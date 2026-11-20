@@ -8,6 +8,9 @@ on:
       - 'docs/qa/alexscaves_1010_adjacent_items_boundary.py'
       - 'docs/qa/alexscaves_1010_adjacent_items_probe_test.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-DISCOVERY-1.0.10.json'
+      - 'docs/qa/alexscaves_1010_adjacent_items_boundary_test.py'
+      - 'docs/qa/alexscaves_1010_anvil_block_selector_extra.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-BOUNDARY-1.0.10.json'
   workflow_dispatch:
 permissions:
   contents: read
@@ -39,6 +42,10 @@ jobs:
       - name: Audit typed-only dispatch and native dependency bodies
         run: |
           python3 docs/qa/alexscaves_1010_adjacent_items_boundary.py --jar build/adjacent-items-1010/alexscaves-1.0.10.jar --javap "$JAVA_HOME/bin/javap" --initial build/adjacent-items-1010/report.json --output build/adjacent-items-1010/boundary.json
+      - name: Replay boundary and typed dispatcher
+        run: AC_ADJACENT_BOUNDARY=build/adjacent-items-1010/boundary.json python3 docs/qa/alexscaves_1010_adjacent_items_boundary_test.py -v
+      - name: Audit switch, annotation and factory selector
+        run: python3 docs/qa/alexscaves_1010_anvil_block_selector_extra.py --jar build/adjacent-items-1010/alexscaves-1.0.10.jar --javap "$JAVA_HOME/bin/javap" --output build/adjacent-items-1010/extra.json
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7
@@ -47,5 +54,6 @@ jobs:
           path: |
             build/adjacent-items-1010/report.json
             build/adjacent-items-1010/boundary.json
+            build/adjacent-items-1010/extra.json
           retention-days: 14
           if-no-files-found: ignore

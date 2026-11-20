@@ -1,0 +1,469 @@
+{
+  "scope": "DISCOVERY_NOT_CERTIFIED",
+  "initial_sha256": "357381bd6a9ca6f8df9d79ef274552468033832664a40f59fc04ec2d76d99a6c",
+  "report_sha256": "ec96f80a27cd7c12b9bc114864290210574be7bc07f49b716d93ae14ce793490",
+  "job": 136078291012,
+  "sites": {
+    "com/github/alexmodguy/alexscaves/server/item/AlwaysCombinableOnAnvil": [
+      {
+        "descriptor": "(Lnet/neoforged/neoforge/event/AnvilUpdateEvent;)V",
+        "method": "onUpdateAnvil",
+        "offset": 7,
+        "opcode": "instanceof",
+        "owner": "com/github/alexmodguy/alexscaves/server/event/CommonEvents",
+        "symbol": "class com/github/alexmodguy/alexscaves/server/item/AlwaysCombinableOnAnvil"
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem": [
+      {
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "method": "lambda$static$197",
+        "offset": 0,
+        "opcode": "new",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+        "symbol": "class com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem"
+      },
+      {
+        "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)I",
+        "method": "getBiomeTreatColorOf",
+        "offset": 24,
+        "opcode": "instanceof",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+        "symbol": "class com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem"
+      },
+      {
+        "descriptor": "(Lnet/minecraft/world/item/Item;Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/item/ItemStack;",
+        "method": "create",
+        "offset": 41,
+        "opcode": "instanceof",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/CaveInfoItem",
+        "symbol": "class com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem"
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER": [
+      {
+        "descriptor": "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;",
+        "method": "lambda$getBlockSupplier$439",
+        "offset": 0,
+        "opcode": "new",
+        "owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+        "symbol": "class com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER"
+      },
+      {
+        "descriptor": "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;",
+        "method": "lambda$getBlockSupplier$445",
+        "offset": 0,
+        "opcode": "new",
+        "owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+        "symbol": "class com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER"
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/BlockItemWithScaffolding": [
+      {
+        "descriptor": "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;",
+        "method": "lambda$getBlockSupplier$438",
+        "offset": 0,
+        "opcode": "new",
+        "owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+        "symbol": "class com/github/alexmodguy/alexscaves/server/item/BlockItemWithScaffolding"
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/BlockItemWithSupplierLore": [
+      {
+        "descriptor": "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;",
+        "method": "lambda$getBlockSupplier$437",
+        "offset": 0,
+        "opcode": "new",
+        "owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+        "symbol": "class com/github/alexmodguy/alexscaves/server/item/BlockItemWithSupplierLore"
+      }
+    ]
+  },
+  "attributes": {
+    "com/github/alexmodguy/alexscaves/server/item/AlwaysCombinableOnAnvil": {},
+    "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem": {},
+    "com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER": {},
+    "com/github/alexmodguy/alexscaves/server/item/BlockItemWithScaffolding": {},
+    "com/github/alexmodguy/alexscaves/server/item/BlockItemWithSupplierLore": {
+      "bootstrap_methods": [
+        {
+          "arguments": [
+            "\u0001.\u0001"
+          ],
+          "handle": {
+            "reference": [
+              10,
+              "java/lang/invoke/StringConcatFactory",
+              [
+                12,
+                "makeConcatWithConstants",
+                "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;"
+              ]
+            ],
+            "reference_kind": 6
+          }
+        },
+        {
+          "arguments": [
+            "block.\u0001.desc"
+          ],
+          "handle": {
+            "reference": [
+              10,
+              "java/lang/invoke/StringConcatFactory",
+              [
+                12,
+                "makeConcatWithConstants",
+                "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;"
+              ]
+            ],
+            "reference_kind": 6
+          }
+        }
+      ]
+    }
+  },
+  "type_bodies": {
+    "com/github/alexmodguy/alexscaves/server/item/AlwaysCombinableOnAnvil": {
+      "com/github/alexmodguy/alexscaves/server/event/CommonEvents": [
+        {
+          "declaration": {
+            "access": 1,
+            "code_sha256": "93b2f079354a876c369e5d92ba2e397241ff1e68b68d07cdb999d08c1c75e53b",
+            "code_size": 396,
+            "descriptor": "(Lnet/neoforged/neoforge/event/AnvilUpdateEvent;)V",
+            "exception_handlers": [],
+            "max_locals": 14,
+            "max_stack": 3,
+            "name": "onUpdateAnvil"
+          },
+          "instruction_count": 147,
+          "instruction_sha256": "d3b10ca0aef1dc7c33561666863099339b35108e43ba6ea7202bee38ad90d557"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem": {
+      "com/github/alexmodguy/alexscaves/server/item/CaveInfoItem": [
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "1403b57a603a3a83c03e43dcba5a503b005a87aa2326dbb8975a577f9ee48cfe",
+            "code_size": 64,
+            "descriptor": "(Lnet/minecraft/world/item/Item;Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/item/ItemStack;",
+            "exception_handlers": [],
+            "max_locals": 4,
+            "max_stack": 3,
+            "name": "create"
+          },
+          "instruction_count": 32,
+          "instruction_sha256": "a6cdad3717a8f59522f2edc9cb799b305663b3c2f488e86ef36f1cd3abf96eb5"
+        }
+      ]
+    }
+  },
+  "boundary_owners": {
+    "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": {
+      "class_sha256": "b4de04f32f6e1d92eeda55480b8480f7ed69f3813164f330f49d0eced202e54c",
+      "missing": [],
+      "methods": [
+        {
+          "declaration": {
+            "access": 4106,
+            "code_sha256": "b66b7b254cd4378c88ba2840c1510d9072e1c0e9d25d1b35f114bc031b0c4107",
+            "code_size": 12,
+            "descriptor": "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 4,
+            "name": "lambda$getBlockSupplier$437"
+          },
+          "instruction_count": 6,
+          "instruction_sha256": "9022f74103ac579c3ec6ace4d246d08fd24afa3b68ca984d9034736e6e4abf17"
+        },
+        {
+          "declaration": {
+            "access": 4106,
+            "code_sha256": "b2b5b282d258b07f895c8424dac0783ce8c680a60844c4d73e7e7a27d6fca627",
+            "code_size": 12,
+            "descriptor": "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 4,
+            "name": "lambda$getBlockSupplier$438"
+          },
+          "instruction_count": 6,
+          "instruction_sha256": "18a1f5be5a64e57a003d1805ab377e89efba4e1dfe13a15931cc90074ac6666e"
+        },
+        {
+          "declaration": {
+            "access": 4106,
+            "code_sha256": "a3063fda84dda0ab32e3193e7addf5adb3da6d98864affc0b099a091d7c48e8d",
+            "code_size": 12,
+            "descriptor": "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 4,
+            "name": "lambda$getBlockSupplier$439"
+          },
+          "instruction_count": 6,
+          "instruction_sha256": "c8e91a257bd4ec71b67abb7452dc1a9c8df89d2b5f19d3091b0385ba0aef2e0d"
+        },
+        {
+          "declaration": {
+            "access": 4106,
+            "code_sha256": "481445443834f217bc0762938198925516012ddace69d484f4184209b384c26d",
+            "code_size": 18,
+            "descriptor": "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 5,
+            "name": "lambda$getBlockSupplier$445"
+          },
+          "instruction_count": 8,
+          "instruction_sha256": "0062682cf4c5e0aeb8acdc5f35b221c55c695024858e8ec48c4d7ccdcfe9eabe"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/block/ConversionCrucibleBlock": {
+      "class_sha256": "3198bd295732cbdd26ba6a567a41ada4a20d3d92c48cabdacc5e992da1b4c7eb",
+      "missing": [],
+      "methods": [
+        {
+          "declaration": {
+            "access": 2,
+            "code_sha256": "cc870b220e03ba382e5e47343bbd6c13a6f3261319aa9f100351f5e779a9f21a",
+            "code_size": 223,
+            "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/InteractionResult;",
+            "exception_handlers": [],
+            "max_locals": 10,
+            "max_stack": 2,
+            "name": "acUse"
+          },
+          "instruction_count": 91,
+          "instruction_sha256": "3821e1f57791ae32bafe7c6313bb7dff3c32a769c3d7dae8e61e649167fdd365"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/block/MetalScaffoldingBlock": {
+      "class_sha256": "fc1eebc54549111db2421a5c618ac68be230ba9018c7c0b06b182b889efd8829",
+      "missing": [],
+      "methods": [
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "2564b6da34582ef5460f51671aa793a851cfc0e542b6c9616a09b366620f26ed",
+            "code_size": 245,
+            "descriptor": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)I",
+            "exception_handlers": [],
+            "max_locals": 8,
+            "max_stack": 4,
+            "name": "getDistance"
+          },
+          "instruction_count": 102,
+          "instruction_sha256": "5cdf9e36d98459db98cd11002b7029f97423197a1208449414773b388a918190"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/block/blockentity/ConversionCrucibleBlockEntity": {
+      "class_sha256": "3f0789adf49ec122a7bed10b9085841cedabbcb64c2ac5ff2fb94046ee7d5266",
+      "missing": [],
+      "methods": [
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "38a069686d13444ac609720476641a0bf70f7ee139adc572e64a22efbfbba9e7",
+            "code_size": 193,
+            "descriptor": "(Ljava/util/Optional;)I",
+            "exception_handlers": [],
+            "max_locals": 6,
+            "max_stack": 5,
+            "name": "calculateBiomeColor"
+          },
+          "instruction_count": 97,
+          "instruction_sha256": "ce8ec3ed602da781da691a2c7acc714511bb9afe9f016f2673356c5cc08d9a92"
+        },
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "7851e9bb7c3ecbb8213718b9ef50058ba1c7c03bf83d5ca7b2c2c4edeb310064",
+            "code_size": 1030,
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lcom/github/alexmodguy/alexscaves/server/block/blockentity/ConversionCrucibleBlockEntity;)V",
+            "exception_handlers": [],
+            "max_locals": 8,
+            "max_stack": 15,
+            "name": "tick"
+          },
+          "instruction_count": 489,
+          "instruction_sha256": "9b39b5db9b669886194226e9c455ba2a936c03a19b16b60edcac2502a1828b68"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/level/biome/ACBiomeRegistry": {
+      "class_sha256": "0cef2f44f53c364f23bd7dba36ee4acf224bc0105bb1e2377571d9244219f794",
+      "missing": [],
+      "methods": [
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "c99c633d447b64c50a56f8776a8ef9f0e4daf658adbb72a707cd874a5b31a136",
+            "code_size": 80,
+            "descriptor": "(Lnet/minecraft/resources/ResourceKey;)I",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 2,
+            "name": "getBiomeTabletColor"
+          },
+          "instruction_count": 38,
+          "instruction_sha256": "0bd48ebb7737f25eb87145322df432579461ae28f9315f834080e6a016aa6419"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat": {
+      "class_sha256": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+      "missing": [],
+      "methods": [
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "a68b59d539733715bf10075af11209d0ca535be4dd53c9e564915bf8d3327d34",
+            "code_size": 5,
+            "descriptor": "(Lnet/minecraft/world/food/FoodProperties;)Z",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 1,
+            "name": "canAlwaysEat"
+          },
+          "instruction_count": 3,
+          "instruction_sha256": "18eae0961441c3ceeca57894cd6570ee1049e0810661fe4d1335d66221e18718"
+        },
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "49c3062c4a6ee9829b530154697caa1dd8dc98766d46b57c24b5f08d61a3ab0c",
+            "code_size": 11,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/food/FoodProperties;",
+            "exception_handlers": [],
+            "max_locals": 2,
+            "max_stack": 2,
+            "name": "food"
+          },
+          "instruction_count": 5,
+          "instruction_sha256": "a05ad4ce7ff2e096d31d79ae0995418091ddb23ee0d25f66c490f875c6785f53"
+        },
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "a0768a890da528fa35216441fe1338764dd2dbecfc00261356e50cae9984d221",
+            "code_size": 6,
+            "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Ljava/lang/String;",
+            "exception_handlers": [],
+            "max_locals": 2,
+            "max_stack": 2,
+            "name": "getString"
+          },
+          "instruction_count": 4,
+          "instruction_sha256": "56bbce9b13ae4bee0af9e453990f78d0607e41a3dc432a9262d4ce86089d7b5e"
+        },
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "6e06e74a7821dc9c2edec3d33ecdd451f237e78d4e8ddc074b3a61dfb0991721",
+            "code_size": 6,
+            "descriptor": "(Lnet/minecraft/nbt/ListTag;I)Ljava/lang/String;",
+            "exception_handlers": [],
+            "max_locals": 2,
+            "max_stack": 2,
+            "name": "getString"
+          },
+          "instruction_count": 4,
+          "instruction_sha256": "6f70cbb6a0e96e7736524c191ff71448a7656da33868eb7e78d01731d83386b5"
+        },
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "b9e087e9252353b89150604a38e9421c5c258cfb853640d5de2b1b7968d78b13",
+            "code_size": 24,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;",
+            "exception_handlers": [],
+            "max_locals": 2,
+            "max_stack": 2,
+            "name": "getTag"
+          },
+          "instruction_count": 12,
+          "instruction_sha256": "729cedf8d89cd8fabb2e566fa540989838f1708a68411e6e08fb054d5493ec38"
+        },
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "0ec19dfe246591fd7610d2a93902354ad02807c4b6fffadac41c8e6d0cbcac81",
+            "code_size": 8,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 2,
+            "name": "isEdible"
+          },
+          "instruction_count": 4,
+          "instruction_sha256": "559bf98f32f328ffc5ba13448ab4bb661b998edc538cddababc5b551804b5ea8"
+        },
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "5292322e774be30d66d1f17f1fe435303838e6f40da1bb2af13bc9503acee4e4",
+            "code_size": 28,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V",
+            "exception_handlers": [],
+            "max_locals": 2,
+            "max_stack": 3,
+            "name": "setTag"
+          },
+          "instruction_count": 14,
+          "instruction_sha256": "bde3126a9b91cf18b3a16d870a13a0251962113b932045fed17982f23fd5e596"
+        },
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "832ea9691be681ff3faeda8a6eb4eac6ff9cc7a1c13cafd58c8578be1a27383e",
+            "code_size": 5,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 1,
+            "name": "useConsume"
+          },
+          "instruction_count": 3,
+          "instruction_sha256": "0333ab69b5ed600404b8d191e77515d929ddd67bd32de05467afef8b7805eaeb"
+        },
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "5cd9656a61e0b0011a78e9ca8ca8db8f238646c37aa037306c3546285066d9a3",
+            "code_size": 5,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 1,
+            "name": "useFail"
+          },
+          "instruction_count": 3,
+          "instruction_sha256": "2c677216e79e1207edc0437af4c22d30732da80ceaee3d7a07a23da9df8dad86"
+        },
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "8771d7d535fc022ea7095245528b96ec58feeaf25138dffbe3101d970041b603",
+            "code_size": 5,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 1,
+            "name": "usePass"
+          },
+          "instruction_count": 3,
+          "instruction_sha256": "32084f68a8d789352168bad75b85a5aabcc7cb3a983f6b4c2025d83d50097058"
+        }
+      ]
+    }
+  },
+  "mutation": "NO_MUTATION"
+}
