@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "scope": "STATIC_CONTRACT_CANDIDATE_NOT_IN_LEDGER",
+  "artifact": {
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "native_report_sha256": "7259e2bedc779f0f21574ddb599e06038bd62aa2344d591f34ad89483e34c25e",
+  "job": 136073823658,
+  "run": 44671670490,
+  "resource_id": "alexscaves:alex_meal",
+  "class_sha256": "6b7046627fb4ec7cd5a6e02e6aa6997ed26a0b2133fdeb808ccaf0178c6065da",
+  "parent": "net/minecraft/world/item/Item",
+  "interfaces": [],
+  "fields": [],
+  "descendants": [],
+  "typed_census": {
+    "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": [
+      {
+        "index": 368,
+        "kind": "class_constant"
+      },
+      {
+        "descriptor": "()V",
+        "index": 370,
+        "kind": "method_reference",
+        "name": "<init>"
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/AlexMealItem": [
+      {
+        "index": 71,
+        "kind": "class_constant"
+      }
+    ]
+  },
+  "consumers": {
+    "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": {
+      "class_sha256": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+      "sites": [
+        {
+          "descriptor": "()V",
+          "method": "<clinit>",
+          "offset": 3463,
+          "opcode": "putstatic",
+          "reference": {
+            "descriptor": "Ljava/util/function/Supplier;",
+            "index": 1964,
+            "name": "ALEX_MEAL",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+            "tag": 9
+          },
+          "symbol": "Field ALEX_MEAL:Ljava/util/function/Supplier;"
+        },
+        {
+          "descriptor": "()Lnet/minecraft/world/item/Item;",
+          "method": "lambda$static$196",
+          "offset": 4,
+          "opcode": "invokespecial",
+          "reference": {
+            "descriptor": "()V",
+            "index": 370,
+            "name": "<init>",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/AlexMealItem",
+            "tag": 10
+          },
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/item/AlexMealItem.\"<init>\":()V"
+        }
+      ]
+    }
+  },
+  "methods": [
+    {
+      "declaration": {
+        "access": 1,
+        "code_sha256": "b90806dab266da7422145c09edcefc6459aa8f7087ac9330f2dfffb1082fe47d",
+        "code_size": 28,
+        "descriptor": "()V",
+        "exception_handlers": [],
+        "max_locals": 1,
+        "max_stack": 3,
+        "name": "<init>"
+      },
+      "instruction_count": 12,
+      "instruction_sha256": "148c78f0eae1299468879c2f4ba05fca3893dd6a9d62ff2f86500e5515f51187"
+    },
+    {
+      "declaration": {
+        "access": 1,
+        "code_sha256": "c64912c716ffc67c7ffdeaa9d26c1b93525f46f073e7a14b61081a579d3f4913",
+        "code_size": 34,
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+        "exception_handlers": [],
+        "max_locals": 5,
+        "max_stack": 5,
+        "name": "appendHoverText"
+      },
+      "instruction_count": 16,
+      "instruction_sha256": "5008c66ef4937ea6044c46124b506940b700bbdeb26067f7b2be78f283da3559"
+    }
+  ],
+  "factory": {
+    "declaration": {
+      "access": 4106,
+      "code_sha256": "e559a38fd03a5f06618574de17f28978ef49c402eaa1abe4c78b8f5ae583a84f",
+      "code_size": 8,
+      "descriptor": "()Lnet/minecraft/world/item/Item;",
+      "exception_handlers": [],
+      "max_locals": 0,
+      "max_stack": 2,
+      "name": "lambda$static$196"
+    },
+    "instruction_sha256": "98508081dc449b2e294b7296ab7bec626d218e44dd846ade00002bd3835ade4e",
+    "instruction_count": 4
+  },
+  "resources": {
+    "assets/alexscaves/models/item/alex_meal.json": {
+      "json": {
+        "parent": "minecraft:item/generated",
+        "textures": {
+          "layer0": "alexscaves:item/alex_meal"
+        }
+      },
+      "sha256": "ec65e1facc6a108db2a86eb33c9c85cd6b9e133e1fb77ccb36817da22881c30d",
+      "size": 105
+    },
+    "data/alexscaves/recipe/alex_meal.json": {
+      "json": {
+        "ingredients": [
+          {
+            "item": "alexscaves:gingerbread_crumbs"
+          },
+          {
+            "item": "alexscaves:gingerbread_crumbs"
+          },
+          {
+            "item": "minecraft:baked_potato"
+          },
+          {
+            "item": "minecraft:carrot"
+          },
+          {
+            "item": "minecraft:honey_bottle"
+          },
+          {
+            "item": "minecraft:cooked_beef"
+          },
+          {
+            "item": "minecraft:bowl"
+          }
+        ],
+        "result": {
+          "id": "alexscaves:alex_meal"
+        },
+        "type": "minecraft:crafting_shapeless"
+      },
+      "sha256": "a48cca5e2a86829ac32e7e7c949fcbb0a60bb24f3a2ffae8837ca9eb5342a431",
+      "size": 594
+    }
+  },
+  "food_field": {
+    "field": "ALEX_MEAL",
+    "write_offset": 1634,
+    "segment_sha256": "5d291749a752f3e7a004cef7e1cde0a8befd3b166728f0a295c537c095f8f378",
+    "nutrition": 40,
+    "saturation_modifier": 5,
+    "flags": [
+      {
+        "name": "bowl"
+      }
+    ],
+    "effects": [
+      {
+        "bootstrap_index": 44,
+        "offset": 1616,
+        "probability": 1,
+        "supplier": "lambda$static$44"
+      },
+      {
+        "bootstrap_index": 45,
+        "offset": 1625,
+        "probability": 1,
+        "supplier": "lambda$static$45"
+      }
+    ]
+  },
+  "food_reference_reports": {
+    "native": {
+      "sha256": "8310d35563ee74028469f192aada383c35a6cd43f70b288ec5ad93de6d8dfed1",
+      "run": 44332664446,
+      "job": 134900918644,
+      "replay_job": 134904019583
+    },
+    "boundary": {
+      "sha256": "0fe3473bee455115e568c58f815cc223014ddf5202c828d2634e48d629733320",
+      "run": 44451904667,
+      "job": 135317637623
+    },
+    "builder": {
+      "sha256": "e6453ae5631a104314f67c9d9e337cced60da511e56f226b2b13fb4f39054a77"
+    },
+    "reference": {
+      "sha256": "7eeb6cfcb82dbe38406c5c5241d6955a10826a66610fe8d1d732e7906189fb50"
+    }
+  },
+  "mutation": "NO_MUTATION",
+  "mutating_hook": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED",
+  "runtime_dispatch": "NOT_VERIFIED",
+  "perk_certification": "NOT_CERTIFIED",
+  "provider_universe_closed": false
+}

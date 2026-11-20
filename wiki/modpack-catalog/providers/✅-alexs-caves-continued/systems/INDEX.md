@@ -4,13 +4,13 @@
 
 **Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
 
-**Fichas catalogadas (somente fichas detectadas): 10/10.**
+**Fichas catalogadas (somente fichas detectadas): 13/13.**
 
 **Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 10/10.**
+**Homologadas para perks (somente fichas detectadas): 13/13.**
 
 **Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
@@ -20,6 +20,7 @@
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
+| ✅ | Anvil Combination | [ficha/anvil-combination.md](anvil-combination.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Armor Material | [ficha/armor-material.md](armor-material.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Client Extension | [ficha/client-extension.md](client-extension.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Destroyed Item | [ficha/destroyed-item.md](destroyed-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -29,7 +30,9 @@
 | ✅ | Foods | [ficha/foods.md](foods.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Item Registry | [ficha/item-registry.md](item-registry.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Repairable Item | [ficha/repairable-item.md](repairable-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Scaffolding Placement | [ficha/scaffolding-placement.md](scaffolding-placement.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Swing Control Item | [ficha/swing-control-item.md](swing-control-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Ticking Item | [ficha/ticking-item.md](ticking-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 

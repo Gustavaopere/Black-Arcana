@@ -9344,6 +9344,223 @@
           "reason": "Job 136065187890 replayed native SHA and four tests, official reference boundary SHA; candidate adds replay and canonical index/ledger checks, no physical execution."
         }
       }
+    },
+    "✅-alexs-caves-continued/systems/ticking-item.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Scoped inventory-tick dispatcher/ABI, 17 declared callbacks and one inherited implementer, exact annotations and official engine caller/selection/durability reference. Local callback bodies and call edges only; does not certify every implementer as whole item, downstream effects/spawn/cost settlement, live tick frequency, safe mutating hooks, physical QA or provider closure. Zero new magical roots.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Publisher 1.0.10 SHA-exact; 1555 classes, 1 abstract method, 0 fields, 17 direct and 1 inherited implementers, sole exact native member-reference owner ItemStackTickMixin, common mixin config and TOML identity."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-CONTRACT-1.0.10.md",
+          "reason": "HEAD inject into ItemStack.inventoryTick, target and descriptor exact, forwards stack/level/entity/selected but not raw slot; 17 own callback profiles and indirect inheritance resolved, vanilla Player.aiStep -> Inventory.tick -> ItemStack.inventoryTick -> Item.inventoryTick, NeoForge global index patch."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Ordinary inventory compartments 36+4+1, selected flag reference; branch/constant/call/field fingerprints for 17 callbacks, local guard/formula/cost pivots in proof; exact Hazmat identity count and radiation ctor storage, official durability clamp."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-CONTRACT-1.0.10.md",
+          "reason": "No target selection in the dispatcher; forwards actual inventory holder Entity and Level, item and selection. Different callback entity/sidedness predicates; local target and spawn requests separately bounded; no AOE or damage pipeline certification."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-CONTRACT-1.0.10.md",
+          "reason": "No dispatcher cost, cooldown, mana, resource settlement or scheduler. Local callback writes/requests documented (including ammo, durability, food/stack and effect requests), downstream acceptance/costs and complete equipment have independent scopes."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Exact mixin annotation and engine reference boundaries; selection changes in NeoForge 21.1.250; linked already certified enchantment/armor/attribute/effect scopes without transfer to entire equipment. No second scheduler or verified mutating hook."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Job 136073564307 passed 4 discovery +4 boundary replay tests and extra audit, three exact report hashes. Additional replay, ledger/index gates on final candidate; no transformed runtime or physical QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/alex-meal.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Concrete Alex Meal item: complete two-method native surface, causal registry factory, food parameters/effect payloads, packaged recipe/model and selected provider text. Composes pinned existing food and official-reference contracts; does not certify transformed consumption, accepted effects, safe per-player hooks or full provider universe. One item card, zero new spell roots; support count unchanged.",
+      "evidence": {
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+          "reason": "Constructor attaches the ALEX_MEAL food properties, rarity alias and stack limit; tooltip appends translated styled text before super. No own consumption override; inherited consumption is a pinned external reference."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+          "reason": "Own methods do not settle resources. The inherited reference requests consume(1,entity), preserves infinite materials and handles bowl conversion; actual overrides, component composition and transactions remain unverified."
+        },
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+          "reason": "Exact publisher 1.0.10 hashes, concrete item class and complete two-method surface, registry argument flow and packaged recipe/model; source 1.1.1 is not the behavior authority."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+          "reason": "Composes existing FoodBuilder, Foods and registry contracts without mutating global FoodProperties or suppliers. Use events and getFoodProperties are reference surfaces, not approved per-player hooks or Mastery settlement."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+          "reason": "Nutrition 40, binary32 saturation modifier 5, nominal 400 saturation before reference clamps, stack limit 1, bowl conversion, CONFUSION 200 ticks and BAD_OMEN 48000 ticks at probability 1. Reference use duration 32 ticks and amplifier zero are separately scoped."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+          "reason": "Food consumer is the receiving entity in the external reference. No own attack, target query, range, area, projectile, summon or direct damage behavior. Downstream vanilla effects are not certified by this item."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+          "reason": "Reproduces the original exact report, checks immutable prerequisite seals, complete item/factory bodies and resources, and records selected translation strings. Negative controls and two real read-only CLI runs guard the finite claim."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/systems/anvil-combination.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Empty marker, two implementers, CommonEvents executable use and bus registration."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Same item and nonempty maps; left copy receives compatible levels and is requested as output."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Level upgrade, max level, persistent conflict flag, and weight dispatch are in the native method."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "The copied left stack is the recipient; right hand of the recipe supplies enchantments."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Integer weighted level total plus conflicts; final pickup and XP stay with the reference menu."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Documented AnvilUpdateEvent request and reference settlement; runtime interception unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact publisher replay records method body, switch edges, event annotation and registration."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/biome-treat.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Single biome_treat registry binding, eight own methods, exact recipe and model."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Native start, fresh bound stack, delegated food path, presentation callbacks and Crucible inputs."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Nutrition 20/1, 0.1F saturation modifier, stack limit 1, hunger-zero or creative binding gate."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Samples biome at the player position; existing Crucible action owns world conversion."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Bundled recipe, binding before food settlement, delegated normal use and Crucible hand/drop costs."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Per-stack FOOD and CUSTOM_DATA; resolved key and engine hand replacement remain boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact publisher replays include all own methods, ancestor, resources and earlier food seals."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/systems/scaffolding-placement.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Distinct placement wrapper and two exact mode-2 bindings for metal and rusty scaffolding."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Directional scan and replacement rule with distance resolver and engine placement boundary."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Twelve horizontal positions, twelve as unsupported distance, and direction-dependent counting."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Effective target context, neighboring positions, and first replaceable destination in selected axis."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Native method selects a context; engine owns placement and stack settlement."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Bounds, obstruction, support and placement acceptance remain engine responsibilities."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact publisher bodies, factory selector, both item bindings and scaffolding tag replay."
+        }
+      }
     }
   },
   "providers": {},
