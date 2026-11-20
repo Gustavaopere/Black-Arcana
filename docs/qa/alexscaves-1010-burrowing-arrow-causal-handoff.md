@@ -1,6 +1,6 @@
 # Burrowing Arrow 1.0.10 — handoff de causalidade nativa (sem certificação)
 
-**Estado:** 🟡 descoberta aprofundada em preparação. `DISCOVERY_NOT_CERTIFIED`; `NO_MUTATION`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `provider_universe_closed=false`. Documento de auditoria, **não** ficha ✅, alteração de ledger, nova raiz de magia ou QA de runtime.
+**Estado:** ⚠️ captura binária SHA-exata concluída; análise de causalidade da entidade ainda pendente. `DISCOVERY_NOT_CERTIFIED`; `NO_MUTATION`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `provider_universe_closed=false`. Documento de auditoria, **não** ficha ✅, alteração de ledger, nova raiz de magia ou QA de runtime.
 
 ## Identidade e evidências já existentes
 
@@ -34,3 +34,16 @@ O construtor `BurrowingArrowItem.<init>()` tem 12 bytes de Code e hash `8be36d62
 O novo [probe read-only](alexscaves_1010_burrowing_entity_probe.py) localiza `BurrowingArrowItem.class`, `BurrowingArrowEntity.class` e `ACItemRegistry$6.class` **por basename único dentro do JAR SHA-exato**, sem presumir pacote da entidade; valida hash/tamanho/roster e grava `javap -v -p -c -s`, hash de cada classfile e hash das transcrições num artefato de CI. Não declara certificação, não executa o modpack e não guarda bytes de terceiro no repositório.
 
 Próxima passagem: ler a transcrição real da entidade, construir o grafo transitivo de métodos e consumidores, conferir constantes/CFG/callbacks e distinguir efeito solicitado de efeito aceito. Depois elaborar ficha individual canônica com todos os eixos aplicáveis e somente então atualizar ledger e índices via gerador. **Sem evidência suficiente: permanecer ⚠️ parcial e `NO_MUTATION`.**
+
+## Captura binária adicional (job `136615116371` — sucesso)
+
+O workflow [burrowing_arrow_entity_discovery](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44830850816/job/136615116371) validou JAR SHA-exato e 1.555 classes, produziu as três transcrições integrais `javap -v -p -c -s` e arquivou quatro arquivos. O [manifesto compacto](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-ARROW-ENTITY-DISCOVERY-1.0.10.json) fixa os hashes dos classfiles e das transcrições.
+
+| Classe física | SHA-256 do classfile | Linhas da transcrição |
+|---|---|---:|
+| `BurrowingArrowItem` | `be5e566fc89b01c311d70d8d2a0fbbe7387601c9b07e70417135bd668b51fded` | 93 |
+| `BurrowingArrowEntity` | `2fc54e3d320e716e2ccd39bca598c1d4be6a1a1fc3bfbe3e01a6b5bd6690b975` | 1149 |
+| `ACItemRegistry$6` | `721d302ffe9969fd15510f63035c2d338be5a962a91f88519c0b527efe8b53a6` | 127 |
+
+Artefato de CI `14675699386`, SHA-256 do ZIP `4f291e7d6a6240002be04bbfa354a2a71718a32be2a8c0ab7a5aa42dd3f3df65`, retenção até 04/12/2026. A transcrição foi **capturada**, mas os 1.149 registros de linha da entidade ainda não foram individualmente analisados/convertidos em contrato de comportamento. Não confundir esse resultado com certificação de dano, colisão, block safety, targeting ou persistência.
+
