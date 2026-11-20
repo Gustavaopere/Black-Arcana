@@ -45,6 +45,40 @@ def run(jar: Path, javap: str, output: Path) -> dict:
             raise RuntimeError("FAIL-CLOSED: unexpected archive roster")
         related = sorted(n for n in classes if "Boat" in n and n.startswith(
             "com/github/alexmodguy/alexscaves/"))
+        recipes = []
+        wanted = ("pewen_boat", "pewen_chest_boat",
+                  "thornwood_boat", "thornwood_chest_boat")
+        for path in roster:
+            if not path.endswith(".json") or not any(k in path for k in wanted):
+                continue
+            if "/recipe/" not in path and "/recipes/" not in path:
+                continue
+            recipe_bytes = z.read(path)
+            recipe = json.loads(recipe_bytes.decode("utf-8"))
+            if not isinstance(recipe, dict):
+                raise RuntimeError("FAIL-CLOSED: unexpected recipe JSON: " + path)
+            refs = set()
+            def walk(value):
+                if isinstance(value, dict):
+                    for key, val in value.items():
+                        if key in ("item", "tag") and isinstance(val, str):
+                            refs.add((key, val))
+                        else:
+                            walk(val)
+                elif isinstance(value, list):
+                    for element in value:
+                        walk(element)
+            walk(recipe.get("ingredients", []))
+            walk(recipe.get("key", {}))
+            recipes.append({
+                "path": path,
+                "sha256": sha(recipe_bytes),
+                "size_bytes": len(recipe_bytes),
+                "recipe_type": recipe.get("type"),
+                "result": recipe.get("result"),
+                "ingredient_references": [dict(kind=k, id=v) for k, v in sorted(refs)],
+            })
+
         for label, internal_name in TARGETS.items():
             path = internal_name + ".class"
             if roster.count(path) != 1:
@@ -77,6 +111,7 @@ def run(jar: Path, javap: str, output: Path) -> dict:
         "publisher_size": SIZE,
         "class_count": CLASS_COUNT,
         "related_boat_class_paths": related,
+        "matching_publisher_recipes": recipes,
         "targets": result,
         "mutating_hook": "NOT_VERIFIED",
         "physical_qa": "NOT_TESTED",
