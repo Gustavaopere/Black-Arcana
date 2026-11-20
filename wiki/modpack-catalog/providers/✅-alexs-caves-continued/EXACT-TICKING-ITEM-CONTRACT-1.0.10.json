@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "artifact": {
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "claims": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "static_technical_contract": "CERTIFIED_STATIC_7_AXES",
+    "runtime_dispatch": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "axes": {
+    "identity": "Publisher 1.0.10 SHA-exact; 1555 classes, 1 abstract method, 0 fields, 17 direct and 1 inherited implementers, sole exact native member-reference owner ItemStackTickMixin, common mixin config and TOML identity.",
+    "behavior": "HEAD inject into ItemStack.inventoryTick, target and descriptor exact, forwards stack/level/entity/selected but not raw slot; 17 own callback profiles and indirect inheritance resolved, vanilla Player.aiStep -> Inventory.tick -> ItemStack.inventoryTick -> Item.inventoryTick, NeoForge global index patch.",
+    "parameters": "Ordinary inventory compartments 36+4+1, selected flag reference; branch/constant/call/field fingerprints for 17 callbacks, local guard/formula/cost pivots in proof; exact Hazmat identity count and radiation ctor storage, official durability clamp.",
+    "targeting": "No target selection in the dispatcher; forwards actual inventory holder Entity and Level, item and selection. Different callback entity/sidedness predicates; local target and spawn requests separately bounded; no AOE or damage pipeline certification.",
+    "costs": "No dispatcher cost, cooldown, mana, resource settlement or scheduler. Local callback writes/requests documented (including ammo, durability, food/stack and effect requests), downstream acceptance/costs and complete equipment have independent scopes.",
+    "integration": "Exact mixin annotation and engine reference boundaries; selection changes in NeoForge 21.1.250; linked already certified enchantment/armor/attribute/effect scopes without transfer to entire equipment. No second scheduler or verified mutating hook.",
+    "validation": "Job 136073564307 passed 4 discovery +4 boundary replay tests and extra audit, three exact report hashes. Additional replay, ledger/index gates on final candidate; no transformed runtime or physical QA."
+  },
+  "target_class_sha256": "a96fc5427180e594aa59c3272395c207f3570f49165e33af0fdfa429a9922a1e",
+  "direct_implementers": [
+    "com/github/alexmodguy/alexscaves/server/item/CandyCaneHookItem",
+    "com/github/alexmodguy/alexscaves/server/item/CaveMapItem",
+    "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem",
+    "com/github/alexmodguy/alexscaves/server/item/DreadbowItem",
+    "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+    "com/github/alexmodguy/alexscaves/server/item/GazingPearlItem",
+    "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem",
+    "com/github/alexmodguy/alexscaves/server/item/OccultGemItem",
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem",
+    "com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem",
+    "com/github/alexmodguy/alexscaves/server/item/RadioactiveItem",
+    "com/github/alexmodguy/alexscaves/server/item/RaygunItem",
+    "com/github/alexmodguy/alexscaves/server/item/RemoteDetonatorItem",
+    "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem",
+    "com/github/alexmodguy/alexscaves/server/item/SackOfSatingItem",
+    "com/github/alexmodguy/alexscaves/server/item/SeaStaffItem",
+    "com/github/alexmodguy/alexscaves/server/item/ShotGumItem"
+  ],
+  "inherited_implementers": [
+    "com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem"
+  ],
+  "native_report_sha256": "c0c0b479729361af74fb5ca404df6997a792185973455c4e52089773fb84f72b",
+  "boundary_report_sha256": "e230bb2f1df46465d296be7150a263c27bc1fad28f72be2bbe2dc4d54f39d899",
+  "extra": {
+    "report_sha256": "8f03a6adcf0cb2a967f175fbad76e83923b45a87fd38e55a7e901b44881d214d",
+    "run": 44671589027,
+    "job": 136073564307,
+    "native": {
+      "constructor_refs": {
+        "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": [
+          {
+            "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;F)V",
+            "index": 329,
+            "owner": "com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem"
+          },
+          {
+            "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;F)V",
+            "index": 335,
+            "owner": "com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem"
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": [
+          {
+            "descriptor": "(Lnet/minecraft/world/item/Item$Properties;F)V",
+            "index": 795,
+            "owner": "com/github/alexmodguy/alexscaves/server/item/RadioactiveItem"
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem": [
+          {
+            "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;F)V",
+            "index": 1,
+            "owner": "com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem"
+          }
+        ]
+      },
+      "classes": {
+        "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem": {
+          "class_sha256": "289395b93a1a223f2e66a02528ccb4ce3a1a659dd9c82ac071a5b63c32b1c7cb",
+          "parent": "net/minecraft/world/item/ArmorItem",
+          "fields": [],
+          "methods": [
+            {
+              "declaration": {
+                "access": 9,
+                "code_sha256": "a6916b6e7526a7a5a53962909e0acf82ab376238a0b66d3c601596e0be95c989",
+                "code_size": 112,
+                "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)I",
+                "exception_handlers": [],
+                "max_locals": 2,
+                "max_stack": 2,
+                "name": "getWornAmount"
+              },
+              "instruction_sha256": "d546af06a43f1aa99eee96014438b2679d3dda44b33dffdd7b73aacbc7400c69",
+              "instruction_count": 40
+            }
+          ]
+        },
+        "com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem": {
+          "class_sha256": "1c769a4b64f0e4b3b9a2f5589bfc44ce3e27ec46c616b447d4e1359ffb21bd4b",
+          "parent": "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier",
+          "fields": [
+            {
+              "access": 18,
+              "descriptor": "F",
+              "name": "randomChanceOfRadiation"
+            }
+          ],
+          "methods": [
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "668113e6779d9bb2128c47dc5f1b7210561d219af9d6fef79715ba835d2562af",
+                "code_size": 12,
+                "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;F)V",
+                "exception_handlers": [],
+                "max_locals": 4,
+                "max_stack": 3,
+                "name": "<init>"
+              },
+              "instruction_sha256": "f3344f932a38610451cedb408fae6ed790ddd895e7571834a8e9d60d1d1b4b20",
+              "instruction_count": 8
+            }
+          ]
+        },
+        "com/github/alexmodguy/alexscaves/server/item/RadioactiveItem": {
+          "class_sha256": "6a46aa885ce5e5728c22691033b0a0f892d69f6c6fa7dd86a96c8f33c81d9436",
+          "parent": "net/minecraft/world/item/Item",
+          "fields": [
+            {
+              "access": 18,
+              "descriptor": "F",
+              "name": "randomChanceOfRadiation"
+            }
+          ],
+          "methods": [
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "93f4d18041315ae466b5ad1ce20b90499a83ae756a7ad294dca4c80b70aa0ba3",
+                "code_size": 11,
+                "descriptor": "(Lnet/minecraft/world/item/Item$Properties;F)V",
+                "exception_handlers": [],
+                "max_locals": 3,
+                "max_stack": 2,
+                "name": "<init>"
+              },
+              "instruction_sha256": "2b69655e0e56e2b6b87227d21b6b02d08d3b0474b17180d9afaab6ebb6bcac8b",
+              "instruction_count": 7
+            }
+          ]
+        },
+        "com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem": {
+          "class_sha256": "853e1f6318cfaa2c97ab27955e6b068e4e5f34ab94f4354092233e69bc502f24",
+          "parent": "com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem",
+          "fields": [],
+          "methods": [
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "e1e5d733c7751a8bb39d327cb52e4c272a84e1e7c211af5ea84d834434afa25d",
+                "code_size": 8,
+                "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;F)V",
+                "exception_handlers": [],
+                "max_locals": 4,
+                "max_stack": 4,
+                "name": "<init>"
+              },
+              "instruction_sha256": "b25d141f7ce98b04c2866f3931130af136e769f75806b6c17eb8c48fc0bc68db",
+              "instruction_count": 6
+            }
+          ]
+        }
+      }
+    },
+    "vanilla": {
+      "net.minecraft.world.entity.player.Player": {
+        "obfuscated_owner": "cmx",
+        "class_sha256": "cf857b1a2a716131f78eadec2ee5be22167e3dcf648ee42e2036edc1935edab5",
+        "parent": "net.minecraft.world.entity.LivingEntity",
+        "methods": [
+          {
+            "name": "aiStep",
+            "descriptor": "()V",
+            "code_sha256": "94390b070c1e306f728ebf12364a6ba18ffd033743771d403e1a1b93aa134490",
+            "instruction_sha256": "2947fba2c16a0a949fc75bc094eb67ced1192cd2286577d09ba84cea71399424",
+            "instruction_count": 226
+          }
+        ]
+      },
+      "net.minecraft.world.entity.player.Inventory": {
+        "obfuscated_owner": "cmw",
+        "class_sha256": "761e98523a2ce63c75c1edc1f1f0c13cf2502174d9967434424450e79bc8084c",
+        "parent": "java/lang/Object",
+        "methods": [
+          {
+            "name": "<init>",
+            "descriptor": "(Lcmx;)V",
+            "code_sha256": "904fdf2d607d04da3a213f3daf08537ef21313d354ae85fbcf29faae66d4f69a",
+            "instruction_sha256": "0baae659e718c581de56b34f342ef88bc6813b78cd7e5a47e4ec1998f64903c1",
+            "instruction_count": 30
+          }
+        ]
+      },
+      "net.minecraft.world.item.ItemStack": {
+        "obfuscated_owner": "cuq",
+        "class_sha256": "a34b9141828bd62fa74ad6a5d3b9b47a81df18b4a86866827c8f73d3ab97f901",
+        "parent": "java/lang/Object",
+        "methods": [
+          {
+            "name": "setDamageValue",
+            "descriptor": "(I)V",
+            "code_sha256": "8c813b177c90df56e2b8a5d9f3addc1d7adc06aa9eda00e1854da0c01e7edc9b",
+            "instruction_sha256": "47363f6bd93fe9d4b8b843684d84e4197321688a324178b0d9892e38ec367457",
+            "instruction_count": 11
+          },
+          {
+            "name": "getDamageValue",
+            "descriptor": "()I",
+            "code_sha256": "b5fae22a90e1397b6cc864ebbcf5063e8bc976e7cfc03c3c829f033343d26d97",
+            "instruction_sha256": "009b36be5db47e42fda4c492be76f337222fea4a0eb952561d0f4fc1558dbd51",
+            "instruction_count": 12
+          },
+          {
+            "name": "getMaxDamage",
+            "descriptor": "()I",
+            "code_sha256": "fb14a2839afe7c7fe2e9f0c76cb1e74f95211848b2262f74e576d341b77f2013",
+            "instruction_sha256": "827a3ea3e86963f961af5ec70579fedcf01a61cbdba50e500ab1f2f90839cd64",
+            "instruction_count": 8
+          }
+        ]
+      }
+    }
+  },
+  "discovery_manifest": "EXACT-TICKING-ITEM-DISCOVERY-1.0.10.json",
+  "boundary_manifest": "EXACT-TICKING-ITEM-BOUNDARY-1.0.10.json",
+  "next_scope": "server/item/AlexMealItem"
+}
