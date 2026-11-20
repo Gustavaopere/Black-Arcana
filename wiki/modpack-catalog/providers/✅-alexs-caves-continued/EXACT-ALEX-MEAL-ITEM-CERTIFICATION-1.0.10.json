@@ -1,0 +1,573 @@
+{
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "version": "1.0.10"
+  },
+  "axes": {
+    "behavior": "Constructor attaches the ALEX_MEAL food properties, rarity alias and stack limit; tooltip appends translated styled text before super. No own consumption override; inherited consumption is a pinned external reference.",
+    "costs": "Own methods do not settle resources. The inherited reference requests consume(1,entity), preserves infinite materials and handles bowl conversion; actual overrides, component composition and transactions remain unverified.",
+    "identity": "Exact publisher 1.0.10 hashes, concrete item class and complete two-method surface, registry argument flow and packaged recipe/model; source 1.1.1 is not the behavior authority.",
+    "integration": "Composes existing FoodBuilder, Foods and registry contracts without mutating global FoodProperties or suppliers. Use events and getFoodProperties are reference surfaces, not approved per-player hooks or Mastery settlement.",
+    "parameters": "Nutrition 40, binary32 saturation modifier 5, nominal 400 saturation before reference clamps, stack limit 1, bowl conversion, CONFUSION 200 ticks and BAD_OMEN 48000 ticks at probability 1. Reference use duration 32 ticks and amplifier zero are separately scoped.",
+    "targeting": "Food consumer is the receiving entity in the external reference. No own attack, target query, range, area, projectile, summon or direct damage behavior. Downstream vanilla effects are not certified by this item.",
+    "validation": "Reproduces the original exact report, checks immutable prerequisite seals, complete item/factory bodies and resources, and records selected translation strings. Negative controls and two real read-only CLI runs guard the finite claim."
+  },
+  "boundaries": {
+    "downstream_effect_lifecycle": "NOT_CERTIFIED_BY_THIS_ITEM",
+    "effect_application_acceptance": "NOT_VERIFIED",
+    "effective_datapack_and_components": "NOT_VERIFIED",
+    "inherited_consumption": "COMPOSITION_OF_PINNED_OFFICIAL_REFERENCES",
+    "original_evidence": "STATIC_CONTRACT_CANDIDATE_NOT_IN_LEDGER_PRESERVED",
+    "per_player_mutation_and_progression": "NOT_CERTIFIED",
+    "registry_execution": "NOT_VERIFIED"
+  },
+  "claims": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "runtime_dispatch": "NOT_VERIFIED",
+    "semantic_magic_roots_delta": 0,
+    "static_technical_contract": "CERTIFIED_STATIC_7_AXES"
+  },
+  "food_profile": {
+    "effects": [
+      {
+        "amplifier_argument": "NOT_EXPLICIT",
+        "bootstrap_index": 44,
+        "call_offset": 1616,
+        "code_sha256": "7787449d22628961138af08212478f52035a503016a6181ae185fb46ffcab05d",
+        "constructor_descriptor": "(Lnet/minecraft/core/Holder;I)V",
+        "constructor_offset": 10,
+        "duration_ticks": 200,
+        "field_descriptor": "Lnet/minecraft/core/Holder;",
+        "field_name": "CONFUSION",
+        "field_owner": "net/minecraft/world/effect/MobEffects",
+        "holder_source": "VANILLA_HOLDER_FIELD",
+        "instruction_sha256": "4c3e31032582e4d38ca8aace25af4a88e635289243a2ad4f92b6276f0c2a7615",
+        "probability": {
+          "bits_hex": "3f800000",
+          "value": 1.0
+        },
+        "supplier": "lambda$static$44",
+        "supplier_instruction_count": 6
+      },
+      {
+        "amplifier_argument": "NOT_EXPLICIT",
+        "bootstrap_index": 45,
+        "call_offset": 1625,
+        "code_sha256": "39569ecf4c139f8857f9dec4ceb4a20143a25e51b38ee327259c418377f19cd9",
+        "constructor_descriptor": "(Lnet/minecraft/core/Holder;I)V",
+        "constructor_offset": 9,
+        "duration_ticks": 48000,
+        "field_descriptor": "Lnet/minecraft/core/Holder;",
+        "field_name": "BAD_OMEN",
+        "field_owner": "net/minecraft/world/effect/MobEffects",
+        "holder_source": "VANILLA_HOLDER_FIELD",
+        "instruction_sha256": "2fb9b1234d364b77c3b5c561330b0cbdc22f297dc1d3cfcd948ffaba4bcba550",
+        "probability": {
+          "bits_hex": "3f800000",
+          "value": 1.0
+        },
+        "supplier": "lambda$static$45",
+        "supplier_instruction_count": 6
+      }
+    ],
+    "flags": [
+      "bowl"
+    ],
+    "nutrition": 40,
+    "saturation_modifier": {
+      "bits_hex": "40a00000",
+      "value": 5.0
+    },
+    "segment_sha256": "5d291749a752f3e7a004cef7e1cde0a8befd3b166728f0a295c537c095f8f378",
+    "sound": null,
+    "write_offset": 1634
+  },
+  "native": {
+    "class_entries_scanned": 1555,
+    "class_sha256": "6b7046627fb4ec7cd5a6e02e6aa6997ed26a0b2133fdeb808ccaf0178c6065da",
+    "consumers": {
+      "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": {
+        "class_sha256": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+        "sites": [
+          {
+            "descriptor": "()V",
+            "method": "<clinit>",
+            "offset": 3463,
+            "opcode": "putstatic",
+            "reference": {
+              "descriptor": "Ljava/util/function/Supplier;",
+              "index": 1964,
+              "name": "ALEX_MEAL",
+              "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+              "tag": 9
+            },
+            "symbol": "Field ALEX_MEAL:Ljava/util/function/Supplier;"
+          },
+          {
+            "descriptor": "()Lnet/minecraft/world/item/Item;",
+            "method": "lambda$static$196",
+            "offset": 4,
+            "opcode": "invokespecial",
+            "reference": {
+              "descriptor": "()V",
+              "index": 370,
+              "name": "<init>",
+              "owner": "com/github/alexmodguy/alexscaves/server/item/AlexMealItem",
+              "tag": 10
+            },
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/item/AlexMealItem.\"<init>\":()V"
+          }
+        ]
+      }
+    },
+    "declarations": [
+      {
+        "access": 1,
+        "code_sha256": "b90806dab266da7422145c09edcefc6459aa8f7087ac9330f2dfffb1082fe47d",
+        "code_size": 28,
+        "descriptor": "()V",
+        "exception_handlers": [],
+        "max_locals": 1,
+        "max_stack": 3,
+        "name": "<init>"
+      },
+      {
+        "access": 1,
+        "code_sha256": "c64912c716ffc67c7ffdeaa9d26c1b93525f46f073e7a14b61081a579d3f4913",
+        "code_size": 34,
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+        "exception_handlers": [],
+        "max_locals": 5,
+        "max_stack": 5,
+        "name": "appendHoverText"
+      }
+    ],
+    "descendants": [],
+    "factory": {
+      "declaration": {
+        "access": 4106,
+        "code_sha256": "e559a38fd03a5f06618574de17f28978ef49c402eaa1abe4c78b8f5ae583a84f",
+        "code_size": 8,
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "max_locals": 0,
+        "max_stack": 2,
+        "name": "lambda$static$196"
+      },
+      "instruction_count": 4,
+      "instruction_sha256": "98508081dc449b2e294b7296ab7bec626d218e44dd846ade00002bd3835ade4e",
+      "instructions": [
+        {
+          "offset": 0,
+          "opcode": "new",
+          "operand": "#368",
+          "symbol": "class com/github/alexmodguy/alexscaves/server/item/AlexMealItem"
+        },
+        {
+          "offset": 3,
+          "opcode": "dup",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 4,
+          "opcode": "invokespecial",
+          "operand": "#370",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/item/AlexMealItem.\"<init>\":()V"
+        },
+        {
+          "offset": 7,
+          "opcode": "areturn",
+          "operand": "",
+          "symbol": ""
+        }
+      ]
+    },
+    "fields": [],
+    "interfaces": [],
+    "member_refs": {
+      "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": [
+        {
+          "descriptor": "()V",
+          "index": 370,
+          "name": "<init>",
+          "owner": "com/github/alexmodguy/alexscaves/server/item/AlexMealItem",
+          "tag": 10
+        },
+        {
+          "descriptor": "Ljava/util/function/Supplier;",
+          "index": 1964,
+          "name": "ALEX_MEAL",
+          "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+          "tag": 9
+        }
+      ]
+    },
+    "methods": [
+      {
+        "declaration": {
+          "access": 1,
+          "code_sha256": "b90806dab266da7422145c09edcefc6459aa8f7087ac9330f2dfffb1082fe47d",
+          "code_size": 28,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "max_locals": 1,
+          "max_stack": 3,
+          "name": "<init>"
+        },
+        "instruction_count": 12,
+        "instruction_sha256": "148c78f0eae1299468879c2f4ba05fca3893dd6a9d62ff2f86500e5515f51187",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "new",
+            "operand": "#1",
+            "symbol": "class net/minecraft/world/item/Item$Properties"
+          },
+          {
+            "offset": 4,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "invokespecial",
+            "operand": "#3",
+            "symbol": "Method net/minecraft/world/item/Item$Properties.\"<init>\":()V"
+          },
+          {
+            "offset": 8,
+            "opcode": "getstatic",
+            "operand": "#7",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACFoods.ALEX_MEAL:Lnet/minecraft/world/food/FoodProperties;"
+          },
+          {
+            "offset": 11,
+            "opcode": "invokestatic",
+            "operand": "#13",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/item/ACFoodBuilder.food:(Lnet/minecraft/world/item/Item$Properties;Lnet/minecraft/world/food/FoodProperties;)Lnet/minecraft/world/item/Item$Properties;"
+          },
+          {
+            "offset": 14,
+            "opcode": "getstatic",
+            "operand": "#19",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.RARITY_RAINBOW:Lnet/minecraft/world/item/Rarity;"
+          },
+          {
+            "offset": 17,
+            "opcode": "invokevirtual",
+            "operand": "#25",
+            "symbol": "Method net/minecraft/world/item/Item$Properties.rarity:(Lnet/minecraft/world/item/Rarity;)Lnet/minecraft/world/item/Item$Properties;"
+          },
+          {
+            "offset": 20,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 21,
+            "opcode": "invokevirtual",
+            "operand": "#29",
+            "symbol": "Method net/minecraft/world/item/Item$Properties.stacksTo:(I)Lnet/minecraft/world/item/Item$Properties;"
+          },
+          {
+            "offset": 24,
+            "opcode": "invokespecial",
+            "operand": "#33",
+            "symbol": "Method net/minecraft/world/item/Item.\"<init>\":(Lnet/minecraft/world/item/Item$Properties;)V"
+          },
+          {
+            "offset": 27,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "declaration": {
+          "access": 1,
+          "code_sha256": "c64912c716ffc67c7ffdeaa9d26c1b93525f46f073e7a14b61081a579d3f4913",
+          "code_size": 34,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+          "exception_handlers": [],
+          "max_locals": 5,
+          "max_stack": 5,
+          "name": "appendHoverText"
+        },
+        "instruction_count": 16,
+        "instruction_sha256": "5008c66ef4937ea6044c46124b506940b700bbdeb26067f7b2be78f283da3559",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "ldc",
+            "operand": "#38",
+            "symbol": "String item.alexscaves.alex_meal.desc"
+          },
+          {
+            "offset": 3,
+            "opcode": "invokestatic",
+            "operand": "#40",
+            "symbol": "InterfaceMethod net/minecraft/network/chat/Component.translatable:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;"
+          },
+          {
+            "offset": 6,
+            "opcode": "getstatic",
+            "operand": "#46",
+            "symbol": "Field net/minecraft/ChatFormatting.GRAY:Lnet/minecraft/ChatFormatting;"
+          },
+          {
+            "offset": 9,
+            "opcode": "invokevirtual",
+            "operand": "#52",
+            "symbol": "Method net/minecraft/network/chat/MutableComponent.withStyle:(Lnet/minecraft/ChatFormatting;)Lnet/minecraft/network/chat/MutableComponent;"
+          },
+          {
+            "offset": 12,
+            "opcode": "getstatic",
+            "operand": "#58",
+            "symbol": "Field net/minecraft/ChatFormatting.ITALIC:Lnet/minecraft/ChatFormatting;"
+          },
+          {
+            "offset": 15,
+            "opcode": "invokevirtual",
+            "operand": "#52",
+            "symbol": "Method net/minecraft/network/chat/MutableComponent.withStyle:(Lnet/minecraft/ChatFormatting;)Lnet/minecraft/network/chat/MutableComponent;"
+          },
+          {
+            "offset": 18,
+            "opcode": "invokeinterface",
+            "operand": "#61, 2",
+            "symbol": "InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z"
+          },
+          {
+            "offset": 23,
+            "opcode": "pop",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 24,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 25,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 26,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 27,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 28,
+            "opcode": "aload",
+            "operand": "4",
+            "symbol": ""
+          },
+          {
+            "offset": 30,
+            "opcode": "invokespecial",
+            "operand": "#67",
+            "symbol": "Method net/minecraft/world/item/Item.appendHoverText:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V"
+          },
+          {
+            "offset": 33,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ]
+      }
+    ],
+    "parent": "net/minecraft/world/item/Item",
+    "resources": {
+      "assets/alexscaves/models/item/alex_meal.json": {
+        "json": {
+          "parent": "minecraft:item/generated",
+          "textures": {
+            "layer0": "alexscaves:item/alex_meal"
+          }
+        },
+        "sha256": "ec65e1facc6a108db2a86eb33c9c85cd6b9e133e1fb77ccb36817da22881c30d",
+        "size": 105
+      },
+      "data/alexscaves/recipe/alex_meal.json": {
+        "json": {
+          "ingredients": [
+            {
+              "item": "alexscaves:gingerbread_crumbs"
+            },
+            {
+              "item": "alexscaves:gingerbread_crumbs"
+            },
+            {
+              "item": "minecraft:baked_potato"
+            },
+            {
+              "item": "minecraft:carrot"
+            },
+            {
+              "item": "minecraft:honey_bottle"
+            },
+            {
+              "item": "minecraft:cooked_beef"
+            },
+            {
+              "item": "minecraft:bowl"
+            }
+          ],
+          "result": {
+            "id": "alexscaves:alex_meal"
+          },
+          "type": "minecraft:crafting_shapeless"
+        },
+        "sha256": "a48cca5e2a86829ac32e7e7c949fcbb0a60bb24f3a2ffae8837ca9eb5342a431",
+        "size": 594
+      }
+    },
+    "target": "com/github/alexmodguy/alexscaves/server/item/AlexMealItem",
+    "typed_census": {
+      "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": [
+        {
+          "index": 368,
+          "kind": "class_constant"
+        },
+        {
+          "descriptor": "()V",
+          "index": 370,
+          "kind": "method_reference",
+          "name": "<init>"
+        }
+      ],
+      "com/github/alexmodguy/alexscaves/server/item/AlexMealItem": [
+        {
+          "index": 71,
+          "kind": "class_constant"
+        }
+      ]
+    }
+  },
+  "original_report_sha256": "7259e2bedc779f0f21574ddb599e06038bd62aa2344d591f34ad89483e34c25e",
+  "prerequisites": {
+    "EXACT-ALEX-MEAL-ITEM-CONTRACT-1.0.10.json": "289818396893334a8a281dcbed1e10ec93c04b776523641716d3d934c87008c0",
+    "EXACT-FOOD-BUILDER-CONTRACT-1.0.10.json": "504735467770d52d75c99e7081bfb2a962e5dde0dfa32d884dfdab2e85a6473c",
+    "EXACT-FOODS-CONTRACT-1.0.10.json": "391b4c8d56e364a234af03d34dc5b4fcb900176e116037c9b8363516566c4bef",
+    "EXACT-FOODS-NATIVE-CONTRACT-1.0.10.json": "ab59a8181ea70648053efb15b8fd132f0c6fd3f9f683c7ea72729e0ef0e5c876",
+    "EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.json": "0223cf52d1eaf653488346012d6bd80a74ab2219e3a31126aa0bee18f06a88f7"
+  },
+  "rarity_alias": {
+    "descriptor": "Lnet/minecraft/world/item/Rarity;",
+    "value": {
+      "descriptor": "Lnet/minecraft/world/item/Rarity;",
+      "kind": "field",
+      "name": "EPIC",
+      "offset": 28,
+      "owner": "net/minecraft/world/item/Rarity"
+    },
+    "write_offset": 31
+  },
+  "reference_reports": {
+    "builder": {
+      "native": {
+        "job": 134851123940,
+        "run": 44318572341,
+        "sha256": "e6453ae5631a104314f67c9d9e337cced60da511e56f226b2b13fb4f39054a77"
+      },
+      "reference": {
+        "job": 134853907680,
+        "run": 44319361784,
+        "sha256": "7eeb6cfcb82dbe38406c5c5241d6955a10826a66610fe8d1d732e7906189fb50"
+      }
+    },
+    "food": {
+      "boundary": {
+        "job": 135317637623,
+        "run": 44451904667,
+        "sha256": "0fe3473bee455115e568c58f815cc223014ddf5202c828d2634e48d629733320"
+      },
+      "builder": {
+        "sha256": "e6453ae5631a104314f67c9d9e337cced60da511e56f226b2b13fb4f39054a77"
+      },
+      "native": {
+        "job": 134900918644,
+        "replay_job": 134904019583,
+        "run": 44332664446,
+        "sha256": "8310d35563ee74028469f192aada383c35a6cd43f70b288ec5ad93de6d8dfed1"
+      },
+      "reference": {
+        "sha256": "7eeb6cfcb82dbe38406c5c5241d6955a10826a66610fe8d1d732e7906189fb50"
+      }
+    }
+  },
+  "registry_binding": {
+    "bootstrap_index": 198,
+    "factory": {
+      "code_sha256": "e559a38fd03a5f06618574de17f28978ef49c402eaa1abe4c78b8f5ae583a84f",
+      "descriptor": "()Lnet/minecraft/world/item/Item;",
+      "instruction_sha256": "98508081dc449b2e294b7296ab7bec626d218e44dd846ade00002bd3835ade4e",
+      "name": "lambda$static$196",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+      "reference_kind": 6
+    },
+    "factory_site_offset": 3455,
+    "field": "ALEX_MEAL",
+    "literal_offset": 3452,
+    "namespace": "alexscaves",
+    "path": "alex_meal",
+    "receiver_read_offset": 3449,
+    "register_offset": 3460,
+    "resource_location": "alexscaves:alex_meal",
+    "write_offset": 3463
+  },
+  "schema": "AC_ALEX_MEAL_ITEM_CERTIFICATION_V1",
+  "semantic_magic_roots_delta": 0,
+  "translations": {
+    "assets/alexscaves/lang/en_us.json": {
+      "sha256": "a2a3fab567b07ec10b3d946d4e4ce3e65417b6f9348bd49478d8a253a4232d1f",
+      "size_bytes": 121372,
+      "strings": {
+        "item.alexscaves.alex_meal": "Alex Meal",
+        "item.alexscaves.alex_meal.desc": "You really live like this?"
+      }
+    },
+    "assets/alexscaves/lang/pt_br.json": {
+      "sha256": "080bfaf05b6d710383579dfd0d3c01443f9fa873b0c697f5e6ee0740931018a7",
+      "size_bytes": 84238,
+      "strings": {}
+    }
+  }
+}
