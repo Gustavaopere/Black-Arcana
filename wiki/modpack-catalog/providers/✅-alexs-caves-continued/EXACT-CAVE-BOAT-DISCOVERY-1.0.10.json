@@ -1,0 +1,128 @@
+{
+  "scope": "DISCOVERY_NOT_CERTIFIED",
+  "project": "alexscaves",
+  "version": "1.0.10",
+  "artifact": {
+    "filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "jar_entries": 8898,
+    "class_count": 1555
+  },
+  "provenance": {
+    "source": "publisher Jar / exact javap captures",
+    "pr": 1132,
+    "workflow_run_id": 44836620846,
+    "job_id": 136634502582,
+    "job_conclusion": "success",
+    "artifact_id": 14677954526,
+    "artifact_zip_sha256": "5e5e0e73a18ae3e133ac64c6c9c33cfdae237a481a17a510e3041d24e9fb56af",
+    "expires_at": "2026-12-04T23:25:12Z"
+  },
+  "classes": {
+    "CaveBoatItem": {
+      "sha256": "92fc0840e49f71306bbcafbd3e5f4f5814acbf87846846430007310a2577c18d",
+      "javap_sha256": "6b5bd199a64f5b623fd44c3491b15242b4a44badaab4f4f7c8c0f56335ea8e18"
+    },
+    "AlexsCavesBoatEntity": {
+      "sha256": "6052e323ad6881ee3b70e2cabd1da21e1244ed4dde2d5599e165669f44c8f8f3",
+      "javap_sha256": "9a54b4edeff25227340f3fe90986869f57c18fb2161ec66ba79637641330e4f1"
+    },
+    "AlexsCavesChestBoatEntity": {
+      "sha256": "35cc4e4787b777ca74301bf4bc724900afeb6a7f6d5c4fdac8eef14c2ae281fd",
+      "javap_sha256": "7591cbd52eed9c8dfe3ec8c4b2f740807549bcbb0b1394bd94b091f9f8fec854"
+    },
+    "AlexsCavesBoat_Type": {
+      "sha256": "34aff55b7c4dd09f6fd9a030d6634cfae7ed3dc70ccf2a110867f7e7a751b2d9",
+      "javap_sha256": "8006ebe1e1984fdc106f97c7eecce1f30edae1b0ebf71d65918b22bee4186184"
+    },
+    "ACCompat": {
+      "sha256": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+      "javap_sha256": "157b8068d165a9048586c35bfe2c34ad1fc4adbf83c4f2318128498d1ac59f87"
+    }
+  },
+  "native_item_method": {
+    "owner": "CaveBoatItem",
+    "name": "use",
+    "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+    "code_size": 313,
+    "instructions": 137,
+    "code_sha256": "2bdf4638aa04957bf5b9fd7af79ea1dbb93281bad106752addb5d985cba872bb",
+    "instruction_sha256": "2185420d2c532bc2c742cce6195507aeda3a77679c616efc6e8f83db91870a1c"
+  },
+  "variants": [
+    {
+      "resource_id": "alexscaves:pewen_boat",
+      "factory": "lambda$static$25",
+      "code_sha256": "bdcdd27b8688b4c77b965a94ae39cde059587468e45dcc27f4329ee79552537c",
+      "type": "PEWEN",
+      "enum_ordinal": 0,
+      "has_chest": false,
+      "recipe_path": "data/alexscaves/recipe/pewen_boat.json",
+      "recipe_sha256": "64f7a3e16af2501636904a74c9e79c8cf07ddb4fd89885d388c4207bed6e3e4a",
+      "recipe_type": "minecraft:crafting_shaped",
+      "ingredient_ids": [
+        "alexscaves:pewen_planks"
+      ]
+    },
+    {
+      "resource_id": "alexscaves:pewen_chest_boat",
+      "factory": "lambda$static$26",
+      "code_sha256": "96488931db6e9772a9b9df8b053959e67628f244e3e33bc64e36c2d61b60f22f",
+      "type": "PEWEN",
+      "enum_ordinal": 0,
+      "has_chest": true,
+      "recipe_path": "data/alexscaves/recipe/pewen_chest_boat.json",
+      "recipe_sha256": "0698a740b1b0f0697053d262f6ab04efdd4d7b11b755783a4cbd63f205e2e3d5",
+      "recipe_type": "minecraft:crafting_shapeless",
+      "ingredient_ids": [
+        "alexscaves:pewen_boat",
+        "minecraft:chest"
+      ]
+    },
+    {
+      "resource_id": "alexscaves:thornwood_boat",
+      "factory": "lambda$static$145",
+      "code_sha256": "59c8cc9dd12de9c7fba6cf3ac214421be8f2822511f0ac9e62fbb87eccd17317",
+      "type": "THORNWOOD",
+      "enum_ordinal": 1,
+      "has_chest": false,
+      "recipe_path": "data/alexscaves/recipe/thornwood_boat.json",
+      "recipe_sha256": "378ae31560c09acbfcf176f9bfad23ea4d5288f874fef9ae60e5ddee215041e6",
+      "recipe_type": "minecraft:crafting_shaped",
+      "ingredient_ids": [
+        "alexscaves:thornwood_planks"
+      ]
+    },
+    {
+      "resource_id": "alexscaves:thornwood_chest_boat",
+      "factory": "lambda$static$146",
+      "code_sha256": "aa6d34966ba31d55c535bd67e05f6c97a40b5e984bacc3e088bdf663676ec32b",
+      "type": "THORNWOOD",
+      "enum_ordinal": 1,
+      "has_chest": true,
+      "recipe_path": "data/alexscaves/recipe/thornwood_chest_boat.json",
+      "recipe_sha256": "4e93e21da802378b1f4089be67ef8a3383afa7f4ef54bef80b466eefac8cfb9c",
+      "recipe_type": "minecraft:crafting_shapeless",
+      "ingredient_ids": [
+        "alexscaves:thornwood_boat",
+        "minecraft:chest"
+      ]
+    }
+  ],
+  "structural_findings": {
+    "publisher_thornwood_planks_supplier": "ACBlockRegistry.PEWEN_PLANKS",
+    "both_entity_save_overrides_call_super": false,
+    "item_spawn_acceptance_boolean_read": false,
+    "individual_static_contracts_certified": 0,
+    "new_semantic_magic_roots_certified": 0
+  },
+  "limits": {
+    "static_contract": "PARTIAL",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "mutation": "NO_MUTATION"
+  }
+}
