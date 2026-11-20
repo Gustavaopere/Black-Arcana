@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 2/7.**
+**Fichas catalogadas (somente fichas detectadas): 2/8.**
 
-**Barra das fichas catalogadas:** `█████░░░░░░░░░░░░░░░ 28.6%`
+**Barra das fichas catalogadas:** `█████░░░░░░░░░░░░░░░ 25.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 2/7.**
+**Homologadas para perks (somente fichas detectadas): 2/8.**
 
-**Barra dos contratos técnicos estáticos:** `█████░░░░░░░░░░░░░░░ 28.6%`
+**Barra dos contratos técnicos estáticos:** `█████░░░░░░░░░░░░░░░ 25.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -23,6 +23,7 @@
 | ✅ | Alex Meal | [ficha/alex-meal.md](alex-meal.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Biome Treat | [ficha/biome-treat.md](biome-treat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Candy Cane Hook | [ficha/candy-cane-hook.md](candy-cane-hook.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Cave Book | [ficha/cave-book.md](cave-book.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Pewen Boat | [ficha/pewen-boat.md](pewen-boat.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Pewen Chest Boat | [ficha/pewen-chest-boat.md](pewen-chest-boat.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Thornwood Boat | [ficha/thornwood-boat.md](thornwood-boat.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
