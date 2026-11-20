@@ -1,0 +1,485 @@
+{
+  "artifact": {
+    "bytes": 75279314,
+    "class_count": 1555,
+    "entry_count": 8898,
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "version": "1.0.10"
+  },
+  "candidate_class_paths_and_hashes": [
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/CaveBookItem.class",
+      "class_sha256": "84177c0ff1fdb42d766262624f877874c7c6db22a16036faf4dd6fe0540fcacf",
+      "markers": [
+        "openBookGUI",
+        "CaveBookItem",
+        "cave_book",
+        "CaveBook",
+        "CONSUME_ITEM"
+      ],
+      "priority": 14050
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/client/ClientProxy.class",
+      "class_sha256": "a3d0eb9e19511f13f4155f994fe5486a51b3d5e645ffcfe8ab58440d790e1a69",
+      "markers": [
+        "openBookGUI",
+        "CaveBook"
+      ],
+      "priority": 2200
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/CommonProxy.class",
+      "class_sha256": "c017d8c6dbf2ff7e8f680fb50b90e537b248b165c67cd1b7c77f299baf2bb7cd",
+      "markers": [
+        "openBookGUI"
+      ],
+      "priority": 2200
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.class",
+      "class_sha256": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+      "markers": [
+        "CaveBookItem",
+        "cave_book",
+        "LecternBooks",
+        "CaveBook"
+      ],
+      "priority": 1800
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/citadel/server/block/LecternBooks$BookData.class",
+      "class_sha256": "5d138dff2bb6b3dbb4904b851cf6ba1168e39cf3585e668bef4e382db7813375",
+      "markers": [
+        "LecternBooks"
+      ],
+      "priority": 850
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/citadel/server/block/LecternBooks.class",
+      "class_sha256": "fc87636692a88614e0961bc06f2d73f171914bcd3875160b6f9c39e5831ddeb1",
+      "markers": [
+        "LecternBooks"
+      ],
+      "priority": 850
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/client/gui/book/CaveBookScreen.class",
+      "class_sha256": "f78a3b6aa4ac75fc97f03a539aec5ab26fe57613017225a416d5b83cbf16ae23",
+      "markers": [
+        "cave_book",
+        "BookProgress",
+        "CaveBook"
+      ],
+      "priority": 550
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/citadel/recipe/SpecialRecipeInGuideBook.class",
+      "class_sha256": "e353c2f472927d167034104fc421ec85b2d4517289d6798afa32c3e987e081bc",
+      "markers": [],
+      "priority": 450
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/client/gui/book/BookEntry$Deserializer.class",
+      "class_sha256": "386147dd007957d80b3d4670306654a687e41ae33dbae31b6454b6bf9cf4acff",
+      "markers": [],
+      "priority": 450
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/client/gui/book/BookEntry.class",
+      "class_sha256": "7b6c27a4317ffce90893cbb42e00d91dea321753004e8311a59aa02d64ce2ad7",
+      "markers": [
+        "BookProgress",
+        "CaveBook"
+      ],
+      "priority": 450
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/client/gui/book/BookLink.class",
+      "class_sha256": "13f42a7db690c17359234d848d0f222b042e80f3d6410c7025ea9fec5e805f75",
+      "markers": [],
+      "priority": 450
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/client/gui/book/widget/BookWidget$Type.class",
+      "class_sha256": "e090f89588651686ceea6e7cdfae0bcb3e4a32aed7546f38d7681373b6cc2c21",
+      "markers": [],
+      "priority": 450
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/client/gui/book/widget/BookWidget.class",
+      "class_sha256": "910a6483bddceda0c2a62c4176d55be9acaf3d78f94b457d9c7d5b501da228ec",
+      "markers": [],
+      "priority": 450
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/client/model/CaveBookModel.class",
+      "class_sha256": "82656c2d334da0dacd9d42d8a2cb382279b47a4e1b22c35d776022359416b665",
+      "markers": [
+        "CaveBook"
+      ],
+      "priority": 450
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/client/render/entity/CustomBookEntityRenderer.class",
+      "class_sha256": "1d9ab1614fa5cdc26127107a5a35faf7285672e6fe6346dd453f46fbe2d50fbc",
+      "markers": [],
+      "priority": 450
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/misc/CaveBookProgress$Subcategory.class",
+      "class_sha256": "b8e816a498aa4c66d04ad93bc35f0f70bfeadd3465d3b3895417aafbf21094d1",
+      "markers": [
+        "BookProgress",
+        "CaveBook"
+      ],
+      "priority": 450
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/misc/CaveBookProgress.class",
+      "class_sha256": "551fe70e64fe5063d4fbb2a3a40944e82dbd13068b15dce73da690d3a12d74db",
+      "markers": [
+        "BookProgress",
+        "CaveBook"
+      ],
+      "priority": 450
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/CaveInfoItem.class",
+      "class_sha256": "20b9b5234e829030e0ec01d73669c2be000741695c819fa114941a0dc2e98183",
+      "markers": [
+        "cave_book",
+        "BookProgress",
+        "CaveBook"
+      ],
+      "priority": 100
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.class",
+      "class_sha256": "561ce50ed30684becb2c33468e939489874816745851a17a3d61b72223967633",
+      "markers": [
+        "cave_book"
+      ],
+      "priority": 100
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/client/gui/book/PageRenderer.class",
+      "class_sha256": "001e49f1b37839945e5cd3282a4e7b71cde58ff0c73712f39e520660f8cba7fb",
+      "markers": [
+        "CaveBook"
+      ],
+      "priority": 0
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/client/gui/book/widget/ItemWidget.class",
+      "class_sha256": "47d526a00bb20198476f18ed2cb73667126678f615b4b0101c9a83c4b801d474",
+      "markers": [
+        "CaveBook"
+      ],
+      "priority": 0
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/DrinkableBottledItem.class",
+      "class_sha256": "2d51cafe21c91f964887b30b3ebf262bd8d5944d0879fd08df668623763bd713",
+      "markers": [
+        "CONSUME_ITEM"
+      ],
+      "priority": 0
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/JellyBeanItem.class",
+      "class_sha256": "9842c28cd2eff05621a23be37ce5917ca88a19bf0bd99f0da9b5a5cc62a4355f",
+      "markers": [
+        "CONSUME_ITEM"
+      ],
+      "priority": 0
+    }
+  ],
+  "candidate_count": 23,
+  "capture_limit": 26,
+  "capture_provenance": {
+    "artifact_expires_at": "2026-12-04T23:42:26Z",
+    "artifact_id": 14679244215,
+    "artifact_zip_sha256": "25ec78c0d3caa017d6d61d6ba8c91ab0c35816d14082285d7367e54c7669155d",
+    "commit": "c170def4d913c3c5430c52e0deab75f7d87c2676",
+    "job_conclusion": "success",
+    "job_id": 136641421513,
+    "pr": 1133,
+    "workflow_run_id": 44838694224
+  },
+  "captured_classfiles_and_javap": {
+    "com/github/alexmodguy/alexscaves/citadel/recipe/SpecialRecipeInGuideBook": {
+      "class_bytes": 532,
+      "class_sha256": "e353c2f472927d167034104fc421ec85b2d4517289d6798afa32c3e987e081bc",
+      "contains_code": false,
+      "javap_lines": 37,
+      "javap_sha256": "b9c8ff64ec4405992cf27759e41252b0ece5907b1203510fc2aef516ac5cef1d",
+      "transcript": "com_github_alexmodguy_alexscaves_citadel_recipe_SpecialRecipeInGuideBook.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/citadel/server/block/LecternBooks": {
+      "class_bytes": 1389,
+      "class_sha256": "fc87636692a88614e0961bc06f2d73f171914bcd3875160b6f9c39e5831ddeb1",
+      "contains_code": true,
+      "javap_lines": 126,
+      "javap_sha256": "b06b9cd436459727979ee4e74eccea44a27b8ee193fd1579694098294c5e5997",
+      "transcript": "com_github_alexmodguy_alexscaves_citadel_server_block_LecternBooks.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/citadel/server/block/LecternBooks$BookData": {
+      "class_bytes": 798,
+      "class_sha256": "5d138dff2bb6b3dbb4904b851cf6ba1168e39cf3585e668bef4e382db7813375",
+      "contains_code": true,
+      "javap_lines": 109,
+      "javap_sha256": "0472dcef64bad5b13bb1540c54ecd06d15cebba5e3ea644b0efcd6e3cfbb3e6f",
+      "transcript": "com_github_alexmodguy_alexscaves_citadel_server_block_LecternBooks_BookData.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/client/ClientProxy": {
+      "class_bytes": 92642,
+      "class_sha256": "a3d0eb9e19511f13f4155f994fe5486a51b3d5e645ffcfe8ab58440d790e1a69",
+      "contains_code": true,
+      "javap_lines": 10954,
+      "javap_sha256": "4a18115257725c14c0c6b8285932bd5834e9be3e2778a154d3d925dc5e732b9d",
+      "transcript": "com_github_alexmodguy_alexscaves_client_ClientProxy.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/client/gui/book/BookEntry": {
+      "class_bytes": 11155,
+      "class_sha256": "7b6c27a4317ffce90893cbb42e00d91dea321753004e8311a59aa02d64ce2ad7",
+      "contains_code": true,
+      "javap_lines": 1470,
+      "javap_sha256": "6e17abf16abb22926b79d6d2b945ccb67ea144cfeccd4c1b65331402a41da49b",
+      "transcript": "com_github_alexmodguy_alexscaves_client_gui_book_BookEntry.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/client/gui/book/BookEntry$Deserializer": {
+      "class_bytes": 3753,
+      "class_sha256": "386147dd007957d80b3d4670306654a687e41ae33dbae31b6454b6bf9cf4acff",
+      "contains_code": true,
+      "javap_lines": 359,
+      "javap_sha256": "e959beeb75149bdba1754f6f4ac7a5ff70865d704980cb6121a19849c39856de",
+      "transcript": "com_github_alexmodguy_alexscaves_client_gui_book_BookEntry_Deserializer.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/client/gui/book/BookLink": {
+      "class_bytes": 1306,
+      "class_sha256": "13f42a7db690c17359234d848d0f222b042e80f3d6410c7025ea9fec5e805f75",
+      "contains_code": true,
+      "javap_lines": 231,
+      "javap_sha256": "169db89142e54898d8c538cf24cb612596d1b990b4d34f91cad05cdae8f67929",
+      "transcript": "com_github_alexmodguy_alexscaves_client_gui_book_BookLink.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/client/gui/book/CaveBookScreen": {
+      "class_bytes": 17766,
+      "class_sha256": "f78a3b6aa4ac75fc97f03a539aec5ab26fe57613017225a416d5b83cbf16ae23",
+      "contains_code": true,
+      "javap_lines": 3009,
+      "javap_sha256": "3b99cb08ecd96fe55c589e5d393aafa3f934dbf96bc64f50d29856251a5cdffc",
+      "transcript": "com_github_alexmodguy_alexscaves_client_gui_book_CaveBookScreen.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/client/gui/book/PageRenderer": {
+      "class_bytes": 6602,
+      "class_sha256": "001e49f1b37839945e5cd3282a4e7b71cde58ff0c73712f39e520660f8cba7fb",
+      "contains_code": true,
+      "javap_lines": 799,
+      "javap_sha256": "ee436038609d2e24b8313f88ba054088819ba12552949df480cad51f7ffb2735",
+      "transcript": "com_github_alexmodguy_alexscaves_client_gui_book_PageRenderer.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/client/gui/book/widget/BookWidget": {
+      "class_bytes": 1665,
+      "class_sha256": "910a6483bddceda0c2a62c4176d55be9acaf3d78f94b457d9c7d5b501da228ec",
+      "contains_code": true,
+      "javap_lines": 225,
+      "javap_sha256": "6ac4cf7c41db456dce3ecde0db923bded6e9b69b0bd71533742155f865bb272e",
+      "transcript": "com_github_alexmodguy_alexscaves_client_gui_book_widget_BookWidget.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/client/gui/book/widget/BookWidget$Type": {
+      "class_bytes": 2822,
+      "class_sha256": "e090f89588651686ceea6e7cdfae0bcb3e4a32aed7546f38d7681373b6cc2c21",
+      "contains_code": true,
+      "javap_lines": 328,
+      "javap_sha256": "195a7e604113f58f8587f797fa9958b08ea7bdc22bdf2ad8ad86b9710c687e40",
+      "transcript": "com_github_alexmodguy_alexscaves_client_gui_book_widget_BookWidget_Type.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/client/gui/book/widget/ItemWidget": {
+      "class_bytes": 10266,
+      "class_sha256": "47d526a00bb20198476f18ed2cb73667126678f615b4b0101c9a83c4b801d474",
+      "contains_code": true,
+      "javap_lines": 1030,
+      "javap_sha256": "6f93cf1f8b3c8f4a74e1bb01e338deda635c77de117ca8b16cef0c23b98dd4d1",
+      "transcript": "com_github_alexmodguy_alexscaves_client_gui_book_widget_ItemWidget.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/client/model/CaveBookModel": {
+      "class_bytes": 4829,
+      "class_sha256": "82656c2d334da0dacd9d42d8a2cb382279b47a4e1b22c35d776022359416b665",
+      "contains_code": true,
+      "javap_lines": 927,
+      "javap_sha256": "7b6556682b73574807f304086430f755ca4f9832cfa41f5330cbd8df33622fe5",
+      "transcript": "com_github_alexmodguy_alexscaves_client_model_CaveBookModel.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/client/render/entity/CustomBookEntityRenderer": {
+      "class_bytes": 213,
+      "class_sha256": "1d9ab1614fa5cdc26127107a5a35faf7285672e6fe6346dd453f46fbe2d50fbc",
+      "contains_code": false,
+      "javap_lines": 26,
+      "javap_sha256": "2389e45667d2aaa1491d02270a70331898c54420e4104fe12f2f6e2a0869e279",
+      "transcript": "com_github_alexmodguy_alexscaves_client_render_entity_CustomBookEntityRenderer.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/server/CommonProxy": {
+      "class_bytes": 6781,
+      "class_sha256": "c017d8c6dbf2ff7e8f680fb50b90e537b248b165c67cd1b7c77f299baf2bb7cd",
+      "contains_code": true,
+      "javap_lines": 746,
+      "javap_sha256": "6552d7a5966f1a0539eda4b90588680b5da02bf28fcfb9a6d6aede5ca0804cb4",
+      "transcript": "com_github_alexmodguy_alexscaves_server_CommonProxy.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": {
+      "class_bytes": 61242,
+      "class_sha256": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+      "contains_code": true,
+      "javap_lines": 10610,
+      "javap_sha256": "9ee4fd14dd973b214e5cb70b61f22ccd204f63855884df0948eb8fa3a4b1bfb0",
+      "transcript": "com_github_alexmodguy_alexscaves_server_item_ACItemRegistry.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/server/item/CaveBookItem": {
+      "class_bytes": 4249,
+      "class_sha256": "84177c0ff1fdb42d766262624f877874c7c6db22a16036faf4dd6fe0540fcacf",
+      "contains_code": true,
+      "javap_lines": 285,
+      "javap_sha256": "722c46d0e9f6baee5d0997ff8c556db0269c035f1d678314c6b42caf71a1c238",
+      "transcript": "com_github_alexmodguy_alexscaves_server_item_CaveBookItem.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/server/item/CaveInfoItem": {
+      "class_bytes": 11313,
+      "class_sha256": "20b9b5234e829030e0ec01d73669c2be000741695c819fa114941a0dc2e98183",
+      "contains_code": true,
+      "javap_lines": 1013,
+      "javap_sha256": "2150b671133f3420cda0a5368cbee214811bb94105e0024ae1d0e6a471fc9176",
+      "transcript": "com_github_alexmodguy_alexscaves_server_item_CaveInfoItem.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/server/item/DrinkableBottledItem": {
+      "class_bytes": 4029,
+      "class_sha256": "2d51cafe21c91f964887b30b3ebf262bd8d5944d0879fd08df668623763bd713",
+      "contains_code": true,
+      "javap_lines": 344,
+      "javap_sha256": "347b953e28b49351919bda55dd6d046845e36f711c777e243df552f484e17112",
+      "transcript": "com_github_alexmodguy_alexscaves_server_item_DrinkableBottledItem.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/server/item/JellyBeanItem": {
+      "class_bytes": 12879,
+      "class_sha256": "9842c28cd2eff05621a23be37ce5917ca88a19bf0bd99f0da9b5a5cc62a4355f",
+      "contains_code": true,
+      "javap_lines": 1300,
+      "javap_sha256": "9f6abc3d6a96159541aa2aa6c0f8b07788d7ef123f24f4b0f01671bd20c451ec",
+      "transcript": "com_github_alexmodguy_alexscaves_server_item_JellyBeanItem.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry": {
+      "class_bytes": 42575,
+      "class_sha256": "561ce50ed30684becb2c33468e939489874816745851a17a3d61b72223967633",
+      "contains_code": true,
+      "javap_lines": 6911,
+      "javap_sha256": "26481eba49c9515f84767cec8b2a9e96d621fc47cebfe7b5e88914f717bf9da4",
+      "transcript": "com_github_alexmodguy_alexscaves_server_misc_ACSoundRegistry.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/CaveBookProgress": {
+      "class_bytes": 7045,
+      "class_sha256": "551fe70e64fe5063d4fbb2a3a40944e82dbd13068b15dce73da690d3a12d74db",
+      "contains_code": true,
+      "javap_lines": 827,
+      "javap_sha256": "c32103b460a49f0c01bf4d90bce2fe1647a94150076aa1309b4b6b897dab832e",
+      "transcript": "com_github_alexmodguy_alexscaves_server_misc_CaveBookProgress.javap.txt"
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/CaveBookProgress$Subcategory": {
+      "class_bytes": 4296,
+      "class_sha256": "b8e816a498aa4c66d04ad93bc35f0f70bfeadd3465d3b3895417aafbf21094d1",
+      "contains_code": true,
+      "javap_lines": 547,
+      "javap_sha256": "6b64fee72683c175a545031dbbcc27cdc25e7cdebe9cafa413bdebcbac137406",
+      "transcript": "com_github_alexmodguy_alexscaves_server_misc_CaveBookProgress_Subcategory.javap.txt"
+    }
+  },
+  "filename_matched_resources": [
+    {
+      "bytes": 105,
+      "model_parent": "minecraft:item/generated",
+      "path": "assets/alexscaves/models/item/cave_book.json",
+      "resource_type": null,
+      "sha256": "803c11bd6eade5e560240e94858272fb8bc337dce55342ea27999b8bde600557",
+      "texture_keys": [
+        "layer0"
+      ],
+      "top_level_keys": [
+        "parent",
+        "textures"
+      ]
+    },
+    {
+      "bytes": 700,
+      "criteria_names": [
+        "cave_book"
+      ],
+      "criterion_triggers": {
+        "cave_book": "minecraft:inventory_changed"
+      },
+      "parent": "alexscaves:alexscaves/cave_tablet",
+      "path": "data/alexscaves/advancement/alexscaves/cave_book.json",
+      "requirements": null,
+      "resource_type": null,
+      "sha256": "68fb42ba802827edf2db87a9fb82c09ae3c0747d7d1d2b6b70dc4f06cf2ee726",
+      "top_level_keys": [
+        "criteria",
+        "display",
+        "parent"
+      ]
+    },
+    {
+      "bytes": 323,
+      "ingredient_ids": [
+        {
+          "id": "alexscaves:cave_tablet",
+          "kind": "item"
+        },
+        {
+          "id": "minecraft:book",
+          "kind": "item"
+        },
+        {
+          "id": "alexscaves:nuggets/gold",
+          "kind": "tag"
+        }
+      ],
+      "path": "data/alexscaves/recipe/cave_book.json",
+      "resource_type": "minecraft:crafting_shapeless",
+      "result": {
+        "id": "alexscaves:cave_book"
+      },
+      "sha256": "550c905d6dac50a87c249c53c221379b7878edc2586e654c60d6013feef6e45a",
+      "top_level_keys": [
+        "ingredients",
+        "result",
+        "type"
+      ]
+    }
+  ],
+  "item": {
+    "class_name": "com/github/alexmodguy/alexscaves/server/item/CaveBookItem",
+    "class_sha256": "84177c0ff1fdb42d766262624f877874c7c6db22a16036faf4dd6fe0540fcacf"
+  },
+  "limitations": {
+    "authoritative_server_progress_grant": false,
+    "complete_book_pages_census": false,
+    "complete_transitive_consumer_closure": false,
+    "individual_static_contract": "PARTIAL",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "new_semantic_magic_roots_certified": 0,
+    "physical_persistence_and_multiplayer": false,
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false
+  },
+  "method_code_sha256": {
+    "<init>()V": "b684f9568e1d4cd5ea0d4342f52a5ddd6403b1a57f309ecee16e1ac4c04fdee6",
+    "appendHoverText": "ef270f2394233336f8dfcc5084378b014cc6221dbcaf5d068680fe5f413ae765",
+    "use(Level,Player,InteractionHand)InteractionResultHolder": "afa18cf3478e81ccec190b5a0da07a59c9fbfe6066df6af7d3871a364415ef95"
+  },
+  "provider": "alexscaves",
+  "scope": "DISCOVERY_NOT_CERTIFIED",
+  "source": "JAR publisher SHA-exact; read-only javap -v -p -c -s; no runtime/physical QA",
+  "version": "1.0.10"
+}
