@@ -6,6 +6,9 @@ on:
       - '.github/workflows/alexscaves-1010-candy-cane-hook-probe.yml'
       - 'docs/qa/alexscaves_1010_candy_cane_hook_probe.py'
       - 'docs/qa/alexscaves-1010-candy-cane-hook-handoff.md'
+      - 'docs/qa/alexscaves_1010_candy_cane_hook_static_checks.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/candy-cane-hook.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CANDY-CANE-HOOK-DISCOVERY-1.0.10.json'
   workflow_dispatch:
 permissions:
   contents: read
@@ -20,7 +23,9 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Check auditor syntax
-        run: python3 -m py_compile docs/qa/alexscaves_1010_candy_cane_hook_probe.py
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_candy_cane_hook_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_candy_cane_hook_static_checks.py
       - name: Download SHA-exact publisher JAR
         run: |
           mkdir -p build/candy-cane-hook-1010
@@ -33,6 +38,22 @@ jobs:
             --jar build/candy-cane-hook-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output-dir build/candy-cane-hook-1010/report
+      - name: Check SHA-pinned local causal branches
+        run: |
+          python3 docs/qa/alexscaves_1010_candy_cane_hook_static_checks.py \
+            --transcript-dir build/candy-cane-hook-1010/report
+      - name: Generate exact index deltas for review
+        run: python3 scripts/catalog/generate_perk_ready_indexes.py
+      - name: Archive regenerated index candidates
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-candy-cane-hook-index-candidates
+          path: |
+            wiki/modpack-catalog/providers/INDEX.md
+            wiki/modpack-catalog/providers/✅-alexs-caves-continued/INDEX.md
+            wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/INDEX.md
+          retention-days: 14
       - name: Archive exact bytecode observations
         if: always()
         uses: actions/upload-artifact@v7
