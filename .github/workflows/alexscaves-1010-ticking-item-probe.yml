@@ -10,6 +10,9 @@ on:
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-DISCOVERY-1.0.10.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-DISCOVERY-1.0.10.md'
       - 'docs/qa/alexscaves_1010_ticking_item_boundary.py'
+      - 'docs/qa/alexscaves_1010_ticking_item_boundary_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-BOUNDARY-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-BOUNDARY-1.0.10.md'
   workflow_dispatch:
 
 permissions:
@@ -53,6 +56,8 @@ jobs:
             --userdev build/ticking-1010/userdev.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/ticking-1010/boundary.json
+      - name: Replay exact inventory tick boundary
+        run: AC_TICK_BOUNDARY=build/ticking-1010/boundary.json python3 docs/qa/alexscaves_1010_ticking_item_boundary_test.py -v
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7
