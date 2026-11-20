@@ -479,7 +479,7 @@
       "publisher_json_static_catalog_scope": "Exactly 51 data/alexscaves/enchantment/*.json resources in the SHA-exact publisher 1.0.10 artifact and 51 individual static contracts; not a whole-provider/runtime universe closure."
     },
     "integration_support": {
-      "documented_static_contracts": 7,
+      "documented_static_contracts": 8,
       "cards": [
         "systems/armor-material.md",
         "systems/client-extension.md",
@@ -487,7 +487,8 @@
         "systems/dynamic-attributes.md",
         "systems/enchantable-item.md",
         "systems/food-builder.md",
-        "systems/foods.md"
+        "systems/foods.md",
+        "systems/item-registry.md"
       ],
       "evidence": "EXACT-ARMOR-MATERIAL-1.0.10.md",
       "manifest": "EXACT-ARMOR-MATERIAL-1.0.10.json",
@@ -520,7 +521,8 @@
         "EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.md",
         "EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.md",
         "EXACT-FOOD-BUILDER-CONTRACT-1.0.10.md",
-        "EXACT-FOODS-CONTRACT-1.0.10.md"
+        "EXACT-FOODS-CONTRACT-1.0.10.md",
+        "EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.md"
       ],
       "related_manifests": [
         "EXACT-CLIENT-EXTENSION-1.0.10.json",
@@ -528,12 +530,13 @@
         "EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.json",
         "EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.json",
         "EXACT-FOOD-BUILDER-CONTRACT-1.0.10.json",
-        "EXACT-FOODS-CONTRACT-1.0.10.json"
+        "EXACT-FOODS-CONTRACT-1.0.10.json",
+        "EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.json"
       ],
       "partial_cards": []
     }
   },
-  "next_alphabetical_uncovered_scope": "server/item/ACItemRegistry",
+  "next_alphabetical_uncovered_scope": "server/item/ACRepairableItem",
   "integration_support_inventory": {
     "source_inventory": "remaining_family_inventory.item_outer_classes",
     "scope": "REVIEWED_ALPHABETICAL_PREFIX_OF_PHYSICAL_ITEM_OUTER_CLASSES",
@@ -627,14 +630,26 @@
         "additional_cards": 1,
         "semantic_magic_roots_added": 0,
         "scope_note": "63 FoodProperties, 606 initializer instructions, 46 suppliers and all 121 direct sites in eight owners; ACCompat holder bridge and official vanilla constructor/default plus reused builder reference. Does not certify foods, item registry, gameplay, per-player mutation or provider closure."
+      },
+      {
+        "class": "server/item/ACItemRegistry",
+        "disposition": "INDIVIDUAL_STATIC_CONTRACT_CERTIFIED",
+        "card": "systems/item-registry.md",
+        "evidence": "EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.md",
+        "manifest": "EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.json",
+        "additional_cards": 1,
+        "semantic_magic_roots_added": 0,
+        "scope_note": "SHA-exact declared bindings and bounded native local callbacks, with scoped ACDeferredRegister boundary. The declarer has 200 fields and 208 methods; 188 Supplier field bindings plus 43 additional spawnEgg declarations are 231 static registration requests, not 188 individually certified items or new casts. Does not certify whole items/projectiles, accepted registry/runtime effects, safe per-player hooks, physical QA, perks or provider closure. ACRepairableItem remains separately undisposed."
       }
     ],
-    "next_alphabetical_uncovered_scope": "server/item/ACItemRegistry",
+    "next_alphabetical_uncovered_scope": "server/item/ACRepairableItem",
     "family_universe_closed": false,
     "remaining_family_inventory_preserved": true,
     "typed_constant_pool_class_count": 1555,
     "mutating_hook": "NOT_VERIFIED",
     "physical_qa": "NOT_TESTED",
     "mutation": "NO_MUTATION"
-  }
+  },
+  "completed_scope_checkpoint_scope": "HISTORICAL_SEQUENCE_THROUGH_PR_1122",
+  "current_completed_scope": "ACItemRegistry adds one bounded individual static integration-support card and certificate for its declared supplier bindings, deferred-registration boundary and native local callbacks. The SHA-exact publisher class declares 200 fields and 208 methods: 188 Supplier field bindings plus 43 additional spawnEgg declarations in the static-initializer tail yield 231 static registration requests, not 188 separately certified items or new casts. The scoped ACDeferredRegister boundary does not certify accepted NeoForge registration, whole items/projectiles or runtime effects. Observed provider scope is 89/89 individual static contracts and 8/8 integration-support cards; the increment is one card/certificate and zero semantic magic roots. The nine previous reviewed-prefix entries, physical remaining-family inventory and all other family statuses remain unchanged. Next undisposed symbol is server/item/ACRepairableItem, reserved separately in PR #1124 without status promotion. The full provider remains OPEN, family_universe_closed=false, mutating_hook=NOT_VERIFIED, physical_qa=NOT_TESTED, NO_MUTATION."
 }
