@@ -9168,6 +9168,94 @@
           "reason": "Dois relatórios SHA-exatos e auditores independentes com Mojang client/mappings verificados, testes de roster, pivôs, parâmetros e ledger; consumo externo referencial, sem QA física."
         }
       }
+    },
+    "✅-alexs-caves-continued/systems/foods.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "63 FoodProperties, 606 initializer instructions, 46 suppliers and all 121 direct sites in eight owners; ACCompat holder bridge and official vanilla constructor/default plus reused builder reference. Does not certify foods, item registry, gameplay, per-player mutation or provider closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-CONTRACT-1.0.10.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato; ACFoods com 63 campos public static final de FoodProperties, 48 métodos, censo tipado de 1555 classfiles."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-CONTRACT-1.0.10.md",
+          "reason": "606 instruções no clinit, 63 construções únicas, 46 suppliers, resolução eager por ACFoodBuilder e ACCompat.effect delegando wrapAsHolder; 121 leituras em oito owners. Crosswalk por campo e supplier, não certificação de item."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-CONTRACT-1.0.10.md",
+          "reason": "63 pares de nutrição/modificador de saturação, flags, 46 probabilidades e durações; 45 campos com efeitos, 18 sem declaração; constructor Holder,int referencia amplifier bruto zero; formula float N*m*2F, 32/16 ticks, custos e clamps no contrato de builder."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-CONTRACT-1.0.10.md",
+          "reason": "Suporte declarativo global, nenhum alvo/cast no helper. O consumador de referência é LivingEntity; efeitos downstream e targeting de itens/blocos têm contratos separados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-CONTRACT-1.0.10.md",
+          "reason": "Sem mana, cooldown, recurso, gasto ou transação próprios. Referência de consumo de stack, recipiente e fome no contrato ACFoodBuilder; não equivale a execução dos itens."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-CONTRACT-1.0.10.md",
+          "reason": "Censo e crosswalk de 121 referências tipadas em oito owners, ACCompat.effect -> Registry.wrapAsHolder, referências vanilla 1.21.1 e NeoForge 21.1.250 do builder; sem hook mutador ou autoridade sobre efeitos downstream."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-CONTRACT-1.0.10.md",
+          "reason": "Job 134904019583: seis testes, replay do relatório de SHA fixa; job 135317637623: boundary nativo e construtores de referência SHA-exatos; testes de crosswalk, identidade, boundary e índices obrigatórios. QA física NOT_TESTED."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/systems/item-registry.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Scoped registry/helper contract: causal arguments for 188 named Supplier bindings and 43 additional spawn-egg requests; five deferred-register methods, native lifecycle/ID bridges, common setup and 13 local projectile/dispenser callback contracts. Other item factories retain identity/whole-body hashes only. Nuclear callback requests shrink(1) after ignoring spawn acceptance. Not complete items/entities, installed registry execution, safe per-player hooks, QA or provider closure. One support card, zero new magical roots.",
+      "evidence": {
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.md",
+          "reason": "Causal stack provenance for 188 field registrations and 43 additional spawn-egg declarations; full common helpers, six player projectile factories and fourteen nested callback/constructor bodies. The other item factories retain identity and whole-body hashes only."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.md",
+          "reason": "No mana/cooldown settlement in the registration pipeline. The local nuclear dispenser callback unconditionally requests shrink(1) after addFreshEntity, sound and game-event calls; external acceptance is ignored. Factory durability or other downstream costs are outside the behavior claim."
+        },
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.md",
+          "reason": "Publisher 1.0.10 SHA-1/SHA-256/size; all 200 registry fields, 208 coded declarations, five bridge methods, seven nested classes and focused native lifecycle/ID bridges."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.md",
+          "reason": "DEF_REG to raw DeferredRegister to native constructor event-bus registration; commonSetup enqueueWork to setup; deferred construction via ACRegistryIds ThreadLocal restoration. Calls and return handling are certified locally; external Minecraft/NeoForge implementations and installed dispatch remain unverified."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.md",
+          "reason": "Literal namespace alexscaves, registry key Registries.ITEM, 188 individual paths/factory handles, 43 spawn-egg names/colors/tab/entity suppliers, six material declarations, four rarity aliases, setup operands and exact local callback guards/coordinates/costs."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.md",
+          "reason": "Registration plumbing has no gameplay target selection. getSpawnEggFor resolves map suppliers, checks SpawnEggItem and compares EntityType identity; local projectile callbacks construct at supplied coordinates or with player.level/player. This does not certify downstream projectile targeting or hit acceptance."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.md",
+          "reason": "Typed 1,555-class census, declaration/body reconciliation, CP/BootstrapMethods-resolved stack flow, exact body/branch/operand pins, semantic negative controls and twice-run binary CLI reproduction with unchanged inputs. No gameplay execution."
+        }
+      }
     }
   },
   "providers": {},

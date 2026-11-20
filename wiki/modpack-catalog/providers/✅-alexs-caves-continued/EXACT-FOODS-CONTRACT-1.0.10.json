@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "artifact": {
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "claims": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "static_technical_contract": "CERTIFIED_STATIC_7_AXES",
+    "runtime_dispatch": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "axes": {
+    "identity": "JAR publisher 1.0.10 SHA-exato; ACFoods com 63 campos public static final de FoodProperties, 48 métodos, censo tipado de 1555 classfiles.",
+    "behavior": "606 instruções no clinit, 63 construções únicas, 46 suppliers, resolução eager por ACFoodBuilder e ACCompat.effect delegando wrapAsHolder; 121 leituras em oito owners. Crosswalk por campo e supplier, não certificação de item.",
+    "parameters": "63 pares de nutrição/modificador de saturação, flags, 46 probabilidades e durações; 45 campos com efeitos, 18 sem declaração; constructor Holder,int referencia amplifier bruto zero; formula float N*m*2F, 32/16 ticks, custos e clamps no contrato de builder.",
+    "targeting": "Suporte declarativo global, nenhum alvo/cast no helper. O consumador de referência é LivingEntity; efeitos downstream e targeting de itens/blocos têm contratos separados.",
+    "costs": "Sem mana, cooldown, recurso, gasto ou transação próprios. Referência de consumo de stack, recipiente e fome no contrato ACFoodBuilder; não equivale a execução dos itens.",
+    "integration": "Censo e crosswalk de 121 referências tipadas em oito owners, ACCompat.effect -> Registry.wrapAsHolder, referências vanilla 1.21.1 e NeoForge 21.1.250 do builder; sem hook mutador ou autoridade sobre efeitos downstream.",
+    "validation": "Job 134904019583: seis testes, replay do relatório de SHA fixa; job 135317637623: boundary nativo e construtores de referência SHA-exatos; testes de crosswalk, identidade, boundary e índices obrigatórios. QA física NOT_TESTED."
+  },
+  "counts": {
+    "fields": 63,
+    "effect_fields": 45,
+    "suppliers": 46,
+    "consumer_owners": 8,
+    "consumer_sites": 121
+  },
+  "target_class_sha256": "a52ec981fe51c97003383a46f7c0b2de06baa5e3ca3f73db988655abce51e12e",
+  "initializer_instruction_count": 606,
+  "declared_methods": 48,
+  "crosswalk": "EXACT-FOODS-DISCOVERY-1.0.10.json",
+  "boundary": {
+    "native": {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat",
+      "class_sha256": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+      "descriptor": "(Lnet/minecraft/world/effect/MobEffect;)Lnet/minecraft/core/Holder;",
+      "code_sha256": "a6fcb990359b50a29238d383f13da2a665a0510bbd6dfc4f527e05ef80b47863",
+      "instruction_count": 4,
+      "registry": "BuiltInRegistries.MOB_EFFECT",
+      "delegate": "Registry.wrapAsHolder",
+      "delegate_offset": 4
+    },
+    "reference": {
+      "minecraft": "1.21.1",
+      "client_sha256": "499f6897d1837516680f3114072d8106e11c9adcd933fe5cf051b551089b0c99",
+      "mappings_sha256": "140c47931cccc8fc9e4c22d7603e2d714d1a953a146f51ea7397d95c955536ec",
+      "class_sha256": "a7453d5f04ab3b6b10d7a524b5f1c9d47a0a76c84a57c79c9b457429339b64bb",
+      "constructor": "(Ljm;I)V",
+      "code_sha256": "24931801535be6734bb46587ae621201d1762f5143dfe56f82debdabe241bef0",
+      "amplifier": 0,
+      "amplifier_clamp": [
+        0,
+        255
+      ],
+      "scope": "OFFICIAL_UNTRANSFORMED_REFERENCE"
+    }
+  },
+  "reports": {
+    "native": {
+      "sha256": "8310d35563ee74028469f192aada383c35a6cd43f70b288ec5ad93de6d8dfed1",
+      "run": 44332664446,
+      "job": 134900918644,
+      "replay_job": 134904019583
+    },
+    "boundary": {
+      "sha256": "0fe3473bee455115e568c58f815cc223014ddf5202c828d2634e48d629733320",
+      "run": 44451904667,
+      "job": 135317637623
+    },
+    "builder": {
+      "sha256": "e6453ae5631a104314f67c9d9e337cced60da511e56f226b2b13fb4f39054a77"
+    },
+    "reference": {
+      "sha256": "7eeb6cfcb82dbe38406c5c5241d6955a10826a66610fe8d1d732e7906189fb50"
+    }
+  },
+  "validation": {
+    "native_auditor": "docs/qa/alexscaves_1010_foods_probe.py",
+    "boundary_auditor": "docs/qa/alexscaves_1010_foods_boundary.py",
+    "tests": "docs/qa/alexscaves_1010_foods_probe_test.py",
+    "workflow": ".github/workflows/alexscaves-1010-foods-probe.yml"
+  }
+}

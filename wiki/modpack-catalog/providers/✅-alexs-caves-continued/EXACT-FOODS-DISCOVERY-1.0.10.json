@@ -1,0 +1,2816 @@
+{
+  "schema_version": 1,
+  "claim_scope": "DISCOVERY_NOT_CERTIFIED",
+  "artifact": {
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "native_report_sha256": "8310d35563ee74028469f192aada383c35a6cd43f70b288ec5ad93de6d8dfed1",
+  "class_sha256": "a52ec981fe51c97003383a46f7c0b2de06baa5e3ca3f73db988655abce51e12e",
+  "class_entries_scanned": 1555,
+  "initializer_instruction_count": 606,
+  "declared_methods": 48,
+  "counts": {
+    "fields": 63,
+    "effect_fields": 45,
+    "suppliers": 46,
+    "consumer_owners": 8,
+    "consumer_sites": 121
+  },
+  "builder_calls": {
+    "alwaysEat": 3,
+    "bowl": 6,
+    "build": 63,
+    "effect": 46,
+    "fast": 6,
+    "meat": 5,
+    "nutrition": 63,
+    "of": 63,
+    "saturationMod": 63,
+    "sound": 3
+  },
+  "fields": [
+    {
+      "field": "ALEX_MEAL",
+      "write_offset": 1634,
+      "segment_sha256": "5d291749a752f3e7a004cef7e1cde0a8befd3b166728f0a295c537c095f8f378",
+      "nutrition": 40,
+      "saturation_modifier": 5,
+      "flags": [
+        {
+          "name": "bowl"
+        }
+      ],
+      "effects": [
+        {
+          "bootstrap_index": 44,
+          "offset": 1616,
+          "probability": 1,
+          "supplier": "lambda$static$44"
+        },
+        {
+          "bootstrap_index": 45,
+          "offset": 1625,
+          "probability": 1,
+          "supplier": "lambda$static$45"
+        }
+      ]
+    },
+    {
+      "field": "BIOME_TREAT",
+      "write_offset": 1653,
+      "segment_sha256": "c027aa2edf7c4723e838f80dd6d109fb35080c380268b4b87cc23366a83ee29d",
+      "nutrition": 20,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": []
+    },
+    {
+      "field": "BIOME_TREAT_DONE",
+      "write_offset": 1671,
+      "segment_sha256": "670725a4e135fd2f332cc0948d1a0b65606536ebfae557ac089dbdc1e4f3cf4e",
+      "nutrition": 1,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": []
+    },
+    {
+      "field": "BLOCK_OF_CHOCOLATE",
+      "write_offset": 582,
+      "segment_sha256": "8a47c8551336b91f4a85f4d8eaf5f73d07885503135846906c5f1c0aafc3693b",
+      "nutrition": 2,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 9,
+          "offset": 576,
+          "probability": 0.01,
+          "supplier": "lambda$static$9"
+        }
+      ]
+    },
+    {
+      "field": "BLOCK_OF_FROSTING",
+      "write_offset": 610,
+      "segment_sha256": "fa217903688392d69f47540d3e99fae49853be81ad8d10201008743c3d92a290",
+      "nutrition": 1,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 10,
+          "offset": 604,
+          "probability": 0.02,
+          "supplier": "lambda$static$10"
+        }
+      ]
+    },
+    {
+      "field": "CAKE_LAYER",
+      "write_offset": 666,
+      "segment_sha256": "7ce7508fb4a1aa92b2a5a68860b611fc1f09d4369a16b2b21b9a7651a011f263",
+      "nutrition": 1,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 12,
+          "offset": 660,
+          "probability": 0.02,
+          "supplier": "lambda$static$12"
+        }
+      ]
+    },
+    {
+      "field": "CANDY_CANE",
+      "write_offset": 1052,
+      "segment_sha256": "ef8542255b1c678dabea26c0eea82ed0da4dacc985e915110c09c045c6adbcd3",
+      "nutrition": 2,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 25,
+          "offset": 1046,
+          "probability": 0.01,
+          "supplier": "lambda$static$25"
+        }
+      ]
+    },
+    {
+      "field": "CANDY_CANE_POLE",
+      "write_offset": 1080,
+      "segment_sha256": "c5890e231f515917e47d8e930e62791725ddd14d8afd4e9b568488c4e4317f3d",
+      "nutrition": 1,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 26,
+          "offset": 1074,
+          "probability": 0.01,
+          "supplier": "lambda$static$26"
+        }
+      ]
+    },
+    {
+      "field": "CARAMEL",
+      "write_offset": 1536,
+      "segment_sha256": "7a3e33286c3d02c1d27c12b1c01863d0ec976e2e77c604572867c1d6d085cbb2",
+      "nutrition": 2,
+      "saturation_modifier": 0.3,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 41,
+          "offset": 1530,
+          "probability": 0.04,
+          "supplier": "lambda$static$41"
+        }
+      ]
+    },
+    {
+      "field": "CARAMEL_APPLE",
+      "write_offset": 1565,
+      "segment_sha256": "4d2a5edeb31bd84028eea7c98734d21b21971c4e19119fa954c44132f4815a27",
+      "nutrition": 6,
+      "saturation_modifier": 0.2,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 42,
+          "offset": 1559,
+          "probability": 0.02,
+          "supplier": "lambda$static$42"
+        }
+      ]
+    },
+    {
+      "field": "CHOCOLATE_ICE_CREAM",
+      "write_offset": 918,
+      "segment_sha256": "4171761a1ba29c0fdfc458148e0b268f18bf34cc2e1c8a56682514adb07b0593",
+      "nutrition": 4,
+      "saturation_modifier": 0.2,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 21,
+          "offset": 912,
+          "probability": 0.03,
+          "supplier": "lambda$static$21"
+        }
+      ]
+    },
+    {
+      "field": "COOKIE",
+      "write_offset": 694,
+      "segment_sha256": "743a15316b73e6ee0f920c4160eb9638b303e2a427e5063ae0b640000b7fba64",
+      "nutrition": 2,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 13,
+          "offset": 688,
+          "probability": 0.01,
+          "supplier": "lambda$static$13"
+        }
+      ]
+    },
+    {
+      "field": "COOKIE_HALF",
+      "write_offset": 722,
+      "segment_sha256": "6992cdfabbb47be9ec156afe97dc5544ac9e33b7950c88aafa50a7328b22da7a",
+      "nutrition": 1,
+      "saturation_modifier": 0.05,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 14,
+          "offset": 716,
+          "probability": 0.01,
+          "supplier": "lambda$static$14"
+        }
+      ]
+    },
+    {
+      "field": "DARKENED_APPLE",
+      "write_offset": 554,
+      "segment_sha256": "c69c2635ad749a12cf8f55c20c8a51c8c42b7ad9ed174469ac57645e6166bc9f",
+      "nutrition": 4,
+      "saturation_modifier": 0.35,
+      "flags": [
+        {
+          "name": "alwaysEat"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "field": "DEEP_SEA_SUSHI_ROLL",
+      "write_offset": 446,
+      "segment_sha256": "116b66565331305081a282d9cfeb3263f64f85c1a7f1b60b5ad00c4e47092d30",
+      "nutrition": 7,
+      "saturation_modifier": 0.4,
+      "flags": [],
+      "effects": []
+    },
+    {
+      "field": "DINOSAUR_NUGGETS",
+      "write_offset": 81,
+      "segment_sha256": "aeb412734306420a942781cfd8e63c1ff2aa8e0a7e8021f2fbdb9b33d18ffa20",
+      "nutrition": 3,
+      "saturation_modifier": 0.3,
+      "flags": [
+        {
+          "name": "meat"
+        },
+        {
+          "name": "fast"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "field": "DOUGH",
+      "write_offset": 750,
+      "segment_sha256": "e4c6cef6dfd6cace39207399369f933ab571381617e4c333adfe94f8d9edde6c",
+      "nutrition": 2,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 15,
+          "offset": 744,
+          "probability": 0.01,
+          "supplier": "lambda$static$15"
+        }
+      ]
+    },
+    {
+      "field": "FROSTMINT",
+      "write_offset": 1136,
+      "segment_sha256": "2e6756bba28169359cce8a4182aab4cb8fad816611e4992230ff9e8fe6786c64",
+      "nutrition": 3,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 28,
+          "offset": 1130,
+          "probability": 0.01,
+          "supplier": "lambda$static$28"
+        }
+      ]
+    },
+    {
+      "field": "GELATIN",
+      "write_offset": 1441,
+      "segment_sha256": "e00af5afe3b5fc17c15039ddfc72739e54bc790e2e8d4dc1f54b72bbba677fc6",
+      "nutrition": 3,
+      "saturation_modifier": 0.25,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 38,
+          "offset": 1435,
+          "probability": 0.01,
+          "supplier": "lambda$static$38"
+        }
+      ]
+    },
+    {
+      "field": "GIANT_SWEETBERRY",
+      "write_offset": 1024,
+      "segment_sha256": "f0094a9101b152e9c3c82b0561990dd14c80178a51f74174f99e08a944eccc64",
+      "nutrition": 5,
+      "saturation_modifier": 0.2,
+      "flags": [],
+      "effects": []
+    },
+    {
+      "field": "GINGERBREAD",
+      "write_offset": 1294,
+      "segment_sha256": "c9366402e021ba66a15db074e62e2af27db6243f2bf25203a48063b43cfd2b20",
+      "nutrition": 4,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 33,
+          "offset": 1288,
+          "probability": 0.01,
+          "supplier": "lambda$static$33"
+        }
+      ]
+    },
+    {
+      "field": "GINGERBREAD_CRUMBS",
+      "write_offset": 1350,
+      "segment_sha256": "a4a99d53bd10fc6e7295e5a3b63ddeab48eb2952a6701982c90adcc3cba0b0ab",
+      "nutrition": 1,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 35,
+          "offset": 1344,
+          "probability": 0.01,
+          "supplier": "lambda$static$35"
+        }
+      ]
+    },
+    {
+      "field": "GINGERBREAD_HALF",
+      "write_offset": 1322,
+      "segment_sha256": "73ef87e8efe854e4357039f9bfe1a30694f277f587d3d5912d6ff18a12f0436f",
+      "nutrition": 2,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 34,
+          "offset": 1316,
+          "probability": 0.01,
+          "supplier": "lambda$static$34"
+        }
+      ]
+    },
+    {
+      "field": "GUMBALL_PILE",
+      "write_offset": 1593,
+      "segment_sha256": "e341572e3c9d7ee285e9cb810aeed85c852a984d357de9d5509fd4da3059bbb1",
+      "nutrition": 3,
+      "saturation_modifier": 0.2,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 43,
+          "offset": 1587,
+          "probability": 0.01,
+          "supplier": "lambda$static$43"
+        }
+      ]
+    },
+    {
+      "field": "GUMMY_RING",
+      "write_offset": 1220,
+      "segment_sha256": "5a4d8c20637db3eccb1f83496330041290d532d73144d99f70429c38c0c1ab49",
+      "nutrition": 3,
+      "saturation_modifier": 0.15,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 31,
+          "offset": 1214,
+          "probability": 0.01,
+          "supplier": "lambda$static$31"
+        }
+      ]
+    },
+    {
+      "field": "HOT_CHOCOLATE_BOTTLE",
+      "write_offset": 1476,
+      "segment_sha256": "9247fa2cb998c1aee60da7cb7de3a74dbbc0febb9aaf48eec965e8c6ba2e84de",
+      "nutrition": 4,
+      "saturation_modifier": 0.25,
+      "flags": [
+        {
+          "name": "sound",
+          "argument": "Field net/minecraft/sounds/SoundEvents.GENERIC_DRINK:Lnet/minecraft/sounds/SoundEvent;"
+        }
+      ],
+      "effects": [
+        {
+          "bootstrap_index": 39,
+          "offset": 1464,
+          "probability": 0.02,
+          "supplier": "lambda$static$39"
+        }
+      ]
+    },
+    {
+      "field": "JELLY_BEAN",
+      "write_offset": 1266,
+      "segment_sha256": "81d9d09b0d74aadbe7048843ca3a9407c57ec913ad370d93fd7691e427bf42ab",
+      "nutrition": 1,
+      "saturation_modifier": 0.05,
+      "flags": [],
+      "effects": []
+    },
+    {
+      "field": "LANTERNFISH",
+      "write_offset": 321,
+      "segment_sha256": "f358058751f9af294a0d84cd6a77b73f854ed847fcb1dbb5abd2e97f62b12831",
+      "nutrition": 1,
+      "saturation_modifier": 0.175,
+      "flags": [
+        {
+          "name": "fast"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "field": "LANTERNFISH_COOKED",
+      "write_offset": 342,
+      "segment_sha256": "a8d3d59746f00fd8a6fc2a65f2baaec3e2a88664859d7faadff18d53ab0fa1ef",
+      "nutrition": 2,
+      "saturation_modifier": 0.3,
+      "flags": [
+        {
+          "name": "fast"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "field": "LARGE_PEPPERMINT",
+      "write_offset": 862,
+      "segment_sha256": "972caaa1297baf1ef5442b2d88a1aba2463f98fc7ce9afc1a5f0c2d1179f713c",
+      "nutrition": 5,
+      "saturation_modifier": 0.15,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 19,
+          "offset": 856,
+          "probability": 0.01,
+          "supplier": "lambda$static$19"
+        }
+      ]
+    },
+    {
+      "field": "LICOROOT",
+      "write_offset": 778,
+      "segment_sha256": "b9f45ac9b4cfb5eed750352776c9492d9ff6f8acd45a457e722949093d06c25c",
+      "nutrition": 3,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 16,
+          "offset": 772,
+          "probability": 0.1,
+          "supplier": "lambda$static$16"
+        }
+      ]
+    },
+    {
+      "field": "LICOROOT_VINE",
+      "write_offset": 806,
+      "segment_sha256": "cb05d98c538bb75fff5ae8e40294bc628f3beca4f734e84eb452891ff6b5da2e",
+      "nutrition": 1,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 17,
+          "offset": 800,
+          "probability": 0.1,
+          "supplier": "lambda$static$17"
+        }
+      ]
+    },
+    {
+      "field": "LOLLIPOP_BUNCH",
+      "write_offset": 1108,
+      "segment_sha256": "84fe4cec5ce8b5985f8a376e197a4d3cf746553140c407ad8481199cb38f61a5",
+      "nutrition": 1,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 27,
+          "offset": 1102,
+          "probability": 0.01,
+          "supplier": "lambda$static$27"
+        }
+      ]
+    },
+    {
+      "field": "MUSSEL_COOKED",
+      "write_offset": 427,
+      "segment_sha256": "1afcbbe28764e440c9fb47a7b1a2254061a232861e81c3961d15b5a8ced2e99e",
+      "nutrition": 4,
+      "saturation_modifier": 0.3,
+      "flags": [
+        {
+          "name": "fast"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "field": "PEPPERMINT_POWDER",
+      "write_offset": 1507,
+      "segment_sha256": "43a3bd24ad7701eedb9cbc97eae5cf654551ba15aed485c79cdbd0edc0bd8bc5",
+      "nutrition": 1,
+      "saturation_modifier": 0.1,
+      "flags": [
+        {
+          "name": "fast"
+        }
+      ],
+      "effects": [
+        {
+          "bootstrap_index": 40,
+          "offset": 1501,
+          "probability": 0.01,
+          "supplier": "lambda$static$40"
+        }
+      ]
+    },
+    {
+      "field": "PINE_NUTS",
+      "write_offset": 57,
+      "segment_sha256": "03dde95edde73d511b486cff6f3f0a37ccfdb02978ae63b3f6e511a5a1c7b21a",
+      "nutrition": 2,
+      "saturation_modifier": 0.175,
+      "flags": [],
+      "effects": []
+    },
+    {
+      "field": "PRIMORDIAL_SOUP",
+      "write_offset": 164,
+      "segment_sha256": "cdb72117a136d8826932164b7ed594ac5d57ff1f7fdffafd85adb83958fdf02c",
+      "nutrition": 6,
+      "saturation_modifier": 0.6,
+      "flags": [
+        {
+          "name": "bowl"
+        }
+      ],
+      "effects": [
+        {
+          "bootstrap_index": 1,
+          "offset": 155,
+          "probability": 1,
+          "supplier": "lambda$static$1"
+        }
+      ]
+    },
+    {
+      "field": "PURPLE_SODA_BOTTLE",
+      "write_offset": 1384,
+      "segment_sha256": "39d13e37fcbe24ac3db6c90ecfafe5fe2a36ef86bbac5f94c1478f942810015d",
+      "nutrition": 2,
+      "saturation_modifier": 0.1,
+      "flags": [
+        {
+          "name": "sound",
+          "argument": "Field net/minecraft/sounds/SoundEvents.GENERIC_DRINK:Lnet/minecraft/sounds/SoundEvent;"
+        }
+      ],
+      "effects": [
+        {
+          "bootstrap_index": 36,
+          "offset": 1372,
+          "probability": 0.01,
+          "supplier": "lambda$static$36"
+        }
+      ]
+    },
+    {
+      "field": "RADGILL",
+      "write_offset": 191,
+      "segment_sha256": "62f3413323e29330b8f86ec6e93c77b1cdca064fed87ff9b549d858fadb00982",
+      "nutrition": 2,
+      "saturation_modifier": 0.2,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 2,
+          "offset": 185,
+          "probability": 1,
+          "supplier": "lambda$static$2"
+        }
+      ]
+    },
+    {
+      "field": "RADGILL_COOKED",
+      "write_offset": 219,
+      "segment_sha256": "ffce13aca9cfd277e7b3c3b00e6268d8a463dcbd78ea10f6cbeec1cfcaa0a01f",
+      "nutrition": 5,
+      "saturation_modifier": 0.3,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 3,
+          "offset": 213,
+          "probability": 0.1,
+          "supplier": "lambda$static$3"
+        }
+      ]
+    },
+    {
+      "field": "ROCK_CANDY",
+      "write_offset": 1248,
+      "segment_sha256": "759c20ce886f694daa115c177ef3a950a3071f41b5b13e28d6b0ede9cdf534e4",
+      "nutrition": 2,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 32,
+          "offset": 1242,
+          "probability": 0.01,
+          "supplier": "lambda$static$32"
+        }
+      ]
+    },
+    {
+      "field": "SEA_PIG",
+      "write_offset": 406,
+      "segment_sha256": "20357536777e253bae5d76765dbb0df6eff6c87191af585edf1efa249c922c67",
+      "nutrition": 1,
+      "saturation_modifier": 0.2,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 5,
+          "offset": 400,
+          "probability": 0.7,
+          "supplier": "lambda$static$5"
+        }
+      ]
+    },
+    {
+      "field": "SEETHING_STEW",
+      "write_offset": 133,
+      "segment_sha256": "b0e8b7c50beafe57fd2a431983dd18727d76827645d781464f7aec324efd954b",
+      "nutrition": 6,
+      "saturation_modifier": 0.6,
+      "flags": [
+        {
+          "name": "bowl"
+        }
+      ],
+      "effects": [
+        {
+          "bootstrap_index": 0,
+          "offset": 124,
+          "probability": 1,
+          "supplier": "lambda$static$0"
+        }
+      ]
+    },
+    {
+      "field": "SERENE_SALAD",
+      "write_offset": 102,
+      "segment_sha256": "6f4c5fb23bd90be80ba7d5555dddef54df0d8fba92403f6940d1167f14163c64",
+      "nutrition": 5,
+      "saturation_modifier": 0.35,
+      "flags": [
+        {
+          "name": "bowl"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "field": "SLAM",
+      "write_offset": 270,
+      "segment_sha256": "3558cb508910ce1dfb539abd2fa77c5fc757209453fa5956e3ebd70c1200d4f4",
+      "nutrition": 4,
+      "saturation_modifier": 0.5,
+      "flags": [
+        {
+          "name": "meat"
+        }
+      ],
+      "effects": [
+        {
+          "bootstrap_index": 4,
+          "offset": 261,
+          "probability": 1,
+          "supplier": "lambda$static$4"
+        }
+      ]
+    },
+    {
+      "field": "SMALL_PEPPERMINT",
+      "write_offset": 834,
+      "segment_sha256": "a6d749e8ce2a0738d8314e4be220fbb0b80d0b1ea608b9d97b417a824a902f7c",
+      "nutrition": 3,
+      "saturation_modifier": 0.15,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 18,
+          "offset": 828,
+          "probability": 0.01,
+          "supplier": "lambda$static$18"
+        }
+      ]
+    },
+    {
+      "field": "SOYLENT_GREEN",
+      "write_offset": 300,
+      "segment_sha256": "e41c12b8e4c982f12ab4fd138dcf6bf08eb73b8253e483c019632854e200ede4",
+      "nutrition": 3,
+      "saturation_modifier": 0.35,
+      "flags": [
+        {
+          "name": "alwaysEat"
+        },
+        {
+          "name": "meat"
+        },
+        {
+          "name": "sound",
+          "argument": "Field net/minecraft/sounds/SoundEvents.HONEY_DRINK:Lnet/minecraft/sounds/SoundEvent;"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "field": "SPELUNKIE",
+      "write_offset": 240,
+      "segment_sha256": "98d0b481a128a3fa3b3ca2c05c9c4a0ae076ddb29a55f28c3f004b0faa9ab514",
+      "nutrition": 2,
+      "saturation_modifier": 0.1,
+      "flags": [
+        {
+          "name": "fast"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "field": "SPRINKLES",
+      "write_offset": 1006,
+      "segment_sha256": "5c7959eb133fc6f9fdbf31f34ca734d96959d3ee4a516f99e60584f52edaa6f4",
+      "nutrition": 1,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 24,
+          "offset": 1000,
+          "probability": 0.01,
+          "supplier": "lambda$static$24"
+        }
+      ]
+    },
+    {
+      "field": "STINKY_FISH",
+      "write_offset": 473,
+      "segment_sha256": "27aae05f8a543179195695f9c7bb7a5ffe32e23fa5448ab2665f277038285b03",
+      "nutrition": 1,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 6,
+          "offset": 467,
+          "probability": 1,
+          "supplier": "lambda$static$6"
+        }
+      ]
+    },
+    {
+      "field": "SUGAR_GLASS",
+      "write_offset": 1164,
+      "segment_sha256": "c110271a9bd18d3fffffdcb5242d841f237f83597a875be53eae7e255a499d2b",
+      "nutrition": 1,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 29,
+          "offset": 1158,
+          "probability": 0.01,
+          "supplier": "lambda$static$29"
+        }
+      ]
+    },
+    {
+      "field": "SUNDAE",
+      "write_offset": 978,
+      "segment_sha256": "6808dd6cb65e98e87164366186227edf577f86007bb75505d659ebcf12411a43",
+      "nutrition": 12,
+      "saturation_modifier": 0.35,
+      "flags": [
+        {
+          "name": "bowl"
+        }
+      ],
+      "effects": [
+        {
+          "bootstrap_index": 23,
+          "offset": 969,
+          "probability": 0.2,
+          "supplier": "lambda$static$23"
+        }
+      ]
+    },
+    {
+      "field": "SUNDROP",
+      "write_offset": 1192,
+      "segment_sha256": "17f3d08e9310500bc83aa2cdf68144252fda2dede6385f2f5e8b1a203579c399",
+      "nutrition": 5,
+      "saturation_modifier": 0.2,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 30,
+          "offset": 1186,
+          "probability": 0.05,
+          "supplier": "lambda$static$30"
+        }
+      ]
+    },
+    {
+      "field": "SWEETBERRY_ICE_CREAM",
+      "write_offset": 946,
+      "segment_sha256": "646eda5bdc7ea7508e124c1c6c22cc1c5be28bd4876746ff3a572b6430302dfc",
+      "nutrition": 4,
+      "saturation_modifier": 0.2,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 22,
+          "offset": 940,
+          "probability": 0.03,
+          "supplier": "lambda$static$22"
+        }
+      ]
+    },
+    {
+      "field": "SWEETISH_FISH",
+      "write_offset": 1412,
+      "segment_sha256": "3eaf998865fcef57ed8212d9e0691777243e6cb067aaa96efab50c4864014ed1",
+      "nutrition": 2,
+      "saturation_modifier": 0.2,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 37,
+          "offset": 1406,
+          "probability": 0.01,
+          "supplier": "lambda$static$37"
+        }
+      ]
+    },
+    {
+      "field": "SWEET_PUFF",
+      "write_offset": 638,
+      "segment_sha256": "ae810fda4746cd87d840d3f4eece50b22f1f45cd00812e3ccaf9a8f3e53a7a63",
+      "nutrition": 1,
+      "saturation_modifier": 0.1,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 11,
+          "offset": 632,
+          "probability": 0.02,
+          "supplier": "lambda$static$11"
+        }
+      ]
+    },
+    {
+      "field": "TRILOCARIS_TAIL",
+      "write_offset": 18,
+      "segment_sha256": "c1c7ceadcfc09476b21246a5fc6c0021433eb0d445f01c5db378ff258518e551",
+      "nutrition": 2,
+      "saturation_modifier": 0.3,
+      "flags": [
+        {
+          "name": "meat"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "field": "TRILOCARIS_TAIL_COOKED",
+      "write_offset": 39,
+      "segment_sha256": "d8601d3d944d81cd2776cf6c33799259956e66ac8e060561445287d286800f94",
+      "nutrition": 5,
+      "saturation_modifier": 0.5,
+      "flags": [
+        {
+          "name": "meat"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "field": "TRIPODFISH",
+      "write_offset": 360,
+      "segment_sha256": "47709d010ff53d249d74a1fd9f2182acc3b2bcc527585a60f9ad397a6d79340a",
+      "nutrition": 2,
+      "saturation_modifier": 0.2,
+      "flags": [],
+      "effects": []
+    },
+    {
+      "field": "TRIPODFISH_COOKED",
+      "write_offset": 378,
+      "segment_sha256": "dffa4c6d6ae433e9dac56319913e12f99dd68fe03a2621f69b261ed2dc46398c",
+      "nutrition": 5,
+      "saturation_modifier": 0.34,
+      "flags": [],
+      "effects": []
+    },
+    {
+      "field": "VANILLA_ICE_CREAM",
+      "write_offset": 890,
+      "segment_sha256": "c5853a46b8550d89a53baa9b946485e2bd3870d70d689f9bc0344e0efb8fc219",
+      "nutrition": 4,
+      "saturation_modifier": 0.2,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 20,
+          "offset": 884,
+          "probability": 0.03,
+          "supplier": "lambda$static$20"
+        }
+      ]
+    },
+    {
+      "field": "VESPER_SOUP",
+      "write_offset": 533,
+      "segment_sha256": "12f66be5f15d5daea9bcd017dfe2f198c974af574a50f9a290f1d800503186fd",
+      "nutrition": 5,
+      "saturation_modifier": 0.3,
+      "flags": [
+        {
+          "name": "alwaysEat"
+        },
+        {
+          "name": "bowl"
+        }
+      ],
+      "effects": [
+        {
+          "bootstrap_index": 8,
+          "offset": 524,
+          "probability": 1,
+          "supplier": "lambda$static$8"
+        }
+      ]
+    },
+    {
+      "field": "VESPER_WING",
+      "write_offset": 500,
+      "segment_sha256": "7db025e44d87e803334dc8ddb42812f71f6386a92d572a6a156dac7f315e34f7",
+      "nutrition": 3,
+      "saturation_modifier": 0.2,
+      "flags": [],
+      "effects": [
+        {
+          "bootstrap_index": 7,
+          "offset": 494,
+          "probability": 1,
+          "supplier": "lambda$static$7"
+        }
+      ]
+    }
+  ],
+  "suppliers": {
+    "lambda$static$0": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.RAGE",
+      "ticks": 2200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "214b33766feec84eda38ce18d2462b767812e337dae7519a7dba730351e92910",
+      "instruction_sha256": "34a5b6e5d92616f2d29f07ddefae8c396d9c13bf9a0565b7517898d3c9b3de37"
+    },
+    "lambda$static$1": {
+      "field": "net/minecraft/world/effect/MobEffects.DIG_SPEED",
+      "ticks": 800,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "fa463a8173f80d7a4d3c3c3eb3fd9b13c08a6eeacfb8f01743fe54bf5c4325c3",
+      "instruction_sha256": "366e16876421c374e0879cc84ca6ea08c4de5d277efc3fef7ea903889494ea3f"
+    },
+    "lambda$static$10": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$11": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$12": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$13": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$14": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$15": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$16": {
+      "field": "net/minecraft/world/effect/MobEffects.CONFUSION",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "7787449d22628961138af08212478f52035a503016a6181ae185fb46ffcab05d",
+      "instruction_sha256": "4c3e31032582e4d38ca8aace25af4a88e635289243a2ad4f92b6276f0c2a7615"
+    },
+    "lambda$static$17": {
+      "field": "net/minecraft/world/effect/MobEffects.CONFUSION",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "7787449d22628961138af08212478f52035a503016a6181ae185fb46ffcab05d",
+      "instruction_sha256": "4c3e31032582e4d38ca8aace25af4a88e635289243a2ad4f92b6276f0c2a7615"
+    },
+    "lambda$static$18": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$19": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$2": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.IRRADIATED",
+      "ticks": 2000,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3d6d2018b2148ad7c915111e815dd3e58674f9b6dacf598eef620531366f75b1",
+      "instruction_sha256": "ea0fa6fd0171290d098375ed09ac86ab8aac5214e6d6bdc63c991b500d81421c"
+    },
+    "lambda$static$20": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$21": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$22": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$23": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 400,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "8efed15a6be14d67b1cdc8498de6ee27a0a522a15d85a048dbadc612cc18a3f9",
+      "instruction_sha256": "9772feee7b8e4805a15962b3e0790d994f772c25e5ef56243a4f957e40df3a5c"
+    },
+    "lambda$static$24": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$25": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$26": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$27": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$28": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$29": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$3": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.IRRADIATED",
+      "ticks": 1000,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "22e16d0b6b1969f90adbff675283968b6df250a180a18781790d6792961c841a",
+      "instruction_sha256": "67c69167930ff33a3939d8f7c6c5d3e70c4b69c6b7c786f8bbb55f99a09210de"
+    },
+    "lambda$static$30": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$31": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$32": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$33": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$34": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$35": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$36": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$37": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$38": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$39": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$4": {
+      "field": "net/minecraft/world/effect/MobEffects.DAMAGE_BOOST",
+      "ticks": 400,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "67122e697b0510ed6998ce9b2ae8e9a86ad10a93f2f3afc4134c2583a3e40c93",
+      "instruction_sha256": "7d5db691ccff78fe924de487afbf51ffe5c19d97481c7a9ca27d41532b4cb089"
+    },
+    "lambda$static$40": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$41": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$42": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$43": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    },
+    "lambda$static$44": {
+      "field": "net/minecraft/world/effect/MobEffects.CONFUSION",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "7787449d22628961138af08212478f52035a503016a6181ae185fb46ffcab05d",
+      "instruction_sha256": "4c3e31032582e4d38ca8aace25af4a88e635289243a2ad4f92b6276f0c2a7615"
+    },
+    "lambda$static$45": {
+      "field": "net/minecraft/world/effect/MobEffects.BAD_OMEN",
+      "ticks": 48000,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "39569ecf4c139f8857f9dec4ceb4a20143a25e51b38ee327259c418377f19cd9",
+      "instruction_sha256": "2fb9b1234d364b77c3b5c561330b0cbdc22f297dc1d3cfcd948ffaba4bcba550"
+    },
+    "lambda$static$5": {
+      "field": "net/minecraft/world/effect/MobEffects.HUNGER",
+      "ticks": 1200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "2cada2b3b6c11eb9b2f26c567109095c7f47ec3d7e899474199e7cc124870929",
+      "instruction_sha256": "a4cf01830ddd4fa4bb3f225338cfb70a6fec9c9c0de008ee1b386efee8d5b235"
+    },
+    "lambda$static$6": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.STUNNED",
+      "ticks": 100,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "7b49407fec63cc0b71ee6f325b45ba2c3309fa4c7c6041bd4de35b5818d6327c",
+      "instruction_sha256": "573c4868d04ac72b28247fcfbf48ed7f1232fba66932c15d84ae91fc83a5aabd"
+    },
+    "lambda$static$7": {
+      "field": "net/minecraft/world/effect/MobEffects.HUNGER",
+      "ticks": 1200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "2cada2b3b6c11eb9b2f26c567109095c7f47ec3d7e899474199e7cc124870929",
+      "instruction_sha256": "a4cf01830ddd4fa4bb3f225338cfb70a6fec9c9c0de008ee1b386efee8d5b235"
+    },
+    "lambda$static$8": {
+      "field": "net/minecraft/world/effect/MobEffects.NIGHT_VISION",
+      "ticks": 2400,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "71e9119b2227daf550428d985d6286b4d0c229f3dade57df2f16b3cd812d800d",
+      "instruction_sha256": "9440dc924aee48a92e3ccd1c113e02bfc68131bde14211d38bba8b2b677300ba"
+    },
+    "lambda$static$9": {
+      "field": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.SUGAR_RUSH",
+      "ticks": 200,
+      "constructor": "(Lnet/minecraft/core/Holder;I)V",
+      "code_sha256": "3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9",
+      "instruction_sha256": "1994e1d2f5f4a3eb226b35a535de84b604331b94b1a2a247b656f781b83082c0"
+    }
+  },
+  "consumers": {
+    "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": [
+      {
+        "method": "lambda$static$281",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "77a5b19fc056ddee3277e839debfc9848425a1d47ff65a8ad2dd86f4fd1a44ce",
+        "sites": [
+          {
+            "field": "BLOCK_OF_CHOCOLATE",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$283",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "77a5b19fc056ddee3277e839debfc9848425a1d47ff65a8ad2dd86f4fd1a44ce",
+        "sites": [
+          {
+            "field": "BLOCK_OF_CHOCOLATE",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$285",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "77a5b19fc056ddee3277e839debfc9848425a1d47ff65a8ad2dd86f4fd1a44ce",
+        "sites": [
+          {
+            "field": "BLOCK_OF_CHOCOLATE",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$287",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "77a5b19fc056ddee3277e839debfc9848425a1d47ff65a8ad2dd86f4fd1a44ce",
+        "sites": [
+          {
+            "field": "BLOCK_OF_CHOCOLATE",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$289",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "650c298cee6784499b4f951a602b6caa102d6e91b7e783691c22de1a39dc54eb",
+        "sites": [
+          {
+            "field": "BLOCK_OF_FROSTING",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$291",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "650c298cee6784499b4f951a602b6caa102d6e91b7e783691c22de1a39dc54eb",
+        "sites": [
+          {
+            "field": "BLOCK_OF_FROSTING",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$293",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "650c298cee6784499b4f951a602b6caa102d6e91b7e783691c22de1a39dc54eb",
+        "sites": [
+          {
+            "field": "BLOCK_OF_FROSTING",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$295",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "5aba885551ee23f67914af0f77e6a4dd4c234319f84280703b1ccc9098947b27",
+        "sites": [
+          {
+            "field": "SWEET_PUFF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$297",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "8a937574f51cc98cec1872e0dfcc38539c883377ea6a77acc80587efaed0d165",
+        "sites": [
+          {
+            "field": "CAKE_LAYER",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$299",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "1b4f3872a2a6751a2c132efcb471b770387edfe864fd683c11410c7999b17fc3",
+        "sites": [
+          {
+            "field": "DOUGH",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$301",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "31ae4bb88f648507a500d18ed70fe25f21103f40757d224b8b24159263c901bc",
+        "sites": [
+          {
+            "field": "COOKIE",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$303",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "31ae4bb88f648507a500d18ed70fe25f21103f40757d224b8b24159263c901bc",
+        "sites": [
+          {
+            "field": "COOKIE",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$305",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "6d3ca17f6531700ba7d6384f16136407de7bfc86cb2e63677426c4a04ccc67b5",
+        "sites": [
+          {
+            "field": "COOKIE_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$307",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "6d3ca17f6531700ba7d6384f16136407de7bfc86cb2e63677426c4a04ccc67b5",
+        "sites": [
+          {
+            "field": "COOKIE_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$309",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "6d3ca17f6531700ba7d6384f16136407de7bfc86cb2e63677426c4a04ccc67b5",
+        "sites": [
+          {
+            "field": "COOKIE_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$311",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "84db578cfc30daa99680aa00c6967405a92f60e5aeb31de79640e193379a8166",
+        "sites": [
+          {
+            "field": "LICOROOT",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$313",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "df0661eecf536b86699f94a6df350a956e34e41d6813660e7dc182925250bfcb",
+        "sites": [
+          {
+            "field": "LICOROOT_VINE",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$315",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "df0661eecf536b86699f94a6df350a956e34e41d6813660e7dc182925250bfcb",
+        "sites": [
+          {
+            "field": "LICOROOT_VINE",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$317",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "30234b6e65e044c74ce1d7dbb5ef81875f6f3486301ef429b4d91d979fdf978f",
+        "sites": [
+          {
+            "field": "SMALL_PEPPERMINT",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$319",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9f18123b3f153d3c1c4be6ee4cb21bee66002869a7ff841fd0d411f6c0c28f97",
+        "sites": [
+          {
+            "field": "LARGE_PEPPERMINT",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$321",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "09d49a09c38362b22ee84562178093e969c90f9c78b6bffd147d85c442e0f320",
+        "sites": [
+          {
+            "field": "VANILLA_ICE_CREAM",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$323",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "18ae7b77f7f651b131029057291f80297a8af13ff0da57ed52218842b741c130",
+        "sites": [
+          {
+            "field": "CHOCOLATE_ICE_CREAM",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$325",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "625ac303da11e0bf19eb4621f464425f38e63f685cb2a3dff11aeac40703354f",
+        "sites": [
+          {
+            "field": "SWEETBERRY_ICE_CREAM",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$327",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "cb8634e675e26b9b1ab2aa0815a94bb59ad1f51417919b5ae9fdce397c9f53bc",
+        "sites": [
+          {
+            "field": "SPRINKLES",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$329",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "29c949bb27638b1d952f4ef7a4501ed7701d6d405f0c5eea539988d688403450",
+        "sites": [
+          {
+            "field": "GIANT_SWEETBERRY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$331",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "a99869dfe9b8944d8165040d166d17b31cae63e22a6c0439e43f9c6ea9cd51bc",
+        "sites": [
+          {
+            "field": "CANDY_CANE",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$333",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "a99869dfe9b8944d8165040d166d17b31cae63e22a6c0439e43f9c6ea9cd51bc",
+        "sites": [
+          {
+            "field": "CANDY_CANE",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$335",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "a99869dfe9b8944d8165040d166d17b31cae63e22a6c0439e43f9c6ea9cd51bc",
+        "sites": [
+          {
+            "field": "CANDY_CANE",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$337",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "a99869dfe9b8944d8165040d166d17b31cae63e22a6c0439e43f9c6ea9cd51bc",
+        "sites": [
+          {
+            "field": "CANDY_CANE",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$339",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "b6736e7fc109093debdc95b2aa9d701d67934cee5a7024fd267a588d0649d209",
+        "sites": [
+          {
+            "field": "CANDY_CANE_POLE",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$341",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "b6736e7fc109093debdc95b2aa9d701d67934cee5a7024fd267a588d0649d209",
+        "sites": [
+          {
+            "field": "CANDY_CANE_POLE",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$343",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "4d7d3f2f4783d73f6124bb291be40167ccaea2850bf1d8726c250a49a3c2450d",
+        "sites": [
+          {
+            "field": "LOLLIPOP_BUNCH",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$345",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "f564aef44c0079a4eabf16cb7387bb9e6d45ed402d4108e507fc1900f2134d73",
+        "sites": [
+          {
+            "field": "FROSTMINT",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$347",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "999af7e3cab0913dddb008aa5c01f8dd322c616c986eb2fcc142b632f6be7c55",
+        "sites": [
+          {
+            "field": "SUGAR_GLASS",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$351",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "c3a4704c5e4cf96d48b91c44ebf2a5666e87e05c2cfdffa956b0589b01e71986",
+        "sites": [
+          {
+            "field": "SUNDROP",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$353",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "c22544c1824ce98ad660baa1342e48af4420128006d0ff839c724a473425c3c7",
+        "sites": [
+          {
+            "field": "GUMMY_RING",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$355",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "c22544c1824ce98ad660baa1342e48af4420128006d0ff839c724a473425c3c7",
+        "sites": [
+          {
+            "field": "GUMMY_RING",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$357",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "c22544c1824ce98ad660baa1342e48af4420128006d0ff839c724a473425c3c7",
+        "sites": [
+          {
+            "field": "GUMMY_RING",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$359",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "c22544c1824ce98ad660baa1342e48af4420128006d0ff839c724a473425c3c7",
+        "sites": [
+          {
+            "field": "GUMMY_RING",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$361",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "c22544c1824ce98ad660baa1342e48af4420128006d0ff839c724a473425c3c7",
+        "sites": [
+          {
+            "field": "GUMMY_RING",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$365",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$367",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$369",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$371",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$373",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$375",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$377",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$379",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$381",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$383",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$385",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$387",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$389",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$391",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$393",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$395",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "42b28b2c5c83c1ed0346ed895e27b624f9a89f7cd3bfe046d6ec694882068a36",
+        "sites": [
+          {
+            "field": "ROCK_CANDY",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$397",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "c57ee2fb7922cdbe343ea21152262c9b18587e62af6a2a80ac93b8d9bd368520",
+        "sites": [
+          {
+            "field": "GINGERBREAD",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$399",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$401",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$403",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$405",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$407",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$409",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "c57ee2fb7922cdbe343ea21152262c9b18587e62af6a2a80ac93b8d9bd368520",
+        "sites": [
+          {
+            "field": "GINGERBREAD",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$411",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$413",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$415",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$417",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$419",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "c57ee2fb7922cdbe343ea21152262c9b18587e62af6a2a80ac93b8d9bd368520",
+        "sites": [
+          {
+            "field": "GINGERBREAD",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$421",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$423",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$425",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$427",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "c57ee2fb7922cdbe343ea21152262c9b18587e62af6a2a80ac93b8d9bd368520",
+        "sites": [
+          {
+            "field": "GINGERBREAD",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$429",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$431",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$433",
+        "descriptor": "()Lnet/minecraft/world/food/FoodProperties;",
+        "instruction_sha256": "9d67015a8152cc12348aceeb6571f7fb1698589eb1fa3e61c2fb7f0fc02c337b",
+        "sites": [
+          {
+            "field": "GINGERBREAD_HALF",
+            "offset": 0,
+            "opcode": "getstatic"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": [
+      {
+        "method": "lambda$static$118",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "cc259c5a3543daebb0b31a46659f5341f797c008538fcde70eaa2c2a8a236aba",
+        "sites": [
+          {
+            "field": "STINKY_FISH",
+            "offset": 17,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$130",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "5427fbddcb336f06c0f101655ce0efcb04b569bd3abf5d9c6d6b100fa439c06b",
+        "sites": [
+          {
+            "field": "VESPER_WING",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$131",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "88ae591302ffec8e6ca2721a562754fa5d2df6d19b792105be4510545d68275d",
+        "sites": [
+          {
+            "field": "VESPER_SOUP",
+            "offset": 7,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$148",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "39a48e45b65e66d9fd06da224d5a0e34ef33bdd3a1ea621cab9459ede94f2a2f",
+        "sites": [
+          {
+            "field": "PURPLE_SODA_BOTTLE",
+            "offset": 16,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$154",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "4acf84aca69c01ae41569a6ced1ab1a156a36ad97ef27000939913d885ef94e1",
+        "sites": [
+          {
+            "field": "SWEETISH_FISH",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$155",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "4acf84aca69c01ae41569a6ced1ab1a156a36ad97ef27000939913d885ef94e1",
+        "sites": [
+          {
+            "field": "SWEETISH_FISH",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$156",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "4acf84aca69c01ae41569a6ced1ab1a156a36ad97ef27000939913d885ef94e1",
+        "sites": [
+          {
+            "field": "SWEETISH_FISH",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$157",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "4acf84aca69c01ae41569a6ced1ab1a156a36ad97ef27000939913d885ef94e1",
+        "sites": [
+          {
+            "field": "SWEETISH_FISH",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$158",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "4acf84aca69c01ae41569a6ced1ab1a156a36ad97ef27000939913d885ef94e1",
+        "sites": [
+          {
+            "field": "SWEETISH_FISH",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$159",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "6da23032a844cf9bf560e1c459f10cf654666a7d11ce93cd3763953851385521",
+        "sites": [
+          {
+            "field": "GELATIN",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$160",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "6da23032a844cf9bf560e1c459f10cf654666a7d11ce93cd3763953851385521",
+        "sites": [
+          {
+            "field": "GELATIN",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$161",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "6da23032a844cf9bf560e1c459f10cf654666a7d11ce93cd3763953851385521",
+        "sites": [
+          {
+            "field": "GELATIN",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$162",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "6da23032a844cf9bf560e1c459f10cf654666a7d11ce93cd3763953851385521",
+        "sites": [
+          {
+            "field": "GELATIN",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$163",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "6da23032a844cf9bf560e1c459f10cf654666a7d11ce93cd3763953851385521",
+        "sites": [
+          {
+            "field": "GELATIN",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$171",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "7b7802b4ed7c099bd88139541ebf8130d1c92d15ecc286d305374a4d46611807",
+        "sites": [
+          {
+            "field": "SUNDAE",
+            "offset": 7,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$172",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "1d8aa7800d716f0041c0d2d09976c5b15ec30d36875682a185217ad7be414883",
+        "sites": [
+          {
+            "field": "CANDY_CANE",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$173",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "01afb92a7551f50bb16d2775f9ae02b23976f6b7879996b012a834bc07b982c9",
+        "sites": [
+          {
+            "field": "PEPPERMINT_POWDER",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$175",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "c3e7237285233cb3c622897e2e79aed625b1c1ba65fb0a68738211d74b79ae16",
+        "sites": [
+          {
+            "field": "GUMBALL_PILE",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$177",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "150d55bb7134c44364b910d2c0170c549aa7168b7893af0c94e3897953e8a7a7",
+        "sites": [
+          {
+            "field": "CARAMEL",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$178",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "f7a034d37e66e17dfd09825bb421afd4a7344b18d9311cfd5c327f1a7c083b2e",
+        "sites": [
+          {
+            "field": "CARAMEL_APPLE",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$186",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "a00afc5052f65440903e62ed306395f6c1542937688ea87401b9a9557d7f285c",
+        "sites": [
+          {
+            "field": "GINGERBREAD_CRUMBS",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$29",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "66b3c4ecead45775722a59ff6949678c03f22ce86b5be7ddf555d96c6d343faa",
+        "sites": [
+          {
+            "field": "TRILOCARIS_TAIL",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$30",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "41645db9d71db887d001428e2ba7977012efadeebefa30c8ef9b87e030400db7",
+        "sites": [
+          {
+            "field": "TRILOCARIS_TAIL_COOKED",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$31",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "9f14c3604f2a8c5ddad098e7d383f00fd4cadd16d65229056c8df107c425f1e4",
+        "sites": [
+          {
+            "field": "PINE_NUTS",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$34",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "30618e031600679730e93f91f0def4fc326784769b2737235c6bf7228f51aa28",
+        "sites": [
+          {
+            "field": "DINOSAUR_NUGGETS",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$35",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "c826b91e642dc6be1509cd91791bc5dcc92a52fcac86a9f3434f73df0f2d6cdb",
+        "sites": [
+          {
+            "field": "SERENE_SALAD",
+            "offset": 15,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$36",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "757e6a6d8820044de39b4861dee528786350aa463e4034ec3ab8aeaf1fb39df1",
+        "sites": [
+          {
+            "field": "SEETHING_STEW",
+            "offset": 15,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$37",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "9059432bf03ed9a74e204ee4cd62113017738eeec8e4c47c97a764b7e5277bd6",
+        "sites": [
+          {
+            "field": "PRIMORDIAL_SOUP",
+            "offset": 15,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$56",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "a7e0efa70fc4792d849f3b8dc2c9a0d6feabb2ce38ce7888514867526eac2502",
+        "sites": [
+          {
+            "field": "RADGILL",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$57",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "511077d1f36ac2a7714c635250ef85c5a237e6205f1cce1c385c1b18032207a2",
+        "sites": [
+          {
+            "field": "RADGILL_COOKED",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$64",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "13f205a3b5205928b7aa3a1541dd5406628ef890bc2f083001e3861c27ce32c0",
+        "sites": [
+          {
+            "field": "SPELUNKIE",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$65",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "6fe7fab24f2b69a675aa9091bbf97b66786ce9228f7e6b347a33ee553520af5a",
+        "sites": [
+          {
+            "field": "SLAM",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$66",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "834da1433debce5f74f37278053f9accebfeaf7bf8db7e381dd76b28386dbb82",
+        "sites": [
+          {
+            "field": "SOYLENT_GREEN",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$81",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "a02d24f16bb89efd793c69f59a697e0a7b4aa851d97ba0761c9890c12362c810",
+        "sites": [
+          {
+            "field": "LANTERNFISH",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$82",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "8466629a2acfb8b3e6c265e28b410908730eda24c004c17a02a53d3bac4defbc",
+        "sites": [
+          {
+            "field": "LANTERNFISH_COOKED",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$85",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "dcfe7d7a8c309c8b2a50c84db8189a672247e2cd7b91d03842524a20ec9ee248",
+        "sites": [
+          {
+            "field": "TRIPODFISH",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$86",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "5f1078d4c1d731bc6be5907a9977268310566921fcc539b44236bde11e5898d9",
+        "sites": [
+          {
+            "field": "TRIPODFISH_COOKED",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$89",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "c128d7f7c1ff193511c9923ceba526e11df94edf2b8284b92527f58a9728bbbd",
+        "sites": [
+          {
+            "field": "SEA_PIG",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$95",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "e7ad6add600cfa64d27a50c1073aa16550cc31fc3a1b9e46dc2bc72f6b1cc417",
+        "sites": [
+          {
+            "field": "MUSSEL_COOKED",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      },
+      {
+        "method": "lambda$static$96",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "18e2049a466745fd9951bae728237e1c33907941d204acde9d4ae43ff471273c",
+        "sites": [
+          {
+            "field": "DEEP_SEA_SUSHI_ROLL",
+            "offset": 11,
+            "opcode": "getstatic"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/AlexMealItem": [
+      {
+        "method": "<init>",
+        "descriptor": "()V",
+        "instruction_sha256": "148c78f0eae1299468879c2f4ba05fca3893dd6a9d62ff2f86500e5515f51187",
+        "sites": [
+          {
+            "field": "ALEX_MEAL",
+            "offset": 8,
+            "opcode": "getstatic"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem": [
+      {
+        "method": "<init>",
+        "descriptor": "()V",
+        "instruction_sha256": "797a17e84c04111b2709ebeffcc1d782dbc34e137b02d6c9c51dc417aaccf82a",
+        "sites": [
+          {
+            "field": "BIOME_TREAT",
+            "offset": 18,
+            "opcode": "getstatic"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/CaveInfoItem": [
+      {
+        "method": "create",
+        "descriptor": "(Lnet/minecraft/world/item/Item;Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/item/ItemStack;",
+        "instruction_sha256": "a6cdad3717a8f59522f2edc9cb799b305663b3c2f488e86ef36f1cd3abf96eb5",
+        "sites": [
+          {
+            "field": "BIOME_TREAT_DONE",
+            "offset": 55,
+            "opcode": "getstatic"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/DarkenedAppleItem": [
+      {
+        "method": "<init>",
+        "descriptor": "()V",
+        "instruction_sha256": "092aac53c2c206fbe18b50c91431983a073b679348bb273ab102c1ee366c3d96",
+        "sites": [
+          {
+            "field": "DARKENED_APPLE",
+            "offset": 8,
+            "opcode": "getstatic"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/HotChocolateBottleItem": [
+      {
+        "method": "<init>",
+        "descriptor": "()V",
+        "instruction_sha256": "974e9e8726ae4973f7fbdbe7f6ce415af9b8cad0cbcd9952ae2acae18bea60e3",
+        "sites": [
+          {
+            "field": "HOT_CHOCOLATE_BOTTLE",
+            "offset": 13,
+            "opcode": "getstatic"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/JellyBeanItem": [
+      {
+        "method": "<init>",
+        "descriptor": "()V",
+        "instruction_sha256": "36660132029e6d1afa4a838d9271c33a2c9d022d9f1f6d2f716b1e3f4b7db4cc",
+        "sites": [
+          {
+            "field": "JELLY_BEAN",
+            "offset": 8,
+            "opcode": "getstatic"
+          }
+        ]
+      }
+    ]
+  },
+  "mutation": "NO_MUTATION",
+  "mutating_hook": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED",
+  "perk_certification": "NOT_CERTIFIED",
+  "provider_universe_closed": false,
+  "discovery_run": 44332664446,
+  "discovery_job": 134900918644
+}

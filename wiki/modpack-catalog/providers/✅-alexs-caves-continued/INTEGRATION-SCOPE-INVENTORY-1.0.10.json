@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine historical damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. 51 individual enchantment static contracts (Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Field Extension, Flinging, Gamma Ray, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami, Twilight Perfection, X Ray); no publisher enchantment JSON dossier remains partial. This completes only the bounded 51-resource publisher static catalog, not the whole provider/runtime universe. All 51 publisher enchantment identities have individual dossiers; no additional semantic magic root. Tremorzilla Beam and Raygun add two separately certified damage-type contracts; the current ledger therefore has eleven certified damage cards (11/11 publisher damage JSONs, 100%) while damage_types.cards and documented_static_contracts preserve the nine-card historical checkpoint. The historical Raygun checkpoint had 81/81 observed provider cards. The historical ACArmorMaterial checkpoint added one separately certified integration-support card and reached 82/82 individual static contracts; ACArmorTickItem remains an empty-marker support disposition only and adds zero cards or independent abilities. The historical ACClientExtensionItem checkpoint added one separately certified integration-support card for its declared ABI and all 19 direct implementer initializeClient bodies (18 native and one relocated Citadel), bringing that observed scope to 83/83 individual static contracts (100%). The typed census of all 1555 artifact classes finds 20 target-reference owners including self, but no native Methodref/InterfaceMethodref named initializeClient; registration execution and reflective/external invocation remain NOT_VERIFIED. That client-extension checkpoint added one support candidate and zero semantic magic roots; it did not certify complete implementing items or renderers, per-player mutation hooks, perks or physical gameplay. ACDestroyedItem now completes the already existing PR #1115 support candidate with its declared ABI, single direct implementer, complete 170-byte callback, native selector-5 waste_drum factory binding and separately version-pinned external NeoForge bridge/delegate boundary. This increment adds one static certification, zero candidates and zero semantic magic roots, reaching 84/84 observed individual static contracts and three integration-support contracts. The first three reviewed-prefix dispositions and original remaining_family_inventory are preserved; ACDestroyedItem is the fourth reviewed class. The full provider integration universe remains OPEN, with server/item/ACDynamicAttributeItem next without a certificate; no status from its separate open PR is promoted here. Transformed runtime equivalence, accepted cloud/effect/explosion outcomes, World Safety, hooks, perks and physical QA remain unverified or untested. After the #1117 checkpoint, PR #1116 adds the partial SHA-exact discovery dossier for ACDynamicAttributeItem, preserving all 84 certified contracts including ACDestroyedItem. The observed scope is 84/85 certified, one partial support card; the provider remains OPEN. The next class without a disposition is ACEnchantableItem; ACDynamicAttributeItem still requires static certification. No new semantic magic root, hook or physical QA. PR #1118 completes the existing ACDynamicAttributeItem partial support candidate with SHA-exact constructor, callback, registry and state evidence plus separately pinned NeoForge event/builder reference. Observed scope 85/85 static certificates and 4/4 support cards; zero new candidates, zero roots and no provider closure. Next class without disposition: ACEnchantableItem. Hook and physical QA remain NOT_VERIFIED/NOT_TESTED, NO_MUTATION. PR #1119 adds one static support card for ACEnchantableItem: 86/86 observed, 5/5 supports; +1 card/certificate, zero roots; provider OPEN, NO_MUTATION. Next undisposed: ACFoodBuilder. PR #1120 adds ACFoodBuilder scoped static support card: 87/87 observed, 6/6 support, +1 card/certificate, zero roots; no provider closure. Next ACFoodPropertiesItem; ACFoods remains open. PR #1121 records the SHA-exact ACFoodPropertiesItem empty marker disposition, +0 cards/certificates/semantic roots; BiomeTreatItem is separately open. Next undisposed symbol ACFoods. Observed 87/87 static cards, 6/6 supports, provider OPEN.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine historical damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. 51 individual enchantment static contracts (Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Field Extension, Flinging, Gamma Ray, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami, Twilight Perfection, X Ray); no publisher enchantment JSON dossier remains partial. This completes only the bounded 51-resource publisher static catalog, not the whole provider/runtime universe. All 51 publisher enchantment identities have individual dossiers; no additional semantic magic root. Tremorzilla Beam and Raygun add two separately certified damage-type contracts; the current ledger therefore has eleven certified damage cards (11/11 publisher damage JSONs, 100%) while damage_types.cards and documented_static_contracts preserve the nine-card historical checkpoint. The historical Raygun checkpoint had 81/81 observed provider cards. The historical ACArmorMaterial checkpoint added one separately certified integration-support card and reached 82/82 individual static contracts; ACArmorTickItem remains an empty-marker support disposition only and adds zero cards or independent abilities. The historical ACClientExtensionItem checkpoint added one separately certified integration-support card for its declared ABI and all 19 direct implementer initializeClient bodies (18 native and one relocated Citadel), bringing that observed scope to 83/83 individual static contracts (100%). The typed census of all 1555 artifact classes finds 20 target-reference owners including self, but no native Methodref/InterfaceMethodref named initializeClient; registration execution and reflective/external invocation remain NOT_VERIFIED. That client-extension checkpoint added one support candidate and zero semantic magic roots; it did not certify complete implementing items or renderers, per-player mutation hooks, perks or physical gameplay. ACDestroyedItem now completes the already existing PR #1115 support candidate with its declared ABI, single direct implementer, complete 170-byte callback, native selector-5 waste_drum factory binding and separately version-pinned external NeoForge bridge/delegate boundary. This increment adds one static certification, zero candidates and zero semantic magic roots, reaching 84/84 observed individual static contracts and three integration-support contracts. The first three reviewed-prefix dispositions and original remaining_family_inventory are preserved; ACDestroyedItem is the fourth reviewed class. The full provider integration universe remains OPEN, with server/item/ACDynamicAttributeItem next without a certificate; no status from its separate open PR is promoted here. Transformed runtime equivalence, accepted cloud/effect/explosion outcomes, World Safety, hooks, perks and physical QA remain unverified or untested. After the #1117 checkpoint, PR #1116 adds the partial SHA-exact discovery dossier for ACDynamicAttributeItem, preserving all 84 certified contracts including ACDestroyedItem. The observed scope is 84/85 certified, one partial support card; the provider remains OPEN. The next class without a disposition is ACEnchantableItem; ACDynamicAttributeItem still requires static certification. No new semantic magic root, hook or physical QA. PR #1118 completes the existing ACDynamicAttributeItem partial support candidate with SHA-exact constructor, callback, registry and state evidence plus separately pinned NeoForge event/builder reference. Observed scope 85/85 static certificates and 4/4 support cards; zero new candidates, zero roots and no provider closure. Next class without disposition: ACEnchantableItem. Hook and physical QA remain NOT_VERIFIED/NOT_TESTED, NO_MUTATION. PR #1119 adds one static support card for ACEnchantableItem: 86/86 observed, 5/5 supports; +1 card/certificate, zero roots; provider OPEN, NO_MUTATION. Next undisposed: ACFoodBuilder. PR #1120 adds ACFoodBuilder scoped static support card: 87/87 observed, 6/6 support, +1 card/certificate, zero roots; no provider closure. Next ACFoodPropertiesItem; ACFoods remains open. PR #1121 records the SHA-exact ACFoodPropertiesItem empty marker disposition, +0 cards/certificates/semantic roots; BiomeTreatItem is separately open. Next undisposed symbol ACFoods. Observed 87/87 static cards, 6/6 supports, provider OPEN. PR #1122 candidate adds scoped ACFoods static support: 88/88 observed, 7/7 support, +1 card/certificate, zero roots, provider OPEN; next ACItemRegistry reserved separately.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -479,14 +479,16 @@
       "publisher_json_static_catalog_scope": "Exactly 51 data/alexscaves/enchantment/*.json resources in the SHA-exact publisher 1.0.10 artifact and 51 individual static contracts; not a whole-provider/runtime universe closure."
     },
     "integration_support": {
-      "documented_static_contracts": 6,
+      "documented_static_contracts": 8,
       "cards": [
         "systems/armor-material.md",
         "systems/client-extension.md",
         "systems/destroyed-item.md",
         "systems/dynamic-attributes.md",
         "systems/enchantable-item.md",
-        "systems/food-builder.md"
+        "systems/food-builder.md",
+        "systems/foods.md",
+        "systems/item-registry.md"
       ],
       "evidence": "EXACT-ARMOR-MATERIAL-1.0.10.md",
       "manifest": "EXACT-ARMOR-MATERIAL-1.0.10.json",
@@ -518,19 +520,23 @@
         "EXACT-DESTROYED-ITEM-CONTRACT-1.0.10.md",
         "EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.md",
         "EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.md",
-        "EXACT-FOOD-BUILDER-CONTRACT-1.0.10.md"
+        "EXACT-FOOD-BUILDER-CONTRACT-1.0.10.md",
+        "EXACT-FOODS-CONTRACT-1.0.10.md",
+        "EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.md"
       ],
       "related_manifests": [
         "EXACT-CLIENT-EXTENSION-1.0.10.json",
         "EXACT-DESTROYED-ITEM-CONTRACT-1.0.10.json",
         "EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.json",
         "EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.json",
-        "EXACT-FOOD-BUILDER-CONTRACT-1.0.10.json"
+        "EXACT-FOOD-BUILDER-CONTRACT-1.0.10.json",
+        "EXACT-FOODS-CONTRACT-1.0.10.json",
+        "EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.json"
       ],
       "partial_cards": []
     }
   },
-  "next_alphabetical_uncovered_scope": "server/item/ACFoods",
+  "next_alphabetical_uncovered_scope": "server/item/ACRepairableItem",
   "integration_support_inventory": {
     "source_inventory": "remaining_family_inventory.item_outer_classes",
     "scope": "REVIEWED_ALPHABETICAL_PREFIX_OF_PHYSICAL_ITEM_OUTER_CLASSES",
@@ -614,14 +620,36 @@
         "additional_cards": 0,
         "semantic_magic_roots_added": 0,
         "scope_note": "Empty interface with 0 fields/methods, 1 direct implementer BiomeTreatItem, 0 indirect implementers and no typed member refs in 1555 classfiles. Native behavior belongs to the item; external/reflective dispatch remains unverified."
+      },
+      {
+        "class": "server/item/ACFoods",
+        "disposition": "INDIVIDUAL_STATIC_CONTRACT_CERTIFIED",
+        "card": "systems/foods.md",
+        "evidence": "EXACT-FOODS-CONTRACT-1.0.10.md",
+        "manifest": "EXACT-FOODS-CONTRACT-1.0.10.json",
+        "additional_cards": 1,
+        "semantic_magic_roots_added": 0,
+        "scope_note": "63 FoodProperties, 606 initializer instructions, 46 suppliers and all 121 direct sites in eight owners; ACCompat holder bridge and official vanilla constructor/default plus reused builder reference. Does not certify foods, item registry, gameplay, per-player mutation or provider closure."
+      },
+      {
+        "class": "server/item/ACItemRegistry",
+        "disposition": "INDIVIDUAL_STATIC_CONTRACT_CERTIFIED",
+        "card": "systems/item-registry.md",
+        "evidence": "EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.md",
+        "manifest": "EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.json",
+        "additional_cards": 1,
+        "semantic_magic_roots_added": 0,
+        "scope_note": "SHA-exact declared bindings and bounded native local callbacks, with scoped ACDeferredRegister boundary. The declarer has 200 fields and 208 methods; 188 Supplier field bindings plus 43 additional spawnEgg declarations are 231 static registration requests, not 188 individually certified items or new casts. Does not certify whole items/projectiles, accepted registry/runtime effects, safe per-player hooks, physical QA, perks or provider closure. ACRepairableItem remains separately undisposed."
       }
     ],
-    "next_alphabetical_uncovered_scope": "server/item/ACFoods",
+    "next_alphabetical_uncovered_scope": "server/item/ACRepairableItem",
     "family_universe_closed": false,
     "remaining_family_inventory_preserved": true,
     "typed_constant_pool_class_count": 1555,
     "mutating_hook": "NOT_VERIFIED",
     "physical_qa": "NOT_TESTED",
     "mutation": "NO_MUTATION"
-  }
+  },
+  "completed_scope_checkpoint_scope": "HISTORICAL_SEQUENCE_THROUGH_PR_1122",
+  "current_completed_scope": "ACItemRegistry adds one bounded individual static integration-support card and certificate for its declared supplier bindings, deferred-registration boundary and native local callbacks. The SHA-exact publisher class declares 200 fields and 208 methods: 188 Supplier field bindings plus 43 additional spawnEgg declarations in the static-initializer tail yield 231 static registration requests, not 188 separately certified items or new casts. The scoped ACDeferredRegister boundary does not certify accepted NeoForge registration, whole items/projectiles or runtime effects. Observed provider scope is 89/89 individual static contracts and 8/8 integration-support cards; the increment is one card/certificate and zero semantic magic roots. The nine previous reviewed-prefix entries, physical remaining-family inventory and all other family statuses remain unchanged. Next undisposed symbol is server/item/ACRepairableItem, reserved separately in PR #1124 without status promotion. The full provider remains OPEN, family_universe_closed=false, mutating_hook=NOT_VERIFIED, physical_qa=NOT_TESTED, NO_MUTATION."
 }
