@@ -1,0 +1,520 @@
+{
+  "schema_version": 1,
+  "claim_scope": "DISCOVERY_NOT_CERTIFIED",
+  "artifact": {
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_entries_scanned": 1555,
+  "report_sha256": "6b930d9bc296c736278df961dea6db3b0af31789b39fd623df4cdea232016b2f",
+  "run": 44452078303,
+  "job": 135318206682,
+  "mutation": "NO_MUTATION",
+  "mutating_hook": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED",
+  "provider_universe_closed": false,
+  "target_class_sha256": "04a9b942d2459794503eebc1415a29c245710a0625f1a126f5df2714266d6a05",
+  "target_access": 1537,
+  "target_fields": [],
+  "target_methods": [
+    {
+      "access": 1025,
+      "descriptor": "()[Lnet/minecraft/world/item/Item;",
+      "name": "acExtraRepairMaterials"
+    },
+    {
+      "access": 1,
+      "code_sha256": "42ca1f85243342bd41983ab86f2235408fa46ded7466d4525196f66b9dbb5f3e",
+      "code_size": 2,
+      "descriptor": "()Z",
+      "exception_handlers": [],
+      "max_locals": 1,
+      "max_stack": 1,
+      "name": "acReplacesTierRepairMaterials"
+    },
+    {
+      "access": 9,
+      "code_sha256": "54c5ebeff5755e71bba3eb4a55aa13f5587647502a4c347dd16820464aa4c56f",
+      "code_size": 44,
+      "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+      "exception_handlers": [],
+      "max_locals": 6,
+      "max_stack": 2,
+      "name": "isExtraRepairMaterial"
+    }
+  ],
+  "direct_implementers": [
+    "com/github/alexmodguy/alexscaves/server/item/DesolateDaggerItem",
+    "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem",
+    "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem",
+    "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem"
+  ],
+  "inherited_implementers": [],
+  "in_jar_ancestors": [
+    "com/github/alexmodguy/alexscaves/server/item/SpearItem"
+  ],
+  "typed_census": {
+    "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem": [
+      {
+        "descriptor": "()[Lnet/minecraft/world/item/Item;",
+        "index": 1,
+        "kind": "interface_method_reference",
+        "name": "acExtraRepairMaterials"
+      },
+      {
+        "index": 2,
+        "kind": "class_constant"
+      },
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "kind": "method_declaration",
+        "name": "isExtraRepairMaterial"
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/DesolateDaggerItem": [
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 133,
+        "kind": "interface_method_reference",
+        "name": "isExtraRepairMaterial"
+      },
+      {
+        "index": 134,
+        "kind": "class_constant"
+      },
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 135,
+        "kind": "name_and_type_descriptor",
+        "name": "isExtraRepairMaterial"
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem": [
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 323,
+        "kind": "interface_method_reference",
+        "name": "isExtraRepairMaterial"
+      },
+      {
+        "index": 324,
+        "kind": "class_constant"
+      },
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 325,
+        "kind": "name_and_type_descriptor",
+        "name": "isExtraRepairMaterial"
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem": [
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 127,
+        "kind": "interface_method_reference",
+        "name": "isExtraRepairMaterial"
+      },
+      {
+        "index": 128,
+        "kind": "class_constant"
+      },
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 129,
+        "kind": "name_and_type_descriptor",
+        "name": "isExtraRepairMaterial"
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem": [
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 274,
+        "kind": "interface_method_reference",
+        "name": "isExtraRepairMaterial"
+      },
+      {
+        "index": 275,
+        "kind": "class_constant"
+      },
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 276,
+        "kind": "name_and_type_descriptor",
+        "name": "isExtraRepairMaterial"
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem": [
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 318,
+        "kind": "interface_method_reference",
+        "name": "isExtraRepairMaterial"
+      },
+      {
+        "index": 319,
+        "kind": "class_constant"
+      },
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 320,
+        "kind": "name_and_type_descriptor",
+        "name": "isExtraRepairMaterial"
+      }
+    ]
+  },
+  "exact_member_refs": {
+    "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem": [
+      {
+        "descriptor": "()[Lnet/minecraft/world/item/Item;",
+        "index": 1,
+        "name": "acExtraRepairMaterials",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem",
+        "tag": 11
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/DesolateDaggerItem": [
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 133,
+        "name": "isExtraRepairMaterial",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem",
+        "tag": 11
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem": [
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 323,
+        "name": "isExtraRepairMaterial",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem",
+        "tag": 11
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem": [
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 127,
+        "name": "isExtraRepairMaterial",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem",
+        "tag": 11
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem": [
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 274,
+        "name": "isExtraRepairMaterial",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem",
+        "tag": 11
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem": [
+      {
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+        "index": 318,
+        "name": "isExtraRepairMaterial",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem",
+        "tag": 11
+      }
+    ]
+  },
+  "owners": {
+    "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem": {
+      "class_sha256": "04a9b942d2459794503eebc1415a29c245710a0625f1a126f5df2714266d6a05",
+      "hierarchy": {
+        "parent": "java/lang/Object",
+        "interfaces": [],
+        "access": 1537
+      },
+      "methods": [
+        {
+          "name": "acReplacesTierRepairMaterials",
+          "descriptor": "()Z",
+          "instruction_count": 2,
+          "instruction_sha256": "1b59058de047d7b952e93f4f86ee9b459050726291ca25b3857f3634e96e36f2",
+          "materials": [],
+          "delegate_sites": []
+        },
+        {
+          "name": "isExtraRepairMaterial",
+          "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z",
+          "instruction_count": 25,
+          "instruction_sha256": "a760c09d648377643f357b4c784e32cdd5c7115f93820dc40ba3198879d3c2cb",
+          "materials": [],
+          "delegate_sites": [
+            {
+              "offset": 1,
+              "opcode": "invokeinterface",
+              "symbol": "InterfaceMethod acExtraRepairMaterials:()[Lnet/minecraft/world/item/Item;"
+            },
+            {
+              "offset": 28,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+            }
+          ]
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/item/DesolateDaggerItem": {
+      "class_sha256": "ca020279666b45f5d8ede7082ba20c026a870989a6d90166fd1587af921a95ef",
+      "hierarchy": {
+        "parent": "net/minecraft/world/item/SwordItem",
+        "interfaces": [
+          "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem"
+        ],
+        "access": 33
+      },
+      "methods": [
+        {
+          "name": "acExtraRepairMaterials",
+          "descriptor": "()[Lnet/minecraft/world/item/Item;",
+          "instruction_count": 9,
+          "instruction_sha256": "dbd2d1caf1925d2cdbeb761b8c26bfeeab61046013b09a537915dc04fda473e3",
+          "materials": [
+            {
+              "offset": 6,
+              "field": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.PURE_DARKNESS"
+            }
+          ],
+          "delegate_sites": []
+        },
+        {
+          "name": "acReplacesTierRepairMaterials",
+          "descriptor": "()Z",
+          "instruction_count": 2,
+          "instruction_sha256": "d943c5fe0bd38038ce70963c73b8759ba3d76c8c00d31c1a2141268dc4e0ee0a",
+          "materials": [],
+          "delegate_sites": []
+        },
+        {
+          "name": "isValidRepairItem",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "instruction_count": 4,
+          "instruction_sha256": "8d0aff8cb682f0ecaab3d8e8b8bae582ebbb3c2d25458c381cc9a42c9dded537",
+          "materials": [],
+          "delegate_sites": [
+            {
+              "offset": 2,
+              "opcode": "invokestatic",
+              "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/item/ACRepairableItem.isExtraRepairMaterial:(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z"
+            }
+          ]
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem": {
+      "class_sha256": "846709940e9e400c4d6e894ec07887b762598b0d8f116fff951fa5585245bfd8",
+      "hierarchy": {
+        "parent": "com/github/alexmodguy/alexscaves/server/item/SpearItem",
+        "interfaces": [
+          "com/github/alexmodguy/alexscaves/server/item/ACEnchantableItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem"
+        ],
+        "access": 33
+      },
+      "methods": [
+        {
+          "name": "acExtraRepairMaterials",
+          "descriptor": "()[Lnet/minecraft/world/item/Item;",
+          "instruction_count": 9,
+          "instruction_sha256": "b1b78c54d223788c622a43ebb8171f16d012c3213617c559c3564e8042a04387",
+          "materials": [
+            {
+              "offset": 6,
+              "field": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.TECTONIC_SHARD"
+            }
+          ],
+          "delegate_sites": []
+        },
+        {
+          "name": "isValidRepairItem",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "instruction_count": 13,
+          "instruction_sha256": "cc0255916ce3eac1652c5307264638a4b74445cf9125c8d04de007ef44d31d30",
+          "materials": [],
+          "delegate_sites": [
+            {
+              "offset": 2,
+              "opcode": "invokestatic",
+              "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/item/ACRepairableItem.isExtraRepairMaterial:(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z"
+            },
+            {
+              "offset": 11,
+              "opcode": "invokespecial",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/item/SpearItem.isValidRepairItem:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"
+            }
+          ]
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem": {
+      "class_sha256": "5a74328a7130704a4e2dca9e607bed4dc3a468b8bbcb6d4e238b4d2d962573b0",
+      "hierarchy": {
+        "parent": "net/minecraft/world/item/Item",
+        "interfaces": [
+          "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACEnchantableItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACTickingItem"
+        ],
+        "access": 33
+      },
+      "methods": [
+        {
+          "name": "acExtraRepairMaterials",
+          "descriptor": "()[Lnet/minecraft/world/item/Item;",
+          "instruction_count": 10,
+          "instruction_sha256": "389c59cf797732efddc1d2d4c94ff90fcc835ff5bf2e40a4aefe3f77698bb0b0",
+          "materials": [
+            {
+              "offset": 6,
+              "field": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry.PACKED_GALENA"
+            }
+          ],
+          "delegate_sites": [
+            {
+              "offset": 17,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/level/block/Block.asItem:()Lnet/minecraft/world/item/Item;"
+            }
+          ]
+        },
+        {
+          "name": "isValidRepairItem",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "instruction_count": 13,
+          "instruction_sha256": "7b84bebc22faba3bb9c38df7d7d25ed1503e3854e959853eeffbbeae8aabafc9",
+          "materials": [],
+          "delegate_sites": [
+            {
+              "offset": 2,
+              "opcode": "invokestatic",
+              "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/item/ACRepairableItem.isExtraRepairMaterial:(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z"
+            },
+            {
+              "offset": 11,
+              "opcode": "invokespecial",
+              "symbol": "Method net/minecraft/world/item/Item.isValidRepairItem:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"
+            }
+          ]
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem": {
+      "class_sha256": "92bfb58cb5ed2c84dd6f989afad22c98209542889e30b6214c502dbff42fa1ac",
+      "hierarchy": {
+        "parent": "net/minecraft/world/item/Item",
+        "interfaces": [
+          "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACEnchantableItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACDynamicAttributeItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACTickingItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACSwingControlItem"
+        ],
+        "access": 33
+      },
+      "methods": [
+        {
+          "name": "acExtraRepairMaterials",
+          "descriptor": "()[Lnet/minecraft/world/item/Item;",
+          "instruction_count": 9,
+          "instruction_sha256": "127ab50add6c8b1d97e1928201dc3ef488c407727b0bbe1207d9f9f28e814929",
+          "materials": [
+            {
+              "offset": 6,
+              "field": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.HEAVY_BONE"
+            }
+          ],
+          "delegate_sites": []
+        },
+        {
+          "name": "isValidRepairItem",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "instruction_count": 13,
+          "instruction_sha256": "b81b71b1bb73459f969b50cb0c52c9364e496bbbd8eba643f4314ab80852b1ee",
+          "materials": [],
+          "delegate_sites": [
+            {
+              "offset": 2,
+              "opcode": "invokestatic",
+              "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/item/ACRepairableItem.isExtraRepairMaterial:(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z"
+            },
+            {
+              "offset": 11,
+              "opcode": "invokespecial",
+              "symbol": "Method net/minecraft/world/item/Item.isValidRepairItem:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"
+            }
+          ]
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem": {
+      "class_sha256": "ffd3fddd74f8d44049886e9013de2e3d67cbd2a721015369175e8442c5044741",
+      "hierarchy": {
+        "parent": "net/minecraft/world/item/ShieldItem",
+        "interfaces": [
+          "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACEnchantableItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACTickingItem"
+        ],
+        "access": 33
+      },
+      "methods": [
+        {
+          "name": "acExtraRepairMaterials",
+          "descriptor": "()[Lnet/minecraft/world/item/Item;",
+          "instruction_count": 15,
+          "instruction_sha256": "b1c165d8b02b3531e59afa61434eb1da01506822154ef3a4d9db9cc34f60812e",
+          "materials": [
+            {
+              "offset": 6,
+              "field": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.SCARLET_NEODYMIUM_INGOT"
+            },
+            {
+              "offset": 20,
+              "field": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.AZURE_NEODYMIUM_INGOT"
+            }
+          ],
+          "delegate_sites": []
+        },
+        {
+          "name": "isValidRepairItem",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "instruction_count": 13,
+          "instruction_sha256": "56ef4089abe5ca807759ea066eaab7be291dd520d357c2fab2a6de913f3fa597",
+          "materials": [],
+          "delegate_sites": [
+            {
+              "offset": 2,
+              "opcode": "invokestatic",
+              "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/item/ACRepairableItem.isExtraRepairMaterial:(Lcom/github/alexmodguy/alexscaves/server/item/ACRepairableItem;Lnet/minecraft/world/item/ItemStack;)Z"
+            },
+            {
+              "offset": 11,
+              "opcode": "invokespecial",
+              "symbol": "Method net/minecraft/world/item/ShieldItem.isValidRepairItem:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"
+            }
+          ]
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/item/SpearItem": {
+      "class_sha256": "37b96d1b7936408c0dbd92f0a0715af8400ef55d452c196527e912c3eaf10583",
+      "hierarchy": {
+        "parent": "net/minecraft/world/item/Item",
+        "interfaces": [
+          "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACDynamicAttributeItem"
+        ],
+        "access": 33
+      },
+      "methods": []
+    }
+  }
+}

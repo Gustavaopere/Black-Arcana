@@ -9256,6 +9256,50 @@
           "reason": "Typed 1,555-class census, declaration/body reconciliation, CP/BootstrapMethods-resolved stack flow, exact body/branch/operand pins, semantic negative controls and twice-run binary CLI reproduction with unchanged inputs. No gameplay execution."
         }
       }
+    },
+    "✅-alexs-caves-continued/systems/repairable-item.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Scoped repair-material eligibility and direct implementations; five direct implementers, six material bindings, all local predicate bodies and exact official vanilla/NeoForge reference boundaries. Does not certify complete equipment, active tags, effective cost/settlement, safe mutations, physical QA, perks or provider closure. Zero new magical roots.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-REPAIRABLE-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Publisher 1.0.10 SHA-1/SHA-256/size; interface flags 1537, zero fields, three methods; five direct implementers, zero indirect, one in-JAR ancestor, six typed reference owners across 1555 classes."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-REPAIRABLE-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Getter ABI, default false and dagger true, complete helper loop with ItemStack.is(Item) short circuit; all five material producers and isValidRepairItem overrides, six registration bindings; fallback hierarchy and engine reference separated."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-REPAIRABLE-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Six literal material fields and registry paths, array cardinalities 1/1/1/1/2; identity vs tag matching; vanilla per-material restoration min(D,floor(M/4)), loop bounded by stack count and remaining damage; raw material eligibility does not set cost."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-REPAIRABLE-ITEM-CONTRACT-1.0.10.md",
+          "reason": "No entity targeting, AOE, LOS, projectile, damage application or cast. Receiver equipment and material ItemStack are the predicates' inputs; player/slots in external anvil reference only."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-REPAIRABLE-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Helper does not spend resources or repair. Vanilla createResult increments base cost per material, onTake deducts experience levels when not instabuild and settles right stack count; final anvil price not determined by this interface."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-REPAIRABLE-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Native override calls and registry suppliers; ACItemRegistry contract reused for five item bindings, block binding bounded to literal and helper. Official Minecraft 1.21.1 and NeoForge 21.1.250 AnvilUpdateEvent/AnvilRepairEvent boundaries; no verified safe mutating hook."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-REPAIRABLE-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Job 135321798629 on 60869d51 passed 4 native plus 5 boundary regressions; replay SHA-exact reports and ledger/card/index gates required on final HEAD. No installed transform or physical execution."
+        }
+      }
     }
   },
   "providers": {},
