@@ -1,0 +1,53 @@
+{
+  "scope": "DISCOVERY_NOT_CERTIFIED",
+  "jar_version": "1.0.10",
+  "mod_id": "alexscaves",
+  "jar_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+  "jar_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+  "jar_size": 75279314,
+  "pr": 1131,
+  "collector_job": 136623479589,
+  "collector_run": 44833327965,
+  "artifact_id": 14676467221,
+  "artifact_sha256": "2e7af70cf7e6b3e1b29f7111ad3e546eeea5de57a9e8c9933b7acfc777542742",
+  "artifact_expires_at": "2026-12-04T22:59:35Z",
+  "transcripts": {
+    "CandyCaneHookItem": [
+      "d999251e494c45420e58881181e9d67757247b6865dc4a547bf0da8a46cf8e44",
+      "9103113b3719da863dd2fa32c83b21e42d70500db06341af9d8c5e8a189fa479"
+    ],
+    "CandyCaneHookEntity": [
+      "e590bb67ea2b594861a30b05a5099fbd5eafe2920ff867883aaa6fd7cec478f8",
+      "db02bb6415b39fc211761eefedb221bdcd3ab275a82978f8c7fd294059661273"
+    ],
+    "GumWormSegmentEntity": [
+      "b112e1b579368872a45464510902b2a6a728e38cdd8d320aa59bb9aa0013e09c",
+      "837eebb48fb6c16ecb82d28b9946a848949635b8ca556b2180d235d5d1fde010"
+    ],
+    "ACCompat": [
+      "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+      "917e2276a9d58628fc07fdddd80c4c6a6f975285922b98edd46be33ffddc1fdd"
+    ],
+    "ACItemPredicates": [
+      "ee5ea7be322641a29b49b3b08606928f38456f8ea3bb337a7624a897b379cc89",
+      "9967352bad9506cb99c4ae1e4647ff4bd81c9f5bc7fa504f0abbcd22b17a0402"
+    ],
+    "CandyCaneHookRenderer": [
+      "ce314d75ef0909c6b1e7f9a9803e271e3915b13b44480e8f4328c16b72376ad9",
+      "f1e614aa38b19ec946fbea923e12a985b48385de44189f68797de8cca0da8e5a"
+    ],
+    "ClientEvents": [
+      "52b53d87ec638fda2e0e39be41acec3e09da2c5ab3d327b1b4790bb97a87fbbc",
+      "037998c4a136c1a9b7211832b5d03d04627ee9e22c54b17480bceba088769e8b"
+    ]
+  },
+  "transcript_digest_order": [
+    "class_sha256",
+    "javap_sha256"
+  ],
+  "static_contract": "PARTIAL",
+  "mutating_hook": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED",
+  "mutation": "NO_MUTATION",
+  "provider_universe_closed": false
+}
