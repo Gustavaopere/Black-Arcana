@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "artifact": {
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "claims": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "static_technical_contract": "CERTIFIED_STATIC_7_AXES",
+    "runtime_dispatch": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "axes": {
+    "identity": "Publisher 1.0.10 SHA-exact artifact; 1555 classes, interface two abstract methods, one direct implementer, zero inherited and zero exact native member references.",
+    "behavior": "Complete PrimitiveClubItem callbacks, precise comparison opcodes and branches, swingTime=-1 write and true/false return; official external virtual dispatch and cancellation reference.",
+    "parameters": "Scale sampled at 0F, double 0.95 versus float promotion, swing threshold 1F, animation comparisons including NaN; official attack speed delay float(20D*(1D/ATTACK_SPEED)), scale clamp, updateSwingTime reference.",
+    "targeting": "Left click receives Player and Entity; stack and target unused locally; swing receives LivingEntity and requires Player for local predicate/write. No target acquisition, area or damage pipeline certified.",
+    "costs": "No resources, damage, mana, stack consumption or cooldown mutation in local callbacks; swingTime animation state only, attack strength ticker independent in reference.",
+    "integration": "NeoForge IItemExtension/StackExtension virtual bridge and CommonHooks.onPlayerAttackTarget, patch callsites early return; event precedes callback. Swiftwood/dynamic-attributes separate. Client/server runtime and safe mutation not verified.",
+    "validation": "Job 136065187890 replayed native SHA and four tests, official reference boundary SHA; candidate adds replay and canonical index/ledger checks, no physical execution."
+  },
+  "target_class_sha256": "0fc278b0860306f7746dd2dc445712b42ca4d227d1ec154dfff11471aa67cee3",
+  "native_report_sha256": "67a3bf38959ca92fd40c7a86ffcfa08fc738e036de2eab9f8fd1b54a4e6db8d2",
+  "boundary_report_sha256": "f186d622fdede1b342e56f71f226a29d65556db3ddb32d61fe5a4d024618034f",
+  "direct_implementers": [
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem"
+  ],
+  "reference": {
+    "schema_version": 1,
+    "scope": "STATIC_REFERENCE_ONLY",
+    "report_sha256": "f186d622fdede1b342e56f71f226a29d65556db3ddb32d61fe5a4d024618034f",
+    "run": 44669005582,
+    "job": 136065187890,
+    "vanilla": {
+      "net.minecraft.world.entity.player.Player": {
+        "obfuscated_owner": "cmx",
+        "class_sha256": "cf857b1a2a716131f78eadec2ee5be22167e3dcf648ee42e2036edc1935edab5",
+        "parent": "net.minecraft.world.entity.LivingEntity",
+        "methods": [
+          {
+            "name": "getAttackStrengthScale",
+            "descriptor": "(F)F",
+            "code_sha256": "4f8abca4da27ae4675ffec5562efae868a1f71405725a5a31c568e5c6435e5f8",
+            "instruction_sha256": "7ea06e9a7f60b67edc7b2d8f7cc1c156a1bd11053f1795149e65f2a2b834d909",
+            "instruction_count": 12
+          },
+          {
+            "name": "attack",
+            "descriptor": "(Lbsr;)V",
+            "code_sha256": "ee512663b51d3f7b5d57822df955dc0a03930b31e5324aa1ade3f3d2ad1c1628",
+            "instruction_sha256": "ba71f893c03bba8b4c15e3a1d11b07b5de5ad0e9234580ce51b401fb2011e389",
+            "instruction_count": 652
+          },
+          {
+            "name": "getCurrentItemAttackStrengthDelay",
+            "descriptor": "()F",
+            "code_sha256": "9a5c3f1e05e61a8633fdc1fcf00bf3f414356455195c198a1e48803999fb69a8",
+            "instruction_sha256": "1155f49bc15432558c9add489e832dda3221b8f6ba7b124e329a7a12ec7975a4",
+            "instruction_count": 9
+          }
+        ]
+      },
+      "net.minecraft.world.entity.LivingEntity": {
+        "obfuscated_owner": "btn",
+        "class_sha256": "a729393b3a7d636dc60a0f34e743ed48c951bef7ca75509ec7316dad0d39d0f4",
+        "parent": "net.minecraft.world.entity.Entity",
+        "methods": [
+          {
+            "name": "swing",
+            "descriptor": "(Lbqq;)V",
+            "code_sha256": "20b42ba24975ad890faca89c552cbc4785728ef3ffd7fc0e14d4e231ba80e6f0",
+            "instruction_sha256": "f893309f982a7ee7a2bc4a006a613ca0123486564bf36f3dbbe78a931c24586c",
+            "instruction_count": 5
+          },
+          {
+            "name": "swing",
+            "descriptor": "(Lbqq;Z)V",
+            "code_sha256": "520df50d09362f61da516d2effc8919182351d38d13e7088c470e09b676e2b78",
+            "instruction_sha256": "4cd502c8c1762f21094c09b29d656bc756505b97aa58c51ac6372bfb603b2fd5",
+            "instruction_count": 54
+          },
+          {
+            "name": "updateSwingTime",
+            "descriptor": "()V",
+            "code_sha256": "ba2ff0c7784b4babec80eb4103955d0eb3d63ffe7dc82b65303c97a37fcfe1b0",
+            "instruction_sha256": "86e1f45f2b3e4540145a749e9346104e5c93e7037e173440bccd4de81a43a783",
+            "instruction_count": 35
+          }
+        ]
+      },
+      "net.minecraft.client.multiplayer.MultiPlayerGameMode": {
+        "obfuscated_owner": "fzo",
+        "class_sha256": "507797bdb1deab305eefcfdb0fda8f0bdb052cbf6b9662a604dd615ca9d7e4da",
+        "parent": "java/lang/Object",
+        "methods": [
+          {
+            "name": "attack",
+            "descriptor": "(Lcmx;Lbsr;)V",
+            "code_sha256": "608dff443320575ba461234df87a684f2b26e52d1e8794085b07c6d9780a4b91",
+            "instruction_sha256": "9008ccc689b56bfc3acdcbd91a8e392581c102e8e9caffc259e0e1a3aa052dfb",
+            "instruction_count": 19
+          }
+        ]
+      }
+    },
+    "neoforge": {
+      "classes": {
+        "net/neoforged/neoforge/common/extensions/IItemExtension": {
+          "class_sha256": "d65a413962ab6bf6cf8c33119b010dd16fcf482c114b8ae8abe5c59da951b088",
+          "methods": [
+            {
+              "name": "onEntitySwing",
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Z",
+              "code_sha256": "42ca1f85243342bd41983ab86f2235408fa46ded7466d4525196f66b9dbb5f3e",
+              "instruction_sha256": "1b59058de047d7b952e93f4f86ee9b459050726291ca25b3857f3634e96e36f2"
+            },
+            {
+              "name": "onEntitySwing",
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;)Z",
+              "code_sha256": "cd0efd595032b6c32d5ce0e565a604d4eb0616f0c680615e57225d93f1ab5cf7",
+              "instruction_sha256": "6f5629e25786911686d7cb5cfa8ea9d7a9ee4ea505a8300f986bbda04b5d09ce"
+            },
+            {
+              "name": "onLeftClickEntity",
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;)Z",
+              "code_sha256": "42ca1f85243342bd41983ab86f2235408fa46ded7466d4525196f66b9dbb5f3e",
+              "instruction_sha256": "1b59058de047d7b952e93f4f86ee9b459050726291ca25b3857f3634e96e36f2"
+            }
+          ]
+        },
+        "net/neoforged/neoforge/common/extensions/IItemStackExtension": {
+          "class_sha256": "244993a9cd1a5e99507c88a0a8e1d65b6ef997d44bd73ab696a510ccf2d0397e",
+          "methods": [
+            {
+              "name": "onEntitySwing",
+              "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+              "code_sha256": "d0501272750b669d6f103be691e6342313e28b705b3224d27abc1982756e9e56",
+              "instruction_sha256": "2dfe172293fd321715fffec711bd5ca49b306d7fd460cb88f7d56aa0810d42a1"
+            },
+            {
+              "name": "onEntitySwing",
+              "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;)Z",
+              "code_sha256": "d57ec859546b6ee9360d2aeb148aa908dbdb8a3c6a537f487f9c7a02bf6ea5f6",
+              "instruction_sha256": "68f9d868c5d1359f38ac55c3f5bb83ee11826c636e76dceef3e70630e2b40895"
+            }
+          ]
+        },
+        "net/neoforged/neoforge/common/CommonHooks": {
+          "class_sha256": "86c8a56c77fff474bf4fe90f0354ad32698f018b5e19dc52a2725ee5ff96c73e",
+          "methods": [
+            {
+              "name": "onPlayerAttackTarget",
+              "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;)Z",
+              "code_sha256": "b0584829bb933124a158383fd48fdc37a392bf5bcf2fae2eff1c7bf2c32f5c28",
+              "instruction_sha256": "466cfa5ceaa5f3cd68789efc8867392325260efdd25a77d24d31413ed3c8e1e9"
+            }
+          ]
+        }
+      },
+      "patches": {
+        "patches/net/minecraft/world/entity/player/Player.java.patch": {
+          "present": true,
+          "sha256": "d4de4c72aa6c9fa5ea7395b85ce2f12b2f9335e3d08a62837b7c80494afdefd2"
+        },
+        "patches/net/minecraft/world/entity/LivingEntity.java.patch": {
+          "present": true,
+          "sha256": "4c93e8f55253d5dfccdf352a4a3b0e086dc8ae4a5c91579a03f1887570d40a83"
+        },
+        "patches/net/minecraft/world/item/Item.java.patch": {
+          "present": true,
+          "sha256": "6d16f90d962de67d1de56f92fdf7a8c8067296a87c7c20f7e48691b15ced706f"
+        },
+        "patches/net/minecraft/world/item/ItemStack.java.patch": {
+          "present": true,
+          "sha256": "5e910db862cc11662067e5ffbd2a792197d2eb618ce76f4281ee6fb5998c8c7d"
+        },
+        "patches/net/minecraft/client/multiplayer/MultiPlayerGameMode.java.patch": {
+          "present": true,
+          "sha256": "cef80d312d9ef40230dc1011ef36d4627aa9f41c51ac69fc614eaaf5ce5b472a"
+        },
+        "patches/net/minecraft/server/network/ServerGamePacketListenerImpl.java.patch": {
+          "present": true,
+          "sha256": "ba24917b646124201759bc1b32d0c2c73a35d0976359dd6067ec67ebd95c12ff"
+        }
+      }
+    },
+    "mutation": "NO_MUTATION",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED"
+  },
+  "discovery_manifest": "EXACT-SWING-CONTROL-ITEM-DISCOVERY-1.0.10.json",
+  "next_scope": "server/item/ACTickingItem"
+}
