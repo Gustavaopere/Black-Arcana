@@ -5,6 +5,8 @@ on:
     paths:
       - '.github/workflows/alexscaves-1010-burrowing-cave-map-probe.yml'
       - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
+      - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-MAP-DISCOVERY-1.0.10.json'
   workflow_dispatch:
 permissions:
   contents: read
@@ -28,6 +30,8 @@ jobs:
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_burrowing_cave_map_probe.py
           python3 docs/qa/alexscaves_1010_burrowing_cave_map_probe.py --jar build/burrowing-cave-map-1010/alexscaves-1.0.10.jar --javap "$JAVA_HOME/bin/javap" --output build/burrowing-cave-map-1010/report.json
+      - name: Replay exact six-class discovery
+        run: AC_SIX_REPORT=build/burrowing-cave-map-1010/report.json python3 docs/qa/alexscaves_1010_burrowing_cave_map_probe_test.py -v
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7
