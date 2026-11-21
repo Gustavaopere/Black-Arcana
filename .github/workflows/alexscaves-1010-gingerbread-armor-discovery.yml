@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/alexscaves-1010-gingerbread-armor-discovery.yml'
       - 'docs/qa/alexscaves_1010_gingerbread_armor_discovery.py'
+      - 'docs/qa/alexscaves_1010_gingerbread_armor_static_checks.py'
       - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
       - 'docs/qa/alexscaves_1010_armor_material_audit.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
@@ -36,6 +37,18 @@ jobs:
             --jar build/gingerbread-armor-1010/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/gingerbread-armor-1010/report.json
+      - name: Assert exact class, consumers, resources and reject malformed input
+        run: |
+          python3 docs/qa/alexscaves_1010_gingerbread_armor_static_checks.py \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-DISCOVERY-1.0.10.json' \
+            --report build/gingerbread-armor-1010/report.json
+          echo '{}' > build/gingerbread-armor-1010/bad.json
+          if python3 docs/qa/alexscaves_1010_gingerbread_armor_static_checks.py \
+              --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-DISCOVERY-1.0.10.json' \
+              --report build/gingerbread-armor-1010/bad.json; then
+            echo 'FAIL: malformed evidence accepted'
+            exit 1
+          fi
       - name: Preserve immutable discovery report
         if: always()
         uses: actions/upload-artifact@v7

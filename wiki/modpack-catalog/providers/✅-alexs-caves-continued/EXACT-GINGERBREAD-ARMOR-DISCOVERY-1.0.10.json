@@ -1,0 +1,697 @@
+{
+  "schema_version": 1,
+  "scope": "GINGERBREAD_ARMOR_NATIVE_DISCOVERY_NOT_CERTIFIED",
+  "artifact": {
+    "filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "installed_dump_comparison": "NOT_VERIFIED"
+  },
+  "report": {
+    "sha256": "4b6a0709a167e49ffb4bd04b2949facfc3c7b0e55dad80c28842eaf26f1fbae1",
+    "run_id": 44937619871,
+    "job_id": 136947609057,
+    "artifact_id": 14720561081,
+    "zip_sha256": "a92ea9a51f710e040e54adba19a0eca512d8a0284854564a0be58509fed390cc",
+    "expires_at": "2026-12-05T18:50:51Z"
+  },
+  "native_class": {
+    "owner": "com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem",
+    "sha256": "918cc76cd122605e6ba7aa2e8d26e1f4891b3ad8f26554b960e9b07412884a27",
+    "declared_methods": 8,
+    "code_methods": 8,
+    "fields": 7,
+    "typed_consumer_owners": 3,
+    "ancestors": 0,
+    "methods": [
+      {
+        "name": "<clinit>",
+        "descriptor": "()V",
+        "instruction_count": 24,
+        "instruction_sha256": "e45a52e9e1256285550e099e31591b090f17d04e0eb47437ae45cdddc79e4fe4"
+      },
+      {
+        "name": "<init>",
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+        "instruction_count": 62,
+        "instruction_sha256": "3e819e82db652e0b8e629e0c6339590acd84e7eecbeb50333c23586d6e271fce"
+      },
+      {
+        "name": "acModifiers",
+        "descriptor": "(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)Lcom/google/common/collect/Multimap;",
+        "instruction_count": 14,
+        "instruction_sha256": "30cf36d0881c6b8d1c8b03ed1e1d48c35fc91dbe1515cc3639d8c1f57caf17e8"
+      },
+      {
+        "name": "getArmorTexture",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/lang/String;)Ljava/lang/String;",
+        "instruction_count": 7,
+        "instruction_sha256": "8fe9946fdd40f9b3e888274666495dab8ed7ddac0e3c2c568a8071d0c6393582"
+      },
+      {
+        "name": "getDefaultAttributeModifiers",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+        "instruction_count": 8,
+        "instruction_sha256": "0c89455ac0c9b95fe2a5876a8080cb1d84b19fbadee026e5a3007e038fa87948"
+      },
+      {
+        "name": "getOrCreateDurabilityAttributes",
+        "descriptor": "(II)Lcom/google/common/collect/Multimap;",
+        "instruction_count": 73,
+        "instruction_sha256": "9950c3ffe19bdaddeb9b3d2dc4aecdc2b7fad8f0d81f42fa1de1cde7c3fa0881"
+      },
+      {
+        "name": "initializeClient",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "instruction_count": 6,
+        "instruction_sha256": "1bbd25dc9fd7e396c606c055345c31e2833ddec3b66253cfc9b01bee53b8ed68"
+      },
+      {
+        "name": "lambda$getDefaultAttributeModifiers$0",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+        "instruction_count": 4,
+        "instruction_sha256": "ed920d60e03a8ae500dbd48d1a60a99bba0767b147870273456892cc87950715"
+      }
+    ]
+  },
+  "resources": {
+    "assets/alexscaves/blockstates/frosted_gingerbread_block.json": {
+      "sha256": "d74d193f45be762bbdc4d2faf9497332ef03486a8ba157a74febd6f213ed46e4",
+      "size": 118
+    },
+    "assets/alexscaves/blockstates/frosted_gingerbread_brick_slab.json": {
+      "sha256": "cb8a2bde51a5d4e19231aac5c23bda33fea0715c0e294cc5aa0d2a776fb2da73",
+      "size": 298
+    },
+    "assets/alexscaves/blockstates/frosted_gingerbread_brick_stairs.json": {
+      "sha256": "f813b5e18525316a2b83f56aceee3a8f4ab80c8ae75eb79e2b97d7ae0cca6574",
+      "size": 6694
+    },
+    "assets/alexscaves/blockstates/frosted_gingerbread_brick_wall.json": {
+      "sha256": "2b4abb1f953d7276da19679449a185d31b1f3653cd40c973edec2a69880896b3",
+      "size": 2309
+    },
+    "assets/alexscaves/blockstates/frosted_gingerbread_bricks.json": {
+      "sha256": "f70d25b2d01b2cbfc8fa2980d3a468e48cd74c9123cb30bdc2c363ac05960405",
+      "size": 119
+    },
+    "assets/alexscaves/blockstates/frosted_gingerbread_door.json": {
+      "sha256": "715ce6515709c289e81c8bd0dbf956f33085192ba690f22f63d684f88d3c71ab",
+      "size": 2202
+    },
+    "assets/alexscaves/blockstates/frosted_gingerbread_slab.json": {
+      "sha256": "c798c4648c87af9cc7f12309f4fc1a0c289f65815ec300b0e6abc354badb06d9",
+      "size": 285
+    },
+    "assets/alexscaves/blockstates/frosted_gingerbread_stairs.json": {
+      "sha256": "481c1d292e55d2f90a0530df4df8f1b2216a2dd578c43f171dc78202016b382f",
+      "size": 6454
+    },
+    "assets/alexscaves/blockstates/frosted_gingerbread_wall.json": {
+      "sha256": "f5bbfc3f0e34a4c46d064bad23c1f0a79aaf5d336f199dc8ec7b63b301c1742d",
+      "size": 2255
+    },
+    "assets/alexscaves/blockstates/gingerbread_block.json": {
+      "sha256": "6df116b38d07d2b548dc7efc713696a0c773fdb3772c16a74ab2fdf715bcdb5b",
+      "size": 110
+    },
+    "assets/alexscaves/blockstates/gingerbread_brick_slab.json": {
+      "sha256": "2335c3d89f49d7cefb4f60c6ea29d0837ae06f1704e4c23f9e97a8518219460f",
+      "size": 274
+    },
+    "assets/alexscaves/blockstates/gingerbread_brick_stairs.json": {
+      "sha256": "75ae33a51cabcdcc277615f43f4c6749f4eb80405754c4a4d23a308215a14b03",
+      "size": 6374
+    },
+    "assets/alexscaves/blockstates/gingerbread_brick_wall.json": {
+      "sha256": "d45e5779fe1ffd80f595171667f2a448c3555ca32290dcb89fec6d9754a2c93c",
+      "size": 2237
+    },
+    "assets/alexscaves/blockstates/gingerbread_bricks.json": {
+      "sha256": "dd9682466c08d0b2652768806e8f41ab278e9d4ebbee000566e537f9900745cf",
+      "size": 111
+    },
+    "assets/alexscaves/blockstates/gingerbread_door.json": {
+      "sha256": "ae5b21beff6aabf84d202943218a4c5ac762b8c636379debd14a4fd955410851",
+      "size": 2074
+    },
+    "assets/alexscaves/blockstates/gingerbread_slab.json": {
+      "sha256": "6655779d3b175083033be147eb52e3eef4c13eaf4cd5e9ef17f0a1a037bbca5b",
+      "size": 261
+    },
+    "assets/alexscaves/blockstates/gingerbread_stairs.json": {
+      "sha256": "d33a4a90ce21f0e925cdfa8c3005e280e9aa23f5cd170e18159571e2709ad5b5",
+      "size": 6134
+    },
+    "assets/alexscaves/blockstates/gingerbread_wall.json": {
+      "sha256": "8ccb39a4450902b7da006fda81f705bcf9cec4f6c2b52bfb5559c599ef242aef",
+      "size": 2183
+    },
+    "assets/alexscaves/books/candy_cavity/gingerbread_man.json": {
+      "sha256": "6bb5e383bf62fe8c53f8942e29d24eb74c6a261359f6809fb6c8df257352b1e7",
+      "size": 684
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_block.json": {
+      "sha256": "040fede517c966b7f81936467b5351ec36c63332d9699a538bd623807ea0e074",
+      "size": 119
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_brick_slab.json": {
+      "sha256": "6134824df841d2fc9a755b1f30a05c4365b6a858820bdad3fa54f080dcb2a23d",
+      "size": 226
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_brick_slab_top.json": {
+      "sha256": "926444e1c3f731f2d71fa2d6fae48b15d8bd7409b50f69327cd1c63fe027a15f",
+      "size": 230
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_brick_stairs.json": {
+      "sha256": "fbfce7523409afa199a206d7dc679d7c1a3fdfaed1987d226078abb4b5e9549a",
+      "size": 228
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_brick_stairs_inner.json": {
+      "sha256": "a181a7fc90f6314327d57e41c6bb7df1960c62688bde9a878144477b170ab742",
+      "size": 234
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_brick_stairs_outer.json": {
+      "sha256": "ff7175de1272a4bc22278a530393fe58a398dc4aa2cbc051fb8e5349b99d335d",
+      "size": 234
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_brick_wall_inventory.json": {
+      "sha256": "dc3916c61ff6dfbf2f2279e42473be3434f452357ff4a6efeebede3d10e051f0",
+      "size": 192
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_brick_wall_post.json": {
+      "sha256": "6d2098e84f59406e10d897e507c5a9011efb46894be881f521cdc4a6d4a7e63c",
+      "size": 786
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_brick_wall_side.json": {
+      "sha256": "d67b0dea876f5618686293e76e2aeb9bc2e543d80d62773a408789f7bb3fec81",
+      "size": 732
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_brick_wall_side_tall.json": {
+      "sha256": "31d05cf2e21bbd2b3769cd696314a2d17cf8ebb3cc8cf9c8de27f690f69bc97e",
+      "size": 626
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_bricks.json": {
+      "sha256": "e643652e29071bb1c848223f48622cd5a2de77825bf6a663b9c9769c6d263312",
+      "size": 228
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_door_left_closed.json": {
+      "sha256": "6695266a43f66d95516df713327a93bd10603c4b3017569cd1f32b65ed45afc1",
+      "size": 144
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_door_left_open.json": {
+      "sha256": "35054a5262e1f43fb2a70932a25cbff33434eb65bf5bd510c2612c6e85bcfe22",
+      "size": 142
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_door_right_closed.json": {
+      "sha256": "06b400b36e2b51df3e081261db27e006ac8e0018439e3ea5389ffc52c6fd6c90",
+      "size": 145
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_door_right_open.json": {
+      "sha256": "cf9be7e579feee4002105a4b7187d28e50a28b3308bf4f7b350535dcf82bbf8b",
+      "size": 143
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_slab.json": {
+      "sha256": "f0a7106aac00d56307816d2479e215e46a37a80c0555155c2a010ab3a8458d0d",
+      "size": 233
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_slab_top.json": {
+      "sha256": "2270a42c4412c4cccca764ac9ca6b9152ca42a0163074128d8dcc7d30c90ea6c",
+      "size": 237
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_stairs.json": {
+      "sha256": "f264965eefc00c11ba337ddb82356332b654ace266252d5784d1cfd57188f0ae",
+      "size": 235
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_stairs_inner.json": {
+      "sha256": "cbbe416f2eff72e40ee6c58f4020f1f6e4415b6d9db7737dc6f5a2b95fdbcd94",
+      "size": 241
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_stairs_outer.json": {
+      "sha256": "832ce666ffa65121e917f36f9b39ef7212807c69483dd3fd01e4306200689bae",
+      "size": 241
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_wall_inventory.json": {
+      "sha256": "e1575971db9aac5a2a09d7e30038acfc949f2823222f9bfadaafb28db81a92c0",
+      "size": 200
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_wall_post.json": {
+      "sha256": "e97edb701744a2e7ea940126a4b77712b3ee83c120142201eca5e0b74938a2bf",
+      "size": 140
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_wall_side.json": {
+      "sha256": "256395f72938cb5a236be2486a85c7e44999cffc5d97151376cb1de684fa125a",
+      "size": 140
+    },
+    "assets/alexscaves/models/block/frosted_gingerbread_wall_side_tall.json": {
+      "sha256": "ee1f03b1493f9c8c60d5a38bb72d2900ed18148999e544717737190d21ea9ddd",
+      "size": 135
+    },
+    "assets/alexscaves/models/block/gingerbread_block.json": {
+      "sha256": "0f03248071eaa3e4186729c34b50eb3ef21391c5ab6bfb30dc1b35e8dcc67802",
+      "size": 111
+    },
+    "assets/alexscaves/models/block/gingerbread_brick_slab.json": {
+      "sha256": "b2246fdac94c28406338b0f19318c9d6305517e622c4752ce99cb76f45e67a58",
+      "size": 212
+    },
+    "assets/alexscaves/models/block/gingerbread_brick_slab_top.json": {
+      "sha256": "914cb7fa170ac2b20994d5654514405708b8025b4ded62a771a78daa9b7e0a64",
+      "size": 216
+    },
+    "assets/alexscaves/models/block/gingerbread_brick_stairs.json": {
+      "sha256": "309f9e8fcc7a7e4e9f755f473feef026daa54f304bc38776cad465dcac99431d",
+      "size": 214
+    },
+    "assets/alexscaves/models/block/gingerbread_brick_stairs_inner.json": {
+      "sha256": "c9b533a901768991edb24b9eee3e77a6531ee0100a9c8d0edbfb8138871b6698",
+      "size": 220
+    },
+    "assets/alexscaves/models/block/gingerbread_brick_stairs_outer.json": {
+      "sha256": "926aa9f551542aa9fe2c6cc595cdd7d2c7530fb270a7091320c15fc32ee87587",
+      "size": 220
+    },
+    "assets/alexscaves/models/block/gingerbread_brick_wall_inventory.json": {
+      "sha256": "c868b061414e507484e2e3d1db79d8491656726a18a3a590b04c703bbcc7de8b",
+      "size": 186
+    },
+    "assets/alexscaves/models/block/gingerbread_brick_wall_post.json": {
+      "sha256": "8e0bc990478831c45525428ff779f512aaad675981b783933f369133b27b25f0",
+      "size": 133
+    },
+    "assets/alexscaves/models/block/gingerbread_brick_wall_side.json": {
+      "sha256": "b86a544eb62f38ed3df2b07cfa295d29fa307163b1af6f7a01a365eb3ad60b4f",
+      "size": 133
+    },
+    "assets/alexscaves/models/block/gingerbread_brick_wall_side_tall.json": {
+      "sha256": "d7e3e5d44a39455680082e0877d08470d663c726408be0eb698c6f0e8afd2a14",
+      "size": 128
+    },
+    "assets/alexscaves/models/block/gingerbread_bricks.json": {
+      "sha256": "b94d2f0a1b7f17eb4187f2a63f95cded3380a0a44051d149482aeb14f72ba4f0",
+      "size": 112
+    },
+    "assets/alexscaves/models/block/gingerbread_door_left_closed.json": {
+      "sha256": "ed51ea27a4f71bf705e5a2df884309349bc3b18bf25d65bc8fb40706a134df47",
+      "size": 136
+    },
+    "assets/alexscaves/models/block/gingerbread_door_left_closed_template.json": {
+      "sha256": "ace23c71974c101ab4735dc81b91d33b18b179be11a97c9af34d3e0d5fb0e1db",
+      "size": 520
+    },
+    "assets/alexscaves/models/block/gingerbread_door_left_open.json": {
+      "sha256": "6613f34094db011595776f280c62e5713580477f852f89338be0059683e9b834",
+      "size": 134
+    },
+    "assets/alexscaves/models/block/gingerbread_door_left_open_template.json": {
+      "sha256": "247811f7386fe47cdcb8c185d1f6a1f09ff170a590b1c27941f346d60c04c80f",
+      "size": 620
+    },
+    "assets/alexscaves/models/block/gingerbread_door_right_closed.json": {
+      "sha256": "02cf66aebd5ddb4907f1a8f1650193d7508a37c5d0cfeec077e891cf2d512c68",
+      "size": 137
+    },
+    "assets/alexscaves/models/block/gingerbread_door_right_closed_template.json": {
+      "sha256": "280e98a306123a4330a7c566d406e873c2a193cf8cd9a6cbd378353802a35803",
+      "size": 520
+    },
+    "assets/alexscaves/models/block/gingerbread_door_right_open.json": {
+      "sha256": "3f36da7405886f8962bd7861e07b52fd08f571b49eb78e7e95d14c9e416947b9",
+      "size": 135
+    },
+    "assets/alexscaves/models/block/gingerbread_door_right_open_template.json": {
+      "sha256": "cc24c87d78872ad44bc9d227853f6555a666ae98532117f423e19a07ddfd7ecb",
+      "size": 616
+    },
+    "assets/alexscaves/models/block/gingerbread_slab.json": {
+      "sha256": "97201e6f86b7efbd10e878062a2babb1f1be18fb787f81535216d50800b30b79",
+      "size": 209
+    },
+    "assets/alexscaves/models/block/gingerbread_slab_top.json": {
+      "sha256": "d9e530eedc69137d05776a074e5942e5b8a6b558baa6afdf9a3e075c5f51a701",
+      "size": 213
+    },
+    "assets/alexscaves/models/block/gingerbread_stairs.json": {
+      "sha256": "de0b7692feb2079944da0233e66852a6d5c6c76a1d14503f47142085206f96a1",
+      "size": 211
+    },
+    "assets/alexscaves/models/block/gingerbread_stairs_inner.json": {
+      "sha256": "0c34faaa02c679741a6a404e3efe39f96a7a09b7a7941014c33fd1876f7286eb",
+      "size": 217
+    },
+    "assets/alexscaves/models/block/gingerbread_stairs_outer.json": {
+      "sha256": "2e8f42a42b8f906b66fb65f3053160a852a9c76e15843513d591357e0eeb6b1e",
+      "size": 217
+    },
+    "assets/alexscaves/models/block/gingerbread_wall_inventory.json": {
+      "sha256": "fca8b1403d8330d371ea5963d3f1fcb52b75b632ff2eeafb488e5f72a273f894",
+      "size": 184
+    },
+    "assets/alexscaves/models/block/gingerbread_wall_post.json": {
+      "sha256": "d59d5026a2515249bbbda565f8e55c8367a4c52dd010376e2c4793d6b47f2481",
+      "size": 132
+    },
+    "assets/alexscaves/models/block/gingerbread_wall_side.json": {
+      "sha256": "6711abd79558fc81e80065b987a5c5af7d5e21a567e5a2dd2cc582d44c193f06",
+      "size": 132
+    },
+    "assets/alexscaves/models/block/gingerbread_wall_side_tall.json": {
+      "sha256": "2b6fd034b8ccb14ef1b5472e7d624f6cc9d4f4661bc908357c814f51be462f69",
+      "size": 127
+    },
+    "assets/alexscaves/models/item/frosted_gingerbread_block.json": {
+      "sha256": "d833211eb85d162942395c1801a419feadc4f6b6712e3acd410ab638f32f9f0c",
+      "size": 60
+    },
+    "assets/alexscaves/models/item/frosted_gingerbread_brick_slab.json": {
+      "sha256": "e6af63ce65ddaade3518e4acf37dc72b1000f5682285c9cbcf011748d26ac97f",
+      "size": 65
+    },
+    "assets/alexscaves/models/item/frosted_gingerbread_brick_stairs.json": {
+      "sha256": "e869dfacf2bfbcd9811798fcab2857ed3f94ae8f9fb6755a18e5ef28bba52318",
+      "size": 67
+    },
+    "assets/alexscaves/models/item/frosted_gingerbread_brick_wall.json": {
+      "sha256": "f77ef3b0818ad5ff390ad3a045e24eadb02784df9902b86f3f0a90df05332a13",
+      "size": 75
+    },
+    "assets/alexscaves/models/item/frosted_gingerbread_bricks.json": {
+      "sha256": "994286a22ec30b9a76f2990429f10d3bfc1e48292d9966b67b4b4530a0655c46",
+      "size": 61
+    },
+    "assets/alexscaves/models/item/frosted_gingerbread_door.json": {
+      "sha256": "98cb71b3b173cf694a9240ddad2d8c61af103c034576438b8e6b545fb6f36d93",
+      "size": 120
+    },
+    "assets/alexscaves/models/item/frosted_gingerbread_slab.json": {
+      "sha256": "e0a34786a0497588a408df1d3cbe6ebb616cd861e9d1147e96919a4f8a7d3e6f",
+      "size": 59
+    },
+    "assets/alexscaves/models/item/frosted_gingerbread_stairs.json": {
+      "sha256": "aba33a2c2a04f43eed4a79003c3c9c9b8dafba178503a7fc909c5ed60647de4a",
+      "size": 61
+    },
+    "assets/alexscaves/models/item/frosted_gingerbread_wall.json": {
+      "sha256": "e417a44e7e6929186de32901da8ed9c01611c5efc2951bced160a5f80f61dd8b",
+      "size": 69
+    },
+    "assets/alexscaves/models/item/gingerbread_block.json": {
+      "sha256": "536b34e5478d02b3e0d82607641569f177e0b354484c5dca959a585e4bb6a1e0",
+      "size": 52
+    },
+    "assets/alexscaves/models/item/gingerbread_boots.json": {
+      "sha256": "3301ab3fca58f36d665b035b362bf06943312fa4087f0e5aad6348b6820cd21b",
+      "size": 113
+    },
+    "assets/alexscaves/models/item/gingerbread_brick_slab.json": {
+      "sha256": "3acc4a03b2a5800a0139a11d5d7f367f2471401d2ffabe41c98bcb9dc7b10a73",
+      "size": 57
+    },
+    "assets/alexscaves/models/item/gingerbread_brick_stairs.json": {
+      "sha256": "6d05904be82b676e98f587de7d3df6d7e23f31ab277fc7bdfec1b998f30dfc5a",
+      "size": 59
+    },
+    "assets/alexscaves/models/item/gingerbread_brick_wall.json": {
+      "sha256": "920ea6ceaf8871ee36dc05f1b396616ad891589728f1391f887023839c0e2665",
+      "size": 67
+    },
+    "assets/alexscaves/models/item/gingerbread_bricks.json": {
+      "sha256": "99533d9f3087f8292741f91e3c43eca1379e4b8d2786c1dc0e9a942cf06b468c",
+      "size": 53
+    },
+    "assets/alexscaves/models/item/gingerbread_chestplate.json": {
+      "sha256": "247f4e8d13124dfb2aa7367bd5e08f45dff4f1b38e01cbbe6cf0d0acc045acf9",
+      "size": 118
+    },
+    "assets/alexscaves/models/item/gingerbread_crumbs.json": {
+      "sha256": "26213ecea60103b3965ba7dff7e1483ec6c298897d550eca93fe547e2ad264ad",
+      "size": 114
+    },
+    "assets/alexscaves/models/item/gingerbread_door.json": {
+      "sha256": "d7feb10c936e8eb086bc0118a6fa3f8565b1ca916f992b66f79a246bd366d019",
+      "size": 112
+    },
+    "assets/alexscaves/models/item/gingerbread_helmet.json": {
+      "sha256": "50a572c0b4cd7c407c678cd6ca77a5b4cfd8195505361488bda17806c7939c6c",
+      "size": 114
+    },
+    "assets/alexscaves/models/item/gingerbread_leggings.json": {
+      "sha256": "d11d46139dede72f1e4b3a75bd3167990bba74a1389ac40aacddbd3b09bedbf2",
+      "size": 116
+    },
+    "assets/alexscaves/models/item/gingerbread_slab.json": {
+      "sha256": "a2b69e508eabb33cb35c90d00886b701b1a932f79aefb6ed05125882291074ff",
+      "size": 51
+    },
+    "assets/alexscaves/models/item/gingerbread_stairs.json": {
+      "sha256": "24aeaa51da33d74b424ad7659f2f402559f47868ff77ffddbbb36509a1df6d69",
+      "size": 53
+    },
+    "assets/alexscaves/models/item/gingerbread_wall.json": {
+      "sha256": "9a42b1abf63a4fd4343754503e5106fec29fb3addb1afe8fbd982d9c2d6b340a",
+      "size": 61
+    },
+    "assets/alexscaves/models/item/spawn_egg_gingerbread_man.json": {
+      "sha256": "4b08cf21ed0b0479e8f7758c5fbe6bc6731565150a440364ba2f3bc3734a0cd8",
+      "size": 44
+    },
+    "data/alexscaves/advancement/alexscaves/gingerbread_armor.json": {
+      "sha256": "dd1a66d1e5c756537746c94b33c8d3586dd6d20d6987c4a251b4b34808a0e70e",
+      "size": 1783
+    },
+    "data/alexscaves/advancement/alexscaves/gingerbread_crumbs.json": {
+      "sha256": "48d0d4884f4aeceba6ecfd8848410721cb8999fecde87b3d754a53effe16eb44",
+      "size": 738
+    },
+    "data/alexscaves/advancement/alexscaves/gingerbread_town.json": {
+      "sha256": "60635aea403a528b69de879189d722b5cc57eafe001e0dfa4a43225b8b227727",
+      "size": 1136
+    },
+    "data/alexscaves/loot_table/blocks/frosted_gingerbread_block.json": {
+      "sha256": "a6413eb2e79fbf2af88fe601215200a966ccaa6add3caab1213cb4d8eb69d0b1",
+      "size": 219
+    },
+    "data/alexscaves/loot_table/blocks/frosted_gingerbread_brick_slab.json": {
+      "sha256": "b34a46ada49ccec37fe1d002d65f339b9c34a4c53fbc489b6b463f850f309738",
+      "size": 816
+    },
+    "data/alexscaves/loot_table/blocks/frosted_gingerbread_brick_stairs.json": {
+      "sha256": "1586fa21cc3920775286a31acdbb47ae4f84cb73e232766702db4e58e22c0972",
+      "size": 226
+    },
+    "data/alexscaves/loot_table/blocks/frosted_gingerbread_brick_wall.json": {
+      "sha256": "f23d57720b0bde657838a7507fc375a672c2adfcc61c2d5253c9a4637ed5f0e6",
+      "size": 224
+    },
+    "data/alexscaves/loot_table/blocks/frosted_gingerbread_bricks.json": {
+      "sha256": "cf0581f2851c53f2eb2d9890fd7f93984dbc38bfa6b7b0e009110f07ecf7f9fc",
+      "size": 220
+    },
+    "data/alexscaves/loot_table/blocks/frosted_gingerbread_door.json": {
+      "sha256": "a8b284e595cc4c6d5c413bd9f7eeb1aba4dd75ac8b49430786c583af0290da4a",
+      "size": 218
+    },
+    "data/alexscaves/loot_table/blocks/frosted_gingerbread_slab.json": {
+      "sha256": "cba6a0f41baa01c6a74b17a6fda772a3553f05dbc2a09625056004eb3de90f18",
+      "size": 804
+    },
+    "data/alexscaves/loot_table/blocks/frosted_gingerbread_stairs.json": {
+      "sha256": "d751e062704ededd2c0d3a57a00f649f397d161988746ccdc8c6c4a986c61085",
+      "size": 220
+    },
+    "data/alexscaves/loot_table/blocks/frosted_gingerbread_wall.json": {
+      "sha256": "021fea9088ecd25eed7fa5459294c6807664ac877dd3e4f3737d4fb0f5efa7b7",
+      "size": 218
+    },
+    "data/alexscaves/loot_table/blocks/gingerbread_block.json": {
+      "sha256": "90aa81001a9cb2e558c649420cf30ad67d1fbfa69ea0794042d8223c40d6adc6",
+      "size": 211
+    },
+    "data/alexscaves/loot_table/blocks/gingerbread_brick_slab.json": {
+      "sha256": "2c00acbe98c97097b3222048b51951048cd527d5576010cd0c8d883f9e9a16c2",
+      "size": 800
+    },
+    "data/alexscaves/loot_table/blocks/gingerbread_brick_stairs.json": {
+      "sha256": "6965ecdbfb04cc82ea8f17cef9784d46b3b8c57ecabbd1dea7a0d273709c1513",
+      "size": 218
+    },
+    "data/alexscaves/loot_table/blocks/gingerbread_brick_wall.json": {
+      "sha256": "de4a8da135e41c4b7edb116c56471b9fca16a99f7444227f282a5db3e66c1bd5",
+      "size": 216
+    },
+    "data/alexscaves/loot_table/blocks/gingerbread_bricks.json": {
+      "sha256": "c63db29fd675f6a09513fde7ad977fa8ddd93226aa3787a709313de926f20613",
+      "size": 212
+    },
+    "data/alexscaves/loot_table/blocks/gingerbread_door.json": {
+      "sha256": "af1cfe3688ea2c98cada17bc56a4ea8f09228997df5ee9d70ab85f09ae6b5cff",
+      "size": 210
+    },
+    "data/alexscaves/loot_table/blocks/gingerbread_slab.json": {
+      "sha256": "31bc1ad52a9f9b32f13b047f89886352e44c0219975f63b5103a9a875361478a",
+      "size": 788
+    },
+    "data/alexscaves/loot_table/blocks/gingerbread_stairs.json": {
+      "sha256": "fba7860ed9c4052be7d4616aab79ecbef28eaeb7d9a5fd6ab30979873391c989",
+      "size": 212
+    },
+    "data/alexscaves/loot_table/blocks/gingerbread_wall.json": {
+      "sha256": "77937599743a2f1e8d6aab0a8261a43bb308fed3a33a7113bb1551631387647c",
+      "size": 210
+    },
+    "data/alexscaves/loot_table/chests/gingerbread_town.json": {
+      "sha256": "ea28724a544d70069408419dd5d17a14fedb429d62f298716e4a628fd08253ae",
+      "size": 3213
+    },
+    "data/alexscaves/loot_table/entities/gingerbread_man.json": {
+      "sha256": "a8b888f741e9c807609bd0d087ca9097688eeb45c2e798a49a596c8bb6cac835",
+      "size": 969
+    },
+    "data/alexscaves/recipe/frosted_gingerbread_block.json": {
+      "sha256": "ed887c7a10675ee12498acf5e3acfa171123f9fb7756a7f147523bb5e7cfed55",
+      "size": 301
+    },
+    "data/alexscaves/recipe/frosted_gingerbread_brick_slab.json": {
+      "sha256": "974c905d18312aa4c2554c3620c5c7ace5372ca2630803adfa6727064ef6e88b",
+      "size": 287
+    },
+    "data/alexscaves/recipe/frosted_gingerbread_brick_stairs.json": {
+      "sha256": "1551ab47b1e0bc0dab8b5906d943ca4e58145b6bec44b5a88350d7d7410ede79",
+      "size": 319
+    },
+    "data/alexscaves/recipe/frosted_gingerbread_brick_wall.json": {
+      "sha256": "89afc72827f540b6b40bd6ad0d701a4ba451f7ad9d554ac5979a7015073042ab",
+      "size": 302
+    },
+    "data/alexscaves/recipe/frosted_gingerbread_bricks.json": {
+      "sha256": "5c91a12e7bb5962edde1937f063e4c2826ba075eac895cefe555e4c332a8e00d",
+      "size": 295
+    },
+    "data/alexscaves/recipe/frosted_gingerbread_door.json": {
+      "sha256": "75a4d65d0eaebe3e213b9cef8b67a194a08ee5ff30af16e7618c7501eef3f2ab",
+      "size": 307
+    },
+    "data/alexscaves/recipe/frosted_gingerbread_slab.json": {
+      "sha256": "84ff55caa7fffa010f9cfca85676baf140468915c975acb0189139655408bd10",
+      "size": 280
+    },
+    "data/alexscaves/recipe/frosted_gingerbread_stairs.json": {
+      "sha256": "1482cbc4867f571e1eedf1b37f2882742e30d4a5d4295459be4b751fff613eef",
+      "size": 312
+    },
+    "data/alexscaves/recipe/frosted_gingerbread_wall.json": {
+      "sha256": "30bc8c5370d278b0eff2ae233d3654e7135119c21869c76798644350e68732c4",
+      "size": 295
+    },
+    "data/alexscaves/recipe/gingerbread_block.json": {
+      "sha256": "ce473b0209fba09f0c69e0c8bd75978b19c8d245567f3d536ecbbd693b2cbadb",
+      "size": 259
+    },
+    "data/alexscaves/recipe/gingerbread_brick_slab.json": {
+      "sha256": "55c1961f96224ec6591fae2da094fb296c437aafb578d486412a3b491a91f13c",
+      "size": 271
+    },
+    "data/alexscaves/recipe/gingerbread_brick_stairs.json": {
+      "sha256": "7fed1a579dd7dabf4252c4a4a1862a6a638102a0259e5ea0d1bb952591a6b8dd",
+      "size": 303
+    },
+    "data/alexscaves/recipe/gingerbread_brick_wall.json": {
+      "sha256": "9e5595e9b3409b35dba40b063e5fcfe812c412b756d06d1c3fca300da357a35e",
+      "size": 286
+    },
+    "data/alexscaves/recipe/gingerbread_bricks.json": {
+      "sha256": "6822a3059bd9a6a1283c10d46d4cb0f4d9cbfc729e8e802d6f82587ee07f16a4",
+      "size": 279
+    },
+    "data/alexscaves/recipe/gingerbread_door.json": {
+      "sha256": "91ff1ceac7f72ba6d6174551dc1febb2d12de60fd6deeec58cca1d8e437e8fb4",
+      "size": 291
+    },
+    "data/alexscaves/recipe/gingerbread_slab.json": {
+      "sha256": "04279e91a80e072804e54debc131d961455f984e4e2b7cbeeebc481f16681aeb",
+      "size": 264
+    },
+    "data/alexscaves/recipe/gingerbread_stairs.json": {
+      "sha256": "4323e7e8410702c6ccfed38a004ef64f0fc8875c4b778ae256bdd18c4c288d29",
+      "size": 296
+    },
+    "data/alexscaves/recipe/gingerbread_wall.json": {
+      "sha256": "06aa46695e3bbfdbd1b4bf3ddfc1e9e748aabdaf2ccf6087e33f75255743f871",
+      "size": 279
+    },
+    "data/alexscaves/tags/block/gingerbread_town_gen_replaceables.json": {
+      "sha256": "37958fca241e8b54a09ab3af211644a8dfb8e09247554afa5a23bf85747a9e0c",
+      "size": 117
+    },
+    "data/alexscaves/tags/item/gingerbread_man_steals.json": {
+      "sha256": "59c2591008e62e6bb91011202fa7aa2200fd950f9da55d309dbf0bea243682f8",
+      "size": 513
+    },
+    "data/alexscaves/tags/item/repairs_gingerbread_armor.json": {
+      "sha256": "a9cf2fd7e389f05e5b5a988712378b6a2dff50839eaea40b4b808bfbde44de87",
+      "size": 58
+    },
+    "data/alexscaves/tags/worldgen/structure/gingerbread_men_wander_through.json": {
+      "sha256": "dfaecfccafbb3bea98469da42500e2c916192f44a7e774b80ab54c508f138c1d",
+      "size": 55
+    },
+    "data/alexscaves/worldgen/structure/gingerbread_town.json": {
+      "sha256": "7a183853a5ef8dfb64d99d1ed4bd2003d5056b0e0e2de2c33c5f8b1668ee55d7",
+      "size": 442
+    },
+    "data/alexscaves/worldgen/structure_set/gingerbread_town.json": {
+      "sha256": "161fa45b4ef664a2a0520323660a9e09fc16895153f6dc4c1b67ec46d60ee2ad",
+      "size": 272
+    }
+  },
+  "pieces": [
+    "alexscaves:gingerbread_boots",
+    "alexscaves:gingerbread_chestplate",
+    "alexscaves:gingerbread_helmet",
+    "alexscaves:gingerbread_leggings"
+  ],
+  "registry_factories": [
+    "lambda$static$187",
+    "lambda$static$188",
+    "lambda$static$189",
+    "lambda$static$190"
+  ],
+  "bases": {
+    "material": "GINGERBREAD_ARMOR_MATERIAL",
+    "material_multiplier": 10,
+    "max_damage_by_ordinal": [
+      130,
+      150,
+      160,
+      110
+    ],
+    "defense_by_ordinal": [
+      2,
+      4,
+      5,
+      2
+    ],
+    "slot_ordinal_mapping": "NOT_VERIFIED_FROM_JAR_LOCAL",
+    "known_material_ingredient": "alexscaves:gingerbread_crumbs"
+  },
+  "dynamic_speed": {
+    "attribute": "MOVEMENT_SPEED",
+    "operation": "ADD_MULTIPLIED_BASE",
+    "formula": "0.1 + 0.9 * (float)damage / maxDamage",
+    "cache_key": "damage",
+    "cache_keys_include_max_damage": false,
+    "cache_keys_include_player_uuid": false,
+    "scope": "NATIVE_STATIC_FORMULA_NOT_MUTATOR"
+  },
+  "limits": {
+    "status": "PARTIAL",
+    "claim_scope": "STATIC_DISCOVERY_ONLY",
+    "new_cast_roots": 0,
+    "mutation": "NO_MUTATION",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false
+  }
+}
