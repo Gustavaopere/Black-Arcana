@@ -1016,7 +1016,7 @@
   "current_item_contract_checkpoint": {
     "scope": "FLOATER_AND_FROSTMINT_IN_EXISTING_ALPHABETICAL_REVIEW",
     "provider_observed_static_contracts": 118,
-    "provider_observed_cards": 128,
+    "provider_observed_cards": 131,
     "integration_support_contracts": 15,
     "concrete_item_contracts": 20,
     "equipment_contracts": 5,
