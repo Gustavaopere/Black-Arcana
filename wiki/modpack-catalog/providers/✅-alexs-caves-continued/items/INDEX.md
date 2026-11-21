@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 19/29.**
+**Fichas catalogadas (somente fichas detectadas): 19/32.**
 
-**Barra das fichas catalogadas:** `█████████████░░░░░░░ 65.5%`
+**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 59.4%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 19/29.**
+**Homologadas para perks (somente fichas detectadas): 19/32.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 65.5%`
+**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 59.4%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -46,6 +46,9 @@
 | ✅ | Hood Of Darkness | [ficha/hood-of-darkness.md](hood-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [ficha/pewen-boat.md](pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [ficha/pewen-chest-boat.md](pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Primordial Helmet | [ficha/primordial-helmet.md](primordial-helmet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Primordial Pants | [ficha/primordial-pants.md](primordial-pants.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Primordial Tunic | [ficha/primordial-tunic.md](primordial-tunic.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Purple Soda Bottle | [ficha/purple-soda-bottle.md](purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [ficha/thornwood-boat.md](thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Chest Boat | [ficha/thornwood-chest-boat.md](thornwood-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
