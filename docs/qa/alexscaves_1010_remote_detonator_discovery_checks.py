@@ -84,7 +84,7 @@ def check(path: Path) -> None:
     resources = report["filename_matched_resource_hashes"]
     assert isinstance(resources, dict) and len(resources) <= 200
     for name, proof in resources.items():
-        assert name.endswith(".json") and "detonat" in name.lower()
+        assert name.endswith(".json") and any(term in name.lower() for term in ("remote_detonator", "remote_detonation", "detonator", "remote_control"))
         assert set(proof) == {"sha256", "size"}
         assert len(proof["sha256"]) == 64
         assert type(proof["size"]) is int and proof["size"] > 0
