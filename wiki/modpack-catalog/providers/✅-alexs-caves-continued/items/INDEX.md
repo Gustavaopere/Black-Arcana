@@ -4,13 +4,13 @@
 
 **Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
 
-**Fichas catalogadas (somente fichas detectadas): 13/13.**
+**Fichas catalogadas (somente fichas detectadas): 17/17.**
 
 **Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 13/13.**
+**Homologadas para perks (somente fichas detectadas): 17/17.**
 
 **Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
@@ -28,6 +28,10 @@
 | ✅ | Cave Map | [ficha/cave-map.md](cave-map.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cloak Of Darkness | [ficha/cloak-of-darkness.md](cloak-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Darkened Apple | [ficha/darkened-apple.md](darkened-apple.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Diving Boots | [ficha/diving-boots.md](diving-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Diving Chestplate | [ficha/diving-chestplate.md](diving-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Diving Helmet | [ficha/diving-helmet.md](diving-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Diving Leggings | [ficha/diving-leggings.md](diving-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hood Of Darkness | [ficha/hood-of-darkness.md](hood-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [ficha/pewen-boat.md](pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [ficha/pewen-chest-boat.md](pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |

@@ -1,0 +1,51 @@
+name: Alex's Caves 1.0.10 diving armor contracts
+on:
+  pull_request:
+    branches: [main]
+    paths: &contract_paths
+      - '.github/workflows/alexscaves-1010-diving-armor-catalog.yml'
+      - 'docs/qa/alexscaves_1010_diving_armor_catalog.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
+      - 'docs/qa/alexscaves_1010_action_contract_audit.py'
+      - 'docs/qa/alexscaves_1010_destroyed_item_engine_reference.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.*'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARMOR-MATERIAL-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/diving-*.md'
+  push:
+    branches: [main]
+    paths: *contract_paths
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  diving_armor_catalog:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Download publisher artifact
+        run: |
+          mkdir -p build/diving-armor-1010
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/diving-armor-1010/alexscaves-1.0.10.jar
+      - name: Reproduce publisher evidence
+        run: |
+          python3 docs/qa/alexscaves_1010_diving_armor_catalog.py \
+            --jar build/diving-armor-1010/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/diving-armor-1010/catalog.json
+      - name: Archive verified evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-diving-armor-catalog
+          path: build/diving-armor-1010/catalog.json
+          retention-days: 14

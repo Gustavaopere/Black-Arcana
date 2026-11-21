@@ -590,7 +590,7 @@
       ]
     }
   },
-  "next_alphabetical_uncovered_scope": "server/item/DesolateDaggerItem",
+  "next_alphabetical_uncovered_scope": "server/item/DrinkableBottledItem",
   "integration_support_inventory": {
     "source_inventory": "remaining_family_inventory.item_outer_classes",
     "scope": "REVIEWED_ALPHABETICAL_PREFIX_OF_PHYSICAL_ITEM_OUTER_CLASSES",
@@ -903,9 +903,48 @@
         "static_contracts_added": 2,
         "semantic_magic_roots_added": 0,
         "scope_note": "Two existing item bindings share one class. Hood owns the equipment condition. Cloak owns the charge; its prior action and effect keep their own contracts."
+      },
+      {
+        "class": "server/item/DesolateDaggerItem",
+        "disposition": "INDIVIDUAL_STATIC_CONTRACT_CERTIFIED",
+        "card": "equipment/desolate-dagger.md",
+        "evidence": "EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md",
+        "manifest": "EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json",
+        "additional_cards": 0,
+        "static_contracts_added": 0,
+        "semantic_magic_roots_added": 0,
+        "scope_note": "Existing exact static item contract replayed. Melee callback, target ID, dagger count and timing, repair and native combat boundaries. Separate already-certified entity/damage and enchantment cards remain existing references."
+      },
+      {
+        "class": "server/item/DivingArmorItem",
+        "disposition": "INDIVIDUAL_STATIC_CONTRACT_CERTIFIED",
+        "card": null,
+        "evidence": "EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+        "manifest": "EXACT-DIVING-ARMOR-CATALOG-1.0.10.json",
+        "additional_cards": 4,
+        "static_contracts_added": 4,
+        "semantic_magic_roots_added": 0,
+        "scope_note": "Four registry bindings and separate item contracts. Slot attributes, helmet effect request, leggings swim modifier, boots Muck collision and movement, chestplate attributes, loot and repair. Exact publisher methods, typed consumers and resources; external engine acceptance remains pending.",
+        "cards": [
+          "items/diving-helmet.md",
+          "items/diving-chestplate.md",
+          "items/diving-leggings.md",
+          "items/diving-boots.md"
+        ]
+      },
+      {
+        "class": "server/item/DreadbowItem",
+        "disposition": "INDIVIDUAL_STATIC_CONTRACT_CERTIFIED",
+        "card": "equipment/dreadbow.md",
+        "evidence": "EXACT-DREADBOW-CONTRACTS-1.0.10.md",
+        "manifest": "EXACT-DREADBOW-CONTRACTS-1.0.10.json",
+        "additional_cards": 0,
+        "static_contracts_added": 0,
+        "semantic_magic_roots_added": 0,
+        "scope_note": "Existing exact static item contract replayed. Charge and perfect-shot state, target geometry, two firing modes, separate Dark Arrow contract, ammunition and native damage/settlement boundaries."
       }
     ],
-    "next_alphabetical_uncovered_scope": "server/item/DesolateDaggerItem",
+    "next_alphabetical_uncovered_scope": "server/item/DrinkableBottledItem",
     "family_universe_closed": false,
     "remaining_family_inventory_preserved": true,
     "typed_constant_pool_class_count": 1555,
@@ -914,16 +953,15 @@
     "mutation": "NO_MUTATION"
   },
   "completed_scope_checkpoint_scope": "HISTORICAL_SEQUENCE_THROUGH_PR_1122",
-  "current_completed_scope": "Four contiguous item classes through DarknessArmorItem reviewed. Four static contracts, including three existing item cards, and one presentation disposition. Provider OPEN.",
+  "current_completed_scope": "Three contiguous item classes through DreadbowItem reviewed. Four new static item contracts under DivingArmorItem. Existing Desolate Dagger and Dreadbow evidence replayed. Provider OPEN.",
   "current_item_contract_checkpoint": {
-    "scope": "PRESENTATION_AND_DARKNESS_ITEM_SYMBOLS_IN_EXISTING_ALPHABETICAL_REVIEW",
-    "provider_observed_static_contracts": 109,
-    "provider_observed_cards": 109,
+    "scope": "DESOLATE_DAGGER_DIVING_ARMOR_AND_DREADBOW_IN_EXISTING_ALPHABETICAL_REVIEW",
+    "provider_observed_static_contracts": 113,
+    "provider_observed_cards": 113,
     "integration_support_contracts": 15,
-    "concrete_item_contracts": 13,
-    "presentation_dispositions_added": 1,
+    "concrete_item_contracts": 17,
     "semantic_magic_roots_added": 0,
     "whole_provider_catalog_closed": false,
-    "next_scope": "server/item/DesolateDaggerItem"
+    "next_scope": "server/item/DrinkableBottledItem"
   }
 }
