@@ -4,13 +4,13 @@
 
 **Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
 
-**Fichas catalogadas (somente fichas detectadas): 14/14.**
+**Fichas catalogadas (somente fichas detectadas): 15/15.**
 
 **Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 14/14.**
+**Homologadas para perks (somente fichas detectadas): 15/15.**
 
 **Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
@@ -24,6 +24,7 @@
 | ✅ | Armor Material | [ficha/armor-material.md](armor-material.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Info Item | [ficha/cave-info-item.md](cave-info-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Client Extension | [ficha/client-extension.md](client-extension.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Custom Armor Post Render | [ficha/custom-armor-post-render.md](custom-armor-post-render.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Destroyed Item | [ficha/destroyed-item.md](destroyed-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dynamic Attributes | [ficha/dynamic-attributes.md](dynamic-attributes.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Enchantable Item | [ficha/enchantable-item.md](enchantable-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
