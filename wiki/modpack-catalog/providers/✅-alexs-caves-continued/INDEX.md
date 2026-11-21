@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 116/120.**
+**Fichas catalogadas (somente fichas detectadas): 116/124.**
 
-**Barra das fichas catalogadas:** `███████████████████░ 96.7%`
+**Barra das fichas catalogadas:** `██████████████████░░ 93.5%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 116/120.**
+**Homologadas para perks (somente fichas detectadas): 116/124.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████████░ 96.7%`
+**Barra dos contratos técnicos estáticos:** `██████████████████░░ 93.5%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -123,6 +123,10 @@
 | ✅ | Fertilizer | [items/fertilizer.md](items/fertilizer.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Floater | [items/floater.md](items/floater.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gazing Pearl | [items/gazing-pearl.md](items/gazing-pearl.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gingerbread Boots | [items/gingerbread-boots.md](items/gingerbread-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gingerbread Chestplate | [items/gingerbread-chestplate.md](items/gingerbread-chestplate.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gingerbread Helmet | [items/gingerbread-helmet.md](items/gingerbread-helmet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gingerbread Leggings | [items/gingerbread-leggings.md](items/gingerbread-leggings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hood Of Darkness | [items/hood-of-darkness.md](items/hood-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [items/pewen-boat.md](items/pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [items/pewen-chest-boat.md](items/pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -154,7 +158,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ⚠️ | Equipment | 4/6 (66.7%) | 4 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 19/21 (90.5%) | 19 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Items | 19/25 (76.0%) | 19 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 15/15 (100.0%) | 15 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
