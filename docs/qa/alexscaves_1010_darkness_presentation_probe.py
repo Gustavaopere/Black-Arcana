@@ -73,7 +73,10 @@ def inspect(jar: Path, javap: str, output: Path) -> dict:
             if any(t in short for t in ("Darkness", "Apple", "Cloak", "Hood")):
                 selected.add(owner)
         for uses in typed.values():
-            selected.update(owner for owner, d in uses.items() if d["direct_implementer"])
+            selected.update(uses.keys())
+        for owner in readers:
+            if owner.endswith(("/ACItemRegistry", "/ACServerConfig", "/ACEffectRegistry", "/ACArmorMaterial")):
+                selected.add(owner)
         score = {}
         for owner in selected:
             base = owner.rsplit("/", 1)[-1]
