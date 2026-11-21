@@ -9561,6 +9561,393 @@
           "reason": "Exact publisher bodies, factory selector, both item bindings and scaffolding tag replay."
         }
       }
+    },
+    "✅-alexs-caves-continued/items/burrowing-arrow.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Item and entity registration, two own item bodies, recipe and arrow tag."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Item creates the publisher projectile with owner. Dispenser uses the positional factory."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Base damage 3.5, dimension 0.5 by 0.5, extra piercing and bounded digging timer and counter."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Collision and native digging gates are documented separately from inherited entity impacts."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Recipe yields four arrows. Ammunition consumption and pickup remain caller outcomes."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "World write request, count and cleanup are independent of accepted destruction and hooks."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact six-class replay, entity and dispenser bodies, factories and resources."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/candy-cane-hook.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Item and entity registrations, thirteen item bodies, factory and recipe."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Native launch, retract, attachment, cleanup, motion and entity damage request."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Durability 200, dimensions, speed, gravity, damage and enchantment formulas."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Held stack, hand, owner, block hook, entity filters and GumWorm boundary."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Recipe and one durability request when commanding retraction on an eligible active stack."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Component UUID and reeling state, entity NBT, and native call boundaries; no mutating hook."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact publisher replay and linked enchantment and dispatcher contracts."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/pewen-boat.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "One shared item class, four distinct registry bindings, two entity forms and exact recipes."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Checks fluid-aware raycast, obstruction and collision then requests placement of the variant."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Stack limit 1, placement envelope, type, registry dimensions, inherited reference capacity."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Click location and obstruction query have distinct geometry; raycast uses player range in reference."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Recipe inputs and output, one-item debit request on server outside instabuild, possible drops."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Spawn acceptance, placement settlement and inherited container persistence are boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact publisher class and recipe replay, entity registry and bounded engine reference."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/pewen-chest-boat.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "One shared item class, four distinct registry bindings, two entity forms and exact recipes."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Checks fluid-aware raycast, obstruction and collision then requests placement of the variant."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Stack limit 1, placement envelope, type, registry dimensions, inherited reference capacity."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Click location and obstruction query have distinct geometry; raycast uses player range in reference."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Recipe inputs and output, one-item debit request on server outside instabuild, possible drops."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Spawn acceptance, placement settlement and inherited container persistence are boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact publisher class and recipe replay, entity registry and bounded engine reference."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/thornwood-boat.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "One shared item class, four distinct registry bindings, two entity forms and exact recipes."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Checks fluid-aware raycast, obstruction and collision then requests placement of the variant."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Stack limit 1, placement envelope, type, registry dimensions, inherited reference capacity."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Click location and obstruction query have distinct geometry; raycast uses player range in reference."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Recipe inputs and output, one-item debit request on server outside instabuild, possible drops."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Spawn acceptance, placement settlement and inherited container persistence are boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact publisher class and recipe replay, entity registry and bounded engine reference."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/thornwood-chest-boat.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "One shared item class, four distinct registry bindings, two entity forms and exact recipes."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Checks fluid-aware raycast, obstruction and collision then requests placement of the variant."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Stack limit 1, placement envelope, type, registry dimensions, inherited reference capacity."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Click location and obstruction query have distinct geometry; raycast uses player range in reference."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Recipe inputs and output, one-item debit request on server outside instabuild, possible drops."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Spawn acceptance, placement settlement and inherited container persistence are boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact publisher class and recipe replay, entity registry and bounded engine reference."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/cave-book.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Registry binding, three item bodies, recipe, advancement and 68 packaged page JSONs."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Requests client GUI and server usage signals, without a local progression grant."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Stack 1, uncommon rarity and local screen visibility states."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Hand stack and player own the use; page visibility reads local player progression."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Recipe inputs, no local decrement, distinction between use criterion and Codex cost."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Client interface and resource loading are presentation; Codex owns advancement requests."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact item, proxy, GUI and progress replay, and bounded publisher page census."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/systems/cave-info-item.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "CAVE_TABLET and CAVE_CODEX registry bindings, seven own bodies, BiomeTreatItem descendant."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Creates and decodes CaveBiome and uses the Codex branch to request progress."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Hidden or visible biome tooltip, research configuration and progression levels."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Recorded biome key selects a category for the using player's data."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "A successful Codex progress request can debit one item outside Creative, distinct from the tablet."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Native stack state and progression request, with engine and runtime authority pending."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact publisher body, factory and consumer replay, including progress and Spelunkery Table."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/cave-map.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Registry and recipe serializer, twelve own bodies and packaged map resources."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Starts server search, queues worker, fills biome samples, and may request regeneration."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "128-square sampling grid, 1800-tick check, 200-block horizontal threshold and search config."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Biome key and player root-vehicle position select the search; no combat targeting."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Recipe and custom component update, without local stack debit at map use."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Queue, worker tag and render handoff are bounded from runtime acceptance and persistence."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact item lifecycle, serialized state, recipe, scheduler and worker replay."
+        }
+      }
     }
   },
   "providers": {},

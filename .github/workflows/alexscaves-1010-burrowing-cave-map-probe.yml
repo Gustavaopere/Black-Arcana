@@ -1,12 +1,32 @@
-name: Alex's Caves 1.0.10 BurrowingArrow through CaveMap discovery
+name: Alex's Caves 1.0.10 BurrowingArrow through CaveMap contracts
 on:
   pull_request:
     branches: [main]
-    paths:
+    paths: &contract_paths
       - '.github/workflows/alexscaves-1010-burrowing-cave-map-probe.yml'
       - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
       - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe_test.py'
+      - 'docs/qa/alexscaves_1010_burrowing_cave_items_catalog.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-MAP-DISCOVERY-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-ARROW-ENTITY-DISCOVERY-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CANDY-CANE-HOOK-DISCOVERY-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CAVE-BOAT-DISCOVERY-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CAVE-BOOK-DISCOVERY-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-CONTRACT-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOOD-BUILDER-CONTRACT-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.*'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/burrowing-arrow.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/candy-cane-hook.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/*boat.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/cave-book.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/cave-map.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/cave-info-item.md'
+  push:
+    branches: [main]
+    paths: *contract_paths
   workflow_dispatch:
 permissions:
   contents: read
@@ -32,11 +52,18 @@ jobs:
           python3 docs/qa/alexscaves_1010_burrowing_cave_map_probe.py --jar build/burrowing-cave-map-1010/alexscaves-1.0.10.jar --javap "$JAVA_HOME/bin/javap" --output build/burrowing-cave-map-1010/report.json
       - name: Replay exact six-class discovery
         run: AC_SIX_REPORT=build/burrowing-cave-map-1010/report.json python3 docs/qa/alexscaves_1010_burrowing_cave_map_probe_test.py -v
+      - name: Reproduce item bindings, recipes, book census and consumer evidence
+        run: |
+          python3 docs/qa/alexscaves_1010_burrowing_cave_items_catalog.py \
+            --jar build/burrowing-cave-map-1010/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --discovery build/burrowing-cave-map-1010/report.json \
+            --output build/burrowing-cave-map-1010/catalog.json
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: alexscaves-1010-burrowing-cave-map-discovery
-          path: build/burrowing-cave-map-1010/report.json
+          path: build/burrowing-cave-map-1010/*.json
           retention-days: 14
           if-no-files-found: ignore
