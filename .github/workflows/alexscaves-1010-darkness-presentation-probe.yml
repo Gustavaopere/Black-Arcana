@@ -6,6 +6,9 @@ on:
     paths:
       - '.github/workflows/alexscaves-1010-darkness-presentation-probe.yml'
       - 'docs/qa/alexscaves_1010_darkness_presentation_probe.py'
+      - 'docs/qa/alexscaves_1010_darkness_presentation_static_checks.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/providers/INDEX.md'
   workflow_dispatch:
 
 permissions:
@@ -22,7 +25,9 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Validate probe syntax
-        run: python3 -m py_compile docs/qa/alexscaves_1010_darkness_presentation_probe.py
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_darkness_presentation_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_darkness_presentation_static_checks.py
       - name: Download exact publisher release
         run: |
           mkdir -p build/darkness-presentation-1010
@@ -35,6 +40,10 @@ jobs:
             --jar build/darkness-presentation-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output-dir build/darkness-presentation-1010/evidence
+      - name: Assert SHA-pinned presentation and Darkness pathways
+        run: |
+          python3 docs/qa/alexscaves_1010_darkness_presentation_static_checks.py \
+            --transcript-dir build/darkness-presentation-1010/evidence
       - name: Preserve bounded SHA-exact evidence
         if: always()
         uses: actions/upload-artifact@v7

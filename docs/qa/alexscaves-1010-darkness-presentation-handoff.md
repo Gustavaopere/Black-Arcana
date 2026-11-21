@@ -14,3 +14,7 @@ CI runs `docs/qa/alexscaves_1010_darkness_presentation_probe.py` against the pub
 - The two possible gear pieces and the apple effect must be separated by item identity, registry binding, owner, duration, amplifier, durability/charge, persistence and exact downstream consumption.
 - Static observations never prove accepted effects, packet authority, claim/PvP behavior, or a safe hook. Mutations remain `NO_MUTATION`; mutating hook `NOT_VERIFIED`; physical QA `NOT_TESTED`; provider universe `OPEN`.
 - Add object-specific technical cards and update all alphabetical indexes only after the evidence confirms the actual IDs and method contracts. No counter promotion from class-name discovery alone.
+
+## Consolidação de evidências
+
+Após a auditoria ampliada do run [44864573972](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44864573972), 18 transcrições de classes e 17 recursos JSON foram capturados. O [manifesto SHA-exato](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-PRESENTATION-DISCOVERY-1.0.10.json) registra hashes, as duas interfaces de apresentação e seus consumidores; as três [fichas de itens](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/INDEX.md) são ⚠️ parciais. O único efeito e cast Darkness Incarnate já consta do catálogo anterior; não houve nova raiz. O verificador de métodos/consumers confirma apenas caminhos estáticos, sem QA, hook ou mutação.
