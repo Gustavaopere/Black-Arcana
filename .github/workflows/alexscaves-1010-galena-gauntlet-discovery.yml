@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/alexscaves-1010-galena-gauntlet-discovery.yml'
       - 'docs/qa/alexscaves_1010_galena_gauntlet_discovery.py'
+      - 'docs/qa/alexscaves_1010_galena_gauntlet_static_checks.py'
       - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
       - 'docs/qa/alexscaves_1010_armor_material_audit.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
@@ -36,6 +37,18 @@ jobs:
             --jar build/galena-gauntlet-1010/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/galena-gauntlet-1010/report.json
+      - name: Verify SHA-exact method roster and reject wrong input
+        run: |
+          python3 docs/qa/alexscaves_1010_galena_gauntlet_static_checks.py \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-GAUNTLET-DISCOVERY-1.0.10.json' \
+            --report build/galena-gauntlet-1010/report.json
+          echo '{}' > build/galena-gauntlet-1010/bad.json
+          if python3 docs/qa/alexscaves_1010_galena_gauntlet_static_checks.py \
+              --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-GAUNTLET-DISCOVERY-1.0.10.json' \
+              --report build/galena-gauntlet-1010/bad.json; then
+            echo 'ERROR: malformed report was accepted'
+            exit 1
+          fi
       - name: Preserve full read-only evidence
         if: always()
         uses: actions/upload-artifact@v7
