@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "scope": "GAZING_PEARL_PUBLISHER_DISCOVERY_NOT_CERTIFIED",
+  "artifact": {
+    "name": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "new_installed_dump_comparison": "NOT_VERIFIED"
+  },
+  "report": {
+    "sha256": "d73959ca968bd23e57240d2fb3943e400362af9da92940af7343e93f47ff01c5",
+    "run_id": 44936198921,
+    "job_id": 136943226304,
+    "artifact_id": 14719307762,
+    "zip_sha256": "99adb9c94f95711e5cac1a80c8156a5476e467ddf5761e222ef2ec5a8592ce02",
+    "expires_at": "2026-12-05T18:34:09Z"
+  },
+  "classes": {
+    "com/github/alexmodguy/alexscaves/server/item/GazingPearlItem": {
+      "sha256": "2519bc5aed494deccc0423053ea42904314511094b29cd1e4025cc65a08a5a07",
+      "methods_count": 5,
+      "consumers_count": 3,
+      "fields_count": 0,
+      "methods": [
+        {
+          "name": "<init>",
+          "descriptor": "()V",
+          "instruction_count": 10,
+          "instruction_sha256": "9855503372dbefceae2aefd813b4fc60c88c3f3895aed40632eccc8f86207a89"
+        },
+        {
+          "name": "acInventoryTick",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+          "instruction_count": 46,
+          "instruction_sha256": "d07f91671a62a6f55fcdafe5621557736e1835c7e08113217c0048e33a181ad7"
+        },
+        {
+          "name": "appendHoverText",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+          "instruction_count": 38,
+          "instruction_sha256": "41a8d00ebb184327784103f4fb98e9b14dc7949da9e6096d0e27a499340e9886"
+        },
+        {
+          "name": "getPearlColor",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "instruction_count": 73,
+          "instruction_sha256": "e4bffbeaf3e572d06916a5e34bb84399f8114cf52c203cda0d2d67ebfac6c6cc"
+        },
+        {
+          "name": "shouldCauseReequipAnimation",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Z)Z",
+          "instruction_count": 16,
+          "instruction_sha256": "aa4589eb22574a8dadbc5071f2d0f4ca8f7fee81310fe7de6dd3efc97cb6ce4c"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/entity/util/DeepOneReaction": {
+      "sha256": "5898cd4286885ad85e92065f68bff883131e921af295b781b806e076ff1e54dc",
+      "methods_count": 9,
+      "consumers_count": 7,
+      "fields_count": 7,
+      "methods": [
+        {
+          "name": "$values",
+          "descriptor": "()[Lcom/github/alexmodguy/alexscaves/server/entity/util/DeepOneReaction;",
+          "instruction_count": 19,
+          "instruction_sha256": "1b0ea20410900248966ac40d6150c424bec065bcd24c8c002a53748507aaf64a"
+        },
+        {
+          "name": "<clinit>",
+          "descriptor": "()V",
+          "instruction_count": 35,
+          "instruction_sha256": "786bd2fd0be64f0fa84bf0eea158a87888e0cab7037e1018f6aba0a4aa2d0fe8"
+        },
+        {
+          "name": "<init>",
+          "descriptor": "(Ljava/lang/String;IDD)V",
+          "instruction_count": 11,
+          "instruction_sha256": "f8fca0ada13bc03f440375ec64160b3e9df2a31cf81b82f2bb5f63a04e41fab8"
+        },
+        {
+          "name": "fromReputation",
+          "descriptor": "(I)Lcom/github/alexmodguy/alexscaves/server/entity/util/DeepOneReaction;",
+          "instruction_count": 17,
+          "instruction_sha256": "8b4fa809042cc895400a7d9d52cf2b0746bb072a2a9c755a2e560151db9e9178"
+        },
+        {
+          "name": "getMaxDistance",
+          "descriptor": "()D",
+          "instruction_count": 3,
+          "instruction_sha256": "db4d24e6806b165b286c033ec938a9ca25b5a3cdb682bc47f61353a6ffb16bee"
+        },
+        {
+          "name": "getMinDistance",
+          "descriptor": "()D",
+          "instruction_count": 3,
+          "instruction_sha256": "d454b13a9c976a69dab2d36ebdfb09b840d2ca089f7189ad2f05c3547ff87de1"
+        },
+        {
+          "name": "validPlayer",
+          "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/entity/living/DeepOneBaseEntity;Lnet/minecraft/world/entity/player/Player;)Z",
+          "instruction_count": 31,
+          "instruction_sha256": "ca6cd089217d926f813485cef1c7c1005adf03e8e1b50e4f6563fc5229075f6a"
+        },
+        {
+          "name": "valueOf",
+          "descriptor": "(Ljava/lang/String;)Lcom/github/alexmodguy/alexscaves/server/entity/util/DeepOneReaction;",
+          "instruction_count": 5,
+          "instruction_sha256": "e35a62bab6ea59e9073a8cc5d3f5b145a5ef8daab4b7229c89b313edf6816b2f"
+        },
+        {
+          "name": "values",
+          "descriptor": "()[Lcom/github/alexmodguy/alexscaves/server/entity/util/DeepOneReaction;",
+          "instruction_count": 4,
+          "instruction_sha256": "65387671f17a702c9d8b9a6e05e6996d3ed52a5ad1aa763458d1ce5b84529267"
+        }
+      ]
+    }
+  },
+  "filename_matched_resources": {
+    "assets/alexscaves/models/item/gazing_pearl.json": {
+      "json": {
+        "parent": "minecraft:item/generated",
+        "textures": {
+          "layer0": "alexscaves:item/gazing_pearl"
+        }
+      },
+      "sha256": "a1fd223aa8c09ce52ff113c20cbeb6efec3f1b027297254f28c9303c43930d03",
+      "size": 108
+    },
+    "data/alexscaves/recipe/pearl_from_gazing_pearl.json": {
+      "json": {
+        "ingredients": [
+          {
+            "item": "alexscaves:gazing_pearl"
+          },
+          {
+            "item": "alexscaves:marine_snow"
+          }
+        ],
+        "result": {
+          "count": 1,
+          "id": "alexscaves:pearl"
+        },
+        "type": "minecraft:crafting_shapeless"
+      },
+      "sha256": "663ecb4f1b80e92a251e541e6a9b2c312efecccfd322f959d81ecc2e8b4e14d2",
+      "size": 282
+    }
+  },
+  "reputation_bands": [
+    {
+      "range": "<=-10",
+      "category": "AGGRESSIVE"
+    },
+    {
+      "range": "-9..10",
+      "category": "STALKING"
+    },
+    {
+      "range": "11..30",
+      "category": "NEUTRAL"
+    },
+    {
+      "range": ">=31",
+      "category": "HELPFUL"
+    }
+  ],
+  "limits": {
+    "static_contract": "PARTIAL",
+    "claim_scope": "STATIC_DISCOVERY_ONLY",
+    "mutation": "NO_MUTATION",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_certified_delta": 0
+  }
+}

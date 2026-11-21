@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/alexscaves-1010-gazing-pearl-discovery.yml'
       - 'docs/qa/alexscaves_1010_gazing_pearl_discovery.py'
+      - 'docs/qa/alexscaves_1010_gazing_pearl_static_checks.py'
       - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
       - 'docs/qa/alexscaves_1010_armor_material_audit.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
@@ -36,6 +37,18 @@ jobs:
             --jar build/gazing-pearl-1010/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/gazing-pearl-1010/report.json
+      - name: Verify immutable SHA-exact roster and reject malformed report
+        run: |
+          python3 docs/qa/alexscaves_1010_gazing_pearl_static_checks.py \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GAZING-PEARL-DISCOVERY-1.0.10.json' \
+            --report build/gazing-pearl-1010/report.json
+          echo '{}' > build/gazing-pearl-1010/bad.json
+          if python3 docs/qa/alexscaves_1010_gazing_pearl_static_checks.py \
+              --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GAZING-PEARL-DISCOVERY-1.0.10.json' \
+              --report build/gazing-pearl-1010/bad.json; then
+            echo 'FAIL: malformed input accepted'
+            exit 1
+          fi
       - name: Preserve full exact discovery evidence
         if: always()
         uses: actions/upload-artifact@v7
