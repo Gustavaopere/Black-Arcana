@@ -38,7 +38,7 @@ def name_body(method):
 
 
 def instructions(method):
-    return " ".join(row["symbol"] + " " + row["operand"]
+    return " ".join(row["opcode"] + " " + row["operand"] + " " + row["symbol"]
                     for row in method["instructions"])
 
 
