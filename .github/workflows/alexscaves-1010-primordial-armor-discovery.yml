@@ -8,6 +8,8 @@ on:
       - 'docs/qa/alexscaves_1010_primordial_armor_discovery_checks.py'
       - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
       - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/providers/INDEX.md'
   workflow_dispatch:
 permissions:
   contents: read
@@ -40,9 +42,11 @@ jobs:
       - name: Reject malformed report and confirm discovery-only limits
         run: |
           python3 docs/qa/alexscaves_1010_primordial_armor_discovery_checks.py \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-DISCOVERY-1.0.10.json' \
             --report build/primordial-armor-1010/report.json
           echo '{}' > build/primordial-armor-1010/bad.json
           if python3 docs/qa/alexscaves_1010_primordial_armor_discovery_checks.py \
+              --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-DISCOVERY-1.0.10.json' \
               --report build/primordial-armor-1010/bad.json; then
             echo 'FAIL: malformed Primordial evidence accepted'
             exit 1
