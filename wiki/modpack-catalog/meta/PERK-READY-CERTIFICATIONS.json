@@ -10507,6 +10507,49 @@
           "reason": "Exact replay of local item, projectile, explosion and accessor methods, registration and resources."
         }
       }
+    },
+    "✅-alexs-mobs-continued/actions/dimensional-carver-passage.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "version": "2.1.13",
+      "artifact_sha1": "50ddafdf3d12b33331e4eecb4ab514ae451baadd",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.md",
+          "reason": "Exact artifact, Carver factory and portal entity registration; separate Shattered identity."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.md",
+          "reason": "Use and channel order, portal creation, lifecycle, sister linking, dimensional and in-level transfer."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.md",
+          "reason": "1.5-block clip; use 200 ticks, movement threshold three, cooldowns 40/200, portal life 1200, geometry and destinations."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.md",
+          "reason": "Explicit volume queries, eligibility filters, positional shifts and queue treatment per entity kind."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.md",
+          "reason": "Recipe, Void Worm loot prerequisites, durability 20 and one damage requested at completion."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.md",
+          "reason": "Native queue and world policy boundaries documented, deployment reachability CONDITIONAL, mutating hook unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.md",
+          "reason": "Deterministic exact publisher replay of old lifecycle seal and added registry, item, portal, queue and data proof."
+        }
+      }
     }
   },
   "providers": {},

@@ -1,91 +1,100 @@
 # Dimensional Carver — Void Portal / Dimensional Passage
 
-- Provider: **Alex's Mobs Continued** (`alexsmobs`)
-- Version: `2.1.13`
-- Exact physical/publisher SHA-1: `50ddafdf3d12b33331e4eecb4ab514ae451baadd`
-- Owner item: `alexsmobs:dimensional_carver`
-- Semantic type: deliberate supernatural dimensional-traversal action
-- State: `CONDITIONAL`
+**Dossiê documental — 21/11/2026.** `technical_perk_dossier: 1`; objeto `ACTION`; identidade `alexsmobs:dimensional_carver`; tipo semântico: travessia dimensional deliberada. **Contrato técnico estático:** ✅ `STATIC_TECHNICAL_CATALOG_ONLY`, grau `SHA_EXACT_BINARY_BEHAVIOR`. **Alcançabilidade `CONDITIONAL`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; perk executável `NOT_CERTIFIED`; `NO_MUTATION`.** A certificação estática individual não altera a contagem semântica estrita nem homologa o provider integral ou um hook.
 
-## Identity and trigger
+Provider **Alex's Mobs Continued** (`alexsmobs`), versão **2.1.13**, Minecraft 1.21.1/NeoForge/Java 21. Autoridade desta ficha: publisher [CurseForge projeto 1635121/file 8856498](https://www.curseforge.com/minecraft/mc-mods/alexs-mobs-continued/files/8856498), `alexsmobs-2.1.13-neoforge+1.21.1.jar`, **27.452.738 bytes**, SHA-1 `50ddafdf3d12b33331e4eecb4ab514ae451baadd`, SHA-256 `eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8`. O publisher reconsultado coincide com o fingerprint físico histórico; não houve nova leitura de um perfil de jogo instalado. Metadata declara LGPL-3.0. A fonte pública 2.2.3 e releases posteriores não fornecem os parâmetros deste executável.
 
-The exact `ItemDimensionalCarver` path exposes a deliberate channel/use action. The provider resolves the portal attachment/destination surface and settles one dimensional-passage semantic root.
+Para o jogador, o item canaliza a abertura de um portal com destino derivado do respawn/fallback do provider. Isso é **uma** raiz de passagem dimensional. Vida do portal, entidade irmã, partículas, ticks, bloco afetado e transferências são parâmetros ou consequências dessa raiz, não novas magias.
 
-Portal entity ticks, particles, lifetime, destination coordinates and teleport lifecycle are downstream parameters/consequences, not additional spell identities.
+Evidências: [auditoria do artefato](../EXACT-2.1.13-ARTIFACT-AUDIT.md), [operandos existentes](../EXACT-CONTROL-OPERANDS-2.1.13.md), [selo de lifecycle de duas classes](../EXACT-CARVER-PORTAL-LIFECYCLE-2.1.13.json), [handoff do selo](../../../../../docs/qa/alexsmobs-213-carver-portal-lifecycle-handoff.md) e [contrato suplementar de execução](../EXACT-CARVER-EXECUTION-2.1.13.md). O último documento e seu [selo de execução](../EXACT-CARVER-EXECUTION-2.1.13.json) fecham o recorte estático dos métodos próprios, helpers de compatibilidade, factories/registro e fila externa; não convertem esse fechamento em QA física, hook seguro ou aceitação de efeitos em jogo. Somente fatos/operandos limitados e paráfrases; nenhum corpo de implementação ou asset é redistribuído nesta ficha.
 
-## Exact settlement
+## Sete campos do contrato
 
-The exact artifact closes provider behavior that:
+| Campo | Superfície exata e limite |
+|---|---|
+| 1. Identidade e versão | `com.github.alexthe666.alexsmobs.item.ItemDimensionalCarver` → `entity.EntityVoidPortal`; owner-item `alexsmobs:dimensional_carver`, distinto de `alexsmobs:shattered_dimensional_carver`. O construtor do portal recebe Level e **item**, não caster/UUID de proprietário. A identidade do item não cria autorização individual dos viajantes. |
+| 2. Entrada e callbacks | `use(Level,Player,InteractionHand)`, `onUseTick(Level,LivingEntity,ItemStack,int)`, `onPortalOpen(Level,LivingEntity,EntityVoidPortal,Direction)`, `releaseUsing/releaseUsingImpl`; downstream `EntityVoidPortal.tick`, setters de destino/facing/lifespan, criação/link de irmã e `teleportEntityFromDimension`. Registro, helpers e fila externa não devem ser substituídos por uma segunda execução Black Arcana. |
+| 3. Parâmetros/custos | Factory registrada `AMItemRegistry.lambda$static$91` (`<clinit> @1912–1923`, bootstrap #186): durabilidade **20**, raridade **EPIC**. Clip inicial 1,5 bloco, uso declarado 200 ticks, limiar de deslocamento quadrado>9, cooldowns 40/200, solicitação de 1 ponto de dano à durabilidade e vida inicial normal 1200. `getItemStackLimit=1`; `getXpRepairRatio=100.0f` é parâmetro de reparo, **não custo de XP de abertura**. Mana, escola, spell level, chance de sucesso e custo de XP próprios: **N/A**, não há esses consumidores no fluxo do item. |
+| 4. Targeting/geometria | Clip `Block.OUTLINE`/`Fluid.ANY`, posição armazenada no CustomData; portal consulta entidades em sua bounding box deflada por 0,20000000298023224 e acrescenta consulta própria de Void Worm na caixa inflada por1,5. Filtros são cooldown, agachar, classes/multipart e tag; não há filtro próprio de owner/caster. Distância do clip, raio da consulta e distância de viagem são grandezas distintas. |
+| 5. Settlement/autoria/procs | No ramo final servidor: cria/posiciona portal→facing→tenta spawn→`onPortalOpen`→durabilidade→cooldown→parada/limpeza. O retorno de `addFreshEntity` é descartado; a sequência não é transação de spawn aceito. Não há proc de dano, token de mastery ou cast ledger fornecido por esse item. |
+| 6. Persistência/cleanup | Item guarda `HASBLOCK` e `BLOCKX/Y/Z`; release e stop limpam esses valores. Portal sincroniza lifespan/destino/facing/shattered/sister UUID e possui métodos NBT. Presença de serialização não comprova reload correto, remoção pareada, ausência de órfãos ou atomicidade da fila. |
+| 7. Lado e fase | A criação final e a região de teleport do tick têm gates servidor. O uso mantém estado/apresentação nos lados chamados pelo host. `AMTeleportQueue` é settlement posterior de jogadores, consumido no tick de Level do servidor; bloco afetado, lifecycle e chamadas host precisam de análise própria de lado/ordem. Não há WorldEffectPolicy Black Arcana automático. |
 
-- ray-traces/resolves the portal attachment and destination surface;
-- creates `EntityVoidPortal`;
-- sets provider attachment/destination/dimension/lifespan state;
-- adds the portal entity to the level;
-- settles owner-item durability.
+## Entrada ordenada, âncora e cancelamento
 
-Black Arcana must not create a second portal or duplicate durability settlement.
+`ItemDimensionalCarver.use` examina o stack da mão solicitada: se `damageValue >= maxDamage`, retorna o fail do helper (`@7–25`); caso contrário inicia uso (`@28`) e chama `rayTracePortal(...,Fluid.ANY)` (`@36`). A clip vai dos olhos por **1,5 bloco** na direção de visão e usa outline de bloco. O método não contém um gate adicional de `HitResult.Type.BLOCK` antes de utilizar a posição devolvida; não exigir em documentação um hit de bloco que esse método não exige.
 
-## Exact recipe and dependency
+A posição candidata é a localização da clip menos 0,1×o vetor normal de `Direction.orderedByNearest(player)[0]`. Se `HASBLOCK` já está true, reutiliza `BLOCKX/Y/Z`; caso contrário grava a âncora e comita o tag pelo helper (`use @128–207`). `AMCompat.getOrCreateTag` lê CUSTOM_DATA e devolve `copyTag`/tag novo; alterar essa cópia só persiste no stack quando o código chama `setTag`. Não equiparar um CompoundTag local a estado já sincronizado ou persistido.
 
-The exact shaped recipe requires:
+Em cada `onUseTick`, há swing; a cada `remaining%5==0`, game event/som. A probabilidade 0,2 encontrada seleciona **partícula**, não sucesso do portal. O processamento de gameplay requer `HASBLOCK=true` (`@55–62`).
 
-- Void Worm Eye;
-- Void Worm Mandible;
-- Netherite.
-
-The exact provider loot surface supplies Void Worm Eye and Mandible from the Void Worm.
-
-## Reachability gate
-
-Because normal Void Worm reachability remains conditioned on deployed `voidWormSummonable` / `voidWormSpawnDimensions`, normal Dimensional Carver acquisition inherits that unresolved chain.
-
-The Carver action identity and its settlement are exact-current; the blocker is current normal reachability.
-
-## Disposition
-
-- exact action identity: closed;
-- exact recipe: closed;
-- owner loot dependency: closed to Void Worm;
-- current normal acquisition: conditional on the unresolved Void Worm summon path;
-- state: `CONDITIONAL`;
-- strict contribution from this root: **+0**.
-
-Source: `../EXACT-2.1.13-ARTIFACT-AUDIT.md`.
-
-## Matriz de execução e progressão (2026-10-29)
-
-Carver: **identidade executável provada no JAR exato**, mas obtenção normal requer Eye/Mandible do Void Worm — logo a contagem estrita herda o gate de summon/config. Verificar receita/loot efetivos, segurança do destino, lifespan de `EntityVoidPortal`, descarte após reload e débito de durabilidade em `AMC-D01..D02`. Não presumir `range` ou duração a partir do fonte público **2.2.3**. Mutadores **⛔ fail-closed**; BA não cria portal ou teleporte em paralelo. Veja [matriz de QA](../EXACT-ARTIFACT-PERK-QA-GATES-2.1.13.md).
-
-## Operandos de controle confirmados no JAR 2.1.13 (2026-10-31)
-
-- `ItemDimensionalCarver.rayTracePortal`: clip inicial de **1,5 bloco** a partir dos olhos (`ClipContext.Block.OUTLINE`); o `use` chama o método com `Fluid.ANY`. Não confundir com alcance total de travessia.
-- `getUseDuration`: **200 ticks**. `onUseTick` contém o limiar `distanceToSqr(caster, anchor) > 9.0d` (>3 blocos) e um caminho de cooldown de **40 ticks**.
-- Quando `remainingUseTicks == 1` no lado do servidor, o código tenta acrescentar `EntityVoidPortal`, chama `onPortalOpen`, aplica **1 ponto de dano à durabilidade** e adiciona cooldown de **200 ticks** ao jogador. Esses são caminhos de controle estáticos, não QA de sucesso/cardinalidade de spawn.
-- `onPortalOpen` atribui **1200 ticks** ao lifespan inicial. Destino depende do respawn dimension/position do `ServerPlayer` ou de fallback local; não há autorização documentada para alterar dimensões arbitrariamente.
-- `releaseUsingImpl` limpa `HASBLOCK` e `BLOCKX/Y/Z`. Duração efetiva, proteção de destino, lifecycle da entidade, multiplayer e hooks de mutação continuam pendentes.
-
-**Proveniência:** [mapa de bytecode SHA-exato](../EXACT-CONTROL-OPERANDS-2.1.13.md). Estado documental e hooks permanecem ⚠️ / ⛔, respectivamente; não promover índices sem o certificado exigido.
-
-## Ciclo de vida de EntityVoidPortal — selo estático publisher 2.1.13
-
-Evidência: [manifesto de duas classes com hashes, descritores, branches e janelas JVM](../EXACT-CARVER-PORTAL-LIFECYCLE-2.1.13.json) · [handoff com limites e interpretação causal](../../../../../docs/qa/alexsmobs-213-carver-portal-lifecycle-handoff.md). **Somente** o JAR instalado `alexsmobs-2.1.13-neoforge+1.21.1.jar`, SHA-256 `eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8`.
-
-### Parâmetros, fórmulas e eventos observados
-
-| Superfície da versão instalada | Prova JVM | Contrato estritamente permitido |
+| Ordem no tick | Decisão/efeito próprio | Consequência para o contrato |
 |---|---|---|
-| Criação pelo item | `ItemDimensionalCarver.onUseTick @265–375` | Instancia `EntityVoidPortal`, define posição/facing, tenta `addFreshEntity @327`, executa `onPortalOpen @341`, aplica durabilidade via `AMCompat.hurtAndBreak @351` e cooldown pelo provider. O retorno booleano de `addFreshEntity` é descartado por `pop @330`; não garante aceitação do spawn |
-| Vida atribuída ao abrir | `onPortalOpen: setLifespan(1200) @4` | **1200 ticks inicialmente**; não implica duração efetiva universal |
-| Fallback de vida | `EntityVoidPortal.tick: tickCount==1 @5–9; getLifespan @13; ifne @16; setLifespan(2000) @23` | **2000 ticks apenas se o lifespan estiver zero no primeiro tick**; não sobrescreve automaticamente o valor 1200 não nulo |
-| Redução/descartes | `tick: getLifespan @858; isub 1 @862; setLifespan @863; ifgt @928; remove(DISCARDED) @935` | Há caminho de decremento unitário e descarte quando lifespan fica não positivo |
-| Incremento condicional | `tick: instanceof EntityVoidWormPart @687; getLifespan @694; if_icmpge(22) @699; iadd 1 @708; setLifespan @709` | Existe caminho que adiciona 1 quando o lifespan está abaixo de 22, com demais gates ainda não reconstruídos |
-| Janela de ativação do portal | `tick: isClientSide @537; ifne @540; getDestination @553; ifnull @556; getLifespan @560; if_icmple 20 @565; tickCount @569; if_icmple 20 @574` | Consultas/teleportes nessa região são **server-side, com destino não nulo, vida >20 e idade >20 ticks** |
-| Alvos/transferência | `Entity.isOnPortalCooldown @627`; `EntityVoidPortal.teleportEntityFromDimension` consulta `AMTeleportQueue.PLAYERS`, aplica `setPortalCooldown` e referencia `ServerLevel.addFreshEntity` | Há filtros de entidade e caminho de movimentação entre dimensões; resultado físico, permissão, destino exato e idempotência não testados |
-| Estado sincronizado | `SynchedEntityData`: `LIFESPAN`, `DESTINATION`, `ATTACHED_FACE` e métodos `defineSynchedData`, `get/setLifespan`, `get/setDestination` | Campos da entidade têm acesso sincronizado, sem provar consentimento/autoridade de qualquer mod periférico |
-| Estado salvo | `addAdditionalSaveData` (67 instruções/3 branches), `readAdditionalSaveData` (86/5) | Existem caminhos NBT com `AttachFace`, `Lifespan`, `ExitDimension` e `DESTINATION`; QA de save/reload e reconexão **NÃO VERIFICADA** |
+| `@192–229` | Se distância quadrada caster–âncora>9, marca flag local de stop e, se Player, solicita cooldown 40 | >3 blocos é limiar de deslocamento do caster. **A flag não é testada como veto antes do próximo ramo final.** |
+| `@232–245` | Se remaining==1 e lado servidor, entra no ramo de abertura | Movimento>3 no mesmo tick não deve ser descrito como garantia de que nenhum portal será tentado. Registrar ordem; resultado físico não foi reproduzido. |
+| `@265–327` | Constrói portal, posiciona na âncora; facing é direção mais próxima oposta, com UP convertido a DOWN; tenta `addFreshEntity` | O booleano de spawn é descartado por `pop @330`; não há rollback ou gate de aceitação nesse callsite. |
+| `@341–375` | `onPortalOpen`; `AMCompat.hurtAndBreak(stack,1,caster,usedHand)`; marca stop; Player recebe cooldown 200 | A cobrança é solicitação ao host, posterior à tentativa de spawn. Cancelamento/alteração de durabilidade, quebra e custo final dependem do host. Não cobrar de novo no adapter. |
+| `@378–422` | Se flag stop, chama `stopUsingItem`, limpa HASBLOCK/coords e comita tag | A limpeza ocorre depois do ramo de abertura. `releaseUsing` também delega a `releaseUsingImpl`, que limpa a mesma âncora; multiplicidade/ordem dos callbacks host requer QA. |
 
-### Integração com perks e Mastery
+**N/A nesta entrada:** cast Iron's, mana, spell crit/dano, cooldown por escola, consumo de ingrediente da receita a cada uso e transferência arbitrária de coordenadas por um payload próprio. Não existe cálculo de dano do Carver para aplicar uma perk de dano diretamente.
 
-Permitir teoricamente uma perk que altere vida, destino, alcance do clip, cooldown ou custo de durabilidade exigiria **um boundary real do provider**, análise de owner/sidedness e testes de segurança em dimensões, claims e multiplayer. A presença de `setLifespan` e de acessores de `SynchedEntityData` **não demonstra que sejam pontos seguros de extensão**, tampouco permite que o RPG Skill Tree tome autoridade de criação/teleporte. Um adaptador Black Arcana não deve originar um segundo portal, invalidar gates da aquisição pelo Void Worm, nem replicar a cobrança nativa.
+## Destino, geometria e elegibilidade de viagem
 
-**Pendências explícitas:** lifecycle real da entidade em servidor modpack; destino/resolução dimensional e `AMTeleportQueue`; concorrência de travessia; redirecionamento PvP/claims; persistência/save/reload; mods que alteram dimensões; API/hook mutador. O item permanece **⚠️ parcial/condicionado** e **`static_perk_contract=NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`**. Os índices continuam em **0/3 contratos estáticos no recorte observado de Alex's Mobs**, sem alterar o denominador semântico.
+`onPortalOpen` normal solicita lifespan 1200 (`@4`). Começa com dimensão Overworld; usa sleeping position quando presente ou `currentLevel.getHeightmapPos(MOTION_BLOCKING,BlockPos.ZERO)` como fallback. Para `ServerPlayer`, troca a dimensão por `getRespawnDimension`; só troca a posição por `getRespawnPosition` se não-null. Escreve `exitDimension` e `setDestination(pos.above(2))` (`@7–98`). Não há aqui validação de cama/respawn seguro, claims, collision-free landing ou permissão de dimensão; esses resultados não podem ser inferidos do nome respawn. O fallback de posição pode ser calculado no Level atual e depois combinado com a dimensão de respawn: preservar a ordem, não reinterpretar como resolução vanilla completa do respawn.
+
+Na região de viagem de `EntityVoidPortal.tick`, gates próprios são **não-cliente**, destination!=null, lifespan>20 e idade>20 (`@537–574`). O destino geral é `destination.relative(attachmentFacing.getOpposite(),2)` (`@577–592`), e a posição de teleport usa centro do bloco (+0,5 em cada eixo). O ramo específico de `EntityVoidWorm` usa o centro do destination original, aplica cooldown e `resetPortalLogic`; não assumir que todo alvo usa a mesma fórmula.
+
+O registro VOID_PORTAL usa categoria `MISC`, dimensão **0,5×0,5** e `fireImmune` (`AMEntityRegistry.lambda$static$66`); isso não é range de viagem. A lista principal vem de `getEntities(this,bbox.deflate(0.20000000298023224))`; o método acrescenta a consulta de Void Worm em bbox.inflate1.5. Em `@625–682`, pula entidade com portal cooldown, agachada, outro VoidPortal, `AMCompat.isMultipart`, NeoForge `PartEntity` ou tipo em `alexsmobs:void_portal_ignores`. O tag publisher contém VoidPortal, End Crystal e Ender Dragon, `replace=false`; datapacks podem alterá-lo. A combinação de listas/filtros deve ser conservada, sem presumir que cada ramo de classe é alcançável por todos os alvos. **Não há gate de ser o caster, amigo, membro de party ou jogador consentido.**
+
+Quando exitDimension resolve para outro ServerLevel e passa a comparação de identidade de ResourceKey, chama o helper interdimensional; caso contrário segue o teleport local e aplica portal cooldown (`tick @754–850`). Uma dimensão nula/não resolvida não pode ser documentada como rejeição automática: o ramo local existe. Segurança de destino e resultado aceito continuam `NOT_TESTED`.
+
+## Transferência, fila e portal irmã
+
+- **ServerPlayer interdimensional:** `teleportEntityFromDimension @7–24` adiciona `Triple(player,destinationLevel,pos)` à `AMTeleportQueue.PLAYERS`; não executa a transferência inteira naquele callsite. Se não há sister UUID, tenta criar irmã (`@25–37`). O consumer selado `ServerEvents.onLevelTick` processa a fila sob gates servidor/ServerLevel, ajusta Y ao máximo entre o candidato e o heightmap `MOTION_BLOCKING_NO_LEAVES`, solicita teleport ao centro, ticket `POST_TELEPORT` nível 1 e sincronização de XP; limpa a lista após a iteração. Esses efeitos não são operações que Black Arcana deve repetir. Desconexão, identidade/conexão atual, falha parcial, reentrada e limpeza da fila precisam de settlement testado.
+- **Entidade não jogador:** faz `unRide`→`setLevel`→`AMCompat.create`; quando criação retorna entidade, `restoreFrom`→moveTo(center,rotations)→head rotation→portal cooldown→`destinationLevel.addFreshEntity` com resultado descartado. Depois remove a original com DISCARDED, inclusive no ramo create-null (`@43–138`). Isso descreve ordem estática, sem alegar viagem física bem-sucedida, perda reproduzida ou garantia transacional.
+- **Irmã/link:** `setDestination` pode criar irmã se UUID ausente e exitDimension nula/igual à dimensão atual; o caminho de jogador em outra dimensão também pode criá-la. `createAndSetSister` cria do registro VOID_PORTAL, configura facing/posição, chama `link`, define dimensão de retorno, tenta spawn sem usar retorno e copia shattered. `link` escreve UUIDs recíprocos, copia lifespan e destinos recíprocos. UUID de irmã **não é owner UUID**. Consulta de irmã no Level e NBT não provam cleanup pareado ou reconexão entre mundos.
+
+## Vida, persistência e efeito em blocos
+
+O portal normal inicia **shattered=false/lifespan 1200** no construtor por comparação de identidade do item; o mesmo `EntityVoidPortal` também serve ao **Shattered Dimensional Carver**, cuja configuração não deve ser importada como default do normal. `onPortalOpen` normal volta a atribuir 1200. Fallback 2000 no primeiro tick aplica-se apenas se lifespan está 0. Há decremento unitário e descarte quando o valor resultante não é positivo, além de um ramo de VoidWormPart que pode acrescentar 1 quando vida<22. Portanto 1200 não é prova de uma duração efetiva universal, especialmente com callbacks, reload e variantes.
+
+O helper **`clearObstructions` é um efeito real sobre bloco**, condicionado a `hasClearedObstructions=false`, `isShattered=true` e destination!=null. Marca o flag antes de solicitar `Level.destroyBlock(pos,true)`; o loop compilado visita **um candidato** `destination.offset(-1,-1,-1)`: cada eixo inicia −1 e o teste limite também é −1. Não descrever como volume 3×3×3. `tick` chama o helper quando idade>1 depois de recombinar os ramos; o helper próprio não acrescenta gate servidor, claim ou gamerule. Isso não prova que o host aceite destruição nem que proteção de terceiros seja contornada. **O portal normal false não passa esse gate shattered por default.** Alterar shattered num adapter ampliaria o contrato de mundo e não está autorizado.
+
+O selo anterior mostra `SynchedEntityData`, leitura/gravação NBT de facing/lifespan/destino/dimensão; o selo suplementar cobre os métodos próprios de shattered/sister UUID e delimita os campos que não são persistidos. `hasClearedObstructions` não é uma promessa de execução única entre reloads. Não há override próprio de remove/discard no roster que por si só prove remoção da irmã ou esvaziamento de fila. Save/reload, dimensão removida, portal órfão, retenção de referências e saída por falha continuam QA física.
+
+Teleporte, fila, tickets e eventual destruição de bloco tornam a integração **WORLD_AFFECTED**. Black Arcana mantém WorldEffectPolicy, consentimento e limites de dimensão/claim; nenhuma dessas políticas é chamada automaticamente pelos métodos acima. Não suprimir a pipeline nativa e recriar portais em paralelo para contornar um gate.
+
+## Receita, obtenção e contagem
+
+`data/alexsmobs/recipe/dimensional_carver.json`: shaped `MEM / ␠X␠ / ␠X␠`, **2 Void Worm Mandibles  + 1 Void Worm Eye  + 2 itens do tag `c:ingots/netherite`**, resultado 1 Carver. Não fixar o tag a um único item Netherite nem confundir receita com custo por uso. O loot publisher `entities/void_worm.json` contém 1 Eye e 2 Mandibles; loot/recipe efetivos podem receber overrides.
+
+Aquisição Survival normal depende da cadeia Capsid/Mysterious Worm→Void Worm, inclusive `voidWormSummonable`, `voidWormSpawnDimensions` e profundidade efetiva. Valores implantados/overrides não foram capturados nesta ficha. **Estado `CONDITIONAL`; contribuição semântica estrita desta raiz +0.** Configurar um certificado estático, quando a prova for suficiente, não removerá esse gate de alcançabilidade nem homologará gameplay físico.
+
+## Matriz de seams para perks
+
+| Eixo | API/parâmetro real | Limite de integração |
+|---|---|---|
+| Alcance/âncora | Clip 1,5; HASBLOCK e coordenadas; limiar de deslocamento>3 | Sem setter público específico de range/limiar. `NOT_VERIFIED`; não tomar CustomData copiado como autorização nem ignorar a ordem do stop. |
+| Tempo/custo | getUseDuration 200; cooldown 40/200; solicitação de durabilidade 1; repair ratio 100 | Valores distintos. Adapter `NOT_VERIFIED`; não reexecutar cobrança/cooldown, não tratar repair ratio como preço de cast. |
+| Vida/estado | `get/setLifespan`, `setDestination` overloads, `setAttachmentFacing`, `setShattered`, sister/link | APIs observadas, **não hooks seguros certificados**. `setDestination` pode criar irmã: não é simples edição isolada de coordenada. |
+| Target/viagem | Geometria, cooldown/crouch/class/tag; helper interdimensional e fila | `NOT_VERIFIED` para gating por jogador/owner, alcance de viagem, transporte de grupo, collision/claims e prioridade de outros mods. |
+| Dano/crit/projétil/mana | Nenhum consumidor próprio no fluxo descrito | **N/A**; não inventar multiplicador, resistência ou mana ledger para esta ação. |
+| Mundo/persistência | Bloco shattered, tickets, NBT, sister UUID, queue | `NOT_VERIFIED`; política imediatamente antes da mutação e cleanup final precisam de boundary real. Não aplicar efeitos do shattered ao Carver normal por conveniência. |
+| Mastery/autoria | Nenhum callback próprio de ação aceita; tentativa, spawn, irmã, viajantes e fila são etapas distintas | `NOT_VERIFIED`; não premiar ticks, teleport de cada entidade, irmã ou tentativa recusada como casts novos. Dedup exige identidade causal de uma ativação aceita. |
+
+## Plano de aceitação e estado final
+
+Todos os casos abaixo são **propostos; `physical_qa=NOT_TESTED`**. Instrumentar entrada/estado de stack, chamadas do provider, retornos de spawn, portais/UUIDs, fila, inventário/durabilidade, cooldown e posições finais; não testar apenas contagem de callsites. Usar servidor/cliente do pack e mundos de teste autorizados.
+
+| Caso | Estímulo e observação exigida | Critério de settlement |
+|---|---|---|
+| AMC-D01: entrada | Durabilidade abaixo/no máximo; MAIN/OFFHAND; clip hit/miss/fluid; âncora nova/existente; release antes do fim | Nenhum portal/custo extra por callback duplicado; âncora e mão finais coerentes; rejeição/aceitação observadas, sem inferir por partícula. |
+| AMC-D02: movimento/último tick | Distância quadrada abaixo/igual/acima 9, incluindo remaining 1 e cancelamento por troca de item/morte | Registrar ordem flag 40→tentativa final→cooldown 200→cleanup; não impor resultado que contradiga o código. Provar uma única cobrança nativa e estado final do item. |
+| AMC-D03: tentativa de spawn | Cancelar a aceitação de entidade por um hook de teste autorizado, separar onPortalOpen/custo/cooldown do retorno de addFreshEntity | Medir política real de falha/consumo; nenhum adapter reembolsa ou cria portal alternativo sem contrato; mastery não confunde tentativa e aceitação. |
+| AMC-D04: destino/targets | Respawn válido/ausente, dimensão resolvida/removida, fallback, bordas de volume; crouch/cooldown/tag/multipart; vários viajantes | Relatar destino realmente usado e resultado por alvo; nenhuma atribuição automática ao caster; política de mundo e consentimento verificados separadamente. |
+| AMC-D05: transferência | Jogador e não jogador, create-null/spawn recusado com fixture segura, conexão encerrada antes do consumo da fila | Contabilizar originais/cópias/filas/tickets/XP antes e depois; detectar falha parcial sem assumir atomicidade ou executar teleporte duplicado. |
+| AMC-D06: lifecycle | Irmã local/interdimensional, expiração, remoção, save/reload, restart e dimensão indisponível | Sem portal/fila órfãos não explicados; persistência dos campos comprovada; destino e duração medidos em vez de deduzidos de 1200. |
+| AMC-D07: normal/shattered | Confirmar normal false; em fixture autorizada separada da variante, observar o candidato único de clearObstructions e reload do flag | Limite de mundo preservado, sem generalizar 3×3×3; aceitar/cancelar bloco é decisão host/política testada, não inferida. |
+| AMC-D08: aquisição | Config efetiva do Void Worm e receitas/loot/tag após reload | Classificar alcançabilidade atual sem alterar a identidade estática; registrar overrides e manter CONDITIONAL enquanto faltar prova. |
+
+O **catálogo estático individual** fica fechado no recorte publisher 2.1.13 declarado na prova suplementar, com `STATIC_TECHNICAL_CATALOG_ONLY`/`SHA_EXACT_BINARY_BEHAVIOR`. Mutador, proteção de mundo e QA física permanecem eixos separados: `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, perk executável `NOT_CERTIFIED`. O provider integral continua aberto e a ação continua `CONDITIONAL`; nenhuma ampliação do denominador semântico decorre deste certificado. Alex's Mobs mantém item/portais/durabilidade/targets/fila; Black Arcana mantém sua progressão e WorldEffectPolicy, sem segundo spawn, teleporte, custo ou recompensa para o mesmo evento.

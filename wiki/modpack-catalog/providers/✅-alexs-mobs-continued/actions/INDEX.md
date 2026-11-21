@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 0/3.**
+**Fichas catalogadas (somente fichas detectadas): 1/3.**
 
-**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra das fichas catalogadas:** `██████░░░░░░░░░░░░░░ 33.3%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 0/3.**
+**Homologadas para perks (somente fichas detectadas): 1/3.**
 
-**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra dos contratos técnicos estáticos:** `██████░░░░░░░░░░░░░░ 33.3%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -20,7 +20,7 @@
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
-| ⚠️ | Dimensional Carver Passage | [ficha/dimensional-carver-passage.md](dimensional-carver-passage.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Dimensional Carver Passage | [ficha/dimensional-carver-passage.md](dimensional-carver-passage.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Item Transmutation | [ficha/item-transmutation.md](item-transmutation.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Void Worm Summoning | [ficha/void-worm-summoning.md](void-worm-summoning.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
