@@ -2,21 +2,21 @@
 
 > Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
 
-**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+**Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
 
-**Fichas catalogadas (somente fichas detectadas): 10/13.**
+**Fichas catalogadas (somente fichas detectadas): 13/13.**
 
-**Barra das fichas catalogadas:** `███████████████░░░░░ 76.9%`
+**Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 10/13.**
+**Homologadas para perks (somente fichas detectadas): 13/13.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 76.9%`
+**Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
-**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
+**Contratos desta subpasta:** ✅ contratos técnicos estáticos de todas as fichas detectadas certificados; recorte documental, sem homologação de hooks mutadores, QA físico ou universo integral do provider.
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
@@ -26,9 +26,9 @@
 | ✅ | Candy Cane Hook | [ficha/candy-cane-hook.md](candy-cane-hook.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Book | [ficha/cave-book.md](cave-book.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Map | [ficha/cave-map.md](cave-map.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Cloak Of Darkness | [ficha/cloak-of-darkness.md](cloak-of-darkness.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Darkened Apple | [ficha/darkened-apple.md](darkened-apple.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Hood Of Darkness | [ficha/hood-of-darkness.md](hood-of-darkness.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Cloak Of Darkness | [ficha/cloak-of-darkness.md](cloak-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Darkened Apple | [ficha/darkened-apple.md](darkened-apple.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Hood Of Darkness | [ficha/hood-of-darkness.md](hood-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [ficha/pewen-boat.md](pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [ficha/pewen-chest-boat.md](pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [ficha/thornwood-boat.md](thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |

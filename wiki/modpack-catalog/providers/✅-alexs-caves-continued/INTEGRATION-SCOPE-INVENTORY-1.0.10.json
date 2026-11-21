@@ -479,7 +479,7 @@
       "publisher_json_static_catalog_scope": "Exactly 51 data/alexscaves/enchantment/*.json resources in the SHA-exact publisher 1.0.10 artifact and 51 individual static contracts; not a whole-provider/runtime universe closure."
     },
     "integration_support": {
-      "documented_static_contracts": 14,
+      "documented_static_contracts": 15,
       "cards": [
         "systems/armor-material.md",
         "systems/client-extension.md",
@@ -494,7 +494,8 @@
         "systems/ticking-item.md",
         "systems/anvil-combination.md",
         "systems/scaffolding-placement.md",
-        "systems/cave-info-item.md"
+        "systems/cave-info-item.md",
+        "systems/custom-armor-post-render.md"
       ],
       "evidence": "EXACT-ARMOR-MATERIAL-1.0.10.md",
       "manifest": "EXACT-ARMOR-MATERIAL-1.0.10.json",
@@ -533,7 +534,8 @@
         "EXACT-SWING-CONTROL-ITEM-CONTRACT-1.0.10.md",
         "EXACT-TICKING-ITEM-CONTRACT-1.0.10.md",
         "EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
-        "EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md"
+        "EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+        "EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md"
       ],
       "related_manifests": [
         "EXACT-CLIENT-EXTENSION-1.0.10.json",
@@ -547,7 +549,8 @@
         "EXACT-SWING-CONTROL-ITEM-CONTRACT-1.0.10.json",
         "EXACT-TICKING-ITEM-CONTRACT-1.0.10.json",
         "EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.json",
-        "EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.json"
+        "EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.json",
+        "EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.json"
       ],
       "partial_cards": []
     },
@@ -562,9 +565,12 @@
         "items/thornwood-boat.md",
         "items/thornwood-chest-boat.md",
         "items/cave-book.md",
-        "items/cave-map.md"
+        "items/cave-map.md",
+        "items/darkened-apple.md",
+        "items/hood-of-darkness.md",
+        "items/cloak-of-darkness.md"
       ],
-      "documented_static_contracts": 10,
+      "documented_static_contracts": 13,
       "family_universe_closed": false,
       "evidence": "EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
       "manifest": "EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.json",
@@ -574,15 +580,17 @@
       "mutation": "NO_MUTATION",
       "related_evidence": [
         "EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md",
-        "EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md"
+        "EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.md",
+        "EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md"
       ],
       "related_manifests": [
         "EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.json",
-        "EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.json"
+        "EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.json",
+        "EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.json"
       ]
     }
   },
-  "next_alphabetical_uncovered_scope": "server/item/CustomArmorPostRender",
+  "next_alphabetical_uncovered_scope": "server/item/DesolateDaggerItem",
   "integration_support_inventory": {
     "source_inventory": "remaining_family_inventory.item_outer_classes",
     "scope": "REVIEWED_ALPHABETICAL_PREFIX_OF_PHYSICAL_ITEM_OUTER_CLASSES",
@@ -848,9 +856,56 @@
         "static_contracts_added": 1,
         "semantic_magic_roots_added": 0,
         "scope_note": "Registry and recipe serializer, twelve own bodies and packaged map resources. Starts server search, queues worker, fills biome samples, and may request regeneration. 128-square sampling grid, 1800-tick check, 200-block horizontal threshold and search config. Biome key and player root-vehicle position select the search; no combat targeting. Recipe and custom component update, without local stack debit at map use. Queue, worker tag and render handoff are bounded from runtime acceptance and persistence. Exact item lifecycle, serialized state, recipe, scheduler and worker replay."
+      },
+      {
+        "class": "server/item/CustomArmorPostRender",
+        "disposition": "INDIVIDUAL_STATIC_CONTRACT_CERTIFIED",
+        "card": "systems/custom-armor-post-render.md",
+        "evidence": "EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+        "manifest": "EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.json",
+        "additional_cards": 1,
+        "semantic_magic_roots_added": 0,
+        "scope_note": "Exact interface, descriptor, six concrete assignments and three executable type/member sites. Client mixin selects armor model, cancels baseline renderer and dispatches typed texture callback. Slot-specific texture map, eleven assets and glow and foil paths. Equipment slot and renderer wearer select the presentation target; no attack or hit. Rendering state and cache writes only; gameplay debits are inapplicable. Client presentation and resource resolution scope, with physical rendering pending. Whole publisher typed census, model dispatcher replay and texture digests.",
+        "static_contracts_added": 1
+      },
+      {
+        "class": "server/item/CustomTabBehavior",
+        "disposition": "PRESENTATION_SUPPORT_ONLY",
+        "card": null,
+        "evidence": "EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+        "manifest": "EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.json",
+        "additional_cards": 0,
+        "semantic_magic_roots_added": 0,
+        "scope_note": "One abstract tab callback and one typed consumer in ACCreativeTabRegistry.add, no assignable class across 1555 publisher classfiles. Creative-tab entries and fallback presentation only."
+      },
+      {
+        "class": "server/item/DarkenedAppleItem",
+        "disposition": "INDIVIDUAL_STATIC_CONTRACT_CERTIFIED",
+        "card": "items/darkened-apple.md",
+        "evidence": "EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+        "manifest": "EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.json",
+        "additional_cards": 0,
+        "semantic_magic_roots_added": 0,
+        "scope_note": "Exact item binding, two methods, published model, names, recipe and advancement. Checks active Darkness and stack FOOD; requests replacement and delegates food completion. Nutrition 4, saturation modifier 0.35F, alwaysEat, remaining duration plus 600 and existing amplifier. The consuming LivingEntity and its existing effect are the only targets. Recipe plus inherited requested one-unit consumption; no direct cooldown or mana cost. Effect replacement request and trigger precede inherited settlement; effective engine events unverified. Exact constructor and finish replay, resource hashes and pinned food and reference effect contracts.",
+        "static_contracts_added": 1
+      },
+      {
+        "class": "server/item/DarknessArmorItem",
+        "disposition": "INDIVIDUAL_STATIC_CONTRACT_CERTIFIED",
+        "card": null,
+        "cards": [
+          "items/hood-of-darkness.md",
+          "items/cloak-of-darkness.md"
+        ],
+        "evidence": "EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+        "manifest": "EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.json",
+        "additional_cards": 0,
+        "static_contracts_added": 2,
+        "semantic_magic_roots_added": 0,
+        "scope_note": "Two existing item bindings share one class. Hood owns the equipment condition. Cloak owns the charge; its prior action and effect keep their own contracts."
       }
     ],
-    "next_alphabetical_uncovered_scope": "server/item/CustomArmorPostRender",
+    "next_alphabetical_uncovered_scope": "server/item/DesolateDaggerItem",
     "family_universe_closed": false,
     "remaining_family_inventory_preserved": true,
     "typed_constant_pool_class_count": 1555,
@@ -859,15 +914,16 @@
     "mutation": "NO_MUTATION"
   },
   "completed_scope_checkpoint_scope": "HISTORICAL_SEQUENCE_THROUGH_PR_1122",
-  "current_completed_scope": "Six consecutive item symbols through CaveMapItem reviewed. Nine certified static contracts, including four CaveBoatItem variants, with three new cards and zero new magical roots. Provider OPEN.",
+  "current_completed_scope": "Four contiguous item classes through DarknessArmorItem reviewed. Four static contracts, including three existing item cards, and one presentation disposition. Provider OPEN.",
   "current_item_contract_checkpoint": {
-    "scope": "SIX_CAVE_ITEM_SYMBOLS_IN_EXISTING_ALPHABETICAL_REVIEW",
-    "provider_observed_static_contracts": 105,
-    "provider_observed_cards": 105,
-    "integration_support_contracts": 14,
-    "concrete_item_contracts": 10,
+    "scope": "PRESENTATION_AND_DARKNESS_ITEM_SYMBOLS_IN_EXISTING_ALPHABETICAL_REVIEW",
+    "provider_observed_static_contracts": 109,
+    "provider_observed_cards": 109,
+    "integration_support_contracts": 15,
+    "concrete_item_contracts": 13,
+    "presentation_dispositions_added": 1,
     "semantic_magic_roots_added": 0,
     "whole_provider_catalog_closed": false,
-    "next_scope": "server/item/CustomArmorPostRender"
+    "next_scope": "server/item/DesolateDaggerItem"
   }
 }

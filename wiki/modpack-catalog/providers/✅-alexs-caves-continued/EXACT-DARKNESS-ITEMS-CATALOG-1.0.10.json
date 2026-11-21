@@ -1,0 +1,1910 @@
+{
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "version": "1.0.10"
+  },
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "food_profile": {
+    "effects": [],
+    "flags": [
+      "alwaysEat"
+    ],
+    "nutrition": 4,
+    "saturation_modifier": {
+      "bits_hex": "3eb33333",
+      "value": 0.3499999940395355
+    },
+    "segment_sha256": "c69c2635ad749a12cf8f55c20c8a51c8c42b7ad9ed174469ac57645e6166bc9f",
+    "sound": null,
+    "write_offset": 554
+  },
+  "mutating_hook": "NOT_VERIFIED",
+  "mutation": "NO_MUTATION",
+  "native": {
+    "armor_texture_literals": {
+      "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem": [
+        "textures/armor/darkness_armor.png"
+      ],
+      "com/github/alexmodguy/alexscaves/server/item/DivingArmorItem": [
+        "textures/armor/diving_suit_0.png",
+        "textures/armor/diving_suit_1.png"
+      ],
+      "com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem": [
+        "textures/armor/gingerbread_armor_0.png",
+        "textures/armor/gingerbread_armor_1.png"
+      ],
+      "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem": [
+        "textures/armor/hazmat_suit_0.png",
+        "textures/armor/hazmat_suit_1.png"
+      ],
+      "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem": [
+        "textures/armor/primordial_armor_0.png",
+        "textures/armor/primordial_armor_1.png"
+      ],
+      "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem": [
+        "textures/armor/rainbounce_boots.png"
+      ]
+    },
+    "class_entries_scanned": 1555,
+    "class_path_roster_sha256": "2296d31ecc7fabb375922b8ad23c7a25c3e969bdfd80d5e1aa602034ae5d62ed",
+    "consumers": {
+      "AlexsCaves": {
+        "class_sha256": "4f4dce8345d5161b2aa9f22aa5b859bcfc4611219a82480bd2856558442e0abe",
+        "methods": [
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "7a42f665873a7e05d8d1005355b47afe8267f8276627663a985e910909192a20",
+              "code_size": 424,
+              "descriptor": "()V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 4,
+              "name": "<init>"
+            },
+            "instruction_count": 162,
+            "instruction_sha256": "e9a0da3992d31091a2134c63958bdfde7be3a6b8f8609ceb1ce3f6c4bcf6561f"
+          }
+        ]
+      },
+      "client/render/item/ACArmorRenderProperties": {
+        "class_sha256": "bcb780ec718c8f07cabe34d2f054ff546eb7d5529d3f0d7fa7a11aaaad08f729",
+        "methods": [
+          {
+            "declaration": {
+              "access": 9,
+              "code_sha256": "f65f0c8195d252849ce0829005a6e211586d1da146abd4eee7253e5514dd8eec",
+              "code_size": 95,
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 1,
+              "name": "getACArmorModelBase"
+            },
+            "instruction_count": 41,
+            "instruction_sha256": "869cf27339be87b5b132d627ad041fe1781ae4a6f64b4923cd9616871a4c4886"
+          },
+          {
+            "declaration": {
+              "access": 9,
+              "code_sha256": "f1b69a1acdb31e387cee173f98cc6c2e4c8f84ea1331580f81800f992dc8b464",
+              "code_size": 212,
+              "descriptor": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item;Lnet/minecraft/client/model/Model;ZLnet/minecraft/resources/ResourceLocation;)V",
+              "exception_handlers": [],
+              "max_locals": 10,
+              "max_stack": 9,
+              "name": "renderCustomArmor"
+            },
+            "instruction_count": 95,
+            "instruction_sha256": "d41ffa91ae7b25da5fdbe02750fe3c8bff5ea047bd6e9e54d76b94672ddafbf3"
+          }
+        ]
+      },
+      "mixin/client/HumanoidArmorLayerMixin": {
+        "class_sha256": "383fbea50413635447bb3fdbf77f06298007f42e3254e40d5ef0b94a8277e048",
+        "methods": [
+          {
+            "declaration": {
+              "access": 8,
+              "code_sha256": "47a276336496d101f897ae50f18a2d912d3e67c157a84144b823c7767e9aee16",
+              "code_size": 7,
+              "descriptor": "()V",
+              "exception_handlers": [],
+              "max_locals": 0,
+              "max_stack": 1,
+              "name": "<clinit>"
+            },
+            "instruction_count": 3,
+            "instruction_sha256": "c811c4289ca24e8918771fbf2cec3fa3598ab1d965c09d18d764929f7f7cb664"
+          },
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "9d7861a2d8595027252da7e1b5d61641f50c3f7670485e8db6bf1f298eb3e35e",
+              "code_size": 13,
+              "descriptor": "(Lnet/minecraft/client/renderer/entity/RenderLayerParent;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 2,
+              "name": "<init>"
+            },
+            "instruction_count": 7,
+            "instruction_sha256": "8ec96b2fcee47d5ae91aad408c16dc6cba36390665a698da144b2efe61dff5f3"
+          },
+          {
+            "declaration": {
+              "access": 2,
+              "code_sha256": "0bb91495288cae68b7c1c8bad7f4db3a73c1e80f7977035ad1b532e28f137609",
+              "code_size": 186,
+              "descriptor": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;ILnet/minecraft/client/model/HumanoidModel;FFFFFFLorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+              "exception_handlers": [],
+              "max_locals": 21,
+              "max_stack": 8,
+              "name": "ac_renderArmorPiece"
+            },
+            "instruction_count": 86,
+            "instruction_sha256": "560864fe38069261233ae484e783d0d730e8ad2f349384730acb2b5900f8d4ae"
+          },
+          {
+            "declaration": {
+              "access": 2,
+              "code_sha256": "2c5a71f8a22b8c0cf4426b1d3383c6d487110881e58d8dc6f5aa47714b9a66bb",
+              "code_size": 62,
+              "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+              "exception_handlers": [],
+              "max_locals": 7,
+              "max_stack": 5,
+              "name": "getACArmorResource"
+            },
+            "instruction_count": 26,
+            "instruction_sha256": "e97abdede25641a93933d87fc7c26f45158eb80bd131ba618468a9eab294a72a"
+          }
+        ]
+      },
+      "server/config/ACServerConfig": {
+        "class_sha256": "67abf51943537e735a08c268607ca08901c2b197f0b278fa4b464887d40ea129",
+        "methods": [
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "0e4a5c47822fb684a6043bc9d0e8ea242b1dbfda16b92f351194eece564a1e97",
+              "code_size": 1096,
+              "descriptor": "(Lnet/neoforged/neoforge/common/ModConfigSpec$Builder;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 9,
+              "name": "<init>"
+            },
+            "instruction_count": 502,
+            "instruction_sha256": "adf9b64260fd197722e98299ccda246247673eef009850393310d94c2f8b71f0"
+          }
+        ]
+      },
+      "server/item/ACItemRegistry": {
+        "class_sha256": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+        "methods": [
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "050f52ecb79c931c3a455149c9f7537653be12d3fc22fe11bf940b207da78dea",
+              "code_size": 14,
+              "descriptor": "()Lnet/minecraft/world/item/Item;",
+              "exception_handlers": [],
+              "max_locals": 0,
+              "max_stack": 4,
+              "name": "lambda$static$134"
+            },
+            "instruction_count": 6,
+            "instruction_sha256": "dda5cd0097ef451e47a32876dcf0a0a69a24fd78afe0260d3124f63c5ffd76a4"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "4ab51a5f80296bb82149e023b386ab8fd56f442c07762060aac3ed6ae44f911f",
+              "code_size": 14,
+              "descriptor": "()Lnet/minecraft/world/item/Item;",
+              "exception_handlers": [],
+              "max_locals": 0,
+              "max_stack": 4,
+              "name": "lambda$static$135"
+            },
+            "instruction_count": 6,
+            "instruction_sha256": "a77382a0a5971b85c55902bbf49e4bdc0af13a90ff585ce4602ce5c0c2192c00"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "4804ddcbcc419efb87881c1f26eab54e769a43cb3ca100a843c21b0cbbc8893e",
+              "code_size": 8,
+              "descriptor": "()Lnet/minecraft/world/item/Item;",
+              "exception_handlers": [],
+              "max_locals": 0,
+              "max_stack": 2,
+              "name": "lambda$static$136"
+            },
+            "instruction_count": 4,
+            "instruction_sha256": "1da9c22a744990ae12535d251c29f66a4c76f3a56ab4ab5631820c3dc6020a65"
+          }
+        ]
+      },
+      "server/misc/ACAdvancementTrigger": {
+        "class_sha256": "50a5b3f08325022841aadd3bff0030a5019d52601b222bb60ff3a09ea4755135",
+        "methods": [
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "c0553c13c93e7a6ddbc0095ca3d1fdf0a86281ac21c824e9d5d83fd544809090",
+              "code_size": 18,
+              "descriptor": "(Lnet/minecraft/world/entity/Entity;)V",
+              "exception_handlers": [],
+              "max_locals": 3,
+              "max_stack": 2,
+              "name": "triggerForEntity"
+            },
+            "instruction_count": 10,
+            "instruction_sha256": "692a99cb9af0b7290b6666610d34667e4365c80c052070dbc06e86af8a4e1d4f"
+          }
+        ]
+      },
+      "server/misc/ACAdvancementTriggerRegistry": {
+        "class_sha256": "9eafc06678aec5865c565c50ebda0b8ec2041bf3a3a955fd7b881f8d6234e3ce",
+        "methods": [
+          {
+            "declaration": {
+              "access": 8,
+              "code_sha256": "23a42e20a70f2d53047e67da843d42a1f664e7e0c56846e8dd917b3b89c8b3b2",
+              "code_size": 610,
+              "descriptor": "()V",
+              "exception_handlers": [],
+              "max_locals": 4,
+              "max_stack": 4,
+              "name": "<clinit>"
+            },
+            "instruction_count": 285,
+            "instruction_sha256": "032d04beeeb7983884a8eaa305349d2c4fdaf422d5ea14e28a69649433204762"
+          }
+        ]
+      },
+      "server/misc/ACCreativeTabRegistry": {
+        "class_sha256": "e73ea47bee91ada022b06c5c73eebf454f68cfe769bbc7e7a22b2561cc23822d",
+        "methods": [
+          {
+            "declaration": {
+              "access": 10,
+              "code_sha256": "bbe1c5da7c3fc4135beaa496f52d1e77abecc4cd1a988a001d2d239c7ee97512",
+              "code_size": 30,
+              "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$Output;Lnet/minecraft/world/level/ItemLike;)V",
+              "exception_handlers": [],
+              "max_locals": 3,
+              "max_stack": 2,
+              "name": "add"
+            },
+            "instruction_count": 14,
+            "instruction_sha256": "e7d6833a90f7f35458f5239bed9d473a83212dd2096a77c67fecb67ec4c1f295"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "1fd15f2373ea503ec776fffb3c50d59fd6c373eba94d1693c06b2af6e0af8c7b",
+              "code_size": 14,
+              "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$Output;Ljava/util/function/Supplier;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 2,
+              "name": "lambda$static$1"
+            },
+            "instruction_count": 6,
+            "instruction_sha256": "a4da99f5d1e5f7aeacbf6bdd713f5adac03e45b2756802e79940e01894ce5876"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "4a6ee5775221aa148147d7baedc4aa322f92ac71ff99476dccb039250004171e",
+              "code_size": 1419,
+              "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$ItemDisplayParameters;Lnet/minecraft/world/item/CreativeModeTab$Output;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 3,
+              "name": "lambda$static$10"
+            },
+            "instruction_count": 473,
+            "instruction_sha256": "25430039f8c2c47dca8aedfc929161eebe4d0fcecd190244fd82033ce430cad5"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "4c89694b48d63b0dd586e4e4b2b27d2e9febb2c9fc16837a2a0a43fd538de461",
+              "code_size": 61,
+              "descriptor": "()Lnet/minecraft/world/item/CreativeModeTab;",
+              "exception_handlers": [],
+              "max_locals": 0,
+              "max_stack": 5,
+              "name": "lambda$static$11"
+            },
+            "instruction_count": 25,
+            "instruction_sha256": "0501bca85f224cfeb949a8944f3d0e8d3b37685a3b4bf5eb3b59efc6d4bc899c"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "1fd15f2373ea503ec776fffb3c50d59fd6c373eba94d1693c06b2af6e0af8c7b",
+              "code_size": 14,
+              "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$Output;Ljava/util/function/Supplier;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 2,
+              "name": "lambda$static$13"
+            },
+            "instruction_count": 6,
+            "instruction_sha256": "a4da99f5d1e5f7aeacbf6bdd713f5adac03e45b2756802e79940e01894ce5876"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "af594c86ba85f8f91b86614d79bd0a7cf814f03ed32e83f12b1a88b96bcc2290",
+              "code_size": 1390,
+              "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$ItemDisplayParameters;Lnet/minecraft/world/item/CreativeModeTab$Output;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 3,
+              "name": "lambda$static$14"
+            },
+            "instruction_count": 458,
+            "instruction_sha256": "03ac93e1167967bdd54e1703473a4725d289e9f5d9ab35d2eec268b2e0a9a391"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "5d28b6fbaaab4838dac39a9840c0165a01f57cd8dcae61651fe7af40e39a397d",
+              "code_size": 61,
+              "descriptor": "()Lnet/minecraft/world/item/CreativeModeTab;",
+              "exception_handlers": [],
+              "max_locals": 0,
+              "max_stack": 5,
+              "name": "lambda$static$15"
+            },
+            "instruction_count": 25,
+            "instruction_sha256": "16ce4824d38ac25dc46dd5a50f8d4662f49985633264619730d1ed390f85d245"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "1fd15f2373ea503ec776fffb3c50d59fd6c373eba94d1693c06b2af6e0af8c7b",
+              "code_size": 14,
+              "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$Output;Ljava/util/function/Supplier;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 2,
+              "name": "lambda$static$17"
+            },
+            "instruction_count": 6,
+            "instruction_sha256": "a4da99f5d1e5f7aeacbf6bdd713f5adac03e45b2756802e79940e01894ce5876"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "9cefa23845615c7c5eb85f6c3c0002f5508f27ebb743b3dcea41cbe7ccba0f55",
+              "code_size": 1270,
+              "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$ItemDisplayParameters;Lnet/minecraft/world/item/CreativeModeTab$Output;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 3,
+              "name": "lambda$static$18"
+            },
+            "instruction_count": 420,
+            "instruction_sha256": "68c20ce23c8b221b4d6644268d55ad54d18a8f2f6e75a25515963410178594c0"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "91a267056790753a1caa392400768d0b426efd0cddbf67719db441f8c39d9a91",
+              "code_size": 61,
+              "descriptor": "()Lnet/minecraft/world/item/CreativeModeTab;",
+              "exception_handlers": [],
+              "max_locals": 0,
+              "max_stack": 5,
+              "name": "lambda$static$19"
+            },
+            "instruction_count": 25,
+            "instruction_sha256": "762af4a028b47cb63e02ead8cb787dbfb1174776ad92bd0691d0591bf0ca09de"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "403f43295cfe1ebb9f71fc5af3f141736e5a38da8f9055e3fd6558fc8eab3944",
+              "code_size": 992,
+              "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$ItemDisplayParameters;Lnet/minecraft/world/item/CreativeModeTab$Output;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 3,
+              "name": "lambda$static$2"
+            },
+            "instruction_count": 328,
+            "instruction_sha256": "fcde3f4e6f6265885889b18e9b0d6a6621f67d46473ae3582a16d6427b1324ad"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "1fd15f2373ea503ec776fffb3c50d59fd6c373eba94d1693c06b2af6e0af8c7b",
+              "code_size": 14,
+              "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$Output;Ljava/util/function/Supplier;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 2,
+              "name": "lambda$static$21"
+            },
+            "instruction_count": 6,
+            "instruction_sha256": "a4da99f5d1e5f7aeacbf6bdd713f5adac03e45b2756802e79940e01894ce5876"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "c43d1cfbc0fb2efd284f7d75f30f232e5038ddfa264a58d5253e0164cb599c5d",
+              "code_size": 2109,
+              "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$ItemDisplayParameters;Lnet/minecraft/world/item/CreativeModeTab$Output;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 3,
+              "name": "lambda$static$24"
+            },
+            "instruction_count": 699,
+            "instruction_sha256": "73a7aef34c1abcaaa86268fb516d451b75dea372bfb0a87c99540f544eb3cb75"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "7e72746684f28595f0b83d4356623f1a921edff7af25b14c0495a03fb28d366e",
+              "code_size": 59,
+              "descriptor": "()Lnet/minecraft/world/item/CreativeModeTab;",
+              "exception_handlers": [],
+              "max_locals": 0,
+              "max_stack": 5,
+              "name": "lambda$static$25"
+            },
+            "instruction_count": 25,
+            "instruction_sha256": "c3fa5eb5b42e214455ded359f7b6dc506be3e518d4668055971c0898626c6ab3"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "077e20c6c6a7e4604efe06acc4059bbfacc9c9cffdbdfaacd6c04f243f2c54a9",
+              "code_size": 45,
+              "descriptor": "()Lnet/minecraft/world/item/CreativeModeTab;",
+              "exception_handlers": [],
+              "max_locals": 0,
+              "max_stack": 5,
+              "name": "lambda$static$3"
+            },
+            "instruction_count": 17,
+            "instruction_sha256": "291ec8fa29344fd2b6a01d354f2f5b89b562773137da97fd58260ef9064143f2"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "1fd15f2373ea503ec776fffb3c50d59fd6c373eba94d1693c06b2af6e0af8c7b",
+              "code_size": 14,
+              "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$Output;Ljava/util/function/Supplier;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 2,
+              "name": "lambda$static$5"
+            },
+            "instruction_count": 6,
+            "instruction_sha256": "a4da99f5d1e5f7aeacbf6bdd713f5adac03e45b2756802e79940e01894ce5876"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "69e98700f7663a6fd0f21cf35d6c7ca5dd8323ae88768513703ca655b55c1691",
+              "code_size": 1697,
+              "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$ItemDisplayParameters;Lnet/minecraft/world/item/CreativeModeTab$Output;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 3,
+              "name": "lambda$static$6"
+            },
+            "instruction_count": 567,
+            "instruction_sha256": "0374fff8ae0959e4937755b56e6853048a0371d74b06ca166a3f7918c68e7a5c"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "8778484b81afe5f8c048b1f4a277d935c6b0794abaef4f05991d0788ae8c1452",
+              "code_size": 61,
+              "descriptor": "()Lnet/minecraft/world/item/CreativeModeTab;",
+              "exception_handlers": [],
+              "max_locals": 0,
+              "max_stack": 5,
+              "name": "lambda$static$7"
+            },
+            "instruction_count": 25,
+            "instruction_sha256": "11b68c8dae2856e752ea96bb2e84bbb0ef93bd10260a376ae2787dc4cb79eb54"
+          },
+          {
+            "declaration": {
+              "access": 4106,
+              "code_sha256": "1fd15f2373ea503ec776fffb3c50d59fd6c373eba94d1693c06b2af6e0af8c7b",
+              "code_size": 14,
+              "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$Output;Ljava/util/function/Supplier;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 2,
+              "name": "lambda$static$9"
+            },
+            "instruction_count": 6,
+            "instruction_sha256": "a4da99f5d1e5f7aeacbf6bdd713f5adac03e45b2756802e79940e01894ce5876"
+          }
+        ]
+      },
+      "server/potion/DarknessIncarnateEffect": {
+        "class_sha256": "b591db32bebd79410b62e140f649b194cab3248109e5e6d0f05b855e97f247eb",
+        "methods": [
+          {
+            "declaration": {
+              "access": 4,
+              "code_sha256": "a9bb9be645a35dc6ad9751258d125cf17c4fff3b19968d06fc2c006b9bb4873f",
+              "code_size": 20,
+              "descriptor": "()V",
+              "exception_handlers": [],
+              "max_locals": 1,
+              "max_stack": 3,
+              "name": "<init>"
+            },
+            "instruction_count": 11,
+            "instruction_sha256": "30cc2f2d72ad15561193cf9a75154b61dd7b5881415386f2dfdc63284b3ae32c"
+          },
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "846dfe59097a4ab2e6691e159f80dca08ae1d76cd53dd589393c8ff8d3a3d53b",
+              "code_size": 10,
+              "descriptor": "()I",
+              "exception_handlers": [],
+              "max_locals": 1,
+              "max_stack": 2,
+              "name": "getActiveTime"
+            },
+            "instruction_count": 6,
+            "instruction_sha256": "39e1e0301db0edcd48bf9d02afbfb8b9033d8ea2f142c99555fe329bc414cdea"
+          },
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "292c308ac4421678191526089a41b3c981bfb8caab8add8bec926f33b62d4f83",
+              "code_size": 4,
+              "descriptor": "()Ljava/util/List;",
+              "exception_handlers": [],
+              "max_locals": 1,
+              "max_stack": 1,
+              "name": "getCurativeItems"
+            },
+            "instruction_count": 2,
+            "instruction_sha256": "60e1a2f88054fd6ac7cf8f871970623f8ea52cd3b97d3d4b2516b7e55e712aca"
+          },
+          {
+            "declaration": {
+              "access": 9,
+              "code_sha256": "0809372ce7a9f2a339841d3a24787136462470563bb9ccff82726c14e9d23303",
+              "code_size": 79,
+              "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;FF)F",
+              "exception_handlers": [],
+              "max_locals": 7,
+              "max_stack": 4,
+              "name": "getIntensity"
+            },
+            "instruction_count": 41,
+            "instruction_sha256": "c18a2b9fb844ad0cf91e94fc84f6954a0de5ce0f57f73dd622e407089a846e96"
+          },
+          {
+            "declaration": {
+              "access": 2,
+              "code_sha256": "754254be3dd59e065a48231d19449a0d30bd0f0868dc596bbe95706b246b13f7",
+              "code_size": 32,
+              "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+              "exception_handlers": [],
+              "max_locals": 3,
+              "max_stack": 1,
+              "name": "isCreativePlayer"
+            },
+            "instruction_count": 16,
+            "instruction_sha256": "f065dbed29e5ffe8f8ddcda318ae2902c93459833e2d02f6a8238732bdd5811a"
+          },
+          {
+            "declaration": {
+              "access": 9,
+              "code_sha256": "b27d1f303f8f1373cf92d187fba55b03ce6ac72ca7e3e4707b31938a35b71470",
+              "code_size": 56,
+              "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;I)Z",
+              "exception_handlers": [],
+              "max_locals": 4,
+              "max_stack": 3,
+              "name": "isInLight"
+            },
+            "instruction_count": 29,
+            "instruction_sha256": "a4b6c9b861daba0d97e3dd09d3b2f1054b5f46b0f97081efd93f4b1e38fc639a"
+          },
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "3452fe3adb29dba1055ac86c733aa1c03601472494945c3cbacdbf3f34096562",
+              "code_size": 17,
+              "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 3,
+              "name": "onEffectEnd"
+            },
+            "instruction_count": 11,
+            "instruction_sha256": "c1983bf671d66b3f7d8a2c354874cfa6f8321196f237f38834a5d1a03399979d"
+          },
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "68e62d580cc9ef2a8e7c2bff403c7bf2123a8e4ce587092e02a79b0c87ec9a1c",
+              "code_size": 11,
+              "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+              "exception_handlers": [],
+              "max_locals": 3,
+              "max_stack": 2,
+              "name": "onEffectStart"
+            },
+            "instruction_count": 7,
+            "instruction_sha256": "3aec53a98d071517a07fed9509d1a11f306c1264a4c1a9b4e93c515ecc6b270f"
+          },
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "133c0e4bfec7efb3faa94755e5d7df82bf312c0a91490e364d786bdee8ecb9a2",
+              "code_size": 42,
+              "descriptor": "(II)Z",
+              "exception_handlers": [],
+              "max_locals": 3,
+              "max_stack": 2,
+              "name": "shouldTick"
+            },
+            "instruction_count": 24,
+            "instruction_sha256": "08203a1f0481400f779a06d0f9ffc33740f805e013ef63f41c4db4fb107af012"
+          },
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "db6c625a5f7c75068a9eae48ac2ec89a983c1f3eefc79d514b73ab44f942d972",
+              "code_size": 81,
+              "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+              "exception_handlers": [],
+              "max_locals": 3,
+              "max_stack": 8,
+              "name": "tick"
+            },
+            "instruction_count": 40,
+            "instruction_sha256": "4344162ae1ece82c225e6a8efff85df651426101ee590d6d4b3fdc297d835778"
+          },
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "70439802eebc9c6616488124378da2049e0e27d4696e60bdcfed9b180e082350",
+              "code_size": 167,
+              "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Z)V",
+              "exception_handlers": [],
+              "max_locals": 8,
+              "max_stack": 3,
+              "name": "toggleFlight"
+            },
+            "instruction_count": 79,
+            "instruction_sha256": "061a741243fd4b79237bffebfff3bc4284e056d1c06663f84fc19e9949d5390c"
+          }
+        ]
+      }
+    },
+    "targets": {
+      "CustomArmorPostRender": {
+        "assignable_classes": [
+          "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem",
+          "com/github/alexmodguy/alexscaves/server/item/DivingArmorItem",
+          "com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem",
+          "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem",
+          "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem",
+          "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem"
+        ],
+        "class_sha256": "19c649b8fdd407e51049f8a98dd31dc348a022c148ad3d5a70f2295a544988fd",
+        "declarations": [
+          {
+            "access": 1025,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/lang/String;)Ljava/lang/String;",
+            "name": "getArmorTexture"
+          }
+        ],
+        "fields": [],
+        "hierarchy": {
+          "interfaces": [],
+          "parent": "java/lang/Object"
+        },
+        "methods": [],
+        "typed_owners": {
+          "com/github/alexmodguy/alexscaves/mixin/client/HumanoidArmorLayerMixin": {
+            "class_sha256": "383fbea50413635447bb3fdbf77f06298007f42e3254e40d5ef0b94a8277e048",
+            "sites": [
+              {
+                "descriptor": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;ILnet/minecraft/client/model/HumanoidModel;FFFFFFLorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+                "method": "ac_renderArmorPiece",
+                "offset": 13,
+                "opcode": "instanceof",
+                "symbol": "class com/github/alexmodguy/alexscaves/server/item/CustomArmorPostRender"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+                "method": "getACArmorResource",
+                "offset": 4,
+                "opcode": "checkcast",
+                "symbol": "class com/github/alexmodguy/alexscaves/server/item/CustomArmorPostRender"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+                "method": "getACArmorResource",
+                "offset": 12,
+                "opcode": "invokeinterface",
+                "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/item/CustomArmorPostRender.getArmorTexture:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/lang/String;)Ljava/lang/String;"
+              }
+            ],
+            "typed_references": [
+              {
+                "index": 28,
+                "kind": "class_constant"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/lang/String;)Ljava/lang/String;",
+                "index": 82,
+                "kind": "interface_method_reference",
+                "name": "getArmorTexture"
+              }
+            ]
+          },
+          "com/github/alexmodguy/alexscaves/server/item/CustomArmorPostRender": {
+            "class_sha256": "19c649b8fdd407e51049f8a98dd31dc348a022c148ad3d5a70f2295a544988fd",
+            "sites": [],
+            "typed_references": [
+              {
+                "index": 1,
+                "kind": "class_constant"
+              }
+            ]
+          },
+          "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem": {
+            "class_sha256": "872fc610bac5be6010e3981b001c4088c7227e9cffe7938381c34c2f456c4e9a",
+            "sites": [],
+            "typed_references": [
+              {
+                "index": 286,
+                "kind": "class_constant"
+              }
+            ]
+          },
+          "com/github/alexmodguy/alexscaves/server/item/DivingArmorItem": {
+            "class_sha256": "6c4ea04559e2e2425bbc842f02cb9a89a2ea9009b7f43e2d71d05c336c64c334",
+            "sites": [],
+            "typed_references": [
+              {
+                "index": 194,
+                "kind": "class_constant"
+              }
+            ]
+          },
+          "com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem": {
+            "class_sha256": "918cc76cd122605e6ba7aa2e8d26e1f4891b3ad8f26554b960e9b07412884a27",
+            "sites": [],
+            "typed_references": [
+              {
+                "index": 212,
+                "kind": "class_constant"
+              }
+            ]
+          },
+          "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem": {
+            "class_sha256": "289395b93a1a223f2e66a02528ccb4ce3a1a659dd9c82ac071a5b63c32b1c7cb",
+            "sites": [],
+            "typed_references": [
+              {
+                "index": 192,
+                "kind": "class_constant"
+              }
+            ]
+          },
+          "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem": {
+            "class_sha256": "8833c162d1507aba795b1ff809f5a6f6ddb846da308d809795cf80e69be5d09e",
+            "sites": [],
+            "typed_references": [
+              {
+                "index": 91,
+                "kind": "class_constant"
+              }
+            ]
+          },
+          "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem": {
+            "class_sha256": "12809966af8256aa5c55e56b54d49f5be66e9785d6616ffa934c376f3d6d31bd",
+            "sites": [],
+            "typed_references": [
+              {
+                "index": 210,
+                "kind": "class_constant"
+              }
+            ]
+          }
+        }
+      },
+      "CustomTabBehavior": {
+        "assignable_classes": [],
+        "class_sha256": "6a77f884be2f7556f8c5085a534bd70968628c52d83687be2efde8237dba6cbe",
+        "declarations": [
+          {
+            "access": 1025,
+            "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$Output;)V",
+            "name": "fillItemCategory"
+          }
+        ],
+        "fields": [],
+        "hierarchy": {
+          "interfaces": [],
+          "parent": "java/lang/Object"
+        },
+        "methods": [],
+        "typed_owners": {
+          "com/github/alexmodguy/alexscaves/server/item/CustomTabBehavior": {
+            "class_sha256": "6a77f884be2f7556f8c5085a534bd70968628c52d83687be2efde8237dba6cbe",
+            "sites": [],
+            "typed_references": [
+              {
+                "index": 1,
+                "kind": "class_constant"
+              }
+            ]
+          },
+          "com/github/alexmodguy/alexscaves/server/misc/ACCreativeTabRegistry": {
+            "class_sha256": "e73ea47bee91ada022b06c5c73eebf454f68cfe769bbc7e7a22b2561cc23822d",
+            "sites": [
+              {
+                "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$Output;Lnet/minecraft/world/level/ItemLike;)V",
+                "method": "add",
+                "offset": 1,
+                "opcode": "instanceof",
+                "symbol": "class com/github/alexmodguy/alexscaves/server/item/CustomTabBehavior"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$Output;Lnet/minecraft/world/level/ItemLike;)V",
+                "method": "add",
+                "offset": 8,
+                "opcode": "checkcast",
+                "symbol": "class com/github/alexmodguy/alexscaves/server/item/CustomTabBehavior"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$Output;Lnet/minecraft/world/level/ItemLike;)V",
+                "method": "add",
+                "offset": 14,
+                "opcode": "invokeinterface",
+                "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/item/CustomTabBehavior.fillItemCategory:(Lnet/minecraft/world/item/CreativeModeTab$Output;)V"
+              }
+            ],
+            "typed_references": [
+              {
+                "index": 29,
+                "kind": "class_constant"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$Output;)V",
+                "index": 31,
+                "kind": "interface_method_reference",
+                "name": "fillItemCategory"
+              }
+            ]
+          }
+        }
+      },
+      "DarkenedAppleItem": {
+        "assignable_classes": [],
+        "class_sha256": "58e4bd35322bbedbc654519d8a76577f79d964d498a22d372ea452f683b715cb",
+        "declarations": [
+          {
+            "access": 1,
+            "code_sha256": "c023641d828173c9a9a2e809b59e5fb1e40055dfeb52196f16c880a49652a908",
+            "code_size": 24,
+            "descriptor": "()V",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 3,
+            "name": "<init>"
+          },
+          {
+            "access": 1,
+            "code_sha256": "6bcad1fc366ded0dc84e2eb54f7ebfe3974913725c1086088f77d7a2a195b622",
+            "code_size": 100,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;",
+            "exception_handlers": [],
+            "max_locals": 8,
+            "max_stack": 5,
+            "name": "finishUsingItem"
+          }
+        ],
+        "fields": [],
+        "hierarchy": {
+          "interfaces": [],
+          "parent": "net/minecraft/world/item/Item"
+        },
+        "methods": [
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "c023641d828173c9a9a2e809b59e5fb1e40055dfeb52196f16c880a49652a908",
+              "code_size": 24,
+              "descriptor": "()V",
+              "exception_handlers": [],
+              "max_locals": 1,
+              "max_stack": 3,
+              "name": "<init>"
+            },
+            "instruction_count": 10,
+            "instruction_sha256": "092aac53c2c206fbe18b50c91431983a073b679348bb273ab102c1ee366c3d96"
+          },
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "6bcad1fc366ded0dc84e2eb54f7ebfe3974913725c1086088f77d7a2a195b622",
+              "code_size": 100,
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;",
+              "exception_handlers": [],
+              "max_locals": 8,
+              "max_stack": 5,
+              "name": "finishUsingItem"
+            },
+            "instruction_count": 44,
+            "instruction_sha256": "cdbe8a0da2054d989d12457b3fddfe77513d020cde355171256bec1d90bfd48d"
+          }
+        ],
+        "typed_owners": {
+          "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": {
+            "class_sha256": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+            "sites": [
+              {
+                "descriptor": "()Lnet/minecraft/world/item/Item;",
+                "method": "lambda$static$136",
+                "offset": 0,
+                "opcode": "new",
+                "symbol": "class com/github/alexmodguy/alexscaves/server/item/DarkenedAppleItem"
+              },
+              {
+                "descriptor": "()Lnet/minecraft/world/item/Item;",
+                "method": "lambda$static$136",
+                "offset": 4,
+                "opcode": "invokespecial",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/item/DarkenedAppleItem.\"<init>\":()V"
+              }
+            ],
+            "typed_references": [
+              {
+                "index": 635,
+                "kind": "class_constant"
+              },
+              {
+                "descriptor": "()V",
+                "index": 637,
+                "kind": "method_reference",
+                "name": "<init>"
+              }
+            ]
+          },
+          "com/github/alexmodguy/alexscaves/server/item/DarkenedAppleItem": {
+            "class_sha256": "58e4bd35322bbedbc654519d8a76577f79d964d498a22d372ea452f683b715cb",
+            "sites": [],
+            "typed_references": [
+              {
+                "index": 95,
+                "kind": "class_constant"
+              }
+            ]
+          }
+        }
+      },
+      "DarknessArmorItem": {
+        "assignable_classes": [],
+        "class_sha256": "872fc610bac5be6010e3981b001c4088c7227e9cffe7938381c34c2f456c4e9a",
+        "declarations": [
+          {
+            "access": 1,
+            "code_sha256": "9d468ac4daa8aef0c5f80d57396e2a6fed0861cadf15a5545eba6febd84a1b2d",
+            "code_size": 28,
+            "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "exception_handlers": [],
+            "max_locals": 3,
+            "max_stack": 6,
+            "name": "<init>"
+          },
+          {
+            "access": 10,
+            "code_sha256": "6d2e685fbec7468a5a4e46b8ec46dfc1c2955e28e866a3b1f5d5a54810f1c94c",
+            "code_size": 83,
+            "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Z)Z",
+            "exception_handlers": [],
+            "max_locals": 3,
+            "max_stack": 2,
+            "name": "canChargeUp"
+          },
+          {
+            "access": 9,
+            "code_sha256": "2fb138b0494ef0307259afd6f8b2cca9799b7a5c217bee3267c177d913cf32d2",
+            "code_size": 24,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+            "exception_handlers": [],
+            "max_locals": 2,
+            "max_stack": 2,
+            "name": "canChargeUp"
+          },
+          {
+            "access": 9,
+            "code_sha256": "e5e6cb8bf155de32dccbe117cddfb03913cf8518ca514aea5988c542411b4cdf",
+            "code_size": 75,
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;)Z",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 2,
+            "name": "hasMeter"
+          },
+          {
+            "access": 9,
+            "code_sha256": "4cb401e115fbacb0d17f185115442209a5f943ddab994d3277844c31ab7f130c",
+            "code_size": 36,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)F",
+            "exception_handlers": [],
+            "max_locals": 2,
+            "max_stack": 2,
+            "name": "getMeterProgress"
+          },
+          {
+            "access": 1,
+            "code_sha256": "8feea315dd287ffc9f561fc045ac5cc30f5cb395ebeae02eb795c06f44eb4a9f",
+            "code_size": 16,
+            "descriptor": "(Ljava/util/function/Consumer;)V",
+            "exception_handlers": [],
+            "max_locals": 2,
+            "max_stack": 2,
+            "name": "initializeClient"
+          },
+          {
+            "access": 2,
+            "code_sha256": "31ad4d10c9a87cb0a22cba8e1650a9ec9332f7e4eb1849017dc05697ea52db35",
+            "code_size": 116,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;)V",
+            "exception_handlers": [],
+            "max_locals": 7,
+            "max_stack": 4,
+            "name": "acArmorTick"
+          },
+          {
+            "access": 1,
+            "code_sha256": "49391dc10abed9b7fa8211e41106a76c237cde5f3b0e5a65d5a2df54b19851b4",
+            "code_size": 267,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+            "exception_handlers": [],
+            "max_locals": 12,
+            "max_stack": 5,
+            "name": "acInventoryTick"
+          },
+          {
+            "access": 1,
+            "code_sha256": "89c7304d0aecfa82668ee6c50df9b63911773cac5363fa241278819ad1b12286",
+            "code_size": 127,
+            "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;I)V",
+            "exception_handlers": [],
+            "max_locals": 7,
+            "max_stack": 9,
+            "name": "onKeyPacket"
+          },
+          {
+            "access": 1,
+            "code_sha256": "970f36934f1808a172c0b2c4e4f5994bbd5196c9e4bc1ac4144360fe59828216",
+            "code_size": 4,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/lang/String;)Ljava/lang/String;",
+            "exception_handlers": [],
+            "max_locals": 5,
+            "max_stack": 1,
+            "name": "getArmorTexture"
+          }
+        ],
+        "fields": [],
+        "hierarchy": {
+          "interfaces": [
+            "com/github/alexmodguy/alexscaves/server/item/CustomArmorPostRender",
+            "com/github/alexmodguy/alexscaves/server/item/KeybindUsingArmor",
+            "com/github/alexmodguy/alexscaves/server/item/UpdatesStackTags",
+            "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem",
+            "com/github/alexmodguy/alexscaves/server/item/ACTickingItem",
+            "com/github/alexmodguy/alexscaves/server/item/ACArmorTickItem"
+          ],
+          "parent": "net/minecraft/world/item/ArmorItem"
+        },
+        "methods": [
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "9d468ac4daa8aef0c5f80d57396e2a6fed0861cadf15a5545eba6febd84a1b2d",
+              "code_size": 28,
+              "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+              "exception_handlers": [],
+              "max_locals": 3,
+              "max_stack": 6,
+              "name": "<init>"
+            },
+            "instruction_count": 14,
+            "instruction_sha256": "e35b3c62731ef5fb9ff1d825af9f7a6d3a9ecfe3cc56abcea9c65c837ed84a11"
+          },
+          {
+            "declaration": {
+              "access": 2,
+              "code_sha256": "31ad4d10c9a87cb0a22cba8e1650a9ec9332f7e4eb1849017dc05697ea52db35",
+              "code_size": 116,
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;)V",
+              "exception_handlers": [],
+              "max_locals": 7,
+              "max_stack": 4,
+              "name": "acArmorTick"
+            },
+            "instruction_count": 50,
+            "instruction_sha256": "72052f8f53ae2f5bfdcb0cec2779152804c7d3bcc1fd558f53a5ae024a4300f1"
+          },
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "49391dc10abed9b7fa8211e41106a76c237cde5f3b0e5a65d5a2df54b19851b4",
+              "code_size": 267,
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+              "exception_handlers": [],
+              "max_locals": 12,
+              "max_stack": 5,
+              "name": "acInventoryTick"
+            },
+            "instruction_count": 123,
+            "instruction_sha256": "78622c5b0c4502c39782e52d95f3e57b5f73294a33f51b7f6eacb71626b1a5e7"
+          },
+          {
+            "declaration": {
+              "access": 10,
+              "code_sha256": "6d2e685fbec7468a5a4e46b8ec46dfc1c2955e28e866a3b1f5d5a54810f1c94c",
+              "code_size": 83,
+              "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Z)Z",
+              "exception_handlers": [],
+              "max_locals": 3,
+              "max_stack": 2,
+              "name": "canChargeUp"
+            },
+            "instruction_count": 34,
+            "instruction_sha256": "48b5ef67d3f3d735a0b6145d40876a7b442ac67fab43004530ce0031f4ed2e6d"
+          },
+          {
+            "declaration": {
+              "access": 9,
+              "code_sha256": "2fb138b0494ef0307259afd6f8b2cca9799b7a5c217bee3267c177d913cf32d2",
+              "code_size": 24,
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 2,
+              "name": "canChargeUp"
+            },
+            "instruction_count": 13,
+            "instruction_sha256": "8199a80a4c003d5543d4811fd2f964161a851c9cbffdfc2a267d21bc580b5cab"
+          },
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "970f36934f1808a172c0b2c4e4f5994bbd5196c9e4bc1ac4144360fe59828216",
+              "code_size": 4,
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/lang/String;)Ljava/lang/String;",
+              "exception_handlers": [],
+              "max_locals": 5,
+              "max_stack": 1,
+              "name": "getArmorTexture"
+            },
+            "instruction_count": 2,
+            "instruction_sha256": "99181f610d218b77a0a1ce6f3063306cfa087086d65143223968366ca3e8a8aa"
+          },
+          {
+            "declaration": {
+              "access": 9,
+              "code_sha256": "4cb401e115fbacb0d17f185115442209a5f943ddab994d3277844c31ab7f130c",
+              "code_size": 36,
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;)F",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 2,
+              "name": "getMeterProgress"
+            },
+            "instruction_count": 19,
+            "instruction_sha256": "2d9bc1ee9ecba81e05ef416f6feaec187d0176fab7f76a6a440d7a90c187128f"
+          },
+          {
+            "declaration": {
+              "access": 9,
+              "code_sha256": "e5e6cb8bf155de32dccbe117cddfb03913cf8518ca514aea5988c542411b4cdf",
+              "code_size": 75,
+              "descriptor": "(Lnet/minecraft/world/entity/player/Player;)Z",
+              "exception_handlers": [],
+              "max_locals": 1,
+              "max_stack": 2,
+              "name": "hasMeter"
+            },
+            "instruction_count": 27,
+            "instruction_sha256": "977f7ea599d20e828dbc05231667929e551d2127633125e52f1cf3138b5039aa"
+          },
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "8feea315dd287ffc9f561fc045ac5cc30f5cb395ebeae02eb795c06f44eb4a9f",
+              "code_size": 16,
+              "descriptor": "(Ljava/util/function/Consumer;)V",
+              "exception_handlers": [],
+              "max_locals": 2,
+              "max_stack": 2,
+              "name": "initializeClient"
+            },
+            "instruction_count": 6,
+            "instruction_sha256": "b4914985fb6d053a9c64ef710f4b6dd26a0846cce7abff41128b8a10b0084389"
+          },
+          {
+            "declaration": {
+              "access": 1,
+              "code_sha256": "89c7304d0aecfa82668ee6c50df9b63911773cac5363fa241278819ad1b12286",
+              "code_size": 127,
+              "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;I)V",
+              "exception_handlers": [],
+              "max_locals": 7,
+              "max_stack": 9,
+              "name": "onKeyPacket"
+            },
+            "instruction_count": 56,
+            "instruction_sha256": "9b7bf20f4f8199205da9b4959c23200bb92a930973b0e3d98e3529ce6463084b"
+          }
+        ],
+        "typed_owners": {
+          "com/github/alexmodguy/alexscaves/client/event/ClientEvents": {
+            "class_sha256": "52b53d87ec638fda2e0e39be41acec3e09da2c5ab3d327b1b4790bb97a87fbbc",
+            "sites": [
+              {
+                "descriptor": "(Lnet/minecraft/client/gui/GuiGraphics;)V",
+                "method": "renderRidingMeterHud",
+                "offset": 386,
+                "opcode": "invokestatic",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem.hasMeter:(Lnet/minecraft/world/entity/player/Player;)Z"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/client/gui/GuiGraphics;)V",
+                "method": "renderRidingMeterHud",
+                "offset": 482,
+                "opcode": "invokestatic",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem.getMeterProgress:(Lnet/minecraft/world/item/ItemStack;)F"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/client/gui/GuiGraphics;)V",
+                "method": "renderRidingMeterHud",
+                "offset": 494,
+                "opcode": "invokestatic",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem.canChargeUp:(Lnet/minecraft/world/item/ItemStack;)Z"
+              }
+            ],
+            "typed_references": [
+              {
+                "descriptor": "(Lnet/minecraft/world/entity/player/Player;)Z",
+                "index": 1137,
+                "kind": "method_reference",
+                "name": "hasMeter"
+              },
+              {
+                "index": 1138,
+                "kind": "class_constant"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;)F",
+                "index": 1153,
+                "kind": "method_reference",
+                "name": "getMeterProgress"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+                "index": 1157,
+                "kind": "method_reference",
+                "name": "canChargeUp"
+              }
+            ]
+          },
+          "com/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties": {
+            "class_sha256": "bcb780ec718c8f07cabe34d2f054ff546eb7d5529d3f0d7fa7a11aaaad08f729",
+            "sites": [
+              {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;",
+                "method": "getACArmorModelBase",
+                "offset": 55,
+                "opcode": "instanceof",
+                "symbol": "class com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem"
+              },
+              {
+                "descriptor": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item;Lnet/minecraft/client/model/Model;ZLnet/minecraft/resources/ResourceLocation;)V",
+                "method": "renderCustomArmor",
+                "offset": 2,
+                "opcode": "instanceof",
+                "symbol": "class com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem"
+              }
+            ],
+            "typed_references": [
+              {
+                "index": 123,
+                "kind": "class_constant"
+              }
+            ]
+          },
+          "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": {
+            "class_sha256": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+            "sites": [
+              {
+                "descriptor": "()Lnet/minecraft/world/item/Item;",
+                "method": "lambda$static$134",
+                "offset": 0,
+                "opcode": "new",
+                "symbol": "class com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem"
+              },
+              {
+                "descriptor": "()Lnet/minecraft/world/item/Item;",
+                "method": "lambda$static$134",
+                "offset": 10,
+                "opcode": "invokespecial",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V"
+              },
+              {
+                "descriptor": "()Lnet/minecraft/world/item/Item;",
+                "method": "lambda$static$135",
+                "offset": 0,
+                "opcode": "new",
+                "symbol": "class com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem"
+              },
+              {
+                "descriptor": "()Lnet/minecraft/world/item/Item;",
+                "method": "lambda$static$135",
+                "offset": 10,
+                "opcode": "invokespecial",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V"
+              }
+            ],
+            "typed_references": [
+              {
+                "index": 638,
+                "kind": "class_constant"
+              },
+              {
+                "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+                "index": 640,
+                "kind": "method_reference",
+                "name": "<init>"
+              }
+            ]
+          },
+          "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem": {
+            "class_sha256": "872fc610bac5be6010e3981b001c4088c7227e9cffe7938381c34c2f456c4e9a",
+            "sites": [
+              {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;)V",
+                "method": "acArmorTick",
+                "offset": 64,
+                "opcode": "invokestatic",
+                "symbol": "Method canChargeUp:(Lnet/minecraft/world/item/ItemStack;)Z"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+                "method": "acInventoryTick",
+                "offset": 27,
+                "opcode": "invokevirtual",
+                "symbol": "Method acArmorTick:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;)V"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+                "method": "acInventoryTick",
+                "offset": 143,
+                "opcode": "invokestatic",
+                "symbol": "Method canChargeUp:(Lnet/minecraft/world/entity/LivingEntity;Z)Z"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+                "method": "acInventoryTick",
+                "offset": 218,
+                "opcode": "invokestatic",
+                "symbol": "Method getMeterProgress:(Lnet/minecraft/world/item/ItemStack;)F"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+                "method": "acInventoryTick",
+                "offset": 263,
+                "opcode": "invokevirtual",
+                "symbol": "Method onKeyPacket:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;I)V"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;I)V",
+                "method": "onKeyPacket",
+                "offset": 16,
+                "opcode": "invokestatic",
+                "symbol": "Method canChargeUp:(Lnet/minecraft/world/entity/LivingEntity;Z)Z"
+              }
+            ],
+            "typed_references": [
+              {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+                "index": 161,
+                "kind": "method_reference",
+                "name": "canChargeUp"
+              },
+              {
+                "index": 162,
+                "kind": "class_constant"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;)V",
+                "index": 195,
+                "kind": "method_reference",
+                "name": "acArmorTick"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Z)Z",
+                "index": 217,
+                "kind": "method_reference",
+                "name": "canChargeUp"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;)F",
+                "index": 240,
+                "kind": "method_reference",
+                "name": "getMeterProgress"
+              },
+              {
+                "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;I)V",
+                "index": 260,
+                "kind": "method_reference",
+                "name": "onKeyPacket"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "physical_qa": "NOT_TESTED",
+  "provider_universe_closed": false,
+  "rarity_alias": {
+    "descriptor": "Lnet/minecraft/world/item/Rarity;",
+    "value": {
+      "descriptor": "Lnet/minecraft/world/item/Rarity;",
+      "kind": "field",
+      "name": "EPIC",
+      "offset": 10,
+      "owner": "net/minecraft/world/item/Rarity"
+    },
+    "write_offset": 13
+  },
+  "references_sha256": {
+    "EXACT-ARMOR-MATERIAL-1.0.10.json": "d063229c6414ea4cb4a1b6b5022a546a339c7cdbb640745e64f128db1e9395cc",
+    "EXACT-CLIENT-EXTENSION-1.0.10.json": "c0527bbcfc2e178ab53c9b00b0e81b2aae56fc12221e814dd1b95af65f79730c",
+    "EXACT-EFFECT-CONTRACTS-1.0.10.json": "4aa87c312a4c35d5ab6aa126bd8c47f08e842b7f5e1844ad359b6a220443626b",
+    "EXACT-FOOD-BUILDER-CONTRACT-1.0.10.json": "504735467770d52d75c99e7081bfb2a962e5dde0dfa32d884dfdab2e85a6473c",
+    "EXACT-FOODS-NATIVE-CONTRACT-1.0.10.json": "ab59a8181ea70648053efb15b8fd132f0c6fd3f9f683c7ea72729e0ef0e5c876",
+    "EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.json": "0223cf52d1eaf653488346012d6bd80a74ab2219e3a31126aa0bee18f06a88f7",
+    "EXACT-TECHNICAL-CONTRACTS-1.0.10.json": "3af3efd097dc60f2877211604a49543275f6d2b9ac24d1e9050ed175fe0382ef",
+    "EXACT-TICKING-ITEM-CONTRACT-1.0.10.json": "4e74c4ecb1f99d7fd848c06ba1b72fe0a37a61a20f69761a3d9388cda40c3f93"
+  },
+  "registry_bindings": [
+    {
+      "bootstrap_index": 140,
+      "factory": {
+        "code_sha256": "4ab51a5f80296bb82149e023b386ab8fd56f442c07762060aac3ed6ae44f911f",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "a77382a0a5971b85c55902bbf49e4bdc0af13a90ff585ce4602ce5c0c2192c00",
+        "name": "lambda$static$135",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+        "reference_kind": 6
+      },
+      "factory_site_offset": 2469,
+      "field": "CLOAK_OF_DARKNESS",
+      "literal_offset": 2466,
+      "namespace": "alexscaves",
+      "path": "cloak_of_darkness",
+      "receiver_read_offset": 2463,
+      "register_offset": 2474,
+      "resource_location": "alexscaves:cloak_of_darkness",
+      "write_offset": 2477
+    },
+    {
+      "bootstrap_index": 141,
+      "factory": {
+        "code_sha256": "4804ddcbcc419efb87881c1f26eab54e769a43cb3ca100a843c21b0cbbc8893e",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "1da9c22a744990ae12535d251c29f66a4c76f3a56ab4ab5631820c3dc6020a65",
+        "name": "lambda$static$136",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+        "reference_kind": 6
+      },
+      "factory_site_offset": 2486,
+      "field": "DARKENED_APPLE",
+      "literal_offset": 2483,
+      "namespace": "alexscaves",
+      "path": "darkened_apple",
+      "receiver_read_offset": 2480,
+      "register_offset": 2491,
+      "resource_location": "alexscaves:darkened_apple",
+      "write_offset": 2494
+    },
+    {
+      "bootstrap_index": 139,
+      "factory": {
+        "code_sha256": "050f52ecb79c931c3a455149c9f7537653be12d3fc22fe11bf940b207da78dea",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "instruction_sha256": "dda5cd0097ef451e47a32876dcf0a0a69a24fd78afe0260d3124f63c5ffd76a4",
+        "name": "lambda$static$134",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+        "reference_kind": 6
+      },
+      "factory_site_offset": 2452,
+      "field": "HOOD_OF_DARKNESS",
+      "literal_offset": 2449,
+      "namespace": "alexscaves",
+      "path": "hood_of_darkness",
+      "receiver_read_offset": 2446,
+      "register_offset": 2457,
+      "resource_location": "alexscaves:hood_of_darkness",
+      "write_offset": 2460
+    }
+  ],
+  "resources": {
+    "auxiliary_resource_sha256": {
+      "META-INF/neoforge.mods.toml": "54dfb8cdba886fd5ef8e64d2a51c487ce4bf2400995884937ee5fd6d89df68fa",
+      "assets/alexscaves/books/forlorn_hollows/utilities.json": "aee5090c079830220651b7b3fbf05607cfa62f1a3758cb8ef1b2b0329e8360d3"
+    },
+    "json": {
+      "alexscaves.mixins.json": {
+        "json": {
+          "client": [
+            "client.AdvancementTabMixin",
+            "client.BlockLightCoordsMixin",
+            "client.BiomeAmbientSoundsHandlerInstanceMixin",
+            "client.BiomeAmbientSoundsHandlerMixin",
+            "client.CameraAccessor",
+            "client.CameraMixin",
+            "client.ClientChunkCacheStorageMixin",
+            "client.ClientLevelDataMixin",
+            "client.ClientLevelMixin",
+            "client.ClientPacketListenerMixin",
+            "client.GameRendererAccessor",
+            "client.GameRendererMixin",
+            "client.HumanoidArmorLayerMixin",
+            "client.ItemFrameRendererMixin",
+            "client.LevelRenderStageMixin",
+            "client.LevelRendererMixin",
+            "client.LevelRendererSkyMixin",
+            "client.LightTextureMixin",
+            "client.LiquidBlockRendererMixin",
+            "client.LivingEntityAccessor",
+            "client.LivingEntityRendererMixin",
+            "client.LocalPlayerMixin",
+            "client.MinecraftMixin",
+            "client.OptionsMixin",
+            "client.ParticleEngineMixin",
+            "client.RidingMinecartSoundInstanceMixin",
+            "client.ShaderTransparencyMixin",
+            "client.SoundEngineMixin",
+            "client.SpriteResourceLoaderMixin",
+            "client.SpriteResourceLoaderMixin$PalettedPermutationsAccessor",
+            "client.UnderwaterAmbientSoundHandlerMixin",
+            "client.UnderwaterAmbientSoundInstancesMixin",
+            "client.citadel.AbstractClientPlayerMixin",
+            "client.citadel.ClientLevelMixin",
+            "client.citadel.HumanoidModelMixin",
+            "client.citadel.LevelRendererMixin",
+            "client.citadel.LivingEntityRendererMixin",
+            "client.citadel.OutlineColorMixin",
+            "client.citadel.PostEffectInitMixin",
+            "client.citadel.SkyTimeOfDayMixin",
+            "client.citadel.SoundEngineMixin",
+            "client.citadel.SplashRendererMixin",
+            "client.citadel.TimerAccessor"
+          ],
+          "compatibilityLevel": "JAVA_21",
+          "injectors": {
+            "defaultRequire": 1
+          },
+          "minVersion": "0.8",
+          "mixins": [
+            "AbstractArrowAccessor",
+            "AbstractArrowMixin",
+            "AbstractMinecartMixin",
+            "BiomeSourceMixin",
+            "BlockPropertiesMixin",
+            "ChunkGeneratorValidateMixin",
+            "ChunkStatusMixin",
+            "CoralFeatureMixin",
+            "DecoratedPotPatternsMixin",
+            "EnchantRandomlyFunctionMixin",
+            "EntityMixin",
+            "FallingBlockEntityMixin",
+            "FlowingFluidMixin",
+            "FoodDataMixin",
+            "FrogMixin",
+            "IllagerMixin",
+            "ItemPropertiesMixin",
+            "ItemStackAttributeModifiersMixin",
+            "ItemStackTickMixin",
+            "JigsawStructureMixin",
+            "KelpFeatureMixin",
+            "LivingEntityMixin",
+            "MobMixin",
+            "MonsterMixin",
+            "MultiNoiseBiomeSourceMixin",
+            "MultifaceGrowthFeatureMixin",
+            "NaturalSpawnerMixin",
+            "OceanMonumentStructureMixin",
+            "PlayerMixin",
+            "PotionColorMixin",
+            "SeagrassFeatureMixin",
+            "ShipwreckStructureMixin",
+            "SurfaceRulesContextAccessor",
+            "SwampHutPieceMixin",
+            "citadel.LevelMixin",
+            "citadel.LivingEntityMixin",
+            "citadel.MinecraftServerMixin",
+            "citadel.NoiseGeneratorSettingsMixin",
+            "citadel.PrimaryLevelDataMixin",
+            "citadel.ServerLevelMixin",
+            "LakeFeatureMixin",
+            "client.AdvancementTabMixin",
+            "client.BiomeAmbientSoundsHandlerInstanceMixin",
+            "client.BiomeAmbientSoundsHandlerMixin",
+            "client.ClientChunkCacheStorageMixin",
+            "client.ClientLevelDataMixin",
+            "client.ClientLevelMixin",
+            "client.ClientPacketListenerMixin",
+            "client.ItemFrameRendererMixin",
+            "client.LiquidBlockRendererMixin",
+            "client.LivingEntityRendererMixin",
+            "client.LocalPlayerMixin",
+            "client.MinecartSoundInstanceMixin",
+            "client.OptionsMixin",
+            "client.RidingMinecartSoundInstanceMixin",
+            "client.SoundEngineMixin",
+            "client.UnderwaterAmbientSoundHandlerMixin",
+            "client.UnderwaterAmbientSoundInstancesMixin",
+            "client.citadel.HumanoidModelMixin",
+            "client.citadel.LivingEntityRendererMixin",
+            "client.citadel.SoundEngineMixin",
+            "client.citadel.AbstractClientPlayerMixin",
+            "client.citadel.SplashRendererMixin",
+            "client.citadel.TimerAccessor",
+            "client.citadel.LevelRendererMixin",
+            "client.citadel.ClientLevelMixin",
+            "client.citadel.OutlineColorMixin",
+            "client.citadel.SkyTimeOfDayMixin",
+            "client.citadel.PostEffectInitMixin",
+            "client.SpriteResourceLoaderMixin",
+            "client.SpriteResourceLoaderMixin$PalettedPermutationsAccessor",
+            "client.HumanoidArmorLayerMixin",
+            "client.CameraAccessor",
+            "client.CameraMixin",
+            "client.LightTextureMixin",
+            "client.LevelRendererMixin",
+            "client.MinecraftMixin",
+            "client.GameRendererMixin",
+            "client.LevelRendererSkyMixin",
+            "client.LevelRenderStageMixin",
+            "client.GameRendererAccessor",
+            "client.LivingEntityAccessor",
+            "client.ParticleEngineMixin",
+            "client.BlockLightCoordsMixin",
+            "client.ShaderTransparencyMixin"
+          ],
+          "package": "com.github.alexmodguy.alexscaves.mixin",
+          "required": true,
+          "target": "@env(DEFAULT)"
+        },
+        "sha256": "6e120e2d2cf226a25cbe3d0605968a184384194354eac0b1153108f74632c140"
+      },
+      "assets/alexscaves/models/item/cloak_of_darkness.json": {
+        "json": {
+          "parent": "minecraft:item/generated",
+          "textures": {
+            "layer0": "alexscaves:item/cloak_of_darkness"
+          }
+        },
+        "sha256": "10f7cf998103b22a5aedb9fec7c3f16db1e9b614639d012d902da71dc506633f"
+      },
+      "assets/alexscaves/models/item/darkened_apple.json": {
+        "json": {
+          "parent": "minecraft:item/generated",
+          "textures": {
+            "layer0": "alexscaves:item/darkened_apple"
+          }
+        },
+        "sha256": "36441d6055dd4dc3cca312f0a562d8a58b801ca50cd21ddee585f90393094ffb"
+      },
+      "assets/alexscaves/models/item/hood_of_darkness.json": {
+        "json": {
+          "parent": "minecraft:item/generated",
+          "textures": {
+            "layer0": "alexscaves:item/hood_of_darkness"
+          }
+        },
+        "sha256": "84d5b4e2332318cc4d6d4f33be8763305cf52d423a850ff5b77001e0cb60f02f"
+      },
+      "data/alexscaves/advancement/alexscaves/eat_darkened_apple.json": {
+        "json": {
+          "criteria": {
+            "eat_darkened_apple": {
+              "trigger": "alexscaves:eat_darkened_apple"
+            }
+          },
+          "display": {
+            "description": {
+              "translate": "advancements.alexscaves.eat_darkened_apple.desc"
+            },
+            "frame": "goal",
+            "icon": {
+              "id": "alexscaves:darkened_apple"
+            },
+            "title": {
+              "translate": "advancements.alexscaves.eat_darkened_apple.title"
+            }
+          },
+          "parent": "alexscaves:alexscaves/shadow_armor"
+        },
+        "sha256": "dd1518ada2aaec6b1c369eb2a467eace0e7ddf447cd79c2d19c89efee9d84d4a"
+      },
+      "data/alexscaves/advancement/alexscaves/shadow_armor.json": {
+        "json": {
+          "criteria": {
+            "helmet": {
+              "conditions": {
+                "items": [
+                  {
+                    "items": [
+                      "alexscaves:hood_of_darkness"
+                    ]
+                  }
+                ]
+              },
+              "trigger": "minecraft:inventory_changed"
+            },
+            "tunic": {
+              "conditions": {
+                "items": [
+                  {
+                    "items": [
+                      "alexscaves:cloak_of_darkness"
+                    ]
+                  }
+                ]
+              },
+              "trigger": "minecraft:inventory_changed"
+            }
+          },
+          "display": {
+            "description": {
+              "translate": "advancements.alexscaves.shadow_armor.desc"
+            },
+            "icon": {
+              "id": "alexscaves:hood_of_darkness"
+            },
+            "title": {
+              "translate": "advancements.alexscaves.shadow_armor.title"
+            }
+          },
+          "parent": "alexscaves:alexscaves/shadow_silk"
+        },
+        "sha256": "36015f2a064100d9d5d3564f40f56329afbe2fc511e102f088d70a2f93cbba3b"
+      },
+      "data/alexscaves/recipe/cloak_of_darkness.json": {
+        "json": {
+          "key": {
+            "D": {
+              "item": "alexscaves:shadow_silk"
+            },
+            "O": {
+              "item": "alexscaves:occult_gem"
+            }
+          },
+          "pattern": [
+            "D D",
+            "DOD",
+            "DDD"
+          ],
+          "result": {
+            "id": "alexscaves:cloak_of_darkness"
+          },
+          "type": "minecraft:crafting_shaped"
+        },
+        "sha256": "bb5a5e64b2f7a6200e91dd45e877bc4ad6c9c4aa1012e41c31acdfde89bb46e9"
+      },
+      "data/alexscaves/recipe/darkened_apple.json": {
+        "json": {
+          "key": {
+            "D": {
+              "item": "alexscaves:pure_darkness"
+            },
+            "P": {
+              "item": "minecraft:apple"
+            }
+          },
+          "pattern": [
+            " D ",
+            "DPD",
+            " D "
+          ],
+          "result": {
+            "id": "alexscaves:darkened_apple"
+          },
+          "type": "minecraft:crafting_shaped"
+        },
+        "sha256": "69ee3d764bbc896ba4b08155f3dd73af7456c0164210f87f7637d488b5dd40a3"
+      },
+      "data/alexscaves/recipe/hood_of_darkness.json": {
+        "json": {
+          "key": {
+            "D": {
+              "item": "alexscaves:shadow_silk"
+            },
+            "O": {
+              "item": "alexscaves:occult_gem"
+            }
+          },
+          "pattern": [
+            "DOD",
+            "D D"
+          ],
+          "result": {
+            "id": "alexscaves:hood_of_darkness"
+          },
+          "type": "minecraft:crafting_shaped"
+        },
+        "sha256": "1c3884eb43c47a87062f28461938a1ba4bde0c5af8676623707915c6a0ff7038"
+      },
+      "data/alexscaves/tags/item/repairs_darkness_armor.json": {
+        "json": {
+          "values": [
+            "alexscaves:dark_tatters"
+          ]
+        },
+        "sha256": "e62ed396a3620b022890c0292a6bbd8cf610d13e388e94cc09879a650ed204a8"
+      }
+    },
+    "locales": {
+      "en_us": {
+        "names": {
+          "cloak_of_darkness": "Cloak of Darkness",
+          "darkened_apple": "Darkened Apple",
+          "hood_of_darkness": "Hood of Darkness"
+        },
+        "sha256": "a2a3fab567b07ec10b3d946d4e4ce3e65417b6f9348bd49478d8a253a4232d1f"
+      },
+      "pt_br": {
+        "names": {
+          "cloak_of_darkness": "Manto da Escuridão",
+          "darkened_apple": "Maçã Obscura",
+          "hood_of_darkness": "Capuz da Escuridão"
+        },
+        "sha256": "080bfaf05b6d710383579dfd0d3c01443f9fa873b0c697f5e6ee0740931018a7"
+      }
+    },
+    "texture_sha256": {
+      "assets/alexscaves/textures/armor/darkness_armor.png": "dfd970d6464f3d7e3ffcc02baf9727ab05f2ca4c317c21809c0c5af57c9ff19d",
+      "assets/alexscaves/textures/armor/darkness_armor_glow.png": "b3e8b9bf1c3cad8f04560a4acc669c52b94afc948d61f47a450d0744bf9ad324",
+      "assets/alexscaves/textures/armor/diving_suit_0.png": "bc01c0f9bfcee795e51f7e4875eba52e9e44bd4de508c1a1476963a78ceda259",
+      "assets/alexscaves/textures/armor/diving_suit_1.png": "59440a61cfbe4551b6fb624bc422a1ad80bff56a2360f14faf3b46c596497a48",
+      "assets/alexscaves/textures/armor/gingerbread_armor_0.png": "559219c2cd403e72a34a71cfe7141faad057db1357bf6715ddb75ddb8dce0236",
+      "assets/alexscaves/textures/armor/gingerbread_armor_1.png": "2b9c3aa18b3021df779a2782f0ffceca2145774fec13d2a91d4b4ceac63b2cb0",
+      "assets/alexscaves/textures/armor/hazmat_suit_0.png": "67106085c04a1c385c84d0489ce01b20ca3d4e9fcc042b6a6389f0faecd8605f",
+      "assets/alexscaves/textures/armor/hazmat_suit_1.png": "6570dcb363cc2e761cd5d958c72585d2bb6ebf0dedb02dc2aab5bcd80e551107",
+      "assets/alexscaves/textures/armor/primordial_armor_0.png": "d3693fefa4b4d7487d23f45d3e2b8c6dcacff824f4214146edac2a17c54b1ed8",
+      "assets/alexscaves/textures/armor/primordial_armor_1.png": "b870555691c2984aabc7429a94859c20b17a87f5b40393d9fd789ca74257ddee",
+      "assets/alexscaves/textures/armor/rainbounce_boots.png": "9a3fe160b9f137d6ad182906608bfd94731e17ff5e2ae0c63c444c5a433a097f"
+    }
+  },
+  "semantic_magic_roots_added": 0
+}

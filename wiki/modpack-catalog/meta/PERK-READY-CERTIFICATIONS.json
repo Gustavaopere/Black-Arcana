@@ -9948,6 +9948,178 @@
           "reason": "Exact item lifecycle, serialized state, recipe, scheduler and worker replay."
         }
       }
+    },
+    "✅-alexs-caves-continued/systems/custom-armor-post-render.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact interface, descriptor, six concrete assignments and three executable type/member sites."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Client mixin selects armor model, cancels baseline renderer and dispatches typed texture callback."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Slot-specific texture map, eleven assets and glow and foil paths."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Equipment slot and renderer wearer select the presentation target; no attack or hit."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Rendering state and cache writes only; gameplay debits are inapplicable."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Client presentation and resource resolution scope, with physical rendering pending."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Whole publisher typed census, model dispatcher replay and texture digests."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/darkened-apple.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact item binding, two methods, published model, names, recipe and advancement."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Checks active Darkness and stack FOOD; requests replacement and delegates food completion."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Nutrition 4, saturation modifier 0.35F, alwaysEat, remaining duration plus 600 and existing amplifier."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "The consuming LivingEntity and its existing effect are the only targets."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Recipe plus inherited requested one-unit consumption; no direct cooldown or mana cost."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Effect replacement request and trigger precede inherited settlement; effective engine events unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Exact constructor and finish replay, resource hashes and pinned food and reference effect contracts."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/hood-of-darkness.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Published Hood binding lambda$static$134, HELMET factory and shared class with ten bodies."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Head-slot equipment gates charge refresh, meter and activation of the existing cloak action."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Defense 4, durability 195 from ordinal 0, enchantability 40 and shared material."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Wearer and head equipment are consulted for charge and activation eligibility."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Four Shadow Silk and one Occult Gem, repair ingredient DARK_TATTERS. The cloak owns charge."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "The prior action owns the one active root; settlement, synchronization and authorization stay bounded."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Whole publisher replay, item, material and ticking contracts, resource hashes and reference slot ordinals."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/cloak-of-darkness.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Published Cloak binding lambda$static$135, CHESTPLATE factory and shared class with ten bodies."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Inventory tick invokes charging before refreshing light eligibility; activation requests effect with debit."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Defense 5, durability 225 from ordinal 1, charge and flight defaults and light threshold."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "The wearer, chest stack and Hood condition define normal operator and target."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Seven Shadow Silk and one Occult Gem, repair ingredient DARK_TATTERS. Activation requests charge reset."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "The prior action owns the one active root; settlement, synchronization and authorization stay bounded."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.md",
+          "reason": "Whole publisher replay, item, material and ticking contracts, resource hashes and reference slot ordinals."
+        }
+      }
     }
   },
   "providers": {},
