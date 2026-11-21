@@ -44,10 +44,11 @@ def run(p):
     contains(method(j,"FloaterItem","use"),"isInWaterOrBubble","isShiftKeyDown","addFreshEntity","startRiding","shrink")
     contains(method(j,"FloaterEntity","tick"),"wasEyeInWater","double -0.04d","double 0.2d","double 0.9d","timeOutOfWater","discard")
     contains(method(j,"FrostmintSpearItem","releaseUsing"),"float 2.5f","double 0.1d","shootFromRotation","addFreshEntity","shrink")
-    contains(method(j,"FrostmintSpearItem","acHurtEnemy"),"sipush        200","setTicksFrozen","setFrostmintFreezing")
+    contains(method(j,"FrostmintSpearItem","acHurtEnemy"),"setTicksFrozen","setFrostmintFreezing")
+    fail(any(x["opcode"]=="sipush" and x["operand"]=="200" for x in method(j,"FrostmintSpearItem","acHurtEnemy")["instructions"]),"freeze 200 ticks drift")
     contains(method(j,"FrostmintSpearEntity","explode"),"BlockInteraction.KEEP","FrostmintExplosion")
     contains(method(j,"FrostmintSpearEntity","onHitEntity"),"float 6.0f","DamageSources.trident","damageBonus")
-    contains(method(j,"FrostmintExplosion","explode"),"getSeenPercent","ignoreExplosion","setFrostmintFreezing","getTicksRequiredToFreeze","DamageSources")
+    contains(method(j,"FrostmintExplosion","explode"),"getSeenPercent","ignoreExplosion","setFrostmintFreezing","getTicksRequiredToFreeze","getDamageSource")
     contains(method(j,"FrostmintExplosion","finalizeExplosion"),"WorldEventMessage","interactsWithBlocks")
     print("PASS: SHA-exact two item classes, two entities, freeze accessor and native explosion; DISCOVERY_NOT_CERTIFIED / NO_MUTATION")
 if __name__=="__main__":
