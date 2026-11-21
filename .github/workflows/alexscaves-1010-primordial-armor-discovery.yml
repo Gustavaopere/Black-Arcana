@@ -1,0 +1,57 @@
+name: Alex's Caves 1.0.10 Primordial Armor exact static discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-primordial-armor-discovery.yml'
+      - 'docs/qa/alexscaves_1010_primordial_armor_discovery.py'
+      - 'docs/qa/alexscaves_1010_primordial_armor_discovery_checks.py'
+      - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  primordial_armor_discovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile read-only audit and negative checker
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_primordial_armor_discovery.py
+          python3 -m py_compile docs/qa/alexscaves_1010_primordial_armor_discovery_checks.py
+      - name: Download and authenticate 1.0.10 publisher JAR
+        run: |
+          mkdir -p build/primordial-armor-1010
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/primordial-armor-1010/publisher.jar
+      - name: Audit native methods, typed consumers and exact item resource hashes
+        run: |
+          python3 docs/qa/alexscaves_1010_primordial_armor_discovery.py \
+            --jar build/primordial-armor-1010/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/primordial-armor-1010/report.json
+      - name: Reject malformed report and confirm discovery-only limits
+        run: |
+          python3 docs/qa/alexscaves_1010_primordial_armor_discovery_checks.py \
+            --report build/primordial-armor-1010/report.json
+          echo '{}' > build/primordial-armor-1010/bad.json
+          if python3 docs/qa/alexscaves_1010_primordial_armor_discovery_checks.py \
+              --report build/primordial-armor-1010/bad.json; then
+            echo 'FAIL: malformed Primordial evidence accepted'
+            exit 1
+          fi
+      - name: Upload immutable read-only native discovery
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-primordial-armor-discovery
+          path: build/primordial-armor-1010/report.json
+          if-no-files-found: warn
+          retention-days: 14
