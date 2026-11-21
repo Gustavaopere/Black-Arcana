@@ -4,7 +4,7 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 109/109.**
+**Fichas catalogadas (somente fichas detectadas): 113/113.**
 
 **Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
@@ -12,7 +12,7 @@
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 109/109.**
+**Homologadas para perks (somente fichas detectadas): 113/113.**
 
 **Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
@@ -113,6 +113,10 @@
 | ✅ | Cave Map | [items/cave-map.md](items/cave-map.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cloak Of Darkness | [items/cloak-of-darkness.md](items/cloak-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Darkened Apple | [items/darkened-apple.md](items/darkened-apple.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Diving Boots | [items/diving-boots.md](items/diving-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Diving Chestplate | [items/diving-chestplate.md](items/diving-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Diving Helmet | [items/diving-helmet.md](items/diving-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Diving Leggings | [items/diving-leggings.md](items/diving-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hood Of Darkness | [items/hood-of-darkness.md](items/hood-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [items/pewen-boat.md](items/pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [items/pewen-chest-boat.md](items/pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -143,7 +147,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 3/3 (100.0%) | 3 | [Abrir índice](equipment/INDEX.md) |
-| ✅ | Items | 13/13 (100.0%) | 13 | [Abrir índice](items/INDEX.md) |
+| ✅ | Items | 17/17 (100.0%) | 17 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 15/15 (100.0%) | 15 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅

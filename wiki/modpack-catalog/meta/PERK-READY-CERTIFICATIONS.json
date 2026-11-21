@@ -10120,6 +10120,178 @@
           "reason": "Whole publisher replay, item, material and ticking contracts, resource hashes and reference slot ordinals."
         }
       }
+    },
+    "✅-alexs-caves-continued/items/diving-helmet.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "DIVING_HELMET binding and HELMET supplier."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Eligible head stack requests Water Breathing in livingTick."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Defense 2, durability 260, effect request 810 ticks and amplifier 0."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "LivingEntity wearer with eyes outside water or immediate submarine vehicle."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Copper repair and native loot/spawn, without a per-request item debit."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Native inheritable equipment, attribute and consumer boundaries with runtime settlement pending."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Deterministic publisher replay of class methods, typed references, registry bindings and resources."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/diving-chestplate.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "DIVING_CHESTPLATE binding and CHESTPLATE supplier."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Fixed slot map supplies defense and includes material toughness."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Defense 6, durability 300, zero toughness and knockback for the material."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Attribute receiver is the wearer in CHEST. Typed ID census finds no additional wear effect."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Copper repair and native loot/spawn, without a per-query item debit."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Native inheritable equipment, attribute and consumer boundaries with runtime settlement pending."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Deterministic publisher replay of class methods, typed references, registry bindings and resources."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/diving-leggings.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "DIVING_LEGGINGS binding and LEGGINGS supplier."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Constructor adds NeoForge swim speed and returns the map for the leg slot."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Defense 5, durability 320, SWIM_SPEED ADD_VALUE 0.5D."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Modifier receiver is the wearer in LEGS, with no remote entity query."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Copper repair and native loot/spawn, without a per-query item debit."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Native inheritable equipment, attribute and consumer boundaries with runtime settlement pending."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Deterministic publisher replay of class methods, typed references, registry bindings and resources."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/diving-boots.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "DIVING_BOOTS binding and BOOTS supplier."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Exact foot stack satisfies Muck ocean-entity predicate for collision and entityInside."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Defense 2, durability 220, full collision cube and requested vertical delta +0.1D."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "LivingEntity in FEET or type tag, bounded to Muck collision/contact."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Copper repair and native loot/spawn, without a per-contact item debit."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Native inheritable equipment, attribute and consumer boundaries with runtime settlement pending."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DIVING-ARMOR-CATALOG-1.0.10.md",
+          "reason": "Deterministic publisher replay of class methods, typed references, registry bindings and resources."
+        }
+      }
     }
   },
   "providers": {},
