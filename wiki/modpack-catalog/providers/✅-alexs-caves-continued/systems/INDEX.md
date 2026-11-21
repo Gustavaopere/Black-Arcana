@@ -4,13 +4,13 @@
 
 **Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
 
-**Fichas catalogadas (somente fichas detectadas): 13/13.**
+**Fichas catalogadas (somente fichas detectadas): 14/14.**
 
 **Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 13/13.**
+**Homologadas para perks (somente fichas detectadas): 14/14.**
 
 **Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
@@ -22,6 +22,7 @@
 |---|---|---|---|---|---|
 | ✅ | Anvil Combination | [ficha/anvil-combination.md](anvil-combination.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Armor Material | [ficha/armor-material.md](armor-material.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Cave Info Item | [ficha/cave-info-item.md](cave-info-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Client Extension | [ficha/client-extension.md](client-extension.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Destroyed Item | [ficha/destroyed-item.md](destroyed-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dynamic Attributes | [ficha/dynamic-attributes.md](dynamic-attributes.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
