@@ -1,6 +1,6 @@
 # Floater e Frostmint Spear — auditoria causal do JAR 1.0.10
 
-**Estado:** 🟡 descoberta binária concluída, **⚠️ contratos estáticos individuais parciais**, `NO_MUTATION`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, provider `OPEN`. Nenhum novo cast/magia semântica foi certificado. Objetos de utilidade e arma possuem suas [fichas individuais](items/INDEX.md).
+**Estado:** 🟡 descoberta binária concluída, **⚠️ contratos estáticos individuais parciais**, `NO_MUTATION`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, provider `OPEN`. Nenhum novo cast/magia semântica foi certificado. Objetos de utilidade e arma possuem fichas individuais em [Floater](items/floater.md) e [Frostmint Spear](equipment/frostmint-spear.md).
 
 ## Proveniência e reprodutibilidade
 
