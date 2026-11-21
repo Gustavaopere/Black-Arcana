@@ -5,6 +5,9 @@ on:
     paths:
       - '.github/workflows/alexscaves-1010-floater-frostmint-discovery.yml'
       - 'docs/qa/alexscaves_1010_floater_frostmint_discovery.py'
+      - 'docs/qa/alexscaves_1010_floater_frostmint_static_checks.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/providers/INDEX.md'
       - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
       - 'wiki/modpack-catalog/providers/INDEX.md'
@@ -35,6 +38,10 @@ jobs:
             --jar build/floater-frostmint-1010/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/floater-frostmint-1010/report.json
+      - name: Assert exact classes, entity effects and resource hashes
+        run: |
+          python3 docs/qa/alexscaves_1010_floater_frostmint_static_checks.py \
+            --report build/floater-frostmint-1010/report.json
       - name: Preserve bounded SHA-exact discovery
         if: always()
         uses: actions/upload-artifact@v7
