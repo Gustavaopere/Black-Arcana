@@ -44,6 +44,10 @@ jobs:
         run: |
           python3 docs/qa/alexscaves_1010_darkness_presentation_static_checks.py \
             --transcript-dir build/darkness-presentation-1010/evidence
+      - name: Show canonical alphabetical-index delta
+        run: |
+          python3 scripts/catalog/generate_perk_ready_indexes.py
+          git diff -- wiki/modpack-catalog/providers/INDEX.md 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/INDEX.md' 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/INDEX.md'
       - name: Preserve bounded SHA-exact evidence
         if: always()
         uses: actions/upload-artifact@v7
