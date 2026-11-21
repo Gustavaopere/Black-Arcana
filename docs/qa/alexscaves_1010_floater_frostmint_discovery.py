@@ -35,6 +35,10 @@ def run(jar,javap,output):
     discovery.TARGETS=tuple(PREFIX+n for n in NAMES)
     native=discovery.inspect(jar,javap)
     assert set(native["targets"])==set(discovery.TARGETS)
+    entity_names=("FloaterEntity","FrostmintSpearEntity")
+    discovery.TARGETS=tuple("com/github/alexmodguy/alexscaves/server/entity/item/"+n for n in entity_names)
+    entity_native=discovery.inspect(jar,javap)
+    assert set(entity_native["targets"])==set(discovery.TARGETS)
     resources=read_resources(jar)
     require(bool(resources),"no item resources matched, inspect publisher")
     native["filename_matched_resources"]=resources
@@ -43,6 +47,7 @@ def run(jar,javap,output):
         "artifact":{"version":"1.0.10","filename":"alexscaves-1.0.10-neoforge+1.21.1.jar",
                     "sha1":SHA1,"sha256":SHA256,"size_bytes":SIZE},
         "native":native,
+        "entity_native":entity_native,
         "next_unreviewed":"server/item/GalenaGauntletItem",
         "mutation":"NO_MUTATION","mutating_hook":"NOT_VERIFIED",
         "physical_qa":"NOT_TESTED","provider_universe_closed":False,
@@ -61,6 +66,11 @@ def run(jar,javap,output):
         for c,v2 in v["consumers"].items():
             print("CALLER",owner,c,"sites",len(v2["sites"]),
                   "methods",[x["declaration"]["name"] for x in v2["bodies"]])
+    for owner,v in entity_native["targets"].items():
+        print("ENTITY",owner,v["class_sha256"],"methods",len(v["methods"]),
+              "consumers",len(v["consumers"]),"ancestors",len(v["ancestors"]))
+        for m in v["methods"]:
+            print("ENTITY_METHOD",owner,m["declaration"]["name"],m.get("instruction_count"))
     print("RESOURCES",len(resources),json.dumps(sorted(resources)))
     print("STATIC_DISCOVERY_ONLY NO_MUTATION")
 
