@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 4/6.**
+**Fichas catalogadas (somente fichas detectadas): 5/6.**
 
-**Barra das fichas catalogadas:** `█████████████░░░░░░░ 66.7%`
+**Barra das fichas catalogadas:** `████████████████░░░░ 83.3%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 4/6.**
+**Homologadas para perks (somente fichas detectadas): 5/6.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 66.7%`
+**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 83.3%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -23,7 +23,7 @@
 | ✅ | Desolate Dagger | [ficha/desolate-dagger.md](desolate-dagger.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dreadbow | [ficha/dreadbow.md](dreadbow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Extinction Spear | [ficha/extinction-spear.md](extinction-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Frostmint Spear | [ficha/frostmint-spear.md](frostmint-spear.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Frostmint Spear | [ficha/frostmint-spear.md](frostmint-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Galena Gauntlet | [ficha/galena-gauntlet.md](galena-gauntlet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shot Gum | [ficha/shot-gum.md](shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 

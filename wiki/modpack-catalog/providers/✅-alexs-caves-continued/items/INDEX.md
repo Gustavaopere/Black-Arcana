@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 19/29.**
+**Fichas catalogadas (somente fichas detectadas): 20/29.**
 
-**Barra das fichas catalogadas:** `█████████████░░░░░░░ 65.5%`
+**Barra das fichas catalogadas:** `█████████████░░░░░░░ 69.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 19/29.**
+**Homologadas para perks (somente fichas detectadas): 20/29.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 65.5%`
+**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 69.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -33,7 +33,7 @@
 | ✅ | Diving Helmet | [ficha/diving-helmet.md](diving-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Leggings | [ficha/diving-leggings.md](diving-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Fertilizer | [ficha/fertilizer.md](fertilizer.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Floater | [ficha/floater.md](floater.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Floater | [ficha/floater.md](floater.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gazing Pearl | [ficha/gazing-pearl.md](gazing-pearl.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gingerbread Boots | [ficha/gingerbread-boots.md](gingerbread-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gingerbread Chestplate | [ficha/gingerbread-chestplate.md](gingerbread-chestplate.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |

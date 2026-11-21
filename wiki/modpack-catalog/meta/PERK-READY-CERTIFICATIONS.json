@@ -10421,6 +10421,92 @@
           "reason": "Whole publisher census, exact local methods/resources, upstream engine instructions and patch hashes."
         }
       }
+    },
+    "✅-alexs-caves-continued/items/floater.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Publisher 1.0.10 item and entity bindings, exact two and fourteen bodies, and resources."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Water-gated spawn request, root vehicle mounting, alternate existing-entity interaction, lift and timed discard."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "0.98 by 0.98 dimensions, lift 0.2D, gravity -0.04D, 0.9D damping, dry threshold greater than five."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "The using player and root vehicle in the item path. Existing entity interaction mounts the player directly."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Crafting four bioluminesscence plus three ping pong sponge, one item requested outside creative."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Publisher ignores spawn and mount returns. Mojang and NeoForge references bound dispatch and canceled mounting."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "SHA-exact replay of publisher, registry, methods, engine references and resources, without physical runtime proof."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/equipment/frostmint-spear.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Publisher 1.0.10 spear, projectile and presentation item identities, exact factory and method bodies."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Charge and throw, direct damage and area explosion, freezer accessor and post-hit state."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Stack 16, +5 attack damage, -3 attack speed, launch speed 2.5F times power, .5 by .5 projectile, base 6F and radius 2F."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Throw follows rotation and native collision. Explosion checks radius four, exposure and entity filters."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Recipe yields four. Throw requests one item outside instabuild; inherited wear requests and pickup boundaries."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Projectile makes a default stack; trident and explosion authority differ. Freeze counter and runtime timing need testing."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Exact replay of local item, projectile, explosion and accessor methods, registration and resources."
+        }
+      }
     }
   },
   "providers": {},
