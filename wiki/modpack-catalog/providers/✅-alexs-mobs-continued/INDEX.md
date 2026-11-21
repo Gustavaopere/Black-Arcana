@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 0/3.**
+**Fichas catalogadas (somente fichas detectadas): 1/3.**
 
-**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra das fichas catalogadas:** `██████░░░░░░░░░░░░░░ 33.3%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 0/3.**
+**Homologadas para perks (somente fichas detectadas): 1/3.**
 
-**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra dos contratos técnicos estáticos:** `██████░░░░░░░░░░░░░░ 33.3%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -20,7 +20,7 @@
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
-| ⚠️ | Dimensional Carver Passage | [actions/dimensional-carver-passage.md](actions/dimensional-carver-passage.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Dimensional Carver Passage | [actions/dimensional-carver-passage.md](actions/dimensional-carver-passage.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Item Transmutation | [actions/item-transmutation.md](actions/item-transmutation.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Void Worm Summoning | [actions/void-worm-summoning.md](actions/void-worm-summoning.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
@@ -28,7 +28,7 @@
 
 | Catálogo | Subpasta | Fichas catalogadas / observadas | Contratos estáticos | Índice |
 |---|---|---:|---:|---|
-| ⚠️ | Actions | 0/3 (0.0%) | 0 | [Abrir índice](actions/INDEX.md) |
+| ⚠️ | Actions | 1/3 (33.3%) | 1 | [Abrir índice](actions/INDEX.md) |
 
 ## Critério do ✅
 

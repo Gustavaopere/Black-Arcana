@@ -1,6 +1,6 @@
 # Alex's Mobs Continued — 2.1.13
 
-Status: `⚠️ HISTORICAL PUBLISHER SCOPE DOCUMENTED / SIBLING MAIN MODLIST ENTRY RECONFIRMED AT 2.1.13 / PHYSICAL RUNTIME QA NOT TESTED / 3 SUPERNATURAL ROOTS IN OBSERVED ARTIFACT / 0 OF 3 STATIC CONTRACTS CERTIFIED / NO_MUTATION`
+Status: `⚠️ HISTORICAL PUBLISHER SCOPE DOCUMENTED / SIBLING MAIN MODLIST ENTRY RECONFIRMED AT 2.1.13 / PHYSICAL RUNTIME QA NOT TESTED / 3 SUPERNATURAL ROOTS IN OBSERVED ARTIFACT / 1 OF 3 STATIC CONTRACTS CERTIFIED / NO_MUTATION`
 
 ## Identidade registrada na modlist atual do sibling
 
@@ -20,7 +20,7 @@ Alex's Mobs Continued is cross-domain for the magic catalog: the sibling classif
 
 A [modlist do sibling @55d8baa](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/55d8baa166cc3660f529f912d7a735623ab40a32/PROJECT-INSTRUCTIONS/modlist/Mobs/%E2%9C%85-alexs-mobs-continued%20v2.1.13.md) foi localizada e reconsultada: `PROJECT-INSTRUCTIONS/modlist/Mobs/✅-alexs-mobs-continued v2.1.13.md`, JAR `alexsmobs-2.1.13-neoforge+1.21.1.jar`, posição #21, mod ID `alexsmobs`, runtime 2.1.13 e SHA-1 `50ddafdf3d12b33331e4eecb4ab514ae451baadd`. Isso reconfirma o **estado documentado da modlist atual no GitHub**; não é inspeção presencial do diretório de mods ou teste físico do pack. A versão upstream 2.3.0 está documentada como lançada, porém **não instalada**.
 
-O índice individual [INDEX.md](INDEX.md) permanece em **0/3 contratos técnicos estáticos certificados** no recorte semântico observado; o universo integral do mod e as configurações físicas atuais não estão homologados. A auditoria adicional [TransmutationData/NBT/display](../../../../docs/qa/alexsmobs-213-transmutation-data-handoff.md) certifica somente referências estáticas e seus limites, **não** valida perks, hooks ou QA física. `NO_MUTATION` até prova de boundary real.
+O índice individual [INDEX.md](INDEX.md) registra **1/3 contratos técnicos estáticos certificados** no recorte semântico observado. A [ficha Dimensional Carver](actions/dimensional-carver-passage.md) tem prova estática da ativação, do portal e da fila de teleporte. A disponibilidade normal ainda depende do Void Worm; o universo integral do mod e as configurações físicas atuais não estão homologados. A auditoria adicional [TransmutationData/NBT/display](../../../../docs/qa/alexsmobs-213-transmutation-data-handoff.md) certifica somente referências estáticas e seus limites, **não** valida perks, hooks ou QA física. `NO_MUTATION` até prova de boundary real.
 
 ## Exact publisher-artifact closure
 
