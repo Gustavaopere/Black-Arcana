@@ -82,6 +82,18 @@ def run(jar: Path, javap: str, output: Path) -> None:
                             "new", "checkcast", "instanceof"}):
                     print("PIVOT", owner.split("/")[-1], declaration["name"],
                           ins["offset"], ins["opcode"], ins["symbol"][:190])
+    for method in native["targets"][ITEM]["methods"]:
+        if method["declaration"]["name"] in {
+                "<init>", "getEnchantmentValue", "getLerpedUseTime",
+                "getUseTime", "acInventoryTick", "isEnchantable",
+                "isValidRepairItem", "shouldCauseReequipAnimation",
+                "setUseTime", "releaseUsing"}:
+            print("BOUNDED_ITEM_JVM", method["declaration"]["name"],
+                  json.dumps(method["instructions"], sort_keys=True))
+    with ZipFile(jar) as archive:
+        recipe = "data/alexscaves/recipe/galena_gauntlet.json"
+        if recipe in archive.namelist():
+            print("DECLARED_RECIPE", recipe, archive.read(recipe).decode("utf8"))
     print("RESOURCES", len(resources), json.dumps(resources, sort_keys=True))
     print("BOUNDED_DISCOVERY_ONLY NO_MUTATION")
 
