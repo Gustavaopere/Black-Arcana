@@ -1,0 +1,313 @@
+{
+  "schema_version": 1,
+  "scope": "GALENA_GAUNTLET_FULL_CLASS_DISCOVERY_NOT_CERTIFIED",
+  "artifact": {
+    "name": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "installed_dump_parity": "NOT_VERIFIED"
+  },
+  "report": {
+    "sha256": "c91a48f9892be09c4ab951c8083703b0c5ffbb026fc43e7d808c2033dde8bba9",
+    "run_id": 44934418449,
+    "job_id": 136937828915,
+    "artifact_id": 14719225697,
+    "zip_sha256": "7c72db7946900a66c7fd8f624505bd740812d8bc94193726f7cbb039b06cf516",
+    "expires_at": "2026-12-05T18:14:45Z"
+  },
+  "classes": {
+    "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem": {
+      "sha256": "5a74328a7130704a4e2dca9e607bed4dc3a468b8bbcb6d4e238b4d2d962573b0",
+      "methods": [
+        {
+          "name": "<init>",
+          "descriptor": "()V",
+          "instructions": 12,
+          "sha256": "da2ca74b00f1353a497c64df814d5dc360703ec99b0a38263ae540ff173f00e5"
+        },
+        {
+          "name": "acExtraRepairMaterials",
+          "descriptor": "()[Lnet/minecraft/world/item/Item;",
+          "instructions": 10,
+          "sha256": "389c59cf797732efddc1d2d4c94ff90fcc835ff5bf2e40a4aefe3f77698bb0b0"
+        },
+        {
+          "name": "acInventoryTick",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+          "instructions": 64,
+          "sha256": "8dcc27ed692192f6b3cd30a9c50207a0172e4d3e6fa56cb58ef515c56ac9980b"
+        },
+        {
+          "name": "getEnchantmentValue",
+          "descriptor": "()I",
+          "instructions": 2,
+          "sha256": "d943c5fe0bd38038ce70963c73b8759ba3d76c8c00d31c1a2141268dc4e0ee0a"
+        },
+        {
+          "name": "getEquipmentSlot",
+          "descriptor": "()Lnet/minecraft/world/entity/EquipmentSlot;",
+          "instructions": 2,
+          "sha256": "dd2cfd8049f4042b1cd8771f178378a8c7d12f68381d35e7f7925b09f8c114a0"
+        },
+        {
+          "name": "getLerpedUseTime",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;F)F",
+          "instructions": 29,
+          "sha256": "4bc2e6bf3f800a5cd0e9c1c8802be6b5cd6cbdefc291618a20064249ff3b635b"
+        },
+        {
+          "name": "getUseAnimation",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/UseAnim;",
+          "instructions": 2,
+          "sha256": "9e2ff9f93aa66260d75380faf4a750bd2c5e5ad3b6eeadc14092a4443c1fb10b"
+        },
+        {
+          "name": "getUseDuration",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)I",
+          "instructions": 2,
+          "sha256": "9ae974157c6a276e3e9c13b791bc9b4db042dab8f41f2cbbae4fd9120f5f8dab"
+        },
+        {
+          "name": "getUseTime",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "instructions": 11,
+          "sha256": "fcaf2870b7af6824c6036717eac20909ddfa29544808c7d99463aa7edbe04201"
+        },
+        {
+          "name": "initializeClient",
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "instructions": 6,
+          "sha256": "3a6c2d33865c1d1707dcbd93e1f9e0bd3bd706c9817ddb988b4e0589ebb14cf4"
+        },
+        {
+          "name": "isEnchantable",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "instructions": 8,
+          "sha256": "d65c1cfeda03eee5779b3a5eb2bd71fb384cf8951c58a10442bb135007135000"
+        },
+        {
+          "name": "isValidRepairItem",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "instructions": 13,
+          "sha256": "7b84bebc22faba3bb9c38df7d7d25ed1503e3854e959853eeffbbeae8aabafc9"
+        },
+        {
+          "name": "onUseTick",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+          "instructions": 120,
+          "sha256": "b17b8f2afb25c096aa745da71e00950bdb1de0e3761729fa4f6234734fff81d7"
+        },
+        {
+          "name": "releaseUsing",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+          "instructions": 25,
+          "sha256": "d1b2c0c8bdb6e82c98f7c5eeafe77c180e45cadbd571ab89512c3958bb32a006"
+        },
+        {
+          "name": "setUseTime",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;I)V",
+          "instructions": 16,
+          "sha256": "09b5b3b59a4f42bb4628776da29bffebba4135ac6e1e7113a1901109ede5b7dd"
+        },
+        {
+          "name": "shouldCauseReequipAnimation",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Z)Z",
+          "instructions": 16,
+          "sha256": "36eeb94cfde83b3e8588881692a555feb26e88a710b62ac637593d2ba4512a0e"
+        },
+        {
+          "name": "use",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+          "instructions": 47,
+          "sha256": "87df4fcdfaeba914746acd176506fe96cc1c89631c9751135b9133c483617c8b"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity": {
+      "sha256": "a26794c9eba89c554e812078886beda6129d5298219f685f6d0e2be315fbf071",
+      "methods": [
+        {
+          "name": "<clinit>",
+          "descriptor": "()V",
+          "instructions": 23,
+          "sha256": "6b1cea928046cf7a0dfcdd3aaa38dad8c6eccd3d4c6e20e9f6b0ddabcf4b0e91"
+        },
+        {
+          "name": "<init>",
+          "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+          "instructions": 23,
+          "sha256": "a2ed23d6da65e74725d089cbe4a67808b3ebabf363c32562f17c23efc562f66c"
+        },
+        {
+          "name": "addAdditionalSaveData",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "instructions": 23,
+          "sha256": "902bb80a529d271792e80820bdffc560e141388f03a2d27d0037dcafe484f520"
+        },
+        {
+          "name": "damageItem",
+          "descriptor": "(I)V",
+          "instructions": 37,
+          "sha256": "26c2f76584dc4fa9e4192adda507ed89b47be3ea482088270436bad30f5126d1"
+        },
+        {
+          "name": "defineSynchedData",
+          "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+          "instructions": 32,
+          "sha256": "077484e38664719385fee4e6704487fbb8ba2cb79145c521243d809f786ffbeb"
+        },
+        {
+          "name": "directMovementTowards",
+          "descriptor": "(Lnet/minecraft/world/phys/Vec3;F)V",
+          "instructions": 68,
+          "sha256": "2fe8f43c0e6a95bcca0297681830a315dded40b7003a46587e3681692a74ef04"
+        },
+        {
+          "name": "getAddEntityPacket",
+          "descriptor": "(Lnet/minecraft/server/level/ServerEntity;)Lnet/minecraft/network/protocol/Packet;",
+          "instructions": 4,
+          "sha256": "8069d1174ea7fc2fa254b75e0900d5aa546eb08e36923632bafdd8ec344b1b45"
+        },
+        {
+          "name": "getController",
+          "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+          "instructions": 34,
+          "sha256": "0b547d0cef5e0afa81b6dfbdb7f6215da923e21abc49ddb9a6be8cbc4d3199e2"
+        },
+        {
+          "name": "getControllerHandPos",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;F)Lnet/minecraft/world/phys/Vec3;",
+          "instructions": 59,
+          "sha256": "bdb7b25bdcbcf0f25722e10d23a95dff5475b928bbc3848e6b72a3ed6f524b07"
+        },
+        {
+          "name": "getControllerUUID",
+          "descriptor": "()Ljava/util/UUID;",
+          "instructions": 9,
+          "sha256": "fa91dcd8ea98ce6e8c942e529c1a254848e801d3e415ac78253d332227b81ad7"
+        },
+        {
+          "name": "getDamageForItem",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)D",
+          "instructions": 3,
+          "sha256": "8b1271d55ab393ed1e3d6ac10116045048521afb94ee8ee21141b55bd325969b"
+        },
+        {
+          "name": "getDigSpeed",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)F",
+          "instructions": 80,
+          "sha256": "edd233b5cee732c5cccc5f935cd96748940b1a036c20423d33c375973ebf4470"
+        },
+        {
+          "name": "getItemStack",
+          "descriptor": "()Lnet/minecraft/world/item/ItemStack;",
+          "instructions": 6,
+          "sha256": "b23c1a5515f080ec735d4e2148497f5fc2350ceeb06716ba0199f4c89e5fcb11"
+        },
+        {
+          "name": "getReturnProgress",
+          "descriptor": "(F)F",
+          "instructions": 11,
+          "sha256": "02075318d60a3308f162b572846186f66aedb832a6c05423006b02620bab856b"
+        },
+        {
+          "name": "getStrikeProgress",
+          "descriptor": "(F)F",
+          "instructions": 11,
+          "sha256": "da0516824a0780e9bf984df062e2667d8d475b3b8f97d88fca5fc2d5fe4b7eba"
+        },
+        {
+          "name": "getTarget",
+          "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+          "instructions": 17,
+          "sha256": "3b86fcfd877d534897491465143ab7c8237de2159d4cd8adc07e60d1efbc5a31"
+        },
+        {
+          "name": "hurtEntity",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V",
+          "instructions": 141,
+          "sha256": "aa8e9cce394f23845c672ed73837010f51f067453503dd2f7fd697eaeda29d35"
+        },
+        {
+          "name": "isIdling",
+          "descriptor": "()Z",
+          "instructions": 7,
+          "sha256": "1208b41ebe7cf954271681ed59918a48344dfb4507181b98d53e4a2d965ed561"
+        },
+        {
+          "name": "isOwnerWearingGauntlet",
+          "descriptor": "()Z",
+          "instructions": 26,
+          "sha256": "b76b524a3f75e06c324be6edd43562c9e0ad106be7c60e9fa6081e0f6b9d47c8"
+        },
+        {
+          "name": "plopItem",
+          "descriptor": "()V",
+          "instructions": 19,
+          "sha256": "e0279127fbf0af24ef6efc4cc658a5f401e3004b63e400e55d05749c09ad4eae"
+        },
+        {
+          "name": "readAdditionalSaveData",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "instructions": 23,
+          "sha256": "f7e30d3f544cb727466b3d219813386a4fe2936a1dcc086f67402976c49a8eca"
+        },
+        {
+          "name": "setControllerUUID",
+          "descriptor": "(Ljava/util/UUID;)V",
+          "instructions": 7,
+          "sha256": "d14d79b5d9ecaee766923df03e2a29df3f489a75e771bace60ee9dc6857ba91a"
+        },
+        {
+          "name": "setItemStack",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)V",
+          "instructions": 6,
+          "sha256": "aab9a1e89cbd9279593d158a039b3b109a45613f53317bd4887f11d1b2c5e215"
+        },
+        {
+          "name": "tick",
+          "descriptor": "()V",
+          "instructions": 744,
+          "sha256": "3478b6038fe3dad88fd11a2b7aeca49fc85a9ccadc1ad4e9fca089b423b8e9bc"
+        }
+      ]
+    }
+  },
+  "matched_resources": {
+    "assets/alexscaves/models/item/galena_gauntlet.json": {
+      "sha256": "f9e2d936aa9da5a16c7d2fb225d5eac4d38a275cfbd65f4947e799f900f7267f",
+      "size": 1192
+    },
+    "data/alexscaves/advancement/alexscaves/galena_gauntlet_challenge.json": {
+      "sha256": "333feec45d0ff942903bae80a37801ea3df684c28bf13b6e22c495d25a5c8eae",
+      "size": 706
+    },
+    "data/alexscaves/recipe/galena_gauntlet.json": {
+      "sha256": "4354b2b27a8a0caa3073e499b5f0532919d16a97d0321776446f3cbca7301c6c",
+      "size": 516
+    },
+    "data/alexscaves/tags/item/enchantable/galena_gauntlet.json": {
+      "sha256": "5f8a2dfe1222c6631122855a11ab011d916bea83d285d6ecd886a177c058c4cb",
+      "size": 55
+    },
+    "data/alexscaves/tags/item/ferromagnetic_items.json": {
+      "sha256": "d56b9514fe890d6b4eb1e256fd418683e7ec9aeb7032592168671f6851548dbf",
+      "size": 3925
+    },
+    "data/alexscaves/tags/item/galena_gauntlet_crystallization_items.json": {
+      "sha256": "a66bc2d0071dac61445130165f3acbd050694a8613113d47293237557167fd05",
+      "size": 426
+    }
+  },
+  "limits": {
+    "claim_scope": "STATIC_DISCOVERY_ONLY",
+    "static_contract": "PARTIAL",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_certified_delta": 0,
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION"
+  }
+}
