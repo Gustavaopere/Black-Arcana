@@ -16,7 +16,7 @@
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
-**Contratos desta subpasta:** ⚠️ três fichas individuais de Darkness ainda parciais; não promover seus contratos a certificados apenas pela auditoria do corpo nativo. Hooks/QA física e universo integral do provider seguem pendentes.
+**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
@@ -26,9 +26,9 @@
 | ✅ | Candy Cane Hook | [ficha/candy-cane-hook.md](candy-cane-hook.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Book | [ficha/cave-book.md](cave-book.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Map | [ficha/cave-map.md](cave-map.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Cloak of Darkness | [ficha/cloak-of-darkness.md](cloak-of-darkness.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Cloak Of Darkness | [ficha/cloak-of-darkness.md](cloak-of-darkness.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Darkened Apple | [ficha/darkened-apple.md](darkened-apple.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Hood of Darkness | [ficha/hood-of-darkness.md](hood-of-darkness.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Hood Of Darkness | [ficha/hood-of-darkness.md](hood-of-darkness.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [ficha/pewen-boat.md](pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [ficha/pewen-chest-boat.md](pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [ficha/thornwood-boat.md](thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
