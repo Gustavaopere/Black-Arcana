@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 19/25.**
+**Fichas catalogadas (somente fichas detectadas): 19/29.**
 
-**Barra das fichas catalogadas:** `███████████████░░░░░ 76.0%`
+**Barra das fichas catalogadas:** `█████████████░░░░░░░ 65.5%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 19/25.**
+**Homologadas para perks (somente fichas detectadas): 19/29.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 76.0%`
+**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 65.5%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -39,6 +39,10 @@
 | ⚠️ | Gingerbread Chestplate | [ficha/gingerbread-chestplate.md](gingerbread-chestplate.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gingerbread Helmet | [ficha/gingerbread-helmet.md](gingerbread-helmet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gingerbread Leggings | [ficha/gingerbread-leggings.md](gingerbread-leggings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Hazmat Boots | [ficha/hazmat-boots.md](hazmat-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Hazmat Chestplate | [ficha/hazmat-chestplate.md](hazmat-chestplate.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Hazmat Leggings | [ficha/hazmat-leggings.md](hazmat-leggings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Hazmat Mask | [ficha/hazmat-mask.md](hazmat-mask.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hood Of Darkness | [ficha/hood-of-darkness.md](hood-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [ficha/pewen-boat.md](pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [ficha/pewen-chest-boat.md](pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
