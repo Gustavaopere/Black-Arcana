@@ -1,0 +1,63 @@
+# Galena Gauntlet — controle nativo de arma magnética (publisher 1.0.10)
+
+**Estado:** ⚠️ **contrato técnico estático individual PARCIAL**. O censo SHA-exato dos métodos do item e da entidade consumidora está reproduzido no GitHub Actions, mas a cadeia interprocedural, a liquidação engine e os resultados físicos ainda não estão completamente certificados. `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `perks_executable=NOT_CERTIFIED` · `provider_universe_closed=false`. Este equipamento **não adiciona uma nova raiz semântica de cast**, independentemente de `alexscaves:crystallization`.
+
+## 1. Identidade, versão e proveniência
+
+- **Provider e mod ID:** Alex's Caves Continued / `alexscaves`; Minecraft **1.21.1**, **NeoForge**, Java **21**.
+- **Item:** `alexscaves:galena_gauntlet`, identificado em `ACItemRegistry.GALENA_GAUNTLET` e no recurso `data/alexscaves/tags/item/enchantable/galena_gauntlet.json`. Classfile: `com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem.class`.
+- **Fonte da instalação declarada na modlist sibling:** `PROJECT-INSTRUCTIONS/modlist/World Gen/✅-alexs-caves-continued v1.0.10.md` em `Gustavaopere/neoforge-rpg-skilltree`: `alexscaves-1.0.10-neoforge+1.21.1.jar`, versão **1.0.10**, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`.
+- **Artefato publisher efetivamente lido em CI:** mesmo nome e versão, **75.279.314 bytes**, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`. **Paridade com um novo dump da instalação: NÃO VERIFICADA.**
+- **Hashes de classfiles:** `GalenaGauntletItem` = `5a74328a7130704a4e2dca9e607bed4dc3a468b8bbcb6d4e238b4d2d962573b0`; `MagneticWeaponEntity` = `a26794c9eba89c554e812078886beda6129d5298219f685f6d0e2be315fbf071`.
+- **Provas locais reutilizadas, da mesma versão:** [Crystallization](../enchantments/crystallization.md), [manifesto causal](../EXACT-CRYSTALLIZATION-CAUSAL-1.0.10.json), [auditoria original](../EXACT-CRYSTALLIZATION-1.0.10.json). A análise atual amplia a cobertura do item para **17 métodos executáveis** e da entidade para **24**, incluindo `<clinit>`. [Sonda read-only](../../../../../docs/qa/alexscaves_1010_galena_gauntlet_discovery.py) e [workflow](../../../../../.github/workflows/alexscaves-1010-galena-gauntlet-discovery.yml); [execução #44934289130](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44934289130), job `136937428994`, concluída com sucesso, com relatório integral preservado em artefato temporário. [Dossiê de evidências](../EXACT-GALENA-GAUNTLET-DISCOVERY-1.0.10.md).
+
+**Propriedades técnicas:** stack máxima **1**, durabilidade nominal **400**, raridade **UNCOMMON**, valor de encantabilidade retornado **1** (construtor e `getEnchantmentValue` do classfile 1.0.10). A receita declarativa `PPP / PTP / SNS` utiliza 5 Packed Galena, 1 Telecore, 2 Ferrouslime Ball e 1 Scarlet Neodymium Ingot, produzindo uma Gauntlet; SHA-256 da receita `4354b2b27a8a0caa3073e499b5f0532919d16a97d0321776446f3cbca7301c6c` (516 bytes). Não confirma obtenção física dos ingredientes nem o crafting no modpack.
+
+**Descrição funcional própria:** a luva permite controlar uma stack elegível que o jogador porta na outra mão, materializando uma `MagneticWeaponEntity`. Essa entidade mantém movimento, seleção de alvo, ataque, mineração e retorno/descarte sob regras do provider. O encantamento Crystallization amplia a **elegibilidade da stack**, sem criar arma, magia ou projétil distinto.
+
+## 2. Ativação, condições e custos
+
+**`GalenaGauntletItem.use(Level,Player,InteractionHand)`** — 47 instruções observadas. Identifica a mão da luva e a stack oposta; lê `ACEnchantmentRegistry.CRYSTALLIZATION` com `ACCompat.enchantLevel`. Com nível positivo, usa `GALENA_GAUNTLET_CRYSTALLIZATION_ITEMS`; em outro caso, `MAGNETIC_ITEMS`. `ItemStack.is(tag)` decide elegibilidade. Em falha, solicita `ACCompat.useFail`; em sucesso, solicita **um ponto de desgaste da luva** via `ACCompat.hurtAndBreakUsedHand` somente para jogador não criativo, `Player.startUsingItem` e `ACCompat.useConsume`. Os métodos são pedidos à engine; não garantir que todos os efeitos finais sejam aceitos.
+
+**`onUseTick(Level,LivingEntity,ItemStack,int)`** — 120 instruções. Chama o ancestral, identifica a mão, reproduz um evento de áudio nativo, revalida a tag e procura `MagneticWeaponEntity` em `LivingEntity.getBoundingBox().inflate(64D,64D,64D)`, comparando controllers. **64 é expansão axial da AABB usada nessa pesquisa de instâncias**, não alcance de tiro/dano. Se o ramo de criação é alcançado, copia a stack oposta, solicita `setCount(0)` na stack original, instancia `ACEntityRegistry.MAGNETIC_WEAPON`, transmite a cópia via `setItemStack`, posiciona e define `setControllerUUID(livingEntity.getUUID())`, então solicita `Level.addFreshEntity`. O booleano do spawn é descartado no bytecode local; **não existe rollback demonstrado nessa janela**. O método também pode solicitar `stopUsingItem` quando a stack oposta se esvazia.
+
+**`releaseUsing`** — 25 instruções: após o ancestral, solicita `ACCompat.addCooldown(player,stack,5)` se o usuário é `Player`, limpa cache de áudio e solicita som de encerramento. **5 ticks é argumento do cooldown**, não a duração da arma controlada. `getUseDuration` declara **72.000 ticks**; `getUseAnimation` retorna `UseAnim.NONE`; `getEquipmentSlot` retorna `EquipmentSlot.OFFHAND`. O prazo de uso declarado não equivale a vida garantida da entidade ou duração física de controle. Mana ou custo de spell casting: **N/A — nenhum recurso próprio foi identificado nesse caminho**; gastos externos não verificados.
+
+## 3. Estado do item, reparo e cliente
+
+Os métodos nativos `getUseTime`, `setUseTime` e `getLerpedUseTime` acessam componentes/tag por `ACCompat`, com chaves literais **`UseTime`** e **`PrevUseTime`**. `acInventoryTick` consulta `LivingEntity.getUseItem` e, **apenas no lado cliente**, atualiza o estado visual: quando está em uso e `UseTime < 5`, pede incremento em uma unidade; quando não está em uso e `UseTime > 0`, pede decremento em uma unidade. Se `PrevUseTime != UseTime`, atualiza o valor anterior. `setUseTime` primeiro copia o valor atual para `PrevUseTime` e escreve o novo valor. `getLerpedUseTime(stack,partialTick)` calcula **`PrevUseTime + partialTick × (UseTime − PrevUseTime)`**, com zero para tags nulas. Não há clamp global provado para valores previamente adulterados. Esses valores são distintos de cooldown e de `ControllerUUID`. A consistência de estado na mudança de mãos, reload e reinício ainda não foi demonstrada.
+
+`acExtraRepairMaterials` aponta para `ACBlockRegistry.PACKED_GALENA` convertido em item. `isValidRepairItem` aceita o predicado `ACRepairableItem.isExtraRepairMaterial` **ou** o resultado do ancestral `Item.isValidRepairItem`. `isEnchantable` retorna **true exatamente se `ItemStack.getCount()==1`** no corpo local; condições de encantamento herdadas ou externas não foram testadas. `initializeClient` entrega a `IClientItemExtensions` do proxy à apresentação; `shouldCauseReequipAnimation` retorna **false quando ambas as stacks comparadas são Gauntlet**, e true nos outros casos observados. A apresentação não é autoridade de cast. Os hashes, offsets, 17 métodos e parâmetros estão registrados no [dossiê SHA-exato](../EXACT-GALENA-GAUNTLET-DISCOVERY-1.0.10.md), sem certificar a integração física ou engine.
+
+## 4. Targeting, movimento, dano e mundo
+
+A `MagneticWeaponEntity` é a entidade própria, não um projétil novo de Crystallization. O auditor identificou **24 métodos executáveis** e **17 campos**, incluindo `tick` (744 instruções), `hurtEntity` (141), `getDigSpeed` (80), `directMovementTowards` (68), `damageItem` (37), `getController` (34), `getTarget` (17), `getControllerHandPos` (59) e métodos de persistência.
+
+- **Aquisição/alcance:** `tick` usa `ProjectileUtil.getHitResultOnViewVector`; `FIELD_EXTENSION` e `FERROUS_HASTE` aparecem no consumidor. A constante **5.0F** próxima ao caminho de `FIELD_EXTENSION` **não constitui fórmula final de alcance da 1.0.10**. `getTarget` consulta `TARGET_ID` no nível. Raio esférico, AOE, tempo de travamento, tamanho de hitbox e número de alvos efetivo: **NÃO VERIFICADOS**. Não confundir AABB 64 com alcance da arma.
+- **Dano:** `getDamageForItem` delega a `ACCompat.attackDamageBonus(ItemStack)`; `hurtEntity` solicita `damageSources().mobAttack(holder)`, `ACCompat.hurt` e, sob guarda de aceitação, efeitos pós-ataque e `damageItem(1)`. O `tick` tem **dois callsites de `hurtEntity` em ramos distintos**, sem prova de dois impactos por ativação. Dano final, armadura, resistência, atributos externos e aceitação de hit: **NÃO VERIFICADOS**; não fixar base numérica arbitrária.
+- **Desgaste da arma controlada:** `damageItem` consulta controller vivo, criativo e `ItemStack.isDamageableItem`; usa `ACCompat.hurtAndBreakUsedHand` e pode remover a entidade se a stack atingir `getMaxDamage`. Não confundir desgaste da luva na ativação com o desgaste da stack em ataque.
+- **Mineração:** `getDigSpeed` lê `ItemStack.getDestroySpeed`, `ACCompat.miningEfficiencyBonus`, efeitos de velocidade/lentidão de mineração, submersão, solo e o evento NeoForge **`EventHooks.getBreakSpeed`**. `tick` contém duas chamadas a `Level.destroyBlock` e manipulação de progresso de quebra. Speed, limites e autorização de modpacks/claims/PvP: **NÃO VERIFICADOS**; o valor computado não comprova destruição permitida.
+- **Movimento, hitbox e persistência:** `directMovementTowards` usa vetor normalizado, orientação e amortecimento/velocidade nativos; `getControllerHandPos` depende da mão, largura/altura e orientação do player. A entidade escreve/lê **`WeaponStack`** e **`ControllerUUID`** por NBT, mantém um `TARGET_ID` sincronizado e possui `plopItem` que solicita spawn do item. Recuperação após reload, dimension travel, perda de controller, deduplicação de dano e conservação de itens são **NÃO VERIFICADOS**.
+
+## 5. Interfaces conceituais para perks, atributos e Mastery
+
+| Eixo | Fronteira observada | Estado de integração |
+|---|---|---|
+| Elegibilidade | Tags `MAGNETIC_ITEMS` e `GALENA_GAUNTLET_CRYSTALLIZATION_ITEMS`; Crystallization apenas seleciona tag | ⛔ Mudar tags globais não implementa perk individual segura |
+| Alcance/targeting | AABB 64 para busca de instâncias; raycast provider-native; `FIELD_EXTENSION` separado | ⛔ Sem multiplicar 64 como range nem substituir target sem boundary |
+| Dano e escala | `attackDamageBonus`, `mobAttack`, `ACCompat.hurt`, post-attack | ⛔ Sem duplicar ataques, eventos, efeitos ou XP |
+| Uso, duração, cooldown | `UseTime`/`PrevUseTime`, `getUseDuration=72000`, cooldown solicitado 5 | ⛔ Sem novo timer/cooldown ou alterar cliente como autoridade |
+| Recursos/inventário | Desgaste da luva; `setCount(0)` antes do `addFreshEntity`; dano ao item controlado | ⛔ Sem spawn/cópia/refund sem contrato de liquidação |
+| Mineração/world safety | `getDigSpeed`, `EventHooks.getBreakSpeed`, `destroyBlock` | ⛔ Não estender quebras sem `WorldEffectPolicy` e aceitação real |
+| Owner e persistência | UUID de controller, `WeaponStack`, `TARGET_ID` | ⛔ Sem Mastery por tick, retorno ou kill sem autoria/dedupe certificados |
+
+O **Black Arcana** mantém a autoridade de seu runtime e políticas de mundo; o **RPG Skill Tree** só recebe integrações via boundary real para progressão, atributos e Mastery. Nenhum evento mutador ou API segura **por jogador** foi validado nesta ficha. Usar **`NO_MUTATION` / fail-closed**.
+
+## 6. Reprodutibilidade, certificação e próximos gates
+
+1. Reproduzir o auditor `docs/qa/alexscaves_1010_galena_gauntlet_discovery.py` contra o publisher SHA-exato; verificar relatório e hashes de cada método contra o dossiê. Comparar separadamente com o JAR **efetivamente extraído da instalação**.
+2. Completar reconstrução causal dos 17 métodos da Gauntlet, dos principais 24 consumidores da arma, configurações e interações herdadas; distinguir valores declarativos de resultados aceitos. Validar receita, reparo, animação, NBT e gates do NeoForge pela versão apropriada.
+3. Planejar testes físicos: uso nas duas mãos; encantamento ausente/presente; troca de item; spawn negado; inventário cheio; desconexão/reload; alteração de dimensão; ataque e mineração em claims/PvP; items de outros mods e datapacks; restauração e ausência de duplicação/perda.
+4. Somente após prova individual dos eixos pertinentes, atualizar `PERK-READY-CERTIFICATIONS.json` e os índices. **Este documento permanece ⚠️ parcial**; zero hooks mutadores, zero QA física e zero nova raiz/cast certificados.
+
+**Clean-room:** descrições próprias e localizadores de interoperabilidade; nenhuma implementação proprietária, assets ou bytecode de terceiros foram incorporados ao runtime.

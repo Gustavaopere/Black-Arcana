@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 116/118.**
+**Fichas catalogadas (somente fichas detectadas): 116/119.**
 
-**Barra das fichas catalogadas:** `███████████████████░ 98.3%`
+**Barra das fichas catalogadas:** `███████████████████░ 97.5%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 116/118.**
+**Homologadas para perks (somente fichas detectadas): 116/119.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████████░ 98.3%`
+**Barra dos contratos técnicos estáticos:** `███████████████████░ 97.5%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -106,6 +106,7 @@
 | ✅ | Dreadbow | [equipment/dreadbow.md](equipment/dreadbow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Extinction Spear | [equipment/extinction-spear.md](equipment/extinction-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Frostmint Spear | [equipment/frostmint-spear.md](equipment/frostmint-spear.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Galena Gauntlet | [equipment/galena-gauntlet.md](equipment/galena-gauntlet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shot Gum | [equipment/shot-gum.md](equipment/shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Alex Meal | [items/alex-meal.md](items/alex-meal.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Biome Treat | [items/biome-treat.md](items/biome-treat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -151,7 +152,7 @@
 | ✅ | Damage Types | 11/11 (100.0%) | 11 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
-| ⚠️ | Equipment | 4/5 (80.0%) | 4 | [Abrir índice](equipment/INDEX.md) |
+| ⚠️ | Equipment | 4/6 (66.7%) | 4 | [Abrir índice](equipment/INDEX.md) |
 | ⚠️ | Items | 19/20 (95.0%) | 19 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 15/15 (100.0%) | 15 | [Abrir índice](systems/INDEX.md) |
 
