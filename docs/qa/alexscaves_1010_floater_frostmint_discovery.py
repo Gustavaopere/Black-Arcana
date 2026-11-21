@@ -39,6 +39,11 @@ def run(jar,javap,output):
     discovery.TARGETS=tuple("com/github/alexmodguy/alexscaves/server/entity/item/"+n for n in entity_names)
     entity_native=discovery.inspect(jar,javap)
     assert set(entity_native["targets"])==set(discovery.TARGETS)
+    discovery.TARGETS=(
+        "com/github/alexmodguy/alexscaves/server/entity/util/FrostmintExplosion",
+        "com/github/alexmodguy/alexscaves/server/entity/util/FrostmintFreezableAccessor")
+    effect_native=discovery.inspect(jar,javap)
+    assert set(effect_native["targets"])==set(discovery.TARGETS)
     resources=read_resources(jar)
     require(bool(resources),"no item resources matched, inspect publisher")
     native["filename_matched_resources"]=resources
@@ -48,6 +53,7 @@ def run(jar,javap,output):
                     "sha1":SHA1,"sha256":SHA256,"size_bytes":SIZE},
         "native":native,
         "entity_native":entity_native,
+        "effect_native":effect_native,
         "next_unreviewed":"server/item/GalenaGauntletItem",
         "mutation":"NO_MUTATION","mutating_hook":"NOT_VERIFIED",
         "physical_qa":"NOT_TESTED","provider_universe_closed":False,
@@ -71,6 +77,11 @@ def run(jar,javap,output):
               "consumers",len(v["consumers"]),"ancestors",len(v["ancestors"]))
         for m in v["methods"]:
             print("ENTITY_METHOD",owner,m["declaration"]["name"],m.get("instruction_count"))
+    for owner,v in effect_native["targets"].items():
+        print("EFFECT",owner,v["class_sha256"],"methods",len(v["methods"]),
+              "consumers",len(v["consumers"]),"ancestors",len(v["ancestors"]))
+        for m in v["methods"]:
+            print("EFFECT_METHOD",owner,m["declaration"]["name"],m.get("instruction_count"))
     print("RESOURCES",len(resources),json.dumps(sorted(resources)))
     print("STATIC_DISCOVERY_ONLY NO_MUTATION")
 
