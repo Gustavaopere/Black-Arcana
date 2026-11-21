@@ -1,0 +1,52 @@
+name: Alex's Caves 1.0.10 Floater and Frostmint SHA-exact discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-floater-frostmint-discovery.yml'
+      - 'docs/qa/alexscaves_1010_floater_frostmint_discovery.py'
+      - 'docs/qa/alexscaves_1010_floater_frostmint_static_checks.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/providers/INDEX.md'
+      - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/providers/INDEX.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  floater_frostmint_discovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify script syntax
+        run: python3 -m py_compile docs/qa/alexscaves_1010_floater_frostmint_discovery.py
+      - name: Download exact publisher artifact
+        run: |
+          mkdir -p build/floater-frostmint-1010
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/floater-frostmint-1010/publisher.jar
+      - name: Census native owners and full callers
+        run: |
+          python3 docs/qa/alexscaves_1010_floater_frostmint_discovery.py \
+            --jar build/floater-frostmint-1010/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/floater-frostmint-1010/report.json
+      - name: Assert exact classes, entity effects and resource hashes
+        run: |
+          python3 docs/qa/alexscaves_1010_floater_frostmint_static_checks.py \
+            --report build/floater-frostmint-1010/report.json
+      - name: Preserve bounded SHA-exact discovery
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-floater-frostmint-discovery
+          path: build/floater-frostmint-1010/report.json
+          if-no-files-found: error
+          retention-days: 14

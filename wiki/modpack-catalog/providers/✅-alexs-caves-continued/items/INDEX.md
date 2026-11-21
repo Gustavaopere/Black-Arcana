@@ -2,21 +2,21 @@
 
 > Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
 
-**Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
+**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 19/19.**
+**Fichas catalogadas (somente fichas detectadas): 19/20.**
 
-**Barra das fichas catalogadas:** `████████████████████ 100.0%`
+**Barra das fichas catalogadas:** `███████████████████░ 95.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 19/19.**
+**Homologadas para perks (somente fichas detectadas): 19/20.**
 
-**Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
+**Barra dos contratos técnicos estáticos:** `███████████████████░ 95.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
-**Contratos desta subpasta:** ✅ contratos técnicos estáticos de todas as fichas detectadas certificados; recorte documental, sem homologação de hooks mutadores, QA físico ou universo integral do provider.
+**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
@@ -33,6 +33,7 @@
 | ✅ | Diving Helmet | [ficha/diving-helmet.md](diving-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Leggings | [ficha/diving-leggings.md](diving-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Fertilizer | [ficha/fertilizer.md](fertilizer.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Floater | [ficha/floater.md](floater.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hood Of Darkness | [ficha/hood-of-darkness.md](hood-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [ficha/pewen-boat.md](pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [ficha/pewen-chest-boat.md](pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |

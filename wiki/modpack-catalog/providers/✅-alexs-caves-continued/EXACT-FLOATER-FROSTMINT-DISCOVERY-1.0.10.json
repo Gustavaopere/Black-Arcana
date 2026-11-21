@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "scope": "DISCOVERY_NOT_CERTIFIED",
+  "static_technical_certifications_added": 0,
+  "semantic_magic_roots_added": 0,
+  "artifact": {
+    "mod": "Alex's Caves Continued",
+    "mod_id": "alexscaves",
+    "version": "1.0.10",
+    "jar": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "size_bytes": 75279314,
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "classes": 1555
+  },
+  "evidence": {
+    "source": "SHA-pinned publisher JAR via read-only GitHub Actions",
+    "run_id": 44930833400,
+    "job_id": 136926863567,
+    "artifact_id": 14716909972,
+    "artifact_zip_sha256": "a531af12536b77eb35ea9aa42f63dcd07f31898731d065e812640b6b1c7d49a6",
+    "archive_expires": "2026-12-05T17:35:18Z",
+    "report_json_sha256": "7e884f85cf998b45be0b17745f0e3e8997a661da6d32ade7d3c91d7a87d1d658",
+    "report_bytes": 1224635,
+    "script": "docs/qa/alexscaves_1010_floater_frostmint_discovery.py"
+  },
+  "classes": [
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/FloaterItem",
+      "class_sha256": "30d98e6b5db3fc977c8e8e66adb82576c934d5a7cdc423bbd258f1e7a3224a05",
+      "own_methods": 2,
+      "code_use": "4a1d004b4ebb4270900189a914b01ee0a8ad927ec18a4848d6129668baecef46"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/FloaterEntity",
+      "class_sha256": "b675ebd726fc8045610a48fbd310abbd5f6762fe68e1158badd8026e47ac2c30",
+      "own_methods": 14,
+      "code_tick": "4189b44505454cce8089021252d762b641ad024925a2b07a3aebe1db4dc38beb"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/FrostmintSpearItem",
+      "class_sha256": "0156bc79eb7c6bc48229c6811a3d5907e05f74b548fba4c1c467369b22a8f0be",
+      "own_methods": 3,
+      "code_melee": "55bc7f7ad6520bd92a41aceb60da662e13f13b17589ac1be0c3e1c08627b77c9",
+      "code_release": "c6d9a0a2d600341872a224e4421c564418b64df4d0295e30d5b5265a72c85b18"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/SpearItem",
+      "kind": "in_jar_parent",
+      "code_power": "e26fa6592461881452fac47a3ada8b5d8e1523d7b1290bbba62aa8127e623a17"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/FrostmintSpearEntity",
+      "class_sha256": "a01a3cd9dc643326b708635be5f91d96fbe75ad449b05ca6c3c2c7d31f7d1025",
+      "own_methods": 16,
+      "code_hit": "e6c101fffc7ac7402c2afd211721abee9d6138912fbd20ed8e3e16b0187c7e80",
+      "code_explosion": "a6df1e1e4c6ccae7af400484cbf511f8200aa52c2543220a046e1e6d024e4e17"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/util/FrostmintExplosion",
+      "class_sha256": "fed381b37be656b0ed4757994674ba5cd613ace025c3f4673ddcbc8144277fb9",
+      "own_methods": 17,
+      "code_explode": "c9e100185dcac73877eea6706df3e7bed9e6e65d7b86991925e41776af8f298d",
+      "code_finalize": "0befde622b314cde64591c6ff5871cf5e6383927e5109481db8f5c37c6e49b87"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/util/FrostmintFreezableAccessor",
+      "class_sha256": "0ffc4442265c5815d9312614dbbc65ef712433d3969a835ab669f136f2b9a476",
+      "kind": "accessor_interface"
+    }
+  ],
+  "factories": [
+    {
+      "id": "alexscaves:floater",
+      "name": "ACItemRegistry.lambda$static$103",
+      "code_sha256": "a9bfbdf9d227839dbb872f120c68e9df77c8723eed98d8e146c790aa3f395613"
+    },
+    {
+      "id": "alexscaves:frostmint_spear",
+      "name": "ACItemRegistry.lambda$static$192",
+      "code_sha256": "77af284e6a1cafcde0382f7c188510bf17598d6f0b5c16f8a0627d812539fa77"
+    }
+  ],
+  "resources": [
+    {
+      "path": "data/alexscaves/recipe/floater.json",
+      "sha256": "379259801117cfd1aba2045bec78b19d55c913f47d33b1e925b4e241f0c0ce51"
+    },
+    {
+      "path": "data/alexscaves/recipe/frostmint_spear.json",
+      "sha256": "4a2f50e9f4d6caf1455d42bc67040f21320b5018923d87d5d32e1e2da2dcbc8a"
+    },
+    {
+      "path": "data/alexscaves/recipe/frostmint.json",
+      "sha256": "c70d8b491d9221b3d77bd1ff11d8e6757f44d26c408ee0fb4bece752ea8cb80c"
+    },
+    {
+      "path": "data/alexscaves/weapon_attributes/frostmint_spear.json",
+      "sha256": "9241e582904b7efffed0c4e197b792033447ad015fd6980e91dbf1dbbab9b7d5"
+    },
+    {
+      "path": "data/alexscaves/advancement/alexscaves/floater.json",
+      "sha256": "8bdf4966b8a39aaddae54596a9fbfa69a8f60d61c13d091fb79ea9c6becc1722"
+    },
+    {
+      "path": "data/alexscaves/advancement/alexscaves/frostmint_spear.json",
+      "sha256": "4c74c4c7702e0d99c4b04fdd408458bdc6c850cf149f6e6d6429f5d08799189b"
+    }
+  ],
+  "extracted_parameters": {
+    "FloaterItem": {
+      "activation": "ACCompat.isInWaterOrBubble(player) && !player.isShiftKeyDown()",
+      "entity": "ACEntityRegistry.FLOATER",
+      "spawn_boolean_used": false,
+      "riding_boolean_used": false,
+      "noncreative_shrink": 1,
+      "initial_gravity_y": -0.04,
+      "water_lift_y": 0.2,
+      "velocity_damping": 0.9,
+      "out_of_water_discard_after_count_greater_than": 5,
+      "rider_y_offset_approx": 0.7,
+      "save_own_nbt": false
+    },
+    "FrostmintSpearItem": {
+      "stack_size": 16,
+      "base_attack_modifier": 5,
+      "base_attack_speed_modifier": -3,
+      "charge_full_ticks": 20,
+      "charge_formula": "min(1, ((t/20)^2 + 2*(t/20))/3)",
+      "release_threshold_strictly_greater_than": 0.1,
+      "projectile_velocity": "2.5*power",
+      "projectile_inaccuracy": 1,
+      "noninstabuild_shrink": 1,
+      "melee_freeze_ticks": "target.getTicksRequiredToFreeze()+200",
+      "projectile_hit_damage": "6.0F + ACCompat.damageBonus(defaultPickupItem,target)",
+      "explosion_radius_argument": 2,
+      "explosion_entity_max_distance_from_center": 4,
+      "explosion_blocks": "KEEP",
+      "explosion_damage_formula": "int(((u*u+u)/2)*7*(2*radius)+1), u=(1-distance/(2*radius))*getSeenPercent(center,entity)",
+      "explosion_freeze_ticks": "getTicksRequiredToFreeze()+200",
+      "entities_enderman_excluded": true
+    }
+  },
+  "gates": {
+    "mutation": "NO_MUTATION",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "engine_success_not_proven": true,
+    "perks_executable": "NOT_CERTIFIED"
+  }
+}

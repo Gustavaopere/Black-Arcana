@@ -2,27 +2,28 @@
 
 > Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
 
-**Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
+**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 4/4.**
+**Fichas catalogadas (somente fichas detectadas): 4/5.**
 
-**Barra das fichas catalogadas:** `████████████████████ 100.0%`
+**Barra das fichas catalogadas:** `████████████████░░░░ 80.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 4/4.**
+**Homologadas para perks (somente fichas detectadas): 4/5.**
 
-**Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
+**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 80.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
-**Contratos desta subpasta:** ✅ contratos técnicos estáticos de todas as fichas detectadas certificados; recorte documental, sem homologação de hooks mutadores, QA físico ou universo integral do provider.
+**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
 | ✅ | Desolate Dagger | [ficha/desolate-dagger.md](desolate-dagger.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dreadbow | [ficha/dreadbow.md](dreadbow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Extinction Spear | [ficha/extinction-spear.md](extinction-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Frostmint Spear | [ficha/frostmint-spear.md](frostmint-spear.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shot Gum | [ficha/shot-gum.md](shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
