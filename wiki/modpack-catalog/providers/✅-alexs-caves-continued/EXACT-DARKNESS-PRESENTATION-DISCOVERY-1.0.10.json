@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_DISCOVERY_NOT_CERTIFIED",
+  "publisher": {
+    "jar": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "bytes": 75279314,
+    "jar_classes": 1555,
+    "archive_entries": 8898
+  },
+  "source": {
+    "workflow_run": 44864573972,
+    "job_id": 136725251381,
+    "artifact_id": 14691630395,
+    "artifact_sha256": "7cf08c60fd02de05d3a735a365ecc3c8a95bf481fe5f4ccecd5c40aea1313c15",
+    "expires": "2026-12-05T04:08:28Z"
+  },
+  "classes": {
+    "CustomArmorPostRender": "19c649b8fdd407e51049f8a98dd31dc348a022c148ad3d5a70f2295a544988fd",
+    "CustomTabBehavior": "6a77f884be2f7556f8c5085a534bd70968628c52d83687be2efde8237dba6cbe",
+    "HumanoidArmorLayerMixin": "383fbea50413635447bb3fdbf77f06298007f42e3254e40d5ef0b94a8277e048",
+    "ACCreativeTabRegistry": "e73ea47bee91ada022b06c5c73eebf454f68cfe769bbc7e7a22b2561cc23822d",
+    "DarkenedAppleItem": "58e4bd35322bbedbc654519d8a76577f79d964d498a22d372ea452f683b715cb",
+    "DarknessArmorItem": "872fc610bac5be6010e3981b001c4088c7227e9cffe7938381c34c2f456c4e9a",
+    "DarknessIncarnateEffect": "b591db32bebd79410b62e140f649b194cab3248109e5e6d0f05b855e97f247eb",
+    "ACArmorMaterial": "478accf7ab37014dc06a8f3d801348948638dc517db0e21b7fd91d2b47ca40a6",
+    "ACItemRegistry": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+    "ACServerConfig": "67abf51943537e735a08c268607ca08901c2b197f0b278fa4b464887d40ea129"
+  },
+  "method_code_sha256": {
+    "DarkenedAppleItem.finishUsingItem": "6bcad1fc366ded0dc84e2eb54f7ebfe3974913725c1086088f77d7a2a195b622",
+    "DarknessArmorItem.onKeyPacket": "89c7304d0aecfa82668ee6c50df9b63911773cac5363fa241278819ad1b12286",
+    "DarknessArmorItem.acInventoryTick": "49391dc10abed9b7fa8211e41106a76c237cde5f3b0e5a65d5a2df54b19851b4",
+    "DarknessArmorItem.acArmorTick": "31ad4d10c9a87cb0a22cba8e1650a9ec9332f7e4eb1849017dc05697ea52db35",
+    "DarknessArmorItem.getMeterProgress": "4cb401e115fbacb0d17f185115442209a5f943ddab994d3277844c31ab7f130c",
+    "DarknessIncarnateEffect.toggleFlight": "70439802eebc9c6616488124378da2049e0e27d4696e60bdcfed9b180e082350"
+  },
+  "declared_support_interfaces": {
+    "CustomArmorPostRender": {
+      "descriptor": "getArmorTexture(ItemStack,Entity,EquipmentSlot,String):String",
+      "implementers": [
+        "DarknessArmorItem",
+        "DivingArmorItem",
+        "GingerbreadArmorItem",
+        "HazmatArmorItem",
+        "PrimordialArmorItem",
+        "RainbounceBootsItem"
+      ],
+      "native_consumers": [
+        "HumanoidArmorLayerMixin"
+      ],
+      "own_method_bodies": 0
+    },
+    "CustomTabBehavior": {
+      "descriptor": "fillItemCategory(CreativeModeTab.Output):void",
+      "implementers": [],
+      "native_consumers": [
+        "ACCreativeTabRegistry"
+      ],
+      "own_method_bodies": 0
+    }
+  },
+  "item_factories": {
+    "alexscaves:hood_of_darkness": {
+      "lambda": "ACItemRegistry.lambda$static$134",
+      "code_sha256": "050f52ecb79c931c3a455149c9f7537653be12d3fc22fe11bf940b207da78dea",
+      "armor_type": "HELMET"
+    },
+    "alexscaves:cloak_of_darkness": {
+      "lambda": "ACItemRegistry.lambda$static$135",
+      "code_sha256": "4ab51a5f80296bb82149e023b386ab8fd56f442c07762060aac3ed6ae44f911f",
+      "armor_type": "CHESTPLATE"
+    },
+    "alexscaves:darkened_apple": {
+      "lambda": "ACItemRegistry.lambda$static$136",
+      "code_sha256": "4804ddcbcc419efb87881c1f26eab54e769a43cb3ca100a843c21b0cbbc8893e"
+    }
+  },
+  "resource_sha256": {
+    "data/alexscaves/recipe/hood_of_darkness.json": "1c3884eb43c47a87062f28461938a1ba4bde0c5af8676623707915c6a0ff7038",
+    "data/alexscaves/recipe/cloak_of_darkness.json": "bb5a5e64b2f7a6200e91dd45e877bc4ad6c9c4aa1012e41c31acdfde89bb46e9",
+    "data/alexscaves/recipe/darkened_apple.json": "69ee3d764bbc896ba4b08155f3dd73af7456c0164210f87f7637d488b5dd40a3",
+    "data/alexscaves/advancement/alexscaves/eat_darkened_apple.json": "dd1518ada2aaec6b1c369eb2a467eace0e7ddf447cd79c2d19c89efee9d84d4a",
+    "data/alexscaves/tags/item/repairs_darkness_armor.json": "e62ed396a3620b022890c0292a6bbd8cf610d13e388e94cc09879a650ed204a8"
+  },
+  "status": {
+    "static_contracts_certified_new": 0,
+    "new_semantic_magic_roots": 0,
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false
+  },
+  "limits": [
+    "Transformed runtime and external implementers not proven",
+    "Network sender/slot/charge validation not complete as a mutator boundary",
+    "Actual modpack configuration, persistence and multiplayer QA not tested"
+  ]
+}

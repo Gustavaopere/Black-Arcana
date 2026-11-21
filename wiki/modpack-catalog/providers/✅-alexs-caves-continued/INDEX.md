@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 105/105.**
+**Fichas catalogadas (somente fichas detectadas): 105/108.**
 
-**Barra das fichas catalogadas:** `████████████████████ 100.0%`
+**Barra das fichas catalogadas:** `███████████████████░ 97.2%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 105/105.**
+**Homologadas para perks (somente fichas detectadas): 105/108.**
 
-**Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
+**Barra dos contratos técnicos estáticos:** `███████████████████░ 97.2%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -111,6 +111,9 @@
 | ✅ | Candy Cane Hook | [items/candy-cane-hook.md](items/candy-cane-hook.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Book | [items/cave-book.md](items/cave-book.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Map | [items/cave-map.md](items/cave-map.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Cloak Of Darkness | [items/cloak-of-darkness.md](items/cloak-of-darkness.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Darkened Apple | [items/darkened-apple.md](items/darkened-apple.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Hood Of Darkness | [items/hood-of-darkness.md](items/hood-of-darkness.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [items/pewen-boat.md](items/pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [items/pewen-chest-boat.md](items/pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [items/thornwood-boat.md](items/thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -139,7 +142,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 3/3 (100.0%) | 3 | [Abrir índice](equipment/INDEX.md) |
-| ✅ | Items | 10/10 (100.0%) | 10 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Items | 10/13 (76.9%) | 10 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 14/14 (100.0%) | 14 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
