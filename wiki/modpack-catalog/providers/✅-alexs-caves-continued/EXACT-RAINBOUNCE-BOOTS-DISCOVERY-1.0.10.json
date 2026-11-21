@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "scope": "RAINBOUNCE_BOOTS_NATIVE_DISCOVERY_NOT_CERTIFIED",
+  "artifact": {
+    "filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "installed_dump_comparison": "NOT_VERIFIED"
+  },
+  "report": {
+    "sha256": "c7e60198eae632614c4a87acda39f385f49347409f47d0b178f5733362a7be60",
+    "run_id": 44952856958,
+    "job_id": 136994394282,
+    "artifact_id": 14726446731
+  },
+  "owner": "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem",
+  "native_class": {
+    "sha256": "12809966af8256aa5c55e56b54d49f5be66e9785d6616ffa934c376f3d6d31bd",
+    "parent": "net/minecraft/world/item/ArmorItem",
+    "interfaces": [
+      "com/github/alexmodguy/alexscaves/server/item/CustomArmorPostRender",
+      "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem"
+    ],
+    "fields": 0,
+    "declarations": 4,
+    "code_methods": 4,
+    "typed_consumer_owners": 4,
+    "methods": [
+      {
+        "name": "<init>",
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+        "instruction_count": 12,
+        "instruction_sha256": "1c59bef51bc767350a0f79f732eac8355d4c7b6c50b864e6b32197f3a1efabf2"
+      },
+      {
+        "name": "getArmorTexture",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/lang/String;)Ljava/lang/String;",
+        "instruction_count": 2,
+        "instruction_sha256": "4a16426bec92aef93114cd86a2be5cf59ae72252bde57b2fafc339f2daa20bf9"
+      },
+      {
+        "name": "initializeClient",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "instruction_count": 6,
+        "instruction_sha256": "241b312ebd6ff1e8ab0719a7fcbfd71c956258d303ba94e3a602770053402fa8"
+      },
+      {
+        "name": "onEntityLand",
+        "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/phys/Vec3;)V",
+        "instruction_count": 134,
+        "instruction_sha256": "2005b5721f54d7100266965de674f8f5b22ab8a7c4d0c0936e784383dfe13ae8"
+      }
+    ]
+  },
+  "consumers": {
+    "com/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties": {
+      "sites": 2,
+      "class_sha256": "bcb780ec718c8f07cabe34d2f054ff546eb7d5529d3f0d7fa7a11aaaad08f729",
+      "methods": [
+        {
+          "name": "getACArmorModelBase",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;",
+          "instruction_count": 41,
+          "instruction_sha256": "869cf27339be87b5b132d627ad041fe1781ae4a6f64b4923cd9616871a4c4886"
+        },
+        {
+          "name": "renderCustomArmor",
+          "descriptor": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item;Lnet/minecraft/client/model/Model;ZLnet/minecraft/resources/ResourceLocation;)V",
+          "instruction_count": 95,
+          "instruction_sha256": "d41ffa91ae7b25da5fdbe02750fe3c8bff5ea047bd6e9e54d76b94672ddafbf3"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/mixin/EntityMixin": {
+      "sites": 1,
+      "class_sha256": "3bce02159fe0c907840ccebdae4248a63f4488675b78348452405fc89ebdd427",
+      "methods": [
+        {
+          "name": "ac_move",
+          "descriptor": "(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "instruction_count": 20,
+          "instruction_sha256": "4c47a6571a4ab6492d9275863923b16ff0c7996d58aa6149203f74239e2f772c"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": {
+      "sites": 2,
+      "class_sha256": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+      "methods": [
+        {
+          "name": "lambda$static$174",
+          "descriptor": "()Lnet/minecraft/world/item/Item;",
+          "instruction_count": 6,
+          "instruction_sha256": "5a4f14aa8c35ae1004697b38488cad8c1e3d329bb4485af63bd452fec2b6f55a"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem": {
+      "sites": 0,
+      "class_sha256": "12809966af8256aa5c55e56b54d49f5be66e9785d6616ffa934c376f3d6d31bd",
+      "methods": []
+    }
+  },
+  "resources": {
+    "assets/alexscaves/models/item/rainbounce_boots.json": {
+      "sha256": "3932fb14876d88d4d3eb81d04d769e808d52260a4a5babd3f598ce3d6d5690b2",
+      "size": 112
+    },
+    "data/alexscaves/advancement/alexscaves/rainbounce_boots.json": {
+      "sha256": "eb5f095ae1238fc36f5cd376fa7be2855bcebea1bcb4db6a49ed65aa50e14692",
+      "size": 724
+    },
+    "data/alexscaves/recipe/rainbounce_boots.json": {
+      "sha256": "03b902d10877d7cce970edde5b4e7362e212f304d80f6fad7c8afc3cc7cecfbe",
+      "size": 316
+    },
+    "data/alexscaves/tags/block/reduce_rainbounce_boots_effect_on.json": {
+      "sha256": "342576620d9024ac9bc5a706f694ad827026dc4cb23b9cf73cd3391f682eedff",
+      "size": 95
+    },
+    "data/alexscaves/tags/item/repairs_rainbounce_armor.json": {
+      "sha256": "f74498097708215ee46031db7467ce3abed880ed8188eff156e81993d9787e31",
+      "size": 19
+    }
+  },
+  "static_behavior": {
+    "registry_item": "alexscaves:rainbounce_boots",
+    "registry_factory": "ACItemRegistry.lambda$static$174",
+    "registered_armor_type": "BOOTS",
+    "required_equipment_slot": "FEET",
+    "callback": "EntityMixin.ac_move",
+    "effect_method": "RainbounceBootsItem.onEntityLand",
+    "minimum_abs_fall_displacement_exclusive": 0.2,
+    "strong_bounce_boundary_exclusive": 0.42,
+    "weak_bounce_multiplier": 0.7,
+    "strong_bounce_multiplier": 1.05,
+    "tag_reduced_bounce_multiplier": 0.15000000596046448,
+    "has_sugar_rush_horizontal_factor": 1.2,
+    "no_sugar_rush_horizontal_factor": 1.9,
+    "player_world_side_guarantee": "NOT_VERIFIED",
+    "no_new_magic_cast": true
+  },
+  "limits": {
+    "status": "PARTIAL",
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "other_consumers_complete": false,
+    "magic_roots_added": 0,
+    "engine_movement_effectiveness": "NOT_VERIFIED",
+    "mixin_injection_runtime_application": "NOT_VERIFIED"
+  }
+}
