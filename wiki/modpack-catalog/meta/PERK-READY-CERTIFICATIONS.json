@@ -10292,6 +10292,135 @@
           "reason": "Deterministic publisher replay of class methods, typed references, registry bindings and resources."
         }
       }
+    },
+    "✅-alexs-caves-continued/items/purple-soda-bottle.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOTTLE-FERTILIZER-CATALOG-1.0.10.md",
+          "reason": "Unique direct bottled-item binding PURPLE_SODA_BOTTLE and exact publisher declarations."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOTTLE-FERTILIZER-CATALOG-1.0.10.md",
+          "reason": "Instant-use delegate, consumption and container return, native fill and Sack of Sating callers."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOTTLE-FERTILIZER-CATALOG-1.0.10.md",
+          "reason": "Stack 16, 40 ticks, nutrition 2, nominal saturation 0.4 and Sugar Rush 0.01F for 200 ticks."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOTTLE-FERTILIZER-CATALOG-1.0.10.md",
+          "reason": "Self-consumption, separate source-fluid raycast with interaction reach for bottle filling."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOTTLE-FERTILIZER-CATALOG-1.0.10.md",
+          "reason": "Food consumption request and bottle return handoff, empty-bottle debit in filling, loot and recipe use."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOTTLE-FERTILIZER-CATALOG-1.0.10.md",
+          "reason": "Pinned engine food and inventory settlement boundaries. Hot Chocolate subclass remains separately open."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOTTLE-FERTILIZER-CATALOG-1.0.10.md",
+          "reason": "Whole publisher typed census, replayed bindings/bodies/data and upstream reference evidence."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/equipment/extinction-spear.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/extinction-spear.md",
+          "reason": "Publisher registry supplier lambda$static$49, ExtinctionSpearItem and inherited SpearItem."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/extinction-spear.md",
+          "reason": "Charge/throw, melee ghost, in-use defense and separate native projectile and spirit behavior."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/extinction-spear.md",
+          "reason": "1300 durability, +8 attack damage and -3 attack speed, charge formula and speed, dimensions and damage terms."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/extinction-spear.md",
+          "reason": "Shooter rotation and projectile collision, explicit melee target and owner-restricted Grotto scan."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/extinction-spear.md",
+          "reason": "Recipe, TECTONIC_SHARD repair, native durability and item debit requests."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/extinction-spear.md",
+          "reason": "Native equipment, projectile and Spirit Dinosaur boundaries with three independently certified enchantments."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.md",
+          "reason": "Existing exact Spirit Dinosaur replay covers 19 classes, 12 resources, 127 bodies and 2493 anchors."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/fertilizer.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOTTLE-FERTILIZER-CATALOG-1.0.10.md",
+          "reason": "Unique FERTILIZER binding via lambda$static$123, three item bodies and exact recipes."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOTTLE-FERTILIZER-CATALOG-1.0.10.md",
+          "reason": "Clicked crop loop, native bonemeal-event bridge and separate water plant helper."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOTTLE-FERTILIZER-CATALOG-1.0.10.md",
+          "reason": "Up to four native performBonemeal calls, source water amount eight and up to 128 reference iterations."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOTTLE-FERTILIZER-CATALOG-1.0.10.md",
+          "reason": "Clicked block eligibility, sturdy face and adjacent starting position for water. No attack/remote targeting."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOTTLE-FERTILIZER-CATALOG-1.0.10.md",
+          "reason": "Guano and bone-meal recipe and separate shrink requests, with final stack settlement pending."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOTTLE-FERTILIZER-CATALOG-1.0.10.md",
+          "reason": "Native callback and pinned Mojang/NeoForge boundaries; listener and world outcomes need in-game validation."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOTTLE-FERTILIZER-CATALOG-1.0.10.md",
+          "reason": "Whole publisher census, exact local methods/resources, upstream engine instructions and patch hashes."
+        }
+      }
     }
   },
   "providers": {},
