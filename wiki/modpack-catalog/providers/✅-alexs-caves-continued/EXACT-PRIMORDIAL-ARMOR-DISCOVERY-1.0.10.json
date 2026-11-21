@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "scope": "PRIMORDIAL_ARMOR_NATIVE_DISCOVERY_NOT_CERTIFIED",
+  "artifact": {
+    "filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "installed_dump_comparison": "NOT_VERIFIED"
+  },
+  "report": {
+    "sha256": "659f60f17d549d8c795becc4d7fa7e6b8968cb546b8af002099b44abb65e4f75",
+    "run_id": 44951722588,
+    "job_id": 136990914383,
+    "artifact_id": 14725074259
+  },
+  "native_class": {
+    "owner": "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem",
+    "sha256": "8833c162d1507aba795b1ff809f5a6f6ddb846da308d809795cf80e69be5d09e",
+    "declarations": 4,
+    "code_methods": 4,
+    "fields": 0,
+    "typed_consumer_owners": 5,
+    "methods": [
+      {
+        "name": "<init>",
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+        "instruction_count": 12,
+        "instruction_sha256": "1c59bef51bc767350a0f79f732eac8355d4c7b6c50b864e6b32197f3a1efabf2"
+      },
+      {
+        "name": "getArmorTexture",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/lang/String;)Ljava/lang/String;",
+        "instruction_count": 7,
+        "instruction_sha256": "cda97c121e4aa31e0c82fbedb73ce9589c322d3bdefbaa0c7091e474dc815e5a"
+      },
+      {
+        "name": "getExtraSaturationFromArmor",
+        "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)I",
+        "instruction_count": 31,
+        "instruction_sha256": "2fb7d7a8c00bc1a5b33c525f7da5b7c80d04b373b9c24bed3412fe4d04cc8317"
+      },
+      {
+        "name": "initializeClient",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "instruction_count": 6,
+        "instruction_sha256": "241b312ebd6ff1e8ab0719a7fcbfd71c956258d303ba94e3a602770053402fa8"
+      }
+    ]
+  },
+  "consumer_methods": {
+    "com/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties": {
+      "sites": 1,
+      "methods": [
+        {
+          "name": "getACArmorModelBase",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;",
+          "instruction_count": 41,
+          "instruction_sha256": "869cf27339be87b5b132d627ad041fe1781ae4a6f64b4923cd9616871a4c4886"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/mixin/PlayerMixin": {
+      "sites": 1,
+      "methods": [
+        {
+          "name": "ac_eat",
+          "descriptor": "(Lnet/minecraft/world/food/FoodData;Lnet/minecraft/world/food/FoodProperties;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/food/FoodProperties;)V",
+          "instruction_count": 31,
+          "instruction_sha256": "3f928fd639c0d5e62a849fdf302ba373fc304d4a4c8fff7cfd65e11a9a2abffd"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/block/DinosaurChopBlock": {
+      "sites": 1,
+      "methods": [
+        {
+          "name": "eat",
+          "descriptor": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/world/InteractionResult;",
+          "instruction_count": 89,
+          "instruction_sha256": "4e2b75751d124247a814dc386551010171bbfdc157b96a80f01c36c74cc4058c"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": {
+      "sites": 6,
+      "methods": [
+        {
+          "name": "lambda$static$42",
+          "descriptor": "()Lnet/minecraft/world/item/Item;",
+          "instruction_count": 6,
+          "instruction_sha256": "a081b4b006913e5debfe0a59bee0ce182c8bf9646cfbec03b5e7def9b08e9e52"
+        },
+        {
+          "name": "lambda$static$43",
+          "descriptor": "()Lnet/minecraft/world/item/Item;",
+          "instruction_count": 6,
+          "instruction_sha256": "ea5e98aa42d728edfad89f30a2c3ef1b128eb2201de256e7c2d03a3826c0933d"
+        },
+        {
+          "name": "lambda$static$44",
+          "descriptor": "()Lnet/minecraft/world/item/Item;",
+          "instruction_count": 6,
+          "instruction_sha256": "9de2dc138983464c4e2ec94fcc01eecdc395519070e38407cba553608a54fda9"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem": {
+      "sites": 0,
+      "methods": []
+    }
+  },
+  "resources": {
+    "assets/alexscaves/models/item/primordial_helmet.json": {
+      "sha256": "6420214e099ec006f4c9226b5ee1333b8c90d523160c08b0584dc087cbf20160",
+      "size": 113
+    },
+    "assets/alexscaves/models/item/primordial_pants.json": {
+      "sha256": "4f73b566af1deb72b6de4aff2855136cbece58c4ddde6c22255c760f17a41038",
+      "size": 112
+    },
+    "assets/alexscaves/models/item/primordial_tunic.json": {
+      "sha256": "d6b050a3cd64a5e81c9022c5a6c7d183455e319540e68d4d2c6201f6d8eede91",
+      "size": 112
+    },
+    "data/alexscaves/advancement/alexscaves/primordial_armor.json": {
+      "sha256": "9a5232036e8eee7a4d82eec82e7a4bcb26f2839099b0f9bb72912a02e490474b",
+      "size": 1403
+    },
+    "data/alexscaves/recipe/primordial_helmet.json": {
+      "sha256": "51777de205dd200884027441d95d875f475243f2f0566cef26b85b314cd7dc2e",
+      "size": 392
+    },
+    "data/alexscaves/recipe/primordial_pants.json": {
+      "sha256": "1d368632ce2f10bb608fcae97bd5abe5373150cadb48021f88db009a8e0ed8e8",
+      "size": 336
+    },
+    "data/alexscaves/recipe/primordial_tunic.json": {
+      "sha256": "e8e6c9b76ca37eb55ff4dc8c21c1929d2b72709bd9ea5cfbf0e2c66905c654ed",
+      "size": 336
+    },
+    "data/alexscaves/tags/item/repairs_primordial_armor.json": {
+      "sha256": "e13b8c6de37cdba599e83807d62024c55bdd3faabfe981ec9102567a670f9128",
+      "size": 50
+    }
+  },
+  "static_behavior": {
+    "worn_pieces_range": [
+      0,
+      3
+    ],
+    "counting_method": "getExtraSaturationFromArmor",
+    "raw_meat_tag": "RAW_MEATS",
+    "base_food_bonus_per_piece": 1,
+    "saturation_modifier_argument_bonus_per_piece": 0.125,
+    "raw_meat_consumer": "PlayerMixin.ac_eat",
+    "block_consumer": "DinosaurChopBlock.eat",
+    "data_dynamics": "ENGINE_NOT_VERIFIED"
+  },
+  "limits": {
+    "status": "PARTIAL",
+    "provider_universe_closed": false,
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "new_magic_roots": 0,
+    "other_food_consumers_complete": false,
+    "fooddata_engine_effects": "NOT_VERIFIED"
+  }
+}
