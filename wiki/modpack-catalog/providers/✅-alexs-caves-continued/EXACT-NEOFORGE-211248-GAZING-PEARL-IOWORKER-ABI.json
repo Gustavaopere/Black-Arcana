@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "scope": "NEOFORGE_211248_SAVEDDATA_WRITE_LAMBDA_IOWORKER_DISTRIBUTED_ONLY",
+  "evidence": {
+    "run_id": 45020412060,
+    "artifact_id": 14753915176,
+    "report_bytes": 27045,
+    "report_sha256": "5ee461aef0690a5180d0824f900ac6793e03eb0ceb65a0cf0dc0ce8787c9be16"
+  },
+  "engine": {
+    "minecraft_version": "1.21.1",
+    "neoforge_version": "21.1.248",
+    "installer_sha256": "68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c",
+    "neoforge_server_sha256": "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359",
+    "neoforge_server_bytes": 5675624,
+    "minecraft_srg_sha256": "26ca9c40d7e1681190b428583c38816852218e78df3f8bdb60a59a78503aec71",
+    "minecraft_srg_bytes": 14246609,
+    "modlauncher_loaded_bytes": "NOT_OBSERVED"
+  },
+  "classes": {
+    "storage": {
+      "owner": "net/minecraft/world/level/storage/DimensionDataStorage",
+      "class_sha256": "6316f03f8ff914c9d7f26fd91359ae98af449f7894e423a2209144e7181e3993",
+      "source_archive": "NEOFORGE_OVERLAY",
+      "archive_metadata": null,
+      "declared_method_count": 12,
+      "bootstrap": {
+        "cp_index": 223,
+        "bootstrap_index": 2,
+        "bootstrap_table_count": 3,
+        "bootstrap_table_sha256": "3bb5aa84694bd38bc52ec73976de60eccc0239b5d437bc2915952ecf84ca13ab",
+        "lambda": "lambda$save$1",
+        "reference_kind": 5,
+        "caller_offset": 5
+      },
+      "methods": [
+        {
+          "name": "lambda$save$1",
+          "descriptor": "(Ljava/lang/String;Lnet/minecraft/world/level/saveddata/SavedData;)V",
+          "code_sha256": "aa760c83dab616be2f763436b8a90b1932f9e5c0cb526c9a069773595eac0127",
+          "instruction_sha256": "06690fd1bb61a3af60ed97cb2d033a3f548895ae1301fb4e85990120c92118f5",
+          "instruction_count": 10
+        },
+        {
+          "name": "save",
+          "descriptor": "()V",
+          "code_sha256": "4d9b55ddd4b2504d1c2eaf7d22331d9aba3e1c8bbfe71aa7bed8891b6ba2ab6b",
+          "instruction_sha256": "5a5028b5c07526a4c96ae5c14cde4cafcedeedddc32e0d524b382c73f9a834f0",
+          "instruction_count": 6
+        }
+      ]
+    },
+    "saved_data": {
+      "owner": "net/minecraft/world/level/saveddata/SavedData",
+      "class_sha256": "b55a20a77d7f3d4a69c7af79240d6bf14cfa4c7536414a70543030631b265310",
+      "source_archive": "NEOFORGE_OVERLAY",
+      "archive_metadata": null,
+      "declared_method_count": 8,
+      "bootstrap": {
+        "cp_index": 44,
+        "bootstrap_index": 0,
+        "bootstrap_table_count": 1,
+        "bootstrap_table_sha256": "d7102aa5f351b6519627b5cced5d0d73c76dfdc38c31d00a9d405c31d1e56c6b",
+        "lambda": "lambda$save$0",
+        "reference_kind": 5,
+        "caller_offset": 49
+      },
+      "methods": [
+        {
+          "name": "lambda$save$0",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/io/File;)V",
+          "code_sha256": "5119fbfa785c735cdb023b9ece9f39b71c409ebb2896e5b34798d12a6f994e60",
+          "instruction_sha256": "6e3961ecbacab2df70c0c6843f4721095571e1f8ba39a15485e7ee0614f1d1ae",
+          "instruction_count": 12
+        },
+        {
+          "name": "save",
+          "descriptor": "(Ljava/io/File;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "code_sha256": "17391efcb49f300ec019d10d3c6ff49376ce4b821ce2f2823b579955241f44b5",
+          "instruction_sha256": "cbaf17017750ca973e7e3292daf90e6d1ab5ee0e411be889151115fa2f60e099",
+          "instruction_count": 32
+        }
+      ],
+      "lambda_exception_handler": [
+        {
+          "start": 0,
+          "end": 8,
+          "target": 11,
+          "catch": "java/io/IOException"
+        }
+      ]
+    },
+    "worker": {
+      "owner": "net/neoforged/neoforge/common/IOUtilities",
+      "class_sha256": "3c4cfda19b620562486ca18af3d7c095c94a54c31d1028bf8e5d9860952e115a",
+      "source_archive": "NEOFORGE_211248_INSTALLED_LIBRARY",
+      "archive_metadata": {
+        "relative_path": "net/neoforged/neoforge/21.1.248/neoforge-21.1.248-universal.jar",
+        "bytes": 3551268,
+        "sha256": "90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5"
+      },
+      "declared_method_count": 14,
+      "fields": [
+        "TEMP_FILE_SUFFIX",
+        "OPEN_OPTIONS",
+        "LOGGER",
+        "saveDataTasks"
+      ],
+      "methods": [
+        {
+          "name": "<clinit>",
+          "descriptor": "()V",
+          "code_sha256": "0bb043d2461fc95dc8ed4154dbc1065e036c38343f2b289fb52de2fe3ed6790c",
+          "instruction_sha256": "6f8292faf10995e0d5b6fc39036e8cc149a0e8840e5363f958fa557a5e753320",
+          "instruction_count": 18
+        },
+        {
+          "name": "withIOWorker",
+          "descriptor": "(Ljava/lang/Runnable;)V",
+          "code_sha256": "f160c3418e9acf857b202582af5a798a0f2dfa22a2bd069b2c49e4154553bf42",
+          "instruction_sha256": "012979059e22a5c83858d5319dc1ba9af09bdba746bdc4668564e22ce4ff859e",
+          "instruction_count": 6
+        }
+      ]
+    }
+  },
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "limits": {
+    "modlauncher_loaded": "NOT_OBSERVED",
+    "installed_modpack_parity": "NOT_VERIFIED",
+    "io_completion_durability": "NOT_VERIFIED",
+    "writeNbtCompressed_body": "NOT_AUDITED",
+    "queued_task_failure_behavior": "NOT_VERIFIED",
+    "sync_client": "NOT_TESTED"
+  }
+}

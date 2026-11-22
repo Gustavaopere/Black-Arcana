@@ -26,6 +26,7 @@ jobs:
       - name: Compile read-only JVM auditor
         run: |
           python3 -m py_compile docs/qa/neoforge_211248_gazing_pearl_ioworker_lambda_probe.py
+          python3 -m py_compile docs/qa/neoforge_211248_gazing_pearl_ioworker_lambda_checks.py
       - name: Download official NeoForge 21.1.248 installer and verify Maven checksum
         shell: bash
         run: |
@@ -109,6 +110,60 @@ jobs:
               assert r['classes'][label]['save_lambda_bootstrap']['linked_local']
           print('PASS: exact distributed read-only boundaries; no false runtime claims')
           PY
+      - name: Verify SHA-exact native write lambda links and async worker pivots
+        run: |
+          python3 docs/qa/neoforge_211248_gazing_pearl_ioworker_lambda_checks.py \
+            --report build/gazing-pearl-ioworker-211248/report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-IOWORKER-ABI.json'
+      - name: Reject forged async scheduling, dirty clear, write target and null skips
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import copy, hashlib, json
+          folder=Path('build/gazing-pearl-ioworker-211248')
+          evidence=json.loads((folder/'report.json').read_text())
+          manifest=json.loads(Path('wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-IOWORKER-ABI.json').read_text())
+          tests=(
+              ('async-scheduler','worker','withIOWorker',7),
+              ('premature-dirty-clear','saved_data','save',59),
+              ('write-target','saved_data','lambda$save$0',5),
+              ('save-null-guard','storage','lambda$save$1',1),
+          )
+          for case,owner,name,offset in tests:
+              report=copy.deepcopy(evidence)
+              seal=copy.deepcopy(manifest)
+              original=report['classes'][owner]
+              found=[m for m in original['selected_methods']
+                     if m['declaration']['name']==name]
+              assert len(found)==1, 'negative method selection ambiguous'
+              row=next(x for x in found[0]['instructions'] if x['offset']==offset)
+              assert row['opcode']!='nop'
+              row['opcode']='nop'
+              raw_instruction=(json.dumps(found[0]['instructions'],ensure_ascii=False,
+                                          sort_keys=True,indent=2)+'\n').encode('utf8')
+              instr_sha=hashlib.sha256(raw_instruction).hexdigest()
+              found[0]['instruction_sha256']=instr_sha
+              for entry in seal['classes'][owner]['methods']:
+                  if entry['name']==name and entry['descriptor']==found[0]['declaration']['descriptor']:
+                      entry['instruction_sha256']=instr_sha
+                      break
+              else:
+                  raise AssertionError('negative seal method not found')
+              forged_raw=json.dumps(report,ensure_ascii=False,sort_keys=True).encode('utf8')
+              seal['evidence']['report_bytes']=len(forged_raw)
+              seal['evidence']['report_sha256']=hashlib.sha256(forged_raw).hexdigest()
+              (folder/('bad-'+case+'.json')).write_bytes(forged_raw)
+              (folder/('bad-'+case+'-seal.json')).write_text(
+                  json.dumps(seal,ensure_ascii=False),encoding='utf8')
+          PY
+          for case in async-scheduler premature-dirty-clear write-target save-null-guard; do
+            if python3 docs/qa/neoforge_211248_gazing_pearl_ioworker_lambda_checks.py \
+              --report "build/gazing-pearl-ioworker-211248/bad-$case.json" \
+              --manifest "build/gazing-pearl-ioworker-211248/bad-$case-seal.json"; then
+              echo "::error::FORGED_SAVEDDATA_IOWORKER_CONTRACT_ACCEPTED_$case"
+              exit 1
+            fi
+          done
       - name: Preserve bounded evidence; never publish original JARs
         if: always()
         uses: actions/upload-artifact@v7
