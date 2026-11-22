@@ -59,6 +59,14 @@ O [dossiê de persistência, sincronização e identidade](../EXACT-GALENA-GAUNT
 
 Os overrides `addAdditionalSaveData` e `readAdditionalSaveData` tratam condicionalmente `WeaponStack` e `ControllerUUID` via helpers `ACCompat`. `CONTROLLER_ID`, `TARGET_ID`, `IDLING`, progresso, `playerUseCooldown`, `spawnedItem` e `returnFlag` não são escritos por esses overrides; **não inferir que inexiste persistência herdada**. A reconstrução efetiva após unload/restart, as serializações dos helpers e a conservação/duplicação da arma continuam `NÃO VERIFICADO`; nenhuma fonte de XP/Mastery ou hook mutador foi aprovada. `NO_MUTATION` e `physical_qa=NOT_TESTED`.
 
+## 4.4. Subcontrato SHA-exato: mineração, destruição de blocos e world safety
+
+O [dossiê de mineração e efeitos no mundo](../EXACT-GALENA-GAUNTLET-MINING-WORLD-EFFECT-1.0.10.md) fixa **222 pivôs JVM** no `MagneticWeaponEntity.tick()V` (744 instruções) e identifica os métodos dependentes `getDigSpeed`/`damageItem`, com 35 mutações adversariais rejeitadas. O bloco é selecionado quando a arma está a menos de **1,5 blocos do centro** (`distanceToSqr < 2.25d`), sem transformar isso em autorização do jogador ou AOE. Após `S = getDigSpeed(player,state,pos) > 1`, a progressão local é `P += (S / BlockState.getDestroySpeed(level,pos)) / (Ferrous Haste ? 8 : 10)`, sem guarda explícita local para dureza `<= 0`. O limiar `P >= 1` e a negação de `Level.isClientSide` precedem as tentativas server-side de destruição.
+
+A ordem observada é `damageItem(1)` → `ItemStack.mineBlock` → cálculo de EXP/encantamentos/evento de item → `Level.destroyBlock(pos, true)` para `ShulkerBoxBlock`, ou `Level.destroyBlock(pos, false)` para demais blocos. **Não há guarda local do retorno de `destroyBlock` antes de `Player.awardStat` na rota Shulker nem antes de `Block.playerDestroy` na outra rota.** O pedido de `Block.popExperience` exige separadamente destruição reportada como bem-sucedida, EXP positiva e `ServerLevel`. Não usar `awardStat`, `Block.playerDestroy`, `onPlayerDestroyItem` ou desgaste como prova universal de mineração efetiva, XP ou Mastery.
+
+Permissões de claims, callbacks da engine, drops e world safety efetiva continuam **NÃO VERIFICADOS**. Ausência de chamada direta à política do Black Arcana no método do provider não prova bypass; qualquer mutação futura **do Black Arcana** deve passar pela `WorldEffectPolicy` (D007) e pela autoridade do servidor (D006). `NO_MUTATION`, `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
+
 ## 5. Interfaces conceituais para perks, atributos e Mastery
 
 | Eixo | Fronteira observada | Estado de integração |
