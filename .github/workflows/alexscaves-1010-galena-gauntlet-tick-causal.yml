@@ -50,14 +50,14 @@ jobs:
           python3 docs/qa/alexscaves_1010_galena_gauntlet_static_checks.py \
             --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-GAUNTLET-DISCOVERY-1.0.10.json' \
             --report build/galena-tick-1010/report.json
-      - name: Check 68 exact targeting, cooldown, return and drop pivots
+      - name: Check 68 JVM pivots and exact invokedynamic projectile-filter MethodHandle
         run: |
           test "$(sha256sum build/galena-tick-1010/report.json | cut -d ' ' -f1)" = \
             'c91a48f9892be09c4ab951c8083703b0c5ffbb026fc43e7d808c2033dde8bba9'
           python3 docs/qa/alexscaves_1010_galena_gauntlet_tick_checks.py \
             --report build/galena-tick-1010/report.json \
             --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-GAUNTLET-PLAYER-TARGETING-1.0.10.json'
-      - name: Reject 15 re-sealed behavioral JVM opcode forgeries
+      - name: Reject 15 re-sealed opcodes and one forged projectile predicate MethodHandle
         run: |
           python3 docs/qa/alexscaves_1010_galena_gauntlet_tick_negative.py \
             --report build/galena-tick-1010/report.json \
