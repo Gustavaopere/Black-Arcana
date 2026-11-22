@@ -1,0 +1,82 @@
+name: Alex's Caves 1.0.10 Hazmat four individual static contracts
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-hazmat-four-static-cert.yml'
+      - 'docs/qa/alexscaves_1010_hazmat_four_cert_checks.py'
+      - 'docs/qa/alexscaves_1010_hazmat_armor_discovery.py'
+      - 'docs/qa/alexscaves_1010_hazmat_armor_discovery_checks.py'
+      - 'docs/qa/minecraft_1211_armor_type_enum_probe.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  hazmat_four_static:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile probes and checker; run deterministic fake/negative parser cases
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_hazmat_four_cert_checks.py \
+            docs/qa/alexscaves_1010_hazmat_armor_discovery.py \
+            docs/qa/alexscaves_1010_hazmat_armor_discovery_checks.py \
+            docs/qa/minecraft_1211_armor_type_enum_probe.py
+          python3 docs/qa/minecraft_1211_armor_type_enum_probe.py --test
+      - name: Reconstruct SHA-verified official MC 1.21.1 enum reference
+        run: |
+          mkdir -p build/hazmat-four/official
+          python3 docs/qa/minecraft_1211_armor_type_enum_probe.py \
+            --outdir build/hazmat-four/official/inputs \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/hazmat-four/official/report.json
+          test "$(sha256sum build/hazmat-four/official/report.json | cut -d ' ' -f1)" = \
+            'e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91'
+      - name: Download SHA-exact Alex's Caves 1.0.10 publisher
+        run: |
+          mkdir -p build/hazmat-four/publisher
+          curl --fail --silent --show-error --location --retry 4 --retry-delay 2 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/hazmat-four/publisher/publisher.jar
+          test "$(stat -c %s build/hazmat-four/publisher/publisher.jar)" -eq 75279314
+          echo '36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c  build/hazmat-four/publisher/publisher.jar' | sha256sum --check
+      - name: Reproduce complete old Hazmat report, SHA and prior discovery seal
+        run: |
+          python3 docs/qa/alexscaves_1010_hazmat_armor_discovery.py \
+            --jar build/hazmat-four/publisher/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/hazmat-four/publisher/report.json
+          test "$(sha256sum build/hazmat-four/publisher/report.json | cut -d ' ' -f1)" = \
+            '3ef6aeeeb37e0768e206b0777d7193a5ac55a0732ff06d568573c3edf923a033'
+          python3 docs/qa/alexscaves_1010_hazmat_armor_discovery_checks.py \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-DISCOVERY-1.0.10.json' \
+            --report build/hazmat-four/publisher/report.json
+      - name: Certify four individually scoped seven-axis contracts and run adversarial mutations
+        run: |
+          python3 docs/qa/alexscaves_1010_hazmat_four_cert_checks.py \
+            --official build/hazmat-four/official/report.json \
+            --publisher build/hazmat-four/publisher/report.json \
+            --material 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARMOR-MATERIAL-1.0.10.json' \
+            --discovery 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-DISCOVERY-1.0.10.json' \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.json' \
+            --cards-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items' \
+            --adversarial
+      - name: Preserve read-only reports only, not external binary JARs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-hazmat-four-static-replay
+          path: |
+            build/hazmat-four/official/report.json
+            build/hazmat-four/publisher/report.json
+          if-no-files-found: warn
+          retention-days: 14
