@@ -29,6 +29,7 @@ jobs:
       - name: Compile bounded read-only auditor
         run: |
           python3 -m py_compile docs/qa/neoforge_211248_gazing_pearl_saveddata_engine_probe.py
+          python3 -m py_compile docs/qa/neoforge_211248_gazing_pearl_saveddata_engine_checks.py
       - name: Obtain checksum-verified official NeoForge 21.1.248 server installer
         shell: bash
         run: |
@@ -85,6 +86,56 @@ jobs:
           assert r['semantic_magic_roots_delta']==0
           print('PASS: only bounded official distribution ABI, no loaded-runtime inference')
           PY
+      - name: Verify exact engine cache, missing/corrupt save, datafix-null and dirty pivots
+        run: |
+          python3 docs/qa/neoforge_211248_gazing_pearl_saveddata_engine_checks.py \
+            --report build/gazing-pearl-saveddata-211248/report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-SAVEDDATA-ABI.json'
+      - name: Reject forged datafix, dirty-settlement and cache method pivots
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import copy, json, hashlib
+          folder=Path('build/gazing-pearl-saveddata-211248')
+          original=json.loads((folder/'report.json').read_text())
+          seal=json.loads(Path('wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-SAVEDDATA-ABI.json').read_text())
+          cases=(
+              ('datafix-null-guard','storage','readTagFromDisk',108),
+              ('dirty-clear-after-worker','saved_data','save',59),
+              ('cache-creator','storage','computeIfAbsent',17),
+          )
+          for kind,owner,name,offset in cases:
+              report=copy.deepcopy(original)
+              manifest=copy.deepcopy(seal)
+              matches=[m for m in report['native']['classes'][owner]['selected_methods']
+                       if m['declaration']['name']==name
+                       and any(row['offset']==offset for row in m['instructions'])]
+              assert len(matches)==1, 'forged probe target ambiguous'
+              method=matches[0]
+              entry=next(row for row in method['instructions'] if row['offset']==offset)
+              assert entry['opcode']!='nop'
+              entry['opcode']='nop'
+              canon=json.dumps(method['instructions'],sort_keys=True,ensure_ascii=False,indent=2)+'\n'
+              method['instruction_sha256']=hashlib.sha256(canon.encode()).hexdigest()
+              expected=next(m for m in manifest['classes'][owner]['methods']
+                  if m['name']==method['declaration']['name']
+                  and m['descriptor']==method['declaration']['descriptor'])
+              expected['instruction_sha256']=method['instruction_sha256']
+              raw=json.dumps(report,ensure_ascii=False,sort_keys=True).encode()
+              manifest['evidence']['report_sha256']=hashlib.sha256(raw).hexdigest()
+              manifest['evidence']['report_bytes']=len(raw)
+              (folder/('bad-'+kind+'.json')).write_bytes(raw)
+              (folder/('bad-'+kind+'-seal.json')).write_text(
+                  json.dumps(manifest,ensure_ascii=False),encoding='utf8')
+          PY
+          for case in datafix-null-guard dirty-clear-after-worker cache-creator; do
+            if python3 docs/qa/neoforge_211248_gazing_pearl_saveddata_engine_checks.py \
+              --report "build/gazing-pearl-saveddata-211248/bad-$case.json" \
+              --manifest "build/gazing-pearl-saveddata-211248/bad-$case-seal.json"; then
+              echo "::error::FORGED_ENGINE_SAVEDDATA_CONTRACT_ACCEPTED_$case"
+              exit 1
+            fi
+          done
       - name: Publish bounded static engine ABI only
         if: always()
         uses: actions/upload-artifact@v7

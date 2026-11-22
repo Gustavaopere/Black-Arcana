@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "scope": "GAZING_PEARL_OFFICIAL_NEOFORGE_211248_SAVEDDATA_DISTRIBUTED_ABI_ONLY",
+  "evidence": {
+    "run_id": 45016249706,
+    "artifact_id": 14751558128,
+    "report_bytes": 64217,
+    "report_sha256": "8a16f6041ad4f917295d8d757a531f449c307bcde6cc31d6f5af4da925b847ac"
+  },
+  "artifact": {
+    "installer_sha256": "68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c",
+    "neoforge_server_sha256": "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359",
+    "neoforge_server_bytes": 5675624,
+    "minecraft_srg_sha256": "26ca9c40d7e1681190b428583c38816852218e78df3f8bdb60a59a78503aec71",
+    "minecraft_srg_bytes": 14246609,
+    "minecraft_version": "1.21.1",
+    "neoforge_version": "21.1.248",
+    "modlauncher_loaded_bytes": "NOT_OBSERVED"
+  },
+  "classes": {
+    "storage": {
+      "owner": "net/minecraft/world/level/storage/DimensionDataStorage",
+      "class_sha256": "6316f03f8ff914c9d7f26fd91359ae98af449f7894e423a2209144e7181e3993",
+      "source_archive": "NEOFORGE_OVERLAY",
+      "declared_method_count": 12,
+      "fields": [
+        "LOGGER",
+        "cache",
+        "fixerUpper",
+        "registries",
+        "dataFolder"
+      ],
+      "methods": [
+        {
+          "name": "computeIfAbsent",
+          "descriptor": "(Lnet/minecraft/world/level/saveddata/SavedData$Factory;Ljava/lang/String;)Lnet/minecraft/world/level/saveddata/SavedData;",
+          "code_sha256": "1fb5e165f987039c42a28fb21b606f0b894973d9b6ea0b793d37ba9c76e6acb3",
+          "instruction_sha256": "eef5d4d0b5c502df37d4b920c1a6ec2ed3e719fc5274184e69d5491b444f8e47",
+          "instruction_count": 20
+        },
+        {
+          "name": "get",
+          "descriptor": "(Lnet/minecraft/world/level/saveddata/SavedData$Factory;Ljava/lang/String;)Lnet/minecraft/world/level/saveddata/SavedData;",
+          "code_sha256": "67133adbccc5e79ced2670ff54206f841f3975b2ad212f3ff7039f10ececd90a",
+          "instruction_sha256": "c034c2bff577914245304dce27e49663fa53b9075dd188eab486d8702f6d63a9",
+          "instruction_count": 29
+        },
+        {
+          "name": "getDataFile",
+          "descriptor": "(Ljava/lang/String;)Ljava/io/File;",
+          "code_sha256": "ef1d0c207607b2c80bbb053b8ff654102faa92dc989b457ae7d220bd13a6b956",
+          "instruction_sha256": "5ed90b88ba9e42ef0175c3db57459a7130d4fa4dfa2a54c3ecc579a37e525c72",
+          "instruction_count": 8
+        },
+        {
+          "name": "readSavedData",
+          "descriptor": "(Ljava/util/function/BiFunction;Lnet/minecraft/util/datafix/DataFixTypes;Ljava/lang/String;)Lnet/minecraft/world/level/saveddata/SavedData;",
+          "code_sha256": "09b7f6fc94a83dcba08d672d3d02f4b6d7becd9386f26a12556948714a37ce0a",
+          "instruction_sha256": "d71fc0e43d0656af3bf9383f990f4427558a3d17467d25578a9e0a10daf1b957",
+          "instruction_count": 33
+        },
+        {
+          "name": "readTagFromDisk",
+          "descriptor": "(Ljava/lang/String;Lnet/minecraft/util/datafix/DataFixTypes;I)Lnet/minecraft/nbt/CompoundTag;",
+          "code_sha256": "fa08c2c79a1bfe904b94fdc1491ce7f51a2e350648693ca2a8fa08427e2d2230",
+          "instruction_sha256": "52b0404bac6e9c0fd47079d69e25e72454d57447caa51ce720db6a8ddb937913",
+          "instruction_count": 97
+        },
+        {
+          "name": "save",
+          "descriptor": "()V",
+          "code_sha256": "4d9b55ddd4b2504d1c2eaf7d22331d9aba3e1c8bbfe71aa7bed8891b6ba2ab6b",
+          "instruction_sha256": "5a5028b5c07526a4c96ae5c14cde4cafcedeedddc32e0d524b382c73f9a834f0",
+          "instruction_count": 6
+        },
+        {
+          "name": "set",
+          "descriptor": "(Ljava/lang/String;Lnet/minecraft/world/level/saveddata/SavedData;)V",
+          "code_sha256": "c79bf5cc3ef8a08eb7a678bd6d35f768ee332bf69a270f5c25dfb442dad7d801",
+          "instruction_sha256": "5ffad7030a9cfca561b8eca00d8af3021b7993cebe390d43b7deb43ee20e2ca3",
+          "instruction_count": 7
+        }
+      ],
+      "non_executable_declarations": []
+    },
+    "saved_data": {
+      "owner": "net/minecraft/world/level/saveddata/SavedData",
+      "class_sha256": "b55a20a77d7f3d4a69c7af79240d6bf14cfa4c7536414a70543030631b265310",
+      "source_archive": "NEOFORGE_OVERLAY",
+      "declared_method_count": 8,
+      "fields": [
+        "LOGGER",
+        "dirty"
+      ],
+      "methods": [
+        {
+          "name": "isDirty",
+          "descriptor": "()Z",
+          "code_sha256": "aceda4608e5634858ac4549a55517bda00affa5bf68ea34f6900b22cd5e1c892",
+          "instruction_sha256": "3cd86ad03330417f8566561c98891d31386f119aa612952ff0d60d29baa14b82",
+          "instruction_count": 3
+        },
+        {
+          "name": "save",
+          "descriptor": "(Ljava/io/File;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "code_sha256": "17391efcb49f300ec019d10d3c6ff49376ce4b821ce2f2823b579955241f44b5",
+          "instruction_sha256": "cbaf17017750ca973e7e3292daf90e6d1ab5ee0e411be889151115fa2f60e099",
+          "instruction_count": 32
+        },
+        {
+          "name": "setDirty",
+          "descriptor": "()V",
+          "code_sha256": "f81c6006303a71fac58e5a8caa220a5cbdeddef5265c0dc3a10c718ca43f99ef",
+          "instruction_sha256": "b2fd3b7923dfd9026139b858224c347324189096aab90b2237b717dc6e238d6d",
+          "instruction_count": 4
+        },
+        {
+          "name": "setDirty",
+          "descriptor": "(Z)V",
+          "code_sha256": "86b4733a3587c10a3fae65207b13ec07fd794aa774c8b8c1b85ffc55e889bb83",
+          "instruction_sha256": "72232320b96dcfafd141f29d51ea5c60744881ac67153cceb5d00043468dccf5",
+          "instruction_count": 4
+        }
+      ],
+      "non_executable_declarations": [
+        {
+          "name": "save",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "access": 1025
+        }
+      ]
+    },
+    "factory": {
+      "owner": "net/minecraft/world/level/saveddata/SavedData$Factory",
+      "class_sha256": "46cf90d6ca49802a7a4fb4a2ef63686e209893b4b4128bf044ec82a6d861d8dc",
+      "source_archive": "NEOFORGE_OVERLAY",
+      "declared_method_count": 8,
+      "fields": [
+        "constructor",
+        "deserializer",
+        "type"
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "descriptor": "(Ljava/util/function/Supplier;Ljava/util/function/BiFunction;)V",
+          "code_sha256": "ee643579e6f5f41881d87281897a1f7a0e79edd45ce23a6c58626cf4aa377982",
+          "instruction_sha256": "99a2307fa92c674471587b14b8fb63fbd168aaf0b16d8cfabf616e7711c96459",
+          "instruction_count": 6
+        },
+        {
+          "name": "<init>",
+          "descriptor": "(Ljava/util/function/Supplier;Ljava/util/function/BiFunction;Lnet/minecraft/util/datafix/DataFixTypes;)V",
+          "code_sha256": "958e936615047d99241a418da6ebb03613a56d78a6d756bc8c304c44dac1f3ee",
+          "instruction_sha256": "565226d48e41ddad73c6bebe5bc1c90d0f22a8e72cd6c7b73e9df33baee9ebce",
+          "instruction_count": 12
+        },
+        {
+          "name": "deserializer",
+          "descriptor": "()Ljava/util/function/BiFunction;",
+          "code_sha256": "d0cf9f922ab010f8c80625ee6685ff3cb0a085a2217bde1a5d580997c5014bcb",
+          "instruction_sha256": "fb474b5359ea5a99bef1917e6b52fb6795f43b65803b7296628ae9137b9cde7e",
+          "instruction_count": 3
+        },
+        {
+          "name": "type",
+          "descriptor": "()Lnet/minecraft/util/datafix/DataFixTypes;",
+          "code_sha256": "81c401d3b165002f08397c47f28abed78c3b534f9c49837b7bc8614c63222be8",
+          "instruction_sha256": "7742395f759fd3ff353a2190acc8b5dbafcf4a7253b10f94b796573f02e0fe64",
+          "instruction_count": 3
+        }
+      ],
+      "non_executable_declarations": []
+    }
+  },
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "limits": {
+    "exact_server_dist_not_loaded": true,
+    "installed_modpack_engine_bytes": "NOT_VERIFIED",
+    "data_file_physical_qa": "NOT_TESTED",
+    "io_worker_settlement": "NOT_VERIFIED",
+    "client_sync": "NOT_TESTED",
+    "potential_other_mod_transforms": "NOT_VERIFIED"
+  }
+}
