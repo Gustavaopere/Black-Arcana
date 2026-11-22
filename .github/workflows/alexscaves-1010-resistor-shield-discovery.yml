@@ -78,6 +78,27 @@ jobs:
             echo 'FAIL: invalid Resistor Shield evidence passed'
             exit 1
           fi
+      - name: Reject forged native method fingerprints
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          original = Path("build/resistor-shield-1010/report.json")
+          data = json.loads(original.read_text(encoding="utf-8"))
+          methods = data["native"]["targets"][data["owner"]]["methods"]
+          on_use = next(row for row in methods
+                        if row["declaration"]["name"] == "onUseTick")
+          on_use["instruction_sha256"] = "0" * 64
+          Path("build/resistor-shield-1010/forged-report.json").write_text(
+              json.dumps(data), encoding="utf-8"
+          )
+          PY
+          if python3 docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py \
+              --report build/resistor-shield-1010/forged-report.json \
+              --partial-manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RESISTOR-SHIELD-PARTIAL-EVIDENCE-1.0.10.json'; then
+            echo 'FAIL: forged native Resistor Shield method fingerprint accepted'
+            exit 1
+          fi
       - name: Reproduce exact Remote Detonator downstream boundaries on same JAR
         run: |
           python3 docs/qa/alexscaves_1010_remote_detonator_downstream_probe.py \

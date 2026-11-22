@@ -221,8 +221,94 @@ def check(path: Path, partial_manifest_path: Path) -> None:
         for body in info["bodies"]:
             assert body["instruction_count"] == len(body["instructions"])
             assert len(body["instruction_sha256"]) == 64
+    # Publisher SHA was checked by the read-only producer. Independently
+    # reconcile ALL native methods with the human-reviewed causal dossier.
+    # This remains a discovery gate, never a static-certification promotion.
+    import re
+    dossier_path = partial_manifest_path.parent / (
+        "EXACT-RESISTOR-SHIELD-NATIVE-CAUSAL-1.0.10.md"
+    )
+    dossier = dossier_path.read_text(encoding="utf-8")
+    observed_rows = re.findall(
+        r"^\| \`([^\`]+)\` \| ([0-9]+) \| \`([0-9a-f]{64})\` \|$",
+        dossier, re.MULTILINE,
+    )
+    assert len(observed_rows) == 20, "census dossier must list every native method"
+    claimed = {name: (int(count), sha)
+               for name, count, sha in observed_rows}
+    assert len(claimed) == 20, "duplicate native method in dossier"
+    observed = {
+        m["declaration"]["name"]:
+            (m["instruction_count"], m["instruction_sha256"])
+        for m in cls["methods"]
+    }
+    assert len(observed) == len(cls["methods"]) == 20, (
+        "unexpected overload or method census drift"
+    )
+    assert claimed == observed, "method roster or SHA in dossier differs from JAR"
+
+    expected_consumer_counts = {
+        "com/github/alexmodguy/alexscaves/client/event/ClientEvents": 6,
+        "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer": 2,
+        "com/github/alexmodguy/alexscaves/client/sound/ResistorShieldSound": 3,
+        "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": 2,
+        OWNER: 14,
+    }
+    assert {owner: len(data["sites"])
+            for owner, data in cls["consumers"].items()} == (
+        expected_consumer_counts
+    ), "typed consumer owner or site roster drift"
+
+    pulse = next(m for m in cls["methods"]
+                 if m["declaration"]["name"] == "onUseTick")
+    assert pulse["declaration"]["descriptor"] == (
+        "(Lnet/minecraft/world/level/Level;"
+        "Lnet/minecraft/world/entity/LivingEntity;"
+        "Lnet/minecraft/world/item/ItemStack;I)V"
+    )
+    assert pulse["declaration"]["code_sha256"] == (
+        "193bebed4088805aed9cc0da12b8daca41f0889787505c7780c28529387aa3b8"
+    )
+    at = {ins["offset"]: ins for ins in pulse["instructions"]}
+    for offset, opcode, operand, symbol_fragment in (
+        (64, "ifeq", "365", ""),
+        (403, "invokevirtual", None, "Level.getEntitiesOfClass:"),
+        (472, "invokevirtual", None, "DamageSources.mobAttack:"),
+        (492, "invokevirtual", None, "LivingEntity.hurt:"),
+        (495, "pop", "", ""),
+        (537, "invokestatic", None, "ACCompat.knockback:"),
+        (578, "invokestatic", None, "ACCompat.knockback:"),
+        (595, "ifne", "604", ""),
+        (598, "invokestatic", None, "ACCompat.hurtAndBreakUsedHand:"),
+    ):
+        actual = at[offset]
+        assert actual["opcode"] == opcode, ("native branch/call drift", offset)
+        if operand is not None:
+            assert actual["operand"] == operand, ("native guard drift", offset)
+        if symbol_fragment:
+            assert symbol_fragment in actual["symbol"], (
+                "native target method drift", offset,
+            )
+
     resources = a["filename_matched_resource_hashes"]
     assert isinstance(resources, dict) and len(resources) <= 200
+    expected_resources = {
+        "assets/alexscaves/models/item/resistor_shield.json": (
+            1275, "90e6f55395b5da2c68cb0d858aa9b8a773e46a7cd3027500f5249d0f675acb47"
+        ),
+        "data/alexscaves/advancement/alexscaves/resistor_shield.json": (
+            735, "0a4dae9d1e074b98ae2127ea855c9684cd9e18d56fbd8c2f4c7049924508936f"
+        ),
+        "data/alexscaves/recipe/resistor_shield.json": (
+            433, "2d2c648cc1db20b024ba3643c4e3c281b270039299d32ea8a3e9b8e8262f77af"
+        ),
+        "data/alexscaves/tags/item/enchantable/resistor_shield.json": (
+            55, "2b5d57ffc709293f994b472c07cd44ed34647efec41106b819621c060366f3e0"
+        ),
+    }
+    assert {name: (r["size"], r["sha256"]) for name, r in resources.items()} == (
+        expected_resources
+    ), "resource names, sizes or SHA drift"
     for path, proof in resources.items():
         assert path.endswith(".json") and any(t in path.lower() for t in TERMS)
         assert set(proof) == {"size", "sha256"}
