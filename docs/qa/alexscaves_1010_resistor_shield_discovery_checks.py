@@ -279,7 +279,7 @@ def check(path: Path, partial_manifest_path: Path) -> None:
         (537, "invokestatic", None, "ACCompat.knockback:"),
         (578, "invokestatic", None, "ACCompat.knockback:"),
         (595, "ifne", "604", ""),
-        (598, "invokestatic", None, "ACCompat.hurtAndBreakUsedHand:"),
+        (601, "invokestatic", None, "ACCompat.hurtAndBreakUsedHand:"),
     ):
         actual = at[offset]
         assert actual["opcode"] == opcode, ("native branch/call drift", offset)
