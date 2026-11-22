@@ -199,7 +199,7 @@ def check(report_path: Path, manifest_path: Path):
         ("<init>","(Ljava/util/function/Supplier;Ljava/util/function/BiFunction;)V",
          3,"aconst_null","",None),
         ("<init>","(Ljava/util/function/Supplier;Ljava/util/function/BiFunction;)V",
-         4,"invokespecial","<init>:",None),
+         4,"invokespecial",'"<init>":',None),
         ("<init>","(Ljava/util/function/Supplier;Ljava/util/function/BiFunction;Lnet/minecraft/util/datafix/DataFixTypes;)V",
          6,"putfield","constructor:",None),
         ("<init>","(Ljava/util/function/Supplier;Ljava/util/function/BiFunction;Lnet/minecraft/util/datafix/DataFixTypes;)V",
