@@ -77,6 +77,10 @@ jobs:
                         if x['declaration']['name']==method)
               instruction=next(x for x in body['instructions'] if x['offset']==offset)
               instruction['opcode']='nop'
+              normal=json.dumps(body['instructions'],ensure_ascii=False,sort_keys=True,indent=2)+'\n'
+              body['instruction_sha256']=hashlib.sha256(normal.encode('utf8')).hexdigest()
+              next(x for x in s['owner']['methods'] if x['name']==method)['instruction_sha256']=(
+                  body['instruction_sha256'])
               raw=json.dumps(altered,ensure_ascii=False,sort_keys=True).encode('utf8')
               s['evidence']['report_sha256']=hashlib.sha256(raw).hexdigest()
               s['evidence']['report_bytes']=len(raw)

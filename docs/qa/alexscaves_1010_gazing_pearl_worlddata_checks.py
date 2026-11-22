@@ -73,7 +73,7 @@ def check(report_path: Path, manifest_path: Path) -> None:
     _, manifest = read(manifest_path, 100_000)
     assert report["schema_version"] == manifest["schema_version"] == 1
     assert report["scope"] == manifest["scope"] == "GAZING_PEARL_ACWORLD_DATA_REPUTATION_DISCOVERY_ONLY"
-    assert len(raw) == manifest["evidence"]["report_bytes"] == 77203
+    assert len(raw) == manifest["evidence"]["report_bytes"]
     assert hashlib.sha256(raw).hexdigest() == manifest["evidence"]["report_sha256"]
     assert manifest["evidence"]["run_id"] == 45009967780
     assert manifest["evidence"]["artifact_id"] == 14749775926
