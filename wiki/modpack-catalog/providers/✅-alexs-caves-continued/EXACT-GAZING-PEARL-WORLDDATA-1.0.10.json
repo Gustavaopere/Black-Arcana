@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "scope": "GAZING_PEARL_ACWORLD_DATA_REPUTATION_DISCOVERY_ONLY",
+  "source": {
+    "installed_filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "installed_sha1_ledger": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "publisher_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "installed_copy_verified": false
+  },
+  "evidence": {
+    "run_id": 45009967780,
+    "artifact_id": 14749775926,
+    "report_bytes": 77203,
+    "report_sha256": "2816bb57380330b09075b3c9877d21fe0dd7751c2a8013e43d3507e8cdc46118"
+  },
+  "owner": {
+    "name": "com/github/alexmodguy/alexscaves/server/level/storage/ACWorldData",
+    "class_sha256": "ddb140795a4a38e077575effb858c2f7664780f11046475335ca132200b031f5",
+    "parent": "net/minecraft/world/level/saveddata/SavedData",
+    "fields": 6,
+    "declarations": 17,
+    "methods": [
+      {
+        "name": "<init>",
+        "descriptor": "()V",
+        "instruction_count": 22,
+        "instruction_sha256": "0abd342cf812b2e59bdb64b68db91ff931048645fdca1a4c3c9adb3a0a053b2a",
+        "code_sha256": "d049debd7e058fc0738fb6e89af6f740c9bde5fb39da1d98f0ef181be3cb8204"
+      },
+      {
+        "name": "acSave",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+        "instruction_count": 68,
+        "instruction_sha256": "2eedabc2fd6993477a16ac8a56c723d956497a776928618fd967040b6e150c8b",
+        "code_sha256": "fc86c0bf51203469f869f5144f9b3b690b6c0cd6bb5d97258fb24e821a62d587"
+      },
+      {
+        "name": "get",
+        "descriptor": "(Lnet/minecraft/world/level/Level;)Lcom/github/alexmodguy/alexscaves/server/level/storage/ACWorldData;",
+        "instruction_count": 27,
+        "instruction_sha256": "44c0bbe8c2dba5f2115d9988ce97df0397c9358aa3bd54f66774c4c0acff5941",
+        "code_sha256": "bd22587b8dbae8d2faae621a1df5bdbd1e454ce2741779f3f38cac48b5163893"
+      },
+      {
+        "name": "getDeepOneReputation",
+        "descriptor": "(Ljava/util/UUID;)I",
+        "instruction_count": 13,
+        "instruction_sha256": "f46a47af83174da1ab18fa113af27a4f8a2b60f591590208b8c82e7adce85d9c",
+        "code_sha256": "3e8885a28a91d8d1a833fe29728852c1836bf7210cabb11d08ae3b434d48936f"
+      },
+      {
+        "name": "lambda$get$0",
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/level/storage/ACWorldData;)Lnet/minecraft/nbt/CompoundTag;",
+        "instruction_count": 6,
+        "instruction_sha256": "61a94585a28dc1a35da9f571a9f69b376d76b6415950bf460dba0f1f6cb09656",
+        "code_sha256": "1a71d8b3d40096744d782c58a7c2280483f2b217641e7126fd2c63dadd2cd318"
+      },
+      {
+        "name": "load",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)Lcom/github/alexmodguy/alexscaves/server/level/storage/ACWorldData;",
+        "instruction_count": 58,
+        "instruction_sha256": "4e600b8f591f33dd76b86f257ce1ba6fd8101635110d4420a72d1b8f93d32963",
+        "code_sha256": "064fbae435ec957a69aa659ff02248ecd37a9c2fd9132f36228d13b73cb666a5"
+      },
+      {
+        "name": "save",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+        "instruction_count": 4,
+        "instruction_sha256": "471b7cdb07f5943cf0256d157d97d62ea38034677dd24f21da48c4d01ccb7990",
+        "code_sha256": "e28e62cbedd95ba00f0233a962677948eb311aa07d72f0e192a22da817d29c7f"
+      },
+      {
+        "name": "setDeepOneReputation",
+        "descriptor": "(Ljava/util/UUID;I)V",
+        "instruction_count": 11,
+        "instruction_sha256": "d5eff91f83de598aa43275d1aeb5fcc58b4e1ef465a0866012bdcad25932888b",
+        "code_sha256": "33005bf29cb2f8ad51dfae2bf763852d3b08885aaa9d32964022a2c987a885cf"
+      }
+    ]
+  },
+  "consumer_bodies": [
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/living/DeepOneBaseEntity",
+      "name": "getReputationOf",
+      "descriptor": "(Ljava/util/UUID;)I",
+      "instruction_count": 18,
+      "instruction_sha256": "6bff95caa147fb956044b1adac5fccfedc36b33e1f87ba12b6e8b2f32bf05325",
+      "code_sha256": "fd13f9ff7af2eaa0a915e406fb39755d683fb953a8d015404e7b096795915854"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/living/DeepOneBaseEntity",
+      "name": "setReputationOf",
+      "descriptor": "(Ljava/util/UUID;I)V",
+      "instruction_count": 15,
+      "instruction_sha256": "1fd4670d196f2b0d587c37586fec7c47f23533eb1ae23ce2a3d38b004ddee776",
+      "code_sha256": "8b65f5b7bdbd0892071f1a9f397726e4daa99db294025974de9d87375fcba340"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/living/MineGuardianEntity",
+      "name": "dropAllDeathLoot",
+      "descriptor": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;)V",
+      "instruction_count": 41,
+      "instruction_sha256": "13ca8b293ad36d16383b376a94e6b711b5b6e024d68f7733767a9786b69f925b",
+      "code_sha256": "e97272ded07a8b31f64b75d1567a525f2cf5d31c6b489884f011c9ce68511299"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/GazingPearlItem",
+      "name": "acInventoryTick",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+      "instruction_count": 46,
+      "instruction_sha256": "d07f91671a62a6f55fcdafe5621557736e1835c7e08113217c0048e33a181ad7",
+      "code_sha256": "6df42f5fbcb60915e8361362e83ab6607a15f4d7d16cb8f598dc220a83ffb0ac"
+    }
+  ],
+  "consumer_sites": [
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/living/DeepOneBaseEntity",
+      "method": "getReputationOf",
+      "offset": 28,
+      "callee": "getDeepOneReputation"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/living/DeepOneBaseEntity",
+      "method": "setReputationOf",
+      "offset": 25,
+      "callee": "setDeepOneReputation"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/living/MineGuardianEntity",
+      "method": "dropAllDeathLoot",
+      "offset": 51,
+      "callee": "getDeepOneReputation"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/living/MineGuardianEntity",
+      "method": "dropAllDeathLoot",
+      "offset": 82,
+      "callee": "setDeepOneReputation"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/GazingPearlItem",
+      "method": "acInventoryTick",
+      "offset": 83,
+      "callee": "getDeepOneReputation"
+    }
+  ],
+  "limitations": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "boundary": "Read-only publisher bytecode, not an exposed writable perk API, instantiated modpack, full engine SavedData or game execution."
+}
