@@ -50,7 +50,7 @@ def check(path: Path, partial_manifest_path: Path) -> None:
     assert 0 < len(seal_raw) <= 100_000, "partial manifest bounds"
     seal = json.loads(seal_raw, object_pairs_hook=unique)
     assert seal["schema_version"] == 1
-    assert seal["scope"] == "RESISTOR_SHIELD_PARTIAL_IDENTITY_AND_ENMERCHANTABILITY_ONLY"
+    assert seal["scope"] == "RESISTOR_SHIELD_PARTIAL_IDENTITY_AND_ENCHANTABILITY_ONLY"
     assert seal["owner"]["name"] == OWNER
     assert seal["artifact"] == {
         "mod_id": "alexscaves",
