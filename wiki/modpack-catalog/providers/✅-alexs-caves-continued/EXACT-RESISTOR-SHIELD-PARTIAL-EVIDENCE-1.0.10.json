@@ -65,7 +65,46 @@
     ],
     "full_method_census": "PENDING_NEW_DISCOVERY",
     "fields": "NOT_YET_CENSUSED_FOR_THIS_ITEM",
-    "typed_consumer_census": "PENDING_NEW_DISCOVERY"
+    "typed_consumer_census": "PENDING_NEW_DISCOVERY",
+    "support_callbacks": [
+      {
+        "name": "acInventoryTick",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+        "instruction_count": 79,
+        "instruction_sha256": "3cec5ec860390c581f2795f6c2f128c2c1507593934eb6b40db608bf6d182b20",
+        "source": "EXACT-TICKING-ITEM-DISCOVERY-1.0.10.json",
+        "behavior_scope": "SELECTED_TICK_CALLBACK_ONLY"
+      },
+      {
+        "name": "acExtraRepairMaterials",
+        "descriptor": "()[Lnet/minecraft/world/item/Item;",
+        "instruction_count": 15,
+        "instruction_sha256": "b1c165d8b02b3531e59afa61434eb1da01506822154ef3a4d9db9cc34f60812e",
+        "source": "EXACT-REPAIRABLE-ITEM-DISCOVERY-1.0.10.json",
+        "behavior_scope": "TWO_EXTRA_MATERIALS_ONLY",
+        "referenced_registry_fields": [
+          "SCARLET_NEODYMIUM_INGOT",
+          "AZURE_NEODYMIUM_INGOT"
+        ]
+      },
+      {
+        "name": "isValidRepairItem",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+        "instruction_count": 13,
+        "instruction_sha256": "56ef4089abe5ca807759ea066eaab7be291dd520d357c2fab2a6de913f3fa597",
+        "source": "EXACT-REPAIRABLE-ITEM-DISCOVERY-1.0.10.json",
+        "behavior_scope": "EXTRA_OR_SHIELDITEM_FALLBACK"
+      },
+      {
+        "name": "initializeClient",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "instruction_count": 6,
+        "instruction_sha256": "3a6c2d33865c1d1707dcbd93e1f9e0bd3bd706c9817ddb988b4e0589ebb14cf4",
+        "code_sha256": "ab25a13fc141e9c68e695fdce843d4563c474d551d77359cefa387da179e2a9a",
+        "source": "EXACT-CLIENT-EXTENSION-1.0.10.json",
+        "behavior_scope": "PRESENTATION_CALLBACK_ONLY"
+      }
+    ]
   },
   "resource_observation": {
     "relevant_json_count_in_prior_enchantability_roster": 2,
@@ -73,8 +112,8 @@
   },
   "contract_axes": {
     "identity": "PARTIALLY_VERIFIED",
-    "behavior": "PARTIALLY_VERIFIED_ENCHANTABILITY_ONLY",
-    "parameters": "PARTIALLY_VERIFIED_ENCHANTABILITY_ONLY",
+    "behavior": "PARTIALLY_VERIFIED_ENMERCHANTABILITY_REPAIR_TICK_PRESENTATION_ONLY",
+    "parameters": "PARTIALLY_VERIFIED_LOCAL_TICK_SWITCH_COUNTER_AND_TWO_EXTRA_REPAIR_MATERIALS",
     "targeting": "NOT_VERIFIED",
     "costs": "NOT_VERIFIED",
     "integration": "PARTIALLY_VERIFIED_SUPPORTS_ONLY",
@@ -88,5 +127,12 @@
     "mutation": "NO_MUTATION",
     "provider_universe_closed": false,
     "semantic_magic_roots_delta": 0
+  },
+  "source_contracts": {
+    "enchantability": "EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.json",
+    "registry": "EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.json",
+    "tick": "EXACT-TICKING-ITEM-DISCOVERY-1.0.10.json",
+    "repair": "EXACT-REPAIRABLE-ITEM-DISCOVERY-1.0.10.json",
+    "client_presentation": "EXACT-CLIENT-EXTENSION-1.0.10.json"
   }
 }
