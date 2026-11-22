@@ -23,6 +23,7 @@ jobs:
       - name: Verify patch scanner syntax and bounded synthetic tests
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_galena_engine_patch_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_engine_patch_checks.py
           python3 docs/qa/alexscaves_1010_galena_engine_patch_probe.py --selftest
       - name: Download exact official NeoForge 21.1.250 userdev source patches
         run: |
@@ -41,7 +42,16 @@ jobs:
             --output build/galena-engine-211250/patch-report.json \
             > build/galena-engine-211250/probe.log
           test -s build/galena-engine-211250/patch-report.json
+          test "$(wc -c < build/galena-engine-211250/patch-report.json)" -eq 10185
+          test "$(sha256sum build/galena-engine-211250/patch-report.json | cut -d ' ' -f1)" = \
+            '7cb488b63c2abafcf17c839661ac7ff05a367fca84c497c174dea5017ded6411'
           cat build/galena-engine-211250/probe.log
+      - name: Verify pinned patch lines and reject 37 adversarial report mutations
+        run: |
+          python3 docs/qa/alexscaves_1010_galena_engine_patch_checks.py \
+            --report build/galena-engine-211250/patch-report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-ENGINE-PATCH-FOOTPRINT-21.1.250.json' \
+            --adversarial
       - name: Preserve read-only official patch evidence
         if: always()
         uses: actions/upload-artifact@v7

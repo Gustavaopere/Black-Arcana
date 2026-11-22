@@ -1,0 +1,389 @@
+{
+  "conclusions": {
+    "CompoundTag_patch_count": 3,
+    "CustomData_patch_present": false,
+    "ItemStack_exact_add_delete_context_matches": {
+      "ADD": 3,
+      "CONTEXT": 16,
+      "DELETE": 6
+    },
+    "ItemStack_parse_or_save_literal_match_count": 0,
+    "ItemStack_patch_count": 20,
+    "installed_dump_parity": "NOT_VERIFIED",
+    "limitation": "Patch matches do not prove vanilla bodies, no transformations, save/parse success, or physical recovery",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "physical_qa": "NOT_TESTED",
+    "semantic_magic_roots_certified_delta": 0,
+    "static_contract": "NOT_CERTIFIED",
+    "world_effect_policy_hook": "NOT_VERIFIED"
+  },
+  "evidence": {
+    "report_bytes": 10185,
+    "report_format": "canonical JSON, sorted keys and indent=2, UTF-8, newline",
+    "report_sha256": "7cb488b63c2abafcf17c839661ac7ff05a367fca84c497c174dea5017ded6411",
+    "source_artifact_id": 14776063917,
+    "source_branch_head": "2ed0a9f6c58900669795d7e65842d80ba6f25968",
+    "source_workflow_run_id": 45078806235
+  },
+  "expected_archive": {
+    "entry_count": 963,
+    "minecraft_patch_count": 753,
+    "minecraft_patch_path_roster_sha256": "22046c708c5774e479f335fcef95a0c526670fbc9dde01fc29281c94102a640f"
+  },
+  "expected_limits": {
+    "installed_transformed_game": "NOT_VERIFIED",
+    "installer_modpack_transformers": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "physical_qa": "NOT_TESTED",
+    "physical_save_restart": "NOT_TESTED",
+    "proof": "Only which matched lines exist as additions, deletions, or context in exact userdev patches",
+    "provider_universe_closed": false,
+    "stack_codec_semantics": "NOT_VERIFIED",
+    "static_contract": "NOT_CERTIFIED",
+    "userdev_patch_absence_implies_no_runtime_modification": false,
+    "vanilla_method_body": "NOT_VERIFIED"
+  },
+  "expected_reference": {
+    "accompat_helper_report_sha256": "ca395f3418979d8302363cf9db8d54c620572b16ebdc2ecacee5014fce0add64",
+    "alexscaves_publisher_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.250",
+    "official_maven": "https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-userdev.jar",
+    "userdev_filename": "neoforge-21.1.250-userdev.jar",
+    "userdev_sha1": "45f4a0daf3ecd5864338cb5ab7368afbee02e529",
+    "userdev_sha256": "deb6dd1e002aa85406e92501f49d5429cc8eaefe32fc353433e67030c32d8372",
+    "userdev_size": 3983248
+  },
+  "expected_targets": {
+    "CompoundTag": {
+      "hunk_count": 3,
+      "hunk_line_numbers": [
+        3,
+        25,
+        43
+      ],
+      "matched_counts_by_kind": {
+        "ADD": 1,
+        "CONTEXT": 3,
+        "DELETE": 0
+      },
+      "matches": [
+        {
+          "bytes": 32,
+          "kind": "CONTEXT",
+          "line": 4,
+          "line_sha256": "bd532776b0c73d99340cb1d5be8f7acbd09b2452ea4a725f1fea90ccfb638cb5",
+          "tokens": [
+            "compoundtag"
+          ]
+        },
+        {
+          "bytes": 114,
+          "kind": "CONTEXT",
+          "line": 12,
+          "line_sha256": "2dc0c61733568a669288168a51a09afcf82853eb0a7f7db3843f4b3ea1c2c021",
+          "tokens": [
+            "compoundtag"
+          ]
+        },
+        {
+          "bytes": 103,
+          "kind": "CONTEXT",
+          "line": 22,
+          "line_sha256": "57bfc30387e00e4717c1981dd265058a3d8711221a29abf588e58bdb348300bb",
+          "tokens": [
+            "compoundtag"
+          ]
+        },
+        {
+          "bytes": 46,
+          "kind": "ADD",
+          "line": 36,
+          "line_sha256": "46d8378d3895e03ca219b85549424094f4effe44b2e6d062a0595d05951cf44e",
+          "tokens": [
+            "compoundtag"
+          ]
+        }
+      ],
+      "no_patch_body_in_report": true,
+      "path": "patches/net/minecraft/nbt/CompoundTag.java.patch",
+      "present": true,
+      "sha256": "6d4eb62dc6dddb7dd58b02fc1dfe5e76e6ca4634c5ae03bed2875a05c69abe02",
+      "size_bytes": 2018,
+      "total_lines": 50
+    },
+    "CustomData": {
+      "path": "patches/net/minecraft/world/item/component/CustomData.java.patch",
+      "present": false
+    },
+    "ItemStack": {
+      "hunk_count": 20,
+      "hunk_line_numbers": [
+        3,
+        12,
+        23,
+        32,
+        60,
+        70,
+        80,
+        89,
+        122,
+        133,
+        142,
+        151,
+        162,
+        178,
+        196,
+        209,
+        229,
+        239,
+        248,
+        257
+      ],
+      "matched_counts_by_kind": {
+        "ADD": 3,
+        "CONTEXT": 16,
+        "DELETE": 6
+      },
+      "matches": [
+        {
+          "bytes": 88,
+          "kind": "CONTEXT",
+          "line": 9,
+          "line_sha256": "2d0ce5f8fb9e78bc1dd5cf0be0a06406ae4dbcbc80c4a6f0303806de9accb35c",
+          "tokens": [
+            "codec"
+          ]
+        },
+        {
+          "bytes": 87,
+          "kind": "CONTEXT",
+          "line": 13,
+          "line_sha256": "5bfb80e2c8cfcb736f2562e7d9cf198dacfe4cb13e5cf90c15105d822dde23ea",
+          "tokens": [
+            "components"
+          ]
+        },
+        {
+          "bytes": 72,
+          "kind": "ADD",
+          "line": 17,
+          "line_sha256": "67175e6dff7b48dfef0181ff62420b2d870dff734f29ad96feaf819794b5ac8f",
+          "tokens": [
+            "components"
+          ]
+        },
+        {
+          "bytes": 78,
+          "kind": "CONTEXT",
+          "line": 62,
+          "line_sha256": "fc111032861b57af0312f54573c43422e62167d3bfcf2a5f382ec7d6b7b50bf9",
+          "tokens": [
+            "encode"
+          ]
+        },
+        {
+          "bytes": 118,
+          "kind": "DELETE",
+          "line": 64,
+          "line_sha256": "678d5a7265545d51539b6f29706dc8b32e06b085d8315db082eff26c534a259b",
+          "tokens": [
+            "codec",
+            "encode"
+          ]
+        },
+        {
+          "bytes": 131,
+          "kind": "ADD",
+          "line": 66,
+          "line_sha256": "50d2e2c08fa40ebf3661e7fec95223175d743d8254f41fff399df3fd84027546",
+          "tokens": [
+            "codec"
+          ]
+        },
+        {
+          "bytes": 78,
+          "kind": "CONTEXT",
+          "line": 72,
+          "line_sha256": "fc111032861b57af0312f54573c43422e62167d3bfcf2a5f382ec7d6b7b50bf9",
+          "tokens": [
+            "encode"
+          ]
+        },
+        {
+          "bytes": 112,
+          "kind": "DELETE",
+          "line": 74,
+          "line_sha256": "9d62c63e6e4528e2325460e22d97641a7bca7abd3a2e5406214843b3082988c6",
+          "tokens": [
+            "codec"
+          ]
+        },
+        {
+          "bytes": 120,
+          "kind": "ADD",
+          "line": 76,
+          "line_sha256": "896e1b8579bdc35ebbf70162db664bf1b6f5eb8b3a77840d24ce343c38b3fd9a",
+          "tokens": [
+            "codec"
+          ]
+        },
+        {
+          "bytes": 85,
+          "kind": "DELETE",
+          "line": 84,
+          "line_sha256": "f75b11c4c7f12c550e31203de320225b3cd208eb2c7c69db48493c266b927604",
+          "tokens": [
+            "datacomponents"
+          ]
+        },
+        {
+          "bytes": 112,
+          "kind": "DELETE",
+          "line": 98,
+          "line_sha256": "d6cdcdf7e5614d26b0ff03aad4bdc94548b54b18ff69ff1347ba97a472cdc9c0",
+          "tokens": [
+            "datacomponents"
+          ]
+        },
+        {
+          "bytes": 86,
+          "kind": "DELETE",
+          "line": 103,
+          "line_sha256": "0a4d4c166454f88b8edc426350845a333eaa558dce5b63db8c8b2eab21f0028d",
+          "tokens": [
+            "datacomponents",
+            "set"
+          ]
+        },
+        {
+          "bytes": 81,
+          "kind": "DELETE",
+          "line": 108,
+          "line_sha256": "260e152e8a12820ac6821aecbf837897157f0be0a7d0e66a1227b05c40e97841",
+          "tokens": [
+            "datacomponents"
+          ]
+        },
+        {
+          "bytes": 56,
+          "kind": "CONTEXT",
+          "line": 148,
+          "line_sha256": "3f8ea0791ce76ee83f79ac32cac25a8f30eafa5b8ef3b8ac0b4b8534d73fac8a",
+          "tokens": [
+            "datacomponents"
+          ]
+        },
+        {
+          "bytes": 91,
+          "kind": "CONTEXT",
+          "line": 152,
+          "line_sha256": "03286a815c3fde5f9f57a96ab9180126dbc9ecc5e7e2aae5ba7e183592d3b62f",
+          "tokens": [
+            "datacomponents"
+          ]
+        },
+        {
+          "bytes": 89,
+          "kind": "CONTEXT",
+          "line": 153,
+          "line_sha256": "dc54d31f8690d6c45c929896ba61cd5c5859828758c9fb205a524c3b68ab84cc",
+          "tokens": [
+            "datacomponents"
+          ]
+        },
+        {
+          "bytes": 83,
+          "kind": "CONTEXT",
+          "line": 154,
+          "line_sha256": "9ef8bde3e3f9217652f0441fa5f78db7ca62191bad00cb1ccccec6f80646aa6f",
+          "tokens": [
+            "datacomponents"
+          ]
+        },
+        {
+          "bytes": 90,
+          "kind": "CONTEXT",
+          "line": 159,
+          "line_sha256": "8fe7d213a8d2f065f28081d2c319a457438da11788325b3942f6659dec591c99",
+          "tokens": [
+            "datacomponents"
+          ]
+        },
+        {
+          "bytes": 96,
+          "kind": "CONTEXT",
+          "line": 160,
+          "line_sha256": "d9f188f0883d4f8f9057f19458cdec049fa401e31d712a759bb4dd6bb65925c9",
+          "tokens": [
+            "datacomponents"
+          ]
+        },
+        {
+          "bytes": 141,
+          "kind": "CONTEXT",
+          "line": 176,
+          "line_sha256": "87491af5c27a0fed948f8afab819bfdfc30368fbdb7cb79b22c552997f6a912d",
+          "tokens": [
+            "datacomponents"
+          ]
+        },
+        {
+          "bytes": 98,
+          "kind": "CONTEXT",
+          "line": 179,
+          "line_sha256": "9fb9832cc670dc6fe8eb19ec7ccfe43643f0de62b04b3be67ea7895f90a34bac",
+          "tokens": [
+            "datacomponents"
+          ]
+        },
+        {
+          "bytes": 87,
+          "kind": "CONTEXT",
+          "line": 194,
+          "line_sha256": "4f7dc865697835474333589eadf57fbe09d59d055b56c4e281f1f28cbf3cd9a4",
+          "tokens": [
+            "datacomponents"
+          ]
+        },
+        {
+          "bytes": 141,
+          "kind": "CONTEXT",
+          "line": 206,
+          "line_sha256": "87491af5c27a0fed948f8afab819bfdfc30368fbdb7cb79b22c552997f6a912d",
+          "tokens": [
+            "datacomponents"
+          ]
+        },
+        {
+          "bytes": 141,
+          "kind": "CONTEXT",
+          "line": 226,
+          "line_sha256": "87491af5c27a0fed948f8afab819bfdfc30368fbdb7cb79b22c552997f6a912d",
+          "tokens": [
+            "datacomponents"
+          ]
+        },
+        {
+          "bytes": 98,
+          "kind": "CONTEXT",
+          "line": 262,
+          "line_sha256": "479a2697120254f30613dd9a8193914507182b57e1876979eeee76de2d561405",
+          "tokens": [
+            "datacomponents"
+          ]
+        }
+      ],
+      "no_patch_body_in_report": true,
+      "path": "patches/net/minecraft/world/item/ItemStack.java.patch",
+      "present": true,
+      "sha256": "5e910db862cc11662067e5ffbd2a792197d2eb618ce76f4281ee6fb5998c8c7d",
+      "size_bytes": 12326,
+      "total_lines": 264
+    }
+  },
+  "schema_version": 1,
+  "scope": "GALENA_1010_NEOFORGE_211250_NBT_PATCH_FOOTPRINT_SEAL_STATIC_ONLY"
+}
