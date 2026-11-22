@@ -1,0 +1,408 @@
+{
+  "schema_version": 1,
+  "scope": "ALEXSCAVES_1010_GALENA_GAUNTLET_PLAYER_TARGETING_COOLDOWN_RETURN_STATIC_ONLY",
+  "evidence": {
+    "artifact_id": 14719225697,
+    "discovery_run_id": 44934418449,
+    "report_bytes": 1780492,
+    "report_sha256": "c91a48f9892be09c4ab951c8083703b0c5ffbb026fc43e7d808c2033dde8bba9"
+  },
+  "publisher": {
+    "minecraft": "1.21.1",
+    "mod_id": "alexscaves",
+    "mod_version": "1.0.10",
+    "filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "installed_dump_parity": "NOT_VERIFIED"
+  },
+  "entity_class": {
+    "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+    "sha256": "a26794c9eba89c554e812078886beda6129d5298219f685f6d0e2be315fbf071",
+    "total_executable_methods": 24
+  },
+  "item_class": {
+    "owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+    "sha256": "5a74328a7130704a4e2dca9e607bed4dc3a468b8bbcb6d4e238b4d2d962573b0",
+    "total_executable_methods": 17
+  },
+  "methods": [
+    {
+      "name": "tick",
+      "descriptor": "()V",
+      "code_sha256": "eaf08e761f108f4e5f15816ca7f72807c068e51376ec9ed27588d65a6385a699",
+      "instruction_sha256": "3478b6038fe3dad88fd11a2b7aeca49fc85a9ccadc1ad4e9fca089b423b8e9bc",
+      "instruction_count": 744,
+      "pivots": [
+        {
+          "offset": 170,
+          "opcode": "instanceof",
+          "contains": "TeletorEntity"
+        },
+        {
+          "offset": 471,
+          "opcode": "instanceof",
+          "contains": "Player"
+        },
+        {
+          "offset": 519,
+          "opcode": "invokevirtual",
+          "contains": "isOwnerWearingGauntlet:"
+        },
+        {
+          "offset": 544,
+          "opcode": "ifeq",
+          "operand": "1416"
+        },
+        {
+          "offset": 552,
+          "opcode": "ldc",
+          "contains": "30.0f"
+        },
+        {
+          "offset": 579,
+          "opcode": "invokevirtual",
+          "contains": "LivingEntity.getUseItem:"
+        },
+        {
+          "offset": 593,
+          "opcode": "invokevirtual",
+          "contains": "ItemStack.is:"
+        },
+        {
+          "offset": 596,
+          "opcode": "ifeq",
+          "operand": "646"
+        },
+        {
+          "offset": 608,
+          "opcode": "getstatic",
+          "contains": "FERROUS_HASTE"
+        },
+        {
+          "offset": 611,
+          "opcode": "invokestatic",
+          "contains": "ACCompat.enchantLevel:"
+        },
+        {
+          "offset": 614,
+          "opcode": "ifle",
+          "operand": "621"
+        },
+        {
+          "offset": 626,
+          "opcode": "getstatic",
+          "contains": "FIELD_EXTENSION"
+        },
+        {
+          "offset": 629,
+          "opcode": "invokestatic",
+          "contains": "ACCompat.enchantLevel:"
+        },
+        {
+          "offset": 639,
+          "opcode": "ldc_w",
+          "contains": "5.0f"
+        },
+        {
+          "offset": 642,
+          "opcode": "fmul"
+        },
+        {
+          "offset": 643,
+          "opcode": "fadd"
+        },
+        {
+          "offset": 651,
+          "opcode": "invokedynamic",
+          "contains": "Predicate"
+        },
+        {
+          "offset": 659,
+          "opcode": "invokestatic",
+          "contains": "ProjectileUtil.getHitResultOnViewVector:"
+        },
+        {
+          "offset": 666,
+          "opcode": "instanceof",
+          "contains": "EntityHitResult"
+        },
+        {
+          "offset": 683,
+          "opcode": "ifne",
+          "operand": "802"
+        },
+        {
+          "offset": 728,
+          "opcode": "invokevirtual",
+          "contains": "Entity.getBbWidth:"
+        },
+        {
+          "offset": 731,
+          "opcode": "ldc_w",
+          "contains": "1.5f"
+        },
+        {
+          "offset": 736,
+          "opcode": "ifge",
+          "operand": "799"
+        },
+        {
+          "offset": 754,
+          "opcode": "ldc",
+          "contains": "0.35f"
+        },
+        {
+          "offset": 756,
+          "opcode": "fadd"
+        },
+        {
+          "offset": 771,
+          "opcode": "invokevirtual",
+          "contains": "hurtEntity:"
+        },
+        {
+          "offset": 777,
+          "opcode": "ifeq",
+          "operand": "784"
+        },
+        {
+          "offset": 780,
+          "opcode": "iconst_3"
+        },
+        {
+          "offset": 784,
+          "opcode": "iconst_5"
+        },
+        {
+          "offset": 789,
+          "opcode": "iconst_5"
+        },
+        {
+          "offset": 790,
+          "opcode": "invokeinterface",
+          "contains": "RandomSource.nextInt:"
+        },
+        {
+          "offset": 795,
+          "opcode": "iadd"
+        },
+        {
+          "offset": 796,
+          "opcode": "putfield",
+          "contains": "playerUseCooldown:"
+        },
+        {
+          "offset": 1013,
+          "opcode": "invokevirtual",
+          "contains": "BlockState.getDestroySpeed:"
+        },
+        {
+          "offset": 1025,
+          "opcode": "invokevirtual",
+          "contains": "getDigSpeed:"
+        },
+        {
+          "offset": 1034,
+          "opcode": "ifle",
+          "operand": "1413"
+        },
+        {
+          "offset": 1290,
+          "opcode": "invokevirtual",
+          "contains": "Level.destroyBlock:"
+        },
+        {
+          "offset": 1329,
+          "opcode": "invokevirtual",
+          "contains": "Level.destroyBlock:"
+        },
+        {
+          "offset": 1431,
+          "opcode": "ldc_w",
+          "contains": "0.2f"
+        },
+        {
+          "offset": 1435,
+          "opcode": "invokestatic",
+          "contains": "Math.min:"
+        },
+        {
+          "offset": 1489,
+          "opcode": "ldc2_w",
+          "contains": "1.4d"
+        },
+        {
+          "offset": 1516,
+          "opcode": "invokevirtual",
+          "contains": "Player.addItem:"
+        },
+        {
+          "offset": 1519,
+          "opcode": "ifeq",
+          "operand": "1537"
+        },
+        {
+          "offset": 1538,
+          "opcode": "invokevirtual",
+          "contains": "plopItem:"
+        },
+        {
+          "offset": 1568,
+          "opcode": "putfield",
+          "contains": "playerUseCooldown:"
+        }
+      ]
+    },
+    {
+      "name": "isOwnerWearingGauntlet",
+      "descriptor": "()Z",
+      "code_sha256": "c721005516ef5eb3f5a4eeeedd0fe517bfffefec8ee21a149bfe4651b6aa23e0",
+      "instruction_sha256": "b76b524a3f75e06c324be6edd43562c9e0ad106be7c60e9fa6081e0f6b9d47c8",
+      "instruction_count": 26,
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokevirtual",
+          "contains": "getController:"
+        },
+        {
+          "offset": 6,
+          "opcode": "instanceof",
+          "contains": "LivingEntity"
+        },
+        {
+          "offset": 18,
+          "opcode": "invokevirtual",
+          "contains": "getUseItem:"
+        },
+        {
+          "offset": 21,
+          "opcode": "getstatic",
+          "contains": "GALENA_GAUNTLET"
+        },
+        {
+          "offset": 32,
+          "opcode": "invokevirtual",
+          "contains": "ItemStack.is:"
+        },
+        {
+          "offset": 39,
+          "opcode": "invokevirtual",
+          "contains": "LivingEntity.isAlive:"
+        },
+        {
+          "offset": 46,
+          "opcode": "getfield",
+          "contains": "returnFlag:Z"
+        },
+        {
+          "offset": 52,
+          "opcode": "iconst_1"
+        },
+        {
+          "offset": 56,
+          "opcode": "iconst_0"
+        },
+        {
+          "offset": 57,
+          "opcode": "ireturn"
+        }
+      ]
+    },
+    {
+      "name": "plopItem",
+      "descriptor": "()V",
+      "code_sha256": "e8cba231f5515acb557aed34f2ad0b28fb377c7e33b10edfd6be600a213f21cf",
+      "instruction_sha256": "e0279127fbf0af24ef6efc4cc658a5f401e3004b63e400e55d05749c09ad4eae",
+      "instruction_count": 19,
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "getfield",
+          "contains": "spawnedItem:"
+        },
+        {
+          "offset": 4,
+          "opcode": "ifne",
+          "operand": "29"
+        },
+        {
+          "offset": 9,
+          "opcode": "putfield",
+          "contains": "spawnedItem:"
+        },
+        {
+          "offset": 17,
+          "opcode": "invokestatic",
+          "contains": "ACCompat.spawnAtLocation:"
+        },
+        {
+          "offset": 22,
+          "opcode": "ifnull",
+          "operand": "29"
+        },
+        {
+          "offset": 26,
+          "opcode": "invokevirtual",
+          "contains": "ItemEntity.setNoPickUpDelay:"
+        },
+        {
+          "offset": 33,
+          "opcode": "invokevirtual",
+          "contains": "remove:"
+        }
+      ]
+    },
+    {
+      "name": "getTarget",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "code_sha256": "bd04e83a95031e6e3f5db791dc123e37728aa24c7cf02797ceedc0ccb988446b",
+      "instruction_sha256": "3b86fcfd877d534897491465143ab7c8237de2159d4cd8adc07e60d1efbc5a31",
+      "instruction_count": 17,
+      "pivots": [
+        {
+          "offset": 4,
+          "opcode": "getstatic",
+          "contains": "TARGET_ID:"
+        },
+        {
+          "offset": 7,
+          "opcode": "invokevirtual",
+          "contains": "SynchedEntityData.get:"
+        },
+        {
+          "offset": 18,
+          "opcode": "iconst_m1"
+        },
+        {
+          "offset": 19,
+          "opcode": "if_icmpne",
+          "operand": "26"
+        },
+        {
+          "offset": 22,
+          "opcode": "aconst_null"
+        },
+        {
+          "offset": 31,
+          "opcode": "invokevirtual",
+          "contains": "Level.getEntity:"
+        }
+      ]
+    }
+  ],
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0,
+    "actual_targeting_effects": "NOT_TESTED",
+    "projectile_predicate_semantics": "NOT_VERIFIED",
+    "gameplay_damage_settlement": "NOT_TESTED"
+  }
+}
