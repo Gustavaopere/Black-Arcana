@@ -29,8 +29,8 @@ SELECTED_LIMIT = 100
 def relevant_method(name: str) -> bool:
     lower = name.lower()
     return ("reput" in lower or "deepone" in lower or
-            name in {"get", "<init>", "<clinit>", "save", "load", "read",
-                     "saveAdditional", "setDirty"})
+            name in {"get", "<init>", "<clinit>", "save", "acSave",
+                     "lambda$get$0", "load", "read", "saveAdditional", "setDirty"})
 
 
 def inspect(jar: Path, javap: str) -> dict:
@@ -113,6 +113,21 @@ def inspect(jar: Path, javap: str) -> dict:
                             "constant_pool_index": int(match.group(1)),
                         })
             data["executed_instruction_sites_in_disassembly"] = sites
+            selected_callers = {
+                (site["caller_method"], site["caller_descriptor"])
+                for site in sites
+            }
+            caller_reader = ClassReader(z.read(owner + ".class"))
+            data["referencing_bodies"] = [
+                summarize(caller_reader, key, body)
+                for key, body in sorted(calls.items())
+                if key in selected_callers
+            ]
+            require(
+                {(m["declaration"]["name"], m["declaration"]["descriptor"])
+                 for m in data["referencing_bodies"]} == selected_callers,
+                "missing targeted reference-caller body: " + owner,
+            )
         pearl_sites = candidates[PEARL]["executed_instruction_sites_in_disassembly"]
         require(any(x["caller_method"] == "acInventoryTick" and
                     x["offset"] == 83 and REPUTATION_METHOD in x["symbol"]
