@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "scope": "REMOTE_DETONATOR_NATIVE_DISCOVERY_NOT_CERTIFIED",
+  "artifact": {
+    "filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "installed_dump_comparison": "NOT_VERIFIED"
+  },
+  "report": {
+    "workflow_run_id": 44956716666,
+    "job_id": 137006342422,
+    "artifact_id": 14728326280,
+    "uncompressed_bytes": 199424,
+    "sha256": "010a50eec70f2458f20bb2950dbec5b83d000fd177f6391aa90e37137d483ada"
+  },
+  "owner": "com/github/alexmodguy/alexscaves/server/item/RemoteDetonatorItem",
+  "owner_class": {
+    "sha256": "6d6e8cd94df306aec6f99b07af856b477b8e6f34d41aaca06a35921b53f2c4b8",
+    "parent": "net/minecraft/world/item/Item",
+    "interfaces": [
+      "com/github/alexmodguy/alexscaves/server/item/ACTickingItem"
+    ],
+    "declared_field_count": 0,
+    "method_count": 11,
+    "methods": [
+      {
+        "name": "<init>",
+        "descriptor": "()V",
+        "instruction_count": 8,
+        "instruction_sha256": "b1e09b957153a9a6359f7e966a0e90b94486659c93dab03cdd80143d7694857c"
+      },
+      {
+        "name": "acInventoryTick",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+        "instruction_count": 75,
+        "instruction_sha256": "f4cc16efcad69f1d972579c96944647c63101110402e2cbb7bfb2f6da68a896d"
+      },
+      {
+        "name": "addBombTags",
+        "descriptor": "(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/core/BlockPos;Lnet/minecraft/nbt/CompoundTag;)V",
+        "instruction_count": 17,
+        "instruction_sha256": "7ee1a457812d9ff8533b207924d21d20402b133e4ebd32ff086d68d0935bc7bc"
+      },
+      {
+        "name": "appendHoverText",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+        "instruction_count": 58,
+        "instruction_sha256": "cde153556ffe430eed0a7b2705567bc75f8f6c92cd9418aeb799bd5df5e8066b"
+      },
+      {
+        "name": "getBombDimension",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)Ljava/util/Optional;",
+        "instruction_count": 8,
+        "instruction_sha256": "1a390410cb5cbab016724851e1a651fd4058a03b60ddd222d9790ab7378da895"
+      },
+      {
+        "name": "getBombPosition",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/core/GlobalPos;",
+        "instruction_count": 30,
+        "instruction_sha256": "2cad344367fe18da88b99d17e0c48f2e783f551c2fe2bc19e1b66b884b372d6f"
+      },
+      {
+        "name": "isActive",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+        "instruction_count": 17,
+        "instruction_sha256": "a4206726462cada693fbb76134f1f993eef006fd413472c62a9c875e7bf0f4a7"
+      },
+      {
+        "name": "lambda$addBombTags$0",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/nbt/Tag;)V",
+        "instruction_count": 6,
+        "instruction_sha256": "71af9311612389eca81fd9c9d49099631bfa9ac767ba83ec76b510e59271d3b5"
+      },
+      {
+        "name": "loadChunksAround",
+        "descriptor": "(Lnet/minecraft/server/level/ServerLevel;Ljava/util/UUID;Lnet/minecraft/core/BlockPos;Z)V",
+        "instruction_count": 31,
+        "instruction_sha256": "f4f0e6461aac38df4743cfe80382fdebf89502db634317b1698f514034297cb5"
+      },
+      {
+        "name": "use",
+        "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+        "instruction_count": 91,
+        "instruction_sha256": "ac995eaff92b4b833cbff5449f490c6fb7a754a2cdcfe3daa7b7fccfbe2e7934"
+      },
+      {
+        "name": "useOn",
+        "descriptor": "(Lnet/minecraft/world/item/context/UseOnContext;)Lnet/minecraft/world/InteractionResult;",
+        "instruction_count": 103,
+        "instruction_sha256": "659147c0f41037f2d3e00d8f9d83a025b13d72badc4dc327bf4a8bf93d83f772"
+      }
+    ]
+  },
+  "consumers": {
+    "com/github/alexmodguy/alexscaves/client/render/item/ACItemPredicates": {
+      "sha256": "ee5ea7be322641a29b49b3b08606928f38456f8ea3bb337a7624a897b379cc89",
+      "typed_sites": 1,
+      "methods": [
+        {
+          "name": "active",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/world/entity/LivingEntity;)F",
+          "instruction_count": 7,
+          "instruction_sha256": "f81892c60ab9bff9ab06a4aafa2c24fff8925973bda159217bb9f377ee718f02"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": {
+      "sha256": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+      "typed_sites": 2,
+      "methods": [
+        {
+          "name": "lambda$static$75",
+          "descriptor": "()Lnet/minecraft/world/item/Item;",
+          "instruction_count": 4,
+          "instruction_sha256": "a36b3946fd4e79da019dca167b2859e05f58fbf5cf234bd013933b3a0355772f"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/item/RemoteDetonatorItem": {
+      "sha256": "6d6e8cd94df306aec6f99b07af856b477b8e6f34d41aaca06a35921b53f2c4b8",
+      "typed_sites": 9,
+      "methods": []
+    }
+  },
+  "filename_matched_resource_hashes": {
+    "assets/alexscaves/models/item/remote_detonator.json": {
+      "sha256": "e2633935ced3d79fb4d2d1be9265c9f31d8f315ed54bf028ee638f8fc9a2dc2b",
+      "size": 253
+    },
+    "assets/alexscaves/models/item/remote_detonator_active.json": {
+      "sha256": "e1ec3e273a11705bfcb5cb3cab48236be2fea18ecd55e9f0cf85e1c3a3e94ec3",
+      "size": 119
+    },
+    "data/alexscaves/advancement/alexscaves/remote_detonation.json": {
+      "sha256": "34b6e52f88977310e5f4cb77e0e233e8546551bb64eed1f188a8b1164293d3a5",
+      "size": 492
+    },
+    "data/alexscaves/recipe/remote_detonator.json": {
+      "sha256": "d0d8b3f95160749b813b7e4818941f39aeb90d63188a591a595ce5fb9cb8cf82",
+      "size": 424
+    },
+    "data/alexscaves/tags/block/remote_detonator_activates.json": {
+      "sha256": "766354b4a4a5cddd65f046119b7846e19ed8bd542ee9ce535033676cf8a71057",
+      "size": 92
+    }
+  },
+  "native_constraints": {
+    "registry_item": "alexscaves:remote_detonator",
+    "use_attempts_cross_dimension_lookup": true,
+    "load_chunks_around": {
+      "for_range": [
+        "-1..1",
+        "-1..1"
+      ],
+      "force_chunk_requested_count": 9,
+      "force_chunk_flag": true,
+      "release_found_in_owner_use": false
+    },
+    "possible_world_mismatch": "use invokes Level.setBlockAndUpdate on the interaction Level, not on the resolved target ServerLevel; external behavior NOT_VERIFIED",
+    "storage_keys": [
+      "BombPos",
+      "BombDimension",
+      "BombTracked"
+    ],
+    "active_check": "BombDimension OR BombPos",
+    "passive_validation_period": "(entity.tickCount+entity.getId())%20==0 when world and dimension match",
+    "direct_damage": "NOT_IN_OWNER",
+    "explosion_direct": "NOT_IN_OWNER"
+  },
+  "limits": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "source_revision_parity": "NOT_ASSUMED",
+    "other_consumers_complete": false,
+    "world_safety": "BLOCKED_PENDING_PLATFORM_AND_TARGET_CONSUMERS",
+    "registry_bootstrap": "NOT_TESTED",
+    "magic_roots_added": 0
+  }
+}
