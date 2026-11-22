@@ -45,7 +45,52 @@ def unique(pairs):
     return out
 
 
-def check(path: Path) -> None:
+def check(path: Path, partial_manifest_path: Path) -> None:
+    seal_raw = partial_manifest_path.read_bytes()
+    assert 0 < len(seal_raw) <= 100_000, "partial manifest bounds"
+    seal = json.loads(seal_raw, object_pairs_hook=unique)
+    assert seal["schema_version"] == 1
+    assert seal["scope"] == "RESISTOR_SHIELD_PARTIAL_IDENTITY_AND_ENMERCHANTABILITY_ONLY"
+    assert seal["owner"]["name"] == OWNER
+    assert seal["artifact"] == {
+        "mod_id": "alexscaves",
+        "version": "1.0.10",
+        "filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+        "sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE,
+        "minecraft": "1.21.1", "java": 21,
+        "installed_dump_comparison": "NOT_VERIFIED",
+    }
+    assert seal["owner"]["class_sha256"] == OWNER_CLASS_SHA256
+    assert seal["owner"]["parent"] == PARENT
+    assert set(seal["owner"]["declared_interfaces"]) == DIRECT_INTERFACES
+    assert set(seal["states"]) == {
+        "catalog", "static_contract", "mutating_hook", "physical_qa",
+        "mutation", "provider_universe_closed", "semantic_magic_roots_delta",
+    }
+    assert seal["states"] == {
+        "catalog": "PARTIAL", "static_contract": "NOT_CERTIFIED",
+        "mutating_hook": "NOT_VERIFIED", "physical_qa": "NOT_TESTED",
+        "mutation": "NO_MUTATION", "provider_universe_closed": False,
+        "semantic_magic_roots_delta": 0,
+    }
+    assert seal["prior_native_evidence"]["sha256"] == (
+        "d34a655d06d65a771ea9237ef222635e159ffcfa6fe8b454ee6826ee14979e73"
+    )
+    assert seal["prior_native_evidence"]["size_bytes"] == 97832
+    assert seal["item_registry"]["resource_id"] == "alexscaves:resistor_shield"
+    assert seal["item_registry"]["field"] == "ACItemRegistry.RESISTOR_SHIELD"
+    assert seal["item_registry"]["factory"] == "lambda$static$20"
+    assert seal["item_registry"]["factory_code_sha256"] == (
+        "6be6cb4de8570768436590ecdd12cfd11e44f1c9b8e76b7eb58a324d6b4d63ce"
+    )
+    assert seal["item_registry"]["factory_instruction_sha256"] == (
+        "NOT_EXTRACTED_FROM_PRIOR_REGISTRY_TABLE"
+    )
+    assert seal["owner"]["full_method_census"] == "PENDING_NEW_DISCOVERY"
+    assert seal["contract_axes"]["targeting"] == "NOT_VERIFIED"
+    assert seal["contract_axes"]["costs"] == "NOT_VERIFIED"
+    assert seal["resource_observation"]["paths_and_semantics"] == "NOT_VERIFIED"
+
     raw = path.read_bytes()
     assert 0 < len(raw) <= 16_000_000, "report bounds"
     a = json.loads(raw, object_pairs_hook=unique)
@@ -79,6 +124,26 @@ def check(path: Path) -> None:
     assert cls["class_sha256"] == OWNER_CLASS_SHA256
     assert cls["hierarchy"]["parent"] == PARENT
     assert set(cls["hierarchy"]["interfaces"]) == DIRECT_INTERFACES
+    m_methods = seal["owner"]["selected_methods"]
+    assert len(m_methods) == len(PINNED_INTERFACE_METHODS) == 2
+    expected_in_manifest = {
+        (x["name"], x["descriptor"]):
+        (x["instruction_count"], x["instruction_sha256"], x["code_sha256"])
+        for x in m_methods
+    }
+    assert expected_in_manifest == PINNED_INTERFACE_METHODS
+    registry = cls["consumers"].get(
+        "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry"
+    )
+    assert registry is not None
+    factory_codes = [
+        m["declaration"]["code_sha256"] for m in registry["bodies"]
+        if m["declaration"]["name"] == "lambda$static$20"
+        and m["declaration"]["descriptor"] == "()Lnet/minecraft/world/item/Item;"
+    ]
+    assert factory_codes == [seal["item_registry"]["factory_code_sha256"]], (
+        "typed registry factory SHA drift"
+    )
     fingerprint = {
         (x["declaration"]["name"], x["declaration"]["descriptor"]): (
             x["instruction_count"], x["instruction_sha256"],
@@ -122,5 +187,6 @@ def check(path: Path) -> None:
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--report", type=Path, required=True)
+    p.add_argument("--partial-manifest", type=Path, required=True)
     args = p.parse_args()
-    check(args.report)
+    check(args.report, args.partial_manifest)
