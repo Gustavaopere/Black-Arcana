@@ -1,0 +1,78 @@
+# Remote Detonator — descoberta causal publisher 1.0.10
+
+**Estado:** ⚠️ `STATIC_DISCOVERY_ONLY`, `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`, `WORLD_SAFETY_BLOCKED`. Não foi identificada uma nova raiz de cast. O objeto é um item de controle/binding de bloco com world-effects delegados e solicitações de chunk forcing; **não** é uma autorização para reproduzir explosões, carregar chunks ou modificar mundo no Black Arcana.
+
+## Identidade física e reprodução
+
+- **Modpack/autoridade:** `neoforge-rpg-skilltree/PROJECT-INSTRUCTIONS/modlist/World Gen/✅-alexs-caves-continued v1.0.10.md`; Minecraft **1.21.1**, NeoForge, Java **21**, `alexscaves` **1.0.10**, JAR físico esperado `alexscaves-1.0.10-neoforge+1.21.1.jar`, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`.
+- **Publisher JAR efetivamente inspecionado:** SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`, **75.279.314 bytes**, **1.555 classfiles** Java 21. A paridade de dump da instância instalada com publisher não foi refeita; source parity `NOT_ASSUMED`.
+- **Owner:** `com/github/alexmodguy/alexscaves/server/item/RemoteDetonatorItem.class`, SHA-256 `6d6e8cd94df306aec6f99b07af856b477b8e6f34d41aaca06a35921b53f2c4b8`. Extende `net.minecraft.world.item.Item`, implementa `ACTickingItem`, **zero campos declarados**; possui 11 métodos executáveis.
+- **Item de registry:** `ACItemRegistry.REMOTE_DETONATOR` / `alexscaves:remote_detonator`, factory `ACItemRegistry.lambda$static$75()` de **4 instruções**, SHA `a36b3946fd4e79da019dca167b2859e05f58fbf5cf234bd013933b3a0355772f`; construtor `Item.Properties.stacksTo(1)`. Isso comprova pedido de factory, não bootstrap físico.
+- **Discovery CI publisher:** [workflow #44956716666](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44956716666), job `137006342422`, sucesso da **sonda inicial**; artefato `14728326280`, `report.json` de **199.424 bytes**, SHA-256 `010a50eec70f2458f20bb2950dbec5b83d000fd177f6391aa90e37137d483ada`. O checker SHA-exato acrescentado posteriormente requer **nova CI na HEAD final**. Reproduzir com [sonda](../../../../docs/qa/alexscaves_1010_remote_detonator_discovery.py), [checker](../../../../docs/qa/alexscaves_1010_remote_detonator_discovery_checks.py), [workflow](../../../../.github/workflows/alexscaves-1010-remote-detonator-discovery.yml) e [manifesto](EXACT-REMOTE-DETONATOR-DISCOVERY-1.0.10.json).
+
+**Descrição funcional de autoria do catálogo:** um controle que vincula uma posição de bloco elegível e sua dimensão à stack e, no uso posterior, solicita acionar o bloco vinculado por um callback de fogo, com sinalização visual por tooltip/predicate. A resposta do bloco, explosão, dano, drop e atualização efetiva são executados por outras classes/engine — **não confirmados** por este owner.
+
+## Grafo técnico e fingerprints
+
+| Método | Instruções | SHA-256 normalizado |
+|---|---:|---|
+| `<init>()V` | 8 | `b1e09b957153a9a6359f7e966a0e90b94486659c93dab03cdd80143d7694857c` |
+| `acInventoryTick(ItemStack,Level,Entity,boolean)` | 75 | `f4cc16efcad69f1d972579c96944647c63101110402e2cbb7bfb2f6da68a896d` |
+| `addBombTags(ResourceKey,BlockPos,CompoundTag)` | 17 | `7ee1a457812d9ff8533b207924d21d20402b133e4ebd32ff086d68d0935bc7bc` |
+| `appendHoverText(ItemStack,TooltipContext,List,TooltipFlag)` | 58 | `cde153556ffe430eed0a7b2705567bc75f8f6c92cd9418aeb799bd5df5e8066b` |
+| `getBombDimension(CompoundTag)` | 8 | `1a390410cb5cbab016724851e1a651fd4058a03b60ddd222d9790ab7378da895` |
+| `getBombPosition(CompoundTag)` | 30 | `2cad344367fe18da88b99d17e0c48f2e783f551c2fe2bc19e1b66b884b372d6f` |
+| `isActive(ItemStack)` | 17 | `a4206726462cada693fbb76134f1f993eef006fd413472c62a9c875e7bf0f4a7` |
+| `lambda$addBombTags$0(CompoundTag,Tag)` | 6 | `71af9311612389eca81fd9c9d49099631bfa9ac767ba83ec76b510e59271d3b5` |
+| `loadChunksAround(ServerLevel,UUID,BlockPos,boolean)` | 31 | `f4f0e6461aac38df4743cfe80382fdebf89502db634317b1698f514034297cb5` |
+| `use(Level,Player,InteractionHand)` | 91 | `ac995eaff92b4b833cbff5449f490c6fb7a754a2cdcfe3daa7b7fccfbe2e7934` |
+| `useOn(UseOnContext)` | 103 | `659147c0f41037f2d3e00d8f9d83a025b13d72badc4dc327bf4a8bf93d83f772` |
+
+**Consumers tipados (publisher 1.555 classfiles):** `ACItemRegistry.lambda$static$75` (4 instruções, fabrica item); `ACItemPredicates.active(ItemStack,ClientLevel,LivingEntity):float` (7 instruções, SHA `f81892c60ab9bff9ab06a4aafa2c24fff8925973bda159217bb9f377ee718f02` — invoca `RemoteDetonatorItem.isActive`); e nove refs no próprio `RemoteDetonatorItem`, incluindo `use`, `useOn`, tooltip e tick. O censo por ref tipada **não prova** todos os produtores indiretos da tag, todos os efeitos de `ACCompat.onCaughtFire`, a implementação `ACPlatform.forceChunk` ou a aplicação do dispatcher ACTickingItem.
+
+**Recursos com hash e tamanho no manifesto:** `models/item/remote_detonator.json`, `models/item/remote_detonator_active.json`, `advancement/alexscaves/remote_detonation.json`, `recipe/remote_detonator.json` e `tags/block/remote_detonator_activates.json` nas raízes publisher correspondentes. São correspondências de nomes; os ingredientes, blocos exatos da tag e predicados JSON não foram abertos semanticamente nesta sonda. Tag `ACTagRegistry.REMOTE_DETONATOR_ACTIVATES` é consultada no bytecode.
+
+## Fluxo de vinculação — `useOn` (103 instruções)
+
+1. `@0–29`: lê `UseOnContext.getClickedPos` e `getLevel`; se `BlockState.is(REMOTE_DETONATOR_ACTIVATES)` for falso, delega a `Item.useOn` sem executar vínculo do owner.
+2. `@30–44`: solicita som `LODESTONE_COMPASS_LOCK` (`SoundSource.PLAYERS`, volume 1F e pitch 1F) **antes** da escrita de dados; não significa confirmação de som reproduzido.
+3. `@47–84`: obtém player e stack; seleciona booleano `inPlace = !player.getAbilities().instabuild && stack.getCount()==1`. Não há `if(level.isClientSide)` explícito antes deste ramo; se `player` for nulo, comportamento requer a ABI/dispatcher da engine.
+4. `inPlace=true` (`@86–116`): `getOrCreateTag(stack)`, `addBombTags(level.dimension,clickedPos,tag)` e `ACCompat.setTag(stack,tag)`, reaproveitando a stack.
+5. `inPlace=false` (`@119–213`): instancia `ItemStack(REMOTE_DETONATOR,1)`; copia tag anterior se houver ou cria `CompoundTag`; solicita `heldStack.shrink(1)`; vincula dimensão e posição no novo item; solicita `Inventory.add(newStack)`; se `add` for falso, `Player.drop(newStack,false)`. O ramo inclui criativo pela condição `instabuild`, mas **não** provar consequências finais de inventário sem engine.
+6. `@214–221`: retorna `ACCompat.sidedSuccess(level.isClientSide)`. O eventual processamento nos dois lados, inventário duplicado, eventos de proteção/claims e sincronização C2S estão **NOT_VERIFIED**.
+
+`addBombTags` (`@0–40`) salva `BombPos` via `ACCompat.putBlockPos`, codifica `level.dimension` com `Level.RESOURCE_KEY_CODEC` em `NbtOps`, grava opcionalmente `BombDimension` quando o codec produzir resultado, e escreve `BombTracked=true`. Assim, **não presumir que os três campos sempre existam após uma tentativa**. `getBombDimension` decodifica `BombDimension` como `Optional<ResourceKey>`; `getBombPosition` exige **ambos** `BombPos` e `BombDimension` e dimensão decodificável, caso contrário retorna `null`. Já `isActive` devolve verdadeiro se houver **qualquer um** desses dois campos (`OR`), sem exigir par completo nem validade. Consequentemente, modelo ativo e posição utilizável não são equivalentes.
+
+## Fluxo de acionamento remoto — `use` (91 instruções)
+
+- `@0–31`: usa a stack da mão, exige `isActive(stack)`; se não, retorna `ACCompat.usePass(stack)` (`@205–210`). A atividade pode ser verdadeira com apenas um campo, ainda que `getBombPosition` devolva nulo.
+- `@22–82`: decodifica `GlobalPos`; exige dimensão não nula, `!level.isClientSide`, `level instanceof ServerLevel` e `MinecraftServer.getLevel(target.dimension)` não nulo. Esses gates protegem o trecho server-side do `use`, **não** toda a rotina `useOn`.
+- `@82–96`: solicita `loadChunksAround(targetServerLevel,player.getUUID(),target.pos, true)` **antes** de verificar se o bloco ainda pertence à tag; o helper percorre `dx=-1..1, dz=-1..1`, executando **nove solicitações** `ACPlatform.forceChunk(targetLevel,uuid,chunkX+dx,chunkZ+dz,true,true)` (`@6–59`). A implementação externa de `ACPlatform.forceChunk`, o ownership efetivo dos tickets, quotas, lifetime e eventual unforce **não foram auditados**. O `use` não invoca o helper com `false`, nem contém um `finally` explícito de liberação. Não afirmar vazamento permanente sem provar a implementação externa; classificar como **risco severo de lifecycle/performance não resolvido**.
+- `@97–136`: lê `targetServerLevel.getBlockState(target.pos)`; se bloco não pertence a `REMOTE_DETONATOR_ACTIVATES`, não chama fogo, não limpa vínculo e retorna `useSuccess`. Se pertence, solicita `ACCompat.onCaughtFire(blockState,targetServerLevel,target.pos,Direction.UP,player)`. Não se identificou dano, tamanho de explosão, chance de ignição, projétil ou entidade diretamente no owner; são **consumidores externos pendentes**.
+- `@136–162`: mede `player.distanceToSqr(Vec3.atCenterOf(target.pos))`, comparando estritamente a **1000.0D** com `dcmpl/ifle`; se (d^2>1000), solicita advancement `REMOTE_DETONATION`. **1000 é distância ao quadrado para condição de advancement**, não o alcance máximo do controle; sem confirmação do posicionamento dimensional de player e alvo, não assumir significado físico ou distância entre dimensões.
+- `@162–182`: remove `BombDimension` e `BombPos` da tag e pede `ACCompat.setTag(stack)`. `BombTracked` não é removido nesse ramo. O item não pede `stack.shrink` nem durabilidade ao acionar remotamente.
+- **Ponto crítico de world safety:** `@183–198` invoca **`level.setBlockAndUpdate(target.pos,Blocks.AIR.defaultBlockState())` no objeto `level` do argumento do `use`**, e não em `targetServerLevel` recuperado em `@77–82`. Se dimensões diferirem, o bytecode evidencia **a chamada com coordenadas de destino no Level de origem**, mas o mundo efetivamente alterado, condições de chunk/claims, o bloco substituído e qualquer rollback dependem da engine. **Bloqueio obrigatório** a perks de detonação/cross-dimension até inspeção da plataforma/WorldEffectPolicy e reprodução dedicada.
+- `@199–204`: solicita retorno `ACCompat.useSuccess(stack)` mesmo quando alguns gates abortaram, desde que `isActive` inicial tenha sido verdadeiro. Não inferir que isso signifique detonação efetiva.
+
+## Tick, condições e persistência
+
+`acInventoryTick` (`@0–166`) começa por `!level.isClientSide` e `isActive(stack)`. Obtém `getOrCreateTag`; se `BombTracked` existe e é false, **retorna imediatamente** (`@20–40`). Se dimensão decodificada difere da dimensão do `Level` do callback, ou `BombPos` não existe, não prossegue (`@41–85`). Para stack no mesmo mundo, a cada condição `(entity.tickCount+entity.getId())%20==0` solicita `level.isLoaded(pos)` e, somente se carregado, consulta `getBlockState(pos).is(REMOTE_DETONATOR_ACTIVATES)` (`@90–130`). Em todas as execuções desse ramo, `isInWorldBounds(pos)` é consultado: se a posição está fora de limites, ou se a checagem periódica identificou bloco inválido, remove `BombPos` e `BombDimension` e grava a tag (`@132–163`). Isso **não certifica** taxa física por segundo, cobertura de inventários não-jogador ou validade quando o chunk não estiver carregado. Se não carregado, o teste de elegibilidade de bloco é pulado, mas a condição de limites ainda é consultada.
+
+**Persistência** do vínculo: `BombPos` (BlockPos), `BombDimension` (ResourceKey via NBT), `BombTracked` (boolean) em tag `ItemStack` por `ACCompat`; lifetime de tickets, chunk, serialização persistida, troca de dono/UUID, morte, descarte, backup, datapack/registry remap e movimento entre dimensões ainda **NOT_VERIFIED**. `appendHoverText` lê dimensão + posição válidas e prepara texto traduzível `item.alexscaves.remote_detonator.desc` com X/Y/Z em estilo cinza; não apresenta necessariamente nome de dimensão no tooltip. `ACItemPredicates.active` usa `isActive`, portanto pode mostrar aparência ativa com vínculo incompleto.
+
+## Parâmetros, custos, targeting e limites
+
+- **Alvo:** bloco em posição `GlobalPos` vinculada à stack; só é acionável se `BlockState.is(REMOTE_DETONATOR_ACTIVATES)`. **Sem requisito explícito de proximidade** antes do callback no owner; distância quadrada 1000 controla apenas advancement. Alcance real entre dimensões depende de `MinecraftServer.getLevel`, chunk e proteção; não inferir infinito.
+- **AOE/carga:** janela de 3×3 chunks (até nove *solicitações* de tickets) ao redor do alvo, **não** AOE de dano. Quantidade de detonações efetivas, tamanho de explosão, drop e dano **NOT_VERIFIED** em `ACCompat.onCaughtFire` e no bloco alvo.
+- **Custos:** `Item.Properties.stacksTo(1)`; vinculação pode solicitar `shrink(1)` em `inPlace=false`, com criação de substituta; `use` não consome item/mana nem aplica cooldown diretamente. Não comprova ausência de cooldown externo.
+- **Tempo:** no tick do inventário, modulo de **20 ticks** da soma contador+ID, condicionado à elegibilidade; não equivale a cooldown de 20 ticks, nem prova frequência real de invocação no modpack.
+- **Projéteis, atributos de dano, scaling mágico, caster power, hitbox, LOS, status/efeitos concedidos:** **N/A** no owner; consumidores externos de ignição podem causar efeitos e devem ser auditados em versão exata. Sem consulta a Mastery, RPG Skill Tree ou nível de encantamento no owner.
+- **Owner:** jogador da interação fornece UUID para pedidos de ticket. Associação/limpeza do ticket, proteção PvP/claims e privilégio administrativo não estão provados. O item não é um boundary seguro de atributos/perks por si só.
+
+## Riscos para Black Arcana, pendências e disposição
+
+**⛔ World Safety / chunk lifetime bloqueado:** auditoria do JAR exato de `ACPlatform.forceChunk`, produtor de `ACTagRegistry.REMOTE_DETONATOR_ACTIVATES`, classe do bloco acionável e `ACCompat.onCaughtFire`; verificação de setBlock no `Level` correto, unforce/tickets, quotas, bounds, regras de claims e C2S, sync e multiplayer; reprodução dedicada cross-dimensional. Observar que a rotina do owner **já comprova pedidos de chunk-force e world-write**, portanto mutações/perks não podem ser considerados seguros com base num contrato estático descritivo.
+
+**Possibilidades de design sem autorização:** perks poderiam futuramente alterar limite de vínculos, modo de gatilho, escolha de alvos, distância de feedback, TTL do vínculo ou UX de armamento — **hipóteses**, não APIs/hook disponíveis. O Black Arcana não deve copiar este caminho de mundo/chunks nem oferecer um segundo dispatcher. Se uma integração no futuro não garantir owner server-side, validação de chunk/bounds/claim, deduplicação, limite de tickets e lifecycle, usar `NO_MUTATION` / fail-closed. **O RPG Skill Tree não assume autoridade sobre execução de detonações.**
+
+**Resultado:** um owner e um item no recorte JAR; ficha individual **⚠️ parcial**, onze métodos SHA-exatos e cinco JSONs hashados; 0 novos certificados, 0 hooks, 0 testes físicos, 0 novas raízes semânticas de magia. Universo integral do provider **OPEN**. O [manifesto machine-readable](EXACT-REMOTE-DETONATOR-DISCOVERY-1.0.10.json) e o relatório GitHub Actions documentam exatamente o recorte e suas limitações.
