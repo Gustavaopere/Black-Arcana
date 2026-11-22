@@ -96,6 +96,24 @@ def check(report,manifest):
             "full executable method census drift")
     require(r["native"]["class_entries_scanned"]==r["entity_native"]["class_entries_scanned"]==1555,
             "classfile scan universe drift")
+    bridge=m["predicate_bootstrap"]
+    require(bridge["index"]==0 and bridge["invoke_dynamic_offset"]==651 and
+            bridge["callsite_symbol"]=="InvokeDynamic #0:test:()Ljava/util/function/Predicate;",
+            "predicate invokedynamic callsite drift")
+    bootstraps=e["attributes"].get("bootstrap_methods",[])
+    require(len(bootstraps)==1 and bootstraps[0]==bridge["entry"],
+            "predicate bootstrap entry drift")
+    expected_handle={"reference_kind":5,"reference":[10,
+         "net/minecraft/world/entity/Entity",[12,"canBeHitByProjectile","()Z"]]}
+    require(bootstraps[0]["arguments"][1]==expected_handle,
+            "predicate method handle drift")
+    require(bootstraps[0]["arguments"][0]=="(Ljava/lang/Object;)Z" and
+            bootstraps[0]["arguments"][2]=="(Lnet/minecraft/world/entity/Entity;)Z",
+            "predicate functional bridge drift")
+    require(bootstraps[0]["handle"]["reference_kind"]==6 and
+            bootstraps[0]["handle"]["reference"][1]=="java/lang/invoke/LambdaMetafactory" and
+            bootstraps[0]["handle"]["reference"][2][1]=="metafactory",
+            "predicate bootstrap factory drift")
     methods={(x["declaration"]["name"],x["declaration"]["descriptor"]):x for x in e["methods"]}
     require(len(methods)==len(e["methods"]),"ambiguous method declaration")
     require(len(m["methods"])==len(METHOD_NAMES)==4 and
@@ -121,6 +139,7 @@ def check(report,manifest):
             total_pivots+=1
     require(total_pivots>=55 and total_pivots<=80,"causal pivot coverage drift")
     print("PASS: Galena Gauntlet 1.0.10 four exact JVM methods and",total_pivots,"behavior pivots")
+    print("PASS: typed invokedynamic Entity.canBeHitByProjectile method-reference bridge")
     print("PASS: raycast scalar, owner-use guard, strike/cooldown, return/drop subcontracts")
     print("NO_MUTATION NOT_CERTIFIED NOT_TESTED")
 
