@@ -48,10 +48,12 @@ jobs:
       - name: Verify bounded report and malformed-input rejection
         run: |
           python3 docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py \
-            --report build/resistor-shield-1010/report.json
+            --report build/resistor-shield-1010/report.json \
+            --partial-manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RESISTOR-SHIELD-PARTIAL-EVIDENCE-1.0.10.json'
           printf '{}\n' > build/resistor-shield-1010/invalid.json
           if python3 docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py \
-              --report build/resistor-shield-1010/invalid.json; then
+              --report build/resistor-shield-1010/invalid.json \
+              --partial-manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RESISTOR-SHIELD-PARTIAL-EVIDENCE-1.0.10.json'; then
             echo 'FAIL: invalid Resistor Shield evidence passed'
             exit 1
           fi
