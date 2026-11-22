@@ -1,0 +1,52 @@
+# Rainbounce Boots — impulso condicional ao pouso (Alex's Caves Continued 1.0.10)
+
+**Estado:** ⚠️ **ficha individual PARCIAL**, `STATIC_DISCOVERY_ONLY`, `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`, `provider_universe_closed=false`. **Nenhuma nova raiz semântica de magia ou cast.** Item de armadura com ação nativa de mobilidade, potencialmente relevante a perks, mas sem extensão mutadora autorizada.
+
+## Identidade e proveniência exata
+
+- **Item:** `alexscaves:rainbounce_boots`, supplier `ACItemRegistry.RAINBOUNCE_BOOTS`, fábrica `lambda$static$174()Lnet/minecraft/world/item/Item;` (**6 instruções**, fingerprint SHA-256 `5a4f14aa8c35ae1004697b38488cad8c1e3d329bb4485af63bd452fec2b6f55a`). Construído com `RAINBOUNCE_ARMOR_MATERIAL` e `ArmorItem.Type.BOOTS`; equipado no `EquipmentSlot.FEET`.
+- **Provider:** Alex's Caves Continued; `modid=alexscaves` versão física **1.0.10**, Minecraft **1.21.1**, NeoForge, Java 21. Modlist declarativa sibling: `PROJECT-INSTRUCTIONS/modlist/World Gen/✅-alexs-caves-continued v1.0.10.md`.
+- **Artefato publisher físico autenticado:** `alexscaves-1.0.10-neoforge+1.21.1.jar`, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`, **75.279.314 bytes**, 1.555 classfiles. Comparação de dump de instância instalada novo: **NOT_VERIFIED**; a versão foi obtida da modlist física, publisher JAR foi auditado.
+- **Owner:** `com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem.class`, SHA-256 `12809966af8256aa5c55e56b54d49f5be66e9785d6616ffa934c376f3d6d31bd`; extende `ArmorItem`, implementa `CustomArmorPostRender` e `ACClientExtensionItem`; **zero campos próprios**. Quatro métodos executáveis: `<init>` (12 instruções / SHA `1c59bef51bc767350a0f79f732eac8355d4c7b6c50b864e6b32197f3a1efabf2`), `getArmorTexture` (2 / `4a16426bec92aef93114cd86a2be5cf59ae72252bde57b2fafc339f2daa20bf9`), `initializeClient` (6 / `241b312ebd6ff1e8ab0719a7fcbfd71c956258d303ba94e3a602770053402fa8`) e `onEntityLand` (134 / `2005b5721f54d7100266965de674f8f5b22ab8a7c4d0c0936e784383dfe13ae8`).
+- **Recursos com hashes:** modelo `assets/alexscaves/models/item/rainbounce_boots.json` SHA-256 `3932fb14876d88d4d3eb81d04d769e808d52260a4a5babd3f598ce3d6d5690b2`; receita `data/alexscaves/recipe/rainbounce_boots.json` SHA `03b902d10877d7cce970edde5b4e7362e212f304d80f6fad7c8afc3cc7cecfbe`; advancement `data/alexscaves/advancement/alexscaves/rainbounce_boots.json` SHA `eb5f095ae1238fc36f5cd376fa7be2855bcebea1bcb4db6a49ed65aa50e14692`; tag de superfície `data/alexscaves/tags/block/reduce_rainbounce_boots_effect_on.json` SHA `342576620d9024ac9bc5a706f694ad827026dc4cb23b9cf73cd3391f682eedff`; tag de reparo `data/alexscaves/tags/item/repairs_rainbounce_armor.json` SHA `f74498097708215ee46031db7467ce3abed880ed8188eff156e81993d9787e31`. Conteúdo efetivo dos JSONs/tags, condições de craft/advancement/reparo e drops **não comprovados** por esse censo de filenames.
+- **Descrição funcional de autoria do catálogo:** ao mover-se para baixo com deslocamento suficientemente significativo, uma entidade viva vestindo Rainbounce Boots pode receber uma solicitação de impulso vertical e amplificação de movimento horizontal, acompanhada de som e partículas. A força depende da descida, da superfície sob a entidade e da presença de `Sugar Rush`; a eficácia final depende das condições de movimento da engine. Não é descrição oficial citada do mod.
+
+## Ativação, gating e autoria do movimento
+
+**Produtor/callsite:** `com/github/alexmodguy/alexscaves/mixin/EntityMixin.ac_move(MoverType,Vec3,CallbackInfo)` (**20 instruções**, SHA-256 `4c47a6571a4ab6492d9275863923b16ff0c7996d58aa6149203f74239e2f772c`). O método testa `instanceof LivingEntity`, lê `getItemBySlot(EquipmentSlot.FEET)`, exige `ItemStack.is(ACItemRegistry.RAINBOUNCE_BOOTS)` e chama `RainbounceBootsItem.onEntityLand(living,vec3)` no offset **@46**. A classe owner não realiza um evento de item-use nem cast. Não há custo de mana, cooldown ou charge próprios nesta rotina.
+
+**Guardas do efeito:** `onEntityLand` lê `abs(inputVec3.y)` e o converte a `float`. Para executar o ramo, precisa de `!LivingEntity.isSuppressingBounce()`, `(float)abs(input.y)>0.2F` e `input.y<0D`; se alguma falhar, retorna sem pedir impulso, som ou partículas. **Gates de execução do mixin (incluindo aplicação runtime)** não foram testados fisicamente; o offset de callback no bytecode não prova side/priority.
+
+## Fórmulas, efeitos e parâmetros nativos
+
+Se `d=inputVec3.y`, `a=(float)abs(d)`, `v=living.getDeltaMovement()`, o método calcula:
+
+```text
+b = 1.05F se a > 0.42D; caso contrário b = 0.7F
+c = 0.15000000596046448D se bloco em getOnPosLegacy() pertence à tag
+    REDUCE_RAINBOUNCE_BOOTS_EFFECT_ON; caso contrário c = 1D
+Yadd = abs(d) × b × c
+h = 1.2F se efeito SUGAR_RUSH está presente; caso contrário h = 1.9F
+setDeltaMovement( Vec3( v.x × h, v.y + Yadd, v.z × h ) )
+fallDistance = 0F
+```
+
+Esses valores são **argumentos/campos solicitados pelo item** na versão auditada, sujeitos à dinâmica posterior de movimento, colisão, gravidade, velocidade, atualizações do servidor e cancelamentos externos. Não confundir `inputVec3.y` com `v.y`: o primeiro define a magnitude do incremento, enquanto o segundo é **preservado e acrescido** em `Vec3.multiply(h,1,h).add(0,Yadd,0)`. O limite `0.42` é comparação double após `float` (seguir semântica numérica JVM ao examinar fronteiras). A tag reduz somente o `Yadd`, não o horizontal h.
+
+**Efeitos secundários solicitados:** `LivingEntity.playSound(RAINBOUNCE_BOOTS_BOUNCE)`; uma chamada `Level.addParticle(PLAYER_RAINBOW,...)`; e de **3 a 5 chamadas possíveis** de `Level.addParticle(ParticleTypes.CLOUD,...)`, com `random.nextInt(3)` **recalculado no loop**, mais `random.nextFloat()` na posição vertical. Sons ou partículas efetivamente renderizados e sua sincronização em cliente remoto **NOT_VERIFIED**. A multiplicação horizontal é aplicada ao valor atual; `Sugar Rush` diminui o multiplicador relativo, porém não impede o salto.
+
+**Target:** a mesma `LivingEntity` vestindo o item; nenhum adversário é selecionado. Alcance, AOE, hitbox de projétil, quantidade e velocidade de projéteis, invocação, dano, tipo de dano, heals, status aplicados pelo item, teleporte, explosions, LOS e PvP direta **N/A** no método. O item lê o bloco sob a entidade para o `BlockState.is(tag)`; não escreve blocos nem realiza raycast de inimigos. A instância `SUGAR_RUSH` é **consultada**, não concedida nesse callback.
+
+**Escalonamento:** depende da magnitude de `d`, limiares de 0.2/0.42, multiplicadores 0.7/1.05, fator de superfície ~0.15 e condição binária de Sugar Rush 1.2/1.9. Não foram encontradas consultas próprias a níveis de spell, atributos RPG, enchant level, Mastery, perfil do jogador ou rank. **Sem duração fixa:** o callback solicita atualização imediata de `deltaMovement`, cuja persistência temporal pertence à simulação. **Sem escrita própria de dados persistentes:** owner não guarda NBT/componente/UUID; usa entidades, mundo, som e partículas. Durabilidade e proteção comum de armadura são governadas por mecanismos vanilla, não por consumo do impulso nesse método.
+
+## Armor material, render e recursos
+
+O certificado comum [armor-material](../systems/armor-material.md) fixa `RAINBOUNCE_ARMOR_MATERIAL`: multiplicador de durabilidade 6, defesa por ordinal `[2,2,1,2]`, durabilidades calculadas por ordinal `[78,90,96,66]`, encantabilidade 40, toughness **0F**, knockback **0F**. Não extrapolar os arrays a índices de slot sem mapear o `ArmorItem.Type.ordinal()` externo. `getArmorTexture` retorna `alexscaves:textures/armor/rainbounce_boots.png`, e `ACArmorRenderProperties` tem referências ao `RAINBOUNCE_ARMOR_MODEL` e `renderCustomArmor`; o pipeline visual e o conteúdo da recipe não foram executados/validado no modpack.
+
+## Integração com perks, riscos e pendências
+
+**Potenciais dimensões configuráveis:** intensidade de `Yadd`, escala horizontal, gates de impacto, tags de superfície, interação com `Sugar Rush`, feedback audiovisual, limites anti-exploit e consistência de movimento. São **possibilidades de design**, não API exposta ou permissão de interceptação mutadora. Uma alteração genérica em `Entity.move` pode multiplicar o impulso, repetir comandos em cliente/servidor, gerar velocidade excessiva, quebrar colisões, provocar bypass de exploração e gerar processamento visual redundante. Não há prova de boundary per-player/server-owned ou de implementação de Mastery; **`NO_MUTATION` até hooks reais e seguros**. RPG Skill Tree permanece sibling de atributos/progressão; Black Arcana retém runtime mágico.
+
+**Validação reprodutível:** [dossiê técnico](../EXACT-RAINBOUNCE-BOOTS-DISCOVERY-1.0.10.md), [manifesto SHA-exato](../EXACT-RAINBOUNCE-BOOTS-DISCOVERY-1.0.10.json), [sonda](../../../../../docs/qa/alexscaves_1010_rainbounce_boots_discovery.py), [checker](../../../../../docs/qa/alexscaves_1010_rainbounce_boots_discovery_checks.py), [CI inicial publisher](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44952856958) (**PASS de descoberta**, não QA física). Relatório SHA-256 `c7e60198eae632614c4a87acda39f385f49347409f47d0b178f5733362a7be60`; JAR publisher exato e um owner/4 métodos/4 consumers/5 resources.
+
+**Bloqueios técnicos restantes:** configuração e execução real de `EntityMixin`, lado/ordem do callback vs `Entity.move`, validação de tags/datapacks, interferência de equipamentos e outros mods, aceitação da velocidade no lado servidor, quedas/danos/clamps, cooldown externo caso exista, network sync, estados em dimensão/logoff, anti-cheat/PvP/world safety, QA física cliente/servidor e ponto seguro de mutação. Não há evidência para ✅ contrato técnico estático individual ou homologação de hooks/perks nesse estágio.
