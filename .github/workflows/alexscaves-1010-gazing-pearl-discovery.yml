@@ -6,6 +6,7 @@ on:
       - '.github/workflows/alexscaves-1010-gazing-pearl-discovery.yml'
       - 'docs/qa/alexscaves_1010_gazing_pearl_discovery.py'
       - 'docs/qa/alexscaves_1010_gazing_pearl_static_checks.py'
+      - 'docs/qa/alexscaves_1010_gazing_pearl_color_checks.py'
       - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
       - 'docs/qa/alexscaves_1010_armor_material_audit.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
@@ -24,7 +25,9 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Parse Python probe
-        run: python3 -m py_compile docs/qa/alexscaves_1010_gazing_pearl_discovery.py
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_gazing_pearl_discovery.py
+          python3 -m py_compile docs/qa/alexscaves_1010_gazing_pearl_color_checks.py
       - name: Download exact publisher JAR
         run: |
           mkdir -p build/gazing-pearl-1010
@@ -49,6 +52,10 @@ jobs:
             echo 'FAIL: malformed input accepted'
             exit 1
           fi
+      - name: Verify SHA-exact Gazing Pearl color branches and negative JVM pivots
+        run: |
+          python3 docs/qa/alexscaves_1010_gazing_pearl_color_checks.py \
+            --report build/gazing-pearl-1010/report.json
       - name: Preserve full exact discovery evidence
         if: always()
         uses: actions/upload-artifact@v7
