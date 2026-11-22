@@ -33,8 +33,8 @@ def facts(method):
     return method["instruction_count"], method["instruction_sha256"]
 
 
-def check(directory):
-    partial = read(directory / "EXACT-RESISTOR-SHIELD-PARTIAL-EVIDENCE-1.0.10.json")
+def check(directory, manifest_override=None):
+    partial = read(manifest_override or (directory / "EXACT-RESISTOR-SHIELD-PARTIAL-EVIDENCE-1.0.10.json"))
     registry = (directory / "systems/item-registry.md").read_text(encoding="utf-8")
     enchant = read(directory / "EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.json")
     tick = read(directory / "EXACT-TICKING-ITEM-DISCOVERY-1.0.10.json")
@@ -132,5 +132,6 @@ def check(directory):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--catalog-dir", type=Path, required=True)
+    parser.add_argument("--manifest", type=Path)
     args = parser.parse_args()
-    check(args.catalog_dir)
+    check(args.catalog_dir, args.manifest)
