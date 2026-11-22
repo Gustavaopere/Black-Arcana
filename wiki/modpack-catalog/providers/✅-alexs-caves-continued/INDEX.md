@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 116/132.**
+**Fichas catalogadas (somente fichas detectadas): 118/131.**
 
-**Barra das fichas catalogadas:** `█████████████████░░░ 87.9%`
+**Barra das fichas catalogadas:** `██████████████████░░ 90.1%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 116/132.**
+**Homologadas para perks (somente fichas detectadas): 118/131.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████████░░░ 87.9%`
+**Barra dos contratos técnicos estáticos:** `██████████████████░░ 90.1%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -105,7 +105,7 @@
 | ✅ | Desolate Dagger | [equipment/desolate-dagger.md](equipment/desolate-dagger.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dreadbow | [equipment/dreadbow.md](equipment/dreadbow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Extinction Spear | [equipment/extinction-spear.md](equipment/extinction-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Frostmint Spear | [equipment/frostmint-spear.md](equipment/frostmint-spear.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Frostmint Spear | [equipment/frostmint-spear.md](equipment/frostmint-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Galena Gauntlet | [equipment/galena-gauntlet.md](equipment/galena-gauntlet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shot Gum | [equipment/shot-gum.md](equipment/shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Alex Meal | [items/alex-meal.md](items/alex-meal.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -121,7 +121,7 @@
 | ✅ | Diving Helmet | [items/diving-helmet.md](items/diving-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Leggings | [items/diving-leggings.md](items/diving-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Fertilizer | [items/fertilizer.md](items/fertilizer.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Floater | [items/floater.md](items/floater.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Floater | [items/floater.md](items/floater.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gazing Pearl | [items/gazing-pearl.md](items/gazing-pearl.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gingerbread Boots | [items/gingerbread-boots.md](items/gingerbread-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gingerbread Chestplate | [items/gingerbread-chestplate.md](items/gingerbread-chestplate.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -138,7 +138,6 @@
 | ⚠️ | Primordial Pants | [items/primordial-pants.md](items/primordial-pants.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Primordial Tunic | [items/primordial-tunic.md](items/primordial-tunic.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Purple Soda Bottle | [items/purple-soda-bottle.md](items/purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Rainbounce Boots | [items/rainbounce-boots.md](items/rainbounce-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [items/thornwood-boat.md](items/thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Chest Boat | [items/thornwood-chest-boat.md](items/thornwood-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Anvil Combination | [systems/anvil-combination.md](systems/anvil-combination.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -165,8 +164,8 @@
 | ✅ | Damage Types | 11/11 (100.0%) | 11 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
-| ⚠️ | Equipment | 4/6 (66.7%) | 4 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 19/33 (57.6%) | 19 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Equipment | 5/6 (83.3%) | 5 | [Abrir índice](equipment/INDEX.md) |
+| ⚠️ | Items | 20/32 (62.5%) | 20 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 15/15 (100.0%) | 15 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
