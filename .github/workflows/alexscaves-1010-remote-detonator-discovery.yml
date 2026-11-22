@@ -6,6 +6,7 @@ on:
       - '.github/workflows/alexscaves-1010-remote-detonator-discovery.yml'
       - 'docs/qa/alexscaves_1010_remote_detonator_discovery.py'
       - 'docs/qa/alexscaves_1010_remote_detonator_discovery_checks.py'
+      - 'docs/qa/alexscaves_1010_remote_detonator_downstream_probe.py'
       - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
       - 'docs/qa/alexscaves_1010_armor_material_audit.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
@@ -27,6 +28,7 @@ jobs:
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_remote_detonator_discovery.py
           python3 -m py_compile docs/qa/alexscaves_1010_remote_detonator_discovery_checks.py
+          python3 -m py_compile docs/qa/alexscaves_1010_remote_detonator_downstream_probe.py
       - name: Download exact publisher JAR
         run: |
           mkdir -p build/remote-detonator-1010
@@ -51,6 +53,20 @@ jobs:
             echo 'FAIL: malformed RemoteDetonator evidence accepted'
             exit 1
           fi
+      - name: Trace exact chunk-force and fire-dispatch boundaries read-only
+        run: |
+          python3 docs/qa/alexscaves_1010_remote_detonator_downstream_probe.py \
+            --jar build/remote-detonator-1010/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/remote-detonator-1010/boundaries.json
+      - name: Preserve bounded downstream boundary evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-remote-detonator-boundaries
+          path: build/remote-detonator-1010/boundaries.json
+          if-no-files-found: warn
+          retention-days: 14
       - name: Persist publisher native discovery evidence
         if: always()
         uses: actions/upload-artifact@v7
