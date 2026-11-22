@@ -54,6 +54,19 @@ def inspect(jar: Path, javap: str) -> dict:
         ]
         require(len(exact) == int(implemented),
                 "ACPlatform executable body/declaration discrepancy")
+        lambda_declarations = [
+            m for m in rd.methods
+            if m["name"] == "lambda$computeIfAbsent$1" and "code_sha256" in m
+        ]
+        require(len(lambda_declarations) == 1,
+                "factory loader adapter lambda not uniquely declared")
+        loader_lambda = [
+            summarize(rd, key, body)
+            for key, body in platform_parsed.items()
+            if key[0] == "lambda$computeIfAbsent$1"
+        ]
+        require(len(loader_lambda) == 1,
+                "factory loader adapter lambda body missing")
         # Other platform-named implementations are candidates, not aliases
         # inferred from package names. Preserve their distinct provenance.
         platform_helpers = []
@@ -112,6 +125,18 @@ def inspect(jar: Path, javap: str) -> dict:
                             "pool_index": int(found.group(1)),
                         })
             info["invoke_sites"] = sites
+            reader = ClassReader(archive.read(owner + ".class"))
+            selected_keys = {(x["caller"], x["caller_descriptor"]) for x in sites}
+            info["referencing_caller_bodies"] = [
+                summarize(reader, key, body)
+                for key, body in sorted(parsed.items())
+                if key in selected_keys
+            ]
+            require(
+                {(m["declaration"]["name"], m["declaration"]["descriptor"])
+                 for m in info["referencing_caller_bodies"]} == selected_keys,
+                "missing executable referencing caller body: " + owner,
+            )
         require(any(
             x["caller"] == "get" and x["offset"] == 41
             and "ACPlatform.computeIfAbsent:" in x["symbol"]
@@ -130,6 +155,7 @@ def inspect(jar: Path, javap: str) -> dict:
             "exact_declaration": declared[0],
             "has_executable_body": implemented,
             "exact_native_method": exact,
+            "loader_adapter_lambda": loader_lambda,
             "platform_named_candidates": platform_helpers,
             "direct_referencing_owners": references,
             "limits": {
@@ -167,7 +193,7 @@ def run(jar: Path, javap: str, output: Path) -> None:
     print("PLATFORM_CLASS_SHA256", native["class_sha256"])
     print("EXACT_DECLARATION", native["exact_declaration"])
     print("EXACT_BODY_PRESENT", native["has_executable_body"])
-    for method in native["exact_native_method"]:
+    for method in (*native["exact_native_method"], *native["loader_adapter_lambda"]):
         print("METHOD", method["declaration"]["name"],
               method["declaration"]["descriptor"],
               method["instruction_count"], method["instruction_sha256"])
@@ -176,7 +202,13 @@ def run(jar: Path, javap: str, output: Path) -> None:
                 print("PIVOT", step["offset"], step["opcode"],
                       step["operand"], step["symbol"][:250])
     print("PLATFORM_CANDIDATES", native["platform_named_candidates"])
-    print("DIRECT_CALLERS", native["direct_referencing_owners"])
+    print("DIRECT_CALLERS", {
+        owner: {"invoke_sites": info["invoke_sites"],
+                "method_sha256": [
+                    m["instruction_sha256"] for m in info["referencing_caller_bodies"]
+                ]}
+        for owner, info in native["direct_referencing_owners"].items()
+    })
     print("DISCOVERY_ONLY NOT_CERTIFIED NO_MUTATION NOT_TESTED")
 
 
