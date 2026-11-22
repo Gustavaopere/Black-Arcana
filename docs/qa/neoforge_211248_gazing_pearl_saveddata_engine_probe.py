@@ -94,6 +94,7 @@ def inspect(server: Path, srg: Path, javap: str) -> dict:
                     "saved_data": {"setDirty", "isDirty", "save"},
                     "factory": {"<init>"}}[label]
         methods = []
+        abstract_or_native = []
         candidates = [(name, desc) for (name, desc) in parsed
                       if name in SELECT[label]]
         require(len(candidates) <= MAX_SELECTED,
@@ -101,20 +102,35 @@ def inspect(server: Path, srg: Path, javap: str) -> dict:
         for key in sorted(candidates):
             matches = [m for m in reader.methods
                        if (m["name"], m["descriptor"]) == key]
-            require(len(matches) == 1 and "code_sha256" in matches[0],
-                    "engine method code not found uniquely: " + str(key))
+            require(len(matches) == 1, "engine declaration not unique: " + str(key))
+            declaration = matches[0]
+            if "code_sha256" not in declaration:
+                # javap includes abstract declarations as empty parsed bodies.
+                # Preserve them explicitly; a missing Code is not a silent skip.
+                require(not parsed[key], "non-executable JVM declaration had opcodes")
+                require(declaration["access"] & (0x0400 | 0x0100),
+                        "missing Code attribute without abstract/native flag")
+                abstract_or_native.append(declaration)
+                continue
             body = summarize(reader, key, parsed[key])
             require(len(body["instructions"]) <= MAX_INSTRUCTIONS,
                     "unexpected engine method bytecode budget: " + str(key))
             methods.append(body)
-        require(required.issubset({m["declaration"]["name"] for m in methods}),
-                "required engine code method missing: " + label)
+        declared = {m["declaration"]["name"] for m in methods} | {
+            m["name"] for m in abstract_or_native}
+        require(required.issubset(declared),
+                "required engine method declaration missing: " + label)
+        if label == "saved_data":
+            require({"setDirty", "isDirty"}.issubset(
+                {m["declaration"]["name"] for m in methods}),
+                "SavedData dirtiness methods must have executable Code")
         classes[label] = {
             "owner": owner, "source_archive": source,
             "class_sha256": digest(blob), "class_major": reader.major,
             "parent": reader.parent, "access": reader.access,
             "fields": reader.fields, "declared_method_count": len(reader.methods),
             "selected_method_count": len(methods),
+            "non_executable_declarations": abstract_or_native,
             "selected_methods": methods,
             "not_transformed_runtime": True,
         }
