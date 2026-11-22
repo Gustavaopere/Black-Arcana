@@ -7,6 +7,7 @@ on:
       - '.github/workflows/alexscaves-1010-resistor-shield-discovery.yml'
       - 'docs/qa/alexscaves_1010_resistor_shield_discovery.py'
       - 'docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py'
+      - 'docs/qa/alexscaves_1010_resistor_shield_partial_provenance.py'
       - 'docs/qa/alexscaves_1010_remote_detonator_boundary_checks.py'
       - 'docs/qa/alexscaves_1010_remote_detonator_downstream_probe.py'
       - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
@@ -32,7 +33,27 @@ jobs:
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_resistor_shield_discovery.py
           python3 -m py_compile docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py
+          python3 -m py_compile docs/qa/alexscaves_1010_resistor_shield_partial_provenance.py
           python3 -m py_compile docs/qa/alexscaves_1010_remote_detonator_boundary_checks.py
+      - name: Verify SHA-pinned partial evidence against independent prior certified supports
+        run: |
+          python3 docs/qa/alexscaves_1010_resistor_shield_partial_provenance.py \
+            --catalog-dir 'wiki/modpack-catalog/providers/✅-alexs-caves-continued'
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          source=Path('wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RESISTOR-SHIELD-PARTIAL-EVIDENCE-1.0.10.json')
+          d=json.loads(source.read_text(encoding='utf-8'))
+          d['states']['static_contract']='CERTIFIED_WITHOUT_JAR_PROOF'
+          Path('build/resistor-shield-falsified-manifest.json').parent.mkdir(parents=True,exist_ok=True)
+          Path('build/resistor-shield-falsified-manifest.json').write_text(json.dumps(d),encoding='utf-8')
+          PY
+          if python3 docs/qa/alexscaves_1010_resistor_shield_partial_provenance.py \
+              --catalog-dir 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
+              --manifest build/resistor-shield-falsified-manifest.json; then
+            echo 'FAIL: forged Resistor Shield static certificate was accepted'
+            exit 1
+          fi
       - name: Download SHA-pinned Alex's Caves 1.0.10 JAR
         run: |
           mkdir -p build/resistor-shield-1010
