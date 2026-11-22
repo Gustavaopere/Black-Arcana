@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "scope": "RESISTOR_SHIELD_TRANSITIVE_DEPENDENCY_DISCOVERY_ONLY",
+  "artifact": {
+    "filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "installed_binary_parity": "NOT_VERIFIED"
+  },
+  "evidence": {
+    "run_id": 44981995099,
+    "artifact_id": 14738305848,
+    "report_sha256": "cda2ca357c73c4e98fba32b255c810aeab9a9a02f87b37944d8b7a45716d13a9",
+    "report_bytes": 26940
+  },
+  "helper_class": {
+    "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat",
+    "sha256": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b"
+  },
+  "methods": [
+    {
+      "name": "enchantLevel",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I",
+      "instruction_count": 24,
+      "instruction_sha256": "5247a1f7cc1c3c2c6d5a56b92469c88c2e19262de73f721d7b425b9a93262fe0",
+      "code_sha256": "7bfacebb8312d2d52f34a61ed657b575e62cb2cc9155b6b8f33a63bbd571e940"
+    },
+    {
+      "name": "getBoolean",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Z",
+      "instruction_count": 4,
+      "instruction_sha256": "ca5e21473ee4611af3b52d413e5309f2ee10e3c26f85115a083370a924ec57a6",
+      "code_sha256": "3be2c9e983db0531b1b9c240989d3b0cbf688fdbf99660deb9a7fb7ad7f55e62"
+    },
+    {
+      "name": "getInt",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I",
+      "instruction_count": 4,
+      "instruction_sha256": "ad0c707f1b9a5056c674fe5642fa2e3baf209efeec49e9054ab0409d2f5f6d64",
+      "code_sha256": "b28dac6cb43dc55c0ecdda1a8684bbaf110c377b0591b0eb036662fbc9903bd7"
+    },
+    {
+      "name": "getInt",
+      "descriptor": "(Lnet/minecraft/nbt/ListTag;I)I",
+      "instruction_count": 4,
+      "instruction_sha256": "31605a96b5b41ccd585ba4dfecc2937f0188169e12a2a3bf040ac83c788ae983",
+      "code_sha256": "9bd28d77c4064da6c510a24f66e7da0ec81992cb102bb0065261b349bf1bfa13"
+    },
+    {
+      "name": "getOrCreateTag",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;",
+      "instruction_count": 14,
+      "instruction_sha256": "8eaacc66ed83a6218817181a26b0a2aefbe489c52fcf8119249d6cd40c1e6916",
+      "code_sha256": "a8448548804ce53e0c9885bf54fe139fc7fe736431265ba7bf0aeaf2cbefc8c8"
+    },
+    {
+      "name": "getTag",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;",
+      "instruction_count": 12,
+      "instruction_sha256": "729cedf8d89cd8fabb2e566fa540989838f1708a68411e6e08fb054d5493ec38",
+      "code_sha256": "b9e087e9252353b89150604a38e9421c5c258cfb853640d5de2b1b7968d78b13"
+    },
+    {
+      "name": "hurtAndBreakUsedHand",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;)V",
+      "instruction_count": 8,
+      "instruction_sha256": "a63d579011d85284645ef6e58a3abf81ebcc130ff39455ebe598e388f41ea6b7",
+      "code_sha256": "fb1e6e178da5dd1845040a57bd2cfe034a9181a3ad7b62932e7416ad0c0c67f0"
+    },
+    {
+      "name": "knockback",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;DDD)V",
+      "instruction_count": 6,
+      "instruction_sha256": "262a87047180f8ad2a69ca1f00ffbb360a3f16e39180d8b1c73f77c01f39c194",
+      "code_sha256": "6ecfcc9602229d9f41d96491926c4d7eea94f7f0282b5507f75ab45a166a6a5b"
+    },
+    {
+      "name": "setTag",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V",
+      "instruction_count": 14,
+      "instruction_sha256": "bde3126a9b91cf18b3a16d870a13a0251962113b932045fed17982f23fd5e596",
+      "code_sha256": "5292322e774be30d66d1f17f1fe435303838e6f40da1bb2af13bc9503acee4e4"
+    },
+    {
+      "name": "useConsume",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;",
+      "instruction_count": 3,
+      "instruction_sha256": "0333ab69b5ed600404b8d191e77515d929ddd67bd32de05467afef8b7805eaeb",
+      "code_sha256": "832ea9691be681ff3faeda8a6eb4eac6ff9cc7a1c13cafd58c8578be1a27383e"
+    }
+  ],
+  "resources": {
+    "assets/alexscaves/models/item/resistor_shield.json": {
+      "sha256": "90e6f55395b5da2c68cb0d858aa9b8a773e46a7cd3027500f5249d0f675acb47",
+      "size_bytes": 1275,
+      "canonical_json_sha256": "f1492f1930d6ede71b132757a3d3f27a21dbaf47ff6274bd98c6319373a010e1"
+    },
+    "data/alexscaves/advancement/alexscaves/resistor_shield.json": {
+      "sha256": "0a4dae9d1e074b98ae2127ea855c9684cd9e18d56fbd8c2f4c7049924508936f",
+      "size_bytes": 735,
+      "canonical_json_sha256": "6066b4c3215735258b348d2c3d2d4950737f1f34c424b653db4d97b8b5a09dbf"
+    },
+    "data/alexscaves/recipe/resistor_shield.json": {
+      "sha256": "2d2c648cc1db20b024ba3643c4e3c281b270039299d32ea8a3e9b8e8262f77af",
+      "size_bytes": 433,
+      "canonical_json_sha256": "56c713653b142dbc14931aca6b55e2f3ab91f1f8b16c801acc332e1afdb3cc67"
+    },
+    "data/alexscaves/tags/item/enchantable/resistor_shield.json": {
+      "sha256": "2b5d57ffc709293f994b472c07cd44ed34647efec41106b819621c060366f3e0",
+      "size_bytes": 55,
+      "canonical_json_sha256": "9617911e1628b35f923566e73f606baf759dd8335d25500a36ba244077bcc88d"
+    }
+  },
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "mutation": "NO_MUTATION"
+  }
+}

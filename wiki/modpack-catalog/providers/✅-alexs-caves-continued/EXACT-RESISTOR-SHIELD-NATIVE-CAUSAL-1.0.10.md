@@ -71,14 +71,41 @@ Além dos hashes normalizados acima, `onUseTick` tem Code SHA-256 `193bebed40888
 
 Todos os owners acima possuem prefixo `com/github/alexmodguy/alexscaves/`. Censo busca sites de tipos registrados no publisher; sem prova de completude para consumers implícitos. `ClientEvents`, renderer e som são apresentação nativa, **não hooks mutadores**.
 
-Recursos filename-matched (conteúdo e semântica **NÃO AUDITADOS**, apenas hash e tamanho):
+Recursos filename-matched (hash e tamanho do censo inicial; **conteúdo auditado posteriormente** na seção de dependências acima):
 - `assets/alexscaves/models/item/resistor_shield.json` — 1.275 bytes; SHA `90e6f55395b5da2c68cb0d858aa9b8a773e46a7cd3027500f5249d0f675acb47`.
 - `data/alexscaves/advancement/alexscaves/resistor_shield.json` — 735 bytes; SHA `0a4dae9d1e074b98ae2127ea855c9684cd9e18d56fbd8c2f4c7049924508936f`.
 - `data/alexscaves/recipe/resistor_shield.json` — 433 bytes; SHA `2d2c648cc1db20b024ba3643c4e3c281b270039299d32ea8a3e9b8e8262f77af`.
 - `data/alexscaves/tags/item/enchantable/resistor_shield.json` — 55 bytes; SHA `2b5d57ffc709293f994b472c07cd44ed34647efec41106b819621c060366f3e0`.
 
+
+## Dependências resolvidas no JAR publisher — ACCompat e recursos JSON
+
+**Nova evidência:** [workflow #44981995099](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44981995099), artifact [#14738305848](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44981995099/artifacts/14738305848), `dependencies.json` de **26.940 bytes**, SHA-256 `cda2ca357c73c4e98fba32b255c810aeab9a9a02f87b37944d8b7a45716d13a9`. Classfile `ACCompat.class` SHA-256 `333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b`. Identidade do publisher 1.0.10 já pinada acima; comparação com a cópia física instalada e resultados da engine continuam **NOT_VERIFIED**.
+
+**Manifesto reproduzível:** [EXACT-RESISTOR-SHIELD-DEPENDENCIES-1.0.10.json](EXACT-RESISTOR-SHIELD-DEPENDENCIES-1.0.10.json) e checker `docs/qa/alexscaves_1010_resistor_shield_dependency_checks.py` reconciliam **10 métodos (9 nomes, duas overloads de getInt)**, hashes de Code e instruções, 18 pivôs de bytecode, quatro JSONs com SHA bruto e semântico, receita, tag, critério de avanço e modelo. Teste local sobre o artifact original **PASS**, além de dois testes negativos rejeitando SHA de método ou receita adulterados, mesmo com SHA de relatório forjada coerentemente. A CI final precisa reproduzir isso na última HEAD.
+
+- **`ACCompat.enchantLevel(stack,key)`:** 24 instruções, SHA de instruções `5247a1f7cc1c3c2c6d5a56b92469c88c2e19262de73f721d7b425b9a93262fe0`. Consulta `ItemStack.getEnchantments().entrySet()` @1–7, testa `Holder.is(ResourceKey)` @42, retorna `Entry.getIntValue()` @51; quando não há entrada correspondente retorna **0** @60–61. Portanto, `heavySlamLevel` vem de encantamentos observados na stack; Mastery/atributos não são inferidos.
+- **`ACCompat.knockback(target,strength,dx,dz)`:** 6 instruções, SHA `262a87047180f8ad2a69ca1f00ffbb360a3f16e39180d8b1c73f77c01f39c194`. Encaminha os três argumentos a `LivingEntity.knockback(DDD)` @5. A componente X nula do ramo Azure (`casterX - casterX`) é encaminhada sem transformação no helper. Aplicação física, normalização da engine e aceitação do movimento não verificadas.
+- **`ACCompat.hurtAndBreakUsedHand(stack,1,caster)`:** 8 instruções, SHA `a63d579011d85284645ef6e58a3abf81ebcc130ff39455ebe598e388f41ea6b7`. Resolve `caster.getUsedItemHand()` @4, `slotOf(hand)` @7 e solicita `ItemStack.hurtAndBreak(1,caster,slot)` @10. É a rota de desgaste solicitada, sem provar a liquidação da durabilidade nem a quebra real.
+- **`ACCompat.useConsume(stack)`:** 3 instruções, SHA `0333ab69b5ed600404b8d191e77515d929ddd67bd32de05467afef8b7805eaeb`. Devolve `InteractionResultHolder.consume(stack)` @1. O helper não reduz `ItemStack.count`; esse retorno sinaliza o resultado da interação, não uma despesa física de item.
+- **`ACCompat.getTag/getOrCreateTag/setTag`:** respectivamente 12, 14 e 14 instruções; todos operam `DataComponents.CUSTOM_DATA`. Leitura usa `CustomData.copyTag()` ou devolve nulo/nova tag; escrita remove o componente quando tag nula ou define `CustomData.of(tag)`. Isso comprova o armazenamento declarado de `Polarity`, `UseTime`, `PrevUseTime`, `SwitchTime`, `PrevSwitchTime` por componentes da stack; não comprova sincronização client/server, retenção em reload, conflitos de escrita nem lifecycle.
+- **`getBoolean/getInt`:** encaminham às consultas de `CompoundTag`; o censo inclui a overload `ListTag.getInt`, que não é automaticamente consumida pelo escudo.
+
+**Quatro recursos SHA-exatos, agora examinados por conteúdo e por hash semântico:**
+
+| Recurso | Semântica observada no publisher | Limite |
+|---|---|---|
+| `recipe/resistor_shield.json` | Receita `minecraft:crafting_shaped` com linhas `SSS`, ` H `, `AAA`: **3 scarlet neodymium ingots**, **1 heart of iron**, **3 azure neodymium ingots**; resultado `alexscaves:resistor_shield` | A configuração/datapack efetiva pode substituir ou remover a receita |
+| `tags/item/enchantable/resistor_shield.json` | Valor único `alexscaves:resistor_shield` | Elegibilidade, não nível ou chance de enchant |
+| `advancement/alexscaves/resistor_shield.json` | Parent `alexscaves:alexscaves/defeat_magnetron`; trigger `minecraft:inventory_changed` | Não prova que o avanço foi concedido num mundo |
+| `models/item/resistor_shield.json` | Parent `builtin/entity`; particle `alexscaves:block/heart_of_iron_0` e transforms por contexto | Somente apresentação visual |
+
+**Client consumer previamente presente no mesmo relatório native:** `ResistorShieldSound.isValidItem` exige a classe e uma relação entre `isScarlet(stack)` e flag `azure`; `tickVolume` calcula `volume = getLerpedUseTime(stack,1.0F)/5` e `pitch = 0.2F + 0.8F × volume`, sem clamp próprio. `ClientEvents.onPoseHand` e `ACItemstackRenderer.renderByItem` usam interpolação para a apresentação, não fornecem um hook mutador.
+
+**Boundary e estado:** os métodos auxiliares foram estudados no recorte relevante, mas os métodos herdados de `ShieldItem`, o resultado de `LivingEntity.hurt/knockback` e `ItemStack.hurtAndBreak`, world/PvP safety, datapacks efetivos, multiplayer e sincronização ainda não foram verificados. Portanto **⚠️ parcial**, `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Sem incremento de objetos ou raízes mágicas.
+
 ## Certificação, integração e próxima prova
 
-**Comprovado pelo bytecode publisher:** valores imediatos, guards, invocações, parâmetros declarados e grafos enumerados acima. **NÃO VERIFICADO:** resultado de `ACCompat.hurt/knockback/hurtAndBreakUsedHand` e `useConsume`, defesa herdada do `ShieldItem`, persistência física de componentes, comportamento durante reload/respawn, custo aceito, resultado de recursos JSON, callbacks por mixin/eventos, efeitos do lado cliente em servidor, multiplayer e comparação do JAR instalado. Nenhum override seguro por jogador/rank/atributo/Mastery foi identificado.
+**Comprovado pelo bytecode publisher:** valores imediatos, guards, invocações, parâmetros declarados e grafos enumerados acima. **NÃO VERIFICADO:** resultado de `ACCompat.hurt/knockback/hurtAndBreakUsedHand` e `useConsume`, defesa herdada do `ShieldItem`, persistência física de componentes, comportamento durante reload/respawn, custo aceito, aplicação dos recursos JSON nos datapacks efetivos, callbacks por mixin/eventos, efeitos do lado cliente em servidor, multiplayer e comparação do JAR instalado. Nenhum override seguro por jogador/rank/atributo/Mastery foi identificado.
 
 Reproduzir a descoberta e o checker com os scripts `docs/qa/alexscaves_1010_resistor_shield_discovery.py` e `docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py`, sobre JAR SHA-exato e com teste negativo. Validar a CI inteira da **última HEAD**, além de auditar as bibliotecas/consumidores e executar QA física quando aplicável. O relatório não substitui essas etapas. Até então, **⚠️ parcial / NO_MUTATION / fail-closed**.
