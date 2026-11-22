@@ -61,6 +61,15 @@ jobs:
             --universal build/serverlevel-save-callsites-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-universal.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/serverlevel-save-callsites-211248/report.json
+      - name: Trace exact callers of MinecraftServer.saveAllChunks(ZZZ)Z
+        run: |
+          python3 docs/qa/neoforge_211248_serverlevel_save_callsite_probe.py \
+            --mode saveallchunks \
+            --server build/serverlevel-save-callsites-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar \
+            --srg build/serverlevel-save-callsites-211248/server/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
+            --universal build/serverlevel-save-callsites-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-universal.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/serverlevel-save-callsites-211248/saveallchunks_report.json
       - name: Enforce read-only SHA-pinned discovery scope and physical gates
         run: |
           python3 - <<'PY'
@@ -85,13 +94,32 @@ jobs:
           assert r['provider_universe_closed'] is False
           assert r['semantic_magic_roots_delta']==0
           assert r['mutation']=='NO_MUTATION'
-          print('PASS: distributed ServerLevel.save caller discovery, no physical inference')
+          second=json.loads(Path('build/serverlevel-save-callsites-211248/saveallchunks_report.json').read_text())
+          assert second['schema_version']==1
+          assert second['scope']=='NEOFORGE_211248_SAVEALLCHUNKS_CALLSITE_CENSUS_DISTRIBUTED_ONLY'
+          assert second['target']=={'owner':'net/minecraft/server/MinecraftServer',
+              'name':'saveAllChunks','descriptor':'(ZZZ)Z'}
+          assert second['distribution']==r['distribution']
+          assert [x['jar_sha256'] for x in second['archives']]==[x['jar_sha256'] for x in r['archives']]
+          assert second['server_stop_arguments']=='NOT_VERIFIED'
+          assert second['shutdown_path_execution']=='NOT_TESTED'
+          assert second['async_write_completion']=='NOT_TESTED'
+          assert second['disk_durability']=='NOT_TESTED'
+          assert second['static_contract']=='NOT_CERTIFIED'
+          assert second['mutating_hook']=='NOT_VERIFIED'
+          assert second['physical_qa']=='NOT_TESTED'
+          assert second['provider_universe_closed'] is False
+          assert second['semantic_magic_roots_delta']==0
+          assert second['mutation']=='NO_MUTATION'
+          print('PASS: distributed exact two-layer save callsites without shutdown claims')
           PY
       - name: Upload JSON callsite report
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: neoforge-211248-serverlevel-save-callsite-evidence
-          path: build/serverlevel-save-callsites-211248/report.json
+          path: |
+            build/serverlevel-save-callsites-211248/report.json
+            build/serverlevel-save-callsites-211248/saveallchunks_report.json
           if-no-files-found: ignore
           retention-days: 14
