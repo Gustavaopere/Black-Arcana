@@ -67,7 +67,27 @@ def main():
                              capture_output=True,text=True,timeout=15)
             assert p.returncode!=0 and "JVM opcode drift" in p.stderr,(name,p.stderr[-700:])
             print("PASS_FORGED_JVM_REJECTED",name)
-    print("PASS: 15/15 forged JVM behavior pivots rejected by causal opcode validation")
+        # Separate attack on the serialized LambdaMetafactory target. Re-sealing both
+        # the report and manifest must not make a forged methodhandle acceptable.
+        forged=copy.deepcopy(original)
+        forged_seal=copy.deepcopy(seal)
+        handle=forged["entity_native"]["targets"][target]["attributes"]["bootstrap_methods"][0]["arguments"][1]
+        assert handle["reference"][2][1]=="canBeHitByProjectile"
+        handle["reference"][2][1]="forgedNoProjectileFilter"
+        forged_seal["predicate_bootstrap"]["entry"]["arguments"][1]["reference"][2][1]="forgedNoProjectileFilter"
+        raw=json.dumps(forged,sort_keys=True,ensure_ascii=False).encode("utf8")
+        forged_seal["evidence"]["report_sha256"]=hashlib.sha256(raw).hexdigest()
+        forged_seal["evidence"]["report_bytes"]=len(raw)
+        fr=Path(temp)/"forged-handle-report.json"
+        fs=Path(temp)/"forged-handle-seal.json"
+        fr.write_bytes(raw)
+        fs.write_text(json.dumps(forged_seal,ensure_ascii=False),encoding="utf8")
+        out=subprocess.run((sys.executable,str(args.checker),
+                             "--report",str(fr),"--manifest",str(fs)),
+                            capture_output=True,text=True,timeout=15)
+        assert out.returncode!=0 and "predicate method handle drift" in out.stderr,out.stderr[-700:]
+        print("PASS_FORGED_METHODHANDLE_REJECTED predicate-entity-projectile-filter")
+    print("PASS: 15/15 forged JVM opcodes and 1/1 forged MethodHandle rejected causally")
 
 if __name__=="__main__":
     main()
