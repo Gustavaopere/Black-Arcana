@@ -55,12 +55,39 @@ jobs:
           }
           test -f libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar
           test -f libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar
+      - name: Enumerate official NeoForge 21.1.248 library class authority
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          import hashlib
+          root=Path('build/gazing-pearl-ioworker-211248/server/libraries')
+          exact=root/'net/neoforged/neoforge/21.1.248'
+          assert exact.is_dir(), 'exact NeoForge installed library path missing'
+          files=sorted(exact.glob('*.jar'))
+          assert 1<=len(files)<=16
+          wanted='net/neoforged/neoforge/common/IOUtilities.class'
+          found=[]
+          for f in files:
+              with ZipFile(f) as z:
+                  members=z.namelist()
+                  assert len(members)==len(set(members))
+                  if wanted in members:
+                      found.append(f)
+                      print('IOUTILITIES_LIBRARY='+str(f.relative_to(root)))
+                      print('IOUTILITIES_LIBRARY_SHA256='+hashlib.sha256(f.read_bytes()).hexdigest())
+                      print('IOUTILITIES_CLASS_SHA256='+hashlib.sha256(z.read(wanted)).hexdigest())
+          print('OFFICIAL_NEOFORGE_JAR_COUNT='+str(len(files)))
+          print('IOUTILITIES_CLASS_MATCHES='+str(len(found)))
+          assert len(found)==1, 'cannot use source-ambiguous IOUtilities'
+          PY
       - name: Discover exact SaveData lambda handles and IOUtilities.withIOWorker body
         run: |
           python3 docs/qa/neoforge_211248_gazing_pearl_ioworker_lambda_probe.py \
             --server build/gazing-pearl-ioworker-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar \
             --srg build/gazing-pearl-ioworker-211248/server/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --libraries build/gazing-pearl-ioworker-211248/server/libraries \
             --output build/gazing-pearl-ioworker-211248/report.json
       - name: Reject unsupported durability, physical QA or hook claims
         run: |

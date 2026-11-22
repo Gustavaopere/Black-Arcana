@@ -113,7 +113,31 @@ def invocation_link(reader: ClassReader, body, expected_offset: int):
     }
 
 
-def inspect(server, srg, javap):
+def locate_worker_library(libraries: Path):
+    """Find the NeoForge-owned IO helper in the exact official installed libraries."""
+    require(libraries.is_dir(), "NeoForge --installServer libraries root missing")
+    home = libraries / "net/neoforged/neoforge/21.1.248"
+    require(home.is_dir(), "exact versioned NeoForge library directory missing")
+    jars = sorted(home.glob("*.jar"))
+    require(1 <= len(jars) <= 16, "unbounded versioned NeoForge library candidates")
+    candidates = []
+    target = OWNERS["worker"] + ".class"
+    for jar in jars:
+        require(jar.is_file() and jar.stat().st_size <= 90_000_000,
+                "unbounded official NeoForge library")
+        with ZipFile(jar) as z:
+            names = z.namelist()
+            require(len(names) == len(set(names)), "duplicate NeoForge library entries")
+            if target in names:
+                raw = z.read(target)
+                sha = hashlib.sha256(jar.read_bytes()).hexdigest()
+                relative = jar.relative_to(libraries).as_posix()
+                candidates.append((jar, raw, sha, jar.stat().st_size, relative))
+    require(len(candidates) == 1, "IOUtilities owner not uniquely located in versioned official installed NeoForge libraries")
+    return candidates[0]
+
+
+def inspect(server, srg, libraries, javap):
     distribution = verify_distribution(server, srg)
     with ZipFile(server) as overlay, ZipFile(srg) as vanilla:
         ov, mc = overlay.namelist(), vanilla.namelist()
@@ -121,6 +145,8 @@ def inspect(server, srg, javap):
                 "duplicate official archive entries")
         found = {}
         for label, owner in OWNERS.items():
+            if label == "worker":
+                continue
             path = owner + ".class"
             archive = choose_archive(path, set(ov), set(mc))
             require(archive in ("NEOFORGE_OVERLAY", "INSTALLED_MINECRAFT_SRG"),
@@ -128,10 +154,16 @@ def inspect(server, srg, javap):
             raw = (overlay if archive == "NEOFORGE_OVERLAY" else vanilla).read(path)
             require(64 <= len(raw) <= MAX_CLASS_BYTES and raw[:4] == b"\xca\xfe\xba\xbe",
                     "malformed/oversize classfile " + owner)
-            found[label] = (owner, raw, archive)
+            found[label] = (owner, raw, archive, None, None)
+    worker_jar, worker_raw, worker_sha, worker_bytes, worker_path = locate_worker_library(libraries)
+    require(64 <= len(worker_raw) <= MAX_CLASS_BYTES and
+            worker_raw[:4] == b"\xca\xfe\xba\xbe", "malformed IOUtilities classfile")
+    found["worker"] = (OWNERS["worker"], worker_raw, "NEOFORGE_211248_INSTALLED_LIBRARY",
+                       worker_jar, {"sha256": worker_sha, "bytes": worker_bytes,
+                                    "relative_path": worker_path})
     classes = {}
     cp = str(server) + ":" + str(srg)
-    for label, (owner, raw, archive) in found.items():
+    for label, (owner, raw, archive, worker_src, archive_metadata) in found.items():
         reader = ClassReader(raw)
         require(reader.name == owner and reader.major == 65,
                 "unexpected JVM owner or major")
@@ -140,7 +172,8 @@ def inspect(server, srg, javap):
         if label in PINNED:
             require(digest(raw) == PINNED[label],
                     "preaudited engine class hash drift")
-        parsed = disassemble(cp, javap, owner)
+        classpath = (str(worker_src) + ":" + cp) if worker_src is not None else cp
+        parsed = disassemble(classpath, javap, owner)
         selected = methods_to_inspect(label, parsed)
         bodies = []
         non_executable_declarations = []
@@ -182,6 +215,7 @@ def inspect(server, srg, javap):
             "class_sha256": digest(raw),
             "class_major": reader.major,
             "declared_method_count": len(reader.methods),
+            "archive_metadata": archive_metadata,
             "fields": reader.fields,
             "selected_methods": bodies,
             "non_executable_declarations": non_executable_declarations,
@@ -209,11 +243,13 @@ def main():
     p.add_argument("--server", type=Path, required=True)
     p.add_argument("--srg", type=Path, required=True)
     p.add_argument("--javap", default="javap")
+    p.add_argument("--libraries", type=Path, required=True,
+                   help="official --installServer libraries root")
     p.add_argument("--output", type=Path, required=True)
     a = p.parse_args()
     require(a.output.suffix == ".json" and not a.output.exists(),
             "write-once read-only report required")
-    report = inspect(a.server, a.srg, a.javap)
+    report = inspect(a.server, a.srg, a.libraries, a.javap)
     payload = canonical(report).encode("utf8")
     require(0 < len(payload) <= MAX_REPORT, "bounded evidence report too large")
     a.output.parent.mkdir(parents=True, exist_ok=True)
@@ -221,7 +257,8 @@ def main():
     print("WRITE_CHAIN_REPORT_SHA256", hashlib.sha256(payload).hexdigest())
     for label, row in report["classes"].items():
         print("CLASS", label, row["source_archive"], row["class_sha256"],
-              "methods", len(row["selected_methods"]))
+              "methods", len(row["selected_methods"]),
+              "library", row["archive_metadata"])
         for meth in row["selected_methods"]:
             print("METHOD", label, meth["declaration"]["name"],
                   meth["declaration"]["descriptor"],
