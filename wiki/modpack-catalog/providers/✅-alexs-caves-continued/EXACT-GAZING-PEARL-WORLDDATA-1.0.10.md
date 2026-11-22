@@ -56,8 +56,14 @@ Os dois métodos da `DeepOneBaseEntity` contêm guardas client/server explícita
 
 ### Limites de certificação e QA
 
-O contrato staticamente rastreado agora cobre o armazenamento local `Map<UUID,Integer>`, o getter default 0, o clamp do setter [−100,100], o roundtrip NBT de reputação (com a ressalva de load sem clamp), os três consumidores tipados, cinco callsites e guards de cada método relevante. Isto **não é a certificação individual da Gazing Pearl**: `ACPlatform.computeIfAbsent`, `SavedData`, outros eventos/consumidores por reflexão, comportamento da IA, recompensas efetivas, authoritative session, tempo/cópia da stack, envio client/server, datapacks, custo/targeting de outras habilidades e QA física permanecem pendentes. Sem inventar um hook mutador.
+O contrato staticamente rastreado agora cobre o armazenamento local `Map<UUID,Integer>`, o getter default 0, o clamp do setter [−100,100], o roundtrip NBT de reputação (com a ressalva de load sem clamp), os três consumidores tipados, cinco callsites e guards de cada método relevante. Isto **não é a certificação individual da Gazing Pearl**: `BootstrapMethods`/`SavedData` da engine (o corpo local de `ACPlatform.computeIfAbsent` já foi observado), outros eventos/consumidores por reflexão, comportamento da IA, recompensas efetivas, authoritative session, tempo/cópia da stack, envio client/server, datapacks, custo/targeting de outras habilidades e QA física permanecem pendentes. Sem inventar um hook mutador.
 
+
+## Terceira etapa — ponte ACPlatform para SavedData
+
+A [auditoria SHA-exata da ponte](EXACT-GAZING-PEARL-ACPLATFORM-1.0.10.md) fecha apenas o **método local** `ACPlatform.computeIfAbsent` do publisher 1.0.10 e o corpo de sua função sintética, com dois callers tipados (`ACWorldData.get` e `CitadelServerData.get`). O wrapper cria `SavedData.Factory` usando o `Supplier` e a primeira `Function`, deixa a segunda `Function` sem acesso direto, fornece `DataFixTypes=null` e delega à `DimensionDataStorage.computeIfAbsent`. O lambda adaptador executa `Function.apply(CompoundTag)` e não utiliza `HolderLookup.Provider`. Há um [manifesto de 2 métodos e 2 callers](EXACT-GAZING-PEARL-ACPLATFORM-1.0.10.json), com hashes/offsets e checker fail-closed para o JAR identificado.
+
+A [documentação oficial NeoForge 1.21–1.21.1](https://docs.neoforged.net/docs/1.21.1/datastorage/saveddata/) confirma o papel de `computeIfAbsent`, do `SavedData.Factory`, do nome de arquivo `.dat` e de `setDirty`, sem demonstrar o comportamento físico no servidor do modpack. A ponte é uma dependência transitiva da Gazing Pearl, **não** um hook mutador por jogador. Persistem a pendência de `BootstrapMethods`, engine exata, cache/salvamento/reload, sincronização de stack, bytes da instalação e QA. **NO_MUTATION; Gazing Pearl permanece ⚠️ PARCIAL**.
 
 ## Próximos gates
 
