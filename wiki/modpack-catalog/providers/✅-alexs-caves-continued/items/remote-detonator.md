@@ -22,6 +22,8 @@
 
 **`isActive(ItemStack)` (17 instruções, SHA `a4206726462cada693fbb76134f1f993eef006fd413472c62a9c875e7bf0f4a7`):** avalia `BombPos OR BombDimension`, não ambos; um item com tag incompleta pode parecer ativo. `getBombPosition` retorna `null` sem ambos e sem dimensão válida. Tooltip `appendHoverText` (58 instruções) exibe coordenadas X/Y/Z apenas com posição e dimensão decodificáveis; `ACItemPredicates.active` (7 instruções) seleciona estado visual com `isActive`, sem teste de jogo.
 
+**Boundary de tick reutilizado:** [ACTickingItem](../systems/ticking-item.md) possui prova estática individual do `ItemStackTickMixin` e do forwarding `ItemStack.inventoryTick -> acInventoryTick`; esse certificado do suporte **não** se transfere à aplicação transformada, nem cria scheduler/hook autorizado para este item.
+
 ## Efeitos, parâmetros, alvo e custos
 
 - **Targeting:** uma posição armazenada `GlobalPos` (bloco + dimensão) quando válido, tag `REMOTE_DETONATOR_ACTIVATES`; sem raycast de criatura, AOE de dano, LOS ou limite de distância explícitos para acionar. **Distância quadrada 1000** controla somente advancement, não alcance máximo. Exige mundo de destino resolvível.
