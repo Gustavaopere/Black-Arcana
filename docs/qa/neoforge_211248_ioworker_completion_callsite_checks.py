@@ -42,7 +42,7 @@ def check(report,manifest):
     assert w['evidence']['artifact_id']==14770385280
     assert w['evidence']['report_bytes']==len(raw)
     assert w['evidence']['report_sha256']==hashlib.sha256(raw).hexdigest()
-    assert w['evidence']['report_sha256']==GOLDEN_SHA or w['evidence']['report_sha256']!=GOLDEN_SHA
+    # Manifest SHA binds the report; negative fixtures deliberately re-seal altered reports.
     assert r['schema_version']==w['schema_version']==1
     assert r['scope']==w['scope']==SCOPE
     assert r['target']==w['target']=={'owner':'net/neoforged/neoforge/common/IOUtilities','name':'waitUntilIOWorkerComplete','descriptor':'()V'}
