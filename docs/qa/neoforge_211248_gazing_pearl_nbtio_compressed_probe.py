@@ -17,6 +17,7 @@ from neoforge_211248_custom_data_delegate_probe import choose_archive
 from neoforge_211248_gazing_pearl_saveddata_engine_probe import verify_distribution
 
 OWNER = "net/minecraft/nbt/NbtIo"
+FALLBACK_OWNER = OWNER + "$StringFallbackDataOutput"
 SELECT = {"writeCompressed", "write", "writeUnnamedTag", "writeUnnamedTagWithFallback", "writeAnyTag", "createCompressorStream"}
 SCOPE = "NEOFORGE_211248_NBTIO_COMPRESSED_WRITE_DISTRIBUTED_ONLY"
 MAX_METHODS = 175
@@ -68,6 +69,39 @@ def audit(server: Path, srg: Path, javap: str) -> dict:
                   x["declaration"]["descriptor"] ==
                   "(Lnet/minecraft/nbt/CompoundTag;Ljava/io/OutputStream;)V"]
     require(len(compressed) == 1, "expected exact compressed OutputStream ABI absent")
+    # This wrapper is a direct transitive writer consumer through
+    # writeUnnamedTagWithFallback; do not infer its behavior from its name.
+    fallback_member = FALLBACK_OWNER + ".class"
+    with ZipFile(server) as overlay, ZipFile(srg) as vanilla:
+        ov, mc = overlay.namelist(), vanilla.namelist()
+        fallback_source = choose_archive(fallback_member, set(ov), set(mc))
+        require(fallback_source in ("NEOFORGE_OVERLAY", "INSTALLED_MINECRAFT_SRG"),
+                "exact string fallback inner class not located")
+        fallback_raw = (overlay if fallback_source == "NEOFORGE_OVERLAY" else vanilla).read(fallback_member)
+    require(64 < len(fallback_raw) <= MAX_CLASS_BYTES and fallback_raw[:4] == b"\xca\xfe\xba\xbe",
+            "string fallback classfile budget/signature drift")
+    fallback_reader = ClassReader(fallback_raw)
+    require(fallback_reader.name == FALLBACK_OWNER and fallback_reader.major == 65,
+            "string fallback JVM identity drift")
+    require(1 <= len(fallback_reader.methods) <= 45, "string fallback method roster unbounded")
+    fallback_parsed = disassemble(str(server) + ":" + str(srg), javap, FALLBACK_OWNER)
+    fallback_declarations = {(m["name"],m["descriptor"]):m for m in fallback_reader.methods}
+    require(set(fallback_declarations) == set(fallback_parsed) and
+            len(fallback_declarations) == len(fallback_reader.methods),
+            "fallback class declarations mismatch")
+    fallback_bodies = []
+    fallback_nonexec = []
+    for key in sorted(fallback_parsed):
+        decl = fallback_declarations[key]
+        if "code_sha256" not in decl:
+            require(not fallback_parsed[key] and decl["access"] & (0x0400 | 0x0100),
+                    "non-executable fallback method not flagged")
+            fallback_nonexec.append(decl)
+            continue
+        item = summarize(fallback_reader, key, fallback_parsed[key])
+        require(0 < item["instruction_count"] <= MAX_INSTRUCTIONS,
+                "fallback method instruction budget exceeded")
+        fallback_bodies.append(item)
     roster = [
         {"name":m["name"],"descriptor":m["descriptor"],"access":m["access"],
          "code_sha256":m.get("code_sha256")}
@@ -82,6 +116,17 @@ def audit(server: Path, srg: Path, javap: str) -> dict:
             "declared_methods":roster,"field_names":[f["name"] for f in reader.fields],
             "selected_methods":bodies,
             "non_executable_declarations":nonexecutable,
+        },
+        "string_fallback":{
+            "owner":FALLBACK_OWNER,
+            "source_archive":fallback_source,
+            "class_sha256":digest(fallback_raw),
+            "class_major":fallback_reader.major,
+            "parent":fallback_reader.parent,
+            "declared_method_count":len(fallback_reader.methods),
+            "fields":[field["name"] for field in fallback_reader.fields],
+            "selected_methods":fallback_bodies,
+            "non_executable_declarations":fallback_nonexec,
         },
         "publisher_callsite":"SavedData.lambda$save$0 → IOUtilities.writeNbtCompressed → IOUtilities.lambda$writeNbtCompressed$1 → NbtIo.writeCompressed(CompoundTag,OutputStream)",
         "scope_limit":"exact official 21.1.248 distributed JVM only",
@@ -117,10 +162,14 @@ def main():
     print("NBTIO_CLASS",report["class"]["source_archive"],
           report["class"]["class_sha256"],
           "declared",report["class"]["declared_method_count"])
+    print("FALLBACK_CLASS",report["string_fallback"]["class_sha256"],"methods",report["string_fallback"]["declared_method_count"])
     for m in report["class"]["selected_methods"]:
         d=m["declaration"]
         print("METHOD",d["name"],d["descriptor"],d["code_sha256"],
               m["instruction_sha256"],m["instruction_count"])
+    for m in report["string_fallback"]["selected_methods"]:
+        d=m["declaration"]
+        print("FALLBACK_METHOD",d["name"],d["descriptor"],d["code_sha256"],m["instruction_sha256"],m["instruction_count"])
     print("NO_MUTATION NOT_CERTIFIED NOT_TESTED NOT_MODLAUNCHER")
 
 
