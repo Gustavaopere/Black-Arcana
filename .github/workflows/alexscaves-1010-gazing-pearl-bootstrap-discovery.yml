@@ -5,6 +5,10 @@ on:
     paths:
       - '.github/workflows/alexscaves-1010-gazing-pearl-bootstrap-discovery.yml'
       - 'docs/qa/alexscaves_1010_gazing_pearl_acplatform_bootstrap_probe.py'
+      - 'docs/qa/alexscaves_1010_gazing_pearl_acplatform_bootstrap_checks.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GAZING-PEARL-ACPLATFORM-BOOTSTRAP-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GAZING-PEARL-ACPLATFORM-1.0.10.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md'
       - 'docs/qa/alexscaves_1010_armor_material_audit.py'
       - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GAZING-PEARL-ACPLATFORM-BOOTSTRAP-1.0.10.md'
@@ -22,7 +26,9 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Validate read-only bootstrap probe syntax
-        run: python3 -m py_compile docs/qa/alexscaves_1010_gazing_pearl_acplatform_bootstrap_probe.py
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_gazing_pearl_acplatform_bootstrap_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_gazing_pearl_acplatform_bootstrap_checks.py
       - name: Download and identify publisher 1.0.10 JAR
         run: |
           mkdir -p build/gazing-pearl-bootstrap
@@ -54,6 +60,41 @@ jobs:
           assert r['semantic_magic_roots_delta']==0
           print('PASS: bounded bootstrap mapping, no hook or physical QA')
           PY
+      - name: Verify native bootstrap linkage and reject forged mapping
+        run: |
+          python3 docs/qa/alexscaves_1010_gazing_pearl_acplatform_bootstrap_checks.py \
+            --report build/gazing-pearl-bootstrap/report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GAZING-PEARL-ACPLATFORM-BOOTSTRAP-1.0.10.json'
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,hashlib,copy
+          base=Path('build/gazing-pearl-bootstrap')
+          source=json.loads((base/'report.json').read_text())
+          seal=json.loads(Path('wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GAZING-PEARL-ACPLATFORM-BOOTSTRAP-1.0.10.json').read_text())
+          for kind in ('redirect-loader','wrong-bootstrap'):
+              modified=copy.deepcopy(source)
+              ms=copy.deepcopy(seal)
+              d=modified['native']['factory_invokedynamic']
+              if kind=='redirect-loader':
+                  d['bootstrap_entry']['arguments'][1]['reference'][2][1]='lambda$untrusted$1'
+                  ms['native']['bootstrap_entry']['arguments'][1]['reference'][2][1]='lambda$untrusted$1'
+              else:
+                  d['bootstrap_index']=1
+                  ms['native']['bootstrap_index']=1
+              raw=json.dumps(modified,ensure_ascii=False,sort_keys=True).encode('utf8')
+              ms['evidence']['report_bytes']=len(raw)
+              ms['evidence']['report_sha256']=hashlib.sha256(raw).hexdigest()
+              (base/('bad-'+kind+'.json')).write_bytes(raw)
+              (base/('bad-'+kind+'-seal.json')).write_text(json.dumps(ms,ensure_ascii=False),encoding='utf8')
+          PY
+          for kind in redirect-loader wrong-bootstrap; do
+            if python3 docs/qa/alexscaves_1010_gazing_pearl_acplatform_bootstrap_checks.py \
+              --report "build/gazing-pearl-bootstrap/bad-$kind.json" \
+              --manifest "build/gazing-pearl-bootstrap/bad-$kind-seal.json"; then
+              echo "FAIL: forged JVM bootstrap mapping accepted: $kind"
+              exit 1
+            fi
+          done
       - name: Preserve exact static JVM bootstrap evidence
         if: always()
         uses: actions/upload-artifact@v7

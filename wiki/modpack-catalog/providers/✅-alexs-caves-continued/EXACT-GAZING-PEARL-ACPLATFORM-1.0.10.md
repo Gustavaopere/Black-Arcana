@@ -41,6 +41,10 @@ O censo de métodos tipados em **1.555 classfiles** encontrou apenas **dois owne
 
 **Isolamento de contexto:** `CitadelServerData` compartilha o helper genérico, porém **não** é uma segunda raiz de reputação nem consumidor direto da Gazing Pearl. A cadeia comprovada da pérola segue `GazingPearlItem.acInventoryTick → ACWorldData.get → ACPlatform.computeIfAbsent → DimensionDataStorage.computeIfAbsent` e, quando há instância válida, `ACWorldData.getDeepOneReputation(UUID)`.
 
+## BootstrapMethods — vinculação direta comprovada no publisher
+
+O [relatório e manifesto de bootstrap SHA-exato](EXACT-GAZING-PEARL-ACPLATFORM-BOOTSTRAP-1.0.10.md) registram `ACPlatform.computeIfAbsent` @7 com `CONSTANT_InvokeDynamic #136` → `BootstrapMethods[0]` → `LambdaMetafactory.metafactory` → `REF_invokeStatic ACPlatform.lambda$computeIfAbsent$1`, adaptado de `Function` para `BiFunction(CompoundTag,HolderLookup.Provider)`. Com isso o loader de cinco instruções não é mais apenas uma hipótese de associação. A ligação é estática e **não valida o resultado da engine**, SavedData físico ou mutação segura.
+
 ## Referência de engine e efeitos delimitados
 
 A [documentação oficial NeoForge **1.21–1.21.1**](https://docs.neoforged.net/docs/1.21.1/datastorage/saveddata/) define `DimensionDataStorage.computeIfAbsent` como consulta/criação/carregamento de `SavedData` por `Factory` e nome; os dados ficam no diretório `data` da dimensão pertinente. A mesma documentação define `setDirty` como aviso de alteração necessário para salvar, **não** garantia de escrita síncrona imediata. O [Javadoc da engine para 1.21.1](https://lexxie.dev/neoforge/1.21.1/net/minecraft/world/level/storage/DimensionDataStorage.html) confirma a assinatura `computeIfAbsent(SavedData.Factory,String)` e tipos de armazenamento.
@@ -52,6 +56,6 @@ Portanto, **a chave candidata esperada** no Overworld para o owner reputacional 
 - **Dano/tipo, AOE, projétil, duração, mana, cooldown, targeting ofensivo:** **N/A** para esta ponte de armazenamento. O UUID do portador pertence ao caller Gazing Pearl, **não** ao método `computeIfAbsent`.
 - **Key de SavedData, Supplier/loader e contexto servidor:** observados; a operação de armazenamento não certifica permissões de escrita por player, prevenção de replay, PvP/claims, sync de stack ou ownership.
 - **Clean-room:** apenas signatures, offsets, hashes e observações comportamentais para interoperabilidade. Não transferir código de terceiros, nem reimplementar a classe no runtime Black Arcana.
-- **Próximas provas:** inspecionar o `BootstrapMethods` de `invokedynamic` para vinculação exata; contrato da engine efetiva NeoForge 21.1.248 e `SavedData.Factory`; semântica de `ACPlatform.computeIfAbsent` em mundos/saves e errors; sincronização de `ItemStack` com `CUSTOM_DATA`, render/tooltip client, QA física em modpack e reprodução do JAR efetivamente instalado. Sem hook real e seguro por usuário, **NO_MUTATION / fail-closed**.
+- **Próximas provas:** a vinculação `BootstrapMethods` → `ACPlatform.lambda$computeIfAbsent$1` foi auditada no [dossiê SHA-exato de bootstrap](EXACT-GAZING-PEARL-ACPLATFORM-BOOTSTRAP-1.0.10.md), sem provar execução física; pendente o contrato da engine efetiva NeoForge 21.1.248 e `SavedData.Factory`; semântica de `ACPlatform.computeIfAbsent` em mundos/saves e errors; sincronização de `ItemStack` com `CUSTOM_DATA`, render/tooltip client, QA física em modpack e reprodução do JAR efetivamente instalado. Sem hook real e seguro por usuário, **NO_MUTATION / fail-closed**.
 
 **Status final do recorte:** método local conhecido, mas **Gazing Pearl ⚠️ parcial**, `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`; provider `OPEN`, nenhuma raiz ou contagem aumentada.
