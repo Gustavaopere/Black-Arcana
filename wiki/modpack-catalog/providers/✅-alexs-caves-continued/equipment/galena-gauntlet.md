@@ -47,6 +47,12 @@ No caminho do jogador, `FERROUS_HASTE > 0` altera a solicitação de `playerUseC
 
 No retorno, o método solicita `returnProgress=min(1,progress+0.2f)` e tenta `Player.addItem(getItemStack())` quando o controle passa pela condição de proximidade **distância menor que 1,4**. Em caso de insucesso do inventário, `plopItem` solicita `ACCompat.spawnAtLocation`, mas **não comprova** spawn físico, rollback ou conservação do item. `getTarget` lê `TARGET_ID` e retorna `null` na sentinela `-1`; IDs não nulos dependem de `Level.getEntity`. A mineração usa dois callsites condicionais de `Level.destroyBlock`, sem autorização de WorldEffectPolicy/claims inferível. `NO_MUTATION` e `physical_qa=NOT_TESTED`.
 
+## 4.2. Subcontrato observado: cálculo de dano e velocidade de mineração
+
+O [dossiê SHA-exato de dano, desgaste e mineração](../EXACT-GALENA-GAUNTLET-DAMAGE-DIGSPEED-1.0.10.md) documenta individualmente os métodos `getDamageForItem`, `hurtEntity`, `damageItem` e `getDigSpeed` da `MagneticWeaponEntity`, com 90 pivôs JVM reproduzíveis e testes adversariais. O cálculo encaminha `ATTACK_DAMAGE` do controller, bônus da stack e bônus adicional para alvo `LivingEntity` a `ACCompat.hurt`; o dano aceito pela engine permanece **NÃO VERIFICADO**. Fire Aspect solicita ignição antes do retorno de `ACCompat.hurt`, e os callsites de atribuição ao jogador e do trigger de abate não estão todos protegidos localmente pelo resultado desse helper. Portanto **Mastery/XP não podem contabilizar uma tentativa ou uma atribuição como hit ou kill certificado**.
+
+A velocidade de mineração depende de `ItemStack.getDestroySpeed`, bônus de eficiência condicionado a valor maior que 1, efeitos de velocidade/lentidão, água e chão da entidade controlada, e do retorno de `EventHooks.getBreakSpeed`. Este evento calcula um valor; não certifica quebra de bloco autorizada por claims/`WorldEffectPolicy`. A mesma auditoria identifica solicitação de desgaste ao item controlado no ramo de dano aceito, não reparo/refund nem custo mutador seguro. **A Gauntlet continua ⚠️ parcial, `NO_MUTATION` e `physical_qa=NOT_TESTED`.**
+
 ## 5. Interfaces conceituais para perks, atributos e Mastery
 
 | Eixo | Fronteira observada | Estado de integração |
