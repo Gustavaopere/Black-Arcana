@@ -53,6 +53,12 @@ O [dossiê SHA-exato de dano, desgaste e mineração](../EXACT-GALENA-GAUNTLET-D
 
 A velocidade de mineração depende de `ItemStack.getDestroySpeed`, bônus de eficiência condicionado a valor maior que 1, efeitos de velocidade/lentidão, água e chão da entidade controlada, e do retorno de `EventHooks.getBreakSpeed`. Este evento calcula um valor; não certifica quebra de bloco autorizada por claims/`WorldEffectPolicy`. A mesma auditoria identifica solicitação de desgaste ao item controlado no ramo de dano aceito, não reparo/refund nem custo mutador seguro. **A Gauntlet continua ⚠️ parcial, `NO_MUTATION` e `physical_qa=NOT_TESTED`.**
 
+## 4.3. Subcontrato SHA-exato: persistência NBT, sincronização e controller
+
+O [dossiê de persistência, sincronização e identidade](../EXACT-GALENA-GAUNTLET-PERSISTENCE-SYNC-1.0.10.md) audita 12 métodos nativos da `MagneticWeaponEntity`, 126 pivôs JVM, os cinco accessors de `SynchedEntityData` e seus defaults. **Servidor:** `getController()` consulta `getControllerUUID()` e solicita `ServerLevel.getEntity(UUID)`. **Cliente:** consulta o accessor `CONTROLLER_ID`, cujo sentinel é `-1`, e solicita `Level.getEntity(int)`. O ID de entidade do cliente não constitui chave persistente nem prova de autoria.
+
+Os overrides `addAdditionalSaveData` e `readAdditionalSaveData` tratam condicionalmente `WeaponStack` e `ControllerUUID` via helpers `ACCompat`. `CONTROLLER_ID`, `TARGET_ID`, `IDLING`, progresso, `playerUseCooldown`, `spawnedItem` e `returnFlag` não são escritos por esses overrides; **não inferir que inexiste persistência herdada**. A reconstrução efetiva após unload/restart, as serializações dos helpers e a conservação/duplicação da arma continuam `NÃO VERIFICADO`; nenhuma fonte de XP/Mastery ou hook mutador foi aprovada. `NO_MUTATION` e `physical_qa=NOT_TESTED`.
+
 ## 5. Interfaces conceituais para perks, atributos e Mastery
 
 | Eixo | Fronteira observada | Estado de integração |
