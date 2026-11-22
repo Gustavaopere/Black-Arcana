@@ -10726,6 +10726,182 @@
           "reason": "Exact 1.0.10 publisher original report, eight methods, factory lambda$static$190, official vanilla enum bytecode with SHA hashes and 24 resealed adversarial mutations; no pack-level gameplay QA."
         }
       }
+    },
+    "✅-alexs-caves-continued/items/hazmat-mask.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Hazmat Mask: seven-axis native static catalog for HEAD, armor 2 and configured max durability 260; zero new casts. Does not guarantee accepted radiation/acid protection, engine transformed dispatch, hooks or gameplay QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher SHA-exact alexscaves 1.0.10, independent class HazmatArmorItem, factory lambda$static$69, exact HELMET/HEAD binding, official MC1.21.1 ordinal 0, recipe/model hash."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Full six-method HazmatArmorItem surface, four-slot getWornAmount and native consumer callsites for radioactive items, IrradiatedEffect and AcidBlock; only Mask visual particle branch."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material ARMOR 2 configured, max durability 260, toughness 0.5, enchantability 25; native environmental factor f=1-n/4, distinct caller guards and requested effects."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "One equipped LivingEntity in exact HEAD slot; passive n counter applies only where caller queries it, no independent cast, AOE, projectile or offensive target."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No mana, cooldown, charge or direct durability debit by owner's six methods; configured max durability 260 and polymer_plate repair reference, actual costs not observed."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Multiple native risk consumers share getWornAmount; no authority-safe per-player extension or verified mutation hook. NO_MUTATION, no extra Irradiated, acid damage or Mastery settlement."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "SHA verified original publisher six methods and seven typed consumer owners, original material seal, official five-value armor enum; read-only exact replay, 34 synthetic adversarial checks; no installed transformed runtime or physical QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/hazmat-chestplate.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Hazmat Chestplate: seven-axis native static catalog for CHEST, armor 4 and configured max durability 300; zero new casts. Does not guarantee accepted radiation/acid protection, engine transformed dispatch, hooks or gameplay QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher SHA-exact alexscaves 1.0.10, independent class HazmatArmorItem, factory lambda$static$70, exact CHESTPLATE/CHEST binding, official MC1.21.1 ordinal 1, recipe/model hash."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Full six-method HazmatArmorItem surface, four-slot getWornAmount and native consumer callsites for radioactive items, IrradiatedEffect and AcidBlock; only Mask visual particle branch."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material ARMOR 4 configured, max durability 300, toughness 0.5, enchantability 25; native environmental factor f=1-n/4, distinct caller guards and requested effects."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "One equipped LivingEntity in exact CHEST slot; passive n counter applies only where caller queries it, no independent cast, AOE, projectile or offensive target."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No mana, cooldown, charge or direct durability debit by owner's six methods; configured max durability 300 and polymer_plate repair reference, actual costs not observed."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Multiple native risk consumers share getWornAmount; no authority-safe per-player extension or verified mutation hook. NO_MUTATION, no extra Irradiated, acid damage or Mastery settlement."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "SHA verified original publisher six methods and seven typed consumer owners, original material seal, official five-value armor enum; read-only exact replay, 34 synthetic adversarial checks; no installed transformed runtime or physical QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/hazmat-leggings.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Hazmat Leggings: seven-axis native static catalog for LEGS, armor 5 and configured max durability 320; zero new casts. Does not guarantee accepted radiation/acid protection, engine transformed dispatch, hooks or gameplay QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher SHA-exact alexscaves 1.0.10, independent class HazmatArmorItem, factory lambda$static$71, exact LEGGINGS/LEGS binding, official MC1.21.1 ordinal 2, recipe/model hash."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Full six-method HazmatArmorItem surface, four-slot getWornAmount and native consumer callsites for radioactive items, IrradiatedEffect and AcidBlock; only Mask visual particle branch."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material ARMOR 5 configured, max durability 320, toughness 0.5, enchantability 25; native environmental factor f=1-n/4, distinct caller guards and requested effects."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "One equipped LivingEntity in exact LEGS slot; passive n counter applies only where caller queries it, no independent cast, AOE, projectile or offensive target."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No mana, cooldown, charge or direct durability debit by owner's six methods; configured max durability 320 and polymer_plate repair reference, actual costs not observed."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Multiple native risk consumers share getWornAmount; no authority-safe per-player extension or verified mutation hook. NO_MUTATION, no extra Irradiated, acid damage or Mastery settlement."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "SHA verified original publisher six methods and seven typed consumer owners, original material seal, official five-value armor enum; read-only exact replay, 34 synthetic adversarial checks; no installed transformed runtime or physical QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/hazmat-boots.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Hazmat Boots: seven-axis native static catalog for FEET, armor 2 and configured max durability 220; zero new casts. Does not guarantee accepted radiation/acid protection, engine transformed dispatch, hooks or gameplay QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher SHA-exact alexscaves 1.0.10, independent class HazmatArmorItem, factory lambda$static$72, exact BOOTS/FEET binding, official MC1.21.1 ordinal 3, recipe/model hash."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Full six-method HazmatArmorItem surface, four-slot getWornAmount and native consumer callsites for radioactive items, IrradiatedEffect and AcidBlock; only Mask visual particle branch."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material ARMOR 2 configured, max durability 220, toughness 0.5, enchantability 25; native environmental factor f=1-n/4, distinct caller guards and requested effects."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "One equipped LivingEntity in exact FEET slot; passive n counter applies only where caller queries it, no independent cast, AOE, projectile or offensive target."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No mana, cooldown, charge or direct durability debit by owner's six methods; configured max durability 220 and polymer_plate repair reference, actual costs not observed."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Multiple native risk consumers share getWornAmount; no authority-safe per-player extension or verified mutation hook. NO_MUTATION, no extra Irradiated, acid damage or Mastery settlement."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "SHA verified original publisher six methods and seven typed consumer owners, original material seal, official five-value armor enum; read-only exact replay, 34 synthetic adversarial checks; no installed transformed runtime or physical QA."
+        }
+      }
     }
   },
   "providers": {},

@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 122/134.**
+**Fichas catalogadas (somente fichas detectadas): 126/134.**
 
-**Barra das fichas catalogadas:** `██████████████████░░ 91.0%`
+**Barra das fichas catalogadas:** `██████████████████░░ 94.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 122/134.**
+**Homologadas para perks (somente fichas detectadas): 126/134.**
 
-**Barra dos contratos técnicos estáticos:** `██████████████████░░ 91.0%`
+**Barra dos contratos técnicos estáticos:** `██████████████████░░ 94.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -127,10 +127,10 @@
 | ✅ | Gingerbread Chestplate | [items/gingerbread-chestplate.md](items/gingerbread-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gingerbread Helmet | [items/gingerbread-helmet.md](items/gingerbread-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gingerbread Leggings | [items/gingerbread-leggings.md](items/gingerbread-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Hazmat Boots | [items/hazmat-boots.md](items/hazmat-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Hazmat Chestplate | [items/hazmat-chestplate.md](items/hazmat-chestplate.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Hazmat Leggings | [items/hazmat-leggings.md](items/hazmat-leggings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Hazmat Mask | [items/hazmat-mask.md](items/hazmat-mask.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Hazmat Boots | [items/hazmat-boots.md](items/hazmat-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Hazmat Chestplate | [items/hazmat-chestplate.md](items/hazmat-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Hazmat Leggings | [items/hazmat-leggings.md](items/hazmat-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Hazmat Mask | [items/hazmat-mask.md](items/hazmat-mask.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hood Of Darkness | [items/hood-of-darkness.md](items/hood-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [items/pewen-boat.md](items/pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [items/pewen-chest-boat.md](items/pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -168,7 +168,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ⚠️ | Equipment | 5/6 (83.3%) | 5 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 24/35 (68.6%) | 24 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Items | 28/35 (80.0%) | 28 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 15/15 (100.0%) | 15 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
