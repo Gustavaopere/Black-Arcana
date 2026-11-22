@@ -178,3 +178,11 @@
 **Contrato estático:** somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../meta/PERK-READY-CERTIFICATIONS.json) recebem ✅ nessa coluna, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido. Hooks e QA exigem seus próprios estados verificados no certificado, sem promoção a partir do catálogo.
 
 Arquivos técnicos de apoio e inventários agregados continuam relevantes, mas não são contabilizados como objetos concluídos. O algoritmo deve ser revisado por provider antes de declarar universo fechado.
+
+## Evidências transitivas de persistência da Gazing Pearl (sem criar novos objetos)
+
+Os dossiês a seguir estão em ordem alfabética do recorte técnico; complementam a [ficha individual](items/gazing-pearl.md), mas **não** promovem seu contrato estático, hooks, QA física ou os contadores acima.
+
+- [IO worker — callers `ServerLevel.save` e `WorldUpgrader.work`](EXACT-NEOFORGE-211248-GAZING-PEARL-IOWORKER-CALLSITES-ABI.md) — dois callers JVM da espera no overlay; estático.
+- [NBT — escritores de Tag](EXACT-NEOFORGE-211248-GAZING-PEARL-TAG-WRITERS.md) — dispatch de serializers distribuídos; estático.
+- [Shutdown — `stopServer → saveAllChunks → ServerLevel.save`](EXACT-NEOFORGE-211248-GAZING-PEARL-SERVERLEVEL-SAVE-CALLSITES.md) — cadeia JVM com flags booleanas e limites de persistência; estático.
