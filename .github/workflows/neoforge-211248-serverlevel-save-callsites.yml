@@ -6,6 +6,10 @@ on:
       - '.github/workflows/neoforge-211248-serverlevel-save-callsites.yml'
       - 'docs/qa/neoforge_211248_serverlevel_save_callsite_probe.py'
       - 'docs/qa/neoforge_211248_serverlevel_save_callsite_checks.py'
+      - 'docs/qa/neoforge_211248_serverlevel_save_callsite_checks.py'
+      - 'docs/qa/neoforge_211248_serverlevel_save_callsite_negative.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/INDEX.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-IOWORKER-CALLSITES-ABI.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-SERVERLEVEL-SAVE-CALLSITES.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-SERVERLEVEL-SAVE-CALLSITES.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md'
@@ -23,7 +27,10 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Compile bounded read-only JVM scanner
-        run: python3 -m py_compile docs/qa/neoforge_211248_serverlevel_save_callsite_probe.py
+        run: |
+          python3 -m py_compile docs/qa/neoforge_211248_serverlevel_save_callsite_probe.py
+          python3 -m py_compile docs/qa/neoforge_211248_serverlevel_save_callsite_checks.py
+          python3 -m py_compile docs/qa/neoforge_211248_serverlevel_save_callsite_negative.py
       - name: Download and SHA-verify official NeoForge 21.1.248 installer
         shell: bash
         run: |
@@ -113,6 +120,23 @@ jobs:
           assert second['mutation']=='NO_MUTATION'
           print('PASS: distributed exact two-layer save callsites without shutdown claims')
           PY
+      - name: Verify exact two-report SHA, JVM method bodies and shutdown flags
+        run: |
+          python3 docs/qa/neoforge_211248_serverlevel_save_callsite_checks.py \
+            --serverlevel-report build/serverlevel-save-callsites-211248/report.json \
+            --saveallchunks-report build/serverlevel-save-callsites-211248/saveallchunks_report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-SERVERLEVEL-SAVE-CALLSITES.json'
+          test "$(sha256sum build/serverlevel-save-callsites-211248/report.json | cut -d ' ' -f1)" = \
+            '70ea6910ab39cf59d2c3b1a3347aa54d09dbdfe98f65dee42356c555c23ec4b8'
+          test "$(sha256sum build/serverlevel-save-callsites-211248/saveallchunks_report.json | cut -d ' ' -f1)" = \
+            '979f36eee46e8848216ad8429208627a68a4ae18654dd1073c9bf1ff5b562708'
+      - name: Reject nine re-sealed forged JVM shutdown/boolean flags
+        run: |
+          python3 docs/qa/neoforge_211248_serverlevel_save_callsite_negative.py \
+            --serverlevel-report build/serverlevel-save-callsites-211248/report.json \
+            --saveallchunks-report build/serverlevel-save-callsites-211248/saveallchunks_report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-SERVERLEVEL-SAVE-CALLSITES.json' \
+            --checker docs/qa/neoforge_211248_serverlevel_save_callsite_checks.py
       - name: Upload JSON callsite report
         if: always()
         uses: actions/upload-artifact@v7
