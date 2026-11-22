@@ -156,6 +156,13 @@ def check(path: Path, partial_manifest_path: Path) -> None:
         for m in support_rows
     }
     assert support_fingerprints == OTHER_PINNED_METHODS
+    fingerprint = {
+        (x["declaration"]["name"], x["declaration"]["descriptor"]): (
+            x["instruction_count"], x["instruction_sha256"],
+            x["declaration"]["code_sha256"],
+        )
+        for x in cls["methods"]
+    }
     for identity, (count, sha) in OTHER_PINNED_METHODS.items():
         assert identity in fingerprint
         assert fingerprint[identity][:2] == (count, sha), (
@@ -193,13 +200,6 @@ def check(path: Path, partial_manifest_path: Path) -> None:
         seal["item_registry"]["factory_instruction_count"],
         seal["item_registry"]["factory_instruction_sha256"],
     )], "registry factory normalized instruction drift"
-    fingerprint = {
-        (x["declaration"]["name"], x["declaration"]["descriptor"]): (
-            x["instruction_count"], x["instruction_sha256"],
-            x["declaration"]["code_sha256"],
-        )
-        for x in cls["methods"]
-    }
     for ident, signature in PINNED_INTERFACE_METHODS.items():
         assert fingerprint.get(ident) == signature, ("known SHA drift", ident)
     assert isinstance(cls["fields"], list)
