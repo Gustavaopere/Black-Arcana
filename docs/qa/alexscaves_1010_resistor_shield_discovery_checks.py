@@ -84,8 +84,9 @@ def check(path: Path, partial_manifest_path: Path) -> None:
         "6be6cb4de8570768436590ecdd12cfd11e44f1c9b8e76b7eb58a324d6b4d63ce"
     )
     assert seal["item_registry"]["factory_instruction_sha256"] == (
-        "NOT_EXTRACTED_FROM_PRIOR_REGISTRY_TABLE"
+        "d5746049d40ac0bafdb3b78aac9a4134cba1f81838a06bb5866b30c3143402bc"
     )
+    assert seal["item_registry"]["factory_instruction_count"] == 4
     assert seal["owner"]["full_method_census"] == "PENDING_NEW_DISCOVERY"
     assert seal["contract_axes"]["targeting"] == "NOT_VERIFIED"
     assert seal["contract_axes"]["costs"] == "NOT_VERIFIED"
@@ -144,6 +145,16 @@ def check(path: Path, partial_manifest_path: Path) -> None:
     assert factory_codes == [seal["item_registry"]["factory_code_sha256"]], (
         "typed registry factory SHA drift"
     )
+    factory_fingerprints = [
+        (m["instruction_count"], m["instruction_sha256"])
+        for m in registry["bodies"]
+        if m["declaration"]["name"] == "lambda$static$20"
+        and m["declaration"]["descriptor"] == "()Lnet/minecraft/world/item/Item;"
+    ]
+    assert factory_fingerprints == [(
+        seal["item_registry"]["factory_instruction_count"],
+        seal["item_registry"]["factory_instruction_sha256"],
+    )], "registry factory normalized instruction drift"
     fingerprint = {
         (x["declaration"]["name"], x["declaration"]["descriptor"]): (
             x["instruction_count"], x["instruction_sha256"],
