@@ -23,20 +23,26 @@ SIGNATURE = "(Lnet/minecraft/util/ProgressListener;ZZ)V"
 NEOFORGE_UNIVERSAL_SHA256 = "90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5"
 TARGET = {"owner": OWNER, "name": METHOD, "descriptor": SIGNATURE}
 SCOPE = "NEOFORGE_211248_SERVERLEVEL_SAVE_CALLSITE_CENSUS_DISTRIBUTED_ONLY"
+TARGETS = {
+    "serverlevel-save": {"target": TARGET, "scope": SCOPE},
+    "saveallchunks": {"target": {"owner": "net/minecraft/server/MinecraftServer",
+                                  "name": "saveAllChunks", "descriptor": "(ZZZ)Z"},
+                      "scope": "NEOFORGE_211248_SAVEALLCHUNKS_CALLSITE_CENSUS_DISTRIBUTED_ONLY"},
+}
 MAX_CLASS_BYTES = 8_000_000
 MAX_CLASSES = 35_000
 MAX_CANDIDATES = 140
 MAX_INSNS = 4_500
 MAX_REPORT_BYTES = 510_000
 
-def matching_methodref(reader, i):
+def matching_methodref(reader, i, target):
     entry = reader.pool[i]
     if entry is None or entry[0] not in (10, 11):
         return False
     _, owner, signature = reader.resolve(i)
-    return owner == OWNER and signature[1:] == [METHOD, SIGNATURE]
+    return owner == target["owner"] and signature[1:] == [target["name"], target["descriptor"]]
 
-def scan_archive(path: Path, label: str, javap: str):
+def scan_archive(path: Path, label: str, javap: str, target: dict):
     with ZipFile(path) as z:
         all_names = z.namelist()
         require(len(all_names) == len(set(all_names)), "duplicate JAR member")
@@ -50,7 +56,7 @@ def scan_archive(path: Path, label: str, javap: str):
                     "invalid or oversized official class: " + path_name)
             reader = ClassReader(raw)
             require(reader.name + ".class" == path_name, "class path mismatch: " + path_name)
-            refs = [i for i in range(1, len(reader.pool)) if matching_methodref(reader, i)]
+            refs = [i for i in range(1, len(reader.pool)) if matching_methodref(reader, i, target)]
             handles = [i for i, entry in enumerate(reader.pool)
                        if entry and entry[0] == 15 and entry[1][1] in refs]
             if refs or handles:
@@ -84,15 +90,16 @@ def scan_archive(path: Path, label: str, javap: str):
             "class_roster_sha256":digest(("\n".join(classes)+"\n").encode("utf8")),
             "typed_candidates":candidates,"direct_invoke_sites":direct}
 
-def audit(server: Path, srg: Path, universal: Path, javap: str):
+def audit(server: Path, srg: Path, universal: Path, javap: str, mode: str):
     dist=verify_distribution(server,srg)
     require(universal.stat().st_size==3551268 and
             digest(universal.read_bytes())==NEOFORGE_UNIVERSAL_SHA256,
             "unexpected official universal JAR identity")
-    archives = [scan_archive(path,label,javap) for label,path in (
+    spec = TARGETS[mode]
+    archives = [scan_archive(path,label,javap,spec["target"]) for label,path in (
         ("NEOFORGE_OVERLAY",server),("INSTALLED_MINECRAFT_SRG",srg),
         ("NEOFORGE_UNIVERSAL",universal))]
-    return {"schema_version":1,"scope":SCOPE,"target":TARGET,
+    return {"schema_version":1,"scope":spec["scope"],"target":spec["target"],
             "distribution":dist,"archives":archives,
             "scope_limit":"three exact official distributed JARs only; no ModLauncher transform or modpack-wide proof",
             "server_stop_arguments":"NOT_VERIFIED",
@@ -111,15 +118,16 @@ def main():
     for name in ("server","srg","universal","output"):
         ap.add_argument("--"+name,type=Path,required=True)
     ap.add_argument("--javap",default="javap")
+    ap.add_argument("--mode", choices=sorted(TARGETS), default="serverlevel-save")
     a=ap.parse_args()
     require(a.output.suffix==".json" and not a.output.exists(),"new report path required")
-    report=audit(a.server,a.srg,a.universal,a.javap)
+    report=audit(a.server,a.srg,a.universal,a.javap,a.mode)
     raw=canonical(report).encode("utf8")
     require(0<len(raw)<=MAX_REPORT_BYTES,"bounded report size exceeded")
     a.output.parent.mkdir(parents=True,exist_ok=True)
     a.output.write_bytes(raw)
-    print("SERVERLEVEL_SAVE_CALLSITE_REPORT_SHA256",hashlib.sha256(raw).hexdigest())
-    print("SERVERLEVEL_SAVE_CALLSITE_REPORT_BYTES",len(raw))
+    print("SAVE_CALLSITE_REPORT_SHA256",a.mode,hashlib.sha256(raw).hexdigest())
+    print("SAVE_CALLSITE_REPORT_BYTES",a.mode,len(raw))
     for archive in report["archives"]:
         print("ARCHIVE",archive["archive"],archive["jar_sha256"],
               "class_entries",archive["class_entries_scanned"],
