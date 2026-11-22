@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/alexscaves-1010-resistor-shield-discovery.yml'
       - 'docs/qa/alexscaves_1010_resistor_shield_discovery.py'
+      - 'docs/qa/alexscaves_1010_resistor_shield_dependency_probe.py'
       - 'docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py'
       - 'docs/qa/alexscaves_1010_resistor_shield_partial_provenance.py'
       - 'docs/qa/alexscaves_1010_remote_detonator_boundary_checks.py'
@@ -32,6 +33,7 @@ jobs:
       - name: Syntax of read-only census and fail-closed checker
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_resistor_shield_discovery.py
+          python3 -m py_compile docs/qa/alexscaves_1010_resistor_shield_dependency_probe.py
           python3 -m py_compile docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py
           python3 -m py_compile docs/qa/alexscaves_1010_resistor_shield_partial_provenance.py
           python3 -m py_compile docs/qa/alexscaves_1010_remote_detonator_boundary_checks.py
@@ -66,6 +68,12 @@ jobs:
             --jar build/resistor-shield-1010/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/resistor-shield-1010/report.json
+      - name: Discover SHA-pinned ACCompat helpers and exact Resistor Shield JSON contents
+        run: |
+          python3 docs/qa/alexscaves_1010_resistor_shield_dependency_probe.py \
+            --jar build/resistor-shield-1010/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/resistor-shield-1010/dependencies.json
       - name: Verify bounded report and malformed-input rejection
         run: |
           python3 docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py \
@@ -122,6 +130,15 @@ jobs:
           path: build/resistor-shield-1010/boundaries.json
           if-no-files-found: warn
           retention-days: 14
+      - name: Upload SHA-exact Resistor Shield transitive dependencies
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-resistor-shield-dependencies
+          path: build/resistor-shield-1010/dependencies.json
+          if-no-files-found: warn
+          retention-days: 14
+
       - name: Upload reproducible native report
         if: always()
         uses: actions/upload-artifact@v7
