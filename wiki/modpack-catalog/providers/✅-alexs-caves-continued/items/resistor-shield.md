@@ -25,6 +25,18 @@
 
 **Gatilhos de defesa/uso:** `use`, `useOn`, ataque recebido, `getUseAnimation`, `getUseDuration`, `inventoryTick`, efeitos ativos/passivos, condicionais de equipamento, guardas client/server, ataque/block events, callbacks de proteção e critério de cancelamento: **NÃO VERIFICADOS para `ResistorShieldItem`**. É incorreto inferir que o comportamento nativo equivale ao `ShieldItem` vanilla sem confirmar hierarquia e overrides físicos. Nenhuma ordem de execução de bloqueio ou cooldown foi certificada.
 
+## Callbacks nativos já auditados em contratos de suporte (publisher 1.0.10)
+
+**`acInventoryTick(ItemStack,Level,Entity,boolean):void` — 79 instruções**, SHA-256 das instruções `3cec5ec860390c581f2795f6c2f128c2c1507593934eb6b40db608bf6d182b20`. A [prova de ACTickingItem](../EXACT-TICKING-ITEM-CONTRACT-1.0.10.md) e seu [manifesto](../EXACT-TICKING-ITEM-DISCOVERY-1.0.10.json) já identificaram esse corpo no classfile de ResistorShieldItem. O método lê `getUseTime(stack)` @1; se `UseTime != 0`, `entity instanceof LivingEntity` e a stack `!equals(living.getUseItem())`, solicita `setUseTime(stack,0)` @34 e grava `PrevUseTime=0` via `ACCompat.getOrCreateTag` / `CompoundTag.putInt` / `ACCompat.setTag` @38–55 **antes** da guarda `Level.isClientSide` @59. No ramo cliente, `isScarlet(stack)` @66, `getSwitchTime(stack)` @72 e campos auxiliares alimentam o valor anterior `PrevSwitchTime`; se scarlet e `SwitchTime<5`, pede incremento de **1** @139; se não scarlet e `SwitchTime>0`, pede decremento de **1** @160. O limite `5` é **limite local de um contador de troca**, não duração de defesa, cooldown certificado, escala de dano ou chance. O método não pode ser reexecutado por perks sem duplicar efeitos de tick. Side real de componentes gravados, sincronização e os helpers `getUseTime/isScarlet/setSwitchTime` exigem inspeção individual.
+
+**`acExtraRepairMaterials():Item[]` — 15 instruções**, SHA-256 `b1c165d8b02b3531e59afa61434eb1da01506822154ef3a4d9db9cc34f60812e`. A [prova de ACRepairableItem](../EXACT-REPAIRABLE-ITEM-CONTRACT-1.0.10.md) e o [manifesto de métodos](../EXACT-REPAIRABLE-ITEM-DISCOVERY-1.0.10.json) mostram construção de array com **2 identidades**, `ACItemRegistry.SCARLET_NEODYMIUM_INGOT` @6 e `ACItemRegistry.AZURE_NEODYMIUM_INGOT` @20. A consulta é por identidade `ItemStack.is(Item)`, não por uma categoria abstrata; não comprova que o material foi consumido ou que o item foi restaurado.
+
+**`isValidRepairItem(ItemStack,ItemStack):boolean` — 13 instruções**, SHA-256 `56ef4089abe5ca807759ea066eaab7be291dd520d357c2fab2a6de913f3fa597`. Primeiro solicita `ACRepairableItem.isExtraRepairMaterial(this, repairStack)` @2; se não aceito, delega a `ShieldItem.isValidRepairItem` @11. A referência vanilla auditada usa `PLANKS` ou fallback, mas **a união efetiva de tags no modpack e o settlement da bigorna não foram testados**. Esse callback determina elegibilidade, não um custo de XP, número de ingots, fração restaurada ou receita garantida.
+
+**`initializeClient(Consumer<IClientItemExtensions>):void` — 6 instruções**, Code SHA `ab25a13fc141e9c68e695fdce843d4563c474d551d77359cefa387da179e2a9a`, instruction SHA `3a6c2d33865c1d1707dcbd93e1f9e0bd3bd706c9817ddb988b4e0589ebb14cf4`, de [ACClientExtensionItem](../systems/client-extension.md) e [selo](../EXACT-CLIENT-EXTENSION-1.0.10.json). Encaminha `AlexsCaves.PROXY` @1 → `CommonProxy.getISTERProperties` @4 → `IClientItemExtensions` @7 → `Consumer.accept` @10. É extensão de apresentação/renderer, **não** hook de combate nem estado por jogador.
+
+**Cuidado de escopo:** os quatro callbacks estão demonstrados em relatórios nativos anteriores **apenas nos contratos de suporte relevantes**. Não há neste momento censo completo de todos os métodos e todos os consumidores de ResistorShieldItem na PR #1148. Esses fatos aprofundam a ficha mas **não promovem o contrato integral para ✅**.
+
 ## Efeitos, parâmetros, danos e custos
 
 | Campo técnico | Situação nesta ficha |
@@ -33,8 +45,8 @@
 | Tipo, valor e fonte de dano | ⚠️ **NÃO VERIFICADOS**; não presumir que o item inflige dano |
 | Redução/mitigação de dano, ângulo de bloqueio e knockback | ⚠️ **NÃO VERIFICADOS**; nome e herança aparente não estabelecem fórmula |
 | AOE, partículas, projéteis, entidades invocadas | ⚠️ **NÃO VERIFICADOS**; presença ou ausência exige inspeção dos métodos |
-| Duração, use ticks, cooldown, recarga | ⚠️ **NÃO VERIFICADOS** |
-| Durabilidade, stack size, custo de reparo/uso, mana, XP | ⚠️ **NÃO VERIFICADOS** para o item, exceto o **count == 1** como condição de consulta de encantabilidade, **não como débito** |
+| Duração, use ticks, cooldown, recarga | ⚠️ **NÃO VERIFICADOS** para defesa; o tick tem `SwitchTime` delimitado localmente entre guardas com `0` e `5`, que não equivale a cooldown |
+| Durabilidade, stack size, custo de reparo/uso, mana, XP | ⚠️ **NÃO VERIFICADOS** para o item; **count == 1** limita encantabilidade, não é débito. Dois materiais extras são elegíveis para reparo, sem comprovação de custo consumido |
 | Fórmulas/multiplicadores de defesa/atributos/efeitos | ⚠️ **NÃO VERIFICADOS** |
 | Valor retornado por `getEnchantmentValue()` | **1**, escopo da interface e owner auditado, não nível do enchant |
 | `isEnchantable(stack)` local | **`stack.getCount()==1`**, sem certificar aceite final por mesa ou bigorna |
