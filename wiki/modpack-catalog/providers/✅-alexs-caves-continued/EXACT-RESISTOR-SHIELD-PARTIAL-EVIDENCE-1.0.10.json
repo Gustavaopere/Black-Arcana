@@ -29,7 +29,9 @@
     "bootstrap_offset": 650,
     "registry_runtime_bootstrap": "NOT_TESTED",
     "factory_code_sha256": "6be6cb4de8570768436590ecdd12cfd11e44f1c9b8e76b7eb58a324d6b4d63ce",
-    "factory_instruction_sha256": "NOT_EXTRACTED_FROM_PRIOR_REGISTRY_TABLE"
+    "factory_instruction_sha256": "d5746049d40ac0bafdb3b78aac9a4134cba1f81838a06bb5866b30c3143402bc",
+    "factory_instruction_count": 4,
+    "factory_caller_evidence": "AC_ENCHANTABLE_ITEM_DISCOVERY_V1.constructor_factories.lambda$static$20 and clinit_bootstrap_windows offset 650"
   },
   "owner": {
     "name": "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem",
