@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "scope": "NEOFORGE_211248_IOUTILITIES_WRITE_NBT_COMPRESSED_DISTRIBUTED_ONLY",
+  "evidence": {
+    "run_id": 45047273632,
+    "artifact_id": 14764335789,
+    "report_bytes": 64358,
+    "report_sha256": "fa32022e12085683d0d4fe5f85e9e9ab15a979d1901f47ae2229f77849687092"
+  },
+  "engine": {
+    "minecraft_version": "1.21.1",
+    "neoforge_version": "21.1.248",
+    "installer_sha256": "68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c",
+    "neoforge_server_sha256": "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359",
+    "neoforge_server_bytes": 5675624,
+    "minecraft_srg_sha256": "26ca9c40d7e1681190b428583c38816852218e78df3f8bdb60a59a78503aec71",
+    "minecraft_srg_bytes": 14246609,
+    "modlauncher_loaded_bytes": "NOT_OBSERVED"
+  },
+  "library": {
+    "path": "net/neoforged/neoforge/21.1.248/neoforge-21.1.248-universal.jar",
+    "bytes": 3551268,
+    "sha256": "90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5",
+    "worker_class_sha256": "3c4cfda19b620562486ca18af3d7c095c94a54c31d1028bf8e5d9860952e115a"
+  },
+  "owner": "net/neoforged/neoforge/common/IOUtilities",
+  "write_callback": {
+    "owner": "net/neoforged/neoforge/common/IOUtilities$WriteCallback",
+    "class_sha256": "788ce7628d40835cc3b061e231efbc43e0366eb16c2f334143bf43fa6bac4618",
+    "access": 1537,
+    "method_name": "write",
+    "method_desc": "(Ljava/io/OutputStream;)V",
+    "method_access": 1025
+  },
+  "method_roster_sha256": "361a1f55bb19054b97ef836b08a75fb6188062b8d381ae2249392e13801619dc",
+  "methods": {
+    "<clinit>": {
+      "code_sha256": "0bb043d2461fc95dc8ed4154dbc1065e036c38343f2b289fb52de2fe3ed6790c",
+      "instruction_sha256": "6f8292faf10995e0d5b6fc39036e8cc149a0e8840e5363f958fa557a5e753320",
+      "instruction_count": 18
+    },
+    "<init>": {
+      "code_sha256": "d6f7264189858f154b120ac2e9b76f4b4dae9ddb629e4ec627af7810207e1a24",
+      "instruction_sha256": "a4e909f6fbb3424695cfd8081458c1db352953a8b4021610a41ca8bcbc874b14",
+      "instruction_count": 3
+    },
+    "atomicWrite": {
+      "code_sha256": "4243612c391911a78edd3bdc7b463eeb56e153347aff8d3b2cc77b992ff384bb",
+      "instruction_sha256": "c55fc94ab58f0edf170e4e9a5d4d7d77fbe611b233817937d2a0873ee21996d3",
+      "instruction_count": 76
+    },
+    "cleanupTempFiles": {
+      "code_sha256": "395ee751097e1bf9edf6bf9b36aadddfbdc11e64bd2daf2540b7ff8a60a0862b",
+      "instruction_sha256": "de3d15573a4f46980ed52d149e5c9ce07a9505ace328336e3d47526f3d404cf9",
+      "instruction_count": 41
+    },
+    "createPredicate": {
+      "code_sha256": "34bec93ff2c3f51c603e1fc387ffa03d95d0f0c701530bb6aa55b1918eb8bdd5",
+      "instruction_sha256": "7cb42234bc20830a90563d7b8db6939bb552d898d666e251f56e11139c36a1b9",
+      "instruction_count": 3
+    },
+    "lambda$createPredicate$0": {
+      "code_sha256": "5525c48fd77e1449dd2f1f79104774ef7b8bb3c87792dec5f9dee68ac66b9adb",
+      "instruction_sha256": "c0552f06f7d94e6e6c460621e35848d84bd1d4531ad8417294a0ec3d7ca8e81d",
+      "instruction_count": 18
+    },
+    "lambda$writeNbt$2": {
+      "code_sha256": "b939a9f8b68f1f00c117aabe1ca27289c75f5b62032cefaeaafa169e328b2992",
+      "instruction_sha256": "80463944d23fe92d0e349c3a6c4e445f7fec41b099cebfb8fcb43cdd23fcae03",
+      "instruction_count": 40
+    },
+    "lambda$writeNbtCompressed$1": {
+      "code_sha256": "59552640fb080b54d00774eafec82e587ea590fb0f3a533341277837282245c2",
+      "instruction_sha256": "797a6c2cc0921f993e36cfd23cfc277f2c3e9755b4f37910738897f4366b64da",
+      "instruction_count": 22
+    },
+    "tryCleanupTempFiles": {
+      "code_sha256": "5de26eed4fcf4c7baa3713c2660bdb7011dcee72c47af9434275980663047a4c",
+      "instruction_sha256": "3d911c397c8220050a199013f04af56ab60948ca853cbbd3b564dd13653186e6",
+      "instruction_count": 25
+    },
+    "tryListTempFiles": {
+      "code_sha256": "70165f8c019634328311c0d8c71ff1d7a25a99aac0d2367e1213bca46b78c67f",
+      "instruction_sha256": "41046cf08ec6f5303cb0e9b4059fbf4fe7f12d8c37a9372b99c94dcfd92cd165",
+      "instruction_count": 37
+    },
+    "waitUntilIOWorkerComplete": {
+      "code_sha256": "4cc9868460e4ae0ae254c122b6703c63d66f4dabd91338bec21c505bd73598e7",
+      "instruction_sha256": "bdc84de5c2a8c49dbdfb26bda8dbefdab9620df9f5d91a07b21ab4f29d65eec0",
+      "instruction_count": 7
+    },
+    "withIOWorker": {
+      "code_sha256": "f160c3418e9acf857b202582af5a798a0f2dfa22a2bd069b2c49e4154553bf42",
+      "instruction_sha256": "012979059e22a5c83858d5319dc1ba9af09bdba746bdc4668564e22ce4ff859e",
+      "instruction_count": 6
+    },
+    "writeNbt": {
+      "code_sha256": "89f4fe320d68a840204e9f821ba15f8b1bec742a85f3f12b3b8eb445081fe533",
+      "instruction_sha256": "2c106e44670698a392058144501ae07d9da9b964189b335c8de5298e601ce1c2",
+      "instruction_count": 5
+    },
+    "writeNbtCompressed": {
+      "code_sha256": "272d495a87ec57b2aefdc0d24d2183cf6e7aed795473296a9b4373c295d58ef9",
+      "instruction_sha256": "6f2124caf4f7bc877d8fc9a6a7fafd2655454edbab1a59c7fd6a1ce209dfd3d6",
+      "instruction_count": 5
+    }
+  },
+  "bootstrap": {
+    "writeNbtCompressed": {
+      "cp_index": 88,
+      "bootstrap_index": 1,
+      "bootstrap_table_count": 3,
+      "bootstrap_table_sha256": "0d1bc1cb363840de20b0b7c2cb37bf079979470a438a1193b7cea7a53b726b82",
+      "lambda": "lambda$writeNbtCompressed$1",
+      "reference_kind": 6
+    },
+    "writeNbt": {
+      "cp_index": 96,
+      "bootstrap_index": 2,
+      "bootstrap_table_count": 3,
+      "bootstrap_table_sha256": "0d1bc1cb363840de20b0b7c2cb37bf079979470a438a1193b7cea7a53b726b82",
+      "lambda": "lambda$writeNbt$2",
+      "reference_kind": 6
+    }
+  },
+  "atomic_handlers": [
+    {
+      "start": 35,
+      "end": 57,
+      "target": 68,
+      "catch": "java/lang/Throwable"
+    },
+    {
+      "start": 74,
+      "end": 78,
+      "target": 81,
+      "catch": "java/lang/Throwable"
+    },
+    {
+      "start": 93,
+      "end": 109,
+      "target": 112,
+      "catch": "java/nio/file/AtomicMoveNotSupportedException"
+    },
+    {
+      "start": 27,
+      "end": 129,
+      "target": 132,
+      "catch": "java/lang/Exception"
+    },
+    {
+      "start": 133,
+      "end": 138,
+      "target": 141,
+      "catch": "java/lang/Exception"
+    }
+  ],
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "limits": {
+    "loaded_modlauncher": "NOT_OBSERVED",
+    "modpack_exact_binary": "NOT_VERIFIED",
+    "NbtIo_writeCompressed_implementation": "NOT_AUDITED",
+    "filesystem_provider_atomic_move": "NOT_TESTED",
+    "crash_durability": "NOT_TESTED",
+    "physical_save_and_reload": "NOT_TESTED",
+    "shutdown_wait_callsite": "NOT_VERIFIED",
+    "reputation_sync": "NOT_TESTED"
+  }
+}

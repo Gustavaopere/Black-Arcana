@@ -11,6 +11,8 @@ on:
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-WRITE-NBT-ABI.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-WRITE-NBT-ABI.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-IOWORKER-ABI.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-SAVEDDATA-ABI.md'
   workflow_dispatch:
 permissions:
   contents: read
@@ -27,6 +29,7 @@ jobs:
       - name: Compile bounded read-only inspector
         run: |
           python3 -m py_compile docs/qa/neoforge_211248_gazing_pearl_write_nbt_compressed_probe.py
+          python3 -m py_compile docs/qa/neoforge_211248_gazing_pearl_write_nbt_compressed_checks.py
       - name: Download and SHA-verify official NeoForge 21.1.248 Maven installer
         shell: bash
         run: |
@@ -85,6 +88,56 @@ jobs:
           assert x['semantic_magic_roots_delta']==0
           print('PASS: bounded write-NBT distributable static observation only')
           PY
+      - name: Verify exact WriteCallback bootstrap, temporary file, force and move fallback
+        run: |
+          python3 docs/qa/neoforge_211248_gazing_pearl_write_nbt_compressed_checks.py \
+            --report build/gazing-pearl-nbt-write-211248/report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-WRITE-NBT-ABI.json'
+      - name: Reject forged atomic moves, force, fallback, cleanup, callback and IO join
+        run: |
+          python3 - <<'PY'
+          import copy, hashlib, json
+          from pathlib import Path
+          root=Path('build/gazing-pearl-nbt-write-211248')
+          raw=json.loads((root/'report.json').read_text(encoding='utf8'))
+          seal=json.loads(Path('wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-WRITE-NBT-ABI.json').read_text(encoding='utf8'))
+          tests=(
+              ('atomic-move','atomicWrite',105),
+              ('file-force','atomicWrite',54),
+              ('fallback-replace','atomicWrite',121),
+              ('failure-cleanup','atomicWrite',134),
+              ('async-join','waitUntilIOWorkerComplete',3),
+              ('nbt-compressed','lambda$writeNbtCompressed$1',11),
+              ('write-callback-bridge','writeNbtCompressed',2),
+          )
+          for case,name,off in tests:
+              report=copy.deepcopy(raw)
+              manifest=copy.deepcopy(seal)
+              methods=[x for x in report['selected_methods'] if x['declaration']['name']==name]
+              assert len(methods)==1, 'negative method missing'
+              m=methods[0]
+              rows=[x for x in m['instructions'] if x['offset']==off]
+              assert len(rows)==1 and rows[0]['opcode']!='nop'
+              rows[0]['opcode']='nop'
+              canon=json.dumps(m['instructions'],ensure_ascii=False,sort_keys=True,indent=2)+'\n'
+              h=hashlib.sha256(canon.encode()).hexdigest()
+              m['instruction_sha256']=h
+              manifest['methods'][name]['instruction_sha256']=h
+              forge=json.dumps(report,ensure_ascii=False,sort_keys=True).encode()
+              manifest['evidence']['report_sha256']=hashlib.sha256(forge).hexdigest()
+              manifest['evidence']['report_bytes']=len(forge)
+              (root/('forged-'+case+'.json')).write_bytes(forge)
+              (root/('forged-'+case+'-seal.json')).write_text(
+                  json.dumps(manifest,ensure_ascii=False),encoding='utf8')
+          PY
+          for case in atomic-move file-force fallback-replace failure-cleanup async-join nbt-compressed write-callback-bridge; do
+            if python3 docs/qa/neoforge_211248_gazing_pearl_write_nbt_compressed_checks.py \
+              --report "build/gazing-pearl-nbt-write-211248/forged-$case.json" \
+              --manifest "build/gazing-pearl-nbt-write-211248/forged-$case-seal.json"; then
+              echo "::error::UNSAFE_FORGED_WRITE_NBT_CONTRACT_WAS_ACCEPTED_$case"
+              exit 1
+            fi
+          done
       - name: Publish evidence only (no third-party JAR)
         if: always()
         uses: actions/upload-artifact@v7
