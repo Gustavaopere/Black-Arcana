@@ -10550,6 +10550,182 @@
           "reason": "Deterministic exact publisher replay of old lifecycle seal and added registry, item, portal, queue and data proof."
         }
       }
+    },
+    "✅-alexs-caves-continued/items/gingerbread-helmet.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Gingerbread HELMET item is statically individually verified at HELMET ordinal 0; defense 2, configured maximum damage 130. No runtime ability to mutate shared item caches, no active perk execution, no physical QA or provider universe closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher 1.0.10 SHA-exact; registry lambda$static$187 constructs the HELMET item, official MC1.21.1 type ordinal 0 and unique item model/UUID verified."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Native GingerbreadArmorItem constructor, slot gate HEAD, dynamic attribute assembly, damage-only cache and armor texture resolved from all eight bytecode bodies; runtime acceptance remains untested."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material [2,4,5,2] at ordinal 0: ARMOR ADD_VALUE 2, max durability 130, 25 enchantability; speed modifier 0.1D+0.9D*(float damage/float maxDamage), ADD_MULTIPLIED_BASE."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Equipped HEAD slot is local attribute receiver context; no target ray, projectile, range, area, cast, status application, or independent attack in any of the eight class methods."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No per-query resource debit in native GingerbreadArmorItem; material requests max durability 130 and declares Gingerbread Crumbs for repair, with actual wear and crafting untested."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Shared damage-indexed map suppresses isolated per-player mutation; ACCompat.itemAttributes bridge and inherited ArmorItem dispatch do not verify a safe per-player hook; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Exact 1.0.10 publisher original report, eight methods, factory lambda$static$187, official vanilla enum bytecode with SHA hashes and 24 resealed adversarial mutations; no pack-level gameplay QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/gingerbread-chestplate.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Gingerbread CHESTPLATE item is statically individually verified at CHESTPLATE ordinal 1; defense 4, configured maximum damage 150. No runtime ability to mutate shared item caches, no active perk execution, no physical QA or provider universe closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher 1.0.10 SHA-exact; registry lambda$static$188 constructs the CHESTPLATE item, official MC1.21.1 type ordinal 1 and unique item model/UUID verified."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Native GingerbreadArmorItem constructor, slot gate CHEST, dynamic attribute assembly, damage-only cache and armor texture resolved from all eight bytecode bodies; runtime acceptance remains untested."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material [2,4,5,2] at ordinal 1: ARMOR ADD_VALUE 4, max durability 150, 25 enchantability; speed modifier 0.1D+0.9D*(float damage/float maxDamage), ADD_MULTIPLIED_BASE."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Equipped CHEST slot is local attribute receiver context; no target ray, projectile, range, area, cast, status application, or independent attack in any of the eight class methods."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No per-query resource debit in native GingerbreadArmorItem; material requests max durability 150 and declares Gingerbread Crumbs for repair, with actual wear and crafting untested."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Shared damage-indexed map suppresses isolated per-player mutation; ACCompat.itemAttributes bridge and inherited ArmorItem dispatch do not verify a safe per-player hook; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Exact 1.0.10 publisher original report, eight methods, factory lambda$static$188, official vanilla enum bytecode with SHA hashes and 24 resealed adversarial mutations; no pack-level gameplay QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/gingerbread-leggings.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Gingerbread LEGGINGS item is statically individually verified at LEGGINGS ordinal 2; defense 5, configured maximum damage 160. No runtime ability to mutate shared item caches, no active perk execution, no physical QA or provider universe closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher 1.0.10 SHA-exact; registry lambda$static$189 constructs the LEGGINGS item, official MC1.21.1 type ordinal 2 and unique item model/UUID verified."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Native GingerbreadArmorItem constructor, slot gate LEGS, dynamic attribute assembly, damage-only cache and armor texture resolved from all eight bytecode bodies; runtime acceptance remains untested."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material [2,4,5,2] at ordinal 2: ARMOR ADD_VALUE 5, max durability 160, 25 enchantability; speed modifier 0.1D+0.9D*(float damage/float maxDamage), ADD_MULTIPLIED_BASE."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Equipped LEGS slot is local attribute receiver context; no target ray, projectile, range, area, cast, status application, or independent attack in any of the eight class methods."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No per-query resource debit in native GingerbreadArmorItem; material requests max durability 160 and declares Gingerbread Crumbs for repair, with actual wear and crafting untested."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Shared damage-indexed map suppresses isolated per-player mutation; ACCompat.itemAttributes bridge and inherited ArmorItem dispatch do not verify a safe per-player hook; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Exact 1.0.10 publisher original report, eight methods, factory lambda$static$189, official vanilla enum bytecode with SHA hashes and 24 resealed adversarial mutations; no pack-level gameplay QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/gingerbread-boots.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Gingerbread BOOTS item is statically individually verified at BOOTS ordinal 3; defense 2, configured maximum damage 110. No runtime ability to mutate shared item caches, no active perk execution, no physical QA or provider universe closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher 1.0.10 SHA-exact; registry lambda$static$190 constructs the BOOTS item, official MC1.21.1 type ordinal 3 and unique item model/UUID verified."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Native GingerbreadArmorItem constructor, slot gate FEET, dynamic attribute assembly, damage-only cache and armor texture resolved from all eight bytecode bodies; runtime acceptance remains untested."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material [2,4,5,2] at ordinal 3: ARMOR ADD_VALUE 2, max durability 110, 25 enchantability; speed modifier 0.1D+0.9D*(float damage/float maxDamage), ADD_MULTIPLIED_BASE."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Equipped FEET slot is local attribute receiver context; no target ray, projectile, range, area, cast, status application, or independent attack in any of the eight class methods."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No per-query resource debit in native GingerbreadArmorItem; material requests max durability 110 and declares Gingerbread Crumbs for repair, with actual wear and crafting untested."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Shared damage-indexed map suppresses isolated per-player mutation; ACCompat.itemAttributes bridge and inherited ArmorItem dispatch do not verify a safe per-player hook; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Exact 1.0.10 publisher original report, eight methods, factory lambda$static$190, official vanilla enum bytecode with SHA hashes and 24 resealed adversarial mutations; no pack-level gameplay QA."
+        }
+      }
     }
   },
   "providers": {},

@@ -155,8 +155,7 @@ def run(outdir, output, javap):
     values=inspect_rows(rows)
     report={
       'schema':1,'scope':'MINECRAFT_1211_ARMOR_ITEM_TYPE_OFFICIAL_CLIENT_BINARY_DISCOVERY_NOT_INSTALLED_RUNTIME',
-      'metadata':{'manifest_url':META,'manifest_sha256':digest(manifest),
-        'version_url':meta['url'],'version_sha1':meta['sha1'],'version_json_sha256':digest(version_bytes)},
+      'metadata':{'manifest_url':META,'version_url':meta['url'],'version_sha1':meta['sha1'],'version_json_sha256':digest(version_bytes)},
       'artifacts':refs,
       'enum':{'mapped_name':CLASS,'binary_name':obf,'class_sha256':digest(class_bytes),'major':major,
               'initializer_instruction_count':len(rows),
