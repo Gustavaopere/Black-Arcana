@@ -17,6 +17,25 @@ SHA256 = "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c"
 SIZE = 75279314
 TERMS = ("resistor_shield", "resistor", "resistance_shield")
 
+OWNER_CLASS_SHA256 = "ffd3fddd74f8d44049886e9013de2e3d67cbd2a721015369175e8442c5044741"
+PARENT = "net/minecraft/world/item/ShieldItem"
+DIRECT_INTERFACES = {
+    "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem",
+    "com/github/alexmodguy/alexscaves/server/item/ACEnchantableItem",
+    "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem",
+    "com/github/alexmodguy/alexscaves/server/item/ACTickingItem",
+}
+PINNED_INTERFACE_METHODS = {
+    ("getEnchantmentValue", "()I"): (
+        2, "d943c5fe0bd38038ce70963c73b8759ba3d76c8c00d31c1a2141268dc4e0ee0a",
+        "95ef737cd8a13db65e3eb3c18e8816a5179dcbdf341309522ab00e95d5aae6d2",
+    ),
+    ("isEnchantable", "(Lnet/minecraft/world/item/ItemStack;)Z"): (
+        8, "9cd84b0255be269f2bf50fce0095c14fa5d484831fd35063e71f4c9814aa6b4f",
+        "c1c39189ff601291bec7533e758094d6e935147c1308db53adfe374b3a117a58",
+    ),
+}
+
 
 def unique(pairs):
     out = {}
@@ -57,8 +76,18 @@ def check(path: Path) -> None:
     assert set(native["targets"]) == {OWNER}
     assert "filename_matched_resources" not in native
     cls = native["targets"][OWNER]
-    assert isinstance(cls["class_sha256"], str) and len(cls["class_sha256"]) == 64
-    assert isinstance(cls["hierarchy"]["parent"], str)
+    assert cls["class_sha256"] == OWNER_CLASS_SHA256
+    assert cls["hierarchy"]["parent"] == PARENT
+    assert set(cls["hierarchy"]["interfaces"]) == DIRECT_INTERFACES
+    fingerprint = {
+        (x["declaration"]["name"], x["declaration"]["descriptor"]): (
+            x["instruction_count"], x["instruction_sha256"],
+            x["declaration"]["code_sha256"],
+        )
+        for x in cls["methods"]
+    }
+    for ident, signature in PINNED_INTERFACE_METHODS.items():
+        assert fingerprint.get(ident) == signature, ("known SHA drift", ident)
     assert isinstance(cls["fields"], list)
     assert len(cls["methods"]) <= 60
     assert len(cls["methods"]) == sum("code_sha256" in x for x in cls["declarations"])
