@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "scope": "NEOFORGE_211248_IOWORKER_COMPLETION_CALLSITE_CENSUS_DISTRIBUTED_ONLY",
+  "evidence": {
+    "run_id": 45062154362,
+    "artifact_id": 14770385280,
+    "report_bytes": 22710,
+    "report_sha256": "54411e230dbf04fe72faedae3b96e513524739a4592d1c56646d48e797cc1725"
+  },
+  "target": {
+    "owner": "net/neoforged/neoforge/common/IOUtilities",
+    "name": "waitUntilIOWorkerComplete",
+    "descriptor": "()V"
+  },
+  "distribution": {
+    "installer_sha256": "68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c",
+    "minecraft_srg_bytes": 14246609,
+    "minecraft_srg_sha256": "26ca9c40d7e1681190b428583c38816852218e78df3f8bdb60a59a78503aec71",
+    "minecraft_version": "1.21.1",
+    "modlauncher_loaded_bytes": "NOT_OBSERVED",
+    "neoforge_server_bytes": 5675624,
+    "neoforge_server_sha256": "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359",
+    "neoforge_version": "21.1.248"
+  },
+  "archives": [
+    {
+      "source_archive": "NEOFORGE_OVERLAY",
+      "jar_sha256": "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359",
+      "jar_size_bytes": 5675624,
+      "class_entries_scanned": 1603,
+      "class_roster_sha256": "4ef99fe37da0e8dbe7550fad0833c83ea6748a9ed45c32bc25d94d15483397c2",
+      "candidates": [
+        {
+          "owner": "net/minecraft/server/level/ServerLevel",
+          "class_sha256": "19b42e51848fd27df3683dacf694baa5126ee9f0665f12afdc65f82493a1e5a3",
+          "refs": [
+            1324
+          ],
+          "handle_indices": []
+        },
+        {
+          "owner": "net/minecraft/util/worldupdate/WorldUpgrader",
+          "class_sha256": "f0349c7a436bb8216c5c4d0ab06c0bdb15a6181bfc8f80a1289413eff551bd97",
+          "refs": [
+            213
+          ],
+          "handle_indices": []
+        }
+      ],
+      "direct_invoke_sites": [
+        {
+          "owner": "net/minecraft/server/level/ServerLevel",
+          "class_sha256": "19b42e51848fd27df3683dacf694baa5126ee9f0665f12afdc65f82493a1e5a3",
+          "name": "save",
+          "descriptor": "(Lnet/minecraft/util/ProgressListener;ZZ)V",
+          "code_sha256": "9d5744651dacb59b8108ef18fc0088c11a594561476feb28f6f20fe025617706",
+          "instruction_sha256": "cf0feca69062c125ba9dd7ba62b0e5df908692a2d2d69e7a4d1b86589d4377a9",
+          "instruction_count": 42,
+          "callsites": [
+            {
+              "offset": 94,
+              "opcode": "invokestatic",
+              "cp_index": 1324,
+              "symbol": "Method net/neoforged/neoforge/common/IOUtilities.waitUntilIOWorkerComplete:()V"
+            }
+          ]
+        },
+        {
+          "owner": "net/minecraft/util/worldupdate/WorldUpgrader",
+          "class_sha256": "f0349c7a436bb8216c5c4d0ab06c0bdb15a6181bfc8f80a1289413eff551bd97",
+          "name": "work",
+          "descriptor": "()V",
+          "code_sha256": "45f2cc76455e13cde6d0c4b2c3d391c86986d68c43ee37a19437e6de1f13d8b6",
+          "instruction_sha256": "865b2ae2f5b08879062c0ff0b7d71c9818d5c1ae7a0a78bf3d745f170c008b43",
+          "instruction_count": 45,
+          "callsites": [
+            {
+              "offset": 74,
+              "opcode": "invokestatic",
+              "cp_index": 213,
+              "symbol": "Method net/neoforged/neoforge/common/IOUtilities.waitUntilIOWorkerComplete:()V"
+            }
+          ]
+        }
+      ],
+      "method_handles_not_direct_calls": []
+    },
+    {
+      "source_archive": "INSTALLED_MINECRAFT_SRG",
+      "jar_sha256": "26ca9c40d7e1681190b428583c38816852218e78df3f8bdb60a59a78503aec71",
+      "jar_size_bytes": 14246609,
+      "class_entries_scanned": 6148,
+      "class_roster_sha256": "8e1559f350a6f5d16a6ac13ad677907df6f657bc0741b5732d6ec84e35b0afa1",
+      "candidates": [],
+      "direct_invoke_sites": [],
+      "method_handles_not_direct_calls": []
+    },
+    {
+      "source_archive": "NEOFORGE_UNIVERSAL",
+      "jar_sha256": "90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5",
+      "jar_size_bytes": 3551268,
+      "class_entries_scanned": 1492,
+      "class_roster_sha256": "a941d0fbf5962d7294e05ee4f177f2c8b0f1b91ddc793590c7fa95a44f4732d4",
+      "candidates": [],
+      "direct_invoke_sites": [],
+      "method_handles_not_direct_calls": []
+    }
+  ],
+  "states": {
+    "shutdown_execution": "NOT_TESTED",
+    "worker_completion_at_server_stop": "NOT_VERIFIED",
+    "modlauncher_classes": "NOT_OBSERVED",
+    "real_disk_durability": "NOT_TESTED",
+    "modpack_physical_qa": "NOT_TESTED",
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  }
+}

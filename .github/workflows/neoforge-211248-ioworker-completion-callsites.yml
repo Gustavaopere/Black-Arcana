@@ -1,0 +1,112 @@
+name: NeoForge 21.1.248 IO worker completion exact callsite discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/neoforge-211248-ioworker-completion-callsites.yml'
+      - 'docs/qa/neoforge_211248_ioworker_completion_callsite_probe.py'
+      - 'docs/qa/neoforge_211248_ioworker_completion_callsite_checks.py'
+      - 'docs/qa/neoforge_211248_ioworker_completion_callsite_negative.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-IOWORKER-CALLSITES-ABI.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-IOWORKER-CALLSITES-ABI.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact_ioworker_completion_callsites:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Syntax check for bounded bytecode callsite census
+        run: |
+          python3 -m py_compile docs/qa/neoforge_211248_ioworker_completion_callsite_probe.py
+          python3 -m py_compile docs/qa/neoforge_211248_ioworker_completion_callsite_checks.py
+          python3 -m py_compile docs/qa/neoforge_211248_ioworker_completion_callsite_negative.py
+      - name: Fetch and verify official NeoForge 21.1.248 installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/gazing-pearl-ioworker-callsites-211248/server
+          cd build/gazing-pearl-ioworker-callsites-211248/server
+          BASE='https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248'
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            "$BASE/neoforge-21.1.248-installer.jar.sha256" -o installer.sha256
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            "$BASE/neoforge-21.1.248-installer.jar" -o neoforge-installer.jar
+          EXPECTED="$(awk '{print $1}' installer.sha256)"
+          ACTUAL="$(sha256sum neoforge-installer.jar | awk '{print $1}')"
+          test "$(printf '%s' "$EXPECTED" | wc -c)" -eq 64
+          test "$EXPECTED" = "$ACTUAL"
+          test "$ACTUAL" = '68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c'
+          unzip -tq neoforge-installer.jar
+      - name: Install official exact NeoForge server distribution
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/gazing-pearl-ioworker-callsites-211248/server
+          java -jar neoforge-installer.jar --installServer > install.log 2>&1 || {
+            tail -n 90 install.log
+            exit 1
+          }
+          test -f libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar
+          test -f libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-universal.jar
+          test -f libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar
+      - name: Scan exact JVM Methodref and direct invocation callsites
+        run: |
+          python3 docs/qa/neoforge_211248_ioworker_completion_callsite_probe.py \
+            --server build/gazing-pearl-ioworker-callsites-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar \
+            --srg build/gazing-pearl-ioworker-callsites-211248/server/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
+            --universal build/gazing-pearl-ioworker-callsites-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-universal.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/gazing-pearl-ioworker-callsites-211248/report.json
+      - name: Forbid inferences of live shutdown or authorized provider mutation
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('build/gazing-pearl-ioworker-callsites-211248/report.json').read_text())
+          assert r['schema_version']==1
+          assert r['scope']=='NEOFORGE_211248_IOWORKER_COMPLETION_CALLSITE_CENSUS_DISTRIBUTED_ONLY'
+          assert r['distribution']['neoforge_version']=='21.1.248'
+          assert len(r['archives'])==3
+          assert [x['source_archive'] for x in r['archives']]==[
+             'NEOFORGE_OVERLAY','INSTALLED_MINECRAFT_SRG','NEOFORGE_UNIVERSAL']
+          assert r['shutdown_execution']=='NOT_TESTED'
+          assert r['worker_completion_at_server_stop']=='NOT_VERIFIED'
+          assert r['modlauncher_classes']=='NOT_OBSERVED'
+          assert r['real_disk_durability']=='NOT_TESTED'
+          assert r['modpack_physical_qa']=='NOT_TESTED'
+          assert r['static_contract']=='NOT_CERTIFIED'
+          assert r['mutating_hook']=='NOT_VERIFIED'
+          assert r['mutation']=='NO_MUTATION'
+          assert r['provider_universe_closed'] is False
+          assert r['semantic_magic_roots_delta']==0
+          print('PASS: bounded callsite discovery, no live shutdown claim')
+          PY
+      - name: Verify SHA-exact 9243-class census and JVM callsite guards
+        run: |
+          python3 docs/qa/neoforge_211248_ioworker_completion_callsite_checks.py \
+            --report build/gazing-pearl-ioworker-callsites-211248/report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-IOWORKER-CALLSITES-ABI.json'
+          test "$(sha256sum build/gazing-pearl-ioworker-callsites-211248/report.json | cut -d ' ' -f1)" = \
+            '54411e230dbf04fe72faedae3b96e513524739a4592d1c56646d48e797cc1725'
+      - name: Reject eight re-sealed forged JVM guard/callsite pivots
+        run: |
+          python3 docs/qa/neoforge_211248_ioworker_completion_callsite_negative.py \
+            --report build/gazing-pearl-ioworker-callsites-211248/report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-IOWORKER-CALLSITES-ABI.json' \
+            --checker docs/qa/neoforge_211248_ioworker_completion_callsite_checks.py
+      - name: Upload compact JSON report only
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: neoforge-211248-ioworker-completion-callsite-evidence
+          path: build/gazing-pearl-ioworker-callsites-211248/report.json
+          if-no-files-found: ignore
+          retention-days: 14
