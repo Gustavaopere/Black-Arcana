@@ -1,0 +1,97 @@
+name: NeoForge 21.1.248 ServerLevel.save JVM caller discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/neoforge-211248-serverlevel-save-callsites.yml'
+      - 'docs/qa/neoforge_211248_serverlevel_save_callsite_probe.py'
+      - 'docs/qa/neoforge_211248_serverlevel_save_callsite_checks.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-SERVERLEVEL-SAVE-CALLSITES.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-SERVERLEVEL-SAVE-CALLSITES.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  discover_exact_save_callers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile bounded read-only JVM scanner
+        run: python3 -m py_compile docs/qa/neoforge_211248_serverlevel_save_callsite_probe.py
+      - name: Download and SHA-verify official NeoForge 21.1.248 installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/serverlevel-save-callsites-211248/server
+          cd build/serverlevel-save-callsites-211248/server
+          BASE='https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248'
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            "$BASE/neoforge-21.1.248-installer.jar.sha256" -o installer.sha256
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            "$BASE/neoforge-21.1.248-installer.jar" -o neoforge-installer.jar
+          EXPECTED="$(awk '{print $1}' installer.sha256)"
+          ACTUAL="$(sha256sum neoforge-installer.jar | awk '{print $1}')"
+          test "$(printf '%s' "$EXPECTED" | wc -c)" -eq 64
+          test "$EXPECTED" = "$ACTUAL"
+          test "$ACTUAL" = '68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c'
+          unzip -tq neoforge-installer.jar
+      - name: Install exact official NeoForge distribution
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/serverlevel-save-callsites-211248/server
+          java -jar neoforge-installer.jar --installServer > install.log 2>&1 || {
+            tail -n 90 install.log
+            exit 1
+          }
+          test -f libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar
+          test -f libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-universal.jar
+          test -f libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar
+      - name: Census all exact JVM references and direct ServerLevel.save callsites
+        run: |
+          python3 docs/qa/neoforge_211248_serverlevel_save_callsite_probe.py \
+            --server build/serverlevel-save-callsites-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar \
+            --srg build/serverlevel-save-callsites-211248/server/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
+            --universal build/serverlevel-save-callsites-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-universal.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/serverlevel-save-callsites-211248/report.json
+      - name: Enforce read-only SHA-pinned discovery scope and physical gates
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('build/serverlevel-save-callsites-211248/report.json').read_text())
+          assert r['schema_version']==1
+          assert r['scope']=='NEOFORGE_211248_SERVERLEVEL_SAVE_CALLSITE_CENSUS_DISTRIBUTED_ONLY'
+          assert r['distribution']['neoforge_version']=='21.1.248'
+          assert len(r['archives'])==3
+          assert [x['archive'] for x in r['archives']]==[
+            'NEOFORGE_OVERLAY','INSTALLED_MINECRAFT_SRG','NEOFORGE_UNIVERSAL']
+          assert r['target']=={'owner':'net/minecraft/server/level/ServerLevel',
+            'name':'save','descriptor':'(Lnet/minecraft/util/ProgressListener;ZZ)V'}
+          assert r['server_stop_arguments']=='NOT_VERIFIED'
+          assert r['shutdown_path_execution']=='NOT_TESTED'
+          assert r['async_write_completion']=='NOT_TESTED'
+          assert r['disk_durability']=='NOT_TESTED'
+          assert r['static_contract']=='NOT_CERTIFIED'
+          assert r['mutating_hook']=='NOT_VERIFIED'
+          assert r['physical_qa']=='NOT_TESTED'
+          assert r['provider_universe_closed'] is False
+          assert r['semantic_magic_roots_delta']==0
+          assert r['mutation']=='NO_MUTATION'
+          print('PASS: distributed ServerLevel.save caller discovery, no physical inference')
+          PY
+      - name: Upload JSON callsite report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: neoforge-211248-serverlevel-save-callsite-evidence
+          path: build/serverlevel-save-callsites-211248/report.json
+          if-no-files-found: ignore
+          retention-days: 14
