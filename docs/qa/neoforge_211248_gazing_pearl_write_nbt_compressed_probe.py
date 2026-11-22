@@ -10,12 +10,15 @@ from __future__ import annotations
 import argparse
 import hashlib
 from pathlib import Path
+from zipfile import ZipFile
 
 from alexscaves_1010_armor_material_audit import (
     ClassReader, canonical, digest, require,
 )
 from alexscaves_1010_enchantable_item_probe import disassemble, summarize
-from neoforge_211248_gazing_pearl_ioworker_lambda_probe import locate_worker_library
+from neoforge_211248_gazing_pearl_ioworker_lambda_probe import (
+    locate_worker_library, invocation_link,
+)
 from neoforge_211248_gazing_pearl_saveddata_engine_probe import verify_distribution
 
 OWNER = "net/neoforged/neoforge/common/IOUtilities"
@@ -38,6 +41,19 @@ def audit(server: Path, srg: Path, libraries: Path, javap: str) -> dict:
     require(digest(raw) == PINNED_CLASS_SHA256, "IOUtilities.class SHA drift")
     reader = ClassReader(raw)
     require(reader.major == 65 and reader.name == OWNER, "JVM owner/version drift")
+    with ZipFile(jar) as archive:
+        callback_raw = archive.read(OWNER + "$WriteCallback.class")
+    callback = ClassReader(callback_raw)
+    require(callback.name == OWNER + "$WriteCallback" and
+            callback.major == 65 and callback.access & 0x0200,
+            "native write callback interface identity drift")
+    require(len(callback.methods) <= 8, "unbounded callback declaration roster")
+    callable_methods = [m for m in callback.methods if m["name"] == "write"]
+    require(len(callable_methods) == 1 and
+            callable_methods[0]["descriptor"] == "(Ljava/io/OutputStream;)V"
+            and (callable_methods[0]["access"] & 0x0400) != 0
+            and "code_sha256" not in callable_methods[0],
+            "callback is not the expected abstract OutputStream writer")
     require(len(reader.methods) <= MAX_DECLARED, "unbounded IOUtilities method roster")
     parsed = disassemble(str(jar) + ":" + str(server) + ":" + str(srg),
                          javap, OWNER)
@@ -73,6 +89,17 @@ def audit(server: Path, srg: Path, libraries: Path, javap: str) -> dict:
             "required write+worker bodies absent")
     require(worker_bodies[0]["declaration"]["code_sha256"] ==
             PINNED_WITH_IO_WORKER_CODE, "previously sealed worker changed")
+    bootstraps = {}
+    for name in ("writeNbtCompressed", "writeNbt"):
+        matched = [m for m in result if m["declaration"]["name"] == name]
+        require(len(matched) == 1, "missing unique write callback bootstrap owner")
+        bootstrap = invocation_link(reader, matched[0], 2)
+        implementer = bootstrap["linked_local"]
+        require(any(m["declaration"]["name"] == implementer["name"] and
+                    m["declaration"]["descriptor"] == implementer["descriptor"] and
+                    m["declaration"]["code_sha256"] == implementer["code_sha256"]
+                    for m in result), "typed methodhandle not linked to audited lambda")
+        bootstraps[name] = bootstrap
     roster = [
         {"name": m["name"], "descriptor": m["descriptor"], "access": m["access"],
          "code_sha256": m.get("code_sha256")}
@@ -86,6 +113,11 @@ def audit(server: Path, srg: Path, libraries: Path, javap: str) -> dict:
                               "sha256": sha, "worker_class_sha256": digest(raw)},
         "owner": OWNER,
         "owner_major": reader.major,
+        "write_callback": {
+            "owner": callback.name, "class_sha256": digest(callback_raw),
+            "access": callback.access, "methods": callback.methods,
+        },
+        "bootstrap_links": bootstraps,
         "method_roster": roster,
         "selected_methods": result,
         "non_executable_declarations": non_executable,
