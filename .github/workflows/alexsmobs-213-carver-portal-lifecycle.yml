@@ -5,6 +5,12 @@ on:
     paths:
       - '.github/workflows/alexsmobs-213-carver-portal-lifecycle.yml'
       - 'docs/qa/alexsmobs_213_carver_portal_lifecycle_probe.py'
+      - 'docs/qa/alexsmobs_213_carver_execution.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
+      - 'docs/qa/alexscaves_1010_action_contract_audit.py'
+      - 'docs/qa/alexscaves_1010_destroyed_item_engine_reference.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.*'
       - 'docs/qa/alexsmobs_213_carver_portal_lifecycle_probe_test.py'
       - 'docs/qa/alexsmobs-213-carver-portal-lifecycle-handoff.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-PORTAL-LIFECYCLE-2.1.13.json'
@@ -14,6 +20,12 @@ on:
     paths:
       - '.github/workflows/alexsmobs-213-carver-portal-lifecycle.yml'
       - 'docs/qa/alexsmobs_213_carver_portal_lifecycle_probe.py'
+      - 'docs/qa/alexsmobs_213_carver_execution.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
+      - 'docs/qa/alexscaves_1010_action_contract_audit.py'
+      - 'docs/qa/alexscaves_1010_destroyed_item_engine_reference.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.*'
       - 'docs/qa/alexsmobs_213_carver_portal_lifecycle_probe_test.py'
       - 'docs/qa/alexsmobs-213-carver-portal-lifecycle-handoff.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-PORTAL-LIFECYCLE-2.1.13.json'
@@ -44,21 +56,11 @@ jobs:
           printf '%s  %s\n' 'eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8' \
             'build/alexsmobs-213-carver/alexsmobs-2.1.13.jar' | sha256sum -c -
           test "$(stat -c '%s' build/alexsmobs-213-carver/alexsmobs-2.1.13.jar)" = '27452738'
-      - name: Inspect exact Carver and EntityVoidPortal classes
+      - name: Reproduce the exact lifecycle and execution seals
         run: |
-          set -euo pipefail
-          SNAPSHOT='wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-PORTAL-LIFECYCLE-2.1.13.json'
-          if [[ -f "$SNAPSHOT" ]]; then
-            python3 docs/qa/alexsmobs_213_carver_portal_lifecycle_probe.py \
-              --jar build/alexsmobs-213-carver/alexsmobs-2.1.13.jar \
-              --javap "$JAVA_HOME/bin/javap" --snapshot "$SNAPSHOT" \
-              --output build/alexsmobs-213-carver/report.json
-          else
-            python3 docs/qa/alexsmobs_213_carver_portal_lifecycle_probe.py \
-              --jar build/alexsmobs-213-carver/alexsmobs-2.1.13.jar \
-              --javap "$JAVA_HOME/bin/javap" --print-candidate \
-              --output build/alexsmobs-213-carver/report.json
-          fi
+          python3 docs/qa/alexsmobs_213_carver_execution.py \
+            --jar build/alexsmobs-213-carver/alexsmobs-2.1.13.jar \
+            --javap "$JAVA_HOME/bin/javap" --output build/alexsmobs-213-carver/report.json
       - name: Preserve canonical perk indexes
         run: |
           python3 scripts/catalog/check_perk_ready_indexes.py

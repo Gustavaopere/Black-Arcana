@@ -10421,6 +10421,135 @@
           "reason": "Whole publisher census, exact local methods/resources, upstream engine instructions and patch hashes."
         }
       }
+    },
+    "✅-alexs-caves-continued/items/floater.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Publisher 1.0.10 item and entity bindings, exact two and fourteen bodies, and resources."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Water-gated spawn request, root vehicle mounting, alternate existing-entity interaction, lift and timed discard."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "0.98 by 0.98 dimensions, lift 0.2D, gravity -0.04D, 0.9D damping, dry threshold greater than five."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "The using player and root vehicle in the item path. Existing entity interaction mounts the player directly."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Crafting four bioluminesscence plus three ping pong sponge, one item requested outside creative."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Publisher ignores spawn and mount returns. Mojang and NeoForge references bound dispatch and canceled mounting."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "SHA-exact replay of publisher, registry, methods, engine references and resources, without physical runtime proof."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/equipment/frostmint-spear.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Publisher 1.0.10 spear, projectile and presentation item identities, exact factory and method bodies."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Charge and throw, direct damage and area explosion, freezer accessor and post-hit state."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Stack 16, +5 attack damage, -3 attack speed, launch speed 2.5F times power, .5 by .5 projectile, base 6F and radius 2F."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Throw follows rotation and native collision. Explosion checks radius four, exposure and entity filters."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Recipe yields four. Throw requests one item outside instabuild; inherited wear requests and pickup boundaries."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Projectile makes a default stack; trident and explosion authority differ. Freeze counter and runtime timing need testing."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+          "reason": "Exact replay of local item, projectile, explosion and accessor methods, registration and resources."
+        }
+      }
+    },
+    "✅-alexs-mobs-continued/actions/dimensional-carver-passage.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "version": "2.1.13",
+      "artifact_sha1": "50ddafdf3d12b33331e4eecb4ab514ae451baadd",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.md",
+          "reason": "Exact artifact, Carver factory and portal entity registration; separate Shattered identity."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.md",
+          "reason": "Use and channel order, portal creation, lifecycle, sister linking, dimensional and in-level transfer."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.md",
+          "reason": "1.5-block clip; use 200 ticks, movement threshold three, cooldowns 40/200, portal life 1200, geometry and destinations."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.md",
+          "reason": "Explicit volume queries, eligibility filters, positional shifts and queue treatment per entity kind."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.md",
+          "reason": "Recipe, Void Worm loot prerequisites, durability 20 and one damage requested at completion."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.md",
+          "reason": "Native queue and world policy boundaries documented, deployment reachability CONDITIONAL, mutating hook unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-EXECUTION-2.1.13.md",
+          "reason": "Deterministic exact publisher replay of old lifecycle seal and added registry, item, portal, queue and data proof."
+        }
+      }
     }
   },
   "providers": {},
