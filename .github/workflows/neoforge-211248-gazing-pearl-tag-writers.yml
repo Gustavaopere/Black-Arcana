@@ -5,6 +5,9 @@ on:
     paths:
       - '.github/workflows/neoforge-211248-gazing-pearl-tag-writers.yml'
       - 'docs/qa/neoforge_211248_gazing_pearl_tag_writer_probe.py'
+      - 'docs/qa/neoforge_211248_gazing_pearl_tag_writer_checks.py'
+      - 'docs/qa/neoforge_211248_gazing_pearl_tag_writer_negative.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-TAG-WRITERS.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-TAG-WRITERS.md'
   workflow_dispatch:
 permissions:
@@ -20,7 +23,10 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Syntax check for bounded exact-distribution auditor
-        run: python3 -m py_compile docs/qa/neoforge_211248_gazing_pearl_tag_writer_probe.py
+        run: |
+          python3 -m py_compile docs/qa/neoforge_211248_gazing_pearl_tag_writer_probe.py
+          python3 -m py_compile docs/qa/neoforge_211248_gazing_pearl_tag_writer_checks.py
+          python3 -m py_compile docs/qa/neoforge_211248_gazing_pearl_tag_writer_negative.py
       - name: Fetch official NeoForge 21.1.248 installer with checksum
         shell: bash
         run: |
@@ -86,6 +92,19 @@ jobs:
           assert report['semantic_magic_roots_delta']==0
           print('PASS: discovery only, no executable hook, no physical acceptance')
           PY
+      - name: Verify exact Tag.write signatures and causal JVM opcodes
+        run: |
+          python3 docs/qa/neoforge_211248_gazing_pearl_tag_writer_checks.py \
+            --report build/gazing-pearl-tag-write-211248/report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-TAG-WRITERS.json'
+          test "$(sha256sum build/gazing-pearl-tag-write-211248/report.json | cut -d ' ' -f1)" = \
+            'c80b30aaac9a243f83af59c581800bb565653adc7fc7d1ada4a6b14546667351'
+      - name: Reject 11 forged writer pivots with recomputed manifest hashes
+        run: |
+          python3 docs/qa/neoforge_211248_gazing_pearl_tag_writer_negative.py \
+            --report build/gazing-pearl-tag-write-211248/report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-TAG-WRITERS.json' \
+            --checker docs/qa/neoforge_211248_gazing_pearl_tag_writer_checks.py
       - name: Upload report only (never official JARs)
         if: always()
         uses: actions/upload-artifact@v7
