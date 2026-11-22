@@ -159,6 +159,10 @@
 | ✅ | Swing Control Item | [systems/swing-control-item.md](systems/swing-control-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Ticking Item | [systems/ticking-item.md](systems/ticking-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
+## Evidência de suporte em auditoria (sem novos objetos)
+
+- ⚠️ **Gazing Pearl — ACPlatform/armazenamento:** [dossiê de métodos e consumidores](EXACT-GAZING-PEARL-ACPLATFORM-1.0.10.md) · [manifesto SHA-exato](EXACT-GAZING-PEARL-ACPLATFORM-1.0.10.json) · [ficha individual](items/gazing-pearl.md). Ponte de `SavedData` observada no publisher; engine, hooks e QA física pendentes. **Não** acrescenta certificados, casts ou raízes.
+
 ## Subpastas
 
 | Catálogo | Subpasta | Fichas catalogadas / observadas | Contratos estáticos | Índice |

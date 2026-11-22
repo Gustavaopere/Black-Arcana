@@ -5,10 +5,14 @@ on:
     paths:
       - '.github/workflows/alexscaves-1010-gazing-pearl-acplatform-discovery.yml'
       - 'docs/qa/alexscaves_1010_gazing_pearl_acplatform_probe.py'
+      - 'docs/qa/alexscaves_1010_gazing_pearl_acplatform_checks.py'
       - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
       - 'docs/qa/alexscaves_1010_armor_material_audit.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GAZING-PEARL-ACPLATFORM-1.0.10.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GAZING-PEARL-ACPLATFORM-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GAZING-PEARL-WORLDDATA-1.0.10.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/INDEX.md'
   workflow_dispatch:
 permissions:
   contents: read
@@ -25,6 +29,7 @@ jobs:
       - name: Syntax-check the read-only ACPlatform probe
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_gazing_pearl_acplatform_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_gazing_pearl_acplatform_checks.py
       - name: Download the publisher JAR pinned to Alex's Caves 1.0.10
         run: |
           mkdir -p build/gazing-pearl-acplatform-1010
@@ -55,6 +60,46 @@ jobs:
           assert report['mutation']=='NO_MUTATION'
           print('PASS: bounded ACPlatform bridge discovery; no mutation or physical claim')
           PY
+      - name: Validate SHA-pinned factory, adapter and callsites with negative cases
+        run: |
+          python3 docs/qa/alexscaves_1010_gazing_pearl_acplatform_checks.py \
+            --report build/gazing-pearl-acplatform-1010/report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GAZING-PEARL-ACPLATFORM-1.0.10.json'
+          python3 - <<'PY'
+          import json, hashlib, copy
+          from pathlib import Path
+          folder=Path('build/gazing-pearl-acplatform-1010')
+          original=json.loads((folder/'report.json').read_text())
+          seal=json.loads(Path('wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GAZING-PEARL-ACPLATFORM-1.0.10.json').read_text())
+          for kind, group, offset, index in (
+              ('factory-delegate','exact_native_method',18,0),
+              ('loader-function','loader_adapter_lambda',2,1),
+          ):
+              altered=copy.deepcopy(original)
+              modified_seal=copy.deepcopy(seal)
+              method=altered['native'][group][0]
+              instruction=next(x for x in method['instructions']
+                               if x['offset']==offset)
+              instruction['opcode']='nop'
+              serialized=json.dumps(method['instructions'], ensure_ascii=False,
+                                    sort_keys=True, indent=2)+'\n'
+              method['instruction_sha256']=hashlib.sha256(serialized.encode()).hexdigest()
+              modified_seal['platform']['methods'][index]['instruction_sha256']=method['instruction_sha256']
+              raw=json.dumps(altered,ensure_ascii=False,sort_keys=True).encode()
+              modified_seal['evidence']['report_sha256']=hashlib.sha256(raw).hexdigest()
+              modified_seal['evidence']['report_bytes']=len(raw)
+              (folder/('bad-'+kind+'.json')).write_bytes(raw)
+              (folder/('bad-'+kind+'-seal.json')).write_text(
+                  json.dumps(modified_seal,ensure_ascii=False),encoding='utf-8')
+          PY
+          for kind in factory-delegate loader-function; do
+            if python3 docs/qa/alexscaves_1010_gazing_pearl_acplatform_checks.py \
+              --report "build/gazing-pearl-acplatform-1010/bad-$kind.json" \
+              --manifest "build/gazing-pearl-acplatform-1010/bad-$kind-seal.json"; then
+              echo "FAIL: accepted forged JVM factory/adapter $kind"
+              exit 1
+            fi
+          done
       - name: Upload exact native storage bridge report
         if: always()
         uses: actions/upload-artifact@v7
