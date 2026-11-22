@@ -25,6 +25,21 @@ DIRECT_INTERFACES = {
     "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem",
     "com/github/alexmodguy/alexscaves/server/item/ACTickingItem",
 }
+OTHER_PINNED_METHODS = {
+    ("acInventoryTick", "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V"): (
+        79, "3cec5ec860390c581f2795f6c2f128c2c1507593934eb6b40db608bf6d182b20",
+    ),
+    ("acExtraRepairMaterials", "()[Lnet/minecraft/world/item/Item;"): (
+        15, "b1c165d8b02b3531e59afa61434eb1da01506822154ef3a4d9db9cc34f60812e",
+    ),
+    ("isValidRepairItem", "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"): (
+        13, "56ef4089abe5ca807759ea066eaab7be291dd520d357c2fab2a6de913f3fa597",
+    ),
+    ("initializeClient", "(Ljava/util/function/Consumer;)V"): (
+        6, "3a6c2d33865c1d1707dcbd93e1f9e0bd3bd706c9817ddb988b4e0589ebb14cf4",
+    ),
+}
+
 PINNED_INTERFACE_METHODS = {
     ("getEnchantmentValue", "()I"): (
         2, "d943c5fe0bd38038ce70963c73b8759ba3d76c8c00d31c1a2141268dc4e0ee0a",
@@ -133,6 +148,29 @@ def check(path: Path, partial_manifest_path: Path) -> None:
         for x in m_methods
     }
     assert expected_in_manifest == PINNED_INTERFACE_METHODS
+    support_rows = seal["owner"]["support_callbacks"]
+    assert len(support_rows) == len(OTHER_PINNED_METHODS) == 4
+    support_fingerprints = {
+        (m["name"], m["descriptor"]):
+        (m["instruction_count"], m["instruction_sha256"])
+        for m in support_rows
+    }
+    assert support_fingerprints == OTHER_PINNED_METHODS
+    for identity, (count, sha) in OTHER_PINNED_METHODS.items():
+        assert identity in fingerprint
+        assert fingerprint[identity][:2] == (count, sha), (
+            "known support callback SHA drift", identity
+        )
+    presentation = next(m for m in support_rows if m["name"] == "initializeClient")
+    assert presentation["code_sha256"] == (
+        "ab25a13fc141e9c68e695fdce843d4563c474d551d77359cefa387da179e2a9a"
+    )
+    assert fingerprint[("initializeClient", "(Ljava/util/function/Consumer;)V")][2] == (
+        presentation["code_sha256"]
+    )
+    assert next(m for m in support_rows if m["name"] == "acExtraRepairMaterials")[
+        "referenced_registry_fields"
+    ] == ["SCARLET_NEODYMIUM_INGOT", "AZURE_NEODYMIUM_INGOT"]
     registry = cls["consumers"].get(
         "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry"
     )
