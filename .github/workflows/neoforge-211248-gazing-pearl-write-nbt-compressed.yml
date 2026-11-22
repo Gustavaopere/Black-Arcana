@@ -1,0 +1,95 @@
+name: NeoForge 21.1.248 IOUtilities.writeNbtCompressed exact discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/neoforge-211248-gazing-pearl-write-nbt-compressed.yml'
+      - 'docs/qa/neoforge_211248_gazing_pearl_write_nbt_compressed_probe.py'
+      - 'docs/qa/neoforge_211248_gazing_pearl_write_nbt_compressed_checks.py'
+      - 'docs/qa/neoforge_211248_gazing_pearl_ioworker_lambda_probe.py'
+      - 'docs/qa/neoforge_211248_gazing_pearl_saveddata_engine_probe.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-WRITE-NBT-ABI.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-WRITE-NBT-ABI.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact_write_nbt_boundary:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile bounded read-only inspector
+        run: |
+          python3 -m py_compile docs/qa/neoforge_211248_gazing_pearl_write_nbt_compressed_probe.py
+      - name: Download and SHA-verify official NeoForge 21.1.248 Maven installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/gazing-pearl-nbt-write-211248/server
+          cd build/gazing-pearl-nbt-write-211248/server
+          BASE='https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248'
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            "$BASE/neoforge-21.1.248-installer.jar.sha256" -o installer.sha256
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            "$BASE/neoforge-21.1.248-installer.jar" -o neoforge-installer.jar
+          EXPECTED="$(awk '{print $1}' installer.sha256)"
+          ACTUAL="$(sha256sum neoforge-installer.jar | awk '{print $1}')"
+          test "$(printf '%s' "$EXPECTED" | wc -c)" -eq 64
+          test "$ACTUAL" = "$EXPECTED"
+          test "$ACTUAL" = '68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c'
+          unzip -tq neoforge-installer.jar
+      - name: Install exact official NeoForge 21.1.248 distribution
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/gazing-pearl-nbt-write-211248/server
+          java -jar neoforge-installer.jar --installServer > install.log 2>&1 || {
+            tail -n 90 install.log
+            exit 1
+          }
+          test -f libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar
+          test -f libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-universal.jar
+          test -f libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar
+      - name: Discover verified IOUtilities NBT write method and adjacent JVM call graph
+        run: |
+          python3 docs/qa/neoforge_211248_gazing_pearl_write_nbt_compressed_probe.py \
+            --server build/gazing-pearl-nbt-write-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar \
+            --srg build/gazing-pearl-nbt-write-211248/server/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
+            --libraries build/gazing-pearl-nbt-write-211248/server/libraries \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/gazing-pearl-nbt-write-211248/report.json
+      - name: Enforce no static certification or physical inference
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          x=json.loads(Path('build/gazing-pearl-nbt-write-211248/report.json').read_text())
+          assert x['schema_version']==1
+          assert x['scope']=='NEOFORGE_211248_IOUTILITIES_WRITE_NBT_COMPRESSED_DISTRIBUTED_ONLY'
+          assert x['artifact']['neoforge_version']=='21.1.248'
+          assert x['universal_library']['sha256']=='90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5'
+          assert x['modlauncher_class']=='NOT_OBSERVED'
+          assert x['installed_modpack_parity']=='NOT_VERIFIED'
+          assert x['actual_file_io']=='NOT_TESTED'
+          assert x['durability_after_restart']=='NOT_TESTED'
+          assert x['static_contract']=='NOT_CERTIFIED'
+          assert x['mutating_hook']=='NOT_VERIFIED'
+          assert x['physical_qa']=='NOT_TESTED'
+          assert x['mutation']=='NO_MUTATION'
+          assert x['semantic_magic_roots_delta']==0
+          print('PASS: bounded write-NBT distributable static observation only')
+          PY
+      - name: Publish evidence only (no third-party JAR)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: neoforge-211248-gazing-pearl-write-nbt-evidence
+          path: build/gazing-pearl-nbt-write-211248/report.json
+          retention-days: 14
+          if-no-files-found: ignore
