@@ -79,6 +79,18 @@ O [dossiê do artefato oficial `userdev`](../EXACT-GALENA-ENGINE-PATCH-FOOTPRINT
 
 As patches de `ItemStack` apresentam modificações de texto próximas a referências `codec`, `encode` e `DataComponents`; não permitem, isoladamente, concluir a semântica de `ItemStack.save/parse` usada por `ACCompat`. A auditoria não recompila Minecraft, não examina os corpos finais do engine, não testa serialização real da arma nem o modpack instalado. **37 forgeries report-only** rejeitadas no verificador SHA-exato sustentam apenas o fingerprint dos patches. Nenhuma promoção: `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Manter fail-closed para APIs mutadoras, Mastery e políticas de mundo.
 
+## 4.7. Retorno, fallback drop e remoção: subcontrato publisher SHA-exato
+
+O [dossiê de retorno/drop](../EXACT-GALENA-GAUNTLET-RETURN-DROP-1.0.10.md), [manifesto](../EXACT-GALENA-GAUNTLET-RETURN-DROP-1.0.10.json) e [checker adversarial](../../../../../docs/qa/alexscaves_1010_galena_return_drop_checks.py) cobrem nove métodos JVM (oito do item/entidade e `ACCompat.spawnAtLocation`), **423 pivôs tipados** e **61 mutações adversariais com digests re-selados rejeitadas** no teste local, todos vinculados ao publisher 1.0.10. Não são testes físicos.
+
+- `GalenaGauntletItem.onUseTick` solicita `ItemStack.setCount(0)` na stack original @201 **antes** de `Level.addFreshEntity` @258 e descarta o booleano de spawn @261, sem rollback local identificado.
+- `MagneticWeaponEntity.tick` chama `Player.addItem` @1516 somente após retorno para distância **< 1,4 bloco** do player, entidade não removida e `spawnedItem=false`. Se o booleano é verdadeiro, marca `spawnedItem` e solicita `remove(DISCARDED)`; caso contrário ou se o flag já estiver verdadeiro, chama `plopItem` @1538.
+- `plopItem` marca `spawnedItem=true` **antes** do pedido `ACCompat.spawnAtLocation` @17. Mesmo com retorno `null`, a janela solicita `remove(DISCARDED)`. O helper é uma delegação de **quatro instruções** a `Entity.spawnAtLocation(ItemStack)` (sem validação adicional no wrapper).
+- Em `tick`, a janela inicial servidor considera controller ausente com `tickCount>20` ou stack vazia; chama `plopItem` **somente se** `hadPlayerController=true`, antes de solicitar remoção. `hadPlayerController` e `spawnedItem` são campos que as sobrescritas NBT auditadas **não** persistem; impacto de reload é desconhecido.
+- O progresso visual de retorno aumenta até 1 por incrementos de 0,2f e não constitui confirmação de restituição. `Player.addItem`, `Entity.spawnAtLocation` e `Entity.remove` pertencem à engine não auditada nesse recorte.
+
+**Status:** `NO_MUTATION` · `static_contract=NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. Sem prova de loss/duplication real, hook mutador, item refund ou ganho de Mastery; qualquer integração permanece fail-closed.
+
 ## 5. Interfaces conceituais para perks, atributos e Mastery
 
 | Eixo | Fronteira observada | Estado de integração |

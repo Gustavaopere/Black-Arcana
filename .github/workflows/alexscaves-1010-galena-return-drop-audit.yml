@@ -6,6 +6,7 @@ on:
       - '.github/workflows/alexscaves-1010-galena-return-drop-audit.yml'
       - 'docs/qa/alexscaves_1010_galena_return_drop_probe.py'
       - 'docs/qa/alexscaves_1010_galena_return_drop_checks.py'
+      - 'docs/qa/alexscaves_1010_galena_gauntlet_discovery.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
   workflow_dispatch:
 permissions:
@@ -48,6 +49,15 @@ jobs:
             --javap "$JAVA_HOME/bin/javap" \
             --output build/galena-return-drop-1010/return-drop-report.json \
             > build/galena-return-drop-1010/return-drop-discovery.log
+      - name: Verify exact return/drop nine-method JVM causal seal and adversarial changes
+        run: |
+          test "$(sha256sum build/galena-return-drop-1010/return-drop-report.json | cut -d ' ' -f1)" = \
+            '8cff541420b4bbca8820aa419ed73cf01478c4a881c7f6afa12e256f6a9ae916'
+          test "$(wc -c < build/galena-return-drop-1010/return-drop-report.json)" -eq 188299
+          python3 docs/qa/alexscaves_1010_galena_return_drop_checks.py \
+            --report build/galena-return-drop-1010/return-drop-report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-GAUNTLET-RETURN-DROP-1.0.10.json' \
+            --adversarial
       - name: Preserve read-only publisher JVM evidence
         if: always()
         uses: actions/upload-artifact@v7
