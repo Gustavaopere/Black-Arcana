@@ -67,6 +67,12 @@ A ordem observada é `damageItem(1)` → `ItemStack.mineBlock` → cálculo de E
 
 Permissões de claims, callbacks da engine, drops e world safety efetiva continuam **NÃO VERIFICADOS**. Ausência de chamada direta à política do Black Arcana no método do provider não prova bypass; qualquer mutação futura **do Black Arcana** deve passar pela `WorldEffectPolicy` (D007) e pela autoridade do servidor (D006). `NO_MUTATION`, `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
 
+## 4.5. Helpers `ACCompat` de NBT, UUID e `CUSTOM_DATA`: subcontrato exato
+
+O [dossiê de `ACCompat` SHA-exato](../EXACT-GALENA-ACCOMPAT-HELPERS-1.0.10.md) verifica **10 corpos nativos** (43 pivôs JVM, 17 callsites do item/entidade e 18 forgeries adversariais rejeitadas) no JAR publisher 1.0.10; classe `ACCompat` com 200 métodos declarados. `saveStack` delega a `ItemStack.save(provider)` e faz cast para `CompoundTag`; `loadStack` delega a `ItemStack.parse(provider,tag)`, com `Optional.orElse(ItemStack.EMPTY)` como fallback **apenas para Optional vazio**. `putUUID`, `hasUUID`, `getUUID`, `getCompound` e `getInt` delegam diretamente aos respectivos métodos `CompoundTag`; não acrescentam validação própria no wrapper.
+
+`getTag` retorna `null` quando `DataComponents.CUSTOM_DATA` está ausente e solicita `CustomData.copyTag()` quando presente. `getOrCreateTag` produz uma tag nova ou uma cópia, **sem gravar a stack nesse método**. A gravação explícita ocorre em `setTag`, que solicita `ItemStack.remove(CUSTOM_DATA)` para argumento `null`, ou `CustomData.of(tag)` + `ItemStack.set(CUSTOM_DATA,...)` em outro caso. A semântica dos métodos internos de Minecraft/NeoForge, transformações da instância e recuperação física **não está certificada**. Não interpretar uma tag ou um `ControllerUUID` como confirmação de cast/hit/mineração ou autorização de Mastery. `NO_MUTATION`, `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
+
 ## 5. Interfaces conceituais para perks, atributos e Mastery
 
 | Eixo | Fronteira observada | Estado de integração |

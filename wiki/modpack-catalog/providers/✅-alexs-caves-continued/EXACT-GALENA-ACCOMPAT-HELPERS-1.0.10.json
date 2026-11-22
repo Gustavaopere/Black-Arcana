@@ -1,0 +1,548 @@
+{
+  "class": {
+    "declared_methods": 200,
+    "fields": 3,
+    "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat",
+    "sha256": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b"
+  },
+  "evidence": {
+    "caller_report_sha256": "c91a48f9892be09c4ab951c8083703b0c5ffbb026fc43e7d808c2033dde8bba9",
+    "report_bytes": 26782,
+    "report_sha256": "ca395f3418979d8302363cf9db8d54c620572b16ebdc2ecacee5014fce0add64",
+    "source_artifact_id": 14775313807,
+    "source_workflow_run_id": 45077106620
+  },
+  "methods": [
+    {
+      "code_sha256": "5f8a2b9781cd1a6d503e8ab22df9bdde03d41ce0fd2b27b372a9ab8e31bd86d3",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;",
+      "instruction_count": 4,
+      "instruction_sha256": "21e073d9807522cf9aa1d2e70ddac9a85dc941c689aba6233fcb8fe8c2d4d08d",
+      "name": "getCompound",
+      "pivots": [
+        {
+          "offset": 2,
+          "opcode": "invokevirtual",
+          "operand": "#1062",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.getCompound:(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;"
+        },
+        {
+          "offset": 5,
+          "opcode": "areturn",
+          "operand": "",
+          "symbol": ""
+        }
+      ]
+    },
+    {
+      "code_sha256": "b28dac6cb43dc55c0ecdda1a8684bbaf110c377b0591b0eb036662fbc9903bd7",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I",
+      "instruction_count": 4,
+      "instruction_sha256": "ad0c707f1b9a5056c674fe5642fa2e3baf209efeec49e9054ab0409d2f5f6d64",
+      "name": "getInt",
+      "pivots": [
+        {
+          "offset": 2,
+          "opcode": "invokevirtual",
+          "operand": "#1035",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.getInt:(Ljava/lang/String;)I"
+        },
+        {
+          "offset": 5,
+          "opcode": "ireturn",
+          "operand": "",
+          "symbol": ""
+        }
+      ]
+    },
+    {
+      "code_sha256": "a8448548804ce53e0c9885bf54fe139fc7fe736431265ba7bf0aeaf2cbefc8c8",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;",
+      "instruction_count": 14,
+      "instruction_sha256": "8eaacc66ed83a6218817181a26b0a2aefbe489c52fcf8119249d6cd40c1e6916",
+      "name": "getOrCreateTag",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "getstatic",
+          "operand": "#9",
+          "symbol": "Field net/minecraft/core/component/DataComponents.CUSTOM_DATA:Lnet/minecraft/core/component/DataComponentType;"
+        },
+        {
+          "offset": 4,
+          "opcode": "invokevirtual",
+          "operand": "#15",
+          "symbol": "Method net/minecraft/world/item/ItemStack.get:(Lnet/minecraft/core/component/DataComponentType;)Ljava/lang/Object;"
+        },
+        {
+          "offset": 7,
+          "opcode": "checkcast",
+          "operand": "#21",
+          "symbol": "class net/minecraft/world/item/component/CustomData"
+        },
+        {
+          "offset": 12,
+          "opcode": "ifnonnull",
+          "operand": "25",
+          "symbol": ""
+        },
+        {
+          "offset": 15,
+          "opcode": "new",
+          "operand": "#27",
+          "symbol": "class net/minecraft/nbt/CompoundTag"
+        },
+        {
+          "offset": 19,
+          "opcode": "invokespecial",
+          "operand": "#29",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.\"<init>\":()V"
+        },
+        {
+          "offset": 22,
+          "opcode": "goto",
+          "operand": "29",
+          "symbol": ""
+        },
+        {
+          "offset": 26,
+          "opcode": "invokevirtual",
+          "operand": "#23",
+          "symbol": "Method net/minecraft/world/item/component/CustomData.copyTag:()Lnet/minecraft/nbt/CompoundTag;"
+        },
+        {
+          "offset": 29,
+          "opcode": "areturn",
+          "operand": "",
+          "symbol": ""
+        }
+      ]
+    },
+    {
+      "code_sha256": "b9e087e9252353b89150604a38e9421c5c258cfb853640d5de2b1b7968d78b13",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;",
+      "instruction_count": 12,
+      "instruction_sha256": "729cedf8d89cd8fabb2e566fa540989838f1708a68411e6e08fb054d5493ec38",
+      "name": "getTag",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "getstatic",
+          "operand": "#9",
+          "symbol": "Field net/minecraft/core/component/DataComponents.CUSTOM_DATA:Lnet/minecraft/core/component/DataComponentType;"
+        },
+        {
+          "offset": 4,
+          "opcode": "invokevirtual",
+          "operand": "#15",
+          "symbol": "Method net/minecraft/world/item/ItemStack.get:(Lnet/minecraft/core/component/DataComponentType;)Ljava/lang/Object;"
+        },
+        {
+          "offset": 7,
+          "opcode": "checkcast",
+          "operand": "#21",
+          "symbol": "class net/minecraft/world/item/component/CustomData"
+        },
+        {
+          "offset": 12,
+          "opcode": "ifnonnull",
+          "operand": "19",
+          "symbol": ""
+        },
+        {
+          "offset": 15,
+          "opcode": "aconst_null",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 16,
+          "opcode": "goto",
+          "operand": "23",
+          "symbol": ""
+        },
+        {
+          "offset": 20,
+          "opcode": "invokevirtual",
+          "operand": "#23",
+          "symbol": "Method net/minecraft/world/item/component/CustomData.copyTag:()Lnet/minecraft/nbt/CompoundTag;"
+        },
+        {
+          "offset": 23,
+          "opcode": "areturn",
+          "operand": "",
+          "symbol": ""
+        }
+      ]
+    },
+    {
+      "code_sha256": "c4c782b1bfa2a9c3d587ec79d9629edf2c3516a4b088cd215692e4c4fe039dcb",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Ljava/util/UUID;",
+      "instruction_count": 4,
+      "instruction_sha256": "5ebf229c2467aea20aef1b07cff48bdc0091311736c1c64f818ba15b677cd568",
+      "name": "getUUID",
+      "pivots": [
+        {
+          "offset": 2,
+          "opcode": "invokevirtual",
+          "operand": "#1090",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.getUUID:(Ljava/lang/String;)Ljava/util/UUID;"
+        },
+        {
+          "offset": 5,
+          "opcode": "areturn",
+          "operand": "",
+          "symbol": ""
+        }
+      ]
+    },
+    {
+      "code_sha256": "9b989b8b5c1d43689c9b705610ecc49d57c7782c1e02bac069a998f363340bc2",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Z",
+      "instruction_count": 4,
+      "instruction_sha256": "0316fe60721c0144dedd9b80a27b0ea6ff7d865fb3b59a5992483b8da84fc5f2",
+      "name": "hasUUID",
+      "pivots": [
+        {
+          "offset": 2,
+          "opcode": "invokevirtual",
+          "operand": "#1087",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.hasUUID:(Ljava/lang/String;)Z"
+        },
+        {
+          "offset": 5,
+          "opcode": "ireturn",
+          "operand": "",
+          "symbol": ""
+        }
+      ]
+    },
+    {
+      "code_sha256": "5239d51ba4567ae224e0cb659063c6ffb926b30126f2231385f3961a51b45bdd",
+      "descriptor": "(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/item/ItemStack;",
+      "instruction_count": 7,
+      "instruction_sha256": "c7e4660d1ef54318648ac97a5e5568b288615abbd35695739fa4f25f7d355238",
+      "name": "loadStack",
+      "pivots": [
+        {
+          "offset": 2,
+          "opcode": "invokestatic",
+          "operand": "#694",
+          "symbol": "Method net/minecraft/world/item/ItemStack.parse:(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/nbt/Tag;)Ljava/util/Optional;"
+        },
+        {
+          "offset": 5,
+          "opcode": "getstatic",
+          "operand": "#698",
+          "symbol": "Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;"
+        },
+        {
+          "offset": 8,
+          "opcode": "invokevirtual",
+          "operand": "#374",
+          "symbol": "Method java/util/Optional.orElse:(Ljava/lang/Object;)Ljava/lang/Object;"
+        },
+        {
+          "offset": 11,
+          "opcode": "checkcast",
+          "operand": "#16",
+          "symbol": "class net/minecraft/world/item/ItemStack"
+        },
+        {
+          "offset": 14,
+          "opcode": "areturn",
+          "operand": "",
+          "symbol": ""
+        }
+      ]
+    },
+    {
+      "code_sha256": "9bc59b9d44f0f1f9bd48ed6c0f36b83d58b706dc72c694b139e3d333fa3640e2",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/UUID;)V",
+      "instruction_count": 5,
+      "instruction_sha256": "b82b3cd54966fa98c6b35dcc1a7b77a67aa9affd39c80ebfa7c7dc6319678956",
+      "name": "putUUID",
+      "pivots": [
+        {
+          "offset": 3,
+          "opcode": "invokevirtual",
+          "operand": "#1094",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.putUUID:(Ljava/lang/String;Ljava/util/UUID;)V"
+        }
+      ]
+    },
+    {
+      "code_sha256": "20b23f68a37a1a59d48c4286b3aea0debce7d6c3cbd9ca7564b5fb83e304380a",
+      "descriptor": "(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;",
+      "instruction_count": 5,
+      "instruction_sha256": "a0cde0b1fb66999079205fc1bd2b94d07288d544249f4001b69b5d9fb1eaf529",
+      "name": "saveStack",
+      "pivots": [
+        {
+          "offset": 2,
+          "opcode": "invokevirtual",
+          "operand": "#701",
+          "symbol": "Method net/minecraft/world/item/ItemStack.save:(Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/Tag;"
+        },
+        {
+          "offset": 5,
+          "opcode": "checkcast",
+          "operand": "#27",
+          "symbol": "class net/minecraft/nbt/CompoundTag"
+        },
+        {
+          "offset": 8,
+          "opcode": "areturn",
+          "operand": "",
+          "symbol": ""
+        }
+      ]
+    },
+    {
+      "code_sha256": "5292322e774be30d66d1f17f1fe435303838e6f40da1bb2af13bc9503acee4e4",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V",
+      "instruction_count": 14,
+      "instruction_sha256": "bde3126a9b91cf18b3a16d870a13a0251962113b932045fed17982f23fd5e596",
+      "name": "setTag",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "ifnonnull",
+          "operand": "15",
+          "symbol": ""
+        },
+        {
+          "offset": 5,
+          "opcode": "getstatic",
+          "operand": "#9",
+          "symbol": "Field net/minecraft/core/component/DataComponents.CUSTOM_DATA:Lnet/minecraft/core/component/DataComponentType;"
+        },
+        {
+          "offset": 8,
+          "opcode": "invokevirtual",
+          "operand": "#30",
+          "symbol": "Method net/minecraft/world/item/ItemStack.remove:(Lnet/minecraft/core/component/DataComponentType;)Ljava/lang/Object;"
+        },
+        {
+          "offset": 11,
+          "opcode": "pop",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 12,
+          "opcode": "goto",
+          "operand": "27",
+          "symbol": ""
+        },
+        {
+          "offset": 16,
+          "opcode": "getstatic",
+          "operand": "#9",
+          "symbol": "Field net/minecraft/core/component/DataComponents.CUSTOM_DATA:Lnet/minecraft/core/component/DataComponentType;"
+        },
+        {
+          "offset": 20,
+          "opcode": "invokestatic",
+          "operand": "#33",
+          "symbol": "Method net/minecraft/world/item/component/CustomData.of:(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/item/component/CustomData;"
+        },
+        {
+          "offset": 23,
+          "opcode": "invokevirtual",
+          "operand": "#37",
+          "symbol": "Method net/minecraft/world/item/ItemStack.set:(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;"
+        },
+        {
+          "offset": 26,
+          "opcode": "pop",
+          "operand": "",
+          "symbol": ""
+        }
+      ]
+    }
+  ],
+  "not_demonstrated": [
+    "engine ItemStack.parse()/save() acceptance and exceptions",
+    "CompoundTag missing/invalid key semantics",
+    "survival save/restart",
+    "drop/duplicate item prevention",
+    "client sync and dimension transport",
+    "mutating perks or real provider hooks"
+  ],
+  "publisher": {
+    "filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "installed_dump_parity": "NOT_VERIFIED",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "version": "1.0.10"
+  },
+  "schema_version": 1,
+  "scope": "ALEXSCAVES_1010_GALENA_ACCOMPAT_HELPER_CAUSAL_STATIC_ONLY",
+  "states": {
+    "installed_dump_parity": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0,
+    "static_contract": "NOT_CERTIFIED"
+  },
+  "typed_caller_sites": [
+    {
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;",
+      "callee_name": "getOrCreateTag",
+      "caller_descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+      "caller_name": "acInventoryTick",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "offset": 46,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I",
+      "callee_name": "getInt",
+      "caller_descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+      "caller_name": "acInventoryTick",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "offset": 56,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I",
+      "callee_name": "getInt",
+      "caller_descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+      "caller_name": "acInventoryTick",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "offset": 64,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V",
+      "callee_name": "setTag",
+      "caller_descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+      "caller_name": "acInventoryTick",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "offset": 85,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;",
+      "callee_name": "getTag",
+      "caller_descriptor": "(Lnet/minecraft/world/item/ItemStack;F)F",
+      "caller_name": "getLerpedUseTime",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "offset": 1,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I",
+      "callee_name": "getInt",
+      "caller_descriptor": "(Lnet/minecraft/world/item/ItemStack;F)F",
+      "caller_name": "getLerpedUseTime",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "offset": 13,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I",
+      "callee_name": "getInt",
+      "caller_descriptor": "(Lnet/minecraft/world/item/ItemStack;F)F",
+      "caller_name": "getLerpedUseTime",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "offset": 30,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;",
+      "callee_name": "getTag",
+      "caller_descriptor": "(Lnet/minecraft/world/item/ItemStack;)I",
+      "caller_name": "getUseTime",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "offset": 1,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I",
+      "callee_name": "getInt",
+      "caller_descriptor": "(Lnet/minecraft/world/item/ItemStack;)I",
+      "caller_name": "getUseTime",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "offset": 13,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;",
+      "callee_name": "getOrCreateTag",
+      "caller_descriptor": "(Lnet/minecraft/world/item/ItemStack;I)V",
+      "caller_name": "setUseTime",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "offset": 1,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V",
+      "callee_name": "setTag",
+      "caller_descriptor": "(Lnet/minecraft/world/item/ItemStack;I)V",
+      "caller_name": "setUseTime",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "offset": 26,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;",
+      "callee_name": "saveStack",
+      "caller_descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "caller_name": "addAdditionalSaveData",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "offset": 25,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/UUID;)V",
+      "callee_name": "putUUID",
+      "caller_descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "caller_name": "addAdditionalSaveData",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "offset": 47,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;",
+      "callee_name": "getCompound",
+      "caller_descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "caller_name": "readAdditionalSaveData",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "offset": 22,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/item/ItemStack;",
+      "callee_name": "loadStack",
+      "caller_descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "caller_name": "readAdditionalSaveData",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "offset": 25,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Z",
+      "callee_name": "hasUUID",
+      "caller_descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "caller_name": "readAdditionalSaveData",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "offset": 35,
+      "opcode": "invokestatic"
+    },
+    {
+      "callee_descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Ljava/util/UUID;",
+      "callee_name": "getUUID",
+      "caller_descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "caller_name": "readAdditionalSaveData",
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "offset": 46,
+      "opcode": "invokestatic"
+    }
+  ]
+}

@@ -23,7 +23,9 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Validate observational helper probe
-        run: python3 -m py_compile docs/qa/alexscaves_1010_galena_accompat_probe.py
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_accompat_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_accompat_checks.py
       - name: Download and verify exact installed-version publisher artifact
         run: |
           mkdir -p build/galena-accompat-1010
@@ -52,6 +54,15 @@ jobs:
             --output build/galena-accompat-1010/accompat-report.json \
             > build/galena-accompat-1010/accompat-discovery.log
           test -s build/galena-accompat-1010/accompat-report.json
+          test "$(sha256sum build/galena-accompat-1010/accompat-report.json | cut -d ' ' -f1)" = \
+            'ca395f3418979d8302363cf9db8d54c620572b16ebdc2ecacee5014fce0add64'
+          test "$(wc -c < build/galena-accompat-1010/accompat-report.json)" -eq 26782
+      - name: Audit ten native helpers and reject adversarially resealed method changes
+        run: |
+          python3 docs/qa/alexscaves_1010_galena_accompat_checks.py \
+            --report build/galena-accompat-1010/accompat-report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-ACCOMPAT-HELPERS-1.0.10.json' \
+            --adversarial
       - name: Preserve read-only helper evidence
         if: always()
         uses: actions/upload-artifact@v7
