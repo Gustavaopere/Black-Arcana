@@ -6,6 +6,7 @@ on:
       - '.github/workflows/neoforge-211248-ioworker-completion-callsites.yml'
       - 'docs/qa/neoforge_211248_ioworker_completion_callsite_probe.py'
       - 'docs/qa/neoforge_211248_ioworker_completion_callsite_checks.py'
+      - 'docs/qa/neoforge_211248_ioworker_completion_callsite_negative.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-IOWORKER-CALLSITES-ABI.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-IOWORKER-CALLSITES-ABI.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md'
@@ -26,6 +27,7 @@ jobs:
         run: |
           python3 -m py_compile docs/qa/neoforge_211248_ioworker_completion_callsite_probe.py
           python3 -m py_compile docs/qa/neoforge_211248_ioworker_completion_callsite_checks.py
+          python3 -m py_compile docs/qa/neoforge_211248_ioworker_completion_callsite_negative.py
       - name: Fetch and verify official NeoForge 21.1.248 installer
         shell: bash
         run: |
@@ -94,39 +96,12 @@ jobs:
             --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-IOWORKER-CALLSITES-ABI.json'
           test "$(sha256sum build/gazing-pearl-ioworker-callsites-211248/report.json | cut -d ' ' -f1)" = \
             '54411e230dbf04fe72faedae3b96e513524739a4592d1c56646d48e797cc1725'
-      - name: Reject eight forged wait/guard/level-save JVM pivots
+      - name: Reject eight re-sealed forged JVM guard/callsite pivots
         run: |
-          python3 - <<'PY'
-          import copy, hashlib, json, subprocess, sys
-          from pathlib import Path
-          root=Path('build/gazing-pearl-ioworker-callsites-211248')
-          raw=json.loads((root/'report.json').read_text())
-          seal=json.loads(Path('wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-IOWORKER-CALLSITES-ABI.json').read_text())
-          tests=(
-              ('server-save-skip',0,7),('server-save-data',0,27),
-              ('server-save-event',0,84),('server-wait-boolean',0,91),
-              ('server-wait-call',0,94),('upgrader-storage-save',1,71),
-              ('upgrader-wait-call',1,74),('upgrader-finished',1,103))
-          for name,idx,offset in tests:
-              report=copy.deepcopy(raw);manifest=copy.deepcopy(seal)
-              method=report['archives'][0]['direct_invoke_sites'][idx]['method']
-              rows=[x for x in method['instructions'] if x['offset']==offset]
-              assert len(rows)==1 and rows[0]['opcode']!='nop',name
-              rows[0]['opcode']='nop'
-              method['instruction_sha256']=hashlib.sha256(
-                  (json.dumps(method['instructions'],sort_keys=True,ensure_ascii=False,indent=2)+'\n').encode()).hexdigest()
-              manifest['archives'][0]['direct_invoke_sites'][idx]['instruction_sha256']=method['instruction_sha256']
-              forged=json.dumps(report,sort_keys=True,ensure_ascii=False).encode()
-              manifest['evidence']['report_bytes']=len(forged)
-              manifest['evidence']['report_sha256']=hashlib.sha256(forged).hexdigest()
-              a=root/('bad-'+name+'.json');b=root/('bad-'+name+'-seal.json')
-              a.write_bytes(forged);b.write_text(json.dumps(manifest,ensure_ascii=False))
-              run=subprocess.run((sys.executable,'docs/qa/neoforge_211248_ioworker_completion_callsite_checks.py',
-                                  '--report',str(a),'--manifest',str(b)),capture_output=True,text=True)
-              assert run.returncode!=0 and 'JVM opcode drift' in run.stderr,(name,run.stderr[-600:])
-              print('PASS_FORGED_JVM_REJECTED',name)
-          print('PASS: 8/8 resealed forged JVM mutations rejected by causal opcode check')
-          PY
+          python3 docs/qa/neoforge_211248_ioworker_completion_callsite_negative.py \
+            --report build/gazing-pearl-ioworker-callsites-211248/report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-IOWORKER-CALLSITES-ABI.json' \
+            --checker docs/qa/neoforge_211248_ioworker_completion_callsite_checks.py
       - name: Upload compact JSON report only
         if: always()
         uses: actions/upload-artifact@v7
