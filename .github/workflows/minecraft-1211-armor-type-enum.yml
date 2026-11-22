@@ -1,0 +1,85 @@
+name: Minecraft 1.21.1 official ArmorItem.Type and Gingerbread four-piece certification
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/minecraft-1211-armor-type-enum.yml'
+      - 'docs/qa/minecraft_1211_armor_type_enum_probe.py'
+      - 'docs/qa/minecraft_1211_gingerbread_four_cert_checks.py'
+      - 'docs/qa/alexscaves_1010_gingerbread_armor_discovery.py'
+      - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  armor_enum_upstream:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Validate deterministic parsers and four negative fixtures
+        run: |
+          python3 -m py_compile docs/qa/minecraft_1211_armor_type_enum_probe.py docs/qa/minecraft_1211_gingerbread_four_cert_checks.py
+          python3 docs/qa/minecraft_1211_armor_type_enum_probe.py --test
+      - name: Inspect official authenticated Minecraft 1.21.1 ArmorItem.Type binary
+        run: |
+          mkdir -p build/armor-enum-1211
+          python3 docs/qa/minecraft_1211_armor_type_enum_probe.py \
+            --outdir build/armor-enum-1211/input \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/armor-enum-1211/report.json \
+            > build/armor-enum-1211/probe.log
+          cat build/armor-enum-1211/probe.log
+          test "$(wc -c < build/armor-enum-1211/report.json)" -eq 11191
+          test "$(sha256sum build/armor-enum-1211/report.json | cut -d ' ' -f1)" = \
+            'e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91'
+      - name: Download SHA-exact Alex's Caves Continued 1.0.10 publisher
+        run: |
+          mkdir -p build/gingerbread-1010
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/gingerbread-1010/publisher.jar
+          test "$(stat -c %s build/gingerbread-1010/publisher.jar)" -eq 75279314
+          test "$(sha256sum build/gingerbread-1010/publisher.jar | cut -d ' ' -f1)" = \
+            '36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c'
+      - name: Reproduce original eight-method Gingerbread report and prior discovery seal
+        run: |
+          python3 docs/qa/alexscaves_1010_gingerbread_armor_discovery.py \
+            --jar build/gingerbread-1010/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/gingerbread-1010/report.json \
+            > build/gingerbread-1010/probe.log
+          test "$(sha256sum build/gingerbread-1010/report.json | cut -d ' ' -f1)" = \
+            '4b6a0709a167e49ffb4bd04b2949facfc3c7b0e55dad80c28842eaf26f1fbae1'
+          python3 docs/qa/alexscaves_1010_gingerbread_armor_static_checks.py \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-DISCOVERY-1.0.10.json' \
+            --report build/gingerbread-1010/report.json
+      - name: Certify seven static axes per piece; 24 in-memory adversarial mutations
+        run: |
+          python3 docs/qa/minecraft_1211_gingerbread_four_cert_checks.py \
+            --official build/armor-enum-1211/report.json \
+            --publisher build/gingerbread-1010/report.json \
+            --material 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARMOR-MATERIAL-1.0.10.json' \
+            --discovery 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-DISCOVERY-1.0.10.json' \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.json' \
+            --cards-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items' \
+            --adversarial
+      - name: Preserve only read-only reports; never ship Minecraft/third-party JARs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: minecraft-1211-gingerbread-four-static-certification
+          path: |
+            build/armor-enum-1211/report.json
+            build/armor-enum-1211/probe.log
+            build/gingerbread-1010/report.json
+            build/gingerbread-1010/probe.log
+          if-no-files-found: warn
+          retention-days: 14

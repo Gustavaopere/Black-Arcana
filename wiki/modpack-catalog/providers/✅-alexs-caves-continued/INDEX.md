@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 118/134.**
+**Fichas catalogadas (somente fichas detectadas): 122/134.**
 
-**Barra das fichas catalogadas:** `█████████████████░░░ 88.1%`
+**Barra das fichas catalogadas:** `██████████████████░░ 91.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 118/134.**
+**Homologadas para perks (somente fichas detectadas): 122/134.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████████░░░ 88.1%`
+**Barra dos contratos técnicos estáticos:** `██████████████████░░ 91.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -123,10 +123,10 @@
 | ✅ | Fertilizer | [items/fertilizer.md](items/fertilizer.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Floater | [items/floater.md](items/floater.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gazing Pearl | [items/gazing-pearl.md](items/gazing-pearl.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gingerbread Boots | [items/gingerbread-boots.md](items/gingerbread-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gingerbread Chestplate | [items/gingerbread-chestplate.md](items/gingerbread-chestplate.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gingerbread Helmet | [items/gingerbread-helmet.md](items/gingerbread-helmet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gingerbread Leggings | [items/gingerbread-leggings.md](items/gingerbread-leggings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gingerbread Boots | [items/gingerbread-boots.md](items/gingerbread-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gingerbread Chestplate | [items/gingerbread-chestplate.md](items/gingerbread-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gingerbread Helmet | [items/gingerbread-helmet.md](items/gingerbread-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gingerbread Leggings | [items/gingerbread-leggings.md](items/gingerbread-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Hazmat Boots | [items/hazmat-boots.md](items/hazmat-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Hazmat Chestplate | [items/hazmat-chestplate.md](items/hazmat-chestplate.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Hazmat Leggings | [items/hazmat-leggings.md](items/hazmat-leggings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -168,7 +168,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ⚠️ | Equipment | 5/6 (83.3%) | 5 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 20/35 (57.1%) | 20 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Items | 24/35 (68.6%) | 24 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 15/15 (100.0%) | 15 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅

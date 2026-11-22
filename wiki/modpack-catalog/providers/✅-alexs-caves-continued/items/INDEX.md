@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 20/35.**
+**Fichas catalogadas (somente fichas detectadas): 24/35.**
 
-**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 57.1%`
+**Barra das fichas catalogadas:** `█████████████░░░░░░░ 68.6%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 20/35.**
+**Homologadas para perks (somente fichas detectadas): 24/35.**
 
-**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 57.1%`
+**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 68.6%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -35,10 +35,10 @@
 | ✅ | Fertilizer | [ficha/fertilizer.md](fertilizer.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Floater | [ficha/floater.md](floater.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gazing Pearl | [ficha/gazing-pearl.md](gazing-pearl.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gingerbread Boots | [ficha/gingerbread-boots.md](gingerbread-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gingerbread Chestplate | [ficha/gingerbread-chestplate.md](gingerbread-chestplate.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gingerbread Helmet | [ficha/gingerbread-helmet.md](gingerbread-helmet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gingerbread Leggings | [ficha/gingerbread-leggings.md](gingerbread-leggings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gingerbread Boots | [ficha/gingerbread-boots.md](gingerbread-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gingerbread Chestplate | [ficha/gingerbread-chestplate.md](gingerbread-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gingerbread Helmet | [ficha/gingerbread-helmet.md](gingerbread-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gingerbread Leggings | [ficha/gingerbread-leggings.md](gingerbread-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Hazmat Boots | [ficha/hazmat-boots.md](hazmat-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Hazmat Chestplate | [ficha/hazmat-chestplate.md](hazmat-chestplate.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Hazmat Leggings | [ficha/hazmat-leggings.md](hazmat-leggings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
