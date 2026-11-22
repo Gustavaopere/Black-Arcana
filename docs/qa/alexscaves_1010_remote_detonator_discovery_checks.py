@@ -158,6 +158,24 @@ def check(report_path: Path, manifest_path: Path):
         text = methods[name]
         for marker in markers:
             assert marker in text, (name, marker)
+    # Exact stack/offset pivots: the source Level, not target ServerLevel,
+    # supplies the receiver of the world-write call; forceChunk comes first.
+    parsed = {v["declaration"]["name"]: v for v in o["methods"]}
+    def ins(name, offset):
+        values = [i for i in parsed[name]["instructions"] if i["offset"] == offset]
+        assert len(values) == 1, (name, offset)
+        return values[0]
+    assert ins("use", 94)["opcode"] == "invokestatic"
+    assert "loadChunksAround" in ins("use", 94)["symbol"]
+    assert "REMOTE_DETONATOR_ACTIVATES" in ins("use", 111)["symbol"]
+    assert "ACCompat.onCaughtFire" in ins("use", 133)["symbol"]
+    assert ins("use", 183)["opcode"] == "aload_1"
+    assert "Level.setBlockAndUpdate" in ins("use", 195)["symbol"]
+    assert "ACPlatform.forceChunk" in ins("loadChunksAround", 44)["symbol"]
+    assert ins("loadChunksAround", 43)["opcode"] == "iconst_1"
+    assert "BombTracked" in ins("acInventoryTick", 22)["symbol"]
+    assert "BombPos" in ins("acInventoryTick", 148)["symbol"]
+    assert "BombDimension" in ins("acInventoryTick", 155)["symbol"]
     factory = o["consumers"][
         "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry"
     ]["bodies"][0]
