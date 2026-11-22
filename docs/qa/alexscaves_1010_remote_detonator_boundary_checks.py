@@ -53,17 +53,13 @@ def check(report_path: Path, manifest_path: Path):
     assert manifest["scope"] == (
         "REMOTE_DETONATOR_BOUNDARIES_SHA_EXACT_DISCOVERY_NOT_WORLD_SAFETY_CERTIFICATION"
     )
-    assert report["artifact"] == manifest["artifact"] == {
+    publisher = {
         "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
         "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
         "size_bytes": 75279314,
-    } or (
-        report["artifact"] == {
-            "sha1": manifest["artifact"]["sha1"],
-            "sha256": manifest["artifact"]["sha256"],
-            "size_bytes": manifest["artifact"]["size_bytes"],
-        } and manifest["artifact"]["version"] == "1.0.10"
-    )
+    }
+    assert report["artifact"] == publisher
+    assert manifest["artifact"] == {**publisher, "version": "1.0.10"}
     for key, expected in {
         "platform_effective_implementation": "NOT_VERIFIED",
         "ticket_lifetime": "NOT_VERIFIED",
