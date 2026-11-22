@@ -1,0 +1,62 @@
+name: Alex's Caves 1.0.10 Resistor Shield exact native discovery
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-resistor-shield-discovery.yml'
+      - 'docs/qa/alexscaves_1010_resistor_shield_discovery.py'
+      - 'docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py'
+      - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/providers/INDEX.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  resistor_shield_discovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Syntax of read-only census and fail-closed checker
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_resistor_shield_discovery.py
+          python3 -m py_compile docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py
+      - name: Download SHA-pinned Alex's Caves 1.0.10 JAR
+        run: |
+          mkdir -p build/resistor-shield-1010
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/resistor-shield-1010/publisher.jar
+      - name: Discover ResistorShieldItem native owners, methods and resources
+        run: |
+          python3 docs/qa/alexscaves_1010_resistor_shield_discovery.py \
+            --jar build/resistor-shield-1010/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/resistor-shield-1010/report.json
+      - name: Verify bounded report and malformed-input rejection
+        run: |
+          python3 docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py \
+            --report build/resistor-shield-1010/report.json
+          printf '{}\n' > build/resistor-shield-1010/invalid.json
+          if python3 docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py \
+              --report build/resistor-shield-1010/invalid.json; then
+            echo 'FAIL: invalid Resistor Shield evidence passed'
+            exit 1
+          fi
+      - name: Upload reproducible native report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-resistor-shield-discovery
+          path: build/resistor-shield-1010/report.json
+          if-no-files-found: warn
+          retention-days: 14
