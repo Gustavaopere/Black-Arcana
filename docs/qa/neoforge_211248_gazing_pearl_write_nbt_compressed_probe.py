@@ -45,14 +45,13 @@ def audit(server: Path, srg: Path, libraries: Path, javap: str) -> dict:
     require(len(declared) == len(reader.methods), "duplicate JVM method declaration")
     require(set(parsed) == set(declared), "missing unexpected JVM disassembly declaration")
 
-    # Discovery, not a guess about the disk semantics: selected methods are
-    # exact calls plus closely named local helpers, bounded against JAR drift.
-    names = {"writeNbtCompressed", "withIOWorker", "writeNbt"}
-    selected = [
-        key for key in sorted(parsed)
-        if key[0] in names or key[0].startswith("lambda$writeNbtCompressed$")
-    ]
-    require(2 <= len(selected) <= MAX_SELECTED, "write boundary method roster drift")
+    # The initial pinned run discovered just fourteen concrete IOUtilities
+    # declarations. Audit that full bounded class (atomicWrite, cleanup and
+    # IO-pool completion included), not merely the forwarding wrapper.
+    selected = sorted(parsed)
+    require(len(selected) == len(reader.methods) == 14 and
+            len(selected) <= MAX_SELECTED,
+            "verified 14-method IOUtilities roster drift")
     result = []
     non_executable = []
     for key in selected:
