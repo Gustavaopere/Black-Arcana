@@ -1,0 +1,159 @@
+name: NeoForge 21.1.248 Gazing Pearl exact NbtIo compressed writer discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/neoforge-211248-gazing-pearl-nbtio-compressed.yml'
+      - 'docs/qa/neoforge_211248_gazing_pearl_nbtio_compressed_probe.py'
+      - 'docs/qa/neoforge_211248_gazing_pearl_nbtio_compressed_checks.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-NBTIO-ABI.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-NBTIO-ABI.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-WRITE-NBT-ABI.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact_nbtio_compressed_abi:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile bounded NbtIo class auditor
+        run: |
+          python3 -m py_compile docs/qa/neoforge_211248_gazing_pearl_nbtio_compressed_probe.py
+          python3 -m py_compile docs/qa/neoforge_211248_gazing_pearl_nbtio_compressed_checks.py
+      - name: Fetch official NeoForge 21.1.248 installer with Maven checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/gazing-pearl-nbtio-211248/server
+          cd build/gazing-pearl-nbtio-211248/server
+          BASE='https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248'
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            "$BASE/neoforge-21.1.248-installer.jar.sha256" -o installer.sha256
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            "$BASE/neoforge-21.1.248-installer.jar" -o neoforge-installer.jar
+          EXPECTED="$(awk '{print $1}' installer.sha256)"
+          ACTUAL="$(sha256sum neoforge-installer.jar | awk '{print $1}')"
+          test "$(printf '%s' "$EXPECTED" | wc -c)" -eq 64
+          test "$ACTUAL" = "$EXPECTED"
+          test "$ACTUAL" = '68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c'
+          unzip -tq neoforge-installer.jar
+      - name: Install official exact NeoForge distribution
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/gazing-pearl-nbtio-211248/server
+          java -jar neoforge-installer.jar --installServer > install.log 2>&1 || {
+            tail -n 90 install.log
+            exit 1
+          }
+          test -f libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar
+          test -f libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar
+      - name: Extract NbtIo compressed-write classfile identity and bounded methods
+        run: |
+          python3 docs/qa/neoforge_211248_gazing_pearl_nbtio_compressed_probe.py \
+            --server build/gazing-pearl-nbtio-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar \
+            --srg build/gazing-pearl-nbtio-211248/server/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/gazing-pearl-nbtio-211248/report.json
+      - name: Fail closed against physical or mutating inferences
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('build/gazing-pearl-nbtio-211248/report.json').read_text())
+          assert report['schema_version']==1
+          assert report['scope']=='NEOFORGE_211248_NBTIO_COMPRESSED_WRITE_DISTRIBUTED_ONLY'
+          assert report['distribution']['neoforge_version']=='21.1.248'
+          assert report['modlauncher_loaded']=='NOT_OBSERVED'
+          assert report['physical_installed_modpack_parity']=='NOT_VERIFIED'
+          assert report['filesystem_write_or_restart']=='NOT_TESTED'
+          assert report['actual_nbt_reload']=='NOT_TESTED'
+          assert report['shutdown_wait_callsite']=='NOT_VERIFIED'
+          assert report['physical_qa']=='NOT_TESTED'
+          assert report['static_contract']=='NOT_CERTIFIED'
+          assert report['mutating_hook']=='NOT_VERIFIED'
+          assert report['mutation']=='NO_MUTATION'
+          assert report['provider_universe_closed'] is False
+          assert report['semantic_magic_roots_delta']==0
+          print('PASS: bounded distributed NbtIo discovery; no live I/O claims')
+          PY
+      - name: Verify exact GZIP, tag writer and StringFallback JVM pivots
+        run: |
+          python3 docs/qa/neoforge_211248_gazing_pearl_nbtio_compressed_checks.py \
+            --report build/gazing-pearl-nbtio-211248/report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-NBTIO-ABI.json'
+          echo "NBTIO_GOLDEN_REPORT_SHA256=$(sha256sum build/gazing-pearl-nbtio-211248/report.json | cut -d ' ' -f1)"
+          test "$(sha256sum build/gazing-pearl-nbtio-211248/report.json | cut -d ' ' -f1)" = \
+            '02a7b6c89e8b704189f40f4979b85a334e212dd8aa2be5cb24bfecdb311f33f3'
+      - name: Reject forged compressor, serializer, tag dispatch and UTF recovery
+        run: |
+          python3 - <<'PY'
+          import copy, hashlib, json
+          from pathlib import Path
+          root=Path('build/gazing-pearl-nbtio-211248')
+          src=json.loads((root/'report.json').read_text())
+          seal=json.loads(Path('wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-GAZING-PEARL-NBTIO-ABI.json').read_text())
+          cases=(
+              ('gzip-stream','class','createCompressorStream','(Ljava/io/OutputStream;)Ljava/io/DataOutputStream;',13),
+              ('compressor-creation','class','writeCompressed','(Lnet/minecraft/nbt/CompoundTag;Ljava/io/OutputStream;)V',1),
+              ('nbt-write-dispatch','class','writeCompressed','(Lnet/minecraft/nbt/CompoundTag;Ljava/io/OutputStream;)V',7),
+              ('unnamed-wrapper-call','class','write','(Lnet/minecraft/nbt/CompoundTag;Ljava/io/DataOutput;)V',2),
+              ('fallback-wrapper','class','writeUnnamedTagWithFallback','(Lnet/minecraft/nbt/Tag;Ljava/io/DataOutput;)V',1),
+              ('nbt-type-id','class','writeUnnamedTag','(Lnet/minecraft/nbt/Tag;Ljava/io/DataOutput;)V',7),
+              ('utf-log','string_fallback','writeUTF','(Ljava/lang/String;)V',12),
+              ('utf-empty-fallback','string_fallback','writeUTF','(Ljava/lang/String;)V',18),
+          )
+          for case,owner,name,desc,offset in cases:
+              report=copy.deepcopy(src)
+              manifest=copy.deepcopy(seal)
+              items=[m for m in report[owner]['selected_methods']
+                     if m['declaration']['name']==name and m['declaration']['descriptor']==desc]
+              assert len(items)==1, 'negative target selector invalid'
+              item=items[0]
+              instr=[x for x in item['instructions'] if x['offset']==offset]
+              assert len(instr)==1 and instr[0]['opcode']!='nop'
+              instr[0]['opcode']='nop'
+              updated=(json.dumps(item['instructions'],sort_keys=True,ensure_ascii=False,indent=2)+'\n').encode()
+              sha=hashlib.sha256(updated).hexdigest()
+              item['instruction_sha256']=sha
+              key='nbtio' if owner=='class' else 'fallback'
+              records=[m for m in manifest['classes'][key]['methods']
+                       if m['name']==name and m['descriptor']==desc]
+              assert len(records)==1
+              records[0]['instruction_sha256']=sha
+              forged=json.dumps(report,sort_keys=True,ensure_ascii=False).encode()
+              manifest['evidence']['report_bytes']=len(forged)
+              manifest['evidence']['report_sha256']=hashlib.sha256(forged).hexdigest()
+              (root/('bad-'+case+'.json')).write_bytes(forged)
+              (root/('bad-'+case+'-seal.json')).write_text(json.dumps(manifest,ensure_ascii=False))
+          PY
+          for case in gzip-stream compressor-creation nbt-write-dispatch unnamed-wrapper-call fallback-wrapper nbt-type-id utf-log utf-empty-fallback; do
+            LOG="build/gazing-pearl-nbtio-211248/bad-$case.log"
+            if python3 docs/qa/neoforge_211248_gazing_pearl_nbtio_compressed_checks.py \
+              --report "build/gazing-pearl-nbtio-211248/bad-$case.json" \
+              --manifest "build/gazing-pearl-nbtio-211248/bad-$case-seal.json" >"$LOG" 2>&1; then
+              echo "::error::FORGED_NBTIO_ACCEPTED_$case"
+              exit 1
+            fi
+            if ! grep -Fq 'JVM opcode drift' "$LOG"; then
+              cat "$LOG"
+              echo "::error::WRONG_NBTIO_REJECTION_REASON_$case"
+              exit 1
+            fi
+            echo "EXPECTED_NBTIO_JVM_OPCODE_DRIFT_REJECTED=$case"
+          done
+      - name: Upload report only, never official JAR
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: neoforge-211248-gazing-pearl-nbtio-class-evidence
+          path: build/gazing-pearl-nbtio-211248/report.json
+          if-no-files-found: ignore
+          retention-days: 14

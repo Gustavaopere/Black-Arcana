@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "scope": "NEOFORGE_211248_NBTIO_COMPRESSED_WRITE_DISTRIBUTED_ONLY",
+  "evidence": {
+    "run_id": 45055281886,
+    "artifact_id": 14767252409,
+    "report_bytes": 44730,
+    "report_sha256": "02a7b6c89e8b704189f40f4979b85a334e212dd8aa2be5cb24bfecdb311f33f3"
+  },
+  "distribution": {
+    "minecraft_version": "1.21.1",
+    "neoforge_version": "21.1.248",
+    "installer_sha256": "68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c",
+    "neoforge_server_sha256": "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359",
+    "neoforge_server_bytes": 5675624,
+    "minecraft_srg_sha256": "26ca9c40d7e1681190b428583c38816852218e78df3f8bdb60a59a78503aec71",
+    "minecraft_srg_bytes": 14246609,
+    "modlauncher_loaded_bytes": "NOT_OBSERVED"
+  },
+  "classes": {
+    "nbtio": {
+      "owner": "net/minecraft/nbt/NbtIo",
+      "source_archive": "NEOFORGE_OVERLAY",
+      "class_major": 65,
+      "class_sha256": "6c124951f395280964900afe4c0c2a550d4808901c3362519806202fd48024d0",
+      "declared_method_count": 22,
+      "roster_sha256": "5db41efaa0c1c7a5c1329c536e90ae3cb3a08ca24d4506f9d3e511060da5a98c",
+      "fields": [
+        "SYNC_OUTPUT_OPTIONS"
+      ],
+      "methods": [
+        {
+          "name": "createCompressorStream",
+          "descriptor": "(Ljava/io/OutputStream;)Ljava/io/DataOutputStream;",
+          "code_sha256": "8026218dbc5ab4cddb156cfac19ac5fd198ae914e802ebfa92902247b285a0e9",
+          "instruction_sha256": "b4feadad99a2cff545d6f1b5c60f4ae948f8d598d67f70095ac11dcfd5581418",
+          "instruction_count": 11
+        },
+        {
+          "name": "write",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/io/DataOutput;)V",
+          "code_sha256": "85675cda32d432eadcea901432f5b6b7cd5d746a2fbc58bddd992ead373acc35",
+          "instruction_sha256": "49c72ebced933a548b0afda65f769fb3f378662551c1de70375418d1874558bc",
+          "instruction_count": 4
+        },
+        {
+          "name": "write",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/nio/file/Path;)V",
+          "code_sha256": "5103284b5b27be8ac61cd1fea28ee21654ff30cf0f87691e0204df3cb0c604b9",
+          "instruction_sha256": "62838f4e89d28ddea18ae42d5b8ea2db646a25adf31dbc81e89d7888ca07ed40",
+          "instruction_count": 61
+        },
+        {
+          "name": "writeAnyTag",
+          "descriptor": "(Lnet/minecraft/nbt/Tag;Ljava/io/DataOutput;)V",
+          "code_sha256": "b09548cb7eb2622a96b64456cdb083a253e1b4b6408ac945c1a1b77518e2a4d9",
+          "instruction_sha256": "8038f0f5038eec4d3ffb2ff36a110730d83e557734ae37f036837641b72253e9",
+          "instruction_count": 11
+        },
+        {
+          "name": "writeCompressed",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/io/OutputStream;)V",
+          "code_sha256": "4e40b3d0af785b83eab4b9ebe9373ecfe34ac33368dd5572f701c107714fec81",
+          "instruction_sha256": "56d50173023a72b3581d7f0d32c368bae2efdebaa033af702c045f17ae255788",
+          "instruction_count": 24
+        },
+        {
+          "name": "writeCompressed",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/nio/file/Path;)V",
+          "code_sha256": "9710e409f4bf8006f6f7471937d0e6493eb8960246bb4d542d5fb96a75e19afc",
+          "instruction_sha256": "26ed1ee177d7d8473a76bef23d4972524dc8d9b729b78b3f9556dfa403de3a23",
+          "instruction_count": 43
+        },
+        {
+          "name": "writeUnnamedTag",
+          "descriptor": "(Lnet/minecraft/nbt/Tag;Ljava/io/DataOutput;)V",
+          "code_sha256": "3296be601bab5520a098d88d96722347fc7aa8357f492906042507e70f21d693",
+          "instruction_sha256": "2ac2d2a5a3d9059c71778622d93b183481c4d0626023a4dd6bfd274feff1037f",
+          "instruction_count": 14
+        },
+        {
+          "name": "writeUnnamedTagWithFallback",
+          "descriptor": "(Lnet/minecraft/nbt/Tag;Ljava/io/DataOutput;)V",
+          "code_sha256": "229bbc701566bb153dc9716a4bafd2f9e9b91576049e383eb751a4ed709658e0",
+          "instruction_sha256": "287c5ad320ca8f49d64491d3c67081245afd09e888cca53dbb9d2134bb85d415",
+          "instruction_count": 7
+        }
+      ]
+    },
+    "fallback": {
+      "owner": "net/minecraft/nbt/NbtIo$StringFallbackDataOutput",
+      "source_archive": "NEOFORGE_OVERLAY",
+      "class_major": 65,
+      "class_sha256": "0dd70203d2a454f6cf95ab854640062e39d0372cdf2665c734aa16b4fd7847ba",
+      "parent": "net/minecraft/util/DelegateDataOutput",
+      "declared_method_count": 2,
+      "fields": [],
+      "methods": [
+        {
+          "name": "<init>",
+          "descriptor": "(Ljava/io/DataOutput;)V",
+          "code_sha256": "405f81f0b51683db4ab14a729fb164a2c889439967d0bfe6248ebe8183a4873d",
+          "instruction_sha256": "ed481e7a78d177be721e07d4887229d14f5ee33eee3386dd5f36fad5c938923b",
+          "instruction_count": 4
+        },
+        {
+          "name": "writeUTF",
+          "descriptor": "(Ljava/lang/String;)V",
+          "code_sha256": "bef73de317c11cdb18b016eaf07520ab2129b80325dd627a21787d14803d4b66",
+          "instruction_sha256": "87d2aae57a86df766715271735eec67008f945b2e09ae1ed48eaace9220d94b2",
+          "instruction_count": 12
+        }
+      ],
+      "utf_handler": [
+        {
+          "start": 0,
+          "end": 5,
+          "target": 8,
+          "catch": "java/io/UTFDataFormatException"
+        }
+      ]
+    }
+  },
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "limits": {
+    "loaded_modlauncher": "NOT_OBSERVED",
+    "physical_installed_modpack_parity": "NOT_VERIFIED",
+    "filesystem_write_or_restart": "NOT_TESTED",
+    "actual_nbt_reload": "NOT_TESTED",
+    "shutdown_wait_callsite": "NOT_VERIFIED",
+    "compoundtag_write_virtual_dispatch": "NOT_AUDITED",
+    "fallback_utf_exception_observed_in_real_save": "NOT_TESTED"
+  }
+}
