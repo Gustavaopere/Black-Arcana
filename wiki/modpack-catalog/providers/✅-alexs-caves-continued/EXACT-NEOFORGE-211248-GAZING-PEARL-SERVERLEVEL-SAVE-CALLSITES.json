@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "scope": "NEOFORGE_211248_SAVE_SHUTDOWN_CHAIN_DISTRIBUTED_STATIC_ONLY",
+  "evidence": {
+    "serverlevel_save": {
+      "filename": "report.json",
+      "bytes": 45105,
+      "sha256": "70ea6910ab39cf59d2c3b1a3347aa54d09dbdfe98f65dee42356c555c23ec4b8"
+    },
+    "saveallchunks": {
+      "filename": "saveallchunks_report.json",
+      "bytes": 68068,
+      "sha256": "979f36eee46e8848216ad8429208627a68a4ae18654dd1073c9bf1ff5b562708"
+    },
+    "discovery_run_id": 45067244452,
+    "artifact_id": 14772170804
+  },
+  "distribution": {
+    "neoforge_version": "21.1.248",
+    "minecraft_version": "1.21.1",
+    "installer_sha256": "68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c",
+    "neoforge_server_sha256": "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359",
+    "minecraft_srg_sha256": "26ca9c40d7e1681190b428583c38816852218e78df3f8bdb60a59a78503aec71",
+    "neoforge_universal_sha256": "90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5"
+  },
+  "archives": [
+    {
+      "archive": "NEOFORGE_OVERLAY",
+      "jar_sha256": "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359",
+      "class_entries_scanned": 1603,
+      "class_roster_sha256": "4ef99fe37da0e8dbe7550fad0833c83ea6748a9ed45c32bc25d94d15483397c2",
+      "first_methods": 1,
+      "second_methods": 2
+    },
+    {
+      "archive": "INSTALLED_MINECRAFT_SRG",
+      "jar_sha256": "26ca9c40d7e1681190b428583c38816852218e78df3f8bdb60a59a78503aec71",
+      "class_entries_scanned": 6148,
+      "class_roster_sha256": "8e1559f350a6f5d16a6ac13ad677907df6f657bc0741b5732d6ec84e35b0afa1",
+      "first_methods": 1,
+      "second_methods": 2
+    },
+    {
+      "archive": "NEOFORGE_UNIVERSAL",
+      "jar_sha256": "90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5",
+      "class_entries_scanned": 1492,
+      "class_roster_sha256": "a941d0fbf5962d7294e05ee4f177f2c8b0f1b91ddc793590c7fa95a44f4732d4",
+      "first_methods": 1,
+      "second_methods": 0
+    }
+  ],
+  "methods": [
+    {
+      "report": "serverlevel_save",
+      "archive": 0,
+      "owner": "net/minecraft/server/MinecraftServer",
+      "name": "saveAllChunks",
+      "descriptor": "(ZZZ)Z",
+      "class_sha256": "3f1b7a260a249ae836d9d71bf0a0fe7575b62aff48f2b8fac10dd06aaa9efd2f",
+      "code_sha256": "141333cba3001dc03409adc7b92e5fe800e7e1f3c33b9badda4cd09fe6f9ce66",
+      "instruction_sha256": "feb69688aeecce2fe359a3c3b7ea9822fd6a58f23ee8686f6f62a74b7948a3d9",
+      "instruction_count": 93,
+      "offset": 82,
+      "cp_index": 1005,
+      "opcode": "invokevirtual"
+    },
+    {
+      "report": "serverlevel_save",
+      "archive": 1,
+      "owner": "net/minecraft/server/MinecraftServer",
+      "name": "saveAllChunks",
+      "descriptor": "(ZZZ)Z",
+      "class_sha256": "b2c008639af4ff9a4c108494ecab7ec4d4c89a228fd461b7eeb76d51f424ce52",
+      "code_sha256": "4e1e884157f1068031cb043801697689541e00ae20345f63c230c5502e1721ce",
+      "instruction_sha256": "611427db25f0878c830988fbea8c346770b8c77116f67be6af9672720630b7e5",
+      "instruction_count": 93,
+      "offset": 82,
+      "cp_index": 1269,
+      "opcode": "invokevirtual"
+    },
+    {
+      "report": "serverlevel_save",
+      "archive": 2,
+      "owner": "net/neoforged/neoforge/server/command/generation/GenerationTask",
+      "name": "lambda$acceptChunkResult$5",
+      "descriptor": "()V",
+      "class_sha256": "dd8b5a03f41c6724f79472cb3e75f574aee7f8aff7f2b998ff56b7aca6890647",
+      "code_sha256": "968183897e79da6d938c3084e31d559c0b1692d978f50d6fda9a82f177ce0ab3",
+      "instruction_sha256": "dc002047e2476e0083a77e119e1f3c3bc9d31596ce2ebd719afcce3d00ce0ee9",
+      "instruction_count": 7,
+      "offset": 7,
+      "cp_index": 342,
+      "opcode": "invokevirtual"
+    },
+    {
+      "report": "saveallchunks",
+      "archive": 0,
+      "owner": "net/minecraft/server/MinecraftServer",
+      "name": "saveEverything",
+      "descriptor": "(ZZZ)Z",
+      "class_sha256": "3f1b7a260a249ae836d9d71bf0a0fe7575b62aff48f2b8fac10dd06aaa9efd2f",
+      "code_sha256": "b6538680f75d80e05205ca11533418771faef8526dfb390be89b36e6e566601e",
+      "instruction_sha256": "445133122b23aeab9f1e8118f33a6fdbcbd3de9c79bd35cea6c72bbfd02f098d",
+      "instruction_count": 24,
+      "offset": 16,
+      "cp_index": 1050,
+      "opcode": "invokevirtual"
+    },
+    {
+      "report": "saveallchunks",
+      "archive": 0,
+      "owner": "net/minecraft/server/MinecraftServer",
+      "name": "stopServer",
+      "descriptor": "()V",
+      "class_sha256": "3f1b7a260a249ae836d9d71bf0a0fe7575b62aff48f2b8fac10dd06aaa9efd2f",
+      "code_sha256": "6dae566c783e0299191ddefbd767276b0af2c62dc4f065361632e2d17d919430",
+      "instruction_sha256": "f721bf7d6d1819f6b2682c053fd43ea793f622d0d9c68637cb6c7647c6e0feec",
+      "instruction_count": 136,
+      "offset": 224,
+      "cp_index": 1050,
+      "opcode": "invokevirtual"
+    },
+    {
+      "report": "saveallchunks",
+      "archive": 1,
+      "owner": "net/minecraft/server/MinecraftServer",
+      "name": "saveEverything",
+      "descriptor": "(ZZZ)Z",
+      "class_sha256": "b2c008639af4ff9a4c108494ecab7ec4d4c89a228fd461b7eeb76d51f424ce52",
+      "code_sha256": "187d63b416e6f52376062f098f398599800d5b66c0d8b0647dbe9345fd80d576",
+      "instruction_sha256": "221139ddd51d2958b3d0bd83169b85bc96d7d93d60ca86c55a80d493fec8d3d6",
+      "instruction_count": 23,
+      "offset": 16,
+      "cp_index": 1315,
+      "opcode": "invokevirtual"
+    },
+    {
+      "report": "saveallchunks",
+      "archive": 1,
+      "owner": "net/minecraft/server/MinecraftServer",
+      "name": "stopServer",
+      "descriptor": "()V",
+      "class_sha256": "b2c008639af4ff9a4c108494ecab7ec4d4c89a228fd461b7eeb76d51f424ce52",
+      "code_sha256": "e531897d8569b80168a72b95d182cf9400009d1e627cf93c69083e1cef2172cc",
+      "instruction_sha256": "845308d0e32bc3552d2a0e3e6ec2f9e1bdd4ef75dd5e70cbd50f68ae89f459a0",
+      "instruction_count": 129,
+      "offset": 224,
+      "cp_index": 1315,
+      "opcode": "invokevirtual"
+    }
+  ],
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0,
+    "shutdown_path_execution": "NOT_TESTED",
+    "server_stop_arguments": "NOT_VERIFIED",
+    "async_write_completion": "NOT_TESTED",
+    "disk_durability": "NOT_TESTED"
+  }
+}
