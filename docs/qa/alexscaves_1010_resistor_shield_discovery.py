@@ -19,6 +19,23 @@ from alexscaves_1010_armor_material_audit import (
 OWNER = "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem"
 TERMS = ("resistor_shield", "resistor", "resistance_shield")
 
+EXPECTED_CLASS_SHA = "ffd3fddd74f8d44049886e9013de2e3d67cbd2a721015369175e8442c5044741"
+EXPECTED_PARENT = "net/minecraft/world/item/ShieldItem"
+EXPECTED_INTERFACES = {
+    "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem",
+    "com/github/alexmodguy/alexscaves/server/item/ACEnchantableItem",
+    "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem",
+    "com/github/alexmodguy/alexscaves/server/item/ACTickingItem",
+}
+KNOWN_INTERFACE_BODIES = {
+    ("getEnchantmentValue", "()I"): (
+        2, "d943c5fe0bd38038ce70963c73b8759ba3d76c8c00d31c1a2141268dc4e0ee0a",
+    ),
+    ("isEnchantable", "(Lnet/minecraft/world/item/ItemStack;)Z"): (
+        8, "9cd84b0255be269f2bf50fce0095c14fa5d484831fd35063e71f4c9814aa6b4f",
+    ),
+}
+
 
 def discover(jar: Path, javap: str, output: Path) -> None:
     verify_artifact(jar)
@@ -29,6 +46,22 @@ def discover(jar: Path, javap: str, output: Path) -> None:
     require(set(native["targets"]) == {OWNER}, "target roster drift")
     native.pop("filename_matched_resources", None)
     cls = native["targets"][OWNER]
+    # Independent, previously SHA-certified 1.0.10 ACEnchantableItem evidence.
+    # This binds the new *census* to a known exact class, without promoting
+    # a complete item's gameplay contract or a mutating hook.
+    require(cls["class_sha256"] == EXPECTED_CLASS_SHA,
+            "ResistorShieldItem class drift against prior native audit")
+    require(cls["hierarchy"]["parent"] == EXPECTED_PARENT,
+            "ResistorShieldItem superclass drift")
+    require(set(cls["hierarchy"]["interfaces"]) == EXPECTED_INTERFACES,
+            "ResistorShieldItem interface roster drift")
+    selected = {
+        (m["declaration"]["name"], m["declaration"]["descriptor"]):
+        (m["instruction_count"], m["instruction_sha256"])
+        for m in cls["methods"]
+    }
+    require(all(selected.get(k) == v for k, v in KNOWN_INTERFACE_BODIES.items()),
+            "native enchantability methods drift against previously certified audit")
     require(cls["class_sha256"] and len(cls["class_sha256"]) == 64,
             "owner fingerprint absent")
     require(len(cls["methods"]) == sum(
