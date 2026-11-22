@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 0/18.**
+**Fichas catalogadas (somente fichas detectadas): 1/18.**
 
-**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra das fichas catalogadas:** `█░░░░░░░░░░░░░░░░░░░ 5.6%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 0/18.**
+**Homologadas para perks (somente fichas detectadas): 1/18.**
 
-**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra dos contratos técnicos estáticos:** `█░░░░░░░░░░░░░░░░░░░ 5.6%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -20,7 +20,7 @@
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
-| ⚠️ | Archmage Shard | [rituals/archmage-shard.md](rituals/archmage-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Archmage Shard | [rituals/archmage-shard.md](rituals/archmage-shard.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Druid Shard | [rituals/druid-shard.md](rituals/druid-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Frostling Shard | [rituals/frostling-shard.md](rituals/frostling-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Hunter Shard | [rituals/hunter-shard.md](rituals/hunter-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -43,7 +43,7 @@
 
 | Catálogo | Subpasta | Fichas catalogadas / observadas | Contratos estáticos | Índice |
 |---|---|---:|---:|---|
-| ⚠️ | Rituals | 0/11 (0.0%) | 0 | [Abrir índice](rituals/INDEX.md) |
+| ⚠️ | Rituals | 1/11 (9.1%) | 1 | [Abrir índice](rituals/INDEX.md) |
 | ⚠️ | Spells | 0/7 (0.0%) | 0 | [Abrir índice](spells/INDEX.md) |
 
 ## Critério do ✅

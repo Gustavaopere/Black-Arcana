@@ -6,9 +6,9 @@
 
 **Barra dos providers catalogados:** `░░░░░░░░░░░░░░░░░░░░ 2.4%`
 
-**Fichas catalogadas (somente fichas detectadas): 507/2446.**
+**Fichas catalogadas (somente fichas detectadas): 508/2446.**
 
-**Barra das fichas catalogadas:** `████░░░░░░░░░░░░░░░░ 20.7%`
+**Barra das fichas catalogadas:** `████░░░░░░░░░░░░░░░░ 20.8%`
 
 **Escopo:** pastas atuais de providers; a modlist pode conter outros mods/sistemas ainda não representados. Objetos ausentes do catálogo não são presumidos inexistentes.
 
@@ -18,7 +18,7 @@
 
 **Próximo na fila alfabética:** Alexs Caves Continued.
 
-**Fichas com contrato técnico estático certificado: 257/2446.**
+**Fichas com contrato técnico estático certificado: 258/2446.**
 
 **Barra das fichas estáticas observadas:** `██░░░░░░░░░░░░░░░░░░ 10.5%`
 
@@ -36,7 +36,7 @@
 | ✅ | Aeromancy Additions — ✅ catálogo da versão-fonte documentado | 58/58 (100.0%) | 0 | ⚠️ | ⚠️ 0/58 verificados | ⚠️ 0/58 testados | [Ver fichas](✅-aeromancy-additions/INDEX.md) |
 | ⚠️ | Alexs Caves Continued — 🟡 próximo na fila | 118/134 (88.1%) | 118 | ⚠️ | ⚠️ 0/134 verificados | ⚠️ 0/134 testados | [Ver fichas](✅-alexs-caves-continued/INDEX.md) |
 | ⚠️ | Alexs Mobs Continued | 1/3 (33.3%) | 1 | ⚠️ | ⚠️ 0/3 verificados | ⚠️ 0/3 testados | [Ver fichas](✅-alexs-mobs-continued/INDEX.md) |
-| ⚠️ | Alshanex Familiars | 0/18 (0.0%) | 0 | ⚠️ | ⚠️ 0/18 verificados | ⚠️ 0/18 testados | [Ver fichas](✅-alshanex-familiars/INDEX.md) |
+| ⚠️ | Alshanex Familiars | 1/18 (5.6%) | 1 | ⚠️ | ⚠️ 0/18 verificados | ⚠️ 0/18 testados | [Ver fichas](✅-alshanex-familiars/INDEX.md) |
 | ⚠️ | Apokinetics | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-apokinetics/INDEX.md) |
 | ⚠️ | Apotheosis | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-apotheosis/INDEX.md) |
 | ⚠️ | Apotheotic Creation | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-apotheotic-creation/INDEX.md) |

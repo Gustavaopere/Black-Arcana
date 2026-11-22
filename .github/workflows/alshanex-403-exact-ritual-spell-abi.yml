@@ -7,6 +7,9 @@ on:
       - '.github/workflows/alshanex-403-exact-ritual-spell-abi.yml'
       - 'docs/qa/alshanex_403_exact_ritual_spell_abi.py'
       - 'docs/qa/alshanex_403_exact_ritual_spell_abi_test.py'
+      - 'docs/qa/alshanex_403_archmage_ritual_contract.py'
+      - 'docs/qa/alexscaves_1010_action_contract_audit.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
       - 'wiki/modpack-catalog/providers/✅-alshanex-familiars/**'
   push:
     branches: [main]
@@ -14,6 +17,9 @@ on:
       - '.github/workflows/alshanex-403-exact-ritual-spell-abi.yml'
       - 'docs/qa/alshanex_403_exact_ritual_spell_abi.py'
       - 'docs/qa/alshanex_403_exact_ritual_spell_abi_test.py'
+      - 'docs/qa/alshanex_403_archmage_ritual_contract.py'
+      - 'docs/qa/alexscaves_1010_action_contract_audit.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
       - 'wiki/modpack-catalog/providers/✅-alshanex-familiars/**'
   workflow_dispatch:
 
@@ -47,6 +53,17 @@ jobs:
           python3 docs/qa/alshanex_403_exact_ritual_spell_abi.py \
             --jar build/alshanex-403/provider.jar \
             --output build/alshanex-403/evidence.json
+      - name: Replay the pinned Archmage Shard ritual contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --retry 3 --retry-all-errors \
+            --connect-timeout 20 --max-time 120 \
+            'https://cursemaven.com/curse/maven/familiarslib-1316458/8059464/familiarslib-1316458-8059464.jar' \
+            --output build/alshanex-403/familiarslib.jar
+          python3 docs/qa/alshanex_403_archmage_ritual_contract.py \
+            --jar build/alshanex-403/provider.jar \
+            --familiarslib build/alshanex-403/familiarslib.jar --verify
       - name: Publish metadata only; never upload third-party archive or disassembly
         if: always()
         uses: actions/upload-artifact@v7

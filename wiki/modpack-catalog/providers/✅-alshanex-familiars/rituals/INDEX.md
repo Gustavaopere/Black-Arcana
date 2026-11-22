@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 0/11.**
+**Fichas catalogadas (somente fichas detectadas): 1/11.**
 
-**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra das fichas catalogadas:** `█░░░░░░░░░░░░░░░░░░░ 9.1%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 0/11.**
+**Homologadas para perks (somente fichas detectadas): 1/11.**
 
-**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra dos contratos técnicos estáticos:** `█░░░░░░░░░░░░░░░░░░░ 9.1%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -20,7 +20,7 @@
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
-| ⚠️ | Archmage Shard | [ficha/archmage-shard.md](archmage-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Archmage Shard | [ficha/archmage-shard.md](archmage-shard.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Druid Shard | [ficha/druid-shard.md](druid-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Frostling Shard | [ficha/frostling-shard.md](frostling-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Hunter Shard | [ficha/hunter-shard.md](hunter-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |

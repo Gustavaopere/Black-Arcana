@@ -1,0 +1,1263 @@
+{
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "familiarslib_artifact": {
+    "bytes": 341186,
+    "sha1": "7fa3f3116e35c12456425ae195924ced33fcc2eb",
+    "sha256": "bf53bc48bb220c268b2db3619c68d75dba15e140bbd2d3799dd85b9299a0e5a9"
+  },
+  "familiarslib_version": "1.7.1",
+  "mutating_hook": "NOT_VERIFIED",
+  "mutation": "NO_MUTATION",
+  "perk_certification": "NOT_CERTIFIED",
+  "physical_qa": "NOT_TESTED",
+  "post_craft_library_class": {
+    "net/alshanex/familiarslib/item/AbstractRuneItem": {
+      "class_sha256": "a247755448ed2a54950c782c8c61a6f5dec4d629b50f762c22f20fb5fb354014",
+      "methods": [
+        {
+          "access": 1,
+          "anchors": [
+            {
+              "fact": "iconst_1",
+              "offset": 24
+            },
+            {
+              "fact": "ItemStack.shrink:",
+              "offset": 25
+            },
+            {
+              "fact": "spawnFamiliar:",
+              "offset": 33
+            },
+            {
+              "fact": "triggerShardAdvancement:",
+              "offset": 52
+            },
+            {
+              "fact": "InteractionResult.SUCCESS:",
+              "offset": 55
+            }
+          ],
+          "code_sha256": "03eda6248758c20d41fbe2b347ec6095137219dfcdfd3b0d3dded9b1f6a297df",
+          "code_size": 59,
+          "descriptor": "(Lnet/minecraft/world/item/context/UseOnContext;)Lnet/minecraft/world/InteractionResult;",
+          "exception_handlers": [],
+          "instruction_count": 31,
+          "max_locals": 7,
+          "max_stack": 4,
+          "name": "useOn"
+        },
+        {
+          "access": 4,
+          "code_sha256": "e8b9607db76017a8facffb1d60489f53ff01f8432a3145218383e832b1f77b16",
+          "code_size": 14,
+          "descriptor": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "exception_handlers": [],
+          "instruction_count": 6,
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "triggerShardAdvancement"
+        }
+      ],
+      "superclass": "net/minecraft/world/item/Item"
+    }
+  },
+  "provider_classes": {
+    "net/alshanex/alshanex_familiars/block/ArchmageStatue": {
+      "class_sha256": "27ee3746b65eaf11cebbecf90a3c78c1182b8d49b56a3be39dcc0e86257d9b69",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "b7b10534218a1340456eaa7d492984f699d5e95a59952d013bc093cc2caa2fc2",
+          "code_size": 47,
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V",
+          "exception_handlers": [],
+          "instruction_count": 23,
+          "max_locals": 7,
+          "max_stack": 6,
+          "name": "onRemove"
+        },
+        {
+          "access": 1,
+          "code_sha256": "4caa94b66b545a0ee1f4b1d8eed0924aa8ae92c1a15b22171552173232b2935b",
+          "code_size": 10,
+          "descriptor": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/entity/BlockEntity;",
+          "exception_handlers": [],
+          "instruction_count": 6,
+          "max_locals": 3,
+          "max_stack": 4,
+          "name": "newBlockEntity"
+        },
+        {
+          "access": 1,
+          "code_sha256": "1197a918ebb77259033b0902436c493f16e90a3e19e0be6b14ddb192c41391cd",
+          "code_size": 149,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/ItemInteractionResult;",
+          "exception_handlers": [],
+          "instruction_count": 67,
+          "max_locals": 13,
+          "max_stack": 5,
+          "name": "useItemOn"
+        },
+        {
+          "access": 2,
+          "code_sha256": "a4aa15945dcfef46ba30aac1651ec2574014124fde177ba9ff80d0ba1239f2b0",
+          "code_size": 37,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;)V",
+          "exception_handlers": [],
+          "instruction_count": 19,
+          "max_locals": 5,
+          "max_stack": 3,
+          "name": "dropItem"
+        }
+      ],
+      "superclass": "io/redspace/ironsspellbooks/block/pedestal/PedestalBlock"
+    },
+    "net/alshanex/alshanex_familiars/block/ClericStatue": {
+      "class_sha256": "a6c4030cdc18cb68171996dc24f5afa2a1c2e790cbbffb0546fb508873d7bc63",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "b7b10534218a1340456eaa7d492984f699d5e95a59952d013bc093cc2caa2fc2",
+          "code_size": 47,
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V",
+          "exception_handlers": [],
+          "instruction_count": 23,
+          "max_locals": 7,
+          "max_stack": 6,
+          "name": "onRemove"
+        },
+        {
+          "access": 1,
+          "code_sha256": "4caa94b66b545a0ee1f4b1d8eed0924aa8ae92c1a15b22171552173232b2935b",
+          "code_size": 10,
+          "descriptor": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/entity/BlockEntity;",
+          "exception_handlers": [],
+          "instruction_count": 6,
+          "max_locals": 3,
+          "max_stack": 4,
+          "name": "newBlockEntity"
+        },
+        {
+          "access": 1,
+          "code_sha256": "1197a918ebb77259033b0902436c493f16e90a3e19e0be6b14ddb192c41391cd",
+          "code_size": 149,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/ItemInteractionResult;",
+          "exception_handlers": [],
+          "instruction_count": 67,
+          "max_locals": 13,
+          "max_stack": 5,
+          "name": "useItemOn"
+        },
+        {
+          "access": 2,
+          "code_sha256": "a4aa15945dcfef46ba30aac1651ec2574014124fde177ba9ff80d0ba1239f2b0",
+          "code_size": 37,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;)V",
+          "exception_handlers": [],
+          "instruction_count": 19,
+          "max_locals": 5,
+          "max_stack": 3,
+          "name": "dropItem"
+        }
+      ],
+      "superclass": "io/redspace/ironsspellbooks/block/pedestal/PedestalBlock"
+    },
+    "net/alshanex/alshanex_familiars/block/DruidStatue": {
+      "class_sha256": "8b86d71b6bc982219dbfd4e38a0e7c04334250e3998f9a45e4f0f1670d5496f5",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "b7b10534218a1340456eaa7d492984f699d5e95a59952d013bc093cc2caa2fc2",
+          "code_size": 47,
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V",
+          "exception_handlers": [],
+          "instruction_count": 23,
+          "max_locals": 7,
+          "max_stack": 6,
+          "name": "onRemove"
+        },
+        {
+          "access": 1,
+          "code_sha256": "4caa94b66b545a0ee1f4b1d8eed0924aa8ae92c1a15b22171552173232b2935b",
+          "code_size": 10,
+          "descriptor": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/entity/BlockEntity;",
+          "exception_handlers": [],
+          "instruction_count": 6,
+          "max_locals": 3,
+          "max_stack": 4,
+          "name": "newBlockEntity"
+        },
+        {
+          "access": 1,
+          "code_sha256": "1197a918ebb77259033b0902436c493f16e90a3e19e0be6b14ddb192c41391cd",
+          "code_size": 149,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/ItemInteractionResult;",
+          "exception_handlers": [],
+          "instruction_count": 67,
+          "max_locals": 13,
+          "max_stack": 5,
+          "name": "useItemOn"
+        },
+        {
+          "access": 2,
+          "code_sha256": "a4aa15945dcfef46ba30aac1651ec2574014124fde177ba9ff80d0ba1239f2b0",
+          "code_size": 37,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;)V",
+          "exception_handlers": [],
+          "instruction_count": 19,
+          "max_locals": 5,
+          "max_stack": 3,
+          "name": "dropItem"
+        }
+      ],
+      "superclass": "io/redspace/ironsspellbooks/block/pedestal/PedestalBlock"
+    },
+    "net/alshanex/alshanex_familiars/block/HunterStatue": {
+      "class_sha256": "0723a0b95c8599d76a5ed9c5d2142937de073962dc29cd69b15027d4c1f40881",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "b7b10534218a1340456eaa7d492984f699d5e95a59952d013bc093cc2caa2fc2",
+          "code_size": 47,
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V",
+          "exception_handlers": [],
+          "instruction_count": 23,
+          "max_locals": 7,
+          "max_stack": 6,
+          "name": "onRemove"
+        },
+        {
+          "access": 1,
+          "code_sha256": "4caa94b66b545a0ee1f4b1d8eed0924aa8ae92c1a15b22171552173232b2935b",
+          "code_size": 10,
+          "descriptor": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/entity/BlockEntity;",
+          "exception_handlers": [],
+          "instruction_count": 6,
+          "max_locals": 3,
+          "max_stack": 4,
+          "name": "newBlockEntity"
+        },
+        {
+          "access": 1,
+          "code_sha256": "1197a918ebb77259033b0902436c493f16e90a3e19e0be6b14ddb192c41391cd",
+          "code_size": 149,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/ItemInteractionResult;",
+          "exception_handlers": [],
+          "instruction_count": 67,
+          "max_locals": 13,
+          "max_stack": 5,
+          "name": "useItemOn"
+        },
+        {
+          "access": 2,
+          "code_sha256": "a4aa15945dcfef46ba30aac1651ec2574014124fde177ba9ff80d0ba1239f2b0",
+          "code_size": 37,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;)V",
+          "exception_handlers": [],
+          "instruction_count": 19,
+          "max_locals": 5,
+          "max_stack": 3,
+          "name": "dropItem"
+        }
+      ],
+      "superclass": "io/redspace/ironsspellbooks/block/pedestal/PedestalBlock"
+    },
+    "net/alshanex/alshanex_familiars/block/RitualCorePedestal": {
+      "class_sha256": "a28605b944477d9c46b449ac560fe0be36adebca3e5f7bbe066713431419cd92",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "1b11476e0f9202b2cefdba87ba96c13bc9cf74619efd3e4239e96ebd07aea860",
+          "code_size": 47,
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V",
+          "exception_handlers": [],
+          "instruction_count": 23,
+          "max_locals": 7,
+          "max_stack": 6,
+          "name": "onRemove"
+        },
+        {
+          "access": 1,
+          "code_sha256": "1113aac649d56914b100aa0fe5bdba790684c459ccf7ee87da35c35a1266bba9",
+          "code_size": 149,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/ItemInteractionResult;",
+          "exception_handlers": [],
+          "instruction_count": 67,
+          "max_locals": 13,
+          "max_stack": 5,
+          "name": "useItemOn"
+        },
+        {
+          "access": 2,
+          "code_sha256": "29042a033fa55f8096bb0bd1517faa3295642e0c95cd9f03422094fd86739cf8",
+          "code_size": 37,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;)V",
+          "exception_handlers": [],
+          "instruction_count": 19,
+          "max_locals": 5,
+          "max_stack": 3,
+          "name": "dropItem"
+        },
+        {
+          "access": 1,
+          "code_sha256": "bc4dc29e6db3ff7226caed69fadf2e3cc7603f26b9f184f6c6b1f3831b86517f",
+          "code_size": 30,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/BlockEntityType;)Lnet/minecraft/world/level/block/entity/BlockEntityTicker;",
+          "exception_handlers": [],
+          "instruction_count": 12,
+          "max_locals": 4,
+          "max_stack": 3,
+          "name": "getTicker"
+        }
+      ],
+      "superclass": "io/redspace/ironsspellbooks/block/pedestal/PedestalBlock"
+    },
+    "net/alshanex/alshanex_familiars/block/entity/FamiliarStatueEntity": {
+      "class_sha256": "71a7c61f69a40d51adb8a359c784df84251a9219eccbf26165e7a0aa4a8bac66",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "d0cf9f922ab010f8c80625ee6685ff3cb0a085a2217bde1a5d580997c5014bcb",
+          "code_size": 5,
+          "descriptor": "()Lnet/minecraft/world/item/ItemStack;",
+          "exception_handlers": [],
+          "instruction_count": 3,
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "getHeldItem"
+        },
+        {
+          "access": 1,
+          "code_sha256": "0596afafcd9f895b30a27a57f7bc755051938f605f0f5c02aa64b276259a7ddf",
+          "code_size": 10,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)V",
+          "exception_handlers": [],
+          "instruction_count": 6,
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "setHeldItem"
+        },
+        {
+          "access": 1,
+          "code_sha256": "eef1a39374c18ce75527286801e7dde15d6a09122425eb4010cf6b569e4063dd",
+          "code_size": 32,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 18,
+          "max_locals": 2,
+          "max_stack": 6,
+          "name": "drops"
+        },
+        {
+          "access": 4,
+          "code_sha256": "19cad3aefa0dcf5ddd08a1c5df68a86439bcfd2efaa719553adb5f6fe1858e03",
+          "code_size": 14,
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "exception_handlers": [],
+          "instruction_count": 10,
+          "max_locals": 3,
+          "max_stack": 3,
+          "name": "loadAdditional"
+        },
+        {
+          "access": 4,
+          "code_sha256": "f5f0caffce7bd2f6776cdd67750a261cc0294cba65495fcaa5c767a59fa39813",
+          "code_size": 8,
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "exception_handlers": [],
+          "instruction_count": 6,
+          "max_locals": 3,
+          "max_stack": 3,
+          "name": "saveAdditional"
+        },
+        {
+          "access": 1,
+          "code_sha256": "4a24dbf69b8f75f8c22a067557bd43b6fdc902c9a46706cee718c1a03a51e8ca",
+          "code_size": 32,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 16,
+          "max_locals": 1,
+          "max_stack": 5,
+          "name": "setChanged"
+        }
+      ],
+      "superclass": "net/minecraft/world/level/block/entity/BlockEntity"
+    },
+    "net/alshanex/alshanex_familiars/block/entity/RitualAutomatorBlockEntity": {
+      "class_sha256": "9d18980a7544a86d26c252048d343ceda123673021a64e59c825bfc239a9db76",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "61d6e5673306ddfdc6b2cb7ab6ee872673f75c34ef17f27372634320f23128d4",
+          "code_size": 14,
+          "descriptor": "(Lnet/minecraft/resources/ResourceLocation;)V",
+          "exception_handlers": [],
+          "instruction_count": 8,
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "setRecipe"
+        },
+        {
+          "access": 1,
+          "anchors": [
+            {
+              "fact": "bipush 10",
+              "offset": 32
+            },
+            {
+              "fact": "BlockPos.below:",
+              "offset": 124
+            },
+            {
+              "fact": "Level.getCapability:",
+              "offset": 128
+            }
+          ],
+          "code_sha256": "75e36b63dbc04199aba1faa371fc6ddb55705b9e185684e773f96e5e94f96291",
+          "code_size": 252,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V",
+          "exception_handlers": [],
+          "instruction_count": 116,
+          "max_locals": 9,
+          "max_stack": 6,
+          "name": "tick"
+        },
+        {
+          "access": 2,
+          "anchors": [
+            {
+              "fact": "isSameItemSameComponents:",
+              "offset": 20
+            },
+            {
+              "fact": "setHeldItem:",
+              "offset": 30
+            },
+            {
+              "fact": "spawnFlyingItem:",
+              "offset": 48
+            }
+          ],
+          "code_sha256": "a5a4ca0233683b975ef0bb6f175f3fee487b8bfd3acbb482ba51587b70828578",
+          "code_size": 55,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/alshanex/alshanex_familiars/block/entity/RitualCorePedestalEntity;Lnet/alshanex/alshanex_familiars/recipe_types/RitualRecipeType;Lnet/neoforged/neoforge/items/IItemHandler;)Z",
+          "exception_handlers": [],
+          "instruction_count": 27,
+          "max_locals": 6,
+          "max_stack": 5,
+          "name": "performCollection"
+        },
+        {
+          "access": 2,
+          "code_sha256": "5cad2d69252d3bdb5897cb5522277b2fcadaedb3c2c6a7586c8086784115db49",
+          "code_size": 272,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/alshanex/alshanex_familiars/block/entity/RitualCorePedestalEntity;Ljava/util/List;Lnet/alshanex/alshanex_familiars/recipe_types/RitualRecipeType;Lnet/neoforged/neoforge/items/IItemHandler;)Z",
+          "exception_handlers": [],
+          "instruction_count": 114,
+          "max_locals": 13,
+          "max_stack": 5,
+          "name": "performCleanup"
+        },
+        {
+          "access": 2,
+          "code_sha256": "513b7cb1efed20ba91decae1f373ed7c14208a9f7963c5c8ba8d7532408f9979",
+          "code_size": 360,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/alshanex/alshanex_familiars/block/entity/RitualCorePedestalEntity;Ljava/util/List;Lnet/alshanex/alshanex_familiars/recipe_types/RitualRecipeType;Lnet/neoforged/neoforge/items/IItemHandler;)V",
+          "exception_handlers": [],
+          "instruction_count": 145,
+          "max_locals": 11,
+          "max_stack": 5,
+          "name": "performSupply"
+        },
+        {
+          "access": 2,
+          "code_sha256": "a6e0dbf38b35602127db2e55a506c3117d840e530d3b5117632658de0dc4f197",
+          "code_size": 52,
+          "descriptor": "(Ljava/util/List;Lnet/minecraft/world/item/ItemStack;)V",
+          "exception_handlers": [],
+          "instruction_count": 24,
+          "max_locals": 5,
+          "max_stack": 2,
+          "name": "removeNeed"
+        },
+        {
+          "access": 2,
+          "code_sha256": "4405962e2e85bdecc6f8c85607c6403b22a391527660c914902e22fbd818bcc8",
+          "code_size": 58,
+          "descriptor": "(Lnet/minecraft/core/BlockPos;)Z",
+          "exception_handlers": [],
+          "instruction_count": 26,
+          "max_locals": 4,
+          "max_stack": 2,
+          "name": "isTargeted"
+        },
+        {
+          "access": 2,
+          "anchors": [
+            {
+              "fact": "bipush -10",
+              "offset": 8
+            },
+            {
+              "fact": "bipush 10",
+              "offset": 12
+            },
+            {
+              "fact": "bipush -5",
+              "offset": 17
+            },
+            {
+              "fact": "bipush -10",
+              "offset": 25
+            },
+            {
+              "fact": "bipush 10",
+              "offset": 31
+            }
+          ],
+          "code_sha256": "99b2d6a2467edbfac76013e376b295d445b35e5f2503953f9f0c1eaafb6bad94",
+          "code_size": 91,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 45,
+          "max_locals": 5,
+          "max_stack": 5,
+          "name": "findCore"
+        },
+        {
+          "access": 2,
+          "code_sha256": "1b2cbc2da56d8173314ff5de8b5bb2b7396303ade132304c737f166b867688a8",
+          "code_size": 55,
+          "descriptor": "(Lnet/neoforged/neoforge/items/IItemHandler;Lnet/minecraft/world/item/crafting/Ingredient;IZ)Lnet/minecraft/world/item/ItemStack;",
+          "exception_handlers": [],
+          "instruction_count": 24,
+          "max_locals": 7,
+          "max_stack": 4,
+          "name": "extractItemForIngredient"
+        },
+        {
+          "access": 2,
+          "anchors": [
+            {
+              "fact": "bipush 20",
+              "offset": 11
+            }
+          ],
+          "code_sha256": "1a545e8ea10d9853a1a5b657f60a21d6ce050a620b2325d16929f3fd118b0c55",
+          "code_size": 33,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Z)V",
+          "exception_handlers": [],
+          "instruction_count": 17,
+          "max_locals": 5,
+          "max_stack": 8,
+          "name": "spawnFlyingItem"
+        },
+        {
+          "access": 2,
+          "code_sha256": "9deac654e9f6f67a1e3484dd1af1d030791db26c6da3ba9e6a6cd1a0718b7541",
+          "code_size": 105,
+          "descriptor": "(Lnet/minecraft/world/level/Level;)V",
+          "exception_handlers": [],
+          "instruction_count": 44,
+          "max_locals": 5,
+          "max_stack": 2,
+          "name": "processFlyingItems"
+        },
+        {
+          "access": 2,
+          "anchors": [
+            {
+              "fact": "returnToStorageOrDrop:",
+              "offset": 12
+            },
+            {
+              "fact": "FamiliarStatueEntity.setHeldItem:",
+              "offset": 62
+            },
+            {
+              "fact": "RitualCorePedestalEntity.setHeldItem:",
+              "offset": 100
+            }
+          ],
+          "code_sha256": "bce791c70edd09fb0b64e168fdac4bb550e12bce49492007c23d5687a3e3c043",
+          "code_size": 118,
+          "descriptor": "(Lnet/alshanex/alshanex_familiars/util/rituals/FlyingItem;)V",
+          "exception_handlers": [],
+          "instruction_count": 56,
+          "max_locals": 6,
+          "max_stack": 2,
+          "name": "completeFlight"
+        },
+        {
+          "access": 2,
+          "code_sha256": "7e9508d8426acca70c04afdc93d5d7169da0e7af0570c70be59771be77cdb6ed",
+          "code_size": 120,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)V",
+          "exception_handlers": [],
+          "instruction_count": 62,
+          "max_locals": 4,
+          "max_stack": 8,
+          "name": "returnToStorageOrDrop"
+        },
+        {
+          "access": 4,
+          "code_sha256": "687df1e12c13116457f0510e28afe02ec2db0c5b7a593402c95874eb7a4d8188",
+          "code_size": 92,
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "exception_handlers": [],
+          "instruction_count": 41,
+          "max_locals": 6,
+          "max_stack": 3,
+          "name": "saveAdditional"
+        },
+        {
+          "access": 4,
+          "code_sha256": "774a2a6c0901863a750eef11144f9953155be151ac07371111d64d8c867e235e",
+          "code_size": 98,
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "exception_handlers": [],
+          "instruction_count": 44,
+          "max_locals": 5,
+          "max_stack": 3,
+          "name": "loadAdditional"
+        },
+        {
+          "access": 4098,
+          "anchors": [
+            {
+              "fact": "RecipeHolder.id:",
+              "offset": 1
+            },
+            {
+              "fact": "ResourceLocation.equals:",
+              "offset": 8
+            }
+          ],
+          "code_sha256": "af120f363e379fa85f3d6cd172d724521ec2a03a686de6b21ed0f4dbfaec9e7d",
+          "code_size": 12,
+          "descriptor": "(Lnet/minecraft/world/item/crafting/RecipeHolder;)Z",
+          "exception_handlers": [],
+          "instruction_count": 6,
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "lambda$tick$0"
+        }
+      ],
+      "superclass": "net/minecraft/world/level/block/entity/BlockEntity"
+    },
+    "net/alshanex/alshanex_familiars/block/entity/RitualCorePedestalEntity": {
+      "class_sha256": "1167d4c17cb840c567c93d89d43d2e9d3fadd049a52c52c8a3e150ada5cb5d36",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "44ad69eb15c33f2a29e4487377a8370676eba02b9bc272168cdc0eb53cb3c0d5",
+          "code_size": 48,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)V",
+          "exception_handlers": [],
+          "instruction_count": 26,
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "setHeldItem"
+        },
+        {
+          "access": 1,
+          "code_sha256": "52d444cd3cbd9e037a0febeb17f70fcbb1e2e7fd1b6c867eb3d8964e8d847c6e",
+          "code_size": 32,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 18,
+          "max_locals": 2,
+          "max_stack": 6,
+          "name": "drops"
+        },
+        {
+          "access": 2,
+          "code_sha256": "cfd2ae790532ba1d72864b697903069cad5011d7a80e7cb6f41e36826c430f4d",
+          "code_size": 74,
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "exception_handlers": [],
+          "instruction_count": 37,
+          "max_locals": 3,
+          "max_stack": 4,
+          "name": "writeNBT"
+        },
+        {
+          "access": 2,
+          "code_sha256": "4d06f5e9369c6e6cc95b4aff6cbd850c50f6f39e16312d8a9eb3f48385063450",
+          "code_size": 55,
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "exception_handlers": [],
+          "instruction_count": 28,
+          "max_locals": 3,
+          "max_stack": 4,
+          "name": "readNBT"
+        },
+        {
+          "access": 1,
+          "anchors": [
+            {
+              "fact": "isClientSide:",
+              "offset": 1
+            },
+            {
+              "fact": "isValidRecipe:",
+              "offset": 38
+            },
+            {
+              "fact": "bipush 100",
+              "offset": 68
+            },
+            {
+              "fact": "bipush 10",
+              "offset": 87
+            },
+            {
+              "fact": "bipush 100",
+              "offset": 136
+            },
+            {
+              "fact": "completeRitual:",
+              "offset": 145
+            }
+          ],
+          "code_sha256": "355c51131ec68eb8c1f60cf2541fd5d6ab208c06b1b8ca142f1d2ec7a3f881c1",
+          "code_size": 149,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V",
+          "exception_handlers": [],
+          "instruction_count": 76,
+          "max_locals": 6,
+          "max_stack": 4,
+          "name": "tick"
+        },
+        {
+          "access": 2,
+          "anchors": [
+            {
+              "fact": "getResultForRecipe:",
+              "offset": 6
+            },
+            {
+              "fact": "clearItemsFromPedestals:",
+              "offset": 70
+            },
+            {
+              "fact": "ItemStack.\"<init>\":(Lnet/minecraft/world/level/ItemLike;)V",
+              "offset": 86
+            },
+            {
+              "fact": "setHeldItem:",
+              "offset": 89
+            }
+          ],
+          "code_sha256": "b4159efa90d8f123e9ee05d8df5e7365d3eb91e183e2ef9af9d2d3c5b301ad2e",
+          "code_size": 124,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V",
+          "exception_handlers": [],
+          "instruction_count": 67,
+          "max_locals": 7,
+          "max_stack": 18,
+          "name": "completeRitual"
+        }
+      ],
+      "superclass": "net/minecraft/world/level/block/entity/BlockEntity"
+    },
+    "net/alshanex/alshanex_familiars/item/shards/ArchmageShard": {
+      "class_sha256": "05ab3ed2635b73532cde46894e4d08342911100c65d6281014a75356d35d34fa",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "d6f7264189858f154b120ac2e9b76f4b4dae9ddb629e4ec627af7810207e1a24",
+          "code_size": 5,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 3,
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "<init>"
+        },
+        {
+          "access": 4,
+          "anchors": [
+            {
+              "fact": "EntityRegistry.ARCHMAGE_PET:",
+              "offset": 4
+            },
+            {
+              "fact": "Level.addFreshEntity:",
+              "offset": 56
+            },
+            {
+              "fact": "pop",
+              "offset": 59
+            }
+          ],
+          "code_sha256": "d2962a2dd55e65ca419674a55b8f7a1b8abf3cf0692914f50ddd6848e86262b1",
+          "code_size": 61,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;)V",
+          "exception_handlers": [],
+          "instruction_count": 30,
+          "max_locals": 5,
+          "max_stack": 8,
+          "name": "spawnFamiliar"
+        }
+      ],
+      "superclass": "net/alshanex/familiarslib/item/AbstractRuneItem"
+    },
+    "net/alshanex/alshanex_familiars/recipe_types/RitualRecipeType": {
+      "class_sha256": "c8e6523f9b7c24088bb1dd9459f0d2c3df5025cc8bd6864d8136b8d84df8faf8",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "bb385c3fe129cecba24341a2984afcdb707d854c0f2820aed459875497f4d5cb",
+          "code_size": 8,
+          "descriptor": "()Lnet/minecraft/world/item/ItemStack;",
+          "exception_handlers": [],
+          "instruction_count": 4,
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "result"
+        },
+        {
+          "access": 1,
+          "code_sha256": "d0f0c86e69dd3170caadefde3b3abb70911f9c50b36368ab89bb058db41a2303",
+          "code_size": 289,
+          "descriptor": "(Lnet/alshanex/alshanex_familiars/recipe_types/RitualRecipeType$Input;Lnet/minecraft/world/level/Level;)Z",
+          "exception_handlers": [],
+          "instruction_count": 109,
+          "max_locals": 12,
+          "max_stack": 2,
+          "name": "matches"
+        },
+        {
+          "access": 1,
+          "code_sha256": "bb385c3fe129cecba24341a2984afcdb707d854c0f2820aed459875497f4d5cb",
+          "code_size": 8,
+          "descriptor": "(Lnet/alshanex/alshanex_familiars/recipe_types/RitualRecipeType$Input;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/world/item/ItemStack;",
+          "exception_handlers": [],
+          "instruction_count": 4,
+          "max_locals": 3,
+          "max_stack": 1,
+          "name": "assemble"
+        },
+        {
+          "access": 1,
+          "code_sha256": "42ca1f85243342bd41983ab86f2235408fa46ded7466d4525196f66b9dbb5f3e",
+          "code_size": 2,
+          "descriptor": "(II)Z",
+          "exception_handlers": [],
+          "instruction_count": 2,
+          "max_locals": 3,
+          "max_stack": 1,
+          "name": "canCraftInDimensions"
+        },
+        {
+          "access": 1,
+          "code_sha256": "668501b084f2dc96265ceb4e39579391868136fffaeab12c3f93e3c91daee2e4",
+          "code_size": 5,
+          "descriptor": "()Lnet/minecraft/world/item/crafting/Ingredient;",
+          "exception_handlers": [],
+          "instruction_count": 3,
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "centralItem"
+        },
+        {
+          "access": 1,
+          "code_sha256": "d0cf9f922ab010f8c80625ee6685ff3cb0a085a2217bde1a5d580997c5014bcb",
+          "code_size": 5,
+          "descriptor": "()Ljava/util/List;",
+          "exception_handlers": [],
+          "instruction_count": 3,
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "inputs"
+        },
+        {
+          "access": 4161,
+          "code_sha256": "1dc1835866ff0838c5788b90744cf59aea95479f80b4e21beeb9b853da0d494d",
+          "code_size": 10,
+          "descriptor": "(Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/world/item/ItemStack;",
+          "exception_handlers": [],
+          "instruction_count": 6,
+          "max_locals": 3,
+          "max_stack": 3,
+          "name": "assemble"
+        },
+        {
+          "access": 4161,
+          "code_sha256": "2f8639cbed223433ced70b066efbf2181f15905e88896de30e77408244723818",
+          "code_size": 10,
+          "descriptor": "(Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/world/level/Level;)Z",
+          "exception_handlers": [],
+          "instruction_count": 6,
+          "max_locals": 3,
+          "max_stack": 3,
+          "name": "matches"
+        }
+      ],
+      "superclass": "java/lang/Record"
+    },
+    "net/alshanex/alshanex_familiars/recipe_types/RitualRecipeType$Serializer": {
+      "class_sha256": "34dbe0d65fddc3da44a60e4a5bb2c7fd5e29e8dcea6257a1b11a2ae09a268705",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "175d7611e15ddf94bc7b3a3d9cab3d8862f9215ade20028a78378158b9b8d0a7",
+          "code_size": 4,
+          "descriptor": "()Lcom/mojang/serialization/MapCodec;",
+          "exception_handlers": [],
+          "instruction_count": 2,
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "codec"
+        },
+        {
+          "access": 1,
+          "code_sha256": "fc16f656815240177c1bda87f71429a9065d7f20b8753f70b0a6fe7f8731fdac",
+          "code_size": 4,
+          "descriptor": "()Lnet/minecraft/network/codec/StreamCodec;",
+          "exception_handlers": [],
+          "instruction_count": 2,
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "streamCodec"
+        },
+        {
+          "access": 4106,
+          "code_sha256": "9cf93d84e330ef29b723c586cce18c544433298c99396283a287c14602850dbd",
+          "code_size": 107,
+          "descriptor": "(Lcom/mojang/serialization/codecs/RecordCodecBuilder$Instance;)Lcom/mojang/datafixers/kinds/App;",
+          "exception_handlers": [],
+          "instruction_count": 31,
+          "max_locals": 1,
+          "max_stack": 8,
+          "name": "lambda$static$0"
+        },
+        {
+          "access": 8,
+          "code_sha256": "cfbb571aba3acccc4681f3e6e3002b73c80b094bce87b0bf5dc7002e8935c6b5",
+          "code_size": 66,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 18,
+          "max_locals": 0,
+          "max_stack": 9,
+          "name": "<clinit>"
+        }
+      ],
+      "superclass": "java/lang/Object"
+    },
+    "net/alshanex/alshanex_familiars/registry/ItemRegistry": {
+      "class_sha256": "8fcd3011758d2967de766e532c0715fb14c49e63f16a221b668f578903da0236",
+      "methods": [
+        {
+          "access": 4106,
+          "code_sha256": "711363a875bfd483eff7b31ed792928471d266235340c62a0ccd9a9f76923bc9",
+          "code_size": 8,
+          "descriptor": "()Lnet/minecraft/world/item/Item;",
+          "exception_handlers": [],
+          "instruction_count": 4,
+          "max_locals": 0,
+          "max_stack": 2,
+          "name": "lambda$static$1"
+        },
+        {
+          "access": 8,
+          "code_sha256": "b83168893c5ac8bc0adc7c6de471ad91ca00f0e4e1e21ee1b1e241bf688ace13",
+          "code_size": 1293,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 385,
+          "max_locals": 0,
+          "max_stack": 3,
+          "name": "<clinit>"
+        }
+      ],
+      "superclass": "java/lang/Object"
+    },
+    "net/alshanex/alshanex_familiars/registry/RecipeRegistry": {
+      "class_sha256": "ae38e086de1fa0a85ce753c1c83e0f5ac76113b690ecec5e9624e8c2d14ecbcb",
+      "methods": [
+        {
+          "access": 8,
+          "code_sha256": "a2dfc90a155fa83bc17eef058b2a4d55ede1ce39f3a4b7710452102ba1bdfbfb",
+          "code_size": 103,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 34,
+          "max_locals": 0,
+          "max_stack": 3,
+          "name": "<clinit>"
+        }
+      ],
+      "superclass": "java/lang/Object"
+    },
+    "net/alshanex/alshanex_familiars/util/rituals/FlyingItem": {
+      "class_sha256": "42a46c21e0577d071104fe32f60e2132b9d11dcff27aeac4ea3ff9ab52b671db",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "d98b6f96775a83e617b9c026e89e45019328e8191280e8f2470b8d7900685b43",
+          "code_size": 38,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;IZ)V",
+          "exception_handlers": [],
+          "instruction_count": 21,
+          "max_locals": 6,
+          "max_stack": 2,
+          "name": "<init>"
+        },
+        {
+          "access": 1,
+          "code_sha256": "d6f7264189858f154b120ac2e9b76f4b4dae9ddb629e4ec627af7810207e1a24",
+          "code_size": 5,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 3,
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "<init>"
+        },
+        {
+          "access": 1,
+          "code_sha256": "0a194c2532b8ff7ae848fdb1f14e458e5d881220fdb81b55bdbfa32c0ff83803",
+          "code_size": 11,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 7,
+          "max_locals": 1,
+          "max_stack": 3,
+          "name": "tick"
+        },
+        {
+          "access": 1,
+          "code_sha256": "b7b31cf9010d1d5a9b21f22b92052dba2e656b1cf78e40b4662f698fe92fe18b",
+          "code_size": 13,
+          "descriptor": "()Z",
+          "exception_handlers": [],
+          "instruction_count": 7,
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "hasArrived"
+        },
+        {
+          "access": 1,
+          "code_sha256": "ff88e355c6b4927ae02cf5df9699940488da620fca89535afa175db865a62601",
+          "code_size": 91,
+          "descriptor": "(Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "exception_handlers": [],
+          "instruction_count": 45,
+          "max_locals": 3,
+          "max_stack": 4,
+          "name": "save"
+        },
+        {
+          "access": 9,
+          "code_sha256": "5b5358db0f2764c0152e9a43b57597361e3fc0622b9c916e8214b4de3a71ff93",
+          "code_size": 99,
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/alshanex/alshanex_familiars/util/rituals/FlyingItem;",
+          "exception_handlers": [],
+          "instruction_count": 48,
+          "max_locals": 3,
+          "max_stack": 4,
+          "name": "load"
+        }
+      ],
+      "superclass": "java/lang/Object"
+    },
+    "net/alshanex/alshanex_familiars/util/rituals/RitualHelper": {
+      "class_sha256": "f54c779f990f45341280d30689b6b412040aa956c08b5231e829be20e53fc33f",
+      "methods": [
+        {
+          "access": 10,
+          "anchors": [
+            {
+              "fact": "Stream.findFirst:",
+              "offset": 87
+            }
+          ],
+          "code_sha256": "db15876d8812547c7164f088adca04260c3374bfc1854c96fd86364e3c765054",
+          "code_size": 93,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;)Ljava/util/Optional;",
+          "exception_handlers": [],
+          "instruction_count": 37,
+          "max_locals": 7,
+          "max_stack": 4,
+          "name": "findMatchingRecipe"
+        },
+        {
+          "access": 9,
+          "code_sha256": "f473695441ba033341e6cff684fb9ef89b60d44ad453cbba4938e8335727e8c5",
+          "code_size": 38,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;)Z",
+          "exception_handlers": [],
+          "instruction_count": 22,
+          "max_locals": 4,
+          "max_stack": 3,
+          "name": "isValidRecipe"
+        },
+        {
+          "access": 9,
+          "code_sha256": "08b736c68cfe1692515049f264bfddb9b436a655ec523b5d582dc02a94a5cd3d",
+          "code_size": 50,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/Item;",
+          "exception_handlers": [],
+          "instruction_count": 20,
+          "max_locals": 3,
+          "max_stack": 3,
+          "name": "getResultForRecipe"
+        },
+        {
+          "access": 9,
+          "code_sha256": "5151c88ccd310a271fe13993a598e25a70aba64e061a678c42708ba99f0e876e",
+          "code_size": 55,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)Z",
+          "exception_handlers": [],
+          "instruction_count": 21,
+          "max_locals": 3,
+          "max_stack": 2,
+          "name": "isItemInRecipeRecipe"
+        },
+        {
+          "access": 9,
+          "code_sha256": "d080f6bf45a1ee22b1d6111b1e437d76ad62f0aef4efc78e4daf50d48a79e371",
+          "code_size": 44,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/core/particles/ParticleOptions;",
+          "exception_handlers": [],
+          "instruction_count": 18,
+          "max_locals": 3,
+          "max_stack": 3,
+          "name": "getParticleForRecipe"
+        },
+        {
+          "access": 9,
+          "anchors": [
+            {
+              "fact": "RitualIngredient.consume:",
+              "offset": 143
+            },
+            {
+              "fact": "FamiliarStatueEntity.setHeldItem:",
+              "offset": 228
+            }
+          ],
+          "code_sha256": "0eb95a5467e498612df204de400e82f8c4192e8fe3c0c66ff8e92f1b0ad24ee8",
+          "code_size": 269,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V",
+          "exception_handlers": [],
+          "instruction_count": 102,
+          "max_locals": 15,
+          "max_stack": 5,
+          "name": "clearItemsFromPedestals"
+        },
+        {
+          "access": 9,
+          "anchors": [
+            {
+              "fact": "iconst_2",
+              "offset": 7
+            },
+            {
+              "fact": "BlockPos.north:",
+              "offset": 8
+            },
+            {
+              "fact": "iconst_2",
+              "offset": 15
+            },
+            {
+              "fact": "BlockPos.south:",
+              "offset": 16
+            },
+            {
+              "fact": "iconst_2",
+              "offset": 23
+            },
+            {
+              "fact": "BlockPos.east:",
+              "offset": 24
+            },
+            {
+              "fact": "iconst_2",
+              "offset": 31
+            },
+            {
+              "fact": "BlockPos.west:",
+              "offset": 32
+            }
+          ],
+          "code_sha256": "877fe5a871a6a871227b14b2d7eaccf49fe580ebf18daff79a64f2ec5c1910b1",
+          "code_size": 103,
+          "descriptor": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;)Ljava/util/List;",
+          "exception_handlers": [],
+          "instruction_count": 60,
+          "max_locals": 9,
+          "max_stack": 5,
+          "name": "getSurroundingPedestals"
+        },
+        {
+          "access": 9,
+          "code_sha256": "3b41bdc04b87905d419aec87ab975096d6818a7b435b6107b1e63c3a0c05ccb3",
+          "code_size": 78,
+          "descriptor": "(Ljava/util/List;)Ljava/util/List;",
+          "exception_handlers": [],
+          "instruction_count": 33,
+          "max_locals": 5,
+          "max_stack": 2,
+          "name": "getItemStacksFromPedestals"
+        },
+        {
+          "access": 9,
+          "code_sha256": "996d0eb3555dccab2f77ce65ee9dce067710881ce72de1d3721471077fcec5cc",
+          "code_size": 153,
+          "descriptor": "(Lnet/minecraft/core/particles/ParticleOptions;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;)V",
+          "exception_handlers": [],
+          "instruction_count": 87,
+          "max_locals": 8,
+          "max_stack": 18,
+          "name": "spawnParticlesAtPedestals"
+        },
+        {
+          "access": 4106,
+          "code_sha256": "8e6786de41ab9f4393e58173cebd8f1e3e2dde0fca1473a9692e75d2a37a0de5",
+          "code_size": 7,
+          "descriptor": "(Lnet/alshanex/alshanex_familiars/recipe_types/RitualRecipeType$Input;Lnet/minecraft/world/level/Level;Lnet/alshanex/alshanex_familiars/recipe_types/RitualRecipeType;)Z",
+          "exception_handlers": [],
+          "instruction_count": 5,
+          "max_locals": 3,
+          "max_stack": 3,
+          "name": "lambda$findMatchingRecipe$0"
+        }
+      ],
+      "superclass": "java/lang/Object"
+    }
+  },
+  "provider_universe_closed": false,
+  "publisher_artifact": {
+    "bytes": 21848062,
+    "sha1": "e5051c2385a426d05bf203ba8081a23d891f6686",
+    "sha256": "ed006afb15a68bee9685ddac45c0f8bfc2a16e3a8a05004c6e1a3373f5f9a284"
+  },
+  "publisher_version": "4.0.3",
+  "recipe": {
+    "central_item": "alshanex_familiars:pet_soul",
+    "each_consumed": true,
+    "each_count": 1,
+    "particle": "minecraft:end_rod",
+    "peripheral_items": [
+      "irons_spellbooks:legendary_ink",
+      "irons_spellbooks:arcane_essence",
+      "irons_spellbooks:arcane_rune",
+      "irons_spellbooks:magic_cloth"
+    ],
+    "recipe_id": "alshanex_familiars:ritual_recipes/archmage_shard",
+    "resource": "data/alshanex_familiars/recipe/ritual_recipes/archmage_shard.json",
+    "resource_sha256": "af31603a46719a7b09e4a4f21844fb2fa0f72ea999880f5e4d6102310b6ef46d",
+    "result_components_explicit": false,
+    "result_count_explicit": false,
+    "result_item": "alshanex_familiars:archmage_shard",
+    "type": "alshanex_familiars:ritual_recipe"
+  },
+  "schema_version": 1
+}
