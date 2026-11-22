@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 20/34.**
+**Fichas catalogadas (somente fichas detectadas): 20/35.**
 
-**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 58.8%`
+**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 57.1%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 20/34.**
+**Homologadas para perks (somente fichas detectadas): 20/35.**
 
-**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 58.8%`
+**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 57.1%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -52,6 +52,7 @@
 | ✅ | Purple Soda Bottle | [ficha/purple-soda-bottle.md](purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Rainbounce Boots | [ficha/rainbounce-boots.md](rainbounce-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Remote Detonator | [ficha/remote-detonator.md](remote-detonator.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Resistor Shield | [ficha/resistor-shield.md](resistor-shield.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [ficha/thornwood-boat.md](thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Chest Boat | [ficha/thornwood-chest-boat.md](thornwood-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 

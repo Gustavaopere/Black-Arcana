@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "scope": "RESISTOR_SHIELD_PARTIAL_IDENTITY_AND_ENCHANTABILITY_ONLY",
+  "artifact": {
+    "mod_id": "alexscaves",
+    "version": "1.0.10",
+    "filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "minecraft": "1.21.1",
+    "java": 21,
+    "installed_dump_comparison": "NOT_VERIFIED"
+  },
+  "prior_native_evidence": {
+    "workflow_run": 44312413309,
+    "job": 134829679393,
+    "artifact_id": 14430752398,
+    "filename": "report.json",
+    "size_bytes": 97832,
+    "sha256": "d34a655d06d65a771ea9237ef222635e159ffcfa6fe8b454ee6826ee14979e73",
+    "scope": "AC_ENCHANTABLE_ITEM_DISCOVERY_V1"
+  },
+  "item_registry": {
+    "resource_id": "alexscaves:resistor_shield",
+    "field": "ACItemRegistry.RESISTOR_SHIELD",
+    "factory": "lambda$static$20",
+    "factory_descriptor": "()Lnet/minecraft/world/item/Item;",
+    "bootstrap_offset": 650,
+    "registry_runtime_bootstrap": "NOT_TESTED",
+    "factory_code_sha256": "6be6cb4de8570768436590ecdd12cfd11e44f1c9b8e76b7eb58a324d6b4d63ce",
+    "factory_instruction_sha256": "d5746049d40ac0bafdb3b78aac9a4134cba1f81838a06bb5866b30c3143402bc",
+    "factory_instruction_count": 4,
+    "factory_caller_evidence": "AC_ENCHANTABLE_ITEM_DISCOVERY_V1.constructor_factories.lambda$static$20 and clinit_bootstrap_windows offset 650"
+  },
+  "owner": {
+    "name": "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem",
+    "class_sha256": "ffd3fddd74f8d44049886e9013de2e3d67cbd2a721015369175e8442c5044741",
+    "parent": "net/minecraft/world/item/ShieldItem",
+    "declared_interfaces": [
+      "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem",
+      "com/github/alexmodguy/alexscaves/server/item/ACEnchantableItem",
+      "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem",
+      "com/github/alexmodguy/alexscaves/server/item/ACTickingItem"
+    ],
+    "selected_methods": [
+      {
+        "name": "getEnchantmentValue",
+        "descriptor": "()I",
+        "code_size": 2,
+        "instruction_count": 2,
+        "code_sha256": "95ef737cd8a13db65e3eb3c18e8816a5179dcbdf341309522ab00e95d5aae6d2",
+        "instruction_sha256": "d943c5fe0bd38038ce70963c73b8759ba3d76c8c00d31c1a2141268dc4e0ee0a",
+        "behavior": "RETURN_LITERAL_1"
+      },
+      {
+        "name": "isEnchantable",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+        "code_size": 14,
+        "instruction_count": 8,
+        "code_sha256": "c1c39189ff601291bec7533e758094d6e935147c1308db53adfe374b3a117a58",
+        "instruction_sha256": "9cd84b0255be269f2bf50fce0095c14fa5d484831fd35063e71f4c9814aa6b4f",
+        "behavior": "STACK_COUNT_EQ_1"
+      }
+    ],
+    "full_method_census": "PENDING_NEW_DISCOVERY",
+    "fields": "NOT_YET_CENSUSED_FOR_THIS_ITEM",
+    "typed_consumer_census": "PENDING_NEW_DISCOVERY",
+    "support_callbacks": [
+      {
+        "name": "acInventoryTick",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+        "instruction_count": 79,
+        "instruction_sha256": "3cec5ec860390c581f2795f6c2f128c2c1507593934eb6b40db608bf6d182b20",
+        "source": "EXACT-TICKING-ITEM-DISCOVERY-1.0.10.json",
+        "behavior_scope": "SELECTED_TICK_CALLBACK_ONLY"
+      },
+      {
+        "name": "acExtraRepairMaterials",
+        "descriptor": "()[Lnet/minecraft/world/item/Item;",
+        "instruction_count": 15,
+        "instruction_sha256": "b1c165d8b02b3531e59afa61434eb1da01506822154ef3a4d9db9cc34f60812e",
+        "source": "EXACT-REPAIRABLE-ITEM-DISCOVERY-1.0.10.json",
+        "behavior_scope": "TWO_EXTRA_MATERIALS_ONLY",
+        "referenced_registry_fields": [
+          "SCARLET_NEODYMIUM_INGOT",
+          "AZURE_NEODYMIUM_INGOT"
+        ]
+      },
+      {
+        "name": "isValidRepairItem",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+        "instruction_count": 13,
+        "instruction_sha256": "56ef4089abe5ca807759ea066eaab7be291dd520d357c2fab2a6de913f3fa597",
+        "source": "EXACT-REPAIRABLE-ITEM-DISCOVERY-1.0.10.json",
+        "behavior_scope": "EXTRA_OR_SHIELDITEM_FALLBACK"
+      },
+      {
+        "name": "initializeClient",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "instruction_count": 6,
+        "instruction_sha256": "3a6c2d33865c1d1707dcbd93e1f9e0bd3bd706c9817ddb988b4e0589ebb14cf4",
+        "code_sha256": "ab25a13fc141e9c68e695fdce843d4563c474d551d77359cefa387da179e2a9a",
+        "source": "EXACT-CLIENT-EXTENSION-1.0.10.json",
+        "behavior_scope": "PRESENTATION_CALLBACK_ONLY"
+      }
+    ]
+  },
+  "resource_observation": {
+    "relevant_json_count_in_prior_enchantability_roster": 2,
+    "paths_and_semantics": "NOT_VERIFIED"
+  },
+  "contract_axes": {
+    "identity": "PARTIALLY_VERIFIED",
+    "behavior": "PARTIALLY_VERIFIED_ENCHANTABILITY_REPAIR_TICK_AND_CLIENT_PRESENTATION_ONLY",
+    "parameters": "PARTIALLY_VERIFIED_STACK_COUNT_SWITCH_COUNTER_AND_EXTRA_REPAIR_MATERIALS",
+    "targeting": "NOT_VERIFIED",
+    "costs": "NOT_VERIFIED",
+    "integration": "PARTIALLY_VERIFIED_SUPPORTS_ONLY",
+    "validation": "PRIOR_NATIVE_PUBLISHER_PROOF_ONLY"
+  },
+  "states": {
+    "catalog": "PARTIAL",
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "source_contracts": {
+    "enchantability": "EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.json",
+    "registry": "EXACT-ITEM-REGISTRY-CONTRACT-1.0.10.json",
+    "tick": "EXACT-TICKING-ITEM-DISCOVERY-1.0.10.json",
+    "repair": "EXACT-REPAIRABLE-ITEM-DISCOVERY-1.0.10.json",
+    "client_presentation": "EXACT-CLIENT-EXTENSION-1.0.10.json"
+  }
+}

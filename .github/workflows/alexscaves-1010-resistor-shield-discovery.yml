@@ -1,0 +1,182 @@
+name: Alex's Caves 1.0.10 Resistor Shield exact native discovery
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-resistor-shield-discovery.yml'
+      - 'docs/qa/alexscaves_1010_resistor_shield_discovery.py'
+      - 'docs/qa/alexscaves_1010_resistor_shield_dependency_probe.py'
+      - 'docs/qa/alexscaves_1010_resistor_shield_dependency_checks.py'
+      - 'docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py'
+      - 'docs/qa/alexscaves_1010_resistor_shield_partial_provenance.py'
+      - 'docs/qa/alexscaves_1010_remote_detonator_boundary_checks.py'
+      - 'docs/qa/alexscaves_1010_remote_detonator_downstream_probe.py'
+      - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/providers/INDEX.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  resistor_shield_discovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Syntax of read-only census and fail-closed checker
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_resistor_shield_discovery.py
+          python3 -m py_compile docs/qa/alexscaves_1010_resistor_shield_dependency_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_resistor_shield_dependency_checks.py
+          python3 -m py_compile docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py
+          python3 -m py_compile docs/qa/alexscaves_1010_resistor_shield_partial_provenance.py
+          python3 -m py_compile docs/qa/alexscaves_1010_remote_detonator_boundary_checks.py
+      - name: Verify SHA-pinned partial evidence against independent prior certified supports
+        run: |
+          python3 docs/qa/alexscaves_1010_resistor_shield_partial_provenance.py \
+            --catalog-dir 'wiki/modpack-catalog/providers/✅-alexs-caves-continued'
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          source=Path('wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RESISTOR-SHIELD-PARTIAL-EVIDENCE-1.0.10.json')
+          d=json.loads(source.read_text(encoding='utf-8'))
+          d['states']['static_contract']='CERTIFIED_WITHOUT_JAR_PROOF'
+          Path('build/resistor-shield-falsified-manifest.json').parent.mkdir(parents=True,exist_ok=True)
+          Path('build/resistor-shield-falsified-manifest.json').write_text(json.dumps(d),encoding='utf-8')
+          PY
+          if python3 docs/qa/alexscaves_1010_resistor_shield_partial_provenance.py \
+              --catalog-dir 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
+              --manifest build/resistor-shield-falsified-manifest.json; then
+            echo 'FAIL: forged Resistor Shield static certificate was accepted'
+            exit 1
+          fi
+      - name: Download SHA-pinned Alex's Caves 1.0.10 JAR
+        run: |
+          mkdir -p build/resistor-shield-1010
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/resistor-shield-1010/publisher.jar
+      - name: Discover ResistorShieldItem native owners, methods and resources
+        run: |
+          python3 docs/qa/alexscaves_1010_resistor_shield_discovery.py \
+            --jar build/resistor-shield-1010/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/resistor-shield-1010/report.json
+      - name: Discover SHA-pinned ACCompat helpers and exact Resistor Shield JSON contents
+        run: |
+          python3 docs/qa/alexscaves_1010_resistor_shield_dependency_probe.py \
+            --jar build/resistor-shield-1010/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/resistor-shield-1010/dependencies.json
+      - name: Verify SHA-pinned transitive helpers and exact resource semantics
+        run: |
+          python3 docs/qa/alexscaves_1010_resistor_shield_dependency_checks.py \
+            --report build/resistor-shield-1010/dependencies.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RESISTOR-SHIELD-DEPENDENCIES-1.0.10.json'
+          python3 - <<'PY'
+          from pathlib import Path
+          import json, hashlib, copy
+          original=json.loads(Path('build/resistor-shield-1010/dependencies.json').read_text())
+          manifest=json.loads(Path('wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RESISTOR-SHIELD-DEPENDENCIES-1.0.10.json').read_text())
+          for kind in ('method','recipe'):
+              report=copy.deepcopy(original); seal=copy.deepcopy(manifest)
+              if kind=='method':
+                  report['helper_class']['methods'][0]['instruction_sha256']='0'*64
+              else:
+                  report['resources']['data/alexscaves/recipe/resistor_shield.json']['parsed_json']['result']['id']='minecraft:air'
+              raw=json.dumps(report,ensure_ascii=False).encode('utf8')
+              seal['evidence']['report_sha256']=hashlib.sha256(raw).hexdigest()
+              seal['evidence']['report_bytes']=len(raw)
+              Path('build/resistor-shield-1010/forged-'+kind+'.json').write_bytes(raw)
+              Path('build/resistor-shield-1010/forged-'+kind+'-manifest.json').write_text(
+                  json.dumps(seal),encoding='utf8')
+          PY
+          for kind in method recipe; do
+            if python3 docs/qa/alexscaves_1010_resistor_shield_dependency_checks.py \
+              --report "build/resistor-shield-1010/forged-$kind.json" \
+              --manifest "build/resistor-shield-1010/forged-$kind-manifest.json"; then
+              echo "FAIL: forged Resistor Shield dependency $kind was accepted"
+              exit 1
+            fi
+          done
+      - name: Verify bounded report and malformed-input rejection
+        run: |
+          python3 docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py \
+            --report build/resistor-shield-1010/report.json \
+            --partial-manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RESISTOR-SHIELD-PARTIAL-EVIDENCE-1.0.10.json'
+          printf '{}\n' > build/resistor-shield-1010/invalid.json
+          if python3 docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py \
+              --report build/resistor-shield-1010/invalid.json \
+              --partial-manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RESISTOR-SHIELD-PARTIAL-EVIDENCE-1.0.10.json'; then
+            echo 'FAIL: invalid Resistor Shield evidence passed'
+            exit 1
+          fi
+      - name: Reject forged native method fingerprints
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          original = Path("build/resistor-shield-1010/report.json")
+          data = json.loads(original.read_text(encoding="utf-8"))
+          methods = data["native"]["targets"][data["owner"]]["methods"]
+          on_use = next(row for row in methods
+                        if row["declaration"]["name"] == "onUseTick")
+          on_use["instruction_sha256"] = "0" * 64
+          Path("build/resistor-shield-1010/forged-report.json").write_text(
+              json.dumps(data), encoding="utf-8"
+          )
+          PY
+          if python3 docs/qa/alexscaves_1010_resistor_shield_discovery_checks.py \
+              --report build/resistor-shield-1010/forged-report.json \
+              --partial-manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RESISTOR-SHIELD-PARTIAL-EVIDENCE-1.0.10.json'; then
+            echo 'FAIL: forged native Resistor Shield method fingerprint accepted'
+            exit 1
+          fi
+      - name: Reproduce exact Remote Detonator downstream boundaries on same JAR
+        run: |
+          python3 docs/qa/alexscaves_1010_remote_detonator_downstream_probe.py \
+            --jar build/resistor-shield-1010/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/resistor-shield-1010/boundaries.json
+          python3 docs/qa/alexscaves_1010_remote_detonator_boundary_checks.py \
+            --report build/resistor-shield-1010/boundaries.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-REMOTE-DETONATOR-BOUNDARIES-1.0.10.json'
+          if python3 docs/qa/alexscaves_1010_remote_detonator_boundary_checks.py \
+            --report build/resistor-shield-1010/invalid.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-REMOTE-DETONATOR-BOUNDARIES-1.0.10.json'; then
+            echo 'FAIL: malformed boundary report accepted'
+            exit 1
+          fi
+      - name: Preserve Remote Detonator boundary reproduction
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-remote-detonator-boundaries-revalidated
+          path: build/resistor-shield-1010/boundaries.json
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Upload SHA-exact Resistor Shield transitive dependencies
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-resistor-shield-dependencies
+          path: build/resistor-shield-1010/dependencies.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Upload reproducible native report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-resistor-shield-discovery
+          path: build/resistor-shield-1010/report.json
+          if-no-files-found: warn
+          retention-days: 14

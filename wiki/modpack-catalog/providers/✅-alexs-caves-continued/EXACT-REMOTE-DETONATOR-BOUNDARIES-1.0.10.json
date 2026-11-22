@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "scope": "REMOTE_DETONATOR_BOUNDARIES_SHA_EXACT_DISCOVERY_NOT_WORLD_SAFETY_CERTIFICATION",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "version": "1.0.10"
+  },
+  "report": {
+    "workflow_run_id": 44969454901,
+    "artifact_id": 14733298491,
+    "filename": "boundaries.json",
+    "uncompressed_bytes": 10014,
+    "sha256": "9187ac7516c239f2177481121b6cc6d8baa3574ae534258bcdcffc231aac3ee6"
+  },
+  "owners": {
+    "com/github/alexmodguy/alexscaves/server/misc/ACPlatform": {
+      "class_sha256": "662a4d2593fe515ed8790bad06d8184d1eb921423033dfd11b3b44142dedc3e6",
+      "methods": [
+        {
+          "name": "forceChunk",
+          "descriptor": "(Lnet/minecraft/server/level/ServerLevel;Ljava/util/UUID;IIZZ)V",
+          "instruction_count": 13,
+          "instruction_sha256": "a09808756da9d0eb25afe271823ad95f2a6e7ad9f309bab3ee231d29912a17b4"
+        },
+        {
+          "name": "forceChunk",
+          "descriptor": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;IIZZ)V",
+          "instruction_count": 13,
+          "instruction_sha256": "529ae674a692ae64ae9c4784c03b975e5dccbb55ee13d93a3ef6c073a2ce3e5e"
+        }
+      ],
+      "bytecode_pivots": [
+        "0 getstatic ticketController",
+        "3 ifnull 24",
+        "20 invokevirtual TicketController.forceChunk",
+        "23 pop (boolean result discarded)",
+        "24 return"
+      ],
+      "effective_controller_initialization": "NOT_VERIFIED",
+      "ticket_acquisition": "NOT_VERIFIED",
+      "ticket_lifetime": "NOT_VERIFIED",
+      "unforce": "NOT_VERIFIED"
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat": {
+      "class_sha256": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+      "methods": [
+        {
+          "name": "onCaughtFire",
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/minecraft/world/entity/LivingEntity;)V",
+          "instruction_count": 7,
+          "instruction_sha256": "5b56c33dfb86da18851b52ca3797a0fb3206ee9284d14b57e76c1af3e59c7cd2"
+        }
+      ],
+      "bytecode_pivots": [
+        "6 invokevirtual BlockState.onCaughtFire",
+        "9 return"
+      ],
+      "actual_block_type": "NOT_VERIFIED",
+      "actual_block_onCaughtFire_behavior": "NOT_VERIFIED"
+    }
+  },
+  "boundary_status": "READ_ONLY_BINARY_DISPATCH_CONFIRMED",
+  "engine_effect_acceptance": "NOT_VERIFIED",
+  "world_safety": "BLOCKED",
+  "static_contract": "NOT_CERTIFIED",
+  "mutating_hook": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED",
+  "mutation": "NO_MUTATION"
+}
