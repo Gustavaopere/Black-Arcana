@@ -17,7 +17,7 @@ from neoforge_211248_custom_data_delegate_probe import choose_archive
 from neoforge_211248_gazing_pearl_saveddata_engine_probe import verify_distribution
 
 OWNER = "net/minecraft/nbt/NbtIo"
-SELECT = {"writeCompressed", "write", "writeUnnamedTag", "writeNamedTag"}
+SELECT = {"writeCompressed", "write", "writeUnnamedTag", "writeUnnamedTagWithFallback", "writeAnyTag", "createCompressorStream"}
 SCOPE = "NEOFORGE_211248_NBTIO_COMPRESSED_WRITE_DISTRIBUTED_ONLY"
 MAX_METHODS = 175
 MAX_SELECTED = 25
@@ -49,7 +49,7 @@ def audit(server: Path, srg: Path, javap: str) -> dict:
     require(set(parsed) == set(declared), "javap/constant pool declaration mismatch")
     selected = sorted(k for k in parsed if k[0] in SELECT
                       or k[0].startswith("lambda$writeCompressed$"))
-    require(2 <= len(selected) <= MAX_SELECTED,
+    require(8 <= len(selected) <= MAX_SELECTED,
             "unexpected compressed writer method selection size")
     bodies, nonexecutable = [], []
     for key in selected:
