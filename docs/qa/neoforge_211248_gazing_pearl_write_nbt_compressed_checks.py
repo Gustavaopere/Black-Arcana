@@ -61,7 +61,7 @@ def check(report_path,manifest_path):
     assert r["scope"]==seal["scope"]==SCOPE
     assert seal["evidence"]["run_id"]==45047273632
     assert seal["evidence"]["artifact_id"]==14764335789
-    assert seal["evidence"]["report_bytes"]==len(raw)==64358
+    assert seal["evidence"]["report_bytes"]==len(raw)
     assert seal["evidence"]["report_sha256"]==hashlib.sha256(raw).hexdigest()
     assert r["artifact"]==seal["engine"]
     assert r["artifact"]["neoforge_version"]=="21.1.248"

@@ -131,12 +131,19 @@ jobs:
                   json.dumps(manifest,ensure_ascii=False),encoding='utf8')
           PY
           for case in atomic-move file-force fallback-replace failure-cleanup async-join nbt-compressed write-callback-bridge; do
+            LOG="build/gazing-pearl-nbt-write-211248/negative-$case.log"
             if python3 docs/qa/neoforge_211248_gazing_pearl_write_nbt_compressed_checks.py \
               --report "build/gazing-pearl-nbt-write-211248/forged-$case.json" \
-              --manifest "build/gazing-pearl-nbt-write-211248/forged-$case-seal.json"; then
+              --manifest "build/gazing-pearl-nbt-write-211248/forged-$case-seal.json" >"$LOG" 2>&1; then
               echo "::error::UNSAFE_FORGED_WRITE_NBT_CONTRACT_WAS_ACCEPTED_$case"
               exit 1
             fi
+            if ! grep -Fq 'JVM opcode drift' "$LOG"; then
+              cat "$LOG"
+              echo "::error::WRONG_NEGATIVE_REJECTION_REASON_$case"
+              exit 1
+            fi
+            echo "EXPECTED_JVM_OPCODE_DRIFT_REJECTED=$case"
           done
       - name: Publish evidence only (no third-party JAR)
         if: always()
