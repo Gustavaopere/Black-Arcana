@@ -1,0 +1,64 @@
+name: Alex's Caves 1.0.10 Galena NBT NeoForge 21.1.250 patch footprint
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-galena-engine-patch-footprint.yml'
+      - 'docs/qa/alexscaves_1010_galena_engine_patch_probe.py'
+      - 'docs/qa/alexscaves_1010_galena_engine_patch_checks.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-ENGINE-PATCH-FOOTPRINT-21.1.250.*'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  galena_engine_patch_boundary:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify patch scanner syntax and bounded synthetic tests
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_engine_patch_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_engine_patch_checks.py
+          python3 docs/qa/alexscaves_1010_galena_engine_patch_probe.py --selftest
+      - name: Download exact official NeoForge 21.1.250 userdev source patches
+        run: |
+          mkdir -p build/galena-engine-211250
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-userdev.jar' \
+            -o build/galena-engine-211250/userdev.jar
+          test "$(wc -c < build/galena-engine-211250/userdev.jar)" -eq 3983248
+          test "$(sha256sum build/galena-engine-211250/userdev.jar | cut -d ' ' -f1)" = \
+            'deb6dd1e002aa85406e92501f49d5429cc8eaefe32fc353433e67030c32d8372'
+          unzip -tq build/galena-engine-211250/userdev.jar
+      - name: Report exact patch footprint without declaring vanilla method bodies
+        run: |
+          python3 docs/qa/alexscaves_1010_galena_engine_patch_probe.py \
+            --userdev build/galena-engine-211250/userdev.jar \
+            --output build/galena-engine-211250/patch-report.json \
+            > build/galena-engine-211250/probe.log
+          test -s build/galena-engine-211250/patch-report.json
+          test "$(wc -c < build/galena-engine-211250/patch-report.json)" -eq 10185
+          test "$(sha256sum build/galena-engine-211250/patch-report.json | cut -d ' ' -f1)" = \
+            '7cb488b63c2abafcf17c839661ac7ff05a367fca84c497c174dea5017ded6411'
+          cat build/galena-engine-211250/probe.log
+      - name: Verify pinned patch lines and reject 37 adversarial report mutations
+        run: |
+          python3 docs/qa/alexscaves_1010_galena_engine_patch_checks.py \
+            --report build/galena-engine-211250/patch-report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-ENGINE-PATCH-FOOTPRINT-21.1.250.json' \
+            --adversarial
+      - name: Preserve read-only official patch evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-galena-211250-engine-patch-footprint
+          path: |
+            build/galena-engine-211250/patch-report.json
+            build/galena-engine-211250/probe.log
+          if-no-files-found: warn
+          retention-days: 14
