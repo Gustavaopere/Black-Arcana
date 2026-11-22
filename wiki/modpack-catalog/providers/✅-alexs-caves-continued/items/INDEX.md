@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 20/32.**
+**Fichas catalogadas (somente fichas detectadas): 20/33.**
 
-**Barra das fichas catalogadas:** `████████████░░░░░░░░ 62.5%`
+**Barra das fichas catalogadas:** `████████████░░░░░░░░ 60.6%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 20/32.**
+**Homologadas para perks (somente fichas detectadas): 20/33.**
 
-**Barra dos contratos técnicos estáticos:** `████████████░░░░░░░░ 62.5%`
+**Barra dos contratos técnicos estáticos:** `████████████░░░░░░░░ 60.6%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -50,6 +50,7 @@
 | ⚠️ | Primordial Pants | [ficha/primordial-pants.md](primordial-pants.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Primordial Tunic | [ficha/primordial-tunic.md](primordial-tunic.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Purple Soda Bottle | [ficha/purple-soda-bottle.md](purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Remote Detonator | [ficha/remote-detonator.md](remote-detonator.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [ficha/thornwood-boat.md](thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Chest Boat | [ficha/thornwood-chest-boat.md](thornwood-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
