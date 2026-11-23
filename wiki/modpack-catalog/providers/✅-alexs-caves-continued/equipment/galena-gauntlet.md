@@ -152,6 +152,18 @@ A [auditoria JVM de retornos e branches](../EXACT-GALENA-SPAWN-RETURN-CFG-21.1.2
 
 **Limite fundamental:** o publisher Galena 1.0.10 solicita `ItemStack.setCount(0)` antes da tentativa de spawn e descarta o booleano retornado, mas **perda real da arma, ausência de restituição, owner/NBT, resultado físico, mixins, event listeners, claims e QA do modpack NÃO FORAM VERIFICADOS**. O relatório comprova estrutura de código distribuído e não autoriza alterar a Gauntlet ou conceder Mastery/perks. `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION` e provider `OPEN`. A Galena segue ⚠️ parcial e o numerador **130/134** do recorte observado permanece.
 
+## 4.15. NeoForge 21.1.248 — guardas de recusa independentes do cancelamento de evento
+
+A [auditoria read-only de guardas de admissão e UUID](../EXACT-GALENA-SPAWN-DENIAL-GUARDS-21.1.248.md), o [manifesto SHA-exato](../EXACT-GALENA-SPAWN-DENIAL-GUARDS-21.1.248.json), a [sonda](../../../../../docs/qa/alexscaves_1010_galena_211248_spawn_denial_guards_probe.py) e o [checker adversarial](../../../../../docs/qa/alexscaves_1010_galena_211248_spawn_denial_guards_checks.py) ampliam a prova dos classfiles distribuídos NeoForge 21.1.248; **não** constituem observação do ModLauncher/instância física. A [descoberta #45232344296](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45232344296) reproduziu relatório de **19.914 bytes**, SHA-256 `c9b4691fbb4a7c1f54964fe568abad111fd891b51543251b3782545adb6c8473`, 4 métodos e 35 referências JVM tipadas.
+
+**Três caminhos distintos de retorno `false` foram distinguidos na distribuição:**
+
+- **Entidade previamente removida:** `ServerLevel.addEntity` consulta `Entity.isRemoved():Z` @**1**, testa `ifeq` @**4** e pode retornar `false` @**26** antes do manager.
+- **Evento cancelado:** `PersistentEntitySectionManager.addEntity` consulta `EntityJoinLevelEvent.isCanceled` @**36**, testa `ifeq` @**39** e pode retornar `false` @**43**, antes de chamar `addEntityWithoutEvent`.
+- **UUID já registrado:** `PersistentEntitySectionManager.addEntityUuid` chama `knownUuids.add(entity.getUUID())` via `Set.add` @**10**; o resultado de `ifne` @**15** distingue sucesso e recusa `false` @**30**. `addEntityWithoutEvent` solicita `addEntityUuid` @**2**, `ifne` @**5** e retorna `false` @**9** se a inscrição do UUID falhar, sem prosseguir ao `EntitySection.add` @**33**. O callback de level e os gates de tracking/ticking aparecem após esta etapa.
+
+O publisher Galena 1.0.10 solicita `ItemStack.setCount(0)` antes de `ACCompat.createEntity` e `Level.addFreshEntity` e descarta o retorno booleano, mas nenhuma das três recusas acima foi provocada ou observada com `MagneticWeaponEntity` no servidor real; **não inferir perda, duplicação, restituição, ausência de compensation externa ou bypass de claims**. Não autoriza mutação, clonagem, redirecionamento de entidade ou XP/Mastery por tentativa. `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION` e Galena ⚠️ parcial. O numerador **130/134** do universo Alex's Caves observado não muda.
+
 ## 5. Interfaces conceituais para perks, atributos e Mastery
 
 | Eixo | Fronteira observada | Estado de integração |
