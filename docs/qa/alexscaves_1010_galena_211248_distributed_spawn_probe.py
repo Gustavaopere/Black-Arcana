@@ -54,7 +54,7 @@ def callsites(reader: ClassReader, body: dict) -> list[dict]:
         if entry is None or entry[0] not in (10, 11):
             continue
         _, owner, pair = reader.resolve(index)
-        name, descriptor = pair
+        _, name, descriptor = pair
         if (name not in CALLEE_NAMES and
                 not owner.endswith("/EntityJoinLevelEvent")):
             continue
