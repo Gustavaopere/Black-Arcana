@@ -171,6 +171,14 @@
 | ⚠️ | Items | 32/35 (91.4%) | 32 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 15/15 (100.0%) | 15 | [Abrir índice](systems/INDEX.md) |
 
+## Evidências de interoperabilidade — Galena Gauntlet (fora do censo de objetos)
+
+Documentos técnicos em ordem alfabética; estes subcontratos auxiliares **não** aumentam o numerador 130/134 e **não** homologam hooks:
+
+- [Entity Join ABI NeoForge 21.1.248](EXACT-GALENA-ENTITY-JOIN-ABI-21.1.248.md) — assinaturas upstream da versão de compilação pinada.
+- [Entity Join ABI NeoForge 21.1.250](EXACT-GALENA-ENTITY-JOIN-ABI-21.1.250.md) — comparação independente de versão adjacente, limitada a arquivos com SHA idêntico.
+- [Entity Join PATCHES NeoForge 21.1.248](EXACT-GALENA-ENTITY-JOIN-PATCHES-21.1.248.md) — linhas `ADD` de evento e cancelamento em patches `userdev` oficiais, sem runtime transformado.
+
 ## Critério do ✅
 
 **Catálogo:** fichas cobertas por fechamento validado de fonte/artefato no manifesto alfabético, ou por certificado técnico individual. O ✅ de uma subpasta cobre apenas seu recorte; o provider exige prova de escopo fechado.
