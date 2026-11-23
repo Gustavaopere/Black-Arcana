@@ -2,7 +2,7 @@
 
 **Estado:** ⚠️ subcontrato de interoperabilidade **estático, parcial e somente leitura**. Este dossiê **não** certifica o objeto Galena, hooks mutadores, aplicação de efeitos, segurança do mundo ou QA física. `static_contract=NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION` · `provider_universe_closed=false` · `semantic_magic_roots_delta=0`.
 
-> **Limitação de versão corrigida (23/11/2026):** os `gradle.properties` atuais de **Black Arcana** e do sibling **RPG Skill Tree** fixam `neo_version=21.1.248`. Portanto, as assinaturas verificadas no `21.1.250` são **evidência auxiliar de versão adjacente**, não equivalem ao contrato da engine-alvo. Prova no `21.1.248` é necessária antes de transferir qualquer conclusão para a build atual. A modlist registra `alexscaves` 1.0.10, mas não fornece paridade de dump transformado. **Nenhuma promoção de estado foi feita.**
+> **Limitação de versão corrigida (23/11/2026):** os `gradle.properties` atuais de **Black Arcana** e do sibling **RPG Skill Tree** fixam `neo_version=21.1.248`. Portanto, as assinaturas verificadas no `21.1.250` são **evidência auxiliar de versão adjacente**, não equivalem ao contrato da engine-alvo. A [ABI-alvo 21.1.248](EXACT-GALENA-ENTITY-JOIN-ABI-21.1.248.md) já foi reproduzida independentemente e apresenta os mesmos hashes dos três classfiles examinados e do arquivo-fonte do evento; apenas **esses bytes** são equivalentes. Não transferir conclusões sobre engine transformada, lado servidor ou resultado de spawn. A modlist registra `alexscaves` 1.0.10, mas não fornece paridade de dump transformado. **Nenhuma promoção de estado foi feita.**
 
 ## 1. Fronteira e fonte primária exata
 
