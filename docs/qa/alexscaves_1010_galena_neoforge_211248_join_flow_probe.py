@@ -140,16 +140,21 @@ def manager(raw):
              "ends_false_call": row.strip().endswith("false);")}
             for j, row in enumerate(nearby)
         ]
-        need(len(calls) == len(callbacks) == 1 and calls[0] < callbacks[0],
-             "load event-callback order: " + method +
+        # Short adjacent methods can fall in the same fixed-size window.
+        # Pair each statement with its IMMEDIATE following callback rather than
+        # claiming the window contains only one callback globally.
+        pairs = [(c, n) for c in calls for n in callbacks if n == c + 1]
+        need(len(pairs) == 1,
+             "load event-callback adjacency: " + method +
              " abstract positional diagnostics=" + json.dumps(fingerprint))
+        c, n = pairs[0]
         paths.append({
             "method": method, "disk_flag": disk,
             "boolean_return_checked_before_on_added": False,
             "anchors": [
                 anchor(lines, start, "load_entrypoint"),
-                anchor(lines, calls[0], "bare_add_entity_call"),
-                anchor(lines, callbacks[0], "notification_after_call"),
+                anchor(lines, c, "bare_add_entity_call"),
+                anchor(lines, n, "notification_after_call"),
             ],
         })
     return {
