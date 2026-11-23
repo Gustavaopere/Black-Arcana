@@ -1,0 +1,144 @@
+{
+  "common": {
+    "body_enum_ordinal_4_outside_four_element_arrays": true,
+    "class_entries_scanned": 1555,
+    "client_rendering": "NOT_TESTED",
+    "damage_reduction_by_enum_ordinal": [
+      3,
+      4,
+      3,
+      2
+    ],
+    "dinosaur_chop_gate": "Player.canEat(false) AND owner block equal to ACBlockRegistry.DINOSAUR_CHOP",
+    "durability_multiplier": 20,
+    "enchantability": 25,
+    "food_data_actual_value": "NOT_VERIFIED",
+    "knockback_resistance": 0,
+    "max_damage_array": [
+      13,
+      15,
+      16,
+      11
+    ],
+    "native_mixin_application": "NOT_VERIFIED",
+    "native_owner_method_count": 4,
+    "new_spell_roots": 0,
+    "nutrition_argument_bonus": "n",
+    "per_player_safe_mutation": "NOT_VERIFIED",
+    "physical_inventory_save_restart": "NOT_TESTED",
+    "raw_meat_bonus_only_for_n_gt_zero": true,
+    "raw_meat_food_properties_required": true,
+    "raw_meats_gate": "ItemStack.is(ACTagRegistry.RAW_MEATS)",
+    "saturation_modifier_argument_bonus": "0.125F*n",
+    "toughness": 0,
+    "typed_consumers": 5,
+    "world_block_mutations": "DELEGATED_TO_DINOSAUR_CHOP_CONSUMER_NOT_AUTHORIZED_FOR_PERKS",
+    "worn_piece_count_range": [
+      0,
+      3
+    ]
+  },
+  "objects": {
+    "primordial_helmet": {
+      "armor_nominal": 3,
+      "durability_max_configured": 260,
+      "enum_constant": "HELMET",
+      "enum_ordinal": 0,
+      "equipment_slot": "HEAD",
+      "evidence_axes": [
+        "identity",
+        "behavior",
+        "parameters",
+        "targeting",
+        "costs",
+        "integration",
+        "validation"
+      ],
+      "factory_method": "lambda$static$42",
+      "food_nutrition_argument_delta_per_piece": 1,
+      "food_saturation_modifier_argument_delta_per_piece": 0.125,
+      "model_sha256": "6420214e099ec006f4c9226b5ee1333b8c90d523160c08b0584dc087cbf20160",
+      "recipe_sha256": "51777de205dd200884027441d95d875f475243f2f0566cef26b85b314cd7dc2e",
+      "repair_material": "alexscaves:tough_hide",
+      "resource_id": "alexscaves:primordial_helmet",
+      "texture": "alexscaves:textures/armor/primordial_armor_0.png",
+      "worn_increment_offset": 26
+    },
+    "primordial_pants": {
+      "armor_nominal": 3,
+      "durability_max_configured": 320,
+      "enum_constant": "LEGGINGS",
+      "enum_ordinal": 2,
+      "equipment_slot": "LEGS",
+      "evidence_axes": [
+        "identity",
+        "behavior",
+        "parameters",
+        "targeting",
+        "costs",
+        "integration",
+        "validation"
+      ],
+      "factory_method": "lambda$static$44",
+      "food_nutrition_argument_delta_per_piece": 1,
+      "food_saturation_modifier_argument_delta_per_piece": 0.125,
+      "model_sha256": "4f73b566af1deb72b6de4aff2855136cbece58c4ddde6c22255c760f17a41038",
+      "recipe_sha256": "1d368632ce2f10bb608fcae97bd5abe5373150cadb48021f88db009a8e0ed8e8",
+      "repair_material": "alexscaves:tough_hide",
+      "resource_id": "alexscaves:primordial_pants",
+      "texture": "alexscaves:textures/armor/primordial_armor_1.png",
+      "worn_increment_offset": 80
+    },
+    "primordial_tunic": {
+      "armor_nominal": 4,
+      "durability_max_configured": 300,
+      "enum_constant": "CHESTPLATE",
+      "enum_ordinal": 1,
+      "equipment_slot": "CHEST",
+      "evidence_axes": [
+        "identity",
+        "behavior",
+        "parameters",
+        "targeting",
+        "costs",
+        "integration",
+        "validation"
+      ],
+      "factory_method": "lambda$static$43",
+      "food_nutrition_argument_delta_per_piece": 1,
+      "food_saturation_modifier_argument_delta_per_piece": 0.125,
+      "model_sha256": "d6b050a3cd64a5e81c9022c5a6c7d183455e319540e68d4d2c6201f6d8eede91",
+      "recipe_sha256": "e8e6c9b76ca37eb55ff4dc8c21c1929d2b72709bd9ea5cfbf0e2c66905c654ed",
+      "repair_material": "alexscaves:tough_hide",
+      "resource_id": "alexscaves:primordial_tunic",
+      "texture": "alexscaves:textures/armor/primordial_armor_0.png",
+      "worn_increment_offset": 53
+    }
+  },
+  "schema": 1,
+  "scope": "ALEXSCAVES_1010_PRIMORDIAL_THREE_INDIVIDUAL_STATIC_CONTRACTS",
+  "sources": {
+    "material_seal": "EXACT-ARMOR-MATERIAL-1.0.10.json",
+    "minecraft_version": "1.21.1",
+    "native_owner_sha256": "8833c162d1507aba795b1ff809f5a6f6ddb846da308d809795cf80e69be5d09e",
+    "official_enum_class_sha256": "304d6345c9ed3d0cdeaea281ed1171b98505b266c04e2b25a023dec665197732",
+    "official_enum_report_sha256": "e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91",
+    "publisher_discovery_seal": "EXACT-PRIMORDIAL-ARMOR-DISCOVERY-1.0.10.json",
+    "publisher_report_sha256": "659f60f17d549d8c795becc4d7fa7e6b8968cb546b8af002099b44abb65e4f75",
+    "publisher_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "publisher_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "publisher_version": "1.0.10"
+  },
+  "states": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "installed_transformed_runtime": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "new_magic_roots": 0,
+    "perk_certification": "NOT_CERTIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "runtime_dispatch": "NOT_VERIFIED",
+    "status": "CERTIFIED_STATIC_7_AXES"
+  }
+}

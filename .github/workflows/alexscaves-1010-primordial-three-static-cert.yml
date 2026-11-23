@@ -1,0 +1,85 @@
+name: Alex's Caves 1.0.10 Primordial three individual static contracts
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-primordial-three-static-cert.yml'
+      - 'docs/qa/alexscaves_1010_primordial_three_cert_checks.py'
+      - 'docs/qa/alexscaves_1010_primordial_armor_discovery.py'
+      - 'docs/qa/alexscaves_1010_primordial_armor_discovery_checks.py'
+      - 'docs/qa/minecraft_1211_armor_type_enum_probe.py'
+      - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  primordial_three_static:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile reproducible probes and static checker
+        run: |
+          python3 -m py_compile docs/qa/minecraft_1211_armor_type_enum_probe.py docs/qa/alexscaves_1010_primordial_armor_discovery.py docs/qa/alexscaves_1010_primordial_three_cert_checks.py
+          python3 docs/qa/minecraft_1211_armor_type_enum_probe.py --test
+      - name: Authenticate official Mojang Minecraft 1.21.1 ArmorItem.Type enum
+        run: |
+          mkdir -p build/primordial-three-1010/mc
+          python3 docs/qa/minecraft_1211_armor_type_enum_probe.py \
+            --outdir build/primordial-three-1010/mc/input \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/primordial-three-1010/mc/report.json \
+            > build/primordial-three-1010/mc/probe.log
+          test "$(sha256sum build/primordial-three-1010/mc/report.json | cut -d ' ' -f1)" = \
+            'e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91'
+      - name: Authenticate exact Alex's Caves publisher 1.0.10
+        run: |
+          mkdir -p build/primordial-three-1010/native
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/primordial-three-1010/native/publisher.jar
+          test "$(stat -c %s build/primordial-three-1010/native/publisher.jar)" -eq 75279314
+          test "$(sha256sum build/primordial-three-1010/native/publisher.jar | cut -d ' ' -f1)" = \
+            '36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c'
+      - name: Reconstruct four-method Primordial report and old SHA-exact discovery seal
+        run: |
+          python3 docs/qa/alexscaves_1010_primordial_armor_discovery.py \
+            --jar build/primordial-three-1010/native/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/primordial-three-1010/native/report.json \
+            > build/primordial-three-1010/native/probe.log
+          test "$(sha256sum build/primordial-three-1010/native/report.json | cut -d ' ' -f1)" = \
+            '659f60f17d549d8c795becc4d7fa7e6b8968cb546b8af002099b44abb65e4f75'
+          python3 docs/qa/alexscaves_1010_primordial_armor_discovery_checks.py \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-DISCOVERY-1.0.10.json' \
+            --report build/primordial-three-1010/native/report.json
+      - name: Certify all three seven-axis contracts and reject 35 adversarial modifications
+        run: |
+          python3 docs/qa/alexscaves_1010_primordial_three_cert_checks.py \
+            --official build/primordial-three-1010/mc/report.json \
+            --publisher build/primordial-three-1010/native/report.json \
+            --material 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARMOR-MATERIAL-1.0.10.json' \
+            --discovery 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-DISCOVERY-1.0.10.json' \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.json' \
+            --cards-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items' \
+            --ledger 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json' \
+            --adversarial
+      - name: Upload read-only reports, never third-party JARs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-primordial-three-static-replay
+          path: |
+            build/primordial-three-1010/mc/report.json
+            build/primordial-three-1010/mc/probe.log
+            build/primordial-three-1010/native/report.json
+            build/primordial-three-1010/native/probe.log
+          if-no-files-found: warn
+          retention-days: 14
