@@ -10902,6 +10902,138 @@
           "reason": "SHA verified original publisher six methods and seven typed consumer owners, original material seal, official five-value armor enum; read-only exact replay, 34 synthetic adversarial checks; no installed transformed runtime or physical QA."
         }
       }
+    },
+    "✅-alexs-caves-continued/items/primordial-helmet.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Primordial Helmet: independently certified native static equipment counter, HELMET ordinal 0, defense 3 and max durability 260. Does not certify actual food/engine/mixin outcomes, safe hook, real modpack QA or provider universe.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "SHA-exact publisher 1.0.10 and official MC 1.21.1 enum mapping; unique item primordial-helmet, ACItemRegistry lambda$static$42, ArmorItem.Type.HELMET ordinal 0, model/recipe resource hashes."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Complete four Code methods of PrimordialArmorItem, exact HEAD worn-count increment @26, bytecode of typed consumers PlayerMixin.ac_eat and DinosaurChopBlock.eat with branch/pivot guards; external mixin application not verified."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Ordinal 0 selects declared nominal armor 3, configured durability 260; per-piece n+1 with n in 0..3, raw meat/chop consumers request nutrition+n and saturationModifier+0.125F*n; actual FoodData settlement not verified."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Equipped LivingEntity HEAD slot, consumers statically call with Player; no offensive target, ray, projectile, AOE, status-effect cast, cooldown or spell scaling in own four methods."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "No own mana, charges, cooldown, cast or durability debit observed; configured max durability 260, repair supplier for alexscaves:tough_hide, not an observed crafting or repair settlement."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "One shared counter is read by two separate consumers; no verified authority-safe per-player mutation hook. Dungeon block changes and FoodData.eat cannot be duplicated; NO_MUTATION and no Mastery/XP grant."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Full original publisher report 659f60f17d549d8c795becc4d7fa7e6b8968cb546b8af002099b44abb65e4f75; official enum report e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91; all referenced method hashes/pivots and 35 adversarial fixtures, no physical gameplay or transformed runtime."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/primordial-tunic.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Primordial Tunic: independently certified native static equipment counter, CHESTPLATE ordinal 1, defense 4 and max durability 300. Does not certify actual food/engine/mixin outcomes, safe hook, real modpack QA or provider universe.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "SHA-exact publisher 1.0.10 and official MC 1.21.1 enum mapping; unique item primordial-tunic, ACItemRegistry lambda$static$43, ArmorItem.Type.CHESTPLATE ordinal 1, model/recipe resource hashes."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Complete four Code methods of PrimordialArmorItem, exact CHEST worn-count increment @53, bytecode of typed consumers PlayerMixin.ac_eat and DinosaurChopBlock.eat with branch/pivot guards; external mixin application not verified."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Ordinal 1 selects declared nominal armor 4, configured durability 300; per-piece n+1 with n in 0..3, raw meat/chop consumers request nutrition+n and saturationModifier+0.125F*n; actual FoodData settlement not verified."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Equipped LivingEntity CHEST slot, consumers statically call with Player; no offensive target, ray, projectile, AOE, status-effect cast, cooldown or spell scaling in own four methods."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "No own mana, charges, cooldown, cast or durability debit observed; configured max durability 300, repair supplier for alexscaves:tough_hide, not an observed crafting or repair settlement."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "One shared counter is read by two separate consumers; no verified authority-safe per-player mutation hook. Dungeon block changes and FoodData.eat cannot be duplicated; NO_MUTATION and no Mastery/XP grant."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Full original publisher report 659f60f17d549d8c795becc4d7fa7e6b8968cb546b8af002099b44abb65e4f75; official enum report e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91; all referenced method hashes/pivots and 35 adversarial fixtures, no physical gameplay or transformed runtime."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/primordial-pants.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Primordial Pants: independently certified native static equipment counter, LEGGINGS ordinal 2, defense 3 and max durability 320. Does not certify actual food/engine/mixin outcomes, safe hook, real modpack QA or provider universe.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "SHA-exact publisher 1.0.10 and official MC 1.21.1 enum mapping; unique item primordial-pants, ACItemRegistry lambda$static$44, ArmorItem.Type.LEGGINGS ordinal 2, model/recipe resource hashes."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Complete four Code methods of PrimordialArmorItem, exact LEGS worn-count increment @80, bytecode of typed consumers PlayerMixin.ac_eat and DinosaurChopBlock.eat with branch/pivot guards; external mixin application not verified."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Ordinal 2 selects declared nominal armor 3, configured durability 320; per-piece n+1 with n in 0..3, raw meat/chop consumers request nutrition+n and saturationModifier+0.125F*n; actual FoodData settlement not verified."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Equipped LivingEntity LEGS slot, consumers statically call with Player; no offensive target, ray, projectile, AOE, status-effect cast, cooldown or spell scaling in own four methods."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "No own mana, charges, cooldown, cast or durability debit observed; configured max durability 320, repair supplier for alexscaves:tough_hide, not an observed crafting or repair settlement."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "One shared counter is read by two separate consumers; no verified authority-safe per-player mutation hook. Dungeon block changes and FoodData.eat cannot be duplicated; NO_MUTATION and no Mastery/XP grant."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Full original publisher report 659f60f17d549d8c795becc4d7fa7e6b8968cb546b8af002099b44abb65e4f75; official enum report e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91; all referenced method hashes/pivots and 35 adversarial fixtures, no physical gameplay or transformed runtime."
+        }
+      }
     }
   },
   "providers": {},

@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 28/35.**
+**Fichas catalogadas (somente fichas detectadas): 31/35.**
 
-**Barra das fichas catalogadas:** `████████████████░░░░ 80.0%`
+**Barra das fichas catalogadas:** `█████████████████░░░ 88.6%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 28/35.**
+**Homologadas para perks (somente fichas detectadas): 31/35.**
 
-**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 80.0%`
+**Barra dos contratos técnicos estáticos:** `█████████████████░░░ 88.6%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -46,9 +46,9 @@
 | ✅ | Hood Of Darkness | [ficha/hood-of-darkness.md](hood-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [ficha/pewen-boat.md](pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [ficha/pewen-chest-boat.md](pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Primordial Helmet | [ficha/primordial-helmet.md](primordial-helmet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Primordial Pants | [ficha/primordial-pants.md](primordial-pants.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Primordial Tunic | [ficha/primordial-tunic.md](primordial-tunic.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Primordial Helmet | [ficha/primordial-helmet.md](primordial-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Primordial Pants | [ficha/primordial-pants.md](primordial-pants.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Primordial Tunic | [ficha/primordial-tunic.md](primordial-tunic.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Purple Soda Bottle | [ficha/purple-soda-bottle.md](purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Rainbounce Boots | [ficha/rainbounce-boots.md](rainbounce-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Remote Detonator | [ficha/remote-detonator.md](remote-detonator.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
