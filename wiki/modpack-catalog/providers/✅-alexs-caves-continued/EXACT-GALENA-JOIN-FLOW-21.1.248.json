@@ -1,0 +1,165 @@
+{
+  "schema": 1,
+  "scope": "GALENA_1010_NEOFORGE_211248_ENTITY_JOIN_CAUSAL_PATCH_SEAL_ONLY",
+  "provenance": {
+    "official_maven": "https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-userdev.jar",
+    "neoforge": "21.1.248",
+    "minecraft": "1.21.1",
+    "userdev_filename": "neoforge-21.1.248-userdev.jar",
+    "userdev_bytes": 3983248,
+    "userdev_sha256": "9278d08154a82927391ed5257481f56d6d0fcb147822c6a79ec9b5129799e79a",
+    "report_sha256": "39605a4b034b7e43cc301111b4d7352aad67b5a1dd4cc78cefc6b9f8b31bcce7",
+    "report_bytes": 8996,
+    "first_successful_run_id": 45208324051,
+    "first_successful_job_id": 137810026496,
+    "source_head_sha": "75f565da91bb88b9b0ebfa223335a2967306a5a2",
+    "alexscaves_provider_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c"
+  },
+  "classes": {
+    "ServerLevel": {
+      "patch_sha256": "d9dc7428b5467f35b42e9f972b3eb9079312e660755b77b6be1f880ed88e6249",
+      "anchors": [
+        {
+          "role": "player_method",
+          "line": 138,
+          "hunk": 13,
+          "line_sha256": "f3cb66ed6fff8b4e31a09bc8640211918e268bdb2257ed5ce5a9431988a7de4e"
+        },
+        {
+          "role": "player_join_cancel_void_return",
+          "line": 139,
+          "hunk": 13,
+          "line_sha256": "eeab97afd0dff7a75cc14b2593061a29135e63a5bae9f472846fc11b860d5d51"
+        },
+        {
+          "role": "player_registration_bypasses_second_event",
+          "line": 148,
+          "hunk": 14,
+          "line_sha256": "c6b233a468bf3c5a5068ca12d5036b605293acda79a874dd83a8abee9a3d9906"
+        },
+        {
+          "role": "player_on_added",
+          "line": 149,
+          "hunk": 14,
+          "line_sha256": "23f00abc022b40ba2a7b60785c22fdbb106dbc313da26baa57b819f6fc76567e"
+        },
+        {
+          "role": "generic_add_entity_method",
+          "line": 152,
+          "hunk": 14,
+          "line_sha256": "150783be170386214ef8dc6bfb2f9db9195732528f25ed8a243bce0047514796"
+        },
+        {
+          "role": "generic_manager_boolean_branch",
+          "line": 158,
+          "hunk": 15,
+          "line_sha256": "3e039f794a762d260652ad46413589bfd75c8439412709e5b4c6c36b0730c12c"
+        },
+        {
+          "role": "generic_on_added_if_manager_true",
+          "line": 159,
+          "hunk": 15,
+          "line_sha256": "8e7f59b43b89cf9cbd3ac399dd4d7127e7c317a473869050ade0c4491dff831c"
+        },
+        {
+          "role": "generic_accepted_true",
+          "line": 160,
+          "hunk": 15,
+          "line_sha256": "869c6057f5cdcab43dea4fc4697c4216f2724af95a8b52736a6af0cb367a4777"
+        },
+        {
+          "role": "generic_rejected_false",
+          "line": 162,
+          "hunk": 15,
+          "line_sha256": "b8df55ea84d2d613ea3aba045a8643155a23bcb045f348586dcaeb4f48127183"
+        }
+      ],
+      "flow": {
+        "player_event_before_bypass_registration": true,
+        "player_cancel_returns_void": true,
+        "normal_entity_manager_boolean_controls_return": true,
+        "normal_entity_on_added_only_if_manager_true": true,
+        "complete_transformed_serverlevel_verified": false
+      }
+    },
+    "PersistentEntitySectionManager": {
+      "patch_sha256": "a2a5ef2bdbf3fec5b7db2f7cc4674338358011b3b738622a7f180faeeb2a56a0",
+      "anchors": [
+        {
+          "role": "bypass_method",
+          "line": 7,
+          "hunk": 1,
+          "line_sha256": "38121b526a47a3790b98c560dac77319f55408b9a141e60bd6fc6cd045697419"
+        },
+        {
+          "role": "bypass_direct_registration",
+          "line": 8,
+          "hunk": 1,
+          "line_sha256": "4b73e6160cbb581519c0a860e63457fefe922cf8bde96640013bce33a6f8e5d5"
+        },
+        {
+          "role": "normal_admission_method",
+          "line": 11,
+          "hunk": 1,
+          "line_sha256": "444c0d73e43bfe63b08b3d3e35b929fcd677018282591bc60cee5ce71b00df5d"
+        },
+        {
+          "role": "normal_entity_join_cancellation_false",
+          "line": 12,
+          "hunk": 1,
+          "line_sha256": "431d5741436fdce83409d407893a129638695ca0bc04cc27cdb630caf7ebd91e"
+        },
+        {
+          "role": "forward_to_uuid_registration",
+          "line": 13,
+          "hunk": 1,
+          "line_sha256": "557f158cc0a7cff85222ae37eac742d2e9170150d9ca5e13f29b9cc7909610fe"
+        },
+        {
+          "role": "registration_without_event",
+          "line": 16,
+          "hunk": 1,
+          "line_sha256": "a729ba9f592a023b10ad8baa7032a307ff90666bbf7acf6ce2783cbb3836767d"
+        },
+        {
+          "role": "uuid_guard_after_cancellation",
+          "line": 17,
+          "hunk": 1,
+          "line_sha256": "094f9f87a68c8e3691b3829e5acab6fc45ced21538843e4f74ae2361ff9a7f7d"
+        }
+      ],
+      "flow": {
+        "normal_entity_join_cancel_return_false": true,
+        "normal_cancellation_before_uuid_registration": true,
+        "player_bypass_prevents_duplicate_event_in_this_patch": true,
+        "three_load_notifications_after_unchecked_add_result": true,
+        "runtime_effect_of_load_notifications": "NOT_VERIFIED"
+      },
+      "load_paths": [
+        {
+          "method": "addLegacyChunkEntities",
+          "disk_flag": "true",
+          "boolean_return_checked_before_on_added": false
+        },
+        {
+          "method": "addWorldGenChunkEntities",
+          "disk_flag": "false",
+          "boolean_return_checked_before_on_added": false
+        },
+        {
+          "method": "processPendingLoads",
+          "disk_flag": "true",
+          "boolean_return_checked_before_on_added": false
+        }
+      ]
+    }
+  },
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  }
+}
