@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fail-closed verification for exact upstream Galena EntityJoinLevelEvent ABI.
 
-Only validates official NeoForge 21.1.250 declarations and provenance.
+Only validates official NeoForge 21.1.248 or 21.1.250 declarations and provenance.
 Does NOT certify spawning, inventory settlement, event firing, world safety,
 mutating hook availability, runtime transformation or physical QA.
 """
@@ -17,10 +17,20 @@ from pathlib import Path
 EVENT = "net/neoforged/neoforge/event/entity/EntityJoinLevelEvent"
 ENTITY = "net/neoforged/neoforge/event/entity/EntityEvent"
 HOOKS = "net/neoforged/neoforge/event/EventHooks"
-REPORT_SCOPE = "GALENA_NEOFORGE_211250_ENTITY_JOIN_ABI_DISCOVERY_ONLY"
-SEAL_SCOPE = "GALENA_NEOFORGE_211250_ENTITY_JOIN_ABI_SUBCONTRACT_NOT_CERTIFIED"
-REPORT_SHA256 = "405abfa11ac03c82efbd63995ff8ccbce5596d3f1e360f5f95392762d3856d12"
-REPORT_SIZE = 11559
+PINS = {
+    "21.1.248": {
+        "report_sha256": "002f2f736ccd9e3af35f0c4bebfac03cc58127b40cdfaad5cca70a8a964aa3c1",
+        "report_bytes": 11559,
+        "run_id": 45182745228,
+        "job_id": 137720448259,
+    },
+    "21.1.250": {
+        "report_sha256": "405abfa11ac03c82efbd63995ff8ccbce5596d3f1e360f5f95392762d3856d12",
+        "report_bytes": 11559,
+        "run_id": 45180679053,
+        "job_id": 137713362339,
+    },
+}
 
 
 def need(condition, label):
@@ -48,28 +58,37 @@ def hash_bytes(raw):
 
 def validate(report, seal, *, raw=None, strict=True):
     need(report["schema_version"] == seal["schema_version"] == 1, "schema")
-    need(report["scope"] == REPORT_SCOPE and seal["scope"] == SEAL_SCOPE, "scope")
+    upstream = report["upstream"]
+    version = upstream["version"]
+    need(version in PINS, "unsupported NeoForge version")
+    pin = PINS[version]
+    release = version.replace(".", "")
+    need(report["scope"] ==
+         f"GALENA_NEOFORGE_{release}_ENTITY_JOIN_ABI_DISCOVERY_ONLY" and
+         seal["scope"] ==
+         f"GALENA_NEOFORGE_{release}_ENTITY_JOIN_ABI_SUBCONTRACT_NOT_CERTIFIED",
+         "scope")
     provenance = seal["provenance"]
-    need(provenance["report_sha256"] == REPORT_SHA256 and
-         provenance["report_bytes"] == REPORT_SIZE, "report source pin")
+    need(provenance["report_sha256"] == pin["report_sha256"] and
+         provenance["report_bytes"] == pin["report_bytes"], "report source pin")
     if strict:
-        need(raw is not None and len(raw) == REPORT_SIZE and
-             hash_bytes(raw) == REPORT_SHA256, "report exact bytes/hash mismatch")
-    need(provenance["publisher"] == "neoforge 21.1.250 official Maven",
+        need(raw is not None and len(raw) == pin["report_bytes"] and
+             hash_bytes(raw) == pin["report_sha256"],
+             "report exact bytes/hash mismatch")
+    need(provenance["publisher"] == f"neoforge {version} official Maven",
          "upstream provenance")
-    need(provenance["run_id"] == 45180679053 and
-         provenance["job_id"] == 137713362339, "observational run provenance")
+    need(provenance["run_id"] == pin["run_id"] and
+         provenance["job_id"] == pin["job_id"], "observational run provenance")
     need(provenance["galena_publisher_sha256"] ==
          "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
          "provider publisher reference")
-    upstream = report["upstream"]
     need(upstream["group"] == "net.neoforged" and
          upstream["artifact"] == "neoforge" and
-         upstream["version"] == "21.1.250", "upstream version identity")
+         upstream["version"] == version, "upstream version identity")
     for k, name in (("universal", "publisher_universal"),
                     ("sources", "publisher_sources")):
         info = upstream[k]
-        need(info["filename"] == "neoforge-21.1.250-" + k + ".jar" and
+        need(info["filename"] == f"neoforge-{version}-" + k + ".jar" and
              info["sha256"] == provenance[name + "_sha256"] and
              info["bytes"] == provenance[name + "_bytes"] and
              info["members"] == provenance[name + "_members"],
@@ -168,7 +187,9 @@ def adversarial(report, seal):
     mutate("unsafe mutation", ["mutation"], "MUTATION")
     mutate("fake provider closure", ["provider_universe_closed"], True)
     mutate("fake extra spell", ["semantic_magic_roots_delta"], 1)
-    mutate("fake version", ["upstream", "version"], "21.1.248")
+    mutate("fake version", ["upstream", "version"],
+           "21.1.250" if report["upstream"]["version"] == "21.1.248"
+           else "21.1.248")
     mutate("alter universal", ["upstream", "universal", "sha256"], "0" * 64)
     mutate("alter source", ["upstream", "event_source_sha256"], "0" * 64)
     mutate("wrong event ABI", ["upstream", "class_sha256", EVENT], "0" * 64)
