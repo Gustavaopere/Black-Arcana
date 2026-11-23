@@ -144,6 +144,14 @@ A [auditoria da distribuição oficial 21.1.248](../EXACT-GALENA-DISTRIBUTED-SPA
 
 **Estados preservados:** Galena ⚠️ parcial; `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`, `provider_universe_closed=false`; não alterar a contagem **130/134** do recorte estático Alex's Caves. A CI do checker desse novo recorte deve passar na HEAD final para validá-lo, sem promover certificação individual da arma.
 
+## 4.14. NeoForge 21.1.248 — retorno booleano de spawn e CFG SHA-exato
+
+A [auditoria JVM de retornos e branches](../EXACT-GALENA-SPAWN-RETURN-CFG-21.1.248.md), seu [manifesto SHA-exato](../EXACT-GALENA-SPAWN-RETURN-CFG-21.1.248.json), a [sonda read-only](../../../../../docs/qa/alexscaves_1010_galena_211248_spawn_return_cfg_probe.py) e o [checker adversarial](../../../../../docs/qa/alexscaves_1010_galena_211248_spawn_return_cfg_checks.py) complementam a cadeia de chamadas da seção 4.13. O artefato é a **distribuição oficial NeoForge 21.1.248 `--installServer`**, não o Minecraft carregado pela ModLauncher com os demais mods. Na [descoberta #45223070726](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45223070726), a sonda reproduziu relatório de **18.311 bytes**, SHA-256 `19ce72117b30cbb716cd385638ebbcdf40b8ea68690a0c4a07aa9b53b8bad579`.
+
+**Recorte técnico comprovado:** cinco métodos em dois classfiles oficiais, **8 branches** e **9 pontos de `ireturn`**, zero exception handlers próprios. `PersistentEntitySectionManager.addEntity` chama `EntityJoinLevelEvent.isCanceled` @**36**; o `ifeq` @**39** tem continuação de recusa `iconst_0 → ireturn` @**43**, enquanto o fluxo que prossegue chama `addEntityWithoutEvent` @**47** e retorna seu resultado @**50**. `ServerLevel.addEntity` avalia a resposta do manager @**32** via `ifeq` @**35**; o caminho falso retorna `0` @**45**, o verdadeiro chama `onAddedToLevel` @**39** e retorna `1` @**43**. `ServerLevel.addFreshEntity` encaminha o booleano de `addEntity` diretamente por `ireturn` @**5**. Também existem causas de retorno falso independentes de cancelamento; não classificá-las sem prova específica.
+
+**Limite fundamental:** o publisher Galena 1.0.10 solicita `ItemStack.setCount(0)` antes da tentativa de spawn e descarta o booleano retornado, mas **perda real da arma, ausência de restituição, owner/NBT, resultado físico, mixins, event listeners, claims e QA do modpack NÃO FORAM VERIFICADOS**. O relatório comprova estrutura de código distribuído e não autoriza alterar a Gauntlet ou conceder Mastery/perks. `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION` e provider `OPEN`. A Galena segue ⚠️ parcial e o numerador **130/134** do recorte observado permanece.
+
 ## 5. Interfaces conceituais para perks, atributos e Mastery
 
 | Eixo | Fronteira observada | Estado de integração |
