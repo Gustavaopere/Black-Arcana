@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 from zipfile import ZipFile
 
@@ -120,6 +121,36 @@ def probe(jar: Path, caller_report: Path, javap: str, output: Path) -> None:
     require(all(x in bytecode for x in pairs), "javap lacks selected body")
     methods = [summarize(reader, k, bytecode[k]) for k in pairs]
     require(len(methods) == len(METHOD_NAMES), "selected method cardinality drift")
+    # Resolve the actual invokedynamic bootstrap MethodHandle, not a guessed
+    # lambda name. The consumer is part of attackDamageBonus's computation.
+    attack = next(k for k in pairs if k[0] == "attackDamageBonus")
+    invoke_dynamics = [symbol for _, (op, operand, symbol) in
+                       sorted(bytecode[attack].items()) if op == "invokedynamic"]
+    require(len(invoke_dynamics) == 1, "attack damage callback count drift")
+    match = re.search(r"InvokeDynamic #(\d+):", invoke_dynamics[0])
+    require(match is not None, "cannot resolve invokedynamic bootstrap index")
+    bootstrap_index = int(match.group(1))
+    table = reader.attributes.get("bootstrap_methods", [])
+    require(bootstrap_index < len(table), "bootstrap index exceeds class table")
+    handles = []
+    for arg in table[bootstrap_index]["arguments"]:
+        if not isinstance(arg, dict):
+            continue
+        ref = arg.get("reference")
+        if (isinstance(ref, list) and len(ref) == 3 and ref[1] == OWNER
+                and isinstance(ref[2], list) and len(ref[2]) == 3
+                and ref[2][1].startswith("lambda$attackDamageBonus$")):
+            handles.append({"reference_kind": arg["reference_kind"],
+                            "owner": ref[1], "name": ref[2][1],
+                            "descriptor": ref[2][2]})
+    require(len(handles) == 1, "no unique exact attack damage lambda handle")
+    callback_key = (handles[0]["name"], handles[0]["descriptor"])
+    require(callback_key in declared and "code_sha256" in declared[callback_key]
+            and callback_key in bytecode, "attack damage lambda body missing")
+    callback = {
+        "bootstrap_index": bootstrap_index, "resolved_handle": handles[0],
+        "method": summarize(reader, callback_key, bytecode[callback_key]),
+    }
     report = {
         "schema_version": 1,
         "scope": "GALENA_ACCOMPAT_COMBAT_BRIDGES_DISCOVERY_NOT_CERTIFIED",
@@ -131,7 +162,8 @@ def probe(jar: Path, caller_report: Path, javap: str, output: Path) -> None:
         },
         "class": {"owner": OWNER, "sha256": digest(raw), "major": reader.major,
                   "declared_methods": len(reader.methods), "fields": len(reader.fields),
-                  "selected_methods": methods},
+                  "selected_methods": methods,
+                  "attack_damage_bootstrap_callback": callback},
         "caller_evidence": {"source_sha256": CALLER_SHA256,
                             "source_bytes": CALLER_BYTES,
                             "typed_callsites": sites},
@@ -153,6 +185,16 @@ def probe(jar: Path, caller_report: Path, javap: str, output: Path) -> None:
     print("REPORT_SHA256", digest(output.read_bytes()), "REPORT_BYTES", output.stat().st_size)
     print("PUBLISHER", SHA256, SIZE, "CLASS", digest(raw))
     print("SELECTED", len(methods), "SITES", len(sites))
+    cm = callback["method"]
+    print("BOOTSTRAP_CALLBACK", callback["bootstrap_index"],
+          callback["resolved_handle"]["name"],
+          callback["resolved_handle"]["descriptor"], "INSTRUCTIONS",
+          cm["instruction_count"], "CODE_SHA",
+          cm["declaration"]["code_sha256"], "INSTRUCTION_SHA",
+          cm["instruction_sha256"])
+    for ins in cm["instructions"]:
+        print("CALLBACK_JVM", ins["offset"], ins["opcode"],
+              ins["operand"][:50], ins["symbol"][:210])
     for m in methods:
         d = m["declaration"]
         print("METHOD", d["name"], d["descriptor"],
