@@ -131,8 +131,18 @@ def manager(raw):
         callbacks = [start + i for i, s in enumerate(nearby)
                      if s.startswith("+") and "instanceof Entity entity" in s
                      and "entity.onAddedToLevel();" in s]
+        fingerprint = [
+            {"relative": j, "add": row.startswith("+"),
+             "contains_add_entity": "addEntity(" in row,
+             "contains_callback": "onAddedToLevel()" in row,
+             "contains_cast": "(T)" in row,
+             "ends_true_call": row.strip().endswith("true);"),
+             "ends_false_call": row.strip().endswith("false);")}
+            for j, row in enumerate(nearby)
+        ]
         need(len(calls) == len(callbacks) == 1 and calls[0] < callbacks[0],
-             "load event-callback order: " + method)
+             "load event-callback order: " + method +
+             " abstract positional diagnostics=" + json.dumps(fingerprint))
         paths.append({
             "method": method, "disk_flag": disk,
             "boolean_return_checked_before_on_added": False,
