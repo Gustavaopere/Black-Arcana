@@ -5,6 +5,8 @@ on:
     paths:
       - '.github/workflows/alexscaves-1010-galena-neoforge-entity-join-abi.yml'
       - 'docs/qa/alexscaves_1010_galena_neoforge_entity_join_abi_probe.py'
+      - 'docs/qa/alexscaves_1010_galena_neoforge_entity_join_abi_checks.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-ENTITY-JOIN-ABI-21.1.250.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-ENTITY-JOIN-ABI-21.1.250.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md'
   workflow_dispatch:
@@ -21,7 +23,7 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Syntax gate for read-only ABI discovery
-        run: python3 -m py_compile docs/qa/alexscaves_1010_galena_neoforge_entity_join_abi_probe.py
+        run: python3 -m py_compile docs/qa/alexscaves_1010_galena_neoforge_entity_join_abi_probe.py docs/qa/alexscaves_1010_galena_neoforge_entity_join_abi_checks.py
       - name: Fetch exact 21.1.250 artifacts and verify upstream checksums
         shell: bash
         run: |
@@ -45,21 +47,17 @@ jobs:
             --sources build/galena-entity-join-abi/neoforge-21.1.250-sources.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/galena-entity-join-abi/report.json
-      - name: Fail closed if report claims a certified or mutating contract
+      - name: Verify sealed report and reject adversarial ABI or status forgeries
+        shell: bash
         run: |
-          python3 - <<'PY'
-          import json
-          from pathlib import Path
-          r = json.loads(Path('build/galena-entity-join-abi/report.json').read_text())
-          assert r['scope'] == 'GALENA_NEOFORGE_211250_ENTITY_JOIN_ABI_DISCOVERY_ONLY'
-          assert r['static_contract'] == 'NOT_CERTIFIED'
-          assert r['mutating_hook'] == 'NOT_VERIFIED'
-          assert r['physical_qa'] == 'NOT_TESTED'
-          assert r['mutation'] == 'NO_MUTATION'
-          assert r['provider_universe_closed'] is False
-          assert r['semantic_magic_roots_delta'] == 0
-          assert all(v in ('NOT_VERIFIED', 'NOT_TESTED') for v in r['limitations'].values())
-          PY
+          set -euo pipefail
+          report=build/galena-entity-join-abi/report.json
+          test "$(stat -c %s "$report")" -eq 11559
+          test "$(sha256sum "$report" | cut -d ' ' -f1)" = '405abfa11ac03c82efbd63995ff8ccbce5596d3f1e360f5f95392762d3856d12'
+          python3 docs/qa/alexscaves_1010_galena_neoforge_entity_join_abi_checks.py \
+            --report "$report" \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-ENTITY-JOIN-ABI-21.1.250.json' \
+            --adversarial
       - name: Preserve observational report only
         if: always()
         uses: actions/upload-artifact@v7
