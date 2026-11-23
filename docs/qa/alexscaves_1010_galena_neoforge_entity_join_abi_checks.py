@@ -99,7 +99,7 @@ def validate(report, seal, *, raw=None, strict=True):
         need(len(methods) <= entry["method_count"], "selected methods overflow")
         need(all(isinstance(x["declaration"], str) and
                  isinstance(x["descriptor"], str) and
-                 re.fullmatch(r"\\([^\\n]*\\)[^\\n]+", x["descriptor"])
+                 re.fullmatch(r"\([^\n]*\)[^\n]+", x["descriptor"])
                  for x in methods), "invalid JVM signatures " + key)
         if key in (EVENT, ENTITY):
             need(len(methods) == spec["method_count"] and
