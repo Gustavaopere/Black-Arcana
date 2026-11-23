@@ -1,0 +1,273 @@
+{
+  "schema": 1,
+  "scope": "GALENA_NEOFORGE_211248_DISTRIBUTED_ENTITY_ADMISSION_ABI_SEAL_ONLY",
+  "provenance": {
+    "report_sha256": "b83db649e207ae7edf4fe8cc6c4c8db935fbe8ef6ceaccc15859a1a535f15342",
+    "report_bytes": 13544,
+    "report_run_id": 45211836269,
+    "report_job_id": 137822418958,
+    "report_head_sha": "d7cfda2d7b79948433216798f7358eb27b4c98f9",
+    "official_neoforge_installer_sha256": "68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c",
+    "distributed_server_sha256": "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359",
+    "minecraft_srg_sha256": "26ca9c40d7e1681190b428583c38816852218e78df3f8bdb60a59a78503aec71",
+    "publisher_alexscaves_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "mc_version": "1.21.1",
+    "neo_version": "21.1.248",
+    "java_major": 65
+  },
+  "classes": {
+    "Level": {
+      "origin": "NEOFORGE_OVERLAY",
+      "sha256": "74a062f0d480674152fa4665bd7b483fca52de8dd3b07178c1a6c40d3fae3fae",
+      "declared_method_count": 146,
+      "selected_count": 0,
+      "methods": []
+    },
+    "ServerLevel": {
+      "origin": "NEOFORGE_OVERLAY",
+      "sha256": "19b42e51848fd27df3683dacf694baa5126ee9f0665f12afdc65f82493a1e5a3",
+      "declared_method_count": 168,
+      "selected_count": 6,
+      "methods": [
+        {
+          "name": "addDuringTeleport",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)V",
+          "code_sha256": "6a041710e24ea551096738fb29a4586c2c42e39c129df963ba5b602c2253019a",
+          "call_count": 2,
+          "calls": [
+            {
+              "offset": 14,
+              "opcode": "invokevirtual",
+              "owner": "net/minecraft/server/level/ServerLevel",
+              "name": "addPlayer",
+              "descriptor": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+              "cp_index": 1384
+            },
+            {
+              "offset": 22,
+              "opcode": "invokevirtual",
+              "owner": "net/minecraft/server/level/ServerLevel",
+              "name": "addEntity",
+              "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+              "cp_index": 1381
+            }
+          ]
+        },
+        {
+          "name": "addEntity",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "code_sha256": "90b05c8f3b8b3044c50d7010fcba7d618fc3972c7216f926aac33028f2975243",
+          "call_count": 2,
+          "calls": [
+            {
+              "offset": 32,
+              "opcode": "invokevirtual",
+              "owner": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+              "name": "addNewEntity",
+              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z",
+              "cp_index": 1443
+            },
+            {
+              "offset": 39,
+              "opcode": "invokevirtual",
+              "owner": "net/minecraft/world/entity/Entity",
+              "name": "onAddedToLevel",
+              "descriptor": "()V",
+              "cp_index": 1446
+            }
+          ]
+        },
+        {
+          "name": "addFreshEntity",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "code_sha256": "3258d8fbc1797f284b939eb102698cf9e82350461672a04c2b3eb7330fa5ae3b",
+          "call_count": 1,
+          "calls": [
+            {
+              "offset": 2,
+              "opcode": "invokevirtual",
+              "owner": "net/minecraft/server/level/ServerLevel",
+              "name": "addEntity",
+              "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+              "cp_index": 1381
+            }
+          ]
+        },
+        {
+          "name": "addPlayer",
+          "descriptor": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "code_sha256": "68d2fa84740549ed511ee7eb943fe147fe65f3dcf6da0394f4d4c26b6b80bf83",
+          "call_count": 4,
+          "calls": [
+            {
+              "offset": 9,
+              "opcode": "invokespecial",
+              "owner": "net/neoforged/neoforge/event/entity/EntityJoinLevelEvent",
+              "name": "<init>",
+              "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;)V",
+              "cp_index": 1390
+            },
+            {
+              "offset": 20,
+              "opcode": "invokevirtual",
+              "owner": "net/neoforged/neoforge/event/entity/EntityJoinLevelEvent",
+              "name": "isCanceled",
+              "descriptor": "()Z",
+              "cp_index": 1393
+            },
+            {
+              "offset": 83,
+              "opcode": "invokevirtual",
+              "owner": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+              "name": "addNewEntityWithoutEvent",
+              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z",
+              "cp_index": 1426
+            },
+            {
+              "offset": 88,
+              "opcode": "invokevirtual",
+              "owner": "net/minecraft/server/level/ServerPlayer",
+              "name": "onAddedToLevel",
+              "descriptor": "()V",
+              "cp_index": 1430
+            }
+          ]
+        },
+        {
+          "name": "addWithUUID",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "code_sha256": "3258d8fbc1797f284b939eb102698cf9e82350461672a04c2b3eb7330fa5ae3b",
+          "call_count": 1,
+          "calls": [
+            {
+              "offset": 2,
+              "opcode": "invokevirtual",
+              "owner": "net/minecraft/server/level/ServerLevel",
+              "name": "addEntity",
+              "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+              "cp_index": 1381
+            }
+          ]
+        },
+        {
+          "name": "tryAddFreshEntityWithPassengers",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "code_sha256": "3303b28caf0565c3010cc45948abdb618dbc33ed393a7d5ae9bc94afa3af5ec0",
+          "call_count": 1,
+          "calls": [
+            {
+              "offset": 40,
+              "opcode": "invokevirtual",
+              "owner": "net/minecraft/server/level/ServerLevel",
+              "name": "addFreshEntityWithPassengers",
+              "descriptor": "(Lnet/minecraft/world/entity/Entity;)V",
+              "cp_index": 1461
+            }
+          ]
+        }
+      ]
+    },
+    "LevelWriter": {
+      "origin": "INSTALLED_MINECRAFT_SRG",
+      "sha256": "ff1c3d2a794c021a565e9213ae01b8b4a8e276975d780128d26994b472190b47",
+      "declared_method_count": 7,
+      "selected_count": 1,
+      "methods": [
+        {
+          "name": "addFreshEntity",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "code_sha256": "42ca1f85243342bd41983ab86f2235408fa46ded7466d4525196f66b9dbb5f3e",
+          "call_count": 0,
+          "calls": []
+        }
+      ]
+    },
+    "PersistentEntitySectionManager": {
+      "origin": "NEOFORGE_OVERLAY",
+      "sha256": "6351fcb7c7370b77b8d9618474783b58ab3e037c224b5c83481c23908db1fbf4",
+      "declared_method_count": 55,
+      "selected_count": 4,
+      "methods": [
+        {
+          "name": "addEntity",
+          "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z",
+          "code_sha256": "c12cfbffb16e15950de4caf3fd5785350b920540c24aed54e3160c9b3f771c7c",
+          "call_count": 3,
+          "calls": [
+            {
+              "offset": 25,
+              "opcode": "invokespecial",
+              "owner": "net/neoforged/neoforge/event/entity/EntityJoinLevelEvent",
+              "name": "<init>",
+              "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;Z)V",
+              "cp_index": 152
+            },
+            {
+              "offset": 36,
+              "opcode": "invokevirtual",
+              "owner": "net/neoforged/neoforge/event/entity/EntityJoinLevelEvent",
+              "name": "isCanceled",
+              "descriptor": "()Z",
+              "cp_index": 161
+            },
+            {
+              "offset": 47,
+              "opcode": "invokevirtual",
+              "owner": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+              "name": "addEntityWithoutEvent",
+              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z",
+              "cp_index": 135
+            }
+          ]
+        },
+        {
+          "name": "addEntityWithoutEvent",
+          "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z",
+          "code_sha256": "f616e8ec0dd0bcbb1ab3ff9425e9659f41af1d9dbc94f8faf4a255c96b7c5454",
+          "call_count": 0,
+          "calls": []
+        },
+        {
+          "name": "addNewEntity",
+          "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z",
+          "code_sha256": "9db758e37d1cce08918652495bb9d01f1207b068528736b83e3cf7d5acce621c",
+          "call_count": 1,
+          "calls": [
+            {
+              "offset": 3,
+              "opcode": "invokevirtual",
+              "owner": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+              "name": "addEntity",
+              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z",
+              "cp_index": 131
+            }
+          ]
+        },
+        {
+          "name": "addNewEntityWithoutEvent",
+          "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z",
+          "code_sha256": "eded2567e210428103c93babe1a26fd7fa9be7163031e8a3db1a5528f09a797b",
+          "call_count": 1,
+          "calls": [
+            {
+              "offset": 3,
+              "opcode": "invokevirtual",
+              "owner": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+              "name": "addEntityWithoutEvent",
+              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z",
+              "cp_index": 135
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  }
+}
