@@ -51,7 +51,7 @@ def refs(reader: ClassReader, body: dict) -> list[dict]:
     for at, (op, arg, _) in sorted(body.items()):
         if op not in SELECT_OPS:
             continue
-        candidate = re.match(r"#(\d+)(?:\s|$)", arg)
+        candidate = re.match(r"#(\d+)(?:\s|,|$)", arg)
         require(candidate is not None, "no constant pool index for invoked member")
         cp_index = int(candidate.group(1))
         require(0 < cp_index < len(reader.pool), "invalid JVM ref index")
