@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Read-only NeoForge 21.1.248 ABI discovery for Galena spawn interoperability.
 
-This inspects the currently pinned 21.1.248 upstream API (see both\nBlack Arcana and sibling gradle.properties), not transformed Minecraft,
+This inspects the pinned NeoForge 21.1.248 API in both Black Arcana and\nthe sibling gradle.properties files, not transformed Minecraft,
 the provider call outcome, a safe mutation hook or physical gameplay.
 No source text, bytecode or assets are stored in the report.
 """
@@ -91,9 +91,12 @@ def probe(universal: Path, sources: Path, javap: str, output: Path) -> dict:
     need(output.suffix == ".json" and not output.exists(), "write-once JSON only")
     universal_info = inspect_zip(universal, maximum=50_000_000)
     sources_info = inspect_zip(sources, maximum=50_000_000)
-    # DISCOVERY ONLY: CI checks both archives against their official Maven
-    # checksums. A separate release-specific seal must pin the resulting SHA
-    # before this target can be counted as a reproducible static sub-contract.
+    need(universal_info["sha256"] ==
+         "90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5",
+         "universal publisher SHA-256 drift")
+    need(sources_info["sha256"] ==
+         "b4b912457549ff586873ce78b39b08af96f11a0e3a54c6b77576c6a25907083f",
+         "sources publisher SHA-256 drift")
     with ZipFile(universal) as jar:
         names = set(jar.namelist())
         # Event's own class and event-hook owner must be in this exact binary.
