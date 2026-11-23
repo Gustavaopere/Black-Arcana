@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/alexscaves-1010-galena-neoforge-211248-entity-join-patches.yml'
       - 'docs/qa/alexscaves_1010_galena_neoforge_211248_entity_join_patches_probe.py'
+      - 'docs/qa/alexscaves_1010_galena_neoforge_211248_entity_join_patches_checks.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-ENTITY-JOIN-PATCHES-21.1.248.*'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md'
   workflow_dispatch:
@@ -21,7 +22,7 @@ jobs:
           python-version: '3.12'
       - name: Verify static scanner syntax and synthetic malformed-patch guard
         run: |
-          python3 -m py_compile docs/qa/alexscaves_1010_galena_neoforge_211248_entity_join_patches_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_neoforge_211248_entity_join_patches_probe.py docs/qa/alexscaves_1010_galena_neoforge_211248_entity_join_patches_checks.py
           python3 docs/qa/alexscaves_1010_galena_neoforge_211248_entity_join_patches_probe.py --selftest
       - name: Download and verify official 21.1.248 userdev upstream checksums
         shell: bash
@@ -47,6 +48,12 @@ jobs:
             > build/galena-211248-entity-join-patches/probe.log
           test -s build/galena-211248-entity-join-patches/report.json
           cat build/galena-211248-entity-join-patches/probe.log
+      - name: Verify exact report and reject adversarial patch forgeries
+        run: |
+          python3 docs/qa/alexscaves_1010_galena_neoforge_211248_entity_join_patches_checks.py \
+            --report build/galena-211248-entity-join-patches/report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-ENTITY-JOIN-PATCHES-21.1.248.json' \
+            --adversarial
       - name: Discovery-only fail-closed safety invariants
         run: |
           python3 - <<'PY'
