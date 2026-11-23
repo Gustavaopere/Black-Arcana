@@ -22,7 +22,7 @@ jobs:
           python-version: '3.12'
       - name: Python syntax and pure synthetic invariants
         run: |
-          python3 -m py_compile docs/qa/alexscaves_1010_galena_neoforge_211248_join_flow_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_neoforge_211248_join_flow_probe.py docs/qa/alexscaves_1010_galena_neoforge_211248_join_flow_checks.py
           python3 docs/qa/alexscaves_1010_galena_neoforge_211248_join_flow_probe.py --selftest
       - name: Fetch official SHA-exact NeoForge 21.1.248 userdev
         shell: bash
@@ -49,6 +49,18 @@ jobs:
             --userdev build/galena-211248-join-flow/neoforge-21.1.248-userdev.jar \
             --output build/galena-211248-join-flow/report.json \
             | tee build/galena-211248-join-flow/probe.log
+      - name: Validate sealed exact report and reject adversarial variants
+        shell: bash
+        run: |
+          set -euo pipefail
+          report=build/galena-211248-join-flow/report.json
+          test "$(stat -c %s "$report")" -eq 8996
+          test "$(sha256sum "$report" | cut -d' ' -f1)" = \
+            '39605a4b034b7e43cc301111b4d7352aad67b5a1dd4cc78cefc6b9f8b31bcce7'
+          python3 docs/qa/alexscaves_1010_galena_neoforge_211248_join_flow_checks.py \
+            --report "$report" \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-JOIN-FLOW-21.1.248.json' \
+            --adversarial
       - name: Fail-closed statuses, never infer runtime or a mutating hook
         run: |
           python3 - <<'PY'
