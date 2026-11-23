@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "scope": "ALEXSCAVES_1010_RAINBOUNCE_BOOTS_INDIVIDUAL_STATIC_CONTRACT",
+  "sources": {
+    "publisher_version": "1.0.10",
+    "publisher_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "publisher_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "publisher_report_sha256": "c7e60198eae632614c4a87acda39f385f49347409f47d0b178f5733362a7be60",
+    "publisher_discovery_seal": "EXACT-RAINBOUNCE-BOOTS-DISCOVERY-1.0.10.json",
+    "owner_class_sha256": "12809966af8256aa5c55e56b54d49f5be66e9785d6616ffa934c376f3d6d31bd",
+    "official_enum_report_sha256": "e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91",
+    "official_enum_class_sha256": "304d6345c9ed3d0cdeaea281ed1171b98505b266c04e2b25a023dec665197732",
+    "material_seal": "EXACT-ARMOR-MATERIAL-1.0.10.json"
+  },
+  "item": {
+    "resource_id": "alexscaves:rainbounce_boots",
+    "factory": "lambda$static$174",
+    "native_class": "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem",
+    "equipment_slot": "FEET",
+    "armor_type": "BOOTS",
+    "enum_ordinal": 3,
+    "armor_nominal": 2,
+    "max_durability_configured": 66,
+    "enchantability": 40,
+    "toughness": 0,
+    "knockback_resistance": 0,
+    "repair_material_supplier": "Ingredient.EMPTY",
+    "on_entity_land_instruction_count": 134,
+    "mixin_move_instruction_count": 20,
+    "base_min_abs_fall_exclusive": 0.2,
+    "strong_bounce_boundary_exclusive": 0.42,
+    "weak_bounce_multiplier": 0.7,
+    "strong_bounce_multiplier": 1.05,
+    "reduced_bounce_tag_factor": 0.15000000596046448,
+    "with_sugar_rush_horizontal": 1.2,
+    "without_sugar_rush_horizontal": 1.9,
+    "cloud_particles_requested_min": 3,
+    "cloud_particles_requested_max": 5,
+    "no_offensive_targeting": true,
+    "magic_roots_delta": 0,
+    "evidence_axes": [
+      "identity",
+      "behavior",
+      "parameters",
+      "targeting",
+      "costs",
+      "integration",
+      "validation"
+    ]
+  },
+  "states": {
+    "status": "CERTIFIED_STATIC_7_AXES",
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "mutation": "NO_MUTATION",
+    "mutating_hook": "NOT_VERIFIED",
+    "perk_certification": "NOT_CERTIFIED",
+    "physical_qa": "NOT_TESTED",
+    "runtime_dispatch": "NOT_VERIFIED",
+    "installed_transformed_runtime": "NOT_VERIFIED",
+    "provider_universe_closed": false
+  }
+}

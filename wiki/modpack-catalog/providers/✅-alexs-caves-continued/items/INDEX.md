@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 31/35.**
+**Fichas catalogadas (somente fichas detectadas): 32/35.**
 
-**Barra das fichas catalogadas:** `█████████████████░░░ 88.6%`
+**Barra das fichas catalogadas:** `██████████████████░░ 91.4%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 31/35.**
+**Homologadas para perks (somente fichas detectadas): 32/35.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████████░░░ 88.6%`
+**Barra dos contratos técnicos estáticos:** `██████████████████░░ 91.4%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -50,7 +50,7 @@
 | ✅ | Primordial Pants | [ficha/primordial-pants.md](primordial-pants.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Primordial Tunic | [ficha/primordial-tunic.md](primordial-tunic.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Purple Soda Bottle | [ficha/purple-soda-bottle.md](purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Rainbounce Boots | [ficha/rainbounce-boots.md](rainbounce-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Rainbounce Boots | [ficha/rainbounce-boots.md](rainbounce-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Remote Detonator | [ficha/remote-detonator.md](remote-detonator.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Resistor Shield | [ficha/resistor-shield.md](resistor-shield.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [ficha/thornwood-boat.md](thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |

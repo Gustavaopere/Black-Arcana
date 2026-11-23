@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 129/134.**
+**Fichas catalogadas (somente fichas detectadas): 130/134.**
 
-**Barra das fichas catalogadas:** `███████████████████░ 96.3%`
+**Barra das fichas catalogadas:** `███████████████████░ 97.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 129/134.**
+**Homologadas para perks (somente fichas detectadas): 130/134.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████████░ 96.3%`
+**Barra dos contratos técnicos estáticos:** `███████████████████░ 97.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -138,7 +138,7 @@
 | ✅ | Primordial Pants | [items/primordial-pants.md](items/primordial-pants.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Primordial Tunic | [items/primordial-tunic.md](items/primordial-tunic.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Purple Soda Bottle | [items/purple-soda-bottle.md](items/purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Rainbounce Boots | [items/rainbounce-boots.md](items/rainbounce-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Rainbounce Boots | [items/rainbounce-boots.md](items/rainbounce-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Remote Detonator | [items/remote-detonator.md](items/remote-detonator.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Resistor Shield | [items/resistor-shield.md](items/resistor-shield.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [items/thornwood-boat.md](items/thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -168,7 +168,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ⚠️ | Equipment | 5/6 (83.3%) | 5 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 31/35 (88.6%) | 31 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Items | 32/35 (91.4%) | 32 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 15/15 (100.0%) | 15 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅

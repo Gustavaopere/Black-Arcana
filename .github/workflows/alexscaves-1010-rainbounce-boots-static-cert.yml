@@ -1,0 +1,77 @@
+name: Alex's Caves 1.0.10 Rainbounce Boots static certification
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-rainbounce-boots-static-cert.yml'
+      - 'docs/qa/alexscaves_1010_rainbounce_boots_static_cert_checks.py'
+      - 'docs/qa/alexscaves_1010_rainbounce_boots_discovery.py'
+      - 'docs/qa/alexscaves_1010_rainbounce_boots_discovery_checks.py'
+      - 'docs/qa/minecraft_1211_armor_type_enum_probe.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  rainbounce_boots_static:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile checker and native probes
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_rainbounce_boots_static_cert_checks.py docs/qa/alexscaves_1010_rainbounce_boots_discovery.py docs/qa/minecraft_1211_armor_type_enum_probe.py
+          python3 docs/qa/minecraft_1211_armor_type_enum_probe.py --test
+      - name: Reproduce SHA-exact Minecraft official enum
+        run: |
+          mkdir -p build/rainbounce-static-1010/official
+          python3 docs/qa/minecraft_1211_armor_type_enum_probe.py \
+            --outdir build/rainbounce-static-1010/official/input \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/rainbounce-static-1010/official/report.json
+          test "$(sha256sum build/rainbounce-static-1010/official/report.json | cut -d ' ' -f1)" = 'e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91'
+      - name: Retrieve and hash original publisher JAR
+        run: |
+          mkdir -p build/rainbounce-static-1010/native
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/rainbounce-static-1010/native/publisher.jar
+          test "$(stat -c %s build/rainbounce-static-1010/native/publisher.jar)" -eq 75279314
+          test "$(sha256sum build/rainbounce-static-1010/native/publisher.jar | cut -d ' ' -f1)" = '36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c'
+      - name: Recreate original four-method SHA-exact report
+        run: |
+          python3 docs/qa/alexscaves_1010_rainbounce_boots_discovery.py \
+            --jar build/rainbounce-static-1010/native/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/rainbounce-static-1010/native/report.json
+          test "$(sha256sum build/rainbounce-static-1010/native/report.json | cut -d ' ' -f1)" = 'c7e60198eae632614c4a87acda39f385f49347409f47d0b178f5733362a7be60'
+      - name: Certify seven technical axes and reject adversarial modifications
+        run: |
+          python3 docs/qa/alexscaves_1010_rainbounce_boots_static_cert_checks.py \
+            --publisher build/rainbounce-static-1010/native/report.json \
+            --official build/rainbounce-static-1010/official/report.json \
+            --material 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARMOR-MATERIAL-1.0.10.json' \
+            --discovery 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAINBOUNCE-BOOTS-DISCOVERY-1.0.10.json' \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAINBOUNCE-BOOTS-STATIC-1.0.10.json' \
+            --card 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/rainbounce-boots.md' \
+            --ledger 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json' \
+            --adversarial
+      - name: Verify generated canonical provider indexes
+        run: |
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+          python3 scripts/catalog/check_perk_ready_indexes.py
+      - name: Upload read-only audit JSON (no third-party JAR)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-rainbounce-static-report
+          path: |
+            build/rainbounce-static-1010/native/report.json
+            build/rainbounce-static-1010/official/report.json
+          if-no-files-found: warn
+          retention-days: 14
