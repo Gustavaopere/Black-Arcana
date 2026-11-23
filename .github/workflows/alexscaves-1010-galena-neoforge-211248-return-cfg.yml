@@ -1,0 +1,112 @@
+name: Alex's Caves Galena NeoForge 21.1.248 distributed return CFG discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-galena-neoforge-211248-return-cfg.yml'
+      - 'docs/qa/alexscaves_1010_galena_211248_spawn_return_cfg_probe.py'
+      - 'docs/qa/alexscaves_1010_galena_211248_spawn_return_cfg_checks.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-SPAWN-RETURN-CFG-21.1.248.*'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md'
+      - 'docs/qa/neoforge_211248_gazing_pearl_saveddata_engine_probe.py'
+      - 'docs/qa/neoforge_211248_custom_data_delegate_probe.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  official_distributed_spawn_return_cfg:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Validate syntax of read-only distributed JVM scanner
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_211248_spawn_return_cfg_probe.py docs/qa/alexscaves_1010_galena_211248_spawn_return_cfg_checks.py
+      - name: Download exact official NeoForge 21.1.248 server installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/galena-211248-spawn-distribution
+          cd build/galena-211248-spawn-distribution
+          base='https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248'
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 "$base/neoforge-21.1.248-installer.jar" -o installer.jar
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 60 "$base/neoforge-21.1.248-installer.jar.sha256" -o installer.jar.sha256
+          actual="$(sha256sum installer.jar | cut -d' ' -f1)"
+          expect="$(head -c 64 installer.jar.sha256)"
+          [[ "$expect" =~ ^[0-9a-fA-F]{64}$ ]]
+          test "$actual" = "${expect,,}"
+          test "$actual" = '68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c'
+          echo "NEOFORGE_EXACT_INSTALLER_SHA256 $actual"
+          unzip -tq installer.jar
+      - name: Materialize publisher-exact server/SRG distributions (not a running game)
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/galena-211248-spawn-distribution
+          java -jar installer.jar --installServer > install.log 2>&1 || {
+            echo "::error::NEOFORGE_211248_INSTALL_SERVER_FAILED"
+            tail -n 80 install.log
+            exit 1
+          }
+          test -f libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar
+          test -f libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar
+      - name: Discover publisher-exact JVM return control graphs without copying Code
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/alexscaves_1010_galena_211248_spawn_return_cfg_probe.py \
+            --server build/galena-211248-spawn-distribution/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar \
+            --srg build/galena-211248-spawn-distribution/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/galena-211248-spawn-distribution/report.json \
+            | tee build/galena-211248-spawn-distribution/probe.log
+      - name: Enforce SHA-exact report, legacy typed-call seal and adversarial CFG checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          report=build/galena-211248-spawn-distribution/report.json
+          test "$(stat -c %s "$report")" -eq 18311
+          test "$(sha256sum "$report" | cut -d' ' -f1)" = '19ce72117b30cbb716cd385638ebbcdf40b8ea68690a0c4a07aa9b53b8bad579'
+          python3 docs/qa/alexscaves_1010_galena_211248_spawn_return_cfg_checks.py \
+            --report "$report" \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-SPAWN-RETURN-CFG-21.1.248.json' \
+            --parent 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-DISTRIBUTED-SPAWN-21.1.248.json' \
+            --adversarial
+      - name: Discovery-only guard against unsupported runtime promotion
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          r=json.loads(Path('build/galena-211248-spawn-distribution/report.json').read_text())
+          assert r['scope']=='GALENA_NEOFORGE_211248_DISTRIBUTED_SPAWN_RETURN_CFG_DISCOVERY_ONLY'
+          assert set(r['classes'])=={'Level','ServerLevel','LevelWriter','PersistentEntitySectionManager'}
+          assert r['artifact']['neoforge_version']=='21.1.248'
+          assert all(v['not_modlauncher_transformed'] is True for v in r['classes'].values())
+          graphs=[m['cfg'] for r in r['classes'].values()
+                  for m in r['selected_methods'] if 'cfg' in m]
+          assert len(graphs)==5
+          assert all(g['exception_edges_modeled'] is False for g in graphs)
+          assert all(g['edges']>0 and g['terminal_sites'] for g in graphs)
+          assert r['limits']['mutation']=='NO_MUTATION'
+          assert r['limits']['mutating_hook']=='NOT_VERIFIED'
+          assert r['limits']['physical_qa']=='NOT_TESTED'
+          assert r['limits']['static_contract']=='NOT_CERTIFIED'
+          assert r['limits']['provider_universe_closed'] is False
+          assert r['limits']['semantic_magic_roots_delta']==0
+          PY
+      - name: Retain read-only return CFG hashes (discovery only)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: galena-211248-distributed-spawn-return-cfg
+          path: |
+            build/galena-211248-spawn-distribution/report.json
+            build/galena-211248-spawn-distribution/probe.log
+          if-no-files-found: warn
+          retention-days: 14
