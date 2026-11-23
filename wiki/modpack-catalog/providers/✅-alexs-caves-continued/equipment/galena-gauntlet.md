@@ -91,6 +91,12 @@ O [dossiê de retorno/drop](../EXACT-GALENA-GAUNTLET-RETURN-DROP-1.0.10.md), [ma
 
 **Status:** `NO_MUTATION` · `static_contract=NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. Sem prova de loss/duplication real, hook mutador, item refund ou ganho de Mastery; qualquer integração permanece fail-closed.
 
+## 4.8. Ponte ACCompat de combate e mineração — evidência adicional
+
+O [dossiê de 14 helpers, 21 callsites e uma lambda por BootstrapMethods](../EXACT-GALENA-ACCOMPAT-COMBAT-BRIDGES-1.0.10.md) fixa o comportamento estático dos wrappers de combate/encantamento/mineração no publisher 1.0.10. O [selo SHA-exato](../EXACT-GALENA-ACCOMPAT-COMBAT-BRIDGES-1.0.10.json) inclui os 14 métodos, callback de `attackDamageBonus`, 34 pivôs e testes adversariais sem reproduzir os dez helpers NBT anteriores. A soma de `AttributeModifier.amount()` usa `ATTACK_DAMAGE` na mão principal; `miningEfficiencyBonus` e `submergedMiningFactor` consultam atributos do jogador. `hurt` apenas delega a `Entity.hurt`; nada aqui certifica dano aceito, spawn/rollback, hooks ou XP/Mastery.
+
+**Estado preservado:** `static_contract=NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED` · `NO_MUTATION`. Sem modificação do ledger/índices até prova integral do objeto.
+
 ## 5. Interfaces conceituais para perks, atributos e Mastery
 
 | Eixo | Fronteira observada | Estado de integração |
