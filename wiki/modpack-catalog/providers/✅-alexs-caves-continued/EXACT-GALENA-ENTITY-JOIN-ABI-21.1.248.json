@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "scope": "GALENA_NEOFORGE_211248_ENTITY_JOIN_ABI_SUBCONTRACT_NOT_CERTIFIED",
+  "provenance": {
+    "publisher": "neoforge 21.1.248 official Maven",
+    "publisher_universal_sha256": "90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5",
+    "publisher_universal_bytes": 3551268,
+    "publisher_universal_members": 2521,
+    "publisher_sources_sha256": "b4b912457549ff586873ce78b39b08af96f11a0e3a54c6b77576c6a25907083f",
+    "publisher_sources_bytes": 1796948,
+    "publisher_sources_members": 1978,
+    "report_sha256": "002f2f736ccd9e3af35f0c4bebfac03cc58127b40cdfaad5cca70a8a964aa3c1",
+    "report_bytes": 11559,
+    "source_sha256": "63f3a66ce430bc4ca49ae03190733f95baad7387a85c5417450d9947acca929f",
+    "run_id": 45182745228,
+    "job_id": 137720448259,
+    "galena_publisher_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c"
+  },
+  "classes": {
+    "net/neoforged/neoforge/event/entity/EntityJoinLevelEvent": {
+      "sha256": "644af7ec062b1497050a50ecb1936aadcf097eb63afd6fa7d56fc7a063e4fe20",
+      "method_count": 4,
+      "required_method_descriptors": [
+        "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;)V",
+        "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;Z)V",
+        "()Lnet/minecraft/world/level/Level;",
+        "()Z"
+      ],
+      "cancellable_declared": true
+    },
+    "net/neoforged/neoforge/event/entity/EntityEvent": {
+      "sha256": "23e99c7a8e2a144ed15c3c755c6a81403bd677215ccb6c967f6f95fd2d25d86e",
+      "method_count": 2,
+      "required_method_descriptors": [
+        "(Lnet/minecraft/world/entity/Entity;)V",
+        "()Lnet/minecraft/world/entity/Entity;"
+      ]
+    },
+    "net/neoforged/neoforge/event/EventHooks": {
+      "sha256": "f810377f87c95c04bb4de7a7ac68e8f4862f9ca33a34cc74e067e65e2a92d66b",
+      "method_count": 114
+    }
+  },
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "limits": {
+    "jar_installed_parity": "NOT_VERIFIED",
+    "event_firing_from_transformed_minecraft": "NOT_VERIFIED",
+    "provider_item_consumption_and_spawn_atomicity": "NOT_VERIFIED",
+    "event_order_and_spawn_result_acceptance": "NOT_VERIFIED",
+    "authoritative_post_spawn_observation": "NOT_VERIFIED",
+    "safe_mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED"
+  }
+}
