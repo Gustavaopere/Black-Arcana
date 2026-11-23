@@ -1,0 +1,75 @@
+name: Alex's Caves 1.0.10 Galena NeoForge 21.1.248 exact entity-join patch discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-galena-neoforge-211248-entity-join-patches.yml'
+      - 'docs/qa/alexscaves_1010_galena_neoforge_211248_entity_join_patches_probe.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-ENTITY-JOIN-PATCHES-21.1.248.*'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  discover_entity_join_patches:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify static scanner syntax and synthetic malformed-patch guard
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_neoforge_211248_entity_join_patches_probe.py
+          python3 docs/qa/alexscaves_1010_galena_neoforge_211248_entity_join_patches_probe.py --selftest
+      - name: Download and verify official 21.1.248 userdev upstream checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/galena-211248-entity-join-patches
+          name='neoforge-21.1.248-userdev.jar'
+          base='https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248'
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 "$base/$name" -o "build/galena-211248-entity-join-patches/$name"
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 60 "$base/$name.sha256" -o "build/galena-211248-entity-join-patches/$name.sha256"
+          expected="$(head -c 64 "build/galena-211248-entity-join-patches/$name.sha256")"
+          [[ "$expected" =~ ^[0-9a-fA-F]{64}$ ]]
+          actual="$(sha256sum "build/galena-211248-entity-join-patches/$name" | cut -d ' ' -f1)"
+          test "$actual" = "${expected,,}"
+          echo "OFFICIAL_USERDEV_SHA256 $actual"
+          echo "OFFICIAL_USERDEV_BYTES $(stat -c %s "build/galena-211248-entity-join-patches/$name")"
+          unzip -tq "build/galena-211248-entity-join-patches/$name"
+      - name: Emit read-only patch locations and hashes without source bodies
+        run: |
+          python3 docs/qa/alexscaves_1010_galena_neoforge_211248_entity_join_patches_probe.py \
+            --userdev build/galena-211248-entity-join-patches/neoforge-21.1.248-userdev.jar \
+            --output build/galena-211248-entity-join-patches/report.json \
+            > build/galena-211248-entity-join-patches/probe.log
+          test -s build/galena-211248-entity-join-patches/report.json
+          cat build/galena-211248-entity-join-patches/probe.log
+      - name: Discovery-only fail-closed safety invariants
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('build/galena-211248-entity-join-patches/report.json').read_text())
+          assert report['scope']=='GALENA_NEOFORGE_211248_ENTITY_JOIN_PATCH_DISCOVERY_ONLY'
+          assert report['publisher']['filename']=='neoforge-21.1.248-userdev.jar'
+          assert report['limitations']['mutation']=='NO_MUTATION'
+          assert report['limitations']['static_contract']=='NOT_CERTIFIED'
+          assert report['limitations']['mutating_hook']=='NOT_VERIFIED'
+          assert report['limitations']['physical_qa']=='NOT_TESTED'
+          assert report['limitations']['provider_universe_closed'] is False
+          assert report['limitations']['all_entity_join_callsites_exhausted'] is False
+          assert report['limitations']['semantic_magic_roots_delta']==0
+          PY
+      - name: Archive hashes and symbol-only report for explicit sealing
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: galena-neoforge-211248-entity-join-patch-discovery
+          path: |
+            build/galena-211248-entity-join-patches/report.json
+            build/galena-211248-entity-join-patches/probe.log
+          if-no-files-found: warn
+          retention-days: 14
