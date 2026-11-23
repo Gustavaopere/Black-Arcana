@@ -27,7 +27,7 @@ jobs:
           java-version: '21'
       - name: Validate syntax of read-only distributed JVM scanner
         run: |
-          python3 -m py_compile docs/qa/alexscaves_1010_galena_211248_spawn_denial_guards_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_211248_spawn_denial_guards_probe.py docs/qa/alexscaves_1010_galena_211248_spawn_denial_guards_checks.py
       - name: Download exact official NeoForge 21.1.248 server installer
         shell: bash
         run: |
@@ -66,6 +66,18 @@ jobs:
             --javap "$JAVA_HOME/bin/javap" \
             --output build/galena-211248-denial-guards/report.json \
             | tee build/galena-211248-denial-guards/probe.log
+      - name: Seal exact 21.1.248 denial guard report and reject adversarial forgeries
+        shell: bash
+        run: |
+          set -euo pipefail
+          report=build/galena-211248-denial-guards/report.json
+          test "$(stat -c %s "$report")" -eq 19914
+          test "$(sha256sum "$report" | cut -d' ' -f1)" = \
+            'c9b4691fbb4a7c1f54964fe568abad111fd891b51543251b3782545adb6c8473'
+          python3 docs/qa/alexscaves_1010_galena_211248_spawn_denial_guards_checks.py \
+            --report "$report" \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-SPAWN-DENIAL-GUARDS-21.1.248.json' \
+            --adversarial
       - name: Discovery-only guard against unsupported runtime promotion
         run: |
           python3 - <<'PY'
