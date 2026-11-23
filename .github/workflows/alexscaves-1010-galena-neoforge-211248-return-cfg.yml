@@ -27,7 +27,7 @@ jobs:
           java-version: '21'
       - name: Validate syntax of read-only distributed JVM scanner
         run: |
-          python3 -m py_compile docs/qa/alexscaves_1010_galena_211248_spawn_return_cfg_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_211248_spawn_return_cfg_probe.py docs/qa/alexscaves_1010_galena_211248_spawn_return_cfg_checks.py
       - name: Download exact official NeoForge 21.1.248 server installer
         shell: bash
         run: |
@@ -66,6 +66,18 @@ jobs:
             --javap "$JAVA_HOME/bin/javap" \
             --output build/galena-211248-spawn-distribution/report.json \
             | tee build/galena-211248-spawn-distribution/probe.log
+      - name: Enforce SHA-exact report, legacy typed-call seal and adversarial CFG checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          report=build/galena-211248-spawn-distribution/report.json
+          test "$(stat -c %s "$report")" -eq 18311
+          test "$(sha256sum "$report" | cut -d' ' -f1)" = '19ce72117b30cbb716cd385638ebbcdf40b8ea68690a0c4a07aa9b53b8bad579'
+          python3 docs/qa/alexscaves_1010_galena_211248_spawn_return_cfg_checks.py \
+            --report "$report" \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-SPAWN-RETURN-CFG-21.1.248.json' \
+            --parent 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-DISTRIBUTED-SPAWN-21.1.248.json' \
+            --adversarial
       - name: Discovery-only guard against unsupported runtime promotion
         run: |
           python3 - <<'PY'
