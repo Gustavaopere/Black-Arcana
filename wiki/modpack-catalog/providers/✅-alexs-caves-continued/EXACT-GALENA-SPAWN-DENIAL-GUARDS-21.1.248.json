@@ -1,0 +1,246 @@
+{
+  "schema": 1,
+  "scope": "GALENA_NEOFORGE_211248_DISTRIBUTED_DENIAL_GUARD_STATIC_SEAL_ONLY",
+  "provenance": {
+    "discovery_run": 45232344296,
+    "discovery_job": 137894927228,
+    "report_sha256": "c9b4691fbb4a7c1f54964fe568abad111fd891b51543251b3782545adb6c8473",
+    "report_bytes": 19914,
+    "discovery_head_sha": "7bd94be896b2423aa883ab676bc7f21486dbcec7",
+    "minecraft_version": "1.21.1",
+    "neo_version": "21.1.248",
+    "install_server_overlay_sha256": "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359",
+    "install_srg_sha256": "26ca9c40d7e1681190b428583c38816852218e78df3f8bdb60a59a78503aec71",
+    "publisher_alexscaves_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c"
+  },
+  "class_sha256": {
+    "ServerLevel": "19b42e51848fd27df3683dacf694baa5126ee9f0665f12afdc65f82493a1e5a3",
+    "PersistentEntitySectionManager": "6351fcb7c7370b77b8d9618474783b58ab3e037c224b5c83481c23908db1fbf4"
+  },
+  "exact_methods": [
+    {
+      "owner": "PersistentEntitySectionManager",
+      "name": "addEntity",
+      "code_sha256": "c12cfbffb16e15950de4caf3fd5785350b920540c24aed54e3160c9b3f771c7c",
+      "instructions": 25,
+      "members": 6,
+      "branches": 2,
+      "returns": 2,
+      "members_sha256": "defae0c50b28f55e6a807b4e24d33c6d93288172b745755258a10a3a74def855",
+      "branches_sha256": "36dc40628636f21d95b6ccf12686c850654523cec1e9a14896678acdb1edb229",
+      "terminals_sha256": "debc3c1f42ba5347bc9c140ef33d84af852e6c9e40cce05424877f75f76d72ff"
+    },
+    {
+      "owner": "PersistentEntitySectionManager",
+      "name": "addEntityUuid",
+      "code_sha256": "5f312b918531647b3983fc55ad0330bb0e43acd5f3609d66e5d8148aac7a2b25",
+      "instructions": 14,
+      "members": 5,
+      "branches": 1,
+      "returns": 2,
+      "members_sha256": "33b7792faf86e1febdf4388ebdcfc5d3b1cf02b337c43fb41b20724a9f8f9db4",
+      "branches_sha256": "a5f73e635a72d93da3316e9eb4299b94a1cc314ae9bfe0a02cac2ada19aaf984",
+      "terminals_sha256": "5cba4baae219a90e7f1177a12b49aa8a025ee7e02e5b24fd4f0fa6e53fc8ade2"
+    },
+    {
+      "owner": "PersistentEntitySectionManager",
+      "name": "addEntityWithoutEvent",
+      "code_sha256": "f616e8ec0dd0bcbb1ab3ff9425e9659f41af1d9dbc94f8faf4a255c96b7c5454",
+      "instructions": 52,
+      "members": 16,
+      "branches": 4,
+      "returns": 2,
+      "members_sha256": "667eeec858f279e22826e67cb1f78c42977fb24f7c0f8f02949c3873d9b37012",
+      "branches_sha256": "63f79885c34056aa8e1c9b58b2d03aa474043eea4377956e06e60cc848d898be",
+      "terminals_sha256": "e471700ecfe38e063a40e92bd20abcd427b62a1b58a6f6cabe2a982b597da1d2"
+    },
+    {
+      "owner": "ServerLevel",
+      "name": "addEntity",
+      "code_sha256": "90b05c8f3b8b3044c50d7010fcba7d618fc3972c7216f926aac33028f2975243",
+      "instructions": 22,
+      "members": 8,
+      "branches": 2,
+      "returns": 3,
+      "members_sha256": "787c00b5d3d8dc406d6671d378c11600d09457c0349fa6d3fada517efad04770",
+      "branches_sha256": "c4c5245542162257585781a99714f48d09b61d9ca3266efb0543bad984773668",
+      "terminals_sha256": "fd18315d7aac07c45f15bf503ae2d37361a8decb75949d7a00ae939839782a07"
+    }
+  ],
+  "causal_anchors": {
+    "server_removed_guard": {
+      "owner": "ServerLevel",
+      "method": "addEntity",
+      "typed_ref": {
+        "offset": 1,
+        "owner": "net/minecraft/world/entity/Entity",
+        "name": "isRemoved",
+        "descriptor": "()Z"
+      },
+      "branch": {
+        "offset": 4,
+        "opcode": "ifeq",
+        "target": 27,
+        "fallthrough": 7
+      },
+      "false_return": {
+        "offset": 26,
+        "opcode": "ireturn",
+        "previous_opcode": "iconst_0"
+      }
+    },
+    "manager_duplicate_uuid_guard": {
+      "owner": "PersistentEntitySectionManager",
+      "method": "addEntityUuid",
+      "typed_refs": [
+        {
+          "offset": 1,
+          "owner": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "name": "knownUuids"
+        },
+        {
+          "offset": 5,
+          "owner": "net/minecraft/world/level/entity/EntityAccess",
+          "name": "getUUID"
+        },
+        {
+          "offset": 10,
+          "owner": "java/util/Set",
+          "name": "add",
+          "descriptor": "(Ljava/lang/Object;)Z"
+        }
+      ],
+      "branch": {
+        "offset": 15,
+        "opcode": "ifne",
+        "target": 31,
+        "fallthrough": 18
+      },
+      "false_return": {
+        "offset": 30,
+        "opcode": "ireturn",
+        "previous_opcode": "iconst_0"
+      },
+      "true_return": {
+        "offset": 32,
+        "opcode": "ireturn",
+        "previous_opcode": "iconst_1"
+      }
+    },
+    "manager_duplicate_before_registration": {
+      "owner": "PersistentEntitySectionManager",
+      "method": "addEntityWithoutEvent",
+      "typed_ref": {
+        "offset": 2,
+        "owner": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+        "name": "addEntityUuid",
+        "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z"
+      },
+      "branch": {
+        "offset": 5,
+        "opcode": "ifne",
+        "target": 10,
+        "fallthrough": 8
+      },
+      "false_return": {
+        "offset": 9,
+        "opcode": "ireturn",
+        "previous_opcode": "iconst_0"
+      },
+      "post_guard_record": {
+        "sectionStorage": 21,
+        "EntitySection_getOrCreateSection": 25,
+        "EntitySection_add": 33,
+        "EntityAccess_setLevelCallback": 49
+      },
+      "non_failure_conditions": [
+        {
+          "offset": 55,
+          "reference": "loaded_flag",
+          "opcode": "ifne"
+        },
+        {
+          "offset": 84,
+          "reference": "Visibility.isAccessible",
+          "opcode": "ifeq"
+        },
+        {
+          "offset": 97,
+          "reference": "Visibility.isTicking",
+          "opcode": "ifeq"
+        }
+      ]
+    },
+    "manager_event_cancel_before_uuid": {
+      "owner": "PersistentEntitySectionManager",
+      "method": "addEntity",
+      "typed_ref": {
+        "offset": 36,
+        "owner": "net/neoforged/neoforge/event/entity/EntityJoinLevelEvent",
+        "name": "isCanceled",
+        "descriptor": "()Z"
+      },
+      "branch": {
+        "offset": 39,
+        "opcode": "ifeq",
+        "target": 44,
+        "fallthrough": 42
+      },
+      "false_return": {
+        "offset": 43,
+        "opcode": "ireturn",
+        "previous_opcode": "iconst_0"
+      }
+    },
+    "server_manager_result": {
+      "owner": "ServerLevel",
+      "method": "addEntity",
+      "typed_ref": {
+        "offset": 32,
+        "owner": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+        "name": "addNewEntity",
+        "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z"
+      },
+      "branch": {
+        "offset": 35,
+        "opcode": "ifeq",
+        "target": 44,
+        "fallthrough": 38
+      },
+      "false_return": {
+        "offset": 45,
+        "opcode": "ireturn",
+        "previous_opcode": "iconst_0"
+      },
+      "accepted_callback": {
+        "offset": 39,
+        "owner": "net/minecraft/world/entity/Entity",
+        "name": "onAddedToLevel",
+        "descriptor": "()V"
+      },
+      "true_return": {
+        "offset": 43,
+        "opcode": "ireturn",
+        "previous_opcode": "iconst_1"
+      }
+    }
+  },
+  "state": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "limits": {
+    "modlauncher_loaded_bytecode": "NOT_OBSERVED",
+    "installed_modpack": "NOT_VERIFIED",
+    "actual_uuid_collision": "NOT_TESTED",
+    "actual_spawn_denial": "NOT_TESTED",
+    "real_item_loss_or_rollback": "NOT_TESTED",
+    "all_failure_paths_exhausted": false,
+    "engine_exception_flow": "NOT_MODELED",
+    "not_runtime_authority": true
+  }
+}
