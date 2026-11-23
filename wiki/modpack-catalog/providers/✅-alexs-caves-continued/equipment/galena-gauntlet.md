@@ -99,6 +99,10 @@ O [dossiê de 14 helpers, 21 callsites e uma lambda por BootstrapMethods](../EXA
 
 ## 4.9. NeoForge 21.1.250: ABI de entrada da entidade e cancelamento — observação limitada
 
+> **Limitação de versão corrigida (23/11/2026):** os `gradle.properties` atuais de **Black Arcana** e do sibling **RPG Skill Tree** fixam `neo_version=21.1.248`. Portanto, as assinaturas verificadas no `21.1.250` são **evidência auxiliar de versão adjacente**, não equivalem ao contrato da engine-alvo. Prova no `21.1.248` é necessária antes de transferir qualquer conclusão para a build atual. A modlist registra `alexscaves` 1.0.10, mas não fornece paridade de dump transformado. **Nenhuma promoção de estado foi feita.**
+
+
+
 O [dossiê SHA-exato de `EntityJoinLevelEvent`](../EXACT-GALENA-ENTITY-JOIN-ABI-21.1.250.md) e seu [manifesto](../EXACT-GALENA-ENTITY-JOIN-ABI-21.1.250.json) documentam **novo recorte externo** à prova publisher 1.0.10: os arquivos oficiais NeoForge 21.1.250 `universal` (SHA-256 `1f9cc68fe9ec0416475d34ce76e95a696b9721d5d338168563dab0632c3d2956`) e `sources` (SHA-256 `a2811d794544ec67dc3fa43b900158f058ea534881ba1c160373554384311a0d`). O evento `EntityJoinLevelEvent` declara **dois construtores** para `(Entity,Level)` e `(Entity,Level,boolean)`, acesso `getLevel()`, `loadedFromDisk()` e implementa `ICancellableEvent`. O ancestral `EntityEvent` possui `getEntity()`. O censo identificou 114 métodos em `EventHooks` no artefato exato, mas **não** localizou um método de nome `join` no subconjunto daquela classe; outras classes e transformações não foram excluídas.
 
 Esses dados são evidências de **ABI existente**, não do disparo, ordenação ou aceitação de `Level.addFreshEntity`. O problema operacional a esclarecer continua sendo a sequência da Gauntlet: `ItemStack.setCount(0)` antes do pedido de spawn cujo retorno é descartado. Não se conclui que o item seja perdido, que o evento seja uma fronteira mutadora segura ou que `ICancellableEvent` sozinho garanta rollback. Event listeners de proteção territorial, servidor dedicado, cancelamento, persistência de inventário e paridade do cliente efetivo continuam **NÃO VERIFICADOS**.
