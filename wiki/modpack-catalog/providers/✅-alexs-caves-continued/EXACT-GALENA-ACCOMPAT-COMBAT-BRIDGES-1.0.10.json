@@ -1,0 +1,496 @@
+{
+  "schema_version": 1,
+  "scope": "ALEXSCAVES_1010_GALENA_ACCOMPAT_COMBAT_BRIDGES_STATIC_SUBCONTRACT",
+  "publisher": {
+    "filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "installed_dump_parity": "NOT_VERIFIED"
+  },
+  "report": {
+    "sha256": "a88dbcda0906f344ecfcd8d4ecea0ea7ba0babae2013643f938a1a2604861bfa",
+    "bytes": 44637,
+    "run_id": 45175127051,
+    "job_id": 137694263147,
+    "artifact_id": 14817659241,
+    "caller_sha256": "c91a48f9892be09c4ab951c8083703b0c5ffbb026fc43e7d808c2033dde8bba9",
+    "caller_bytes": 1780492
+  },
+  "class": {
+    "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat",
+    "sha256": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+    "major": 65,
+    "declared_methods": 200,
+    "fields": 3
+  },
+  "methods": [
+    {
+      "name": "addCooldown",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;I)V",
+      "instruction_count": 7,
+      "code_sha256": "26de736f2abfc5e6ebd3ec8eb6da25f1d6238bc001c07952fdde869e6cae1230",
+      "instruction_sha256": "c00b13fda394feeba5f7427638462fc552f1634025713804e1b93db5b15cfa47",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokevirtual",
+          "fragment": "Player.getCooldowns"
+        },
+        {
+          "offset": 9,
+          "opcode": "invokevirtual",
+          "fragment": "ItemCooldowns.addCooldown"
+        }
+      ]
+    },
+    {
+      "name": "attackDamageBonus",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)D",
+      "instruction_count": 12,
+      "code_sha256": "bd376795836bf5887586cf0fcc3f3f8d0ba9b46781647674f0a9c54ef71a862b",
+      "instruction_sha256": "d5c55d25001c933d6b9ed3d1e4528b64fd155ad7269b26a20feaa7f532dd0c41",
+      "pivots": [
+        {
+          "offset": 5,
+          "opcode": "getstatic",
+          "fragment": "EquipmentSlot.MAINHAND"
+        },
+        {
+          "offset": 9,
+          "opcode": "invokedynamic",
+          "fragment": "InvokeDynamic #2:accept"
+        },
+        {
+          "offset": 14,
+          "opcode": "invokevirtual",
+          "fragment": "ItemStack.forEachModifier"
+        }
+      ]
+    },
+    {
+      "name": "createEntity",
+      "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;",
+      "instruction_count": 4,
+      "code_sha256": "788e58e2b374f34890c09b7d75b127c8d853fdd9e0bcfc132139141dc5828238",
+      "instruction_sha256": "db879f905e1c13c06b5a6bf2393785fd031871ecb435f78c9b6de86a6070e3d4",
+      "pivots": [
+        {
+          "offset": 2,
+          "opcode": "invokevirtual",
+          "fragment": "EntityType.create"
+        }
+      ]
+    },
+    {
+      "name": "damageBonus",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)F",
+      "instruction_count": 20,
+      "code_sha256": "826663655003c485d93518882019173c5e4d307908d46ba7ff12743c9e506b5e",
+      "instruction_sha256": "536378cad9b2552a50c6891da73411af24c95f3d3a8efbb7bdd9b7cb494f0064",
+      "pivots": [
+        {
+          "offset": 6,
+          "opcode": "instanceof",
+          "fragment": "ServerLevel"
+        },
+        {
+          "offset": 9,
+          "opcode": "ifeq",
+          "fragment": "32"
+        },
+        {
+          "offset": 28,
+          "opcode": "invokestatic",
+          "fragment": "EnchantmentHelper.modifyDamage"
+        }
+      ]
+    },
+    {
+      "name": "enchantLevel",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I",
+      "instruction_count": 24,
+      "code_sha256": "7bfacebb8312d2d52f34a61ed657b575e62cb2cc9155b6b8f33a63bbd571e940",
+      "instruction_sha256": "5247a1f7cc1c3c2c6d5a56b92469c88c2e19262de73f721d7b425b9a93262fe0",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokevirtual",
+          "fragment": "ItemStack.getEnchantments"
+        },
+        {
+          "offset": 42,
+          "opcode": "invokeinterface",
+          "fragment": "Holder.is"
+        },
+        {
+          "offset": 51,
+          "opcode": "invokeinterface",
+          "fragment": "getIntValue"
+        }
+      ]
+    },
+    {
+      "name": "enchantLevelOn",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/resources/ResourceKey;)I",
+      "instruction_count": 10,
+      "code_sha256": "246946726095f30036bd080a1c2403811ff8a63882875a786583d02661e79510",
+      "instruction_sha256": "12ee1db7c777a07214edc250cd37b2a5083cf0058e1967e2be1d0b1f4fed514b",
+      "pivots": [
+        {
+          "offset": 10,
+          "opcode": "invokeinterface",
+          "fragment": "RegistryAccess.registryOrThrow"
+        },
+        {
+          "offset": 16,
+          "opcode": "invokeinterface",
+          "fragment": "Registry.getHolderOrThrow"
+        },
+        {
+          "offset": 22,
+          "opcode": "invokestatic",
+          "fragment": "EnchantmentHelper.getEnchantmentLevel"
+        }
+      ]
+    },
+    {
+      "name": "hurt",
+      "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+      "instruction_count": 5,
+      "code_sha256": "bfee6f87d0fe6fa868260b31d8d517320ca51b4204054045bd0acb6835b8e115",
+      "instruction_sha256": "22905deb0cd63081ee8edaaf2b25953b8377cb53a7095476bb7120d664848d15",
+      "pivots": [
+        {
+          "offset": 3,
+          "opcode": "invokevirtual",
+          "fragment": "Entity.hurt"
+        }
+      ]
+    },
+    {
+      "name": "hurtAndBreakUsedHand",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;)V",
+      "instruction_count": 8,
+      "code_sha256": "fb1e6e178da5dd1845040a57bd2cfe034a9181a3ad7b62932e7416ad0c0c67f0",
+      "instruction_sha256": "a63d579011d85284645ef6e58a3abf81ebcc130ff39455ebe598e388f41ea6b7",
+      "pivots": [
+        {
+          "offset": 4,
+          "opcode": "invokevirtual",
+          "fragment": "LivingEntity.getUsedItemHand"
+        },
+        {
+          "offset": 7,
+          "opcode": "invokestatic",
+          "fragment": "slotOf"
+        },
+        {
+          "offset": 10,
+          "opcode": "invokevirtual",
+          "fragment": "ItemStack.hurtAndBreak"
+        }
+      ]
+    },
+    {
+      "name": "knockback",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;DDD)V",
+      "instruction_count": 6,
+      "code_sha256": "6ecfcc9602229d9f41d96491926c4d7eea94f7f0282b5507f75ab45a166a6a5b",
+      "instruction_sha256": "262a87047180f8ad2a69ca1f00ffbb360a3f16e39180d8b1c73f77c01f39c194",
+      "pivots": [
+        {
+          "offset": 5,
+          "opcode": "invokevirtual",
+          "fragment": "LivingEntity.knockback"
+        }
+      ]
+    },
+    {
+      "name": "miningEfficiencyBonus",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)F",
+      "instruction_count": 5,
+      "code_sha256": "20b44b229c9edc0fbb0ae05aa3a6827ec87bb3a5e9517050f24b9e8372bbdcc3",
+      "instruction_sha256": "77970936dafe0bdfe546e37c893f1c02c887b9c1d2d035a8bef4311142b405d4",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "getstatic",
+          "fragment": "Attributes.MINING_EFFICIENCY"
+        },
+        {
+          "offset": 4,
+          "opcode": "invokevirtual",
+          "fragment": "Player.getAttributeValue"
+        }
+      ]
+    },
+    {
+      "name": "postAttackEffects",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;)V",
+      "instruction_count": 14,
+      "code_sha256": "70109e1803a0993436c6c6eb9bf00361242b1fd579d386a418a0f6667d84a714",
+      "instruction_sha256": "afe6aaf7dc71deace1fcf18eb35ff961691566dfb945d222032150420abcb908",
+      "pivots": [
+        {
+          "offset": 8,
+          "opcode": "instanceof",
+          "fragment": "ServerLevel"
+        },
+        {
+          "offset": 11,
+          "opcode": "ifeq",
+          "fragment": "26"
+        },
+        {
+          "offset": 23,
+          "opcode": "invokestatic",
+          "fragment": "EnchantmentHelper.doPostAttackEffects"
+        }
+      ]
+    },
+    {
+      "name": "submergedMiningFactor",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)F",
+      "instruction_count": 5,
+      "code_sha256": "411ab74f29d1423303bddd0129598b531cce1ae7cdc5b17e1f9b4f235009f49a",
+      "instruction_sha256": "27a6638b092c0202c13851b62b477d9737ca86d0a4c2bbbc97a75c9b449047b4",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "getstatic",
+          "fragment": "Attributes.SUBMERGED_MINING_SPEED"
+        },
+        {
+          "offset": 4,
+          "opcode": "invokevirtual",
+          "fragment": "Player.getAttributeValue"
+        }
+      ]
+    },
+    {
+      "name": "useConsume",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;",
+      "instruction_count": 3,
+      "code_sha256": "832ea9691be681ff3faeda8a6eb4eac6ff9cc7a1c13cafd58c8578be1a27383e",
+      "instruction_sha256": "0333ab69b5ed600404b8d191e77515d929ddd67bd32de05467afef8b7805eaeb",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokestatic",
+          "fragment": "InteractionResultHolder.consume"
+        }
+      ]
+    },
+    {
+      "name": "useFail",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;",
+      "instruction_count": 3,
+      "code_sha256": "5cd9656a61e0b0011a78e9ca8ca8db8f238646c37aa037306c3546285066d9a3",
+      "instruction_sha256": "2c677216e79e1207edc0437af4c22d30732da80ceaee3d7a07a23da9df8dad86",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokestatic",
+          "fragment": "InteractionResultHolder.fail"
+        }
+      ]
+    }
+  ],
+  "attack_damage_callback": {
+    "bootstrap_index": 2,
+    "name": "lambda$attackDamageBonus$2",
+    "descriptor": "([DLnet/minecraft/core/Holder;Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+    "instruction_count": 14,
+    "code_sha256": "99b220ffb4dd89e2e6139033eb37924f935fa822ac73bec7bb0732b8cab9d5ca",
+    "instruction_sha256": "0430f8065da3624f36f6846682d8ee40f60b2267e2de66b912e742121418c48e",
+    "pivots": [
+      {
+        "offset": 6,
+        "opcode": "getstatic",
+        "fragment": "Attributes.ATTACK_DAMAGE"
+      },
+      {
+        "offset": 14,
+        "opcode": "if_acmpne",
+        "fragment": "27"
+      },
+      {
+        "offset": 22,
+        "opcode": "invokevirtual",
+        "fragment": "AttributeModifier.amount"
+      },
+      {
+        "offset": 25,
+        "opcode": "dadd",
+        "fragment": ""
+      },
+      {
+        "offset": 26,
+        "opcode": "dastore",
+        "fragment": ""
+      }
+    ]
+  },
+  "typed_caller_sites": [
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "caller_name": "damageItem",
+      "offset": 57,
+      "callee_name": "hurtAndBreakUsedHand",
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;)V"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "caller_name": "getDamageForItem",
+      "offset": 1,
+      "callee_name": "attackDamageBonus",
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;)D"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "caller_name": "getDigSpeed",
+      "offset": 26,
+      "callee_name": "miningEfficiencyBonus",
+      "callee_descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)F"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "caller_name": "getDigSpeed",
+      "offset": 157,
+      "callee_name": "submergedMiningFactor",
+      "callee_descriptor": "(Lnet/minecraft/world/entity/player/Player;)F"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "caller_name": "hurtEntity",
+      "offset": 46,
+      "callee_name": "damageBonus",
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)F"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "caller_name": "hurtEntity",
+      "offset": 58,
+      "callee_name": "enchantLevelOn",
+      "callee_descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "caller_name": "hurtEntity",
+      "offset": 69,
+      "callee_name": "enchantLevel",
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "caller_name": "hurtEntity",
+      "offset": 99,
+      "callee_name": "hurt",
+      "callee_descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "caller_name": "hurtEntity",
+      "offset": 115,
+      "callee_name": "postAttackEffects",
+      "callee_descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;)V"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "caller_name": "hurtEntity",
+      "offset": 173,
+      "callee_name": "knockback",
+      "callee_descriptor": "(Lnet/minecraft/world/entity/LivingEntity;DDD)V"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "caller_name": "tick",
+      "offset": 611,
+      "callee_name": "enchantLevel",
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "caller_name": "tick",
+      "offset": 629,
+      "callee_name": "enchantLevel",
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "caller_name": "tick",
+      "offset": 1221,
+      "callee_name": "enchantLevel",
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "caller_name": "tick",
+      "offset": 1231,
+      "callee_name": "enchantLevel",
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "caller_name": "onUseTick",
+      "offset": 70,
+      "callee_name": "enchantLevel",
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "caller_name": "onUseTick",
+      "offset": 216,
+      "callee_name": "createEntity",
+      "callee_descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "caller_name": "releaseUsing",
+      "offset": 26,
+      "callee_name": "addCooldown",
+      "callee_descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;I)V"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "caller_name": "use",
+      "offset": 38,
+      "callee_name": "enchantLevel",
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "caller_name": "use",
+      "offset": 84,
+      "callee_name": "hurtAndBreakUsedHand",
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;)V"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "caller_name": "use",
+      "offset": 94,
+      "callee_name": "useConsume",
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;"
+    },
+    {
+      "caller_owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "caller_name": "use",
+      "offset": 100,
+      "callee_name": "useFail",
+      "callee_descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;"
+    }
+  ],
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "perk_certification": "NOT_CERTIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0,
+    "engine_effects": "NOT_VERIFIED",
+    "installed_runtime": "NOT_VERIFIED"
+  }
+}
