@@ -141,7 +141,7 @@ def validate(report, seal, *, raw=None, strict=True):
          handle["name"].startswith("lambda$attackDamageBonus$") and
          handle["reference_kind"] == 6,
          "invokedynamic bootstrap handle drift")
-    need({x["name"] for x in cl["selected_methods"]} == NAMES,
+    need({x["declaration"]["name"] for x in cl["selected_methods"]} == NAMES,
          "direct helper overlap/ambiguity")
     total += method_check(cb["method"], spec_cb,
                           label="attackDamageBonus invokedynamic callback")
