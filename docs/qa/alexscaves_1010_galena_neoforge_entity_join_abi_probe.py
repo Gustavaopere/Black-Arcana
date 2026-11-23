@@ -173,6 +173,14 @@ def main() -> None:
           report["candidate"]["event_declares_cancellable_interface"])
     print("candidate EventHooks declarations:",
           report["candidate"]["event_hook_method_declarations"])
+    print("event ABI exact declarations:",
+          report["api"][CLASSES[0]]["methods"])
+    print("EntityEvent ABI exact declarations:",
+          report["api"][CLASSES[1]]["methods"])
+    print("class SHA-256:", report["upstream"]["class_sha256"])
+    print("event source SHA-256:", report["upstream"]["event_source_sha256"])
+    print("upstream artifact archive info:",
+          report["upstream"]["universal"], report["upstream"]["sources"])
     print("report SHA-256:", sha256(a.output.read_bytes()))
     print("report size:", a.output.stat().st_size)
 
