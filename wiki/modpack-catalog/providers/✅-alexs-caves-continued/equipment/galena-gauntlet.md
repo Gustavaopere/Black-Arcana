@@ -116,6 +116,14 @@ A [auditoria da versão-alvo 21.1.248](../EXACT-GALENA-ENTITY-JOIN-ABI-21.1.248.
 
 **Gate bloqueante preservado:** nem essa prova nem o fato de a API ser cancelável demonstram que `Level.addFreshEntity` dispara o evento para `MagneticWeaponEntity`, em qual lado/fase isso ocorre, como a engine processa recusa de inclusão, ou se a stack previamente zerada é restituída. Não autoriza mutação, expansão de range, targeting, AOE, dano, cooldown ou concessão de Mastery. A Gauntlet continua `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; **não alterar o numerador 130/134** por certificação de ABI externa.
 
+## 4.11. NeoForge 21.1.248: patches de entrada/cancelamento de entidades — evidência adicional
+
+A [auditoria SHA-exata dos patches `userdev` 21.1.248](../EXACT-GALENA-ENTITY-JOIN-PATCHES-21.1.248.md) e seu [manifesto de hashes/linhas](../EXACT-GALENA-ENTITY-JOIN-PATCHES-21.1.248.json) examinam o `neoforge-21.1.248-userdev.jar` oficial (**3.983.248 bytes**; SHA-256 `9278d08154a82927391ed5257481f56d6d0fcb147822c6a79ec9b5129799e79a`). O relatório original da [CI de descoberta #45186275044](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45186275044) possui **7.298 bytes**, SHA-256 `a1a2df01b3537a534d26d9121fbd0103368f82135c1b291c3843a89aaad12114`.
+
+**Fato novo delimitado:** em `ServerLevel.java.patch` (linha **139**, hunk **13**, `ADD`) e `PersistentEntitySectionManager.java.patch` (linha **12**, hunk **1**, `ADD`), uma linha adicionada contém simultaneamente `EVENT_BUS`, `EntityJoinLevelEvent` e `isCanceled`; hashes de linha `eeab97afd0dff7a75cc14b2593061a29135e63a5bae9f472846fc11b860d5d51` e `431d5741436fdce83409d407893a129638695ca0bc04cc27cdb630caf7ebd91e`. O `userdev` contém 753 patches Java de Minecraft; `LevelWriter.java.patch` não existe **nesse roster**, sem implicar ausência da interface/classe vanilla ou de outros transformers.
+
+Essa é evidência de **adição de linhas de código nos patches oficiais**, não de execução real de um evento para a arma magnética Galena, nem da ordem relativa entre `ItemStack.setCount(0)`, `ACCompat.createEntity`, o retorno de `Level.addFreshEntity` e cancelamento de terceiros. O descarte do retorno booleano permanece sem settlement/rollback comprovado. **Nenhum hook mutador seguro decorre dessa descoberta.** A unidade de objeto Galena mantém `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. QA física e investigação do método transformado/retorno continuam bloqueantes; **130/134** estáticos no recorte observado permanece inalterado.
+
 ## 5. Interfaces conceituais para perks, atributos e Mastery
 
 | Eixo | Fronteira observada | Estado de integração |
