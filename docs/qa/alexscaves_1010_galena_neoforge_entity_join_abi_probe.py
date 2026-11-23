@@ -63,17 +63,20 @@ def declaration_summary(javap: str, jar: Path, owner: str) -> dict:
     need(len(headers) == 1, "ambiguous ABI class header " + owner)
     # Retain only declarations and JVM descriptors, never method bodies.
     rows = []
+    unresolved = []
     lines = output.splitlines()
     for i, line in enumerate(lines):
-        s = line.strip()
-        if "(" not in s or not s.endswith(";"):
+        signature = line.strip()
+        if "(" not in signature or not signature.endswith(";"):
             continue
-        need(i + 1 < len(lines) and lines[i + 1].strip().startswith("descriptor:"),
-             "missing method descriptor " + owner)
-        rows.append({"declaration": s, "descriptor": lines[i + 1].strip()[11:].strip()})
+        if i + 1 >= len(lines) or not lines[i + 1].strip().startswith("descriptor:"):
+            unresolved.append(signature)
+            continue
+        rows.append({"declaration": signature,
+                     "descriptor": lines[i + 1].strip()[11:].strip()})
     need(bool(rows), "no methods found " + owner)
     return {"owner": owner, "declaration": headers[0],
-            "method_count": len(rows),
+            "method_count": len(rows), "unresolved_signatures": unresolved,
             "methods": rows if owner.endswith("/EntityJoinLevelEvent")
             else [r for r in rows if re.search(r"join|entity", r["declaration"], re.I)]}
 
@@ -82,6 +85,12 @@ def probe(universal: Path, sources: Path, javap: str, output: Path) -> dict:
     need(output.suffix == ".json" and not output.exists(), "write-once JSON only")
     universal_info = inspect_zip(universal, maximum=50_000_000)
     sources_info = inspect_zip(sources, maximum=50_000_000)
+    need(universal_info["sha256"] ==
+         "1f9cc68fe9ec0416475d34ce76e95a696b9721d5d338168563dab0632c3d2956",
+         "universal publisher SHA-256 drift")
+    need(sources_info["sha256"] ==
+         "a2811d794544ec67dc3fa43b900158f058ea534881ba1c160373554384311a0d",
+         "sources publisher SHA-256 drift")
     with ZipFile(universal) as jar:
         names = set(jar.namelist())
         # Event's own class and event-hook owner must be in this exact binary.
@@ -152,7 +161,8 @@ def main() -> None:
     print("scope:", report["scope"])
     print("neoforge:", report["upstream"]["version"])
     for name, entry in report["api"].items():
-        print(name, "declared methods:", entry["method_count"])
+        print(name, "declared methods:", entry["method_count"],
+              "unresolved declarations:", entry["unresolved_signatures"])
     print("cancellable interface in event class declaration:",
           report["candidate"]["event_declares_cancellable_interface"])
     print("candidate EventHooks declarations:",
