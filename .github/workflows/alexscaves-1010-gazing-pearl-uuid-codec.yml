@@ -23,7 +23,7 @@ jobs:
           java-version: '21'
       - name: Check bounded read-only Python parser syntax
         run: |
-          python3 -m py_compile docs/qa/alexscaves_1010_gazing_pearl_uuid_codec_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_gazing_pearl_uuid_codec_probe.py docs/qa/alexscaves_1010_gazing_pearl_uuid_codec_checks.py
       - name: Obtain exact publisher JAR and verify SHA-256 before inspection
         shell: bash
         run: |
@@ -46,6 +46,17 @@ jobs:
             --javap "$JAVA_HOME/bin/javap" \
             --output build/gazing-pearl-uuid-1010/report.json \
             | tee build/gazing-pearl-uuid-1010/probe.log
+      - name: Seal SHA-exact UUID wrappers and 63 typed callers with adversarial mutations
+        shell: bash
+        run: |
+          set -euo pipefail
+          report=build/gazing-pearl-uuid-1010/report.json
+          test "$(stat -c %s "$report")" -eq 49616
+          test "$(sha256sum "$report" | cut -d' ' -f1)" = '3db0c1c42736c6d4c67ab1b0682646d6ba499756ac15f83b7c8e3132548afa3e'
+          python3 docs/qa/alexscaves_1010_gazing_pearl_uuid_codec_checks.py \
+            --report "$report" \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GAZING-PEARL-UUID-CODEC-1.0.10.json' \
+            --adversarial
       - name: Discovery guard - no metadata promoted to complete magical contract
         run: |
           python3 - <<'PY'
