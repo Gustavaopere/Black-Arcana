@@ -97,6 +97,9 @@ def probe(userdev: Path, output: Path) -> dict:
          "report must be new JSON")
     raw = userdev.read_bytes()
     archive_sha = digest(raw)
+    need(len(raw) == 3_983_248 and archive_sha ==
+         "9278d08154a82927391ed5257481f56d6d0fcb147822c6a79ec9b5129799e79a",
+         "publisher-exact NeoForge 21.1.248 userdev identity drift")
     with ZipFile(userdev) as archive:
         names = archive.namelist()
         need(len(names) == len(set(names)) and len(names) <= 20000,
