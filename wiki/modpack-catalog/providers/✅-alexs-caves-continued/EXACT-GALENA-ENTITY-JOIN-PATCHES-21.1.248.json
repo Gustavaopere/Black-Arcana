@@ -1,0 +1,220 @@
+{
+  "schema": 1,
+  "scope": "GALENA_NEOFORGE_211248_ENTITY_JOIN_PATCH_SEAL_ONLY",
+  "provenance": {
+    "neoforge": "21.1.248",
+    "minecraft": "1.21.1",
+    "official_maven": "https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-userdev.jar",
+    "userdev_filename": "neoforge-21.1.248-userdev.jar",
+    "userdev_sha256": "9278d08154a82927391ed5257481f56d6d0fcb147822c6a79ec9b5129799e79a",
+    "userdev_bytes": 3983248,
+    "zip_entries": 963,
+    "patch_count": 753,
+    "patch_roster_sha256": "22046c708c5774e479f335fcef95a0c526670fbc9dde01fc29281c94102a640f",
+    "report_sha256": "a1a2df01b3537a534d26d9121fbd0103368f82135c1b291c3843a89aaad12114",
+    "report_bytes": 7298,
+    "initial_discovery_run_id": 45186275044,
+    "initial_discovery_job_id": 137732591187,
+    "observed_branch_sha": "01bfa33698acbb1918f357a3f19ebb1661a51367",
+    "alexscaves_publisher_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c"
+  },
+  "expected_targets": {
+    "ServerLevel": {
+      "present": true,
+      "sha256": "d9dc7428b5467f35b42e9f972b3eb9079312e660755b77b6be1f880ed88e6249",
+      "hunks": 21,
+      "hits": [
+        {
+          "patch_line": 117,
+          "hunk": 11,
+          "kind": "ADD",
+          "tokens": [
+            "isCanceled"
+          ],
+          "line_sha256": "15eb0bc8214c13a21b6d057dfaf8a6c167bfffd51fecbf07cf9374dfc6fcaed8"
+        },
+        {
+          "patch_line": 128,
+          "hunk": 12,
+          "kind": "ADD",
+          "tokens": [
+            "EVENT_BUS"
+          ],
+          "line_sha256": "39ac1a54631e1b41f895a1875474e29debfe25343282a7391975e7016dc89385"
+        },
+        {
+          "patch_line": 139,
+          "hunk": 13,
+          "kind": "ADD",
+          "tokens": [
+            "EVENT_BUS",
+            "EntityJoinLevelEvent",
+            "isCanceled"
+          ],
+          "line_sha256": "eeab97afd0dff7a75cc14b2593061a29135e63a5bae9f472846fc11b860d5d51"
+        },
+        {
+          "patch_line": 147,
+          "hunk": 14,
+          "kind": "DELETE",
+          "tokens": [
+            "addNewEntity"
+          ],
+          "line_sha256": "dd1476538fcdff508113b8e6913c44770af34dd848822aba905a4ecbdf289fb7"
+        },
+        {
+          "patch_line": 157,
+          "hunk": 15,
+          "kind": "DELETE",
+          "tokens": [
+            "addNewEntity"
+          ],
+          "line_sha256": "af826494746f469355b51c61ae4384e67e167c15c757a6cc570561b402250985"
+        },
+        {
+          "patch_line": 158,
+          "hunk": 15,
+          "kind": "ADD",
+          "tokens": [
+            "addNewEntity"
+          ],
+          "line_sha256": "3e039f794a762d260652ad46413589bfd75c8439412709e5b4c6c36b0730c12c"
+        },
+        {
+          "patch_line": 172,
+          "hunk": 16,
+          "kind": "ADD",
+          "tokens": [
+            "isCanceled"
+          ],
+          "line_sha256": "23813041ebb1adfae5c2f1f7608e9afded2f4725e954a244647ce8b73aac9ce9"
+        },
+        {
+          "patch_line": 185,
+          "hunk": 17,
+          "kind": "ADD",
+          "tokens": [
+            "isCanceled"
+          ],
+          "line_sha256": "23813041ebb1adfae5c2f1f7608e9afded2f4725e954a244647ce8b73aac9ce9"
+        },
+        {
+          "patch_line": 205,
+          "hunk": 19,
+          "kind": "ADD",
+          "tokens": [
+            "isCanceled"
+          ],
+          "line_sha256": "815c33d864ce1a0dbf668b4f44f5ba9d5f94a55624302a038c9c015eb660dfb9"
+        },
+        {
+          "patch_line": 213,
+          "hunk": 19,
+          "kind": "ADD",
+          "tokens": [
+            "isCanceled"
+          ],
+          "line_sha256": "5a296847beca4036a24c421a02bff5d984636014d2641c3461d64726235a7ff3"
+        },
+        {
+          "patch_line": 252,
+          "hunk": 21,
+          "kind": "ADD",
+          "tokens": [
+            "EVENT_BUS"
+          ],
+          "line_sha256": "b47d7b851ee8229f48cb202158b6a81a04299acd8c9e0bd5b74b1a03b23aeaef"
+        }
+      ],
+      "add": 9,
+      "delete": 2,
+      "context": 0
+    },
+    "PersistentEntitySectionManager": {
+      "present": true,
+      "sha256": "a2a5ef2bdbf3fec5b7db2f7cc4674338358011b3b738622a7f180faeeb2a56a0",
+      "hunks": 5,
+      "hits": [
+        {
+          "patch_line": 12,
+          "hunk": 1,
+          "kind": "ADD",
+          "tokens": [
+            "EVENT_BUS",
+            "EntityJoinLevelEvent",
+            "isCanceled"
+          ],
+          "line_sha256": "431d5741436fdce83409d407893a129638695ca0bc04cc27cdb630caf7ebd91e"
+        },
+        {
+          "patch_line": 49,
+          "hunk": 3,
+          "kind": "CONTEXT",
+          "tokens": [
+            "PersistentEntitySectionManager"
+          ],
+          "line_sha256": "80359daf801c9d58f3a0151c9dfd7b1a2317fad6e0075fb492b21db230757426"
+        },
+        {
+          "patch_line": 67,
+          "hunk": 5,
+          "kind": "CONTEXT",
+          "tokens": [
+            "PersistentEntitySectionManager"
+          ],
+          "line_sha256": "7f02bce55bd8879f9c4e1a2bbbc90ddfbe6d4acbae7025f9ce55b761dda63f5e"
+        },
+        {
+          "patch_line": 68,
+          "hunk": 5,
+          "kind": "CONTEXT",
+          "tokens": [
+            "PersistentEntitySectionManager"
+          ],
+          "line_sha256": "c95520c3fd07836cf24982bcaa11d0281065b021912fdca08f57686f6cdff117"
+        }
+      ],
+      "add": 1,
+      "delete": 0,
+      "context": 3
+    },
+    "Level": {
+      "present": true,
+      "sha256": "a98a50aae07408798c12cdacf25489a86acd3d910943f03e88d7a042781200e6",
+      "hunks": 17,
+      "hits": [
+        {
+          "patch_line": 80,
+          "hunk": 5,
+          "kind": "ADD",
+          "tokens": [
+            "isCanceled"
+          ],
+          "line_sha256": "e95c1fe23db471beea35a054ffa2efc43cc1e124b58b3be0703f58439114c866"
+        }
+      ],
+      "add": 1,
+      "delete": 0,
+      "context": 0
+    },
+    "LevelWriter": {
+      "present": false
+    }
+  },
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "limitations": {
+    "runtime": "NOT_VERIFIED",
+    "all_callsites": false,
+    "spawn_acceptance": "NOT_VERIFIED",
+    "event_order": "NOT_VERIFIED",
+    "stack_rollback": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED"
+  }
+}
