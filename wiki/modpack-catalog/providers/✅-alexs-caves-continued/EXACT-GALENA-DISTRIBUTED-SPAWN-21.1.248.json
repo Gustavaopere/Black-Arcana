@@ -40,14 +40,16 @@
               "opcode": "invokevirtual",
               "owner": "net/minecraft/server/level/ServerLevel",
               "name": "addPlayer",
-              "descriptor": "(Lnet/minecraft/server/level/ServerPlayer;)V"
+              "descriptor": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+              "cp_index": 1384
             },
             {
               "offset": 22,
               "opcode": "invokevirtual",
               "owner": "net/minecraft/server/level/ServerLevel",
               "name": "addEntity",
-              "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z"
+              "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+              "cp_index": 1381
             }
           ]
         },
@@ -62,14 +64,16 @@
               "opcode": "invokevirtual",
               "owner": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
               "name": "addNewEntity",
-              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z"
+              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z",
+              "cp_index": 1443
             },
             {
               "offset": 39,
               "opcode": "invokevirtual",
               "owner": "net/minecraft/world/entity/Entity",
               "name": "onAddedToLevel",
-              "descriptor": "()V"
+              "descriptor": "()V",
+              "cp_index": 1446
             }
           ]
         },
@@ -84,7 +88,8 @@
               "opcode": "invokevirtual",
               "owner": "net/minecraft/server/level/ServerLevel",
               "name": "addEntity",
-              "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z"
+              "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+              "cp_index": 1381
             }
           ]
         },
@@ -99,28 +104,32 @@
               "opcode": "invokespecial",
               "owner": "net/neoforged/neoforge/event/entity/EntityJoinLevelEvent",
               "name": "<init>",
-              "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;)V"
+              "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;)V",
+              "cp_index": 1390
             },
             {
               "offset": 20,
               "opcode": "invokevirtual",
               "owner": "net/neoforged/neoforge/event/entity/EntityJoinLevelEvent",
               "name": "isCanceled",
-              "descriptor": "()Z"
+              "descriptor": "()Z",
+              "cp_index": 1393
             },
             {
               "offset": 83,
               "opcode": "invokevirtual",
               "owner": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
               "name": "addNewEntityWithoutEvent",
-              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z"
+              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z",
+              "cp_index": 1426
             },
             {
               "offset": 88,
               "opcode": "invokevirtual",
               "owner": "net/minecraft/server/level/ServerPlayer",
               "name": "onAddedToLevel",
-              "descriptor": "()V"
+              "descriptor": "()V",
+              "cp_index": 1430
             }
           ]
         },
@@ -135,7 +144,8 @@
               "opcode": "invokevirtual",
               "owner": "net/minecraft/server/level/ServerLevel",
               "name": "addEntity",
-              "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z"
+              "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+              "cp_index": 1381
             }
           ]
         },
@@ -150,7 +160,8 @@
               "opcode": "invokevirtual",
               "owner": "net/minecraft/server/level/ServerLevel",
               "name": "addFreshEntityWithPassengers",
-              "descriptor": "(Lnet/minecraft/world/entity/Entity;)V"
+              "descriptor": "(Lnet/minecraft/world/entity/Entity;)V",
+              "cp_index": 1461
             }
           ]
         }
@@ -188,21 +199,24 @@
               "opcode": "invokespecial",
               "owner": "net/neoforged/neoforge/event/entity/EntityJoinLevelEvent",
               "name": "<init>",
-              "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;Z)V"
+              "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;Z)V",
+              "cp_index": 152
             },
             {
               "offset": 36,
               "opcode": "invokevirtual",
               "owner": "net/neoforged/neoforge/event/entity/EntityJoinLevelEvent",
               "name": "isCanceled",
-              "descriptor": "()Z"
+              "descriptor": "()Z",
+              "cp_index": 161
             },
             {
               "offset": 47,
               "opcode": "invokevirtual",
               "owner": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
               "name": "addEntityWithoutEvent",
-              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z"
+              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z",
+              "cp_index": 135
             }
           ]
         },
@@ -224,7 +238,8 @@
               "opcode": "invokevirtual",
               "owner": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
               "name": "addEntity",
-              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z"
+              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z",
+              "cp_index": 131
             }
           ]
         },
@@ -239,7 +254,8 @@
               "opcode": "invokevirtual",
               "owner": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
               "name": "addEntityWithoutEvent",
-              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z"
+              "descriptor": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z",
+              "cp_index": 135
             }
           ]
         }
