@@ -15,11 +15,15 @@ from alexscaves_1010_armor_material_audit import ClassReader, canonical, digest,
 from alexscaves_1010_enchantable_item_probe import disassemble, summarize
 from alexscaves_1010_galena_211248_spawn_denial_guards_probe import analyze
 from alexscaves_1010_nuclear_explosion_effect_probe import bootstrap, numeric, MATH
+from alexscaves_1010_remote_detonator_resource_probe import PINS, RECIPE, ADV, decode, need
 from neoforge_211248_gazing_pearl_saveddata_engine_probe import verify_distribution
 
 MC = "net/minecraft/"
 CHUNK = "net/neoforged/neoforge/common/world/chunk/"
 AC = "com/github/alexmodguy/alexscaves/server/misc/ACCompat"
+TRIGGER = "com/github/alexmodguy/alexscaves/server/misc/ACAdvancementTrigger"
+TRIGGER_REGISTRY = TRIGGER + "Registry"
+PRIMED = MC+"world/entity/item/PrimedTnt"
 PIN = {
     MC+"world/level/Explosion": "3b656cd810d9fbbe001b4477ee5dff9f243c75d42458cd54fababed971da3e07",
     MC+"world/level/ExplosionDamageCalculator": "3151422d92b8c3bb8c399afb977bbf041136998dee337c10c54f60d73ca8a6a6",
@@ -31,17 +35,27 @@ UNIVERSAL_SIZE = 3551268
 ALL_BODIES = {MC+"world/level/ExplosionDamageCalculator",MC+"world/level/EntityBasedExplosionDamageCalculator"}
 SELECTED = {
     MC+"world/level/Explosion": {"<init>","getDefaultDamageSource","getIndirectSourceEntityInternal","getIndirectSourceEntity","getDirectSourceEntity","makeDamageCalculator","getSeenPercent","radius","center"},
-    MC+"world/damagesource/DamageSources": {"explosion"},
+    MC+"world/damagesource/DamageSources": {"explosion","source"},
     MC+"world/damagesource/DamageSource": {"<init>","getEntity","getDirectEntity","isIndirect"},
     MC+"world/item/component/CustomData": {"<init>","of","copyTag","getUnsafe","update","set","isEmpty","<clinit>"},
-    MC+"world/item/ItemStack": {"get","getOrDefault","set","remove","save","saveOptional","parse","parseOptional","copy","copyWithCount","applyComponents"},
-    AC: {"getTag","getOrCreateTag","setTag","putBlockPos","getBlockPos","mayInteract"},
+    MC+"world/item/ItemStack": {"get","getOrDefault","set","remove","save","saveOptional","parse","parseOptional","copy","copyWithCount","applyComponents","use","useOn"},
+    AC: {"getTag","getOrCreateTag","setTag","putBlockPos","getBlockPos","mayInteract","contains","getCompound","posFromTag","getInt","getBoolean","useSuccess","usePass"},
+    TRIGGER: {"<init>","trigger","getId","codec","createInstance"},
+    TRIGGER_REGISTRY: set(),
+    PRIMED: {"<clinit>"},
+    MC+"nbt/CompoundTag": {"contains","getCompound","getInt","getBoolean"},
+    MC+"server/level/ServerPlayerGameMode": {"useItem","useItemOn"},
+    MC+"server/network/ServerGamePacketListenerImpl": {"handleUseItem","handleUseItemOn"},
 }
 REQUIRED = {
     MC+"world/level/Explosion": {"getDefaultDamageSource","getIndirectSourceEntityInternal","getDirectSourceEntity"},
     MC+"world/level/ExplosionDamageCalculator": {"getEntityDamageAmount"},
     MC+"world/item/component/CustomData": {"of","copyTag"},
-    AC: {"getTag","getOrCreateTag","setTag","putBlockPos","getBlockPos"},
+    AC: {"getTag","getOrCreateTag","setTag","putBlockPos","getBlockPos","posFromTag"},
+    TRIGGER_REGISTRY: set(),
+    TRIGGER: set(),
+    MC+"server/level/ServerPlayerGameMode": {"useItem","useItemOn"},
+    MC+"server/network/ServerGamePacketListenerImpl": {"handleUseItem","handleUseItemOn"},
 }
 LIMITS = {
     "actual_ignition":"NOT_VERIFIED", "actual_damage":"NOT_VERIFIED",
@@ -63,15 +77,20 @@ def scan(server,srg,universal,publisher,javap):
     data=universal.read_bytes()
     require(len(data)==UNIVERSAL_SIZE and hashlib.sha256(data).hexdigest()==UNIVERSAL_SHA,"universal pin mismatch")
     identity.update({"universal_sha256":UNIVERSAL_SHA,"universal_bytes":UNIVERSAL_SIZE})
-    owners=sorted(ALL_BODIES|set(SELECTED))
+    owners=set(ALL_BODIES)|set(SELECTED)
     with ZipFile(server) as overlay, ZipFile(universal) as uni, ZipFile(srg) as vanilla, ZipFile(publisher) as mod:
         archives=[("NEOFORGE_OVERLAY",overlay),("NEOFORGE_UNIVERSAL",uni),("INSTALLED_MINECRAFT_SRG",vanilla),("PUBLISHER",mod)]
         for _,z in archives:
             require(len(z.namelist())==len(set(z.namelist())),"duplicate archive entry")
         roster=[(name,z,set(z.namelist())) for name,z in archives]
         classpath=":".join(map(str,(server,universal,srg,publisher)))
+        # Discover nested portal calculator and trigger classes by exact namespace;
+        # do not assume their names or presence.
+        nested={entry[:-6] for _,_,entries in roster for entry in entries
+                if entry.endswith(".class") and (entry.startswith(PRIMED+"$") or entry.startswith(TRIGGER+"$"))}
+        require(len(nested)<=12,"nested class scope")
         classes={}
-        for owner in owners:
+        for owner in sorted(owners|nested):
             found=[(name,z) for name,z,entries in roster if owner+".class" in entries]
             if not found:
                 require(owner not in REQUIRED,"required owner absent "+owner)
@@ -83,11 +102,26 @@ def scan(server,srg,universal,publisher,javap):
             require(owner not in PIN or sha==PIN[owner],"class SHA drift "+owner)
             reader=ClassReader(raw)
             require(reader.name==owner and reader.major==65,"owner/Java drift "+owner)
-            declarations=[m for m in reader.methods if selected(owner,m["name"])]
+            declarations=[m for m in reader.methods if selected(owner,m["name"]) or owner in nested]
             require(REQUIRED.get(owner,set()).issubset({m["name"] for m in declarations}),"required method absent "+owner)
             require(len(declarations)<=85,"method roster budget "+owner)
             parsed=disassemble(classpath,javap,owner)
             methods=[]
+            special={}
+            if owner==TRIGGER_REGISTRY:
+                key=("<clinit>","()V")
+                require(key in parsed and bool(parsed[key]),"missing advancement registry initializer")
+                body=parsed[key]
+                offsets=sorted(body)
+                hits=[at for at,(op,arg,sym) in body.items() if "REMOTE_DETONATION" in sym or sym=="String remote_detonation"]
+                require(0<len(hits)<=8,"remote advancement registry anchors")
+                windows=[]
+                for at in hits:
+                    i=offsets.index(at)
+                    windows.append({"anchor":at,"pivots":[{"offset":q,"opcode":body[q][0],"operand":body[q][1],"symbol":body[q][2]}
+                        for q in offsets[max(0,i-7):i+4]]})
+                special={"registry_initializer_sha256":summarize(reader,key,body)["instruction_sha256"],"remote_detonation_windows":windows,
+                         "bootstrap_links":bootstrap(reader,body)}
             for d in declarations:
                 key=(d["name"],d["descriptor"])
                 if "code_sha256" not in d:
@@ -102,14 +136,28 @@ def scan(server,srg,universal,publisher,javap):
                 row["strings"]=[{"offset":at,"symbol":sym} for at,(op,_,sym) in sorted(body.items()) if op.startswith("ldc") and sym.startswith("String ")]
                 row["bootstrap_links"]=bootstrap(reader,body)
                 row["arithmetic"]=[{"offset":at,"opcode":op} for at,(op,_,_) in sorted(body.items()) if op in MATH]
-                if owner in ALL_BODIES and key[0]=="getEntityDamageAmount":
+                row["type_operands"]=[{"offset":at,"opcode":op,"symbol":sym} for at,(op,_,sym) in sorted(body.items()) if op in {"instanceof","checkcast","new"}]
+                if key[0] in {"getEntityDamageAmount","getIndirectSourceEntityInternal","getDefaultDamageSource","explosion","source","<init>","posFromTag","getInt","getCompound","contains"}:
                     row["local_accesses"]=[{"offset":at,"opcode":op,"slot_operand":arg} for at,(op,arg,_) in sorted(body.items()) if op.startswith(("dload","dstore","fload","fstore","iload","istore","aload","astore"))]
                 methods.append(row)
             classes[owner]={"present":True,"source":source,"available_sources":[name for name,_ in found],"class_sha256":sha,
                             "parent":reader.parent,"interfaces":reader.interfaces,
                             "declared_methods":[{"name":m["name"],"descriptor":m["descriptor"]} for m in reader.methods],
-                            "methods":methods}
-    return {"schema_version":1,"scope":"REMOTE_DETONATOR_SOURCE_STATE_DISTRIBUTED_DISCOVERY_ONLY","artifact":identity,"classes":classes,"limits":LIMITS}
+                            "methods":methods,"special":special}
+        resources={}
+        for path in (RECIPE,ADV):
+            n,h=PINS[path]
+            raw=mod.read(path)
+            require(len(raw)==n and digest(raw)==h,"resource drift "+path)
+            resources[path]=decode(raw)
+        recipe=resources[RECIPE]
+        adv=resources[ADV]
+        require(recipe.get("type")=="minecraft:crafting_shaped","recipe type drift")
+        require(isinstance(recipe.get("pattern"),list) and isinstance(recipe.get("key"),dict),"recipe shape")
+        require(isinstance(adv.get("criteria"),dict),"advancement shape")
+        projected={"recipe":{k:recipe[k] for k in ("type","pattern","key","result")},
+                   "advancement":{k:adv[k] for k in ("parent","criteria","requirements","rewards") if k in adv}}
+    return {"schema_version":2,"scope":"REMOTE_DETONATOR_SOURCE_STATE_DISTRIBUTED_DISCOVERY_ONLY","artifact":identity,"classes":classes,"publisher_resource_projection":projected,"limits":LIMITS}
 
 def self_test():
     require(selected(MC+"world/level/Explosion","getIndirectSourceEntityInternal"),"source filter")
@@ -135,13 +183,16 @@ if __name__=="__main__":
         require(all((a.server,a.srg,a.universal,a.publisher,a.output)) and not a.output.exists(),"write-once report and artifacts required")
         result=scan(a.server,a.srg,a.universal,a.publisher,a.javap)
         data=canonical(result).encode()
-        require(len(data)<=1_500_000,"report budget")
+        require(len(data)<=1_800_000,"report budget")
         a.output.parent.mkdir(parents=True,exist_ok=True)
         with a.output.open("xb") as f:
             f.write(data)
         print("REPORT_SHA256",digest(data),"BYTES",len(data))
+        print("RESOURCE_PROJECTION",json.dumps(result["publisher_resource_projection"],sort_keys=True))
         for owner,row in result["classes"].items():
             print("OWNER",owner,row.get("source"),row.get("class_sha256"))
+            if row.get("special"):
+                print("REGISTRY_PROJECTION",json.dumps(row["special"],sort_keys=True))
             for m in row.get("methods",[]):
                 print("METHOD",owner,m["name"],m["descriptor"],m.get("code_sha256"),m.get("instruction_count"))
                 if m["executable"]:
