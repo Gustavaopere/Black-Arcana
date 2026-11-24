@@ -4,6 +4,7 @@ No semantic equivalence inferred from matching Code hashes or version proximity.
 """
 from __future__ import annotations
 import argparse, json
+from io import BytesIO
 from pathlib import Path
 from contextlib import ExitStack
 from zipfile import ZipFile
@@ -124,9 +125,33 @@ def inspect(args):
             totals[group][kind]+=1
             if kind!="same":changes.append({"entry":name,"kind":kind,"sha248":a,"sha250":b})
         universal_delta={"totals":totals,"changed_entries":changes}
-    report={"schema_version":2,"scope":"DISTRIBUTED_ARCHIVE_AND_CLASS_BYTE_COMPARISON_ONLY",
+        require(len(rows)==59 and all(v["comparison"]=="IDENTICAL_CLASS_BYTES" for v in rows.values()),"finite owner comparison drift")
+        require(totals=={"class":{"same":1491,"changed":1,"only248":0,"only250":0},
+                         "resource":{"same":788,"changed":3,"only248":1,"only250":1}},"universal census drift")
+        nested={}
+        for patch,archive,pin in (
+            (248,u248,"f3cb872880f7dd7923d50f77bd9cf120291f3370fc89fd6a0f865f1e30d60517"),
+            (250,u250,"eee41553202c153f025a2461de319a17641246d037a848f96e50bcaec48021e6")):
+            name=f"META-INF/jarjar/net.neoforged.neoforge-coremods-21.1.{patch}.jar"
+            raw=archive.read(name)
+            require(digest(raw)==pin and len(raw)<10_000_000,"nested CoreMods identity")
+            z=stack.enter_context(ZipFile(BytesIO(raw)))
+            infos=[x for x in z.infolist() if not x.is_dir()]
+            require(len(z.namelist())==len(set(z.namelist())),"duplicate CoreMods paths")
+            require(len(infos)<=10000 and sum(x.file_size for x in infos)<50_000_000,"CoreMods budget")
+            nested[patch]={x.filename:digest(z.read(x)) for x in infos}
+        nested_rows=[]
+        nested_totals={"class":{"same":0,"changed":0,"only248":0,"only250":0},
+                       "resource":{"same":0,"changed":0,"only248":0,"only250":0}}
+        for name in sorted(set(nested[248])|set(nested[250])):
+            a,b=nested[248].get(name),nested[250].get(name)
+            kind="same" if a==b else "only248" if b is None else "only250" if a is None else "changed"
+            nested_totals["class" if name.endswith(".class") else "resource"][kind]+=1
+            nested_rows.append({"entry":name,"comparison":kind,"sha248":a,"sha250":b})
+        coremods_delta={"totals":nested_totals,"members":nested_rows}
+    report={"schema_version":3,"scope":"DISTRIBUTED_ARCHIVE_AND_CLASS_BYTE_COMPARISON_ONLY",
             "build_reference":"21.1.248","physical_ledger_reference":"21.1.250",
-            "artifacts":identity,"classes":rows,"universal_member_comparison":universal_delta,
+            "artifacts":identity,"classes":rows,"universal_member_comparison":universal_delta,"coremods_member_comparison":coremods_delta,
             "limits":{"runtime_loaded_bytes":"NOT_OBSERVED","transitive_equivalence":"NOT_CERTIFIED",
                       "physical_qa":"NOT_TESTED","mutating_hook":"NOT_VERIFIED","mutation":"NO_MUTATION",
                       "provider_universe_closed":False,"semantic_magic_roots_delta":0}}
@@ -137,6 +162,7 @@ def inspect(args):
     print("REPORT_SHA256",digest(raw),"BYTES",len(raw),"OWNERS",len(rows))
     print("ARTIFACTS",json.dumps(identity,sort_keys=True))
     print("UNIVERSAL_DELTA",json.dumps(universal_delta,sort_keys=True))
+    print("COREMODS_DELTA",json.dumps(coremods_delta,sort_keys=True))
     for owner,row in rows.items():print("CLASS",owner,json.dumps(row,sort_keys=True))
     print("NO_MUTATION NO_RUNTIME_EQUIVALENCE")
 
