@@ -35,6 +35,10 @@ jobs:
       - name: Project typed ingress and concrete inventory adapter bodies
         run: |
           python3 docs/qa/alexscaves_1010_holocoder_ingress_probe.py --jar build/holocoder-ingress/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/holocoder-ingress/report.json
+      - name: Verify schema 2 evidence seal
+        run: |
+          test "$(wc -c < build/holocoder-ingress/report.json)" = 1668053
+          echo 'dd8562887a4740769ec09db6e19d5336a77b9e710d8f125f9eea2a9b12d74314  build/holocoder-ingress/report.json' | sha256sum -c -
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7
