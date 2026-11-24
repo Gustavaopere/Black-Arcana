@@ -164,6 +164,10 @@ A [auditoria read-only de guardas de admissão e UUID](../EXACT-GALENA-SPAWN-DEN
 
 O publisher Galena 1.0.10 solicita `ItemStack.setCount(0)` antes de `ACCompat.createEntity` e `Level.addFreshEntity` e descarta o retorno booleano, mas nenhuma das três recusas acima foi provocada ou observada com `MagneticWeaponEntity` no servidor real; **não inferir perda, duplicação, restituição, ausência de compensation externa ou bypass de claims**. Não autoriza mutação, clonagem, redirecionamento de entidade ou XP/Mastery por tentativa. `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION` e Galena ⚠️ parcial. O numerador **130/134** do universo Alex's Caves observado não muda.
 
+## 4.16. NeoForge 21.1.248 — restituição direta e fallback de drop
+
+A [auditoria de liquidação](../EXACT-GALENA-RETURN-SETTLEMENT-21.1.248.md) reproduziu **417.931 bytes**, SHA-256 `cd82ce46cb90d9a4bfb6989a06792619d3207faaeb6c73c55156326cf1951803`, na [run 45447946764](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45447946764), artifact 14947725355. Player.addItem delega a Inventory.add; a rota não danificada modifica a contagem a cada inserção e pode retornar false após progresso parcial. O publisher plopItem marca a flag antes do spawn, ajusta pickup delay se referência não nula e descarta a arma. Entity.spawnAtLocation(ItemStack,F) rejeita vazio/cliente, mas descarta o booleano de Collection.add (captura) ou Level.addFreshEntity (rota normal), retornando a referência do ItemEntity. **Referência não nula não certifica admissão do drop.** Pickup posterior tem gates separados de evento, delay, target UUID e inventário. Não inferir perda/duplicação física nem autorizar compensação automática. ⚠️ parcial, NO_MUTATION, QA física não testada, nenhum novo numerador.
+
 ## 5. Interfaces conceituais para perks, atributos e Mastery
 
 | Eixo | Fronteira observada | Estado de integração |
