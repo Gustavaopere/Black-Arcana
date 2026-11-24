@@ -48,6 +48,12 @@ jobs:
           python3 -m py_compile docs/qa/alexscaves_1010_holocoder_hot_chocolate_ink_bomb_consumers.py
           python3 docs/qa/alexscaves_1010_holocoder_hot_chocolate_ink_bomb_consumers.py --self-test
           python3 docs/qa/alexscaves_1010_holocoder_hot_chocolate_ink_bomb_consumers.py --jar build/alexscaves-three-items/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/alexscaves-three-items/consumers.json
+      - name: Verify expanded discovery seal
+        run: |
+          test "$(wc -c < build/alexscaves-three-items/consumers.json)" = 645624
+          echo '0ab600a51b26fd3da5e7360ad461deabf629f053817f1e210fe1e4a280821dac  build/alexscaves-three-items/consumers.json' | sha256sum -c -
+      - name: Verify generated catalog indexes
+        run: python3 scripts/catalog/generate_perk_ready_indexes.py --check
       - name: Archive report
         if: always()
         uses: actions/upload-artifact@v7
