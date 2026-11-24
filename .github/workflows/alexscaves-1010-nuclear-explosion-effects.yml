@@ -38,6 +38,12 @@ jobs:
             --jar build/nuclear-explosion-effects/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/nuclear-explosion-effects/report.json
+      - name: Seal exact effect report
+        run: |
+          set -euo pipefail
+          report=build/nuclear-explosion-effects/report.json
+          test "$(stat -c %s "$report")" -eq 206285
+          test "$(sha256sum "$report" | cut -d' ' -f1)" = '9bb19b18b085cec164ebea4f4f23735f1560e3deda766b3df8194cb1ddc6bd2e'
       - name: Archive discovery-only report
         if: always()
         uses: actions/upload-artifact@v7
