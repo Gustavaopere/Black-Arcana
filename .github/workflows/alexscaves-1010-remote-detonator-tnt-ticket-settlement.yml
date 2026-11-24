@@ -73,6 +73,12 @@ jobs:
             --universal build/remote-tnt-ticket-settlement/universal.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/remote-tnt-ticket-settlement/report.json
+      - name: Seal exact distributed report
+        run: |
+          set -euo pipefail
+          report=build/remote-tnt-ticket-settlement/report.json
+          test "$(stat -c %s "$report")" -eq 502205
+          test "$(sha256sum "$report" | cut -d' ' -f1)" = '18673682163f9a00ca010d2c27510eb150fa215edac0ecacf835052d61ada91d'
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
