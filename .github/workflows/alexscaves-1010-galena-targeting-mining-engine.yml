@@ -79,6 +79,10 @@ jobs:
             --publisher build/galena-targeting-mining-engine/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/galena-targeting-mining-engine/report.json
+      - name: Verify exact discovery seal
+        run: |
+          test "$(wc -c < build/galena-targeting-mining-engine/report.json)" = 687147
+          echo '5ecefad9c5a2994c6977a11d4bf11335d09993b299b8906c12356e32c726e3dc  build/galena-targeting-mining-engine/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
