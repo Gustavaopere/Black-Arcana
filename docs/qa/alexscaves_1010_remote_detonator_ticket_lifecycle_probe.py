@@ -60,7 +60,7 @@ def selected_refs(reader):
     return out
 
 
-def registration_evidence(reader, parsed):
+def registration_evidence(reader, parsed, archive, jar, javap):
     keys = [k for k in parsed if k[0] == "registerTicketControllers"]
     require(len(keys) == 1, "registration method not unique")
     key = keys[0]
@@ -81,13 +81,22 @@ def registration_evidence(reader, parsed):
                            "signature": signature, "bootstrap": bootstrap})
         for arg in bootstrap["arguments"]:
             ref = arg.get("reference") if isinstance(arg, dict) else None
-            if isinstance(ref, list) and len(ref) == 3 and ref[0] in (10, 11) and ref[1] == reader.name:
-                callback_keys.add((ref[2][1], ref[2][2]))
+            if isinstance(ref, list) and len(ref) == 3 and ref[0] in (10, 11):
+                if ref[1].startswith("com/github/alexmodguy/alexscaves/"):
+                    callback_keys.add((ref[1], ref[2][1], ref[2][2]))
     require(len(bootstraps) == 1 and len(callback_keys) == 1, "validation callback binding unresolved")
-    callback = next(iter(callback_keys))
-    require(callback in parsed and bool(parsed[callback]), "callback executable body missing")
+    owner, name, descriptor = next(iter(callback_keys))
+    require(owner == PREFIX + "level/storage/ACWorldData" and name == "clearLoadedChunksCallback",
+            "callback target differs from existing exact Occult Gem evidence")
+    raw = archive.read(owner + ".class")
+    callback_reader = ClassReader(raw)
+    require(callback_reader.name == owner and callback_reader.major == 65, "callback class identity")
+    callback_parsed = disassemble(jar, javap, owner)
+    callback = (name, descriptor)
+    require(callback in callback_parsed and bool(callback_parsed[callback]), "callback executable body missing")
     return {"registration": method, "bootstrap": bootstraps[0],
-            "validation_callback": summarize(reader, callback, parsed[callback])}
+            "validation_callback_owner": owner, "validation_callback_class_sha256": digest(raw),
+            "validation_callback": summarize(callback_reader, callback, callback_parsed[callback])}
 
 
 def inspect(jar, javap, output):
@@ -108,7 +117,7 @@ def inspect(jar, javap, output):
                 continue
             parsed = disassemble(jar, javap, reader.name)
             if reader.name == REGISTRATION_OWNER:
-                registration = registration_evidence(reader, parsed)
+                registration = registration_evidence(reader, parsed, archive, jar, javap)
             methods = []
             for key, body in sorted(parsed.items()):
                 rows = sorted(body.items())
