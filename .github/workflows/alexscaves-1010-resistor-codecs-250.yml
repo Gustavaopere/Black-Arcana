@@ -80,6 +80,10 @@ jobs:
             --publisher build/resistor-codecs-250/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/resistor-codecs-250/report.json
+      - name: Verify exact report seal
+        run: |
+          test "$(wc -c < build/resistor-codecs-250/report.json)" -eq 658305
+          echo '1a4dc80b88f1484d3a059ddfb3782ec7c5299452c9923cf30244a27e155c645e  build/resistor-codecs-250/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
