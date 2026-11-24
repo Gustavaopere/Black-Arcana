@@ -76,6 +76,15 @@ jobs:
             --universal-sha256 build/remote-211248-engine/universal.jar.sha256 \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/remote-211248-engine/report.json
+      - name: Seal exact engine report and expose verified universal identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          report=build/remote-211248-engine/report.json
+          test "$(stat -c %s "$report")" -eq 65174
+          test "$(sha256sum "$report" | cut -d' ' -f1)" = '5a7ed16b1d5c80cdca755a7a9bca5b20f7e5888ffa11f8298ff7b04ce6a53a36'
+          sha256sum build/remote-211248-engine/universal.jar
+          stat -c %s build/remote-211248-engine/universal.jar
       - name: Archive bounded distributed engine evidence
         if: always()
         uses: actions/upload-artifact@v7
