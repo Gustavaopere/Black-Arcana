@@ -80,6 +80,12 @@ jobs:
             --publisher build/galena-drop-settlement-250/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/galena-drop-settlement-250/report.json
+      - name: Verify exact discovery report replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(wc -c < build/galena-drop-settlement-250/report.json)" = 606089
+          echo '1bb8e6252863a22a3387e941218d239891334c179f0d20ec476b48f6df15e23b  build/galena-drop-settlement-250/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
