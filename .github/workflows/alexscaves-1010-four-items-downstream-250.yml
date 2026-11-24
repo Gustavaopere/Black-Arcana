@@ -81,6 +81,12 @@ jobs:
             --publisher build/four-items-downstream-250/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/four-items-downstream-250/report.json
+      - name: Verify exact discovery report replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(wc -c < build/four-items-downstream-250/report.json)" = 1956222
+          echo '5a5c4a201604224306a2b5cded87cb82523bce8cf0e82aaf998954125afe0c65  build/four-items-downstream-250/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
