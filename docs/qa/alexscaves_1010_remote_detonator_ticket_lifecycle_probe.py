@@ -21,6 +21,13 @@ PREFIX = "com/github/alexmodguy/alexscaves/server/"
 PLATFORM = PREFIX + "misc/ACPlatform"
 DETONATOR = PREFIX + "item/RemoteDetonatorItem"
 CONTROLLER = "net/neoforged/neoforge/common/world/chunk/TicketController"
+REGISTER_EVENT = "net/neoforged/neoforge/common/world/chunk/RegisterTicketControllersEvent"
+VALIDATION = "net/neoforged/neoforge/common/world/chunk/LoadingValidationCallback"
+REGISTRATION_OWNER = "com/github/alexmodguy/alexscaves/AlexsCaves"
+CHUNK_HELPER_OWNERS = {
+    DETONATOR, PREFIX + "item/OccultGemItem", PREFIX + "entity/item/BeholderEyeEntity",
+    PREFIX + "entity/item/NuclearExplosionEntity",
+}
 MEMBER_OPS = {"getstatic", "putstatic", "getfield", "putfield",
               "invokevirtual", "invokespecial", "invokestatic", "invokeinterface"}
 LIMITS = {
@@ -36,9 +43,9 @@ LIMITS = {
 def relevant(tag, owner, name):
     return ((tag == 9 and owner == PLATFORM and name == "ticketController")
             or (tag in (10, 11) and (
-                (owner == PLATFORM and name == "forceChunk")
-                or (owner == DETONATOR and name == "loadChunksAround")
-                or owner == CONTROLLER)))
+                (owner == PLATFORM and name in {"forceChunk", "setTicketController"})
+                or (owner in CHUNK_HELPER_OWNERS and name == "loadChunksAround")
+                or owner in {CONTROLLER, REGISTER_EVENT, VALIDATION})))
 
 
 def selected_refs(reader):
@@ -53,10 +60,40 @@ def selected_refs(reader):
     return out
 
 
+def registration_evidence(reader, parsed):
+    keys = [k for k in parsed if k[0] == "registerTicketControllers"]
+    require(len(keys) == 1, "registration method not unique")
+    key = keys[0]
+    method = summarize(reader, key, parsed[key])
+    bootstraps = []
+    callback_keys = set()
+    for offset, (opcode, operand, symbol) in sorted(parsed[key].items()):
+        if opcode != "invokedynamic":
+            continue
+        match = re.match(r"#(\d+)(?:\s*,\s*\d+)?$", operand.strip())
+        require(match is not None, "unparsed invokedynamic operand")
+        tag, bootstrap_index, signature = reader.resolve(int(match.group(1)))
+        require(tag == 18 and signature[0] == 12, "unexpected invokedynamic constant")
+        if signature[1] != "validateTickets":
+            continue
+        bootstrap = reader.attributes["bootstrap_methods"][bootstrap_index]
+        bootstraps.append({"offset": offset, "bootstrap_index": bootstrap_index,
+                           "signature": signature, "bootstrap": bootstrap})
+        for arg in bootstrap["arguments"]:
+            ref = arg.get("reference") if isinstance(arg, dict) else None
+            if isinstance(ref, list) and len(ref) == 3 and ref[0] in (10, 11) and ref[1] == reader.name:
+                callback_keys.add((ref[2][1], ref[2][2]))
+    require(len(bootstraps) == 1 and len(callback_keys) == 1, "validation callback binding unresolved")
+    callback = next(iter(callback_keys))
+    require(callback in parsed and bool(parsed[callback]), "callback executable body missing")
+    return {"registration": method, "bootstrap": bootstraps[0],
+            "validation_callback": summarize(reader, callback, parsed[callback])}
+
+
 def inspect(jar, javap, output):
     verify_artifact(jar)
     require(not output.exists(), "report must be write-once")
-    candidates, site_count = {}, 0
+    candidates, site_count, registration = {}, 0, None
     with ZipFile(jar) as archive:
         paths = archive.namelist()
         require(len(paths) == len(set(paths)), "duplicate ZIP paths")
@@ -70,6 +107,8 @@ def inspect(jar, javap, output):
             if not refs:
                 continue
             parsed = disassemble(jar, javap, reader.name)
+            if reader.name == REGISTRATION_OWNER:
+                registration = registration_evidence(reader, parsed)
             methods = []
             for key, body in sorted(parsed.items()):
                 rows = sorted(body.items())
@@ -99,10 +138,11 @@ def inspect(jar, javap, output):
                                        "methods": methods}
     require(PLATFORM in candidates and DETONATOR in candidates, "known publisher owner absent")
     require(0 < len(candidates) <= 100 and 0 < site_count <= 1000, "census budget")
-    report = {"schema_version": 1, "scope": "PUBLISHER_TICKET_MEMBER_CENSUS_ONLY",
+    require(registration is not None, "registration evidence missing")
+    report = {"schema_version": 2, "scope": "PUBLISHER_TICKET_REGISTRATION_AND_MEMBER_CENSUS_ONLY",
               "artifact": {"version": "1.0.10", "sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE},
               "class_entries_scanned": len(classes), "candidate_owners": candidates,
-              "direct_site_count": site_count, "limits": LIMITS}
+              "direct_site_count": site_count, "registration": registration, "limits": LIMITS}
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("x", encoding="utf8") as stream:
         stream.write(canonical(report))
@@ -115,6 +155,7 @@ def inspect(jar, javap, output):
                   method["instruction_count"], method["instruction_sha256"])
             for site in method["sites"]:
                 print("SITE", json.dumps(site, sort_keys=True, ensure_ascii=False))
+    print("REGISTRATION", json.dumps(registration, sort_keys=True, ensure_ascii=False))
     print("NO_MUTATION NOT_CERTIFIED WORLD_SAFETY_BLOCKED")
 
 
@@ -122,6 +163,11 @@ def self_test():
     cases = [
         (9, PLATFORM, "ticketController", True),
         (10, PLATFORM, "forceChunk", True),
+        (10, PLATFORM, "setTicketController", True),
+        (10, REGISTER_EVENT, "register", True),
+        (11, VALIDATION, "validateTickets", True),
+        (10, PREFIX + "entity/item/NuclearExplosionEntity", "loadChunksAround", True),
+        (10, PREFIX + "item/OccultGemItem", "loadChunksAround", True),
         (11, DETONATOR, "loadChunksAround", True),
         (10, CONTROLLER, "forceChunk", True),
         (9, PLATFORM, "other", False),
@@ -132,7 +178,7 @@ def self_test():
     ]
     for tag, owner, name, expected in cases:
         require(relevant(tag, owner, name) == expected, "typed member filter mismatch")
-    print("PASS: 9 typed member filter cases")
+    print("PASS:", len(cases), "typed member filter cases")
 
 
 if __name__ == "__main__":
