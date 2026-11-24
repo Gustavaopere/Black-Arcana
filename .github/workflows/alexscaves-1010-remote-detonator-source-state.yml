@@ -80,6 +80,10 @@ jobs:
             --publisher build/remote-source-state/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/remote-source-state/report.json
+      - name: Verify exact expanded report seal
+        run: |
+          test "$(wc -c < build/remote-source-state/report.json)" = 491777
+          echo '1c4e740204ade70a59c75466bd4ccee623ec178a9d79d413b35c5d372a744f1d  build/remote-source-state/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
