@@ -57,6 +57,16 @@ A [coleta #45324622300](https://github.com/Gustavaopere/Black-Arcana/actions/run
 
 Estados preservados: `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`, `WORLD_SAFETY_BLOCKED`. Nenhum novo certificado, cast ou objeto contabilizado.
 
+## Registro e ciclo de vida dos tickets — censo publisher 1.0.10
+
+O [dossiê de lifecycle](../EXACT-REMOTE-DETONATOR-TICKET-LIFECYCLE-1.0.10.md) amplia a auditoria de boundaries: coleta expandida [#45326384195](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45326384195), relatório 46.004 bytes SHA-256 `3c4b8a9c3f66e05e815eb524b3d00aa43534002bfa034b2d5aaa585088baba9c`, 1.555 classes pesquisadas, 6 candidatas, 21 sites diretos e 14 casos de filtro. A CI final da base anterior #45326514618 reproduziu a evidência; nova execução é exigida após a sincronização.
+
+- `AlexsCaves.registerTicketControllers` constrói `alexscaves:forced_chunks`, chama `ACPlatform.setTicketController` @22 e solicita registro @27. Bootstrap 12 aponta para `ACWorldData.clearLoadedChunksCallback(ServerLevel,TicketHelper)`.
+- O callback solicita `removeAllTickets(UUID)` @43 e `removeAllTickets(BlockPos)` @93 sobre as chaves dos mapas de tickets. O contador de debug é de owners processados, não de chunks. Limpeza no carregamento não demonstra liberação durante uso.
+- O único site direto do helper `RemoteDetonatorItem.loadChunksAround` no censo publisher é `use` @94, com true @93. Nenhum site direto com false foi encontrado. A remoção de `NuclearExplosionEntity` pede liberação usando a overload de entidade, e não prova liberação dos tickets UUID do jogador. `OccultGemItem` e `BeholderEyeEntity` também compartilham o dispatcher; não mutar globalmente.
+
+Não afirmar vazamento permanente ou liberação garantida. Engine NeoForge, mundo/dimensão efetiva, callbacks dos blocos, modpack transformado e QA física continuam pendentes. `NO_MUTATION`; `static_contract=NOT_CERTIFIED`; nenhum incremento de índice.
+
 ## Evidências e status
 
 [GitHub Actions #44956716666](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44956716666) aprovou o censo **inicial** de JAR, não a CI da HEAD com manifesto e ficha. Relatório nativo `report.json` **199.424 bytes**, SHA-256 `010a50eec70f2458f20bb2950dbec5b83d000fd177f6391aa90e37137d483ada`, artefato `14728326280`. **Recursos SHA-exatos identificados:** `assets/alexscaves/models/item/remote_detonator.json` e `remote_detonator_active.json`, recipe `data/alexscaves/recipe/remote_detonator.json`, advancement `data/alexscaves/advancement/alexscaves/remote_detonation.json` e tag `data/alexscaves/tags/block/remote_detonator_activates.json`; hashes e bytes no manifesto. A projeção complementar acima confirma as entradas declaradas da tag, tipo/resultado da receita, trigger do advancement e predicado visual; bootstrap de registry, conjunto efetivo da tag, ingredientes, efeitos externos, configuração, QA física, mundo, segurança e hook permanecem não certificados. **+1 ficha parcial, +0 certificados, +0 novos casts.**

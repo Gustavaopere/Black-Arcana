@@ -92,7 +92,47 @@ def registry(archive, jar, javap, owner, targets):
             factories[key] = {"method": key[0], "descriptor": key[1],
                               "constructor_owners": created,
                               "instruction_sha256": summarize(reader, key, body)["instruction_sha256"]}
-    # Entity factory constructors may be method handles, not NEW instructions.
+    # Discover constructor handles inside registry lambdas, then propagate
+    # matching local handles to enclosing suppliers until a fixed point.
+    edges = {}
+    direct = set(factories)
+    for key, body in sorted(parsed.items()):
+        if key[0] == "<clinit>":
+            continue
+        for offset, (op, arg, _) in sorted(body.items()):
+            if op != "invokedynamic":
+                continue
+            match = re.fullmatch(r"#(\d+)(?:\s*,\s*\d+)?", arg)
+            require(match is not None, "unparsed nested bootstrap operand")
+            tag, index, _ = reader.resolve(int(match.group(1)))
+            require(tag == 18, "nested bootstrap kind")
+            for v in reader.attributes["bootstrap_methods"][index]["arguments"]:
+                ref = v.get("reference") if isinstance(v, dict) else None
+                if not isinstance(ref, list) or len(ref) != 3 or ref[0] not in (10, 11):
+                    continue
+                _, target_owner, sig = ref
+                target = (sig[1], sig[2])
+                if target_owner in targets or target_owner == owner and target in parsed:
+                    edges.setdefault(key, []).append({
+                        "offset": offset, "bootstrap_index": index, "kind": v["reference_kind"],
+                        "owner": target_owner, "name": sig[1], "descriptor": sig[2]})
+                if target_owner in targets:
+                    direct.add(key)
+    relevant = set(direct)
+    for _ in range(len(parsed) + 1):
+        new = relevant | {k for k, rows in edges.items() if any(
+            v["owner"] == owner and (v["name"], v["descriptor"]) in relevant for v in rows)}
+        if new == relevant:
+            break
+        relevant = new
+    require(len(relevant) <= 40, "registry factory closure budget")
+    nested = [{"method": k[0], "descriptor": k[1],
+               "instruction_sha256": summarize(reader, k, parsed[k])["instruction_sha256"],
+               "handles": [v for v in edges.get(k, []) if v["owner"] in targets or
+                           (v["owner"] == owner and (v["name"], v["descriptor"]) in relevant)],
+               "typed_members": analyze(reader, parsed[k], next(m for m in reader.methods
+                   if (m["name"], m["descriptor"]) == k))["typed_members"]}
+              for k in sorted(relevant) if k in edges]
     bootstrap_links = []
     clinit = parsed.get(("<clinit>", "()V"), {})
     offsets = sorted(clinit)
@@ -111,7 +151,7 @@ def registry(archive, jar, javap, owner, targets):
             if not isinstance(ref, list) or len(ref) != 3 or ref[0] not in (10, 11):
                 continue
             _, ref_owner, signature = ref
-            if ref_owner in targets or (ref_owner == owner and (signature[1], signature[2]) in factories):
+            if ref_owner in targets or (ref_owner == owner and (signature[1], signature[2]) in relevant):
                 links.append({"kind": v["reference_kind"], "owner": ref_owner,
                               "name": signature[1], "descriptor": signature[2]})
         if links:
@@ -122,7 +162,7 @@ def registry(archive, jar, javap, owner, targets):
             bootstrap_links.append({"offset": offset, "bootstrap_index": index,
                                     "handles": links, "symbolic_context": context})
     return {"owner": owner, "class_sha256": digest(raw),
-            "constructor_factories": list(factories.values()), "bootstrap_links": bootstrap_links}
+            "constructor_factories": list(factories.values()), "nested_factories": nested, "bootstrap_links": bootstrap_links}
 
 
 def inspect(jar, javap, output):
@@ -143,7 +183,7 @@ def inspect(jar, javap, output):
             def select(key, body):
                 if owner.endswith("/NuclearExplosionEntity") and key[0] == "tick":
                     return False
-                return key[0] in CALLBACK_NAMES or bool(references(body))
+                return key[0] in CALLBACK_NAMES or key[0] in {"getTime", "setTime", "defineSynchedData", "setSize", "getSize", "getNearbySirens", "activateSiren"} or bool(references(body))
             methods = inspect_methods(reader, parsed, select)
             data[owner] = {"class_sha256": digest(raw), "parent": reader.parent,
                            "interfaces": reader.interfaces,
@@ -154,7 +194,7 @@ def inspect(jar, javap, output):
                            and p.startswith(PREFIX)]
         require(len(registry_owners) == 2, "registry owners unresolved")
         registries = {o: registry(z, jar, javap, o, targets) for o in registry_owners}
-    report = {"schema_version": 1, "scope": "PUBLISHER_BLOCK_CALLBACK_DISCOVERY_ONLY",
+    report = {"schema_version": 2, "scope": "PUBLISHER_BLOCK_CALLBACK_DISCOVERY_ONLY",
               "artifact": {"version": "1.0.10", "sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE},
               "class_entries_scanned": len(classes), "classes": data, "registries": registries,
               "limits": LIMITS}
@@ -169,7 +209,7 @@ def inspect(jar, javap, output):
         for m in row["selected_methods"]:
             print("METHOD", owner, m["name"], m["descriptor"], m["code_sha256"],
                   m["instruction_count"], "REFS", len(m["typed_members"]))
-            if any(x in m["name"].lower() for x in ("caughtfire", "explode", "ignite", "prime", "tick", "fuse")):
+            if m["name"] != "<clinit>":
                 print("SEMANTIC", json.dumps(m, sort_keys=True, ensure_ascii=False))
     for owner, row in registries.items():
         print("REGISTRY", json.dumps(row, sort_keys=True, ensure_ascii=False))
