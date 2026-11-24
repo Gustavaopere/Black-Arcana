@@ -26,13 +26,19 @@ UNIVERSAL_SHA = "90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e
 UNIVERSAL_SIZE = 3551268
 ALL_BODIES = {MC+"world/item/ShieldItem", SHIELD}
 SELECTED = {
-    MC+"world/item/Item": {"getUseDuration","getUseAnimation","onUseTick","releaseUsing","use","getDefaultAttributeModifiers"},
-    MC+"world/item/ItemStack": {"hurtAndBreak","hurt","getUseDuration","getUseAnimation","onUseTick","releaseUsing","use"},
+    MC+"world/item/Item": {"getUseDuration","getUseAnimation","onUseTick","releaseUsing","use","getDefaultAttributeModifiers","damageItem","canPerformAction"},
+    MC+"world/item/ItemStack": {"hurtAndBreak","hurt","getUseDuration","getUseAnimation","onUseTick","releaseUsing","use","canPerformAction"},
     MC+"world/entity/LivingEntity": {"hurt","actuallyHurt","isDamageSourceBlocked","hurtCurrentlyUsedShield","blockUsingShield","blockedByShield","knockback","isBlocking","startUsingItem","stopUsingItem","releaseUsingItem","updatingUsingItem","updateUsingItem","getUseItem","getUseItemRemainingTicks","getTicksUsingItem","canAttack","isInvulnerableTo"},
     MC+"world/entity/player/Player": {"hurt","actuallyHurt","hurtCurrentlyUsedShield","blockUsingShield","canHarmPlayer","disableShield","isInvulnerableTo"},
     MC+"server/level/ServerPlayer": {"hurt","isInvulnerableTo","canHarmPlayer"},
     MC+"world/entity/Entity": {"isInvulnerableTo"},
-    "net/neoforged/neoforge/event/EventHooks": {"onShieldBlock","onLivingAttack","onLivingDamage","onLivingHurt","onLivingIncomingDamage","onLivingKnockBack","onLivingUseItemStart","onLivingUseItemTick","onLivingUseItemStop","onLivingUseItemFinish"},
+    "net/neoforged/neoforge/event/EventHooks": {"onItemUseStart","onItemUseTick","onUseItemStop","onPlayerDestroyItem"},
+    "net/neoforged/neoforge/common/CommonHooks": {"canContinueUsing","isEntityInvulnerableTo","onDamageBlock","onEntityIncomingDamage","onLivingDamagePost","onLivingDamagePre","onLivingKnockBack"},
+    "net/neoforged/neoforge/common/damagesource/DamageContainer": {"<init>","getNewDamage","getPostAttackInvulnerabilityTicks","getReduction","setBlockedDamage","setNewDamage","setReduction"},
+    "net/neoforged/neoforge/event/entity/living/LivingShieldBlockEvent": {"<init>","getBlocked","getBlockedDamage","getDamageContainer","shieldDamage","setBlocked","setBlockedDamage","setShieldDamage"},
+    "net/neoforged/neoforge/event/entity/living/LivingKnockBackEvent": {"<init>","getStrength","getRatioX","getRatioZ","setStrength","setRatioX","setRatioZ"},
+    "net/neoforged/neoforge/common/ItemAbilities": {"<clinit>"},
+    "net/neoforged/neoforge/common/extensions/IItemExtension": {"canPerformAction","damageItem"},
     MC+"world/damagesource/DamageSources": {"mobAttack"},
 }
 REQUIRED = {
@@ -40,11 +46,14 @@ REQUIRED = {
     MC+"world/item/ShieldItem": {"use","getUseDuration","getUseAnimation"},
     MC+"world/entity/LivingEntity": {"hurt","isDamageSourceBlocked","knockback","isBlocking","startUsingItem"},
     MC+"world/item/ItemStack": {"hurtAndBreak"},
+    "net/neoforged/neoforge/event/EventHooks": {"onItemUseStart","onItemUseTick","onUseItemStop"},
+    "net/neoforged/neoforge/common/CommonHooks": {"onDamageBlock","onEntityIncomingDamage","onLivingKnockBack"},
+    "net/neoforged/neoforge/event/entity/living/LivingShieldBlockEvent": {"getBlocked","getBlockedDamage","shieldDamage"},
 }
 LIMITS = {
-    "actual_ignition":"NOT_VERIFIED", "actual_damage":"NOT_VERIFIED",
-    "actual_ticket_acceptance":"NOT_VERIFIED", "actual_ticket_release":"NOT_VERIFIED",
-    "actual_persistent_ticket_leak":"NOT_OBSERVED", "runtime_loaded_bytes":"NOT_OBSERVED",
+    "actual_damage":"NOT_VERIFIED", "actual_knockback":"NOT_VERIFIED",
+    "actual_durability_settlement":"NOT_VERIFIED", "actual_defense":"NOT_VERIFIED",
+    "runtime_loaded_bytes":"NOT_OBSERVED",
     "effective_config_and_tags":"NOT_VERIFIED", "world_safety":"BLOCKED",
     "static_contract":"NOT_CERTIFIED", "mutating_hook":"NOT_VERIFIED",
     "physical_qa":"NOT_TESTED", "mutation":"NO_MUTATION",
@@ -107,7 +116,7 @@ def scan(server,srg,universal,publisher,javap):
                             "parent":reader.parent,"interfaces":reader.interfaces,
                             "declared_methods":[{"name":m["name"],"descriptor":m["descriptor"]} for m in reader.methods],
                             "methods":methods}
-    return {"schema_version":1,"scope":"RESISTOR_SHIELD_INHERITED_DEFENSE_SETTLEMENT_DISTRIBUTED_DISCOVERY_ONLY","artifact":identity,"classes":classes,"limits":LIMITS}
+    return {"schema_version":2,"scope":"RESISTOR_SHIELD_INHERITED_DEFENSE_SETTLEMENT_DISTRIBUTED_DISCOVERY_ONLY","artifact":identity,"classes":classes,"limits":LIMITS}
 
 def self_test():
     require(selected(MC+"world/item/ShieldItem","getUseDuration"),"shield census")
@@ -133,7 +142,7 @@ if __name__=="__main__":
         require(all((a.server,a.srg,a.universal,a.publisher,a.output)) and not a.output.exists(),"write-once report and artifacts required")
         result=scan(a.server,a.srg,a.universal,a.publisher,a.javap)
         data=canonical(result).encode()
-        require(len(data)<=1_500_000,"report budget")
+        require(len(data)<=1_800_000,"report budget")
         a.output.parent.mkdir(parents=True,exist_ok=True)
         with a.output.open("xb") as f:
             f.write(data)
