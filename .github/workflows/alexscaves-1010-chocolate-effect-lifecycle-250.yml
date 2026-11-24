@@ -93,7 +93,8 @@ jobs:
       - name: Require deterministic byte-identical discovery
         run: |
           cmp build/chocolate-effect-lifecycle-250/report.json build/chocolate-effect-lifecycle-250/replay.json
-          sha256sum build/chocolate-effect-lifecycle-250/report.json
+          test "$(wc -c < build/chocolate-effect-lifecycle-250/report.json)" -eq 161640
+          echo '806e5a412cbaed9ef76a9ddff774af5fc9ed3736c0a21b2b6abbf07745a12c21  build/chocolate-effect-lifecycle-250/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
