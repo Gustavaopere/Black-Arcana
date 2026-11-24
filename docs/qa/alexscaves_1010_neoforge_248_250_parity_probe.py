@@ -38,7 +38,8 @@ GROUPS={
         "server/network/ServerGamePacketListenerImpl","world/level/block/state/BlockState")]+
         [NF+"common/world/chunk/"+x for x in ("ForcedChunkManager","ForcedChunkManager$TicketTracker",
             "ForcedChunkManager$TicketOwner","TicketController","TicketHelper")]+
-        [NF+"event/level/RegisterTicketControllersEvent"],
+        [NF+"common/world/chunk/RegisterTicketControllersEvent",NF+"common/world/chunk/LoadingValidationCallback"],
+    "saved_data": [MC+x for x in ("world/level/storage/DimensionDataStorage","world/level/saveddata/SavedData","world/level/saveddata/SavedData$Factory")],
 }
 PIN_248={
     MC+"world/item/ItemStack":"072cd6887595d3f928a3a1a9605662ff547fe3201d6b6d713a43bfd2719f1a13",
@@ -74,6 +75,8 @@ def inspect(args):
     require(identity["21.1.248"]["universal"]["sha256"]=="90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5","248 universal pin")
     require(identity["21.1.250"]["universal"]["sha256"]==PHYSICAL_ARTIFACTS["universal"]["sha256"] and
             identity["21.1.250"]["universal"]["bytes"]==PHYSICAL_ARTIFACTS["universal"]["size_bytes"],"250 universal pin")
+    require(identity["21.1.250"]["installer"]=={"bytes":6972109,"sha256":"0e47a91ba2139a8db4bf7627af081f7b5789b508bb039ee8dea1272b79693d60"},"250 installer pin")
+    require(identity["21.1.250"]["server"]==identity["21.1.248"]["server"] and identity["21.1.250"]["srg"]==identity["21.1.248"]["srg"],"distributed archive equality drift")
     owners=sorted(set().union(*GROUPS.values()))
     require(30<len(owners)<=80,"finite owner roster")
     with ExitStack() as stack:
@@ -103,9 +106,27 @@ def inspect(args):
             if owner in PIN_248:require(pair["21.1.248"] and pair["21.1.248"]["sha256"]==PIN_248[owner],"previous evidence mismatch")
             rows[owner]={"groups":[k for k,v in GROUPS.items() if owner in v],
                          "versions":pair,"comparison":compare(pair["21.1.248"],pair["21.1.250"])}
-    report={"schema_version":1,"scope":"FINITE_DISTRIBUTED_CLASS_BYTE_COMPARISON_ONLY",
+        # The universal archive differs as a ZIP. Compare exact member bytes,
+        # independently of ZIP container metadata, without redistributing content.
+        u248=archives["21.1.248"][1][1]
+        u250=archives["21.1.250"][1][1]
+        n248={x.filename for x in u248.infolist() if not x.is_dir()}
+        n250={x.filename for x in u250.infolist() if not x.is_dir()}
+        require(len(n248|n250)<=10000,"universal member budget")
+        changes=[]
+        totals={"class":{"same":0,"changed":0,"only248":0,"only250":0},
+                "resource":{"same":0,"changed":0,"only248":0,"only250":0}}
+        for name in sorted(n248|n250):
+            group="class" if name.endswith(".class") else "resource"
+            a=digest(u248.read(name)) if name in n248 else None
+            b=digest(u250.read(name)) if name in n250 else None
+            kind="same" if a==b else "only248" if b is None else "only250" if a is None else "changed"
+            totals[group][kind]+=1
+            if kind!="same":changes.append({"entry":name,"kind":kind,"sha248":a,"sha250":b})
+        universal_delta={"totals":totals,"changed_entries":changes}
+    report={"schema_version":2,"scope":"DISTRIBUTED_ARCHIVE_AND_CLASS_BYTE_COMPARISON_ONLY",
             "build_reference":"21.1.248","physical_ledger_reference":"21.1.250",
-            "artifacts":identity,"classes":rows,
+            "artifacts":identity,"classes":rows,"universal_member_comparison":universal_delta,
             "limits":{"runtime_loaded_bytes":"NOT_OBSERVED","transitive_equivalence":"NOT_CERTIFIED",
                       "physical_qa":"NOT_TESTED","mutating_hook":"NOT_VERIFIED","mutation":"NO_MUTATION",
                       "provider_universe_closed":False,"semantic_magic_roots_delta":0}}
@@ -115,6 +136,7 @@ def inspect(args):
     with args.output.open("xb") as f:f.write(raw)
     print("REPORT_SHA256",digest(raw),"BYTES",len(raw),"OWNERS",len(rows))
     print("ARTIFACTS",json.dumps(identity,sort_keys=True))
+    print("UNIVERSAL_DELTA",json.dumps(universal_delta,sort_keys=True))
     for owner,row in rows.items():print("CLASS",owner,json.dumps(row,sort_keys=True))
     print("NO_MUTATION NO_RUNTIME_EQUIVALENCE")
 
