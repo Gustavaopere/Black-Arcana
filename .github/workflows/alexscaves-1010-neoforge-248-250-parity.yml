@@ -1,0 +1,72 @@
+name: Alex's Caves engine 21.1.248 to physical ledger 21.1.250 class comparison
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-neoforge-248-250-parity.yml'
+      - 'docs/qa/alexscaves_1010_neoforge_248_250_parity_probe.py'
+      - 'docs/qa/neoforge_211248_gazing_pearl_saveddata_engine_probe.py'
+      - 'docs/qa/alexscaves_1010_destroyed_item_engine_reference.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ENGINE-248-250-PARITY.*'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  distributed_class_comparison:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Check comparison guards
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_neoforge_248_250_parity_probe.py
+          python3 docs/qa/alexscaves_1010_neoforge_248_250_parity_probe.py --self-test
+      - name: Materialize both official server distributions
+        shell: bash
+        run: |
+          set -euo pipefail
+          for patch in 248 250; do
+            version="21.1.$patch"
+            root="build/engine-parity/$patch"
+            mkdir -p "$root"
+            (
+              cd "$root"
+              base="https://maven.neoforged.net/releases/net/neoforged/neoforge/$version"
+              for kind in installer universal; do
+                curl --fail --silent --show-error --location --retry 3 --max-time 180 "$base/neoforge-$version-$kind.jar" -o "$kind.jar"
+                curl --fail --silent --show-error --location --retry 3 --max-time 60 "$base/neoforge-$version-$kind.jar.sha256" -o "$kind.sha256"
+                expect="$(head -c 64 "$kind.sha256")"
+                [[ "$expect" =~ ^[0-9a-fA-F]{64}$ ]]
+                echo "${expect,,}  $kind.jar" | sha256sum -c -
+                unzip -tq "$kind.jar"
+              done
+              if [ "$patch" = 248 ]; then
+                echo '68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c  installer.jar' | sha256sum -c -
+              else
+                echo '1f9cc68fe9ec0416475d34ce76e95a696b9721d5d338168563dab0632c3d2956  universal.jar' | sha256sum -c -
+              fi
+              java -jar installer.jar --installServer > install.log 2>&1 || { tail -n 80 install.log; exit 1; }
+              cp "libraries/net/neoforged/neoforge/$version/neoforge-$version-server.jar" server.jar
+              cp libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar srg.jar
+            )
+          done
+      - name: Compare finite class roster
+        run: |
+          python3 docs/qa/alexscaves_1010_neoforge_248_250_parity_probe.py --root248 build/engine-parity/248 --root250 build/engine-parity/250 --output build/engine-parity/report.json
+      - name: Verify schema 3 evidence seal
+        run: |
+          test "$(wc -c < build/engine-parity/report.json)" = 55211
+          echo '12aea5ab66f309459d69d7c2609f0a28b0efa54f2771b7f120e670a98f9d2809  build/engine-parity/report.json' | sha256sum -c -
+      - name: Archive comparison
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: engine-248-250-class-comparison
+          path: build/engine-parity/report.json
+          if-no-files-found: warn
+          retention-days: 14
