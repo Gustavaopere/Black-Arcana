@@ -80,6 +80,9 @@ jobs:
           python3 docs/qa/alexscaves_1010_remote_detonator_resource_probe.py \
             --jar build/remote-detonator-1010/publisher.jar \
             --output build/remote-detonator-1010/resource-projection.json
+          report=build/remote-detonator-1010/resource-projection.json
+          test "$(stat -c %s "$report")" -eq 2501
+          test "$(sha256sum "$report" | cut -d' ' -f1)" = '13041591c74cb720a7f3b74535ae861d03083defecbdbef3ca9fc871f412d280'
       - name: Preserve resource projection (no runtime certification)
         if: always()
         uses: actions/upload-artifact@v7
