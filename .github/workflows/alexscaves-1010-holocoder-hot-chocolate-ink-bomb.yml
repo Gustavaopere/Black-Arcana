@@ -5,6 +5,9 @@ on:
     paths:
       - '.github/workflows/alexscaves-1010-holocoder-hot-chocolate-ink-bomb.yml'
       - 'docs/qa/alexscaves_1010_holocoder_hot_chocolate_ink_bomb_probe.py'
+      - 'docs/qa/alexscaves_1010_holocoder_hot_chocolate_ink_bomb_consumers.py'
+      - 'docs/qa/alexscaves_1010_nuclear_explosion_effect_probe.py'
+      - 'docs/qa/alexscaves_1010_galena_211248_spawn_denial_guards_probe.py'
       - 'docs/qa/alexscaves_1010_burrowing_cave_map_probe.py'
       - 'docs/qa/alexscaves_1010_armor_material_audit.py'
       - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
@@ -36,11 +39,22 @@ jobs:
             --jar build/alexscaves-three-items/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/alexscaves-three-items/report.json
+      - name: Verify initial discovery seal
+        run: |
+          test "$(wc -c < build/alexscaves-three-items/report.json)" = 113270
+          echo 'b1b37e98304c6a38c2eacd1167580a2ec843c1768a3dfcd9b84fa32396a224d5  build/alexscaves-three-items/report.json' | sha256sum -c -
+      - name: Inspect literal producers, registry consumers and Ink Bomb projectile
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_holocoder_hot_chocolate_ink_bomb_consumers.py
+          python3 docs/qa/alexscaves_1010_holocoder_hot_chocolate_ink_bomb_consumers.py --self-test
+          python3 docs/qa/alexscaves_1010_holocoder_hot_chocolate_ink_bomb_consumers.py --jar build/alexscaves-three-items/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/alexscaves-three-items/consumers.json
       - name: Archive report
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: alexscaves-three-item-native-discovery
-          path: build/alexscaves-three-items/report.json
+          path: |
+            build/alexscaves-three-items/report.json
+            build/alexscaves-three-items/consumers.json
           if-no-files-found: warn
           retention-days: 14
