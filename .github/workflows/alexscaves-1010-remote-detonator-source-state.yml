@@ -79,6 +79,12 @@ jobs:
             --publisher build/remote-source-state/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/remote-source-state/report.json
+      - name: Seal exact source and state report
+        run: |
+          set -euo pipefail
+          report=build/remote-source-state/report.json
+          test "$(stat -c %s "$report")" -eq 238884
+          test "$(sha256sum "$report" | cut -d' ' -f1)" = 'ad3096b70447013b1fdd369126007df8bbf607549fb8bf6b93a8db9b6d5ac3bd'
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
