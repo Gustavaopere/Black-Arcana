@@ -34,6 +34,10 @@ jobs:
       - name: Project exact acquisition resources and tag field consumers
         run: |
           python3 docs/qa/alexscaves_1010_four_items_resources_tag_probe.py --jar build/four-items-acquisition/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/four-items-acquisition/report.json
+      - name: Verify exact report seal
+        run: |
+          test "$(wc -c < build/four-items-acquisition/report.json)" = 178620
+          echo '534c8c6a7534d203d994ea1e4f4948b03c5a0ed01c79a5d97aa6a5eb2fdf79c2  build/four-items-acquisition/report.json' | sha256sum -c -
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7
