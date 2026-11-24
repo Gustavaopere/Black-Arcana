@@ -38,6 +38,9 @@ jobs:
             --jar build/remote-block-callbacks/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/remote-block-callbacks/report.json
+          report=build/remote-block-callbacks/report.json
+          test "$(stat -c %s "$report")" -eq 128197
+          test "$(sha256sum "$report" | cut -d' ' -f1)" = '5b4ab93082e611bfd5a540e4ea33316fc2d472bec303561ae78bee33fc3f5635'
       - name: Archive discovery-only evidence
         if: always()
         uses: actions/upload-artifact@v7
