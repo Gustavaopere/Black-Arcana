@@ -58,6 +58,10 @@ jobs:
       - name: Compare finite class roster
         run: |
           python3 docs/qa/alexscaves_1010_neoforge_248_250_parity_probe.py --root248 build/engine-parity/248 --root250 build/engine-parity/250 --output build/engine-parity/report.json
+      - name: Verify schema 3 evidence seal
+        run: |
+          test "$(wc -c < build/engine-parity/report.json)" = 55211
+          echo '12aea5ab66f309459d69d7c2609f0a28b0efa54f2771b7f120e670a98f9d2809  build/engine-parity/report.json' | sha256sum -c -
       - name: Archive comparison
         if: always()
         uses: actions/upload-artifact@v7

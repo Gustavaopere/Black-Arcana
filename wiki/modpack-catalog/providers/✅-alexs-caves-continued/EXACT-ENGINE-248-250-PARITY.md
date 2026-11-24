@@ -19,6 +19,6 @@ Run [45464793964](https://github.com/Gustavaopere/Black-Arcana/actions/runs/4546
 
 ## Expansão schema 3
 
-A comparação dos membros internos dos CoreMods está programada no probe atualizado, com verificação dos hashes observados e orçamento de ZIP. Resultado ainda não certificado nesta revisão. Igualdade de classfiles distribuídos não comprova igualdade dos bytes carregados após transformação, mixins e demais providers.
+[Run 45465724666](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45465724666), job 138699973280, artifact 14954773360: schema 3, 55211 bytes, SHA-256 `12aea5ab66f309459d69d7c2609f0a28b0efa54f2771b7f120e670a98f9d2809`. Os sete classfiles e três recursos internos dos CoreMods têm hashes individuais idênticos entre versões; nenhum membro novo, removido ou alterado. Isso demonstra identidade dos membros, não igualdade do contêiner ZIP ou do processo de carregamento. O relatório fixa 59/59 classes selecionadas e o censo universal, e o workflow exige reprodução exata do selo schema 3. Igualdade de classfiles distribuídos não comprova igualdade dos bytes carregados após transformação, mixins e demais providers.
 
 QA física NOT_TESTED; hooks NOT_VERIFIED; roots delta 0; universo aberto.
