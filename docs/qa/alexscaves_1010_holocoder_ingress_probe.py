@@ -20,14 +20,14 @@ BE=P+"block/blockentity/HologramProjectorBlockEntity"
 REG=P+"block/blockentity/ACBlockEntityRegistry"
 ITEM=P+"item/HolocoderItem"
 TARGETS={
-    EVENT:{"acPlayerEntityInteract"},
+    EVENT:{"acPlayerEntityInteract","playerEntityInteract","<init>"},
     PLATFORM:{"serializeEntity","entityItemHandler","setThrower"},
     COMPAT:{"markDisplayEntity","entityTypeFrom","getUUID","hasUUID","putUUID"},
     ACCESS:{"takeOne","size","stackInSlot"},
     BE:{"tick","getDisplayEntity","setEntity"},
 }
 SELECT={
-    EVENT:{"acPlayerEntityInteract"},
+    EVENT:{"acPlayerEntityInteract","playerEntityInteract","<init>"},
     PLATFORM:{"serializeEntity","entityItemHandler","setThrower"},
     COMPAT:{"markDisplayEntity","entityTypeFrom","getUUID","hasUUID","putUUID","getCompound","getTag","setTag","getOrCreateTag"},
     P+"entity/ai/GingerbreadManStealGoal":{"canStealFromEntityType","hasStealableInventory","stealOneFrom","canUse","canContinueToUse","tick","start","stop"},
@@ -46,6 +46,59 @@ LIMITS={"static_contract":"NOT_CERTIFIED","mutating_hook":"NOT_VERIFIED","physic
         "mutation":"NO_MUTATION","provider_universe_closed":False,"semantic_magic_roots_delta":0,
         "actual_dispatch_and_cancellation":"NOT_VERIFIED","actual_inventory_settlement":"NOT_VERIFIED",
         "runtime_loaded_bytes":"NOT_OBSERVED","effective_tags":"NOT_VERIFIED"}
+
+class AnnotationReader(ClassReader):
+    """Parse JVM annotation attributes only; never infer from pool strings."""
+    def element(self,depth):
+        require(depth<=12,"annotation recursion budget")
+        tag=chr(self.number(1))
+        if tag in "BCDFIJSZs":
+            return {"tag":tag,"constant":self.resolve(self.number())}
+        if tag=="e":
+            return {"tag":tag,"type":self.resolve(self.number()),"constant":self.resolve(self.number())}
+        if tag=="c":
+            return {"tag":tag,"class":self.resolve(self.number())}
+        if tag=="@":
+            return {"tag":tag,"annotation":self.annotation(depth+1)}
+        if tag=="[":
+            n=self.number()
+            require(n<=256,"annotation array budget")
+            return {"tag":tag,"values":[self.element(depth+1) for _ in range(n)]}
+        require(False,"unknown annotation element tag "+tag)
+
+    def annotation(self,depth=0):
+        require(depth<=12,"annotation recursion budget")
+        desc=self.resolve(self.number())
+        require(isinstance(desc,str) and desc.startswith("L") and desc.endswith(";"),"annotation descriptor")
+        n=self.number()
+        require(n<=128,"annotation pair budget")
+        pairs={}
+        for _ in range(n):
+            name=self.resolve(self.number())
+            require(name not in pairs,"duplicate annotation element")
+            pairs[name]=self.element(depth+1)
+        return {"descriptor":desc,"elements":pairs}
+
+    def attrs(self):
+        result={}
+        for _ in range(self.number()):
+            name,size=self.resolve(self.number()),self.number(4)
+            end=self.pos+size
+            require(end<=len(self.raw),"annotation attribute overrun")
+            if name in ("RuntimeVisibleAnnotations","RuntimeInvisibleAnnotations"):
+                require(name not in result,"duplicate annotations attribute")
+                n=self.number()
+                require(n<=128,"annotation count budget")
+                result[name]=[self.annotation() for _ in range(n)]
+                require(self.pos==end,"annotation attribute size mismatch")
+            self.pos=end
+        return result
+
+def annotations(raw):
+    rd=AnnotationReader(raw)
+    return {"class":rd.attributes,"methods":[{"name":m["name"],"descriptor":m["descriptor"],
+                **{k:v for k,v in m.items() if k in ("RuntimeVisibleAnnotations","RuntimeInvisibleAnnotations")}}
+            for m in rd.methods if any(k in m for k in ("RuntimeVisibleAnnotations","RuntimeInvisibleAnnotations"))]}
 
 def match_ref(ref):
     return isinstance(ref,list) and len(ref)==3 and ref[0] in (10,11) and ref[2][1] in TARGETS.get(ref[1],())
@@ -134,12 +187,13 @@ def inspect(jar,javap,output):
             owners[owner]={"class_sha256":digest(raw),"parent":rd.parent,"interfaces":rd.interfaces,
                            "declarations":[{"name":d["name"],"descriptor":d["descriptor"],"code_sha256":d.get("code_sha256")} for d in rd.methods],
                            "fields":rd.fields,"methods":methods}
-        require(dispatch_count>=0,"dispatch census")
+        require(dispatch_count==1,"previously observed capture dispatcher drift")
         reg=registry(z,jar,javap,REG,{BE})
-    report={"schema_version":1,"scope":"HOLOCODER_INGRESS_AND_INVENTORY_BRIDGE_DISCOVERY_ONLY",
+        annotations_by_owner={owner:annotations(z.read(owner+".class")) for owner in selected if owner==EVENT or any(v["sites"] and any(isinstance(x["reference"],list) and x["reference"][1]==EVENT for x in v["sites"]) for v in owners[owner]["methods"])}
+    report={"schema_version":2,"scope":"HOLOCODER_INGRESS_AND_INVENTORY_BRIDGE_DISCOVERY_ONLY",
             "publisher":{"sha1":SHA1,"sha256":SHA256,"size_bytes":SIZE},"class_roster":1555,
             "event_dispatch_sites":dispatch_count,"inventory_access_implementers":sorted(implementers),
-            "owners":owners,"block_entity_registry":reg,"limits":LIMITS}
+            "owners":owners,"block_entity_registry":reg,"annotations":annotations_by_owner,"limits":LIMITS}
     data=canonical(report).encode()
     require(len(data)<=4000000,"report budget")
     output.parent.mkdir(parents=True,exist_ok=True)
@@ -147,6 +201,7 @@ def inspect(jar,javap,output):
     print("REPORT_SHA256",digest(data),"BYTES",len(data),"OWNERS",len(owners),"EVENT_SITES",dispatch_count)
     print("ACCESS_IMPLEMENTERS",json.dumps(sorted(implementers)))
     print("REGISTRY",json.dumps(reg,sort_keys=True))
+    print("ANNOTATIONS",json.dumps(annotations_by_owner,sort_keys=True))
     for owner,row in owners.items():
         print("OWNER",owner,row["class_sha256"],row["interfaces"])
         for method in row["methods"]:
@@ -159,6 +214,11 @@ def self_test():
     require(not match_ref([9,EVENT,[12,"acPlayerEntityInteract","Z"]]),"typed method match")
     require(match_ref([11,ACCESS,[12,"takeOne","(I)Ljava/lang/Object;"]]),"interface match")
     require(LIMITS["mutation"]=="NO_MUTATION","policy")
+    probe=object.__new__(AnnotationReader)
+    probe.raw=bytes.fromhex("00010000")
+    probe.pos=0
+    probe.pool=[None,(1,"Lsample/Event;")]
+    require(probe.annotation()=={"descriptor":"Lsample/Event;","elements":{}},"annotation parser")
     print("PASS: exact typed method and interface owner matching")
 
 if __name__=="__main__":
