@@ -56,6 +56,15 @@ jobs:
           }
           test -f libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar
           test -f libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar
+      - name: Fetch official universal artifact and checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/remote-211248-engine
+          base='https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248'
+          curl --fail --silent --show-error --location --retry 3 --max-time 180 "$base/neoforge-21.1.248-universal.jar" -o universal.jar
+          curl --fail --silent --show-error --location --retry 3 --max-time 60 "$base/neoforge-21.1.248-universal.jar.sha256" -o universal.jar.sha256
+          unzip -tq universal.jar
       - name: Inspect distributed ticket and ignition members
         shell: bash
         run: |
@@ -63,6 +72,8 @@ jobs:
           python3 docs/qa/alexscaves_1010_remote_detonator_neoforge_211248_probe.py \
             --server build/remote-211248-engine/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar \
             --srg build/remote-211248-engine/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
+            --universal build/remote-211248-engine/universal.jar \
+            --universal-sha256 build/remote-211248-engine/universal.jar.sha256 \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/remote-211248-engine/report.json
       - name: Archive bounded distributed engine evidence

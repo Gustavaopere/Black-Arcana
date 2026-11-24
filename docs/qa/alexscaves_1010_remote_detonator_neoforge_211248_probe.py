@@ -7,6 +7,8 @@ launches Minecraft, transforms classes, modifies tickets or certifies hooks.
 from __future__ import annotations
 import argparse
 import json
+import re
+import hashlib
 from pathlib import Path
 from zipfile import ZipFile
 
@@ -49,25 +51,32 @@ def candidates(paths):
                   and p.rsplit("/", 1)[-1][:-6] in CANDIDATE_NAMES)
 
 
-def inspect(server, srg, javap, output):
+def inspect(server, srg, universal, universal_sha256, javap, output):
     identity = verify_distribution(server, srg)
+    expected = universal_sha256.read_text().strip().split()[0].lower()
+    require(re.fullmatch(r"[0-9a-f]{64}", expected) is not None, "invalid universal SHA-256")
+    raw_universal = universal.read_bytes()
+    require(1_000_000 < len(raw_universal) < 20_000_000 and hashlib.sha256(raw_universal).hexdigest() == expected, "universal SHA/size mismatch")
+    identity["universal_sha256"] = expected
+    identity["universal_bytes"] = len(raw_universal)
     require(not output.exists(), "write-once report required")
-    with ZipFile(server) as overlay, ZipFile(srg) as vanilla:
-        a, b = overlay.namelist(), vanilla.namelist()
-        require(len(a) == len(set(a)) and len(b) == len(set(b)), "duplicate archive entries")
-        av, bv = set(a), set(b)
-        discovered = candidates(av | bv)
+    with ZipFile(server) as overlay, ZipFile(srg) as vanilla, ZipFile(universal) as uni:
+        a, b, u = overlay.namelist(), vanilla.namelist(), uni.namelist()
+        require(all(len(v) == len(set(v)) for v in (a, b, u)), "duplicate archive entries")
+        av, bv, uv = set(a), set(b), set(u)
+        discovered = candidates(av | bv | uv)
+        print("DISTRIBUTION_CLASS_ROSTER", json.dumps(sorted(p for p in av | bv | uv if p.endswith(".class") and (p.startswith(CHUNK) or p.rsplit("/",1)[-1] in {"IBlockExtension.class", "IBlockStateExtension.class", "TntBlock.class"}))))
         owners = set(REQUIRED) | set(OPTIONAL) | set(discovered)
         require(len(owners) <= 20, "bounded owner roster")
         result = {}
         for owner in sorted(owners):
             entry = owner + ".class"
-            source = choose_archive(entry, av, bv)
-            if source not in {"NEOFORGE_OVERLAY", "INSTALLED_MINECRAFT_SRG"}:
+            source = ("NEOFORGE_OVERLAY" if entry in av else "NEOFORGE_UNIVERSAL" if entry in uv else choose_archive(entry, av, bv))
+            if source not in {"NEOFORGE_OVERLAY", "NEOFORGE_UNIVERSAL", "INSTALLED_MINECRAFT_SRG"}:
                 require(owner not in REQUIRED, "required class absent: " + owner)
                 result[owner] = {"source": source, "present": False}
                 continue
-            raw = (overlay if source == "NEOFORGE_OVERLAY" else vanilla).read(entry)
+            raw = ({"NEOFORGE_OVERLAY": overlay, "NEOFORGE_UNIVERSAL": uni, "INSTALLED_MINECRAFT_SRG": vanilla}[source]).read(entry)
             reader = ClassReader(raw)
             require(reader.name == owner and reader.major == 65, "class identity drift")
             names = set(REQUIRED.get(owner, ())) | set(OPTIONAL.get(owner, ()))
@@ -76,7 +85,7 @@ def inspect(server, srg, javap, output):
             declarations = [m for m in reader.methods if m["name"] in names]
             require(REQUIRED.get(owner, set()).issubset({m["name"] for m in declarations}),
                     "required declaration absent: " + owner)
-            parsed = disassemble(str(server)+":"+str(srg), javap, owner)
+            parsed = disassemble(str(server)+":"+str(universal)+":"+str(srg), javap, owner)
             selected = []
             for d in declarations:
                 key = (d["name"], d["descriptor"])
@@ -133,6 +142,8 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--server", type=Path)
     p.add_argument("--srg", type=Path)
+    p.add_argument("--universal", type=Path)
+    p.add_argument("--universal-sha256", type=Path)
     p.add_argument("--javap", default="javap")
     p.add_argument("--output", type=Path)
     p.add_argument("--self-test", action="store_true")
@@ -140,5 +151,5 @@ if __name__ == "__main__":
     if args.self_test:
         self_test()
     else:
-        require(all((args.server, args.srg, args.output)), "engine paths and report required")
-        inspect(args.server, args.srg, args.javap, args.output)
+        require(all((args.server, args.srg, args.universal, args.universal_sha256, args.output)), "engine paths and report required")
+        inspect(args.server, args.srg, args.universal, args.universal_sha256, args.javap, args.output)
