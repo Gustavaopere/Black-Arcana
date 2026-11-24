@@ -23,7 +23,7 @@ Holocoder: CommonEvents.acPlayerEntityInteract é produtor de UUID/BoundEntityTa
 
 Hot Chocolate: perfil ACFoods já certificado em seu recorte, herança de DrinkableBottledItem reaproveitada. Override próprio só solicita TIME_SINCE_REST reset para ServerPlayer após retorno ancestral. Sem prova de efeitos sobre spawn/sono, eventos ou stats efetivas.
 
-Ink Bomb: 13 corpos executáveis da entidade compartilhada, incluindo dois caminhos de impacto, synced flag e persistência. O pedido de dano thrown é 0F, retorno ignorado; status e nuvem não condicionados a dano aceito. onHit cria nuvem com radius 2, duration 60, raio/tick -r/d; cloud aplica efeitos conforme variante, não há owner explicitamente definido nesse corpo. Dispenser e AI Deep One são produtores separados; não atribuir a Player sem prova.
+Ink Bomb: 14 corpos executáveis da entidade compartilhada, incluindo dois caminhos de impacto, synced flag e persistência. O pedido de dano thrown é 0F, retorno ignorado; status e nuvem não condicionados a dano aceito. onHit cria nuvem com radius 2, duration 60, raio/tick -r/d; cloud aplica efeitos conforme variante, não há owner explicitamente definido nesse corpo. Dispenser e AI Deep One são produtores separados; não atribuir a Player sem prova.
 
 ## Recursos diretamente observados
 
@@ -38,3 +38,7 @@ Ink Bomb: 13 corpos executáveis da entidade compartilhada, incluindo dois camin
 | data/alexscaves/recipe/hot_chocolate_bottle.json | d9973d88982f4e0d3cefa31987dd087d56250a79a5f6da7a32bb2d9bd1d3ff49 | 415 |
 
 Filename match is not complete resource reference enumeration. All four cards are partial; observed card denominator +4, static numerator +0, semantic roots +0. The historical 37-class contiguous certified prefix remains unchanged, with Galena still first incomplete; later discoveries do not close that prefix. Full provider OPEN. `NO_MUTATION`, `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
+
+## Cardinalidade da projeção expandida
+
+52 projeções de métodos em 18 owners: 44 corpos com projeção delimitada completa e 8 janelas diretas. InkBombEntity: 14 métodos próprios. O censo não representa fechamento de todos os métodos dos 18 owners.
