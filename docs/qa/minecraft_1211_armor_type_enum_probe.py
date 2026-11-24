@@ -23,6 +23,27 @@ CLASS = 'net.minecraft.world.item.ArmorItem$Type'
 ALLOWED = ('https://piston-meta.mojang.com/', 'https://piston-data.mojang.com/',
            'https://launchermeta.mojang.com/', 'https://launcher.mojang.com/')
 NAMES = ('HELMET', 'CHESTPLATE', 'LEGGINGS', 'BOOTS')
+# Historical metadata is part of the sealed report's provenance. Mojang may
+# revise release metadata without changing the client/mapping artifacts.
+HISTORICAL_META = {
+    'url': 'https://piston-meta.mojang.com/v1/packages/ff7ef54488da4a711f3c8a781a9f79105bbe801a/1.21.1.json',
+    'sha1': 'ff7ef54488da4a711f3c8a781a9f79105bbe801a',
+    'sha256': 'ab07658fe972925ed0036e383a09e3b4ca6b3f4ee07634233c02a5a1d49a39c9',
+}
+ARTIFACT_PINS = {
+    'client': {
+        'url': 'https://piston-data.mojang.com/v1/objects/30c73b1c5da787909b2f73340419fdf13b9def88/client.jar',
+        'sha1': '30c73b1c5da787909b2f73340419fdf13b9def88',
+        'sha256': '499f6897d1837516680f3114072d8106e11c9adcd933fe5cf051b551089b0c99',
+        'size': 26836906,
+    },
+    'client_mappings': {
+        'url': 'https://piston-data.mojang.com/v1/objects/2244b6f072256667bcd9a73df124d6c58de77992/client.txt',
+        'sha1': '2244b6f072256667bcd9a73df124d6c58de77992',
+        'sha256': '140c47931cccc8fc9e4c22d7603e2d714d1a953a146f51ea7397d95c955536ec',
+        'size': 9598610,
+    },
+}
 
 
 def require(pred, msg):
@@ -119,24 +140,47 @@ def inspect_rows(rows):
     return values
 
 
+def check_metadata(raw, reference, historical=False):
+    require(digest(raw, 'sha1') == reference['sha1'], 'version metadata sha1 mismatch')
+    if historical:
+        require(reference == HISTORICAL_META and digest(raw) == reference['sha256'],
+                'historical version metadata sha256 mismatch')
+    version = json.loads(raw)
+    require(version['id'] == VERSION, 'version JSON mismatch')
+    descriptors = version['downloads']
+    for key, pin in ARTIFACT_PINS.items():
+        d = descriptors[key]
+        require(all(d[field] == pin[field] for field in ('url','sha1','size')),
+                key + ' metadata artifact identity drift')
+    return descriptors
+
+
 def run(outdir, output, javap):
     require(not output.exists(), 'write-once output required')
     manifest = fetch(META, 3_000_000)
     versions = json.loads(manifest)['versions']
     matching = [x for x in versions if x['id'] == VERSION and x['type'] == 'release']
     require(len(matching)==1, 'target release absent from official manifest')
-    meta = matching[0]
+    live_meta = matching[0]
+    live_bytes = fetch(live_meta['url'], 500_000)
+    check_metadata(live_bytes, live_meta)
+    print('LIVE_VERSION_METADATA', json.dumps({
+        'version_url':live_meta['url'], 'version_sha1':live_meta['sha1'],
+        'version_json_sha256':digest(live_bytes)}, sort_keys=True))
+    # Replay the historical report only from its own verified official JSON.
+    # Do not substitute historical hashes for the current metadata bytes.
+    meta = HISTORICAL_META
     version_bytes = fetch(meta['url'], 500_000)
-    require(digest(version_bytes, 'sha1') == meta['sha1'], 'version metadata sha1 mismatch')
-    version = json.loads(version_bytes)
-    require(version['id'] == VERSION, 'version JSON mismatch')
-    descriptors = version['downloads']
+    descriptors = check_metadata(version_bytes, meta, historical=True)
+    print('HISTORICAL_VERSION_METADATA', json.dumps(meta, sort_keys=True))
+    print('PASS: live and historical metadata match both pinned artifact descriptors')
     refs={}
     outdir.mkdir(parents=True, exist_ok=True)
     for key, cap in (('client',90_000_000),('client_mappings',30_000_000)):
         d=descriptors[key]
         raw=fetch(d['url'], cap)
-        require(len(raw)==d['size'] and digest(raw,'sha1')==d['sha1'],key+' official artifact mismatch')
+        require(len(raw)==d['size'] and digest(raw,'sha1')==d['sha1']
+                and digest(raw)==ARTIFACT_PINS[key]['sha256'],key+' official artifact mismatch')
         dest=outdir/(key+'.jar' if key=='client' else 'client.txt')
         require(not dest.exists(),'output already exists '+str(dest))
         dest.write_bytes(raw)
@@ -178,7 +222,36 @@ def run(outdir, output, javap):
     print('DISCOVERY_ONLY; NO_MUTATION; NOT_CERTIFIED')
 
 
+def metadata_synthetics():
+    import copy
+    fixture = {'id':VERSION,'downloads':{k:{f:p[f] for f in ('url','sha1','size')} for k,p in ARTIFACT_PINS.items()}}
+    def payload(x):
+        raw=canonical(x).encode()
+        return raw, {'sha1':digest(raw,'sha1')}
+    raw,ref=payload(fixture)
+    check_metadata(raw,ref)
+    for key in ARTIFACT_PINS:
+        for field in ('url','sha1','size'):
+            changed=copy.deepcopy(fixture)
+            changed['downloads'][key][field] = 0 if field=='size' else 'different'
+            modified,reference=payload(changed)
+            try:
+                check_metadata(modified,reference)
+            except ValueError:
+                pass
+            else:
+                raise ValueError('accepted changed descriptor '+key+' '+field)
+    try:
+        check_metadata(raw,{'sha1':'0'*40})
+    except ValueError:
+        pass
+    else:
+        raise ValueError('accepted incorrect metadata digest')
+    print('PASS: 7 metadata rejection cases and valid descriptor fixture')
+
+
 def synthetics():
+    metadata_synthetics()
     fake='''public enum a$b {\n  static {};\n    Code:\n       0: new           #2                  // class a$b\n       3: dup\n       4: ldc           #4                  // String HELMET\n       6: iconst_0\n       7: invokespecial #8                  // Method "<init>":(Ljava/lang/String;I)V\n      10: putstatic     #9                  // Field a:La$b;\n      13: new           #2                  // class a$b\n      16: dup\n      17: ldc           #10                 // String CHESTPLATE\n      19: iconst_1\n      20: invokespecial #8                  // Method "<init>":(Ljava/lang/String;I)V\n      23: putstatic     #11                 // Field b:La$b;\n      26: new           #2                  // class a$b\n      29: dup\n      30: ldc           #12                 // String LEGGINGS\n      32: iconst_2\n      33: invokespecial #8                  // Method "<init>":(Ljava/lang/String;I)V\n      36: putstatic     #13                 // Field c:La$b;\n      39: new           #2                  // class a$b\n      42: dup\n      43: ldc           #14                 // String BOOTS\n      45: iconst_3\n      46: invokespecial #8                  // Method "<init>":(Ljava/lang/String;I)V\n      49: putstatic     #15                 // Field d:La$b;\n      52: return\n}'''
     rows=read_code_lines(fake);v=inspect_rows(rows)
     require(len(v)==4 and [x['numeric_operands_before_ctor'][0][1] for x in v]==[0,1,2,3],
