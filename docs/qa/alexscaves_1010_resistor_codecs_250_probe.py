@@ -52,7 +52,7 @@ SELECTED = {
     NF+"common/CommonHooks":{"resolveLookup","getEnchantmentLevel","getAllEnchantments"},
 }
 REQUIRED = {
-    STACK:{"getAllEnchantments","save","parse"},
+    STACK:{"save","parse"},
     STACK+"$1":{"decode","encode"},
     STACK+"$2":{"decode","encode"},
     PATCH+"$1":{"decode","encode"},
@@ -116,7 +116,8 @@ def scan(installer,server,srg,universal,publisher,javap):
             reader=ClassReader(raw)
             require(reader.name==owner and reader.major==65,"owner/Java drift "+owner)
             declarations=[m for m in reader.methods if selected(owner,m["name"])]
-            require(REQUIRED.get(owner,set()).issubset({m["name"] for m in declarations}),"required method absent "+owner)
+            missing=REQUIRED.get(owner,set())-{m["name"] for m in declarations}
+            require(not missing,"required declared method absent "+owner+" "+str(sorted(missing)))
             require(len(declarations)<=120,"method roster budget "+owner)
             parsed=disassemble(classpath,javap,owner)
             methods=[]
@@ -155,7 +156,13 @@ def scan(installer,server,srg,universal,publisher,javap):
                             "parent":reader.parent,"interfaces":reader.interfaces,
                             "declared_methods":[{"name":m["name"],"descriptor":m["descriptor"]} for m in reader.methods],
                             "methods":methods}
-    return {"schema_version":1,"scope":"RESISTOR_COMPONENT_CODEC_AND_EFFECT_FILTER_250_DISCOVERY_ONLY","artifact":identity,"classes":classes,"nested_codec_candidates":nested,"limits":LIMITS}
+        # invokevirtual may resolve an inherited default; do not require a
+        # declaration on ItemStack just because it is the callsite owner.
+        inheritance={}
+        for owner in (STACK,NF+"common/extensions/IItemStackExtension",NF+"common/extensions/IItemExtension",NF+"common/CommonHooks"):
+            inheritance[owner]=[m for m in classes.get(owner,{}).get("methods",[]) if m["name"]=="getAllEnchantments"]
+        require(any(v for v in inheritance.values()),"effective enchantment entrypoint not found")
+    return {"schema_version":1,"scope":"RESISTOR_COMPONENT_CODEC_AND_EFFECT_FILTER_250_DISCOVERY_ONLY","artifact":identity,"classes":classes,"nested_codec_candidates":nested,"effective_enchantment_declarations":{o:[{"name":m["name"],"descriptor":m["descriptor"],"code_sha256":m.get("code_sha256")} for m in ms] for o,ms in inheritance.items()},"limits":LIMITS}
 
 def self_test():
     require(selected(STACK+"$1","decode"),"nested stack codec")
