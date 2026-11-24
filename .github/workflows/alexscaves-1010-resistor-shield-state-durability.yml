@@ -79,6 +79,10 @@ jobs:
             --publisher build/resistor-shield-state-durability/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/resistor-shield-state-durability/report.json
+      - name: Verify exact discovery seal
+        run: |
+          test "$(wc -c < build/resistor-shield-state-durability/report.json)" = 629148
+          echo '942f310f74d356bfa527dbf77bff3d007bf23cd05e1b0f2714ce57fa69bbc5d4  build/resistor-shield-state-durability/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
