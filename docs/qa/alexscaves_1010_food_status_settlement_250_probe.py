@@ -66,7 +66,7 @@ REQUIRED={
     P+"item/ACFoods":{"lambda$static$39"},
     MC+"world/item/Item":{"finishUsingItem"},
     MC+"world/item/ItemUtils":{"startUsingInstantly"},
-    MC+"world/item/ItemStack":{"consume","getFoodProperties"},
+    MC+"world/item/ItemStack":{"consume"},
     LIVING:{"eat","addEatEffect","completeUsingItem","addEffect","removeEffect"},
     PLAYER:{"eat"},
     MC+"world/food/FoodData":{"eat"},
@@ -120,7 +120,8 @@ def scan(installer,server,srg,universal,publisher,javap):
             reader=ClassReader(raw)
             require(reader.name==owner and reader.major==65,"owner/Java drift "+owner)
             declarations=[m for m in reader.methods if selected(owner,m["name"])]
-            require(REQUIRED.get(owner,set()).issubset({m["name"] for m in declarations}),"required method absent "+owner)
+            missing=REQUIRED.get(owner,set())-{m["name"] for m in declarations}
+            require(not missing,"required declared method absent "+owner+" "+str(sorted(missing)))
             require(len(declarations)<=100,"method roster budget "+owner)
             parsed=disassemble(classpath,javap,owner)
             methods=[]
@@ -145,7 +146,11 @@ def scan(installer,server,srg,universal,publisher,javap):
                             "parent":reader.parent,"interfaces":reader.interfaces,
                             "declared_methods":[{"name":m["name"],"descriptor":m["descriptor"]} for m in reader.methods],
                             "methods":methods}
-    return {"schema_version":1,"scope":"FOOD_STATUS_SETTLEMENT_250_DISTRIBUTED_DISCOVERY_ONLY","artifact":identity,"classes":classes,"limits":LIMITS}
+        food_dispatch={}
+        for owner in (MC+"world/item/ItemStack",MC+"world/item/Item",NF+"common/extensions/IItemStackExtension",NF+"common/extensions/IItemExtension"):
+            food_dispatch[owner]=[m for m in classes.get(owner,{}).get("methods",[]) if m["name"]=="getFoodProperties"]
+        require(any(v for v in food_dispatch.values()),"contextual food properties entrypoint absent")
+    return {"schema_version":1,"scope":"FOOD_STATUS_SETTLEMENT_250_DISTRIBUTED_DISCOVERY_ONLY","artifact":identity,"classes":classes,"food_properties_declarations":{o:[{"name":m["name"],"descriptor":m["descriptor"],"code_sha256":m.get("code_sha256")} for m in ms] for o,ms in food_dispatch.items()},"limits":LIMITS}
 
 def self_test():
     require(selected(HOT,"finishUsingItem"),"hot chocolate override")
