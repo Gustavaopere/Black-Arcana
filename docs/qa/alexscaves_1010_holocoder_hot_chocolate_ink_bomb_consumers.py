@@ -6,7 +6,7 @@ from pathlib import Path
 from zipfile import ZipFile
 from alexscaves_1010_armor_material_audit import ClassReader, canonical, digest, require, verify_artifact, SHA1, SHA256, SIZE
 from alexscaves_1010_enchantable_item_probe import disassemble, summarize
-from alexscaves_1010_galena_211248_spawn_denial_guards_probe import analyze
+from alexscaves_1010_galena_211248_spawn_denial_guards_probe import analyze, SELECT_OPS
 from alexscaves_1010_nuclear_explosion_effect_probe import numeric, MATH, bootstrap, context
 
 P="com/github/alexmodguy/alexscaves/server/"
@@ -71,14 +71,19 @@ def inspect(jar,javap,output):
                         hits.append({"offset":at,"opcode":op,"constant":candidates[owner][int(cp[1])],
                             "window":[{"offset":v,"opcode":body[v][0],"symbol":body[v][2],"operand":body[v][1]}
                                       for v in offsets[max(0,i-8):i+9]]})
-                full=(owner==PROJECTILE or owner in (ITEM+"$3",ITEM+"$4") or
-                      owner==ITEM and k[0] in FACTORIES or owner==COMPAT and k[0] in HELPERS or
-                      owner not in (ITEM,FOOD,ENTITY,COMPAT) and bool(hits) and len(body)<=500)
+                core=(owner==PROJECTILE or owner in (ITEM+"$3",ITEM+"$4") or
+                      owner==ITEM and k[0] in FACTORIES or owner==COMPAT and k[0] in HELPERS)
+                member_count=sum(op in SELECT_OPS for op,_,_ in body.values())
+                branch_count=sum(op.startswith("if") or op in ("goto","goto_w") for op,_,_ in body.values())
+                terminal_count=sum(op.endswith("return") or op=="athrow" for op,_,_ in body.values())
+                bounded=len(body)<=500 and member_count<=180 and branch_count<=90 and terminal_count<=30
+                full=core or (owner not in (ITEM,FOOD,ENTITY,COMPAT) and bool(hits) and bounded)
                 if not hits and not full: continue
+                print("PROJECT_METHOD",owner,k[0],k[1],"CORE",core,"MEMBERS",member_count,"FULL",full,flush=True)
                 decl=next(d for d in rd.methods if (d["name"],d["descriptor"])==k)
                 row={"name":k[0],"descriptor":k[1],"code_sha256":decl["code_sha256"],
                      "instruction_count":len(body),"instruction_sha256":summarize(rd,k,body)["instruction_sha256"],
-                     "sites":hits}
+                     "sites":hits,"projection":"FULL_BOUNDED_SEMANTICS" if full else "DIRECT_SITE_WINDOWS_ONLY","typed_member_count":member_count}
                 if full:
                     row["semantics"]=analyze(rd,body,decl)
                     row["numeric_operands"]=[{"offset":at,"opcode":op,"operand":arg,"symbol":sym}
