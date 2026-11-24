@@ -38,6 +38,9 @@ jobs:
             --jar build/remote-ticket-1010/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/remote-ticket-1010/report.json
+          report=build/remote-ticket-1010/report.json
+          test "$(stat -c %s "$report")" -eq 46004
+          test "$(sha256sum "$report" | cut -d' ' -f1)" = '3c4b8a9c3f66e05e815eb524b3d00aa43534002bfa034b2d5aaa585088baba9c'
       - name: Archive read-only evidence
         if: always()
         uses: actions/upload-artifact@v7
