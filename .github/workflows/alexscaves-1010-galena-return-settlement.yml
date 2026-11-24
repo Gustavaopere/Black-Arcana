@@ -79,6 +79,10 @@ jobs:
             --publisher build/galena-return-settlement/publisher.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/galena-return-settlement/report.json
+      - name: Verify exact report seal
+        run: |
+          test "$(wc -c < build/galena-return-settlement/report.json)" = 417931
+          echo 'cd82ce46cb90d9a4bfb6989a06792619d3207faaeb6c73c55156326cf1951803  build/galena-return-settlement/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
