@@ -97,11 +97,33 @@ jobs:
           cmp build/item-entity-defaults-250/report.json build/item-entity-defaults-250/replay.json
           test "$(wc -c < build/item-entity-defaults-250/report.json)" -eq 322625
           echo '448111136166191329351f06376741dc040bb6a6ee9f8f624ae8b915d5fae944  build/item-entity-defaults-250/report.json' | sha256sum -c -
+      - name: Replay separate codec and supplier linkage
+        run: |
+          python3 docs/qa/alexscaves_1010_item_entity_defaults_250_probe.py \
+            --installer build/item-entity-defaults-250/installer.jar \
+            --server build/item-entity-defaults-250/libraries/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-server.jar \
+            --srg build/item-entity-defaults-250/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
+            --universal build/item-entity-defaults-250/universal.jar \
+            --publisher build/item-entity-defaults-250/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --linkage --output build/item-entity-defaults-250/linkage.json
+          python3 docs/qa/alexscaves_1010_item_entity_defaults_250_probe.py \
+            --installer build/item-entity-defaults-250/installer.jar \
+            --server build/item-entity-defaults-250/libraries/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-server.jar \
+            --srg build/item-entity-defaults-250/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
+            --universal build/item-entity-defaults-250/universal.jar \
+            --publisher build/item-entity-defaults-250/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --linkage --output build/item-entity-defaults-250/linkage-replay.json
+          cmp build/item-entity-defaults-250/linkage.json build/item-entity-defaults-250/linkage-replay.json
+          sha256sum build/item-entity-defaults-250/linkage.json
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: item-entity-defaults-250
-          path: build/item-entity-defaults-250/report.json
+          path: |
+            build/item-entity-defaults-250/report.json
+            build/item-entity-defaults-250/linkage.json
           if-no-files-found: warn
           retention-days: 14

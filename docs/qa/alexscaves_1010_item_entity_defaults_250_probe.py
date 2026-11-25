@@ -196,12 +196,27 @@ if __name__=="__main__":
         p.add_argument("--"+name,type=Path)
     p.add_argument("--javap",default="javap")
     p.add_argument("--self-test",action="store_true")
+    p.add_argument("--linkage",action="store_true",help="separate extended supplier and codec linkage report")
     a=p.parse_args()
     if a.self_test:
         self_test()
     else:
         require(all(getattr(a,n) for n in (*DIST,"publisher","output")) and not a.output.exists(),
                 "all exact inputs and write-once output required")
+        if a.linkage:
+            SELECT[STACK].update({"<clinit>", "lambda$static$4", "lambda$static$8",
+                                  "validateStrict", "validateComponents"})
+            SELECT[TYPE].update({"defaultTrackingRangeSupplier", "defaultUpdateIntervalSupplier",
+                                 "defaultTrackDeltasSupplier"})
+            SELECT[BUILDER].update({"lambda$setUpdateInterval$1", "lambda$setTrackingRange$2",
+                                    "lambda$setShouldReceiveVelocityUpdates$3"})
+            SELECT[ITEM].update({"getMaxStackSize", "getMaxDamage"})
+            REQUIRED[STACK] = {"<clinit>", "lambda$static$4"}
+            REQUIRED[TYPE] = {"defaultTrackingRangeSupplier", "defaultUpdateIntervalSupplier",
+                              "defaultTrackDeltasSupplier"}
+            REQUIRED[BUILDER].update({"lambda$setUpdateInterval$1", "lambda$setTrackingRange$2",
+                                      "lambda$setShouldReceiveVelocityUpdates$3"})
+            PINS[BUILDER] = "426b62fad78c0cadfdc7867a2ed48adb2977e80bd5447228a65638197a4e9c09"
         report=scan(a)
         raw=canonical(report).encode()
         require(len(raw)<=3_000_000,"report byte budget")
