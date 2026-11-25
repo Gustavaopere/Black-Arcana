@@ -72,7 +72,7 @@ jobs:
           curl --fail --silent --show-error --location --retry 3 --max-time 180 \
             'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
             --output build/ink-bomb-impact-250/publisher.jar
-      - name: Inspect entity deserialization and UUID contracts
+      - name: Inspect Ink Bomb targeting, impact and status
         run: |
           python3 docs/qa/alexscaves_1010_ink_bomb_impact_250_probe.py \
             --installer build/ink-bomb-impact-250/installer.jar \
@@ -95,7 +95,8 @@ jobs:
       - name: Require deterministic report
         run: |
           cmp build/ink-bomb-impact-250/report.json build/ink-bomb-impact-250/replay.json
-          sha256sum build/ink-bomb-impact-250/report.json
+          test "$(wc -c < build/ink-bomb-impact-250/report.json)" -eq 465320
+          echo '642a25a85314108c189a2fc717e6e6678d122c2603e7fb4c5db6effacc135691  build/ink-bomb-impact-250/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
