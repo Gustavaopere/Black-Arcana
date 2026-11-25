@@ -10293,6 +10293,92 @@
         }
       }
     },
+    "✅-alexs-caves-continued/items/ink-bomb.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HOLOCODER-HOT-CHOCOLATE-INK-BOMB-1.0.10.md",
+          "reason": "Individual exact factory boolean false, item model and class identity; shared entity and installed parity boundary."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-INK-BOMB-IMPACT-21.1.250.md",
+          "reason": "Native use, impact, direct LivingEntity and Submarine branch, status and cloud; distinct variant and deflection."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/ink-bomb.md",
+          "reason": "Exact nominal stack, launch speed/spread/rotation, geometry, effect durations/amplifier, cloud lifetime, timers, tracking suppliers."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-INK-BOMB-IMPACT-21.1.250.md",
+          "reason": "Native targeting, collision, branch filters, AABB, horizontal radius, deflection and owner boundaries."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/ink-bomb.md",
+          "reason": "One-unit request, instabuild guard, dispenser, variant-specific barter; no own mana, durability or cooldown."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/ink-bomb.md",
+          "reason": "Static actor and status boundaries, native NBT, stack replacement and AI distinction; no mutating hook or Mastery receipt."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-INK-BOMB-IMPACT-21.1.250.md",
+          "reason": "59 methods in 17 classes; deterministic 465320-byte report with exact SHA, prior seals linked; final branch replay and canonical index CI required."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/glow-ink-bomb.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HOLOCODER-HOT-CHOCOLATE-INK-BOMB-1.0.10.md",
+          "reason": "Individual exact factory boolean true, item model and class identity; shared entity and installed parity boundary."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-INK-BOMB-IMPACT-21.1.250.md",
+          "reason": "Native use, impact, direct LivingEntity and Submarine branch, status and cloud; distinct variant and deflection."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/glow-ink-bomb.md",
+          "reason": "Exact nominal stack, launch speed/spread/rotation, geometry, effect durations/amplifier, cloud lifetime, timers, tracking suppliers."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-INK-BOMB-IMPACT-21.1.250.md",
+          "reason": "Native targeting, collision, branch filters, AABB, horizontal radius, deflection and owner boundaries."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/glow-ink-bomb.md",
+          "reason": "One-unit request, instabuild guard, dispenser, variant-specific barter; no own mana, durability or cooldown."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/glow-ink-bomb.md",
+          "reason": "Static actor and status boundaries, native NBT, stack replacement and AI distinction; no mutating hook or Mastery receipt."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-INK-BOMB-IMPACT-21.1.250.md",
+          "reason": "59 methods in 17 classes; deterministic 465320-byte report with exact SHA, prior seals linked; final branch replay and canonical index CI required."
+        }
+      }
+    },
     "✅-alexs-caves-continued/items/hot-chocolate-bottle.md": {
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",

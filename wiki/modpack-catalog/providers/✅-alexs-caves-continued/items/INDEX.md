@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 33/39.**
+**Fichas catalogadas (somente fichas detectadas): 35/39.**
 
-**Barra das fichas catalogadas:** `████████████████░░░░ 84.6%`
+**Barra das fichas catalogadas:** `█████████████████░░░ 89.7%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 33/39.**
+**Homologadas para perks (somente fichas detectadas): 35/39.**
 
-**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 84.6%`
+**Barra dos contratos técnicos estáticos:** `█████████████████░░░ 89.7%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -39,7 +39,7 @@
 | ✅ | Gingerbread Chestplate | [ficha/gingerbread-chestplate.md](gingerbread-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gingerbread Helmet | [ficha/gingerbread-helmet.md](gingerbread-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gingerbread Leggings | [ficha/gingerbread-leggings.md](gingerbread-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Glow Ink Bomb | [ficha/glow-ink-bomb.md](glow-ink-bomb.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Glow Ink Bomb | [ficha/glow-ink-bomb.md](glow-ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Boots | [ficha/hazmat-boots.md](hazmat-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Chestplate | [ficha/hazmat-chestplate.md](hazmat-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Leggings | [ficha/hazmat-leggings.md](hazmat-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -47,7 +47,7 @@
 | ⚠️ | Holocoder | [ficha/holocoder.md](holocoder.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hood Of Darkness | [ficha/hood-of-darkness.md](hood-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hot Chocolate Bottle | [ficha/hot-chocolate-bottle.md](hot-chocolate-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Ink Bomb | [ficha/ink-bomb.md](ink-bomb.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Ink Bomb | [ficha/ink-bomb.md](ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [ficha/pewen-boat.md](pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [ficha/pewen-chest-boat.md](pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Primordial Helmet | [ficha/primordial-helmet.md](primordial-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
