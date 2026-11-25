@@ -119,3 +119,18 @@ Pendente: resolver os consumidores herdados diretamente relevantes do áudio (It
 ### Última fronteira de apresentação — lifecycle herdado
 
 O [replay selado integrado em #1222](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45649275425) foi aprovado. O construtor ResistorShieldSound invoca `com/github/alexmodguy/alexscaves/client/sound/ItemTickableSound.<init>(LivingEntity,SoundEvent)` @31, e o dispatcher cliente consulta isSameEntity/canPlaySound antes de enfileirar áudio. As referências não demonstram sozinhas o comportamento herdado. A [sonda delimitada](../../../../../docs/qa/alexscaves_1010_resistor_audio_lifecycle_probe.py) exige o SHA do classfile filho, os quatro Code hashes observados e a hierarquia; projeta todas as declarações dos dois owners, distingue métodos abstratos e executáveis e exige replay idêntico no [workflow](../../../../../.github/workflows/alexscaves-1010-resistor-audio-lifecycle.yml). Sem pressupor métodos herdados além do constructor observado, nem comportamento de SoundManager. Coleta e interpretação ainda pendentes. Nenhuma promoção de certificado, hook, QA ou raiz; `NO_MUTATION`.
+
+### Resultado do replay — ItemTickableSound
+
+[Run 45650697773 / job 139334077600](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45650697773/job/139334077600), HEAD `b0928e9001819a68506da0afafb66e940e2582c6`: quatro checks de escopo, **11 declarações em dois owners**, nove executáveis e duas abstratas; dois relatórios byte-idênticos por cmp, **54.228 bytes**, SHA-256 `e9257edc70e7a3ff00ca1fbe1d2fbe3aedb18e4a6879f8e10c9ae899f0d4b282`. Confirmou quatro Code hashes prévios do filho e hierarquia ItemTickableSound → AbstractTickableSoundInstance. O classfile pai tem SHA-256 `76ccf1f40970b5e112e9c065a9987ec2fdf40f918266b606d66b636f5f4a6231`. Esta revisão fixa tamanho/digest, além do replay.
+
+| Corpo herdado / Code SHA-256 | Resultado estático delimitado |
+|---|---|
+| <init> (39) / `88b63b81423b8b328e5060afade442e6ba2b8b976db22b3f3d6669db99f36a43` | SoundSource.PLAYERS @2, random não semeado explicitamente @5, super @8, user @13; atenuação LINEAR @17–20, looping=true @24–25, posição X/Y/Z da entidade @33/46/59, delay=0 @68–69. Não é distância de ataque. |
+| canPlaySound (26) / `0c5c0a2171e03f616314c33668d7843578f76a0b845bc4c75dccd6a676e07aae` | Exige !user.isSilent @4/7, isUsingItem @14/17 e isValidItem da mão principal @31 ou secundária @48. Não exige identidade com getUseItem nesse corpo; dispatch virtual para o filho aplica classe e polaridade. |
+| tick (65) / `b77b57b153020d1eb0ba0526c9d3a7dd2b34fc52f47d83ca5a36bed2b182093e` | Stack inicial EMPTY; se isUsingItem, escolhe primeiro mão principal válida, senão secundária válida. Se user.isAlive e stack não vazia, atualiza posição e pede tickVolume @128; senão solicita stop @135. Não há guarda isSilent própria neste tick. Não prova som efetivamente enfileirado ou interrompido pelo cliente. |
+| canStartSilent (2) / `95ef737cd8a13db65e3eb3c18e8816a5179dcbdf341309522ab00e95d5aae6d2` | Retorna true literal; distinto de canPlaySound. |
+| isSameEntity (14) / `32c682955035fd0247984a2eb1fc6484d4d0d30fed1680ecfa7f12187c87ed96` | Exige user.isAlive @4 e igualdade dos IDs inteiros getId @14/18, não UUID nem identidade de referência. |
+| tickVolume / isValidItem | Duas declarações abstratas do pai; os corpos concretos e fórmulas do filho constam no replay de apresentação anterior. |
+
+Esses limites distinguem cache de ID runtime de ownership, seleção de mão visual de identidade da stack de uso e stop solicitado de interrupção real. Não inferir volume/atenuação final da engine, dano, custo, alvo de combate ou Mastery pelo áudio. `NO_MUTATION / NOT_CERTIFIED / NOT_TESTED`.
