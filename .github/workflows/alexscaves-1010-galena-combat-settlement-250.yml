@@ -94,7 +94,8 @@ jobs:
       - name: Require identical replay
         run: |
           cmp build/galena-combat-settlement-250/report.json build/galena-combat-settlement-250/replay.json
-          sha256sum build/galena-combat-settlement-250/report.json
+          test "$(wc -c < build/galena-combat-settlement-250/report.json)" -eq 328192
+          echo 'a2646ee06193f4edd3f477cf5e43281ca0bf2080a31f8b9623f13fb96b1ddf8c  build/galena-combat-settlement-250/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
