@@ -21,3 +21,20 @@ Sack of Sating tem rota própria por classe DrinkableBottledItem, cujo cálculo 
 ## Evidência downstream adicional — NeoForge 21.1.250
 
 ACFoods.lambda$static$39 cria Sugar Rush por 200 ticks. ServerPlayer.resetStat solicita valor 0, reseta scoreboard; StatsCounter.setValue passa por StatAwardEvent, pode cancelar ou usar stat/value alterados. PhantomSpawner lê TIME_SINCE_REST, clamp [1,INT_MAX]; sem ALLOW do PlayerSpawnPhantomsEvent, nextInt(clamped) precisa ser >=72000 no ramo de insônia. Outros gates permanecem. Reset não garante proteção absoluta. O censo JSON encontrou licowitch_tower loot e gingerbread_man_steals tag, mais referência da receita em livro. [Dossiê downstream 21.1.250](../EXACT-FOUR-ITEMS-DOWNSTREAM-21.1.250.md).
+
+
+## Liquidação de consumo, efeito e estatística — contrato distribuído adicional
+
+Evidência read-only da PR #1199: [dossiê de consumo e status 21.1.250](../EXACT-FOOD-STATUS-SETTLEMENT-21.1.250.md), [execução 45479066017](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45479066017), relatório de 647.857 bytes, SHA-256 `ac206f62678acd71876df7df3321eb16ee51832a15325515bf23db71bc566464`. Escopo: 113 registros semânticos em 27 owners; classes distribuídas, não runtime transformado.
+
+| Eixo para perks | Fronteira comprovada no recorte | Restrição |
+|---|---|---|
+| Nutrição e saturação | `IItemStackExtension.getFoodProperties` delega ao Item com stack e consumidor; o default de `IItemExtension` lê FOOD; `FoodData.eat` lê nutrition/saturation e delega add. | Perfil contextual pode divergir do perfil publisher; 4 e 2 são valores nominais, não ganho efetivo garantido. |
+| Duração e custo de uso | `LivingEntity.completeUsingItem`: copy @75, finishUsingItem @94, onItemUseFinish @97, setItemInHand @112 quando resultado distinto, stop @116. Eventos Start/Tick consultam duração e podem cancelar; Finish admite resultStack. | Não criar segundo consumo nem substituição de stack; não presumir transação atômica ou material debitado. |
+| Chance e duração de Sugar Rush | `LivingEntity.addEatEffect`: servidor, nextFloat/probability, effect @58, addEffect @61. `FoodProperties.PossibleEffect.effect` obtém Supplier e copia a instância. | 0,02 e 200 ticks são parâmetros de solicitação; não equivalem a aplicação ou duração efetiva. |
+| Admissão de status | `CommonHooks.canMobEffectBeApplied` publica Applicable; APPLY aceita, DEFAULT depende de canBeAffected e demais resultados rejeitam. Remove também publica evento cancelável. | Não conceder Mastery por tentativa, nem aplicar efeito paralelo ao nativo. |
+| Descanso / phantoms | `HotChocolateBottleItem.finishUsingItem` chama ancestral @4 e resetStat @33 apenas para ServerPlayer; `StatsCounter.setValue` publica StatAwardEvent e usa stat/value do evento quando aceito. `PlayerSpawnPhantomsEvent` possui resultado e quantidade mutáveis. | Reset é independente de Sugar Rush; não é imunidade absoluta nem garantia de reset físico. |
+| Recipiente e autoria | `DrinkableBottledItem.finishUsingItem` chama Item.finishUsingItem, trata stack vazia e inserção/drop; `Player.eat` também tem caminhos de conversão, estatística e criterion. | Chamadas de estatística/criterion não têm deduplicação comprovada; preservar o consumidor nativo e materiais infinitos. |
+| Sack of Sating | `overrideOtherStackedOnMe` usa SECONDARY, tags e gates, calcula fome e retorna recipientes; setCount @174. `calculateWholeStackHungerValue` lê perfil e quantidade. | Não chama finishUsingItem ou resetStat nos corpos examinados; não tratar inserção como ingestão da bebida. |
+
+**Estado preservado:** `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. O dossiê permite planejar atributos de nutrição, tempo de uso, chance e duração de efeito, mas não demonstra um hook mutador seguro nem um resultado efetivo no modpack. A aquisição/tag e os consumidores concretos de inventário continuam em auditorias separadas. Nenhum novo certificado ou raiz semântica.
