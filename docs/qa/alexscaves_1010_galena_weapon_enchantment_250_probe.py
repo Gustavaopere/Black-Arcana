@@ -70,7 +70,6 @@ REQUIRED = {
     SOURCE: {"getWeaponItem"},
     HELPER: {"modifyArmorEffectiveness","getDamageProtection","getEnchantmentLevel","forEachModifier","runIterationOnItem"},
     ENCH: {"modifyDamageFilteredValue"},
-    STACK: {"getAttributeModifiers"},
     TARGETED: {"matches"},
 }
 DIST = {
@@ -88,6 +87,53 @@ LIMITS = {"scope":"DISCOVERY_ONLY","static_contract":"NOT_CERTIFIED","physical_q
 def selected(owner, declaration):
     name=declaration["name"]
     return name in SELECT.get(owner, set()) or name.startswith(PREFIXES.get(owner, ()))
+
+ATTRIBUTE_SIGNATURE = ("getAttributeModifiers", "()Lnet/minecraft/world/item/component/ItemAttributeModifiers;")
+
+def reachable(roots, load):
+    """Enumerate bounded declared hierarchy, recording paths, not runtime dispatch."""
+    pending=[(root,[root]) for root in roots]
+    visited={}
+    while pending:
+        owner,path=pending.pop(0)
+        if owner in visited:
+            continue
+        require(len(visited)<64,"hierarchy budget")
+        visited[owner]=path
+        node=load(owner)
+        if node is not None:
+            pending.extend((parent,path+[parent]) for parent in
+                           ([node.parent] if node.parent else [])+node.interfaces)
+    return visited
+
+def resolve_stack_attribute(archives, rosters, order, result):
+    def load(owner):
+        sources=[name for name in order if owner+".class" in rosters[name]]
+        if not sources:
+            return None
+        reader=ClassReader(archives[sources[0]].read(owner+".class"))
+        require(reader.name==owner,"hierarchy identity")
+        return reader
+    paths=reachable([STACK],load)
+    candidates=[]
+    for owner,path in paths.items():
+        reader=load(owner)
+        if reader is None:
+            continue
+        for d in reader.methods:
+            if (d["name"],d["descriptor"])!=ATTRIBUTE_SIGNATURE:
+                continue
+            # An exact executable, non-static body must also have been projected.
+            if "code_sha256" in d and not d["access"] & 0x0008:
+                rows=[m for m in result.get(owner,{}).get("methods",[])
+                      if (m["name"],m["descriptor"])==ATTRIBUTE_SIGNATURE
+                      and m.get("executable") and m.get("code_sha256")==d["code_sha256"]]
+                require(len(rows)==1,"reachable attribute body not projected "+owner)
+                candidates.append({"owner":owner,"path":path,"code_sha256":d["code_sha256"]})
+    require(bool(candidates),"no reachable executable attribute descriptor")
+    return {"reference_owner":STACK,"name":ATTRIBUTE_SIGNATURE[0],
+            "descriptor":ATTRIBUTE_SIGNATURE[1],"reachable_executable_declarations":candidates,
+            "scope":"DECLARED_HIERARCHY_ONLY_NOT_RUNTIME_DISPATCH"}
 
 def scan(args):
     identity={}
@@ -144,9 +190,10 @@ def scan(args):
                            "parent":reader.parent,"interfaces":reader.interfaces,
                            "declared_signatures":[[d["name"],d["descriptor"]] for d in reader.methods],
                            "methods":methods}
+        attribute_resolution=resolve_stack_attribute(archives,rosters,order,result)
     require(seen==set(KNOWN),"prior Code coverage mismatch")
     require(sum(len(v.get("methods",[])) for v in result.values())<=120,"total method budget")
-    return {"schema":1,"artifacts":identity,"classes":result,"limits":LIMITS}
+    return {"schema":1,"artifacts":identity,"classes":result,"attribute_resolution":attribute_resolution,"limits":LIMITS}
 
 def self_test():
     require(selected(SOURCE,{"name":"getWeaponItem"}),"weapon source")
@@ -157,7 +204,19 @@ def self_test():
     require(not selected("foreign/Enchantment",{"name":"modifyDamageFilteredValue"}),"namespace boundary")
     require(all(names<=SELECT[owner] for owner,names in REQUIRED.items()),"required scope consistency")
     require(LIMITS["mutation"]=="NO_MUTATION" and LIMITS["static_contract"]=="NOT_CERTIFIED","policy")
-    print("PASS: eight scope and policy checks")
+    require(STACK not in REQUIRED and selected(STACK,{"name":ATTRIBUTE_SIGNATURE[0]}),
+            "do not conflate reference and declaration")
+    class Node:
+        def __init__(self,parent=None,interfaces=()):
+            self.parent=parent
+            self.interfaces=list(interfaces)
+    graph={"Stack":Node("Object",("Extension",)), "Extension":Node(None,("Base",)),
+           "Base":Node(None,("Extension",))}
+    paths=reachable(["Stack"],graph.get)
+    require(paths=={"Stack":["Stack"],"Object":["Stack","Object"],
+                    "Extension":["Stack","Extension"],"Base":["Stack","Extension","Base"]},
+            "inherited declaration traversal with cycle and missing external ancestor")
+    print("PASS: ten scope, hierarchy and policy checks")
 
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
@@ -182,4 +241,5 @@ if __name__=="__main__":
             print("OWNER",owner,row.get("source"),row.get("class_sha256"),"METHODS",len(row.get("methods",[])))
             for m in row.get("methods",[]):
                 print("SEMANTIC",json.dumps({"owner":owner,**m},sort_keys=True))
+        print("ATTRIBUTE_RESOLUTION",json.dumps(report["attribute_resolution"],sort_keys=True))
         print("DISCOVERY_ONLY NO_MUTATION")
