@@ -1,6 +1,6 @@
 # Hot Chocolate Bottle — `alexscaves:hot_chocolate_bottle`
 
-**Estado:** ⚠️ `STATIC_DISCOVERY_ONLY` · `static_contract=NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION` · provider `OPEN`. Nenhuma nova raiz semântica certificada.
+**Contrato técnico estático:** ✅ `STATIC_TECHNICAL_CATALOG_ONLY` · grau `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION` · provider `OPEN`. Nenhuma nova raiz semântica certificada.
 
 ## Identidade e parâmetros
 
@@ -16,7 +16,7 @@ Alvo é o próprio consumidor; dano, projétil, AOE próprio, mana e cooldown pr
 
 ## Integração e pendências
 
-Sack of Sating tem rota própria por classe DrinkableBottledItem, cujo cálculo de nutrição e recipiente não chama finishUsingItem; não transferir automaticamente reset de TIME_SINCE_REST. Reutilizar suporte de comida sem promover certificado individual do chocolate: fornecedor de efeito e fronteira da estatística aprofundados; aquisição e consumidores da tag foram aprofundados nos dossiês abaixo; efeitos físicos permanecem pendentes. QA física: fome cheia, cancelamento, último item, criativo, inventário cheio, reset de estatística e efeito, reload. Nenhum hook seguro para alterar efeito/custo/XP demonstrado. [Dossiê SHA-exato](../EXACT-HOLOCODER-HOT-CHOCOLATE-INK-BOMB-1.0.10.md) · [registro individual de factories](../systems/item-registry.md).
+Sack of Sating tem rota própria por classe DrinkableBottledItem, cujo cálculo de nutrição e recipiente não chama finishUsingItem; não transferir automaticamente reset de TIME_SINCE_REST. A certificação individual delimita o suporte de comida: fornecedor de efeito e fronteira da estatística aprofundados; aquisição e consumidores da tag foram aprofundados nos dossiês abaixo; efeitos físicos permanecem pendentes. QA física: fome cheia, cancelamento, último item, criativo, inventário cheio, reset de estatística e efeito, reload. Nenhum hook seguro para alterar efeito/custo/XP demonstrado. [Dossiê SHA-exato](../EXACT-HOLOCODER-HOT-CHOCOLATE-INK-BOMB-1.0.10.md) · [registro individual de factories](../systems/item-registry.md).
 
 ## Evidência downstream adicional — NeoForge 21.1.250
 
@@ -37,14 +37,36 @@ Evidência read-only da PR #1199: [dossiê de consumo e status 21.1.250](../EXAC
 | Recipiente e autoria | `DrinkableBottledItem.finishUsingItem` chama Item.finishUsingItem, trata stack vazia e inserção/drop; `Player.eat` também tem caminhos de conversão, estatística e criterion. | Chamadas de estatística/criterion não têm deduplicação comprovada; preservar o consumidor nativo e materiais infinitos. |
 | Sack of Sating | `overrideOtherStackedOnMe` usa SECONDARY, tags e gates, calcula fome e retorna recipientes; setCount @174. `calculateWholeStackHungerValue` lê perfil e quantidade. | Não chama finishUsingItem ou resetStat nos corpos examinados; não tratar inserção como ingestão da bebida. |
 
-**Estado preservado:** `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. O dossiê permite planejar atributos de nutrição, tempo de uso, chance e duração de efeito, mas não demonstra um hook mutador seguro nem um resultado efetivo no modpack. A aquisição/tag e os consumidores concretos de inventário continuam em auditorias separadas. Nenhum novo certificado ou raiz semântica.
+**Estado desta evidência histórica de descoberta:** `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. O dossiê permite planejar atributos de nutrição, tempo de uso, chance e duração de efeito, mas não demonstra um hook mutador seguro nem um resultado efetivo no modpack. A aquisição/tag e os consumidores concretos de inventário foram examinados nos complementos abaixo. Nenhuma nova raiz semântica.
 
 ## Aquisição, clamp e ciclo de vida — complemento individual
 
 - [Aquisição](../EXACT-FOUR-ITEMS-ACQUISITION-1.0.10.md): licowitch_tower, entrada 15, peso 10/153, rolls 3–8, set_count 1–2; não é chance física sem contexto e modificadores. Tag gingerbread_man_steals: 12 valores, índice 5. [Ingresso e inventário](../EXACT-HOLOCODER-INGRESS-1.0.10.md): handler ENTITY_AUTOMATION, Direction.DOWN; extração solicitada via extractItem(slot,1,false). Não equivale a débito confirmado.
 - [Ciclo de vida](../EXACT-CHOCOLATE-EFFECT-LIFECYCLE-21.1.250.md): filtro de roubo exclui Player criativo e GingerbreadManEntity. FoodData.add limita foodLevel a [0,20] e saturação a [0,foodLevel atualizado]; 4/2 são ganhos nominais, não cura. MobEffectInstance.update substitui duração pelo valor maior para mesmo amplifier, não soma. Efeito oculto e expiração têm fluxo próprio; Added não é recibo de liquidação.
-- [Defaults e codec](../EXACT-ITEM-ENTITY-DEFAULTS-21.1.250.md): serializer shapeless lê STRICT_CODEC para result. O corpo ItemStack.lambda$static$3 possui count em [1,99], orElse(1); a ligação do inicializador ao STRICT_CODEC foi resolvida no complemento abaixo. Não presumir quantidade efetivamente obtida. `NO_MUTATION / NOT_CERTIFIED / NOT_TESTED`.
+- [Defaults e codec](../EXACT-ITEM-ENTITY-DEFAULTS-21.1.250.md): serializer shapeless lê STRICT_CODEC para result. O corpo ItemStack.lambda$static$3 possui count em [1,99], orElse(1); a ligação do inicializador ao STRICT_CODEC foi resolvida no complemento abaixo. Não presumir quantidade efetivamente obtida. `NO_MUTATION / perk_certification=NOT_CERTIFIED / physical_qa=NOT_TESTED`.
 
 ### Codec estrito da receita — fechamento do campo nominal
 
 [Run 45525743293](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45525743293), 380.596 bytes SHA-256 `aab3ae48b827b010a92197e8c0c56bc9be8cbb35cadb1e8c0809a9542cc5bcdb`. ItemStack.<clinit> liga CODEC -> lambda$static$4 -> RecordCodecBuilder.create(lambda$static$3); STRICT_CODEC = CODEC.validate(validateStrict). Campo count [1,99] com orElse(1), components opcional EMPTY; validateStrict rejeita componentes inválidos ou count superior ao máximo. Portanto a receita publisher fornece uma unidade nominal. O resultado efetivo ainda depende de registry, datapacks e execução. Nenhum hook ou QA promovido.
+
+## Contrato individual delimitado e sete eixos
+
+A certificação proposta nesta revisão abrange somente o comportamento binário estático do consumível publisher 1.0.10, com distribuição oficial NeoForge 21.1.250. Não afirma paridade com novo dump instalado, runtime transformado, listeners efetivos, execução física, hook ou provider fechado. `perk_certification=NOT_CERTIFIED; runtime_dispatch=NOT_VERIFIED; mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED; NO_MUTATION`.
+
+| Eixo | Evidência individual e limite |
+|---|---|
+| Identidade | Dois corpos próprios e sete do ancestral, factory $164, FOOD perfil HOT_CHOCOLATE_BOTTLE, modelo e receita SHA-exatos. O censo tipado do owner e consumers é limitado ao publisher, não exclui usos externos. |
+| Comportamento | Início via ItemUtils.startUsingInstantly, sem teste canEat próprio do Item.use de comida; o perfil do chocolate não declara alwaysEat. Lifecycle Start/Tick/Finish controla duração e resultado. O ancestral solicita ingestão, stats/criterion e retorno de recipiente; o override apenas acrescenta reset de descanso para ServerPlayer e devolve o resultado ancestral. |
+| Parâmetros | Stack 16, DRINK 40 ticks, 4 nutrition e 2 saturation nominal, chance 0.02F, Sugar Rush 200 ticks, amplifier padrão 0; clamps de FoodData e MobEffectInstance, merge, cooldown próprio N/A. |
+| Targeting | Próprio consumidor (LivingEntity); reset somente ServerPlayer. Sem targeting remoto, dano/tipo, projétil, AOE própria, invocação ou cura direta. O campo temporal eventual é consumidor de Sugar Rush, não efeito incondicional da bebida. |
+| Custos | Uma unidade solicitada no pipeline de comida sob regras de materiais infinitos, retorno de garrafa ou inserção/drop; sem segundo shrink próprio no ancestral. Receita 2 blocos de chocolate, 1 açúcar, 1 garrafa -> 1 unidade nominal. Loot e extração por AI não são consumo do player. Mana/durabilidade/stamina própria N/A. |
+| Integração | Eventos de uso, stats e efeito são fronteiras distintas e não recibos atômicos. Não modificar FOOD global, chance, duração, stat, retorno da garrafa ou Mastery sem boundary por jogador com causalidade e dedupe; não converter Added ou reset request em cast/XP. |
+| Validação | Relatórios publisher 45464509190, downstream 45471957912, aquisição 45473794747, ingresso 45478556000, settlement 45479066017, lifecycle 45513909141 e codec 45525743293. Cada dossiê vincula hashes, corpos, escopo e replay. O CI final do HEAD candidato precisa reproduzir selos e índices. |
+
+### Efeito secundário e fórmula de insônia
+
+ACFoods.lambda$static$39 (Code SHA-256 `3f170597f2af332912135c02914fd01d330cd72ce22a380f3b7d8fea9e8ccbe9`) chama MobEffectInstance(Holder,I) com 200 @18–21. Essa overload (Code `06a69552697053160dd15a4a46255187e61416a95e4cb00e7229ec8849852e06`) passa amplifier=0 @3; o construtor terminal clampa amplifier em [0,255]. O [contrato Sugar Rush](../effects/sugar-rush.md) separa modifier MOVEMENT_SPEED +0.699999988079071D ADD_MULTIPLIED_TOTAL, e evento de aplicação para Player adicionado ao mundo com config sugar_rush_slows_time: solicita campo temporal de raio 10D, multiplier 2F e ceil(duration×2F), nominal 400 para a instância de 200 ticks. O ramo de refresh altera maxDuration, não reinicia a idade; a aplicação efetiva depende dos gates, merge e scheduler. Não multiplicar velocidade efetiva ou tempo real por esses argumentos.
+
+PhantomSpawner.tick Code `b63e8bc63bd4827bf4c1ed42499eca13f5f09130585f7a9246d6f9465ef24d1f`: no ramo não ALLOW que alcança a verificação de insônia, S=clamp(TIME_SINCE_REST,1,2147483647), nextInt(S) @254, comparação com 72000 @259–261. Sob sorteio uniforme, fração favorável desse gate é max(0,S−72000)/S. Não é probabilidade total de spawn: outros gates de dificuldade, ambiente, eventos e tentativa de criação permanecem. O pedido resetStat não é sono nem imunidade.
+
+Persistência própria: nenhum campo na subclasse, nenhum estado/owner customizado do objeto; FOOD e contagem pertencem à stack e duração/status à entidade; TIME_SINCE_REST pertence ao StatsCounter do ServerPlayer. Não declarar round-trip de saves. QA física: fome cheia, cancelamentos Start/Tick/Finish, stack final e múltipla, criativo, inventário cheio, aplicação/refresh/remoção de Sugar Rush, config on/off, stat modificado/cancelado, spawn de phantom, reload e interoperabilidade. Nenhum novo cast/raiz.

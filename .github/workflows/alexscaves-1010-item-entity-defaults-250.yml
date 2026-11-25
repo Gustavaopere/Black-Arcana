@@ -118,6 +118,12 @@ jobs:
           cmp build/item-entity-defaults-250/linkage.json build/item-entity-defaults-250/linkage-replay.json
           test "$(wc -c < build/item-entity-defaults-250/linkage.json)" -eq 380596
           echo 'aab3ae48b827b010a92197e8c0c56bc9be8cbb35cadb1e8c0809a9542cc5bcdb  build/item-entity-defaults-250/linkage.json' | sha256sum -c -
+      - name: Reproduce canonical indexes for individual Hot Chocolate certificate
+        run: |
+          python3 scripts/catalog/generate_perk_ready_indexes.py
+          git diff --exit-code -- wiki/modpack-catalog/providers
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
