@@ -2,12 +2,15 @@
 """Read-only exact publisher controller separation; no runtime execution."""
 import argparse
 import json
+import re
 from pathlib import Path
 from zipfile import ZipFile
 from alexscaves_1010_armor_material_audit import ClassReader, canonical, digest, require, verify_artifact, SHA1, SHA256, SIZE
 from alexscaves_1010_enchantable_item_probe import disassemble, summarize
 from alexscaves_1010_four_items_downstream_250_probe import projection
-from alexscaves_1010_galena_211248_spawn_denial_guards_probe import refs
+from alexscaves_1010_galena_211248_spawn_denial_guards_probe import refs, SELECT_OPS
+from alexscaves_1010_galena_motion_dataflow_probe import successors
+from alexscaves_1010_nuclear_explosion_effect_probe import numeric, bootstrap, MATH
 
 P = "com/github/alexmodguy/alexscaves/server/entity/"
 WEAPON = P + "item/MagneticWeaponEntity"
@@ -25,6 +28,63 @@ LIMITS = {"static_contract":"NOT_CERTIFIED","mutation":"NO_MUTATION",
           "provider_universe_closed":False,"semantic_magic_roots_delta":0,
           "actual_owner_resolution":"NOT_VERIFIED","effective_combat":"NOT_VERIFIED"}
 
+def bounded_refs(reader,body):
+    require(len(body)<=1600,"method budget")
+    offsets=sorted(body)
+    result=[]
+    for start in range(0,len(offsets),120):
+        part=offsets[start:start+120]
+        result.extend(refs(reader,{at:body[at] for at in part}))
+    expected=[at for at in offsets if body[at][0] in SELECT_OPS]
+    require([row["offset"] for row in result]==expected,"partitioned member coverage drift")
+    return result
+
+def project_method(reader,key,body,decl):
+    members=bounded_refs(reader,body)
+    if len(members)<=180:
+        row=projection(reader,key,body,decl)
+        require(row["typed_members"]==members,"projection census drift")
+        return row
+    # Do not truncate the method or relax the shared 180-member bound.
+    # Resolve each partition using the existing strict CP decoder, then
+    # reconstruct the complete normal-edge CFG over original instructions.
+    require(not decl.get("exception_handlers",[]),"wide method exception CFG unsupported")
+    edges=successors(body)
+    offsets=sorted(body)
+    branches=[]
+    for i,at in enumerate(offsets):
+        op,arg,sym=body[at]
+        if not op.startswith(("if","goto")):
+            continue
+        prior=offsets[max(0,i-5):i]
+        branches.append({"offset":at,"opcode":op,"target":int(arg),
+                         "successors":edges[at],"prelude_offsets":prior,
+                         "prelude_opcodes":[body[p][0] for p in prior]})
+    require(len(branches)<=90,"wide branch budget")
+    type_operands=[]
+    for at,(op,arg,_) in sorted(body.items()):
+        if op not in {"new","checkcast","instanceof","anewarray","multianewarray"}:
+            continue
+        match=re.match(r"#(\d+)(?:\s|,|$)",arg)
+        require(match is not None and reader.pool[int(match[1])][0]==7,"unresolved type operand")
+        type_operands.append({"offset":at,"opcode":op,"owner":reader.resolve(int(match[1]))})
+    return {"name":key[0],"descriptor":key[1],"code_sha256":decl["code_sha256"],
+            "code_bytes":decl["code_size"],"instruction_count":len(body),
+            "instruction_sha256":summarize(reader,key,body)["instruction_sha256"],
+            "projection":"FULL_NORMAL_CFG_PARTITIONED_TYPED_MEMBERS",
+            "partition_instruction_budget":120,
+            "typed_members":members,"branches":branches,
+            "exception_handler_count":0,
+            "terminals":[{"offset":at,"opcode":body[at][0]} for at in offsets if not edges[at]],
+            "numeric_operands":[{"offset":at,"opcode":op,"operand":arg,"symbol":sym}
+                                for at,(op,arg,sym) in sorted(body.items()) if numeric(op,sym)],
+            "arithmetic":[{"offset":at,"opcode":op} for at,(op,_,_) in sorted(body.items()) if op in MATH],
+            "strings":[{"offset":at,"symbol":sym} for at,(op,_,sym) in sorted(body.items()) if sym.startswith("String ")],
+            "local_accesses":[{"offset":at,"opcode":op,"operand":arg}
+                              for at,(op,arg,_) in sorted(body.items())
+                              if op.startswith(("aload","astore","iload","istore","fload","fstore","dload","dstore","lload","lstore")) or op=="iinc"],
+            "bootstrap_links":bootstrap(reader,body),"type_operands":type_operands}
+
 def select_sites(members, owner):
     return [m for m in members if m["owner"] == owner and
             m["opcode"] in {"invokevirtual","invokespecial","invokestatic","invokeinterface"}]
@@ -36,7 +96,24 @@ def self_test():
     require(select_sites([a,b,c],WEAPON)==[b],"separate weapon calls")
     require(select_sites([],TELETOR)==[],"empty input")
     require(LIMITS["mutation"]=="NO_MUTATION" and LIMITS["static_contract"]=="NOT_CERTIFIED","policy")
-    print("PASS: four scope and typed-site checks")
+    class FixtureReader:
+        pool=[None,(10,)]
+        def resolve(self,index):
+            require(index==1,"fixture index")
+            return (10,"fixture/Owner",(12,"call","()V"))
+    body={i*3:("invokevirtual","#1","") for i in range(181)}
+    body[544]=("return","","")
+    result=bounded_refs(FixtureReader(),body)
+    require([r["offset"] for r in result]==[i*3 for i in range(181)],"wide site roster")
+    require(bounded_refs(FixtureReader(),{})==[],"empty member roster")
+    bad=dict(body);bad[543]=("invokevirtual","#2","")
+    try:
+        bounded_refs(FixtureReader(),bad)
+    except Exception as exc:
+        require("invalid JVM ref index" in str(exc),"wrong rejection")
+    else:
+        raise AssertionError("invalid member accepted")
+    print("PASS: seven scope, typed-site and partition checks")
 
 def inspect(jar,javap):
     verify_artifact(jar)
@@ -58,7 +135,7 @@ def inspect(jar,javap):
             require(len(body)==count and summarize(wr,key,body)["instruction_sha256"]==sha,"method identity "+name)
             if name=="tick":
                 require(d["code_sha256"]==TICK and not d["exception_handlers"],"tick Code drift")
-            weapon[name]=projection(wr,key,body,d)
+            weapon[name]=project_method(wr,key,body,d)
         sites=select_sites(weapon["tick"]["typed_members"],TELETOR)
         require({m["name"] for m in sites}>={"setWeaponUUID","getTarget","getWeaponPosition"},"expected typed Teletor calls missing")
         tr=readers[TELETOR]
@@ -71,12 +148,12 @@ def inspect(jar,javap):
         field_names=set()
         for k in sorted(selected):
             if k in bodies[TELETOR]:
-                field_names.update(m["name"] for m in refs(tr,bodies[TELETOR][k])
+                field_names.update(m["name"] for m in bounded_refs(tr,bodies[TELETOR][k])
                                    if m["owner"]==TELETOR and m["opcode"] in {"getfield","putfield","getstatic","putstatic"})
         reverse=[]
         for k,body in sorted(bodies[TELETOR].items()):
             if not body: continue
-            members=refs(tr,body)
+            members=bounded_refs(tr,body)
             calls=select_sites(members,WEAPON)
             fields=[m for m in members if m["owner"]==TELETOR and m["name"] in field_names and m["opcode"] in {"getfield","putfield","getstatic","putstatic"}]
             if calls or fields:
@@ -90,7 +167,7 @@ def inspect(jar,javap):
                 native.append({"name":k[0],"descriptor":k[1],"executable":False})
             else:
                 require(k in bodies[TELETOR] and bodies[TELETOR][k],"selected body unavailable")
-                native.append({"executable":True,**projection(tr,k,bodies[TELETOR][k],d)})
+                native.append({"executable":True,**project_method(tr,k,bodies[TELETOR][k],d)})
         return {"schema":1,"publisher":{"sha1":SHA1,"sha256":SHA256,"bytes":SIZE},
                 "class_hashes":hashes,"weapon_methods":weapon,"typed_teletor_calls":sites,
                 "teletor_parent":tr.parent,"teletor_selected_fields":sorted(field_names),

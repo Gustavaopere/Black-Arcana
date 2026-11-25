@@ -7,6 +7,8 @@ on:
       - 'docs/qa/alexscaves_1010_galena_teletor_controller_probe.py'
       - 'docs/qa/alexscaves_1010_four_items_downstream_250_probe.py'
       - 'docs/qa/alexscaves_1010_galena_211248_spawn_denial_guards_probe.py'
+      - 'docs/qa/alexscaves_1010_galena_motion_dataflow_probe.py'
+      - 'docs/qa/alexscaves_1010_nuclear_explosion_effect_probe.py'
       - 'docs/qa/alexscaves_1010_armor_material_audit.py'
       - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-TELETOR-CONTROLLER-1.0.10.md'
