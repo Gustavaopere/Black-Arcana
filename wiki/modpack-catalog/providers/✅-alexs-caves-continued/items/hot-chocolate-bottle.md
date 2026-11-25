@@ -16,7 +16,7 @@ Alvo é o próprio consumidor; dano, projétil, AOE próprio, mana e cooldown pr
 
 ## Integração e pendências
 
-Sack of Sating tem rota própria por classe DrinkableBottledItem, cujo cálculo de nutrição e recipiente não chama finishUsingItem; não transferir automaticamente reset de TIME_SINCE_REST. Reutilizar suporte de comida sem promover certificado individual do chocolate: fornecedor de efeito e fronteira da estatística aprofundados; faltam parâmetros completos de loot e consumidor da tag de roubo, além dos efeitos efetivos. QA física: fome cheia, cancelamento, último item, criativo, inventário cheio, reset de estatística e efeito, reload. Nenhum hook seguro para alterar efeito/custo/XP demonstrado. [Dossiê SHA-exato](../EXACT-HOLOCODER-HOT-CHOCOLATE-INK-BOMB-1.0.10.md) · [registro individual de factories](../systems/item-registry.md).
+Sack of Sating tem rota própria por classe DrinkableBottledItem, cujo cálculo de nutrição e recipiente não chama finishUsingItem; não transferir automaticamente reset de TIME_SINCE_REST. Reutilizar suporte de comida sem promover certificado individual do chocolate: fornecedor de efeito e fronteira da estatística aprofundados; aquisição e consumidores da tag foram aprofundados nos dossiês abaixo; efeitos físicos permanecem pendentes. QA física: fome cheia, cancelamento, último item, criativo, inventário cheio, reset de estatística e efeito, reload. Nenhum hook seguro para alterar efeito/custo/XP demonstrado. [Dossiê SHA-exato](../EXACT-HOLOCODER-HOT-CHOCOLATE-INK-BOMB-1.0.10.md) · [registro individual de factories](../systems/item-registry.md).
 
 ## Evidência downstream adicional — NeoForge 21.1.250
 
@@ -38,3 +38,9 @@ Evidência read-only da PR #1199: [dossiê de consumo e status 21.1.250](../EXAC
 | Sack of Sating | `overrideOtherStackedOnMe` usa SECONDARY, tags e gates, calcula fome e retorna recipientes; setCount @174. `calculateWholeStackHungerValue` lê perfil e quantidade. | Não chama finishUsingItem ou resetStat nos corpos examinados; não tratar inserção como ingestão da bebida. |
 
 **Estado preservado:** `static_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. O dossiê permite planejar atributos de nutrição, tempo de uso, chance e duração de efeito, mas não demonstra um hook mutador seguro nem um resultado efetivo no modpack. A aquisição/tag e os consumidores concretos de inventário continuam em auditorias separadas. Nenhum novo certificado ou raiz semântica.
+
+## Aquisição, clamp e ciclo de vida — complemento individual
+
+- [Aquisição](../EXACT-FOUR-ITEMS-ACQUISITION-1.0.10.md): licowitch_tower, entrada 15, peso 10/153, rolls 3–8, set_count 1–2; não é chance física sem contexto e modificadores. Tag gingerbread_man_steals: 12 valores, índice 5. [Ingresso e inventário](../EXACT-HOLOCODER-INGRESS-1.0.10.md): handler ENTITY_AUTOMATION, Direction.DOWN; extração solicitada via extractItem(slot,1,false). Não equivale a débito confirmado.
+- [Ciclo de vida](../EXACT-CHOCOLATE-EFFECT-LIFECYCLE-21.1.250.md): filtro de roubo exclui Player criativo e GingerbreadManEntity. FoodData.add limita foodLevel a [0,20] e saturação a [0,foodLevel atualizado]; 4/2 são ganhos nominais, não cura. MobEffectInstance.update substitui duração pelo valor maior para mesmo amplifier, não soma. Efeito oculto e expiração têm fluxo próprio; Added não é recibo de liquidação.
+- [Defaults e codec](../EXACT-ITEM-ENTITY-DEFAULTS-21.1.250.md): serializer shapeless lê STRICT_CODEC para result. O corpo ItemStack.lambda$static$3 possui count em [1,99], orElse(1); a ligação do inicializador ao STRICT_CODEC ainda precisa ser provada. Não presumir quantidade efetivamente obtida. `NO_MUTATION / NOT_CERTIFIED / NOT_TESTED`.
