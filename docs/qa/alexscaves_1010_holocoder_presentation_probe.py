@@ -3,11 +3,12 @@
 Publisher exact 1.0.10; no launch, client render, effect or runtime mutation.
 """
 from __future__ import annotations
-import argparse, json
+import argparse, json, re
 from pathlib import Path
 from zipfile import ZipFile
 from alexscaves_1010_armor_material_audit import ClassReader, canonical, digest, require, verify_artifact, SHA1, SHA256, SIZE
-from alexscaves_1010_enchantable_item_probe import disassemble
+from alexscaves_1010_enchantable_item_probe import disassemble, summarize
+from alexscaves_1010_galena_211248_spawn_denial_guards_probe import SELECT_OPS
 from alexscaves_1010_four_items_downstream_250_probe import projection
 
 ROOT = "com/github/alexmodguy/alexscaves/"
@@ -71,6 +72,45 @@ LIMITS = {"scope":"STATIC_DISCOVERY_ONLY","static_contract":"NOT_CERTIFIED",
 def selected(owner, declaration):
     return owner in ALL or declaration["name"] in SELECT.get(owner,set())
 
+def bounded_projection(rd,key,body,decl):
+    offsets=sorted(body)
+    branches=sum(op.startswith("if") or op in ("goto","goto_w") for op,_,_ in body.values())
+    terminals=sum(op.endswith("return") or op=="athrow" for op,_,_ in body.values())
+    members=sum(op in SELECT_OPS for op,_,_ in body.values())
+    print("METHOD_BUDGET",rd.name,key[0],key[1],len(body),branches,terminals,members)
+    if len(body)<=1600 and branches<=90 and terminals<=30 and members<=180:
+        row=projection(rd,key,body,decl)
+        row["projection"]="FULL_BOUNDED_SEMANTICS"
+        return row
+    # The multi-family audio dispatcher is not the Holocoder implementation.
+    # Keep the full method identity and bounded typed windows only; no false
+    # whole-dispatcher claim and no global changes to the shared analyzer.
+    require(rd.name==CLIENT and key[0] in {"playWorldSound","clearSoundCacheFor"},
+            "unhandled over-budget owner "+rd.name+"."+key[0])
+    require(len(body)<=5000 and branches<=400 and terminals<=200 and members<=1500,
+            "shared dispatcher hard budget")
+    sites=[]
+    for i,at in enumerate(offsets):
+        op,arg,_=body[at]
+        if op not in SELECT_OPS and op not in {"new","instanceof","checkcast"}:
+            continue
+        match=re.match(r"#(\d+)(?:\s|,|$)",arg)
+        require(match is not None,"dispatcher typed operand")
+        cp=int(match[1]); ref=rd.resolve(cp)
+        tag=rd.pool[cp][0]
+        target=(ref[1] if tag in (9,10,11) else ref if tag==7 else None)
+        if target not in {BE,SOUND}:
+            continue
+        sites.append({"offset":at,"opcode":op,"constant_pool_index":cp,"reference":ref,
+                      "window":[{"offset":q,"opcode":body[q][0],"operand":body[q][1],"symbol":body[q][2]}
+                                for q in offsets[max(0,i-12):i+13]]})
+    require(0<len(sites)<=40,"no bounded hologram dispatcher sites")
+    return {"name":key[0],"descriptor":key[1],"code_sha256":decl["code_sha256"],
+            "instruction_sha256":summarize(rd,key,body)["instruction_sha256"],
+            "instruction_count":len(body),"branch_count":branches,"terminal_count":terminals,
+            "member_count":members,"projection":"HOLOGRAM_TYPED_WINDOWS_ONLY",
+            "hologram_sites":sites}
+
 def inspect(jar,javap):
     verify_artifact(jar)
     out={}; seen=set()
@@ -95,7 +135,7 @@ def inspect(jar,javap):
                 require(key in parsed and bool(parsed[key]),"body not parsed "+str(full))
                 if full in KNOWN:
                     require(d["code_sha256"]==KNOWN[full],"prior Code drift "+str(full));seen.add(full)
-                row=projection(rd,key,parsed[key],d)
+                row=bounded_projection(rd,key,parsed[key],d)
                 row["exception_handlers"]=d["exception_handlers"]; row["executable"]=True
                 methods.append(row)
             require(REQUIRED.get(owner,set())<={x["name"] for x in methods if x["executable"]},"missing executable body "+owner)
@@ -123,7 +163,8 @@ def self_test():
     require(not selected(NOTOR,{"name":"unrelated"}),"not whole mob renderer")
     require(not selected("foreign/NotorRenderer",{"name":"renderEntityInHologram"}),"owner boundary")
     require(LIMITS["mutation"]=="NO_MUTATION" and LIMITS["static_contract"]=="NOT_CERTIFIED","policy")
-    print("PASS: seven scope and policy checks")
+    require(not selected(CLIENT,{"name":"unrelated"}),"shared audio owner scope")
+    print("PASS: eight scope and policy checks")
 
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
