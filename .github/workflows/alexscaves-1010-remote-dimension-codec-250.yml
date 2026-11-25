@@ -94,7 +94,8 @@ jobs:
       - name: Require identical replay
         run: |
           cmp build/remote-dimension-codec-250/report.json build/remote-dimension-codec-250/replay.json
-          sha256sum build/remote-dimension-codec-250/report.json
+          test "$(wc -c < build/remote-dimension-codec-250/report.json)" -eq 346498
+          echo '71b02a8b441053971148bc7168f40976784a4a93940186e83d27c4a666bbce86  build/remote-dimension-codec-250/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
