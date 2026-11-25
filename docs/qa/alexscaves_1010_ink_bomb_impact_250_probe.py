@@ -74,7 +74,7 @@ KNOWN = {
     (ITEM,"use","(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;"):
         "6b4fb3cd4eb6f2bf9873ce9bbf54705985ac050a5a95c6e8eb88f6b719d4b4a2",
     (THROWITEM,"setItem","(Lnet/minecraft/world/item/ItemStack;)V"):
-        "342ca58804f1d89ec96ff7c5359e827563c025ca2af343d8ae8c6c252aa621",
+        "342ca58804f1d89ec96ff7c5359e827563c025ca2af343d8ae8c8d6c252aa621",
     (CLOUD,"getDimensions","(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;"):
         "b34f5152e4e7f88bc325ba24f30c835827dfbb99a572b9c82777f1054900cdeb",
     (PROJECTILE,"hitTargetOrDeflectSelf","(Lnet/minecraft/world/phys/HitResult;)Lnet/minecraft/world/entity/projectile/ProjectileDeflection;"):
