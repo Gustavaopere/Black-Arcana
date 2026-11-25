@@ -95,7 +95,8 @@ jobs:
       - name: Require deterministic report
         run: |
           cmp build/holocoder-entity-load-250/report.json build/holocoder-entity-load-250/replay.json
-          sha256sum build/holocoder-entity-load-250/report.json
+          test "$(wc -c < build/holocoder-entity-load-250/report.json)" -eq 485099
+          echo '0ee9ec7fb5d4e31f53cd24be22d1b5cf7cc43879ede2c1a86699e145480b4667  build/holocoder-entity-load-250/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
