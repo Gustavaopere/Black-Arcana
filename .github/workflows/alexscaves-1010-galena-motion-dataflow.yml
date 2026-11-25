@@ -39,7 +39,8 @@ jobs:
           python3 docs/qa/alexscaves_1010_galena_motion_dataflow_probe.py --jar build/galena-motion-dataflow/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/galena-motion-dataflow/report.json
           python3 docs/qa/alexscaves_1010_galena_motion_dataflow_probe.py --jar build/galena-motion-dataflow/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/galena-motion-dataflow/replay.json
           cmp build/galena-motion-dataflow/report.json build/galena-motion-dataflow/replay.json
-          sha256sum build/galena-motion-dataflow/report.json
+          test "$(wc -c < build/galena-motion-dataflow/report.json)" -eq 92039
+          echo '1a7bcfba2c077eaf9d84fd624a34ef8c5c2f11c60f3ee5d0451a0e01f1b046f1  build/galena-motion-dataflow/report.json' | sha256sum -c -
       - uses: actions/upload-artifact@v7
         if: always()
         with:
