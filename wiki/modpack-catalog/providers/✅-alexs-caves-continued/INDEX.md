@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 133/138.**
+**Fichas catalogadas (somente fichas detectadas): 135/138.**
 
-**Barra das fichas catalogadas:** `███████████████████░ 96.4%`
+**Barra das fichas catalogadas:** `███████████████████░ 97.8%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 133/138.**
+**Homologadas para perks (somente fichas detectadas): 135/138.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████████░ 96.4%`
+**Barra dos contratos técnicos estáticos:** `███████████████████░ 97.8%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -106,7 +106,7 @@
 | ✅ | Dreadbow | [equipment/dreadbow.md](equipment/dreadbow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Extinction Spear | [equipment/extinction-spear.md](equipment/extinction-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Frostmint Spear | [equipment/frostmint-spear.md](equipment/frostmint-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Galena Gauntlet | [equipment/galena-gauntlet.md](equipment/galena-gauntlet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Galena Gauntlet | [equipment/galena-gauntlet.md](equipment/galena-gauntlet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shot Gum | [equipment/shot-gum.md](equipment/shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Alex Meal | [items/alex-meal.md](items/alex-meal.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Biome Treat | [items/biome-treat.md](items/biome-treat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -122,7 +122,7 @@
 | ✅ | Diving Leggings | [items/diving-leggings.md](items/diving-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Fertilizer | [items/fertilizer.md](items/fertilizer.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Floater | [items/floater.md](items/floater.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gazing Pearl | [items/gazing-pearl.md](items/gazing-pearl.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gazing Pearl | [items/gazing-pearl.md](items/gazing-pearl.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gingerbread Boots | [items/gingerbread-boots.md](items/gingerbread-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gingerbread Chestplate | [items/gingerbread-chestplate.md](items/gingerbread-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gingerbread Helmet | [items/gingerbread-helmet.md](items/gingerbread-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -171,8 +171,8 @@
 | ✅ | Damage Types | 11/11 (100.0%) | 11 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
-| ⚠️ | Equipment | 5/6 (83.3%) | 5 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 35/39 (89.7%) | 35 | [Abrir índice](items/INDEX.md) |
+| ✅ | Equipment | 6/6 (100.0%) | 6 | [Abrir índice](equipment/INDEX.md) |
+| ⚠️ | Items | 36/39 (92.3%) | 36 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 15/15 (100.0%) | 15 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
