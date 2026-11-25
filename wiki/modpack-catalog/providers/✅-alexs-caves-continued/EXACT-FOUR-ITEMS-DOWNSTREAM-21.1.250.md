@@ -52,3 +52,51 @@ PhantomSpawner.tick Code `b63e8bc63bd4827bf4c1ed42499eca13f5f09130585f7a9246d6f9
 | tags/item/gingerbread_man_steals.json | values[5]: hot_chocolate_bottle |
 
 O relatório guarda SHA e tamanho de cada JSON. Pesos, condições e functions dos pools, consumidor da tag de roubo, parâmetros literais de tracking do registry e dispatch do renderer precisam de recorte adicional. Não certificar os quatro objetos a partir deste dossiê isolado. Estados independentes: contrato estático NOT_CERTIFIED; mutating_hook NOT_VERIFIED; physical_qa NOT_TESTED; mutation NO_MUTATION; delta de raízes mágicas 0; universo integral não fechado.
+
+## Modelo nominal da nuvem de tinta — derivação estática, não QA
+
+A duração configurada de 60 ticks não é a vida útil garantida. O relatório downstream já selado (run 45471957912, job 138721970278) demonstra `AreaEffectCloud.tick` Code SHA-256 `f1ce24d2f581fc776233391c6cfc6c0ab2427143f55aa169894737acb002c1a8`: descarte temporal @327/331 precede espera @343/363; soma float @381, limiar estrito radius < 0.5F @387 e descarte @391 precedem setRadius @397 e consulta tickCount % 5 @401–406. Constructor Code `6d772993e97695f33a4f53fb0960c61c27ed3dcd731623642b73c2d2974daeba` define waitTime/reapplicationDelay 20. A lambda de expiração de victims, Code `ab15f5874e979723ed0261e05897faf14b2c0c33e757ae34ef9f81ec28c5556f`, permite remoção quando tickCount >= valor registrado. RadiusOnUse e DurationOnUse não são escritos pelo impacto; o modelo supõe seus valores iniciais zero, nenhum override e nenhuma interrupção.
+
+Com idade contada no corpo de tick (não tempo de relógio desde lançamento), raio inicial 2F, duração 60, espera 20 e incremento float32 -2F/60, a primeira atualização ocorre em age 20. A operação é recorrente em precisão float32, não uma multiplicação exata em double. A primeira atualização que satisfaz o limiar de descarte ocorre em age 65 (46 atualizações, raio candidato 0,46666720509529114). O descarte temporal nominal seria em age 80, mas não é atingido nesse cenário.
+
+| Idade no tick | Raio horizontal após atualização (blocos, aproximado) |
+|---:|---:|
+| 20 | 1,966667 |
+| 25 | 1,800000 |
+| 30 | 1,633334 |
+| 35 | 1,466667 |
+| 40 | 1,300001 |
+| 45 | 1,133334 |
+| 50 | 0,966668 |
+| 55 | 0,800001 |
+| 60 | 0,633334 |
+
+Nove instantes candidatos de consulta. Para um único alvo continuamente elegível, se registrado na primeira consulta e sem reload/removal/alteração do mapa victims, até três novas seleções ao longo dessa janela (ages 20, 40, 60; inclui a primeira). Isso não é contagem de efeitos aceitos: o mapa é atualizado antes da chamada de efeito, e a engine pode rejeitar ou compor efeitos existentes. A AABB, o movimento das entidades, as proteções e os listeners continuam independentes. Não somar três durações, não inferir dano, não creditar Mastery, nem confundir esse raio com hitbox do projétil. Sem alteração de certificado.
+
+Reprodução aritmética independente (Python 3, stdlib; não executa Minecraft ou classes publisher):
+
+```python
+import struct
+
+def f32(x):
+    return struct.unpack(">f", struct.pack(">f", x))[0]
+
+delta = f32(-2.0 / 60)
+r = f32(2.0)
+pulses = []
+for age in range(1, 80):
+    if age < 20:
+        continue
+    r = f32(r + delta)
+    if r < 0.5:
+        break
+    if age % 5 == 0:
+        pulses.append((age, r))
+assert age == 65
+assert r == 0.46666720509529114
+assert [a for a, _ in pulses] == list(range(20, 65, 5))
+assert pulses[0][1] == 1.9666666984558105
+assert pulses[-1][1] == 0.6333339810371399
+```
+
+Este recorte é uma derivação sob hipóteses explícitas a partir do JAR publisher e distribuição 21.1.250 observados, não certificação do runtime instalado ou autorização para alterar tempo, raio ou reaplicação.
