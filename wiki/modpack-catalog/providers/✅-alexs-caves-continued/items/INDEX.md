@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 36/39.**
+**Fichas catalogadas (somente fichas detectadas): 37/39.**
 
-**Barra das fichas catalogadas:** `██████████████████░░ 92.3%`
+**Barra das fichas catalogadas:** `██████████████████░░ 94.9%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 36/39.**
+**Homologadas para perks (somente fichas detectadas): 37/39.**
 
-**Barra dos contratos técnicos estáticos:** `██████████████████░░ 92.3%`
+**Barra dos contratos técnicos estáticos:** `██████████████████░░ 94.9%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -44,7 +44,7 @@
 | ✅ | Hazmat Chestplate | [ficha/hazmat-chestplate.md](hazmat-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Leggings | [ficha/hazmat-leggings.md](hazmat-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Mask | [ficha/hazmat-mask.md](hazmat-mask.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Holocoder | [ficha/holocoder.md](holocoder.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Holocoder | [ficha/holocoder.md](holocoder.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hood Of Darkness | [ficha/hood-of-darkness.md](hood-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hot Chocolate Bottle | [ficha/hot-chocolate-bottle.md](hot-chocolate-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Ink Bomb | [ficha/ink-bomb.md](ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |

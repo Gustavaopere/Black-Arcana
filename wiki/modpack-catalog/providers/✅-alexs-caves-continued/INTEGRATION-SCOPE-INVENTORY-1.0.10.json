@@ -1027,25 +1027,25 @@
     "next_scope": "server/item/GalenaGauntletItem"
   },
   "latest_individual_contract_checkpoint": {
-    "scope": "GAZING_PEARL_AND_GALENA_GAUNTLET_STATIC_CONTRACTS",
-    "provider_observed_static_contracts": 135,
+    "scope": "HOLOCODER_STATIC_CONTRACT",
+    "provider_observed_static_contracts": 136,
     "provider_observed_cards": 138,
     "integration_support_contracts": 15,
-    "concrete_item_contracts": 36,
+    "concrete_item_contracts": 37,
     "equipment_contracts": 6,
     "semantic_magic_roots_added": 0,
     "whole_provider_catalog_closed": false,
     "mutating_hook": "NOT_VERIFIED",
     "physical_qa": "NOT_TESTED",
     "remaining_observed_partial_cards": [
-      "items/holocoder.md",
       "items/remote-detonator.md",
       "items/resistor-shield.md"
     ],
     "evidence": [
       "items/gazing-pearl.md",
-      "equipment/galena-gauntlet.md"
+      "equipment/galena-gauntlet.md",
+      "items/holocoder.md"
     ],
-    "historical_checkpoint_note": "The earlier Floater/Frostmint current_item_contract_checkpoint and reviewed-prefix fields remain as historical snapshots; the latest ledger and INDEX.md are authoritative for current counts. Candidate PR #1218; CI and merge required."
+    "historical_checkpoint_note": "Earlier reviewed-prefix and current_item_contract_checkpoint remain historical; latest ledger and INDEX.md authoritative. Holocoder candidate: CI and merge required."
   }
 }

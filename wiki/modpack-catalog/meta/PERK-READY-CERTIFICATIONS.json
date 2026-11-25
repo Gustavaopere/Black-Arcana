@@ -11295,6 +11295,50 @@
           "reason": "Manifestos/checkers SHA-exatos e replay 45617400804 de 478046 bytes, SHA ca02eac60a6f7577cdfe5436d62c5961f449bba627e86361df048aefb7f09a64; 57/57 workflows na HEAD selada, nova CI após sync."
         }
       }
+    },
+    "✅-alexs-caves-continued/items/holocoder.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Holocoder bounded item/capture and hologram projector representation contract; external concrete entities, listeners, actual inventory/sync and presentation conditional; no summon, mutation or QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/holocoder.md",
+          "reason": "JAR publisher SHA-exato, factory/registry e quatro métodos próprios, block entity e recursos declarativos."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/holocoder.md",
+          "reason": "Captura EntityInteract, inventário/drop, projeção, representação recursiva, estado, render e áudio; efeitos externos condicionais."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/holocoder.md",
+          "reason": "Stack 1, escalas 0.25–3, transição até 10, interpolação, geometria de render e volume/pitch; dano, AOE ofensivo, mana, projétil e cooldown próprios N/A."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/holocoder.md",
+          "reason": "LivingEntity viva não ArmorStand, rotas Player/não-player, alcance efetivo de interação e guardas de bloco; não summon nem AOE."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/holocoder.md",
+          "reason": "Shrink solicitado na captura e projeção, guarda criativa distinta, receita declarativa e fallback sem rollback; sem mana própria."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/holocoder.md",
+          "reason": "CUSTOM_DATA/UUID, blocos, eventos, persistência e limites de authority; NO_MUTATION, não repetir captura/projeção nem creditar Mastery."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/holocoder.md",
+          "reason": "Replays 45525520600, 45539871537 e 45646436758; último 611890 bytes, SHA b3a0f6cda62bacace3859ec5435b6e1b909234aa260fa2f2d79151c2c49831e6, CI da promoção exigida."
+        }
+      }
     }
   },
   "providers": {},
