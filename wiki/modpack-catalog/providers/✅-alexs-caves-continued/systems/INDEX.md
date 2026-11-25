@@ -2,21 +2,21 @@
 
 > Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
 
-**Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
+**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 15/15.**
+**Fichas catalogadas (somente fichas detectadas): 15/16.**
 
-**Barra das fichas catalogadas:** `████████████████████ 100.0%`
+**Barra das fichas catalogadas:** `██████████████████░░ 93.8%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 15/15.**
+**Homologadas para perks (somente fichas detectadas): 15/16.**
 
-**Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
+**Barra dos contratos técnicos estáticos:** `██████████████████░░ 93.8%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
-**Contratos desta subpasta:** ✅ contratos técnicos estáticos de todas as fichas detectadas certificados; recorte documental, sem homologação de hooks mutadores, QA físico ou universo integral do provider.
+**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
@@ -31,6 +31,7 @@
 | ✅ | Food Builder | [ficha/food-builder.md](food-builder.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Foods | [ficha/foods.md](foods.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Item Registry | [ficha/item-registry.md](item-registry.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Keybind Using Armor | [ficha/keybind-using-armor.md](keybind-using-armor.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Repairable Item | [ficha/repairable-item.md](repairable-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Scaffolding Placement | [ficha/scaffolding-placement.md](scaffolding-placement.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Swing Control Item | [ficha/swing-control-item.md](swing-control-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |

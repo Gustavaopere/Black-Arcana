@@ -1027,25 +1027,52 @@
     "next_scope": "server/item/GalenaGauntletItem"
   },
   "latest_individual_contract_checkpoint": {
-    "scope": "HOLOCODER_STATIC_CONTRACT",
-    "provider_observed_static_contracts": 136,
-    "provider_observed_cards": 138,
+    "scope": "RESISTOR_SHIELD_CANDIDATE_AND_THREE_PARTIAL_CARDS",
+    "provider_observed_static_contracts": 137,
+    "provider_observed_cards": 141,
     "integration_support_contracts": 15,
-    "concrete_item_contracts": 37,
+    "concrete_item_contracts": 38,
     "equipment_contracts": 6,
     "semantic_magic_roots_added": 0,
     "whole_provider_catalog_closed": false,
     "mutating_hook": "NOT_VERIFIED",
     "physical_qa": "NOT_TESTED",
     "remaining_observed_partial_cards": [
+      "equipment/limestone-spear.md",
+      "items/jelly-bean.md",
       "items/remote-detonator.md",
-      "items/resistor-shield.md"
+      "systems/keybind-using-armor.md"
     ],
     "evidence": [
       "items/gazing-pearl.md",
       "equipment/galena-gauntlet.md",
-      "items/holocoder.md"
+      "items/holocoder.md",
+      "items/resistor-shield.md",
+      "EXACT-JELLY-KEYBIND-LIMESTONE-1.0.10.md",
+      "EXACT-ITEM-OUTER-CLASS-RECONCILIATION-1.0.10.md"
     ],
-    "historical_checkpoint_note": "Earlier reviewed-prefix and current_item_contract_checkpoint remain historical; latest ledger and INDEX.md authoritative. Holocoder candidate: CI and merge required."
+    "historical_checkpoint_note": "Earlier reviewed-prefix and checkpoint fields remain historical. Holocoder integrated in 651d9b25a0d994d413ad1c03fb883c4afc93f4d6. Candidate +1 certificate and +3 partial cards; CI/merge required."
+  },
+  "item_class_reconciliation_checkpoint": {
+    "scope": "EXISTING_CARDS_MAPPED_PLUS_NEXT_THREE_DISCOVERY",
+    "base_main": "651d9b25a0d994d413ad1c03fb883c4afc93f4d6",
+    "physical_item_outer_classes": 81,
+    "historical_disposition_prefix_classes": 37,
+    "additional_existing_classes_mapped": 7,
+    "additional_existing_cards_mapped": 14,
+    "additional_existing_cards_certified": 14,
+    "observed_classes_with_existing_dispositions_or_mapped_cards": 44,
+    "next_three_partial_classes": [
+      "server/item/JellyBeanItem",
+      "server/item/KeybindUsingArmor",
+      "server/item/LimestoneSpearItem"
+    ],
+    "remaining_after_next_three": 34,
+    "whole_provider_catalog_closed": false,
+    "evidence": [
+      "EXACT-ITEM-OUTER-CLASS-RECONCILIATION-1.0.10.md",
+      "EXACT-JELLY-KEYBIND-LIMESTONE-1.0.10.md"
+    ],
+    "limits": "Class inventory is not object/magic universe. Existing mapped cards not added again. Three new candidate cards partial; no new roots."
   }
 }
