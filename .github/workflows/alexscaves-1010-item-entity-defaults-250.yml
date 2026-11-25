@@ -95,7 +95,8 @@ jobs:
       - name: Require deterministic report
         run: |
           cmp build/item-entity-defaults-250/report.json build/item-entity-defaults-250/replay.json
-          sha256sum build/item-entity-defaults-250/report.json
+          test "$(wc -c < build/item-entity-defaults-250/report.json)" -eq 322625
+          echo '448111136166191329351f06376741dc040bb6a6ee9f8f624ae8b915d5fae944  build/item-entity-defaults-250/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
