@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 37/39.**
+**Fichas catalogadas (somente fichas detectadas): 38/48.**
 
-**Barra das fichas catalogadas:** `██████████████████░░ 94.9%`
+**Barra das fichas catalogadas:** `████████████████░░░░ 79.2%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 37/39.**
+**Homologadas para perks (somente fichas detectadas): 38/48.**
 
-**Barra dos contratos técnicos estáticos:** `██████████████████░░ 94.9%`
+**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 79.2%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -40,6 +40,7 @@
 | ✅ | Gingerbread Helmet | [ficha/gingerbread-helmet.md](gingerbread-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gingerbread Leggings | [ficha/gingerbread-leggings.md](gingerbread-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Glow Ink Bomb | [ficha/glow-ink-bomb.md](glow-ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gossamer Worm Bucket | [ficha/gossamer-worm-bucket.md](gossamer-worm-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Boots | [ficha/hazmat-boots.md](hazmat-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Chestplate | [ficha/hazmat-chestplate.md](hazmat-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Leggings | [ficha/hazmat-leggings.md](hazmat-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -48,17 +49,25 @@
 | ✅ | Hood Of Darkness | [ficha/hood-of-darkness.md](hood-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hot Chocolate Bottle | [ficha/hot-chocolate-bottle.md](hot-chocolate-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Ink Bomb | [ficha/ink-bomb.md](ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Jelly Bean | [ficha/jelly-bean.md](jelly-bean.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Lanternfish Bucket | [ficha/lanternfish-bucket.md](lanternfish-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Marine Snow | [ficha/marine-snow.md](marine-snow.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Moth Dust | [ficha/moth-dust.md](moth-dust.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [ficha/pewen-boat.md](pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [ficha/pewen-chest-boat.md](pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Primordial Helmet | [ficha/primordial-helmet.md](primordial-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Primordial Pants | [ficha/primordial-pants.md](primordial-pants.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Primordial Tunic | [ficha/primordial-tunic.md](primordial-tunic.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Purple Soda Bottle | [ficha/purple-soda-bottle.md](purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Radgill Bucket | [ficha/radgill-bucket.md](radgill-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Rainbounce Boots | [ficha/rainbounce-boots.md](rainbounce-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Remote Detonator | [ficha/remote-detonator.md](remote-detonator.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Resistor Shield | [ficha/resistor-shield.md](resistor-shield.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Resistor Shield | [ficha/resistor-shield.md](resistor-shield.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sea Pig Bucket | [ficha/sea-pig-bucket.md](sea-pig-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [ficha/thornwood-boat.md](thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Chest Boat | [ficha/thornwood-chest-boat.md](thornwood-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Trilocaris Bucket | [ficha/trilocaris-bucket.md](trilocaris-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Tripodfish Bucket | [ficha/tripodfish-bucket.md](tripodfish-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 

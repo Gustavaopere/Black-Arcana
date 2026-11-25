@@ -34,3 +34,20 @@ A [sonda](../../../../docs/qa/alexscaves_1010_marine_fish_moth_probe.py) reutili
 - Moth Dust: identificar callbacks e consumidores efetivos, sem presumir efeito a partir do nome.
 
 Após o resultado, reconciliar com #1229, classificar cada identidade, ampliar a auditoria downstream quando necessário e criar fichas individuais apenas para objetos relevantes. Nenhuma alteração de runtime, índices, contadores, hooks, QA física ou Stage.
+
+## Resultado observado — primeiro replay exato
+
+[Run 45653331096 / job 139343330423](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45653331096/job/139343330423), HEAD `b5bc7f2d5f70fe485036dc7e79285fa96ae7867b`: oito checks, 25 declarações executáveis (17 próprias e oito factories), cinco owners com referência tipada, 13 JSONs no recorte de filename; duas saídas byte-idênticas, 335.054 bytes, SHA-256 `a9afad89d2771265dfbb4f86c2981bba8d204943e053d4364af82af69c5a7f41`. A revisão sela tamanho e digest. A nova HEAD precisa repetir a coleta. A main `f3f48196a0853fe51cefd0dd5ba462b354773dc2` incorporou #1229. MagicConchItem mapeado ao contrato existente; 51/81 classes do roster histórico com disposição documentada, 30 restantes neste checkpoint, não equivalentes a fichas certificadas. SweetishFishBucketItem é subclass direta, fora da coleta de corpos próprios.
+
+### Fichas individuais parciais
+
+- [Gossamer Worm Bucket](items/gossamer-worm-bucket.md)
+- [Lanternfish Bucket](items/lanternfish-bucket.md)
+- [Marine Snow](items/marine-snow.md)
+- [Moth Dust](items/moth-dust.md)
+- [Radgill Bucket](items/radgill-bucket.md)
+- [Sea Pig Bucket](items/sea-pig-bucket.md)
+- [Trilocaris Bucket](items/trilocaris-bucket.md)
+- [Tripodfish Bucket](items/tripodfish-bucket.md)
+
+Nenhuma promoção: 137/149 no recorte proposto, 276/2461 globais, raízes inalteradas. Seis baldes são objetos técnicos de integração, não summons mágicos; elegibilidade final depende de prova downstream. Próxima classe: OccultGemItem, sujeita a reconciliação.
