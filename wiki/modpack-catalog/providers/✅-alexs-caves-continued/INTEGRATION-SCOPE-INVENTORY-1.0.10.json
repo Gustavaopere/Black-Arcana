@@ -310,7 +310,8 @@
         "equipment/desolate-dagger.md",
         "equipment/shot-gum.md",
         "equipment/extinction-spear.md",
-        "equipment/frostmint-spear.md"
+        "equipment/frostmint-spear.md",
+        "equipment/galena-gauntlet.md"
       ],
       "family_universe_closed": false,
       "evidence": "EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md",
@@ -318,9 +319,10 @@
         "EXACT-DREADBOW-CONTRACTS-1.0.10.md",
         "EXACT-GUMBALL-CONTRACTS-1.0.10.md",
         "EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.md",
-        "EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md"
+        "EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+        "equipment/galena-gauntlet.md"
       ],
-      "documented_static_contracts": 5
+      "documented_static_contracts": 6
     },
     "damage_types": {
       "documented_static_contracts": 9,
@@ -1023,5 +1025,27 @@
     "semantic_magic_roots_added": 0,
     "whole_provider_catalog_closed": false,
     "next_scope": "server/item/GalenaGauntletItem"
+  },
+  "latest_individual_contract_checkpoint": {
+    "scope": "GAZING_PEARL_AND_GALENA_GAUNTLET_STATIC_CONTRACTS",
+    "provider_observed_static_contracts": 135,
+    "provider_observed_cards": 138,
+    "integration_support_contracts": 15,
+    "concrete_item_contracts": 36,
+    "equipment_contracts": 6,
+    "semantic_magic_roots_added": 0,
+    "whole_provider_catalog_closed": false,
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "remaining_observed_partial_cards": [
+      "items/holocoder.md",
+      "items/remote-detonator.md",
+      "items/resistor-shield.md"
+    ],
+    "evidence": [
+      "items/gazing-pearl.md",
+      "equipment/galena-gauntlet.md"
+    ],
+    "historical_checkpoint_note": "The earlier Floater/Frostmint current_item_contract_checkpoint and reviewed-prefix fields remain as historical snapshots; the latest ledger and INDEX.md are authoritative for current counts. Candidate PR #1218; CI and merge required."
   }
 }

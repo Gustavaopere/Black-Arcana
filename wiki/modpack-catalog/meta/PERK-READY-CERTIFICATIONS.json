@@ -11251,6 +11251,50 @@
           "reason": "Run 45617075809, 42 corpos, replay idêntico e hash fixado 9581e32b5dbc9245c126fb5795d51204e65ac4e02d776889581f3100aba4245b; gate CI da promoção."
         }
       }
+    },
+    "✅-alexs-caves-continued/equipment/galena-gauntlet.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Galena Gauntlet: bounded native item/MagneticWeaponEntity contract, external stack and effective datapack/listener inputs conditional; no live settlement, safe perk, QA or provider closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato; 17 métodos do item, 24 da entidade, registro/factory, recursos e geometria nominal."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md",
+          "reason": "Fluxo causal de uso, controle, ataque, mineração, retorno, remoção, persistência, branches e consumidores distribuídos; Player e Teletor separados."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md",
+          "reason": "Duração 72000, cooldown release 5, raycast 30+5L, strike, movimento, dano solicitado, knockback, fogo, mitigação e mineração condicionais."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md",
+          "reason": "AABB 64 de busca de instância, raycast, contato, bloco, retorno, UUID e identidade; geometrias distintas, sem AOE próprio adicional."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md",
+          "reason": "Desgaste solicitado 1 da luva e custos da arma/mineração distintos; receita, reparo, cooldown; transferência sem rollback demonstrado; mana N/A."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md",
+          "reason": "Atributos, encantamentos, eventos e world safety delimitados; NO_MUTATION, sem autorizar novos hits, spawn, restituição ou Mastery."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md",
+          "reason": "Manifestos/checkers SHA-exatos e replay 45617400804 de 478046 bytes, SHA ca02eac60a6f7577cdfe5436d62c5961f449bba627e86361df048aefb7f09a64; 57/57 workflows na HEAD selada, nova CI após sync."
+        }
+      }
     }
   },
   "providers": {},
