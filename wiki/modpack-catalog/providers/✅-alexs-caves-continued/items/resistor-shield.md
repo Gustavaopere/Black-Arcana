@@ -115,3 +115,7 @@ Reuso da [paridade 248/250](../EXACT-ENGINE-248-250-PARITY.md) apenas nas distri
 - A falha da CI geral 45648794573 foi em Diff sanity, trailing whitespace no parágrafo acrescentado à ficha, não na sonda. Corrigida nesta revisão; não afirmar CI integral até replay.
 
 Pendente: resolver os consumidores herdados diretamente relevantes do áudio (ItemTickableSound), consolidar os sete eixos e reproduzir a HEAD. Mantém `NO_MUTATION / NOT_CERTIFIED / NOT_TESTED`.
+
+### Última fronteira de apresentação — lifecycle herdado
+
+O [replay selado integrado em #1222](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45649275425) foi aprovado. O construtor ResistorShieldSound invoca `com/github/alexmodguy/alexscaves/client/sound/ItemTickableSound.<init>(LivingEntity,SoundEvent)` @31, e o dispatcher cliente consulta isSameEntity/canPlaySound antes de enfileirar áudio. As referências não demonstram sozinhas o comportamento herdado. A [sonda delimitada](../../../../../docs/qa/alexscaves_1010_resistor_audio_lifecycle_probe.py) exige o SHA do classfile filho, os quatro Code hashes observados e a hierarquia; projeta todas as declarações dos dois owners, distingue métodos abstratos e executáveis e exige replay idêntico no [workflow](../../../../../.github/workflows/alexscaves-1010-resistor-audio-lifecycle.yml). Sem pressupor métodos herdados além do constructor observado, nem comportamento de SoundManager. Coleta e interpretação ainda pendentes. Nenhuma promoção de certificado, hook, QA ou raiz; `NO_MUTATION`.
