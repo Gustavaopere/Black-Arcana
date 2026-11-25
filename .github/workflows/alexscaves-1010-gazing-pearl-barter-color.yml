@@ -37,6 +37,8 @@ jobs:
             python3 docs/qa/alexscaves_1010_gazing_pearl_barter_color_probe.py --jar build/gazing-barter-color/publisher.jar --javap "$JAVA_HOME/bin/javap" --output "build/gazing-barter-color/$n.json"
           done
           cmp build/gazing-barter-color/report.json build/gazing-barter-color/replay.json
+          test "$(wc -c < build/gazing-barter-color/report.json)" -eq 46022
+          echo 'e1ce5e046ce7744c19dc09cf1bd3b4ccf1bb78e42ee7828f41376f4c2a3f231e  build/gazing-barter-color/report.json' | sha256sum -c -
       - uses: actions/upload-artifact@v7
         if: always()
         with:
