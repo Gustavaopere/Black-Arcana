@@ -94,7 +94,8 @@ jobs:
       - name: Require identical replay
         run: |
           cmp build/resistor-enchantment-settlement-250/report.json build/resistor-enchantment-settlement-250/replay.json
-          sha256sum build/resistor-enchantment-settlement-250/report.json
+          test "$(wc -c < build/resistor-enchantment-settlement-250/report.json)" -eq 337346
+          echo '366175b90c9e16b9093454c5da5a996af07b9b33b3ecd4482db74e38b529090c  build/resistor-enchantment-settlement-250/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
