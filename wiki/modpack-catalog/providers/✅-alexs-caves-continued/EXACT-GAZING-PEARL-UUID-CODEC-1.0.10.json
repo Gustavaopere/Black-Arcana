@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "scope": "GAZING_PEARL_1010_ACCOMPAT_UUID_CODEC_STATIC_SUBCONTRACT_NOT_CERTIFIED",
+  "provenance": {
+    "publisher_filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "publisher_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "publisher_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "publisher_bytes": 75279314,
+    "minecraft": "1.21.1",
+    "provider_version": "1.0.10",
+    "publisher_classfiles": 1555,
+    "discovery_run_id": 45227358098,
+    "discovery_job_id": 137877321301,
+    "report_bytes": 49616,
+    "report_sha256": "3db0c1c42736c6d4c67ab1b0682646d6ba499756ac15f83b7c8e3132548afa3e",
+    "discovery_head_sha": "2628fe90cd9185b77fdc0405e94480810a81119b"
+  },
+  "compat": {
+    "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat",
+    "class_sha256": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+    "declared_methods": 200,
+    "uuid_wrappers": [
+      {
+        "name": "getUUID",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Ljava/util/UUID;",
+        "code_sha256": "c4c782b1bfa2a9c3d587ec79d9629edf2c3516a4b088cd215692e4c4fe039dcb",
+        "instructions": 4,
+        "callee_owner": "net/minecraft/nbt/CompoundTag",
+        "callee_name": "getUUID",
+        "callee_descriptor": "(Ljava/lang/String;)Ljava/util/UUID;",
+        "offset": 2,
+        "cp_index": 1090
+      },
+      {
+        "name": "putUUID",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/UUID;)V",
+        "code_sha256": "9bc59b9d44f0f1f9bd48ed6c0f36b83d58b706dc72c694b139e3d333fa3640e2",
+        "instructions": 5,
+        "callee_owner": "net/minecraft/nbt/CompoundTag",
+        "callee_name": "putUUID",
+        "callee_descriptor": "(Ljava/lang/String;Ljava/util/UUID;)V",
+        "offset": 3,
+        "cp_index": 1094
+      }
+    ]
+  },
+  "world": {
+    "owner": "com/github/alexmodguy/alexscaves/server/level/storage/ACWorldData",
+    "class_sha256": "ddb140795a4a38e077575effb858c2f7664780f11046475335ca132200b031f5",
+    "selected": [
+      {
+        "method": "acSave",
+        "code_sha256": "fc86c0bf51203469f869f5144f9b3b690b6c0cd6bb5d97258fb24e821a62d587",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+        "callee": "putUUID",
+        "offset": 78,
+        "cp_index": 206
+      },
+      {
+        "method": "load",
+        "code_sha256": "064fbae435ec957a69aa659ff02248ecd37a9c2fd9132f36228d13b73cb666a5",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)Lcom/github/alexmodguy/alexscaves/server/level/storage/ACWorldData;",
+        "callee": "getUUID",
+        "offset": 51,
+        "cp_index": 106
+      }
+    ]
+  },
+  "typed_consumer_census": {
+    "owners": 27,
+    "methods": 56,
+    "callsites": 63,
+    "roster_canonical_bytes": 44289,
+    "roster_sha256": "9c6440ab63af01c68ff8b2a1f69e8cf45b16f639d7a6847609303bdf95b00eab",
+    "producer_consumers_with_shared_uuid_helper": [
+      "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity",
+      "com/github/alexmodguy/alexscaves/server/level/storage/ACWorldData"
+    ],
+    "roster_not_whole_modpack": true
+  },
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "limits": {
+    "installed_copy": "NOT_VERIFIED",
+    "modlauncher_runtime": "NOT_OBSERVED",
+    "engine_uuid_payload_tag_type": "NOT_VERIFIED",
+    "actual_save_restart": "NOT_TESTED",
+    "stack_sync": "NOT_VERIFIED",
+    "magic_roots_delta": 0
+  }
+}
