@@ -11207,6 +11207,50 @@
           "reason": "Report publisher SHA c7e60198eae632614c4a87acda39f385f49347409f47d0b178f5733362a7be60, official enum e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91, material SHA-exato, verificador adversarial e CI; physical QA not tested."
         }
       }
+    },
+    "✅-alexs-caves-continued/items/gazing-pearl.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Item passivo Gazing Pearl; contrato do snapshot, não IA integral, reputação mutável, perk executável ou QA física.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md",
+          "reason": "Publisher 1.0.10 SHA-exato; cinco métodos, registry bootstrap e recursos de apresentação."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md",
+          "reason": "Callbacks e fluxo de snapshot server-side, getters, storage, tooltip/cor e uso herdado."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md",
+          "reason": "Guardas temporais, limiares de reação, HSB, tipos/defaults NBT e limites do storage."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md",
+          "reason": "UUID da entidade portadora; dano, AOE, cast e projétil próprios não aplicáveis."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md",
+          "reason": "Sem consumo na leitura nativa; stack 1, loot e receita declarativos; uso herdado condicionado."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md",
+          "reason": "ACTickingItem, ACWorldData, CUSTOM_DATA, persistência distribuída; nenhuma mutação autorizada."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md",
+          "reason": "Run 45617075809, 42 corpos, replay idêntico e hash fixado 9581e32b5dbc9245c126fb5795d51204e65ac4e02d776889581f3100aba4245b; gate CI da promoção."
+        }
+      }
     }
   },
   "providers": {},
