@@ -97,6 +97,12 @@ jobs:
           cmp build/ink-bomb-impact-250/report.json build/ink-bomb-impact-250/replay.json
           test "$(wc -c < build/ink-bomb-impact-250/report.json)" -eq 465320
           echo '642a25a85314108c189a2fc717e6e6678d122c2603e7fb4c5db6effacc135691  build/ink-bomb-impact-250/report.json' | sha256sum -c -
+      - name: Verify canonical certification indices
+        run: |
+          python3 scripts/catalog/generate_perk_ready_indexes.py
+          git diff --exit-code -- wiki/modpack-catalog/providers
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
