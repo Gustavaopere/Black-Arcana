@@ -1,0 +1,5 @@
+# Remote Detonator — aquisição e critério declarativo (publisher 1.0.10)
+
+**DISCOVERY_ONLY / NO_MUTATION / WORLD_SAFETY_BLOCKED.** A projeção anterior selou os cinco recursos, mas reteve somente tipo/resultado de receita e nome do trigger. A nova sonda `docs/qa/alexscaves_1010_remote_recipe_criterion_probe.py` reutiliza os dois pins de recurso existentes, verifica multiplicidade por símbolo da receita e preserva ingredientes, condições e requirements declarativos do advancement. A classe RemoteDetonatorItem tem pin SHA-256 6d6e8cd94df306aec6f99b07af856b477b8e6f34d41aaca06a35921b53f2c4b8; a seleção do owner do critério parte do Fieldref REMOTE_DETONATION realmente observado no método use, não de nome de classe presumido. Métodos de trigger próprios são selecionados somente quando a referência existe no publisher. O primeiro replay está pendente. Não há novo certificado, execução de jogo, concessão de advancement, hook, modificação de tickets ou explosão.
+
+[Descoberta anterior](EXACT-REMOTE-DETONATOR-DISCOVERY-1.0.10.md) · [Ficha](items/remote-detonator.md).
