@@ -94,7 +94,8 @@ jobs:
       - name: Require identical replay
         run: |
           cmp build/gazing-pearl-snapshot-250/report.json build/gazing-pearl-snapshot-250/replay.json
-          sha256sum build/gazing-pearl-snapshot-250/report.json
+          test "$(wc -c < build/gazing-pearl-snapshot-250/report.json)" -eq 255779
+          echo '9581e32b5dbc9245c126fb5795d51204e65ac4e02d776889581f3100aba4245b  build/gazing-pearl-snapshot-250/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
