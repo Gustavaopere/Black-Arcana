@@ -11339,6 +11339,50 @@
           "reason": "Replays 45525520600, 45539871537 e 45646436758; último 611890 bytes, SHA b3a0f6cda62bacace3859ec5435b6e1b909234aa260fa2f2d79151c2c49831e6, CI da promoção exigida."
         }
       }
+    },
+    "✅-alexs-caves-continued/items/resistor-shield.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Bounded Resistor Shield native item, distributed shield/use/damage/durability and presentation contract; external transformed runtime and actual settlement/PvP remain conditional. No new root, safe mutating hook or QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/resistor-shield.md",
+          "reason": "JAR publisher SHA-exato, factory, registry, 20 métodos próprios, herança e recursos JSON."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/resistor-shield.md",
+          "reason": "Uso, polaridade, pulso, defesa, dano/knockback, desgaste, estado e apresentação/áudio herdado; requests distintos de resultados."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/resistor-shield.md",
+          "reason": "Stack 1, durabilidade 1000, use 72000, pulso 10 e cada 5, 6+3L/2, forças .5/.2, polaridades, contador 0..5 e fórmulas de apresentação."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/resistor-shield.md",
+          "reason": "LivingEntity em AABB 5/1/5, distância<=5, exclusão self/aliados, defesa e filtros da engine; sem projétil próprio."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/resistor-shield.md",
+          "reason": "Pedido de desgaste 1 e defesa 1+floor(dano) condicionais, disable 100, reparo/receita e ITEM_DAMAGE efetivo; sem mana de cast própria."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/resistor-shield.md",
+          "reason": "CUSTOM_DATA, codecs, eventos, lado, autoria e boundaries de segurança; NO_MUTATION, não duplicar hurt/knockback/settlement ou Mastery."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/resistor-shield.md",
+          "reason": "Replays nativos, dependências, 45446993318, 45461121524, 45478837398, 45528205575, 45649275425, 45651021466 (54228 bytes SHA e9257edc70e7a3ff00ca1fbe1d2fbe3aedb18e4a6879f8e10c9ae899f0d4b282); CI da promoção."
+        }
+      }
     }
   },
   "providers": {},

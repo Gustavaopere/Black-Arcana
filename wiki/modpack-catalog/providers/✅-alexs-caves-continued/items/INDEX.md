@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 37/39.**
+**Fichas catalogadas (somente fichas detectadas): 38/40.**
 
-**Barra das fichas catalogadas:** `██████████████████░░ 94.9%`
+**Barra das fichas catalogadas:** `███████████████████░ 95.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 37/39.**
+**Homologadas para perks (somente fichas detectadas): 38/40.**
 
-**Barra dos contratos técnicos estáticos:** `██████████████████░░ 94.9%`
+**Barra dos contratos técnicos estáticos:** `███████████████████░ 95.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -48,6 +48,7 @@
 | ✅ | Hood Of Darkness | [ficha/hood-of-darkness.md](hood-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hot Chocolate Bottle | [ficha/hot-chocolate-bottle.md](hot-chocolate-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Ink Bomb | [ficha/ink-bomb.md](ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Jelly Bean | [ficha/jelly-bean.md](jelly-bean.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [ficha/pewen-boat.md](pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [ficha/pewen-chest-boat.md](pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Primordial Helmet | [ficha/primordial-helmet.md](primordial-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -56,7 +57,7 @@
 | ✅ | Purple Soda Bottle | [ficha/purple-soda-bottle.md](purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Rainbounce Boots | [ficha/rainbounce-boots.md](rainbounce-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Remote Detonator | [ficha/remote-detonator.md](remote-detonator.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Resistor Shield | [ficha/resistor-shield.md](resistor-shield.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Resistor Shield | [ficha/resistor-shield.md](resistor-shield.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [ficha/thornwood-boat.md](thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Chest Boat | [ficha/thornwood-chest-boat.md](thornwood-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
