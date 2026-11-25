@@ -18,6 +18,19 @@ O efeito de reputação, as stacks criadas para animação e o spawn pertencem �
 
 O probe `docs/qa/alexscaves_1010_ink_bomb_deep_one_ingress_probe.py` exige a identidade completa do JAR, 1.555 classfiles, hashes das três classes e dos três corpos conhecidos. Constrói a família de herança pelo próprio classfile e pesquisa Methodref/InterfaceMethodref de quatro assinaturas exatas (startDisappearBehavior, swapItemsForAnimation, restoreSwappedItem, addReputation), mais constantes String exatas de recursos de barter. Registra callsites por operandos CP, não por substring ou simples presença de nome.
 
-Os métodos de barter encontrados por nome são candidatos de descoberta; corpos maiores que 180 instruções ficam com janelas de sites e hash, sem inferência de fluxo integral. O relatório não comprova dispatch efetivo, handlers externos, referências dinâmicas ou interpretação de loot pela engine. CI exige replay idêntico e publica o relatório. Primeiro resultado e selo ainda pendentes.
+Os métodos de barter encontrados por nome são candidatos de descoberta; corpos maiores que 180 instruções ficam com janelas de sites e hash, sem inferência de fluxo integral. O relatório não comprova dispatch efetivo, handlers externos, referências dinâmicas ou interpretação de loot pela engine. CI exige replay idêntico e publica o relatório. Primeira execução e replay confirmados: [run 45514153339 / job 138869143379](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45514153339/job/138869143379). 137.731 bytes, SHA-256 `5e6f799b338bea093af675e9d8a4864fb959baea9e977b9b4c2012f5a3cae854`, sete owners, 19 métodos distintos; três checks de escopo passaram. O workflow fixa tamanho e digest; CI deste novo head pendente.
 
 **Estado:** `static_contract=NOT_CERTIFIED; mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED; NO_MUTATION`. Não promover Glow Ink Bomb por equivalência da classe. Nenhum delta de raízes.
+
+## Resultados do censo tipado
+
+| Método | Evidência observada |
+|---|---|
+| DeepOneDisappearGoal.tick | Code SHA-256 `6ff8845ac0047b81a67bec6a50971b297957794dd08eeb31a551c469b62d0c66`; invokevirtual startDisappearBehavior @113, ifeq @116. |
+| DeepOneBaseEntity.swapItemsForAnimation | `7314614ddfcf6668c993d823c5ade506ab9e000820d823edd7f9fd0de509285e`; copia mão não vazia para swappedItem @24 e escreve mão @32. |
+| DeepOneBaseEntity.restoreSwappedItem | `f84d84dbe569f78607118ea97b17fa5364524fe1a5fad33fa014269e7a93ea58`; lê swappedItem @5 e escreve mão @8; sem liquidação de inventário de jogador. |
+| DeepOneMageEntity.startDisappearBehavior | `bf6aabce697c6fd37ab27bb119238dd09da912b9bab985c880e6460defb3406c`; para navegação @31, usa ANIMATION_DISAPPEAR; tick >50, evento 67 e remove DISCARDED; rota alternativa evento 66 e false. Sem chamada de InkBombEntity nesse corpo. |
+| DeepOneBaseEntity.generateBarterLoot | `d3df12394c1f7c4a7f78109c323ba56c1616f02aa2f329dbcb33deb941b09022`; resolve lootTable @11, THIS_ENTITY @30, PIGLIN_BARTER @37 e getRandomItems @43. |
+| DeepOneBaseEntity.addReputation | `bfbeb912b8e779e957549f01b5cc2e0eeec04a182ce445f5137ab2b0a1b3fc1f`; compara reação antes/depois, setReputationOf @19, triggers NEUTRAL/HELPFUL e mensagem ao jogador resolvido; não é XP ou Mastery. |
+
+Os inicializadores de DeepOneEntity, Knight e Mage têm literais exatos gameplay/deep_one_barter, gameplay/deep_one_knight_barter e gameplay/deep_one_mage_barter @48, respectivamente; getters retornam BARTER_LOOT. Censo adicional: AbyssalAltarBlockEntity.tick @318 swapItemsForAnimation e @368 addReputation; DeepOneBaseEntity.tick @713 restoreSwappedItem; hurt @75 addReputation; MagicConchItem.releaseUsing @415 addReputation. Essas janelas não provam as condições integrais dos chamadores. Não transferir comportamento de barter para lançamento, nem atribuir ao Mage a rota da bomba. Nenhum certificado, hook mutador ou QA física novo.
