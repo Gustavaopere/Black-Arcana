@@ -39,6 +39,8 @@ jobs:
             python3 docs/qa/alexscaves_1010_galena_teletor_controller_probe.py --jar build/galena-teletor/publisher.jar --javap "$JAVA_HOME/bin/javap" --output "build/galena-teletor/$name.json"
           done
           cmp build/galena-teletor/report.json build/galena-teletor/replay.json
+          test "$(wc -c < build/galena-teletor/report.json)" -eq 233786
+          echo 'a882a1870a5dce6a190005f83281d3876db815025fd5ce0c96c568fda446874e  build/galena-teletor/report.json' | sha256sum -c -
       - uses: actions/upload-artifact@v7
         if: always()
         with:

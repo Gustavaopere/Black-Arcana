@@ -214,3 +214,7 @@ O **Black Arcana** mantém a autoridade de seu runtime e políticas de mundo; o 
 4. Somente após prova individual dos eixos pertinentes, atualizar `PERK-READY-CERTIFICATIONS.json` e os índices. **Este documento permanece ⚠️ parcial**; zero hooks mutadores, zero QA física e zero nova raiz/cast certificados.
 
 **Clean-room:** descrições próprias e localizadores de interoperabilidade; nenhuma implementação proprietária, assets ou bytecode de terceiros foram incorporados ao runtime.
+
+## Controller Teletor — evidência complementar do publisher
+
+[Dossiê e selo SHA-exato](../EXACT-GALENA-TELETOR-CONTROLLER-1.0.10.md): [run 45544346069](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45544346069), 233.786 bytes, SHA-256 `a882a1870a5dce6a190005f83281d3876db815025fd5ce0c96c568fda446874e`. Tick integral da arma: 744 instruções, 234 referências tipadas, 82 branches, zero handlers próprios. O ramo Teletor atualiza IDs/UUID, usa destino eyePosition/posição oscilante do mob, contato |q| < largura do alvo +1, incremento de strike 0.35F e retorno marcado após tentativa de hurt ou, fora de contato, |q|>32. Movimento recebe 0.1F; proximidade de retorno 2.5 com Y acima do controller. Não é targeting do jogador. finalizeSpawn, getWeaponPosition, dropEquipment, getWeapon e tick do Teletor foram auditados separadamente no dossiê; não transferir a chance de enchant ou drop ao Player nem contar tentativa como Mastery. Sem hook mutador, QA física ou certificado integral; replay com selo na HEAD consolidada é gate independente. NO_MUTATION.
