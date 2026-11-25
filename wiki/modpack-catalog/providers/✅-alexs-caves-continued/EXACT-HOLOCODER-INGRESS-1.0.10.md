@@ -32,3 +32,28 @@ A relação com Hot Chocolate Bottle é a tag gingerbread_man_steals; o scope de
 ## Limites
 
 O dossiê melhora a prova de ingresso, registry e adaptador, mas não é certificado completo de Holocoder, Hot Chocolate ou dos mobs. Não comprova execução após transformações, aplicação de permissões, transações, efeito aceito, sync real ou QA. `static_contract=NOT_CERTIFIED; mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED; NO_MUTATION; provider_universe_closed=false; semantic_magic_roots_delta=0`.
+
+## Complemento causal da apresentação e atualização do projetor
+
+**Reuso de prova, sem nova sonda.** [Run 45471957912, job 138721970278](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45471957912/job/138721970278), relatório downstream de 1.956.222 bytes SHA-256 `5a5c4a201604224306a2b5cded87cb82523bce8cf0e82aaf998954125afe0c65`; [run 45478556000, job 138745194532](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45478556000/job/138745194532), 1.668.053 bytes SHA-256 `dd8562887a4740769ec09db6e19d5336a77b9e710d8f125f9eea2a9b12d74314`. Ambos jobs com conclusion success; reexame de registros SEMANTIC dos corpos já extraídos. Publisher 1.0.10 e distribuição 21.1.250 conforme os respectivos relatórios; sem observação da classe transformada.
+
+### Parâmetros e geometria
+
+| Método da block entity | Semântica reconstruída e pivôs |
+|---|---|
+| getRenderBoundingBox | Code SHA `07518d6ad69d783725a8223036e1e30ea18f552ce99921f50d98da9c60f03da7`, 38 instruções. Seja m=(displayEntity nula ? 1F : max(getBbWidth(),getBbHeight()))*hologramScale (@9,20,27,30,34,37). Solicita ACPlatform.encapsulating(pos.offset(-1,-1,-1),pos.offset(2,2,2)) @53, depois AABB.inflate(double(max(m-0.5F,1F))) @65. É parâmetro de caixa para render, não AOE, hitbox física ou alcance de interação. Corpo interno de encapsulating não reconstruído neste recorte. |
+| getSwitchAmount | Code SHA `f68a22a098410476bcad8546408e05aea261f05c472877d571a5fc81f9c5e9ad`, 13 instruções. Resultado float (prevSwitchProgress+(switchProgress-prevSwitchProgress)*partialTick)*0.1F. Pivôs @1,5,9,12,14,15,16,19. Sem clamp local. |
+| getRotation | Code SHA `ca39bafcb8da96e7fc8bd01ccf535213d5648f62368ee3c854d277c781e3b3f7`, 11 instruções. Interpola previousRotation+(rotation-previousRotation)*partialTick; sem normalização local. |
+| cycleHologramScale | Code SHA `a0c1a559dbeceef2549d244467714c3035192b8787091de5d20bb480eccd877e`, 38 instruções. Índice inicial 0; procura primeiro |escala candidata-escala atual|<0.0001F @22/25/29, depois índice (i+1)%array.length @49/54. Roster já provado 0.25/0.5/0.75/1/1.5/2/3: sem correspondência (inclusive NaN) usa índice inicial 0, selecionando 0.5; solicita markUpdated @60. Não implica escala de entidade real ou atributo. |
+
+### Tick, identidade e pacote
+
+tick Code SHA `deeed0fe70acfe71c77378d8791d086e7f625593957f20e1159b174367f3e242`, 137 instruções: incrementa tickCount, guarda progress e rotation anteriores. A comparação @34 usa identidade de referência (if_acmpeq), não UUID.equals; quando prevDisplayUUID e displayUUID diferem e switchProgress<10, solicita HOLOGRAM_STOP se progress==0, e soma 1F. Caso contrário copia referências de display/UUID para prev e solicita markUpdated @109. No trecho seguinte solicita playWorldSound(this,3) @131 somente se não removido e level client. Ramo player resolve lastPlayerUUID da tag se ainda nulo, solicita markUpdated, depois compara UUID.equals @194 (ou null guards) e, se diferente/ausente, grava displayUUID e zera progress. Ramo não-player com entidade existente compara por referência @234 e, se diferente, copia UUID e zera progress. getBestNeighborSignal @255 convertido a float e multiplicado por 1F, soma à rotation @277/278 se positivo. Não deduzir quantidade efetiva de ticks, normalização de ângulo, audibilidade ou igualdade por valor em todos os ramos.
+
+loadAdditional Code SHA `4660509d9298d5c575cf266a90cfe56c32cee6ed4bb30e8f885897e9dfe96ad4`, 52 instruções: chama super; se contains(EntityType), usa ResourceLocation.parse/registry.get; EntityTag, HologramScale e LastPlayerUUID têm guards contains próprios. Rotation lida sem guard contains local. onDataPacket Code SHA `a4145fabcecbf8ab13725334ad60cf335646e17056c26a769ec40e677ddf4cd2`, 57 instruções: packet/tag null retorna; EntityType, HologramScale e LastPlayerUUID condicionais; EntityTag/Rotation lidos sem contains próprio. Não há limpeza explícita do cache de display nessa rotina. Ausência de chave e conteúdo inválido não equivalem a reset universal; parsing, UUID inválido e eventual efeito sobre display físico continuam limites. Os gates são do corpo publisher, não de entrega/ordem real de pacotes.
+
+### Consumidores finais observados
+
+HologramProjectorBlockRenderer.renderAt Code SHA `d54930b7a54fb9939a56e4276508a1d638b9560a29620a9f9bfdf2cb9777e04d`, 362 instruções, chama getDisplayEntity, getSwitchAmount, getHologramScale e LivingEntity.getScale; os ramos de apresentação encaminham renderPlayerHologram @666 ou NotorRenderer.renderEntityInHologram @754. HologramProjectorSound.canPlaySound Code SHA `5dbc3ba2682a5750e1b237b55068b3a9a04f72c36758a73611387323781c515d`, 29 instruções, exige block entity não removida, representação player ou entidade display não nula, e getSwitchAmount(1F)>0. Não certificar shaders, callbacks de renderers externos, som efetivo, isolamento de representação ou comportamento de entidades carregadas. A fórmula de interpolação/caixa e os guards de apresentação foram documentados; não são dano, AOE, summon, cast ou recibo de Mastery.
+
+**Estados:** STATIC_DISCOVERY_ONLY, NOT_CERTIFIED, NOT_VERIFIED, NOT_TESTED, NO_MUTATION. Nenhuma nova raiz ou índice alterado.
