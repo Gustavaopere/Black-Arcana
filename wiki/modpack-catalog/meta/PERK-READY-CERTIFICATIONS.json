@@ -10293,6 +10293,49 @@
         }
       }
     },
+    "✅-alexs-caves-continued/items/hot-chocolate-bottle.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HOLOCODER-HOT-CHOCOLATE-INK-BOMB-1.0.10.md",
+          "reason": "Exact publisher class, two executable bodies, registry supplier $164, recipe and model seals; installed dump parity remains NOT_VERIFIED."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOOD-STATUS-SETTLEMENT-21.1.250.md",
+          "reason": "Native finishUsingItem ancestor and override, contextual food, event-driven stat reset, effect admission and separate Sack of Sating path."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/hot-chocolate-bottle.md",
+          "reason": "16 stack, 40 ticks, nutrition 4, nominal saturation 2, 0.02F Sugar Rush 200 ticks amplifier 0, stat reset and conditional phantom threshold; codec result 1."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/hot-chocolate-bottle.md",
+          "reason": "Self-consuming LivingEntity, ServerPlayer-specific rest reset, separate conditional Sugar Rush temporal field and independent AI item-consumer route; no intrinsic damage, projectile or AOE."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/hot-chocolate-bottle.md",
+          "reason": "Native one-unit consumption request, bottle settlement, recipe, publisher loot and tag inventory consumer; no mana/durability/own cooldown."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/hot-chocolate-bottle.md",
+          "reason": "Bounded read-only native consumption, effect, inventory and stats boundaries. No safe per-player mutating hook or Mastery receipt certified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ITEM-ENTITY-DEFAULTS-21.1.250.md",
+          "reason": "Exact publisher and distributed engine evidence; deterministic prior native, acquisition, lifecycle and codec report seals linked in individual card. Final branch must pass replay and index CI."
+        }
+      }
+    },
     "✅-alexs-caves-continued/items/purple-soda-bottle.md": {
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",

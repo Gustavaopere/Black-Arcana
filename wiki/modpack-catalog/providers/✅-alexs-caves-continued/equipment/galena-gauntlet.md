@@ -184,6 +184,10 @@ Os 17 owners do grupo world_mining_and_inventory têm `IDENTICAL_CLASS_BYTES`: S
 
 A contagem histórica 130/134 nas seções anteriores refere-se ao recorte então identificado; o índice atual observa 130/138, sem promoção por esta correspondência. A Gauntlet continua `NOT_CERTIFIED / NO_MUTATION / WORLD_SAFETY_BLOCKED / NOT_TESTED`; faltam observação física de admissão, conservação, owner, claims, reload e integração efetiva. Não criar compensação, novo spawn ou Mastery por tentativa.
 
+## 4.20. Vetores de movimento e registro da entidade
+
+[Dossiê](../EXACT-GALENA-MOVEMENT-1.0.10.md), [run 45525982648](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45525982648), 94.727 bytes SHA-256 `1cc3b211a9ae87de6ef4cd58e179bb72b8edc4f0cb3e54adb300eda3046e34a7`. directMovementTowards usa q=destino−posição; normaliza somente se |q|>1, soma q×s à velocidade atual, ajusta rotação via approachDegrees com passo 5F. Em idling conserva pitch e solicita yaw+5F. getControllerHandPos soma à posição interpolada um vetor local dependente de width/height (±0,75F, 0,68F, −0,1F), rotacionado pelo yaw corporal interpolado negativo, e 0,75D×vetor de visão normalizado. Os getters de progresso interpolam prev+(current−prev)×partialTick, sem clamp local. tick chama movimento SELF e aplica fator de amortecimento 0,8999999761581421D depois. A factory magnetic_weapon é MISC, dimensão 0,5×0,5, tracking nominal 20, update 1, velocity updates true. Não confundir esses valores com alcance de ataque ou distância efetivamente percorrida; os ramos completos que alimentam o argumento de velocidade do player ainda precisam de prova. Mantém `NO_MUTATION / NOT_CERTIFIED / NOT_TESTED`.
+
 ## 5. Interfaces conceituais para perks, atributos e Mastery
 
 | Eixo | Fronteira observada | Estado de integração |
