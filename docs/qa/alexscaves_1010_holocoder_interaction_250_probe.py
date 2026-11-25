@@ -34,7 +34,9 @@ SELECT = {
     MC+"world/item/ItemStack": {"interactLivingEntity","shrink","setCount"},
     MC+"world/entity/item/ItemEntity": {"setNoPickUpDelay","setThrower","setTarget","setOwner"},
     MC+"world/level/block/state/BlockBehaviour$BlockStateBase": {"useItemOn","useWithoutItem"},
-    HOOKS: {"onInteractEntity","onInteractEntityAt","onRightClickBlock","onEntityInteract","onEntityInteractSpecific"},
+    HOOKS: {"onPlayerDestroyItem"},
+    NF+"common/CommonHooks": {"onInteractEntity","onInteractEntityAt","onRightClickBlock","onPlayerTossEvent"},
+    MC+"world/item/crafting/ShapedRecipe$Serializer": {"<clinit>"},
     EVENT: {"getItemStack","getHand","getCancellationResult","setCancellationResult"},
     EVENT+"$EntityInteract": {"<init>","getTarget","setCanceled"},
     EVENT+"$RightClickBlock": {"getUseBlock","getUseItem","getCancellationResult","setCanceled"},
@@ -57,6 +59,8 @@ KNOWN = {
         "c21f4f21673302dc2313d610adb2c4b2371d841182a35908be14c4da1cedc1b3",
 }
 REQUIRED = {
+    NF+"common/CommonHooks":{"onInteractEntity","onInteractEntityAt","onRightClickBlock","onPlayerTossEvent"},
+    MC+"world/item/crafting/ShapedRecipe$Serializer":{"<clinit>"},
     LISTENER:{"handleInteract","handleUseItemOn"},
     PACKET:{"dispatch","getTarget"},
     MC+"server/level/ServerPlayerGameMode":{"useItemOn"},
