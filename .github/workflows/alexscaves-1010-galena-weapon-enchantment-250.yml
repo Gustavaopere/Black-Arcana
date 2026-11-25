@@ -94,7 +94,8 @@ jobs:
       - name: Require identical replay
         run: |
           cmp build/galena-weapon-enchantment-250/report.json build/galena-weapon-enchantment-250/replay.json
-          sha256sum build/galena-weapon-enchantment-250/report.json
+          test "$(wc -c < build/galena-weapon-enchantment-250/report.json)" -eq 478046
+          echo 'ca02eac60a6f7577cdfe5436d62c5961f449bba627e86361df048aefb7f09a64  build/galena-weapon-enchantment-250/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
