@@ -1027,9 +1027,9 @@
     "next_scope": "server/item/GalenaGauntletItem"
   },
   "latest_individual_contract_checkpoint": {
-    "scope": "NINETEEN_PARTIAL_CARDS_INTEGRATED_PLUS_FOUR_RADIOACTIVE_PARTIAL_CARDS",
+    "scope": "NINETEEN_PARTIAL_CARDS_INTEGRATED_PLUS_EIGHT_RADIOACTIVE_PARTIAL_CARDS",
     "provider_observed_static_contracts": 137,
-    "provider_observed_cards": 164,
+    "provider_observed_cards": 168,
     "integration_support_contracts": 15,
     "concrete_item_contracts": 38,
     "equipment_contracts": 6,
@@ -1064,7 +1064,11 @@
       "items/charred-remnant.md",
       "items/fissile-core.md",
       "items/uranium.md",
-      "items/uranium-shard.md"
+      "items/uranium-shard.md",
+      "items/radrock-uranium-ore.md",
+      "items/waste-drum.md",
+      "items/block-of-uranium.md",
+      "items/unrefined-waste.md"
     ],
     "evidence": [
       "items/gazing-pearl.md",
@@ -1078,10 +1082,10 @@
       "EXACT-QUARRY-RADIANT-FOOD-1.0.10.md",
       "EXACT-RADIOACTIVE-ITEMS-1.0.10.md"
     ],
-    "historical_checkpoint_note": "19 partial cards integrated across #1230/#1232; four further partial cards proposed; two radioactive block class identities pending. No new certificates; CI/merge required."
+    "historical_checkpoint_note": "19 partial cards integrated across #1230/#1232; eight radioactive partial cards proposed, four direct and four block items. No new certificates; CI/merge required."
   },
   "item_class_reconciliation_checkpoint": {
-    "scope": "EXISTING_CARDS_PLUS_FIVE_DISCOVERY_BATCHES_PARTIAL_BLOCK_BINDINGS",
+    "scope": "EXISTING_CARDS_PLUS_FIVE_DISCOVERY_BATCHES_BLOCK_BINDINGS_MAPPED",
     "base_main": "f3f48196a0853fe51cefd0dd5ba462b354773dc2",
     "physical_item_outer_classes": 81,
     "historical_disposition_prefix_classes": 37,
@@ -1105,7 +1109,7 @@
       "EXACT-QUARRY-RADIANT-FOOD-1.0.10.md",
       "EXACT-RADIOACTIVE-ITEMS-1.0.10.md"
     ],
-    "limits": "60/81 outer classes with mapped or previously recorded disposition; two additional radioative block class bodies observed but not mapped to exact item IDs. 21 remaining including those two. Not certificates or entire semantic universe.",
+    "limits": "62/81 outer classes with mapped or previously recorded disposition; all three radioactive class owners mapped in this candidate; 19 remaining. Not certificates or entire semantic universe.",
     "magic_conch_reconciled": true,
     "new_discovery_classes": [
       "server/item/MarineSnowItem",
@@ -1133,7 +1137,13 @@
       "server/item/RadioactiveOnDestroyedBlockItem"
     ],
     "radioactive_direct_item_mapped": true,
-    "radioactive_block_classes_pending_id_binding": 2,
-    "remaining_without_mapped_or_closed_disposition": 21
+    "radioactive_block_classes_pending_id_binding": 0,
+    "remaining_without_mapped_or_closed_disposition": 19,
+    "radioactive_block_ids": [
+      "radrock_uranium_ore",
+      "waste_drum",
+      "block_of_uranium",
+      "unrefined_waste"
+    ]
   }
 }

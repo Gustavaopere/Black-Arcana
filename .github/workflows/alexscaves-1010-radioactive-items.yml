@@ -50,6 +50,8 @@ jobs:
           python3 docs/qa/alexscaves_1010_radioactive_block_bindings_probe.py --jar build/radioactive-items/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/radioactive-items/bindings.json
           python3 docs/qa/alexscaves_1010_radioactive_block_bindings_probe.py --jar build/radioactive-items/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/radioactive-items/bindings-replay.json
           cmp build/radioactive-items/bindings.json build/radioactive-items/bindings-replay.json
+          test "$(wc -c < build/radioactive-items/bindings.json)" -eq 1106955
+          echo '52f90cc908f4e775a29711454c2a58a411dc491116020680d77eaf553a299709  build/radioactive-items/bindings.json' | sha256sum -c -
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7

@@ -41,3 +41,14 @@ ACBlockRegistry.lambda$getBlockSupplier$440(Supplier)BlockItemWithSupplier (Code
 ## RED e correção da sonda suplementar
 
 Run 45793236357/job 139817275195: os dois replays originais reproduziram SHA b8fd8880... e 232851 bytes; a sonda suplementar compilou, mas falhou com `AuditError: selector heading`. Causa: escapes duplicados nas regex Python raw. Corrigidos escapes do cabeçalho, braços de switch e referências de método; quatro checks sintéticos de regressão, exigência de braços do switch e janelas do inicializador ampliadas para até 600 candidatos (não dispensam vínculo causal). A nova CI deve confirmar o GREEN. Download direto no ambiente local indisponível por DNS; validação binária depende do workflow publisher. Sem mudança de contrato ou contagem.
+
+## GREEN e quatro bindings de bloco comprovados
+
+[Run 45793839880/job 139819307102](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45793839880/job/139819307102), HEAD `e992226c0d80b5d6393e0a99de49d185c406a807`: quatro regressões passaram e dois replays de bindings byte-idênticos, 1.106.955 bytes SHA-256 `52f90cc908f4e775a29711454c2a58a411dc491116020680d77eaf553a299709`. 249 janelas. ACBlockRegistry class SHA `b4de04f32f6e1d92eeda55480b8480f7ed69f3813164f330f49d0eced202e54c`, getBlockSupplier Code SHA `0491a61abf0d322efcd2b927a9d55591d5f25a2f094e9d386121b5ad3ed45b68`, helper registerBlockAndItem Code SHA `d1a0bd80dc6b33272d28f317f10161bc4fbacda2d8b41529fe2a53d82141f32c`. Switch 4->80->indy81->$440 e 5->87->indy88->$441. Helper registra bloco @5 e item com mesmo nome @18. Quatro literal-ID callsites do inicializador: radrock_uranium_ore selector 4 @2068; waste_drum selector 5 @2201; block_of_uranium selector 4 @2301; unrefined_waste selector 4 @2330. Nova HEAD sela tamanho/digest e adiciona assertions de roster de bindings sem modificar o relatório. Os parâmetros de bloco no mundo e engine permanecem fora do contrato parcial.
+
+- [Radrock Uranium Ore](items/radrock-uranium-ore.md)
+- [Waste Drum](items/waste-drum.md)
+- [Block Of Uranium](items/block-of-uranium.md)
+- [Unrefined Waste](items/unrefined-waste.md)
+
+Estado candidato: oito fichas radioativas parciais, 137/168 observadas, 62/81 classes com disposição. Oito classes existentes adicionais e onze owners finais serão reconciliados na #1234; nenhum novo certificado. NO_MUTATION.

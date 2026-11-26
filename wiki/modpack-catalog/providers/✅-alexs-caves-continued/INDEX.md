@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 137/164.**
+**Fichas catalogadas (somente fichas detectadas): 137/168.**
 
-**Barra das fichas catalogadas:** `████████████████░░░░ 83.5%`
+**Barra das fichas catalogadas:** `████████████████░░░░ 81.5%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 137/164.**
+**Homologadas para perks (somente fichas detectadas): 137/168.**
 
-**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 83.5%`
+**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 81.5%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -113,6 +113,7 @@
 | ✅ | Shot Gum | [equipment/shot-gum.md](equipment/shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Alex Meal | [items/alex-meal.md](items/alex-meal.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Biome Treat | [items/biome-treat.md](items/biome-treat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Block Of Uranium | [items/block-of-uranium.md](items/block-of-uranium.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Burrowing Arrow | [items/burrowing-arrow.md](items/burrowing-arrow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Candy Cane Hook | [items/candy-cane-hook.md](items/candy-cane-hook.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Book | [items/cave-book.md](items/cave-book.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -158,6 +159,7 @@
 | ⚠️ | Quarry Smasher | [items/quarry-smasher.md](items/quarry-smasher.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Radgill Bucket | [items/radgill-bucket.md](items/radgill-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Radiant Essence | [items/radiant-essence.md](items/radiant-essence.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Radrock Uranium Ore | [items/radrock-uranium-ore.md](items/radrock-uranium-ore.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Rainbounce Boots | [items/rainbounce-boots.md](items/rainbounce-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Remote Detonator | [items/remote-detonator.md](items/remote-detonator.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Resistor Shield | [items/resistor-shield.md](items/resistor-shield.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -170,8 +172,10 @@
 | ✅ | Thornwood Chest Boat | [items/thornwood-chest-boat.md](items/thornwood-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Trilocaris Bucket | [items/trilocaris-bucket.md](items/trilocaris-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Tripodfish Bucket | [items/tripodfish-bucket.md](items/tripodfish-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Unrefined Waste | [items/unrefined-waste.md](items/unrefined-waste.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Uranium Shard | [items/uranium-shard.md](items/uranium-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Uranium | [items/uranium.md](items/uranium.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Waste Drum | [items/waste-drum.md](items/waste-drum.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Anvil Combination | [systems/anvil-combination.md](systems/anvil-combination.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Armor Material | [systems/armor-material.md](systems/armor-material.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Info Item | [systems/cave-info-item.md](systems/cave-info-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -198,7 +202,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ⚠️ | Equipment | 6/9 (66.7%) | 6 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 38/61 (62.3%) | 38 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Items | 38/65 (58.5%) | 38 | [Abrir índice](items/INDEX.md) |
 | ⚠️ | Systems | 15/16 (93.8%) | 15 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅

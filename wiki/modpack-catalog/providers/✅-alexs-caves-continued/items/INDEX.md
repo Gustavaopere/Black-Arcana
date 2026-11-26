@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 38/61.**
+**Fichas catalogadas (somente fichas detectadas): 38/65.**
 
-**Barra das fichas catalogadas:** `████████████░░░░░░░░ 62.3%`
+**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 58.5%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 38/61.**
+**Homologadas para perks (somente fichas detectadas): 38/65.**
 
-**Barra dos contratos técnicos estáticos:** `████████████░░░░░░░░ 62.3%`
+**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 58.5%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -22,6 +22,7 @@
 |---|---|---|---|---|---|
 | ✅ | Alex Meal | [ficha/alex-meal.md](alex-meal.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Biome Treat | [ficha/biome-treat.md](biome-treat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Block Of Uranium | [ficha/block-of-uranium.md](block-of-uranium.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Burrowing Arrow | [ficha/burrowing-arrow.md](burrowing-arrow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Candy Cane Hook | [ficha/candy-cane-hook.md](candy-cane-hook.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Book | [ficha/cave-book.md](cave-book.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -67,6 +68,7 @@
 | ⚠️ | Quarry Smasher | [ficha/quarry-smasher.md](quarry-smasher.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Radgill Bucket | [ficha/radgill-bucket.md](radgill-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Radiant Essence | [ficha/radiant-essence.md](radiant-essence.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Radrock Uranium Ore | [ficha/radrock-uranium-ore.md](radrock-uranium-ore.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Rainbounce Boots | [ficha/rainbounce-boots.md](rainbounce-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Remote Detonator | [ficha/remote-detonator.md](remote-detonator.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Resistor Shield | [ficha/resistor-shield.md](resistor-shield.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -79,8 +81,10 @@
 | ✅ | Thornwood Chest Boat | [ficha/thornwood-chest-boat.md](thornwood-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Trilocaris Bucket | [ficha/trilocaris-bucket.md](trilocaris-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Tripodfish Bucket | [ficha/tripodfish-bucket.md](tripodfish-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Unrefined Waste | [ficha/unrefined-waste.md](unrefined-waste.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Uranium Shard | [ficha/uranium-shard.md](uranium-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Uranium | [ficha/uranium.md](uranium.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Waste Drum | [ficha/waste-drum.md](waste-drum.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 

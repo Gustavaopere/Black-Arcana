@@ -77,7 +77,18 @@ if __name__=="__main__":
     ap=argparse.ArgumentParser()
     ap.add_argument("--jar",type=Path,required=True);ap.add_argument("--javap",default="javap");ap.add_argument("--output",type=Path,required=True)
     a=ap.parse_args();require(not a.output.exists(),"write once")
-    report=inspect(a.jar,a.javap);data=canonical(report).encode();require(len(data)<=5000000,"report budget")
+    report=inspect(a.jar,a.javap)
+    require(report['class_sha256']=='b4de04f32f6e1d92eeda55480b8480f7ed69f3813164f330f49d0eced202e54c','registry pin')
+    require(report['selector']['code_sha256']=='0491a61abf0d322efcd2b927a9d55591d5f25a2f094e9d386121b5ad3ed45b68','selector Code pin')
+    require({'4: 80','5: 87'}<=set(report['switch_arms']),'selector arm pins')
+    found=[]
+    for row in report['candidate_windows']:
+        i=next(i for i,v in enumerate(row['window']) if v['offset']==row['offset'])
+        w=row['window']
+        if ';I)Ljava/util/function/Supplier;' in w[i]['symbol'] and w[i-1]['opcode'] in {'iconst_4','iconst_5'}:
+            found.append((w[i-3]['symbol'],w[i-1]['opcode'],row['offset']))
+    require(sorted(found)==sorted([('String radrock_uranium_ore','iconst_4',2068),('String waste_drum','iconst_5',2201),('String block_of_uranium','iconst_4',2301),('String unrefined_waste','iconst_4',2330)]),'four block ID bindings')
+    data=canonical(report).encode();require(len(data)<=5000000,'report budget')
     with a.output.open("xb") as f:f.write(data)
     print("BINDING_REPORT_SHA256",digest(data),"BYTES",len(data))
     for k,v in report.items():
