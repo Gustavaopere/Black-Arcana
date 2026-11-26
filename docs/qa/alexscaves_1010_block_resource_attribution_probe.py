@@ -80,6 +80,13 @@ def project(rd, key, body):
     return {**projection(rd, key, body, decl), "executable": True}
 
 
+def allocation_targets(row):
+    """Read the actual projection schema; reject non-allocation type operands."""
+    targets = {x["owner"] for x in row["type_operands"] if x["opcode"] == "new"}
+    require(all(isinstance(x, str) for x in targets), "allocation owner type")
+    return targets
+
+
 def inspect(jar, javap):
     verify_artifact(jar)
     report = {"scope": "BLOCK_AND_RESOURCE_STATIC_DISCOVERY_ONLY", "mutation": "NO_MUTATION",
@@ -113,7 +120,7 @@ def inspect(jar, javap):
                 require(supplier in body, "supplier body " + name)
                 row = project(rd, supplier, body[supplier])
                 record["factory"] = row
-                targets = {x["target"] for x in row["new_sites"]}
+                targets = allocation_targets(row)
             else:
                 require(handle["kind"] == 8 and handle["name"] == "<init>", "unresolved non-registry factory " + name)
                 targets = {handle["owner"]}
@@ -205,7 +212,10 @@ def self_test():
     require({x["relation"] for x in hits["data/test/recipe/x.json"]} ==
             {"DIRECT_ID_REGISTRY_CONTEXT_REQUIRED", "POTENTIAL_ITEM_TAG_REFERENCE"}, "relation separation")
     require(len(BINDINGS) == 4 and len(ALL_IDS) == 10, "scope")
-    print("PASS six exact scope and resource checks")
+    require(allocation_targets({"type_operands": [
+        {"owner": "a/B", "opcode": "new"}, {"owner": "a/C", "opcode": "checkcast"}]}) == {"a/B"},
+        "allocation projection schema regression")
+    print("PASS seven exact scope and resource checks")
 
 
 if __name__ == "__main__":
