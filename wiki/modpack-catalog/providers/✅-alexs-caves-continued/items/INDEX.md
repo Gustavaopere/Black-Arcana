@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 42/81.**
+**Fichas catalogadas (somente fichas detectadas): 44/81.**
 
-**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 51.9%`
+**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 54.3%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 42/81.**
+**Homologadas para perks (somente fichas detectadas): 44/81.**
 
-**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 51.9%`
+**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 54.3%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -47,7 +47,7 @@
 | ✅ | Gingerbread Leggings | [ficha/gingerbread-leggings.md](gingerbread-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Glow Ink Bomb | [ficha/glow-ink-bomb.md](glow-ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gossamer Worm Bucket | [ficha/gossamer-worm-bucket.md](gossamer-worm-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Green Soylent | [ficha/green-soylent.md](green-soylent.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Green Soylent | [ficha/green-soylent.md](green-soylent.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Guano | [ficha/guano.md](guano.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Boots | [ficha/hazmat-boots.md](hazmat-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Chestplate | [ficha/hazmat-chestplate.md](hazmat-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -83,7 +83,7 @@
 | ⚠️ | Seething Stew | [ficha/seething-stew.md](seething-stew.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Serene Salad | [ficha/serene-salad.md](serene-salad.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Sharpened Candy Cane | [ficha/sharpened-candy-cane.md](sharpened-candy-cane.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Slam | [ficha/slam.md](slam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Slam | [ficha/slam.md](slam.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Spelunkie | [ficha/spelunkie.md](spelunkie.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Submarine | [ficha/submarine.md](submarine.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Sweetberry Ice Cream Scoop | [ficha/sweetberry-ice-cream-scoop.md](sweetberry-ice-cream-scoop.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |

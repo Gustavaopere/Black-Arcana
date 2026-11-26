@@ -27,3 +27,38 @@ O dispatcher certificado [Ticking Item](../systems/ticking-item.md) liga ItemSta
 Receitas furnace/uranium_shard_blasting.json e furnace/uranium_shard_smelting.json (SHA-256 `3655bc694c8f900b9e9001651fe3da845328ce0741581354f42950ae9a5cb1b7` e `eadb37b66ecdaf22c44bc45c4fdb28f3a9816a97b23252afa57ca6eabecd16ac`): ambas declaram ingrediente unrefined_waste, resultado uranium_shard, 100 ticks e XP 1.0. A duração igual nos dois tipos é do recurso, não convenção presumida do vanilla. Transformar insumo altera identidade e não duplica cast, efeito ou XP. Sem inferir comportamento do bloco colocado.
 
 Os recursos acima foram relidos no log SHA-exato da prova suplementar (job 139819307102). Limites de bloco colocado e consumidores não enumerados permanecem explícitos. `NOT_CERTIFIED / NO_MUTATION / NOT_TESTED`.
+
+
+## Resultado do censo causal — #1240
+
+[Run 45903382213/job 140194260474](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45903382213/job/140194260474): sete checks e dois relatórios byte-idênticos de 227.057 bytes SHA-256 `9708b284726f23dded9e4ad5268296f5ae437bd7aa115ea1bf62e7bc0abdd7a2`, 1.563 JSONs. [Dossiê](../EXACT-BLOCK-RESOURCE-ATTRIBUTION-1.0.10.md) · [Selo por ID](../EXACT-BLOCK-RESOURCE-ATTRIBUTION-SEAL-1.0.10.json).
+
+`BlockItemWithSupplier` class SHA-256 `07a1c41d7b895e55e6c25c1dcb749703bed3c4a289592c958b4567a85a567d20`, quatro métodos próprios. `getBlock()` Code `34958b1e4ad3d0a7c35384b798190647caca05f7aac8bc9d6258af91b9393083` resolve supplier @4. `canFitInsideContainerItems()` Code `5fba881bd1a026278faca1b4a5a9eb6fc3eec8fed13571f9f16df3681035445e` retorna falso apenas para ShulkerBoxBlock; o bloco específico desta ficha não pertence a essa classe. `onDestroyed(ItemEntity)` Code `226813dc8af7ac6358213a35838f56fb39d5d9e717acb039d331303489bc9a46` somente no ramo ShulkerBoxBlock limpa CONTAINER @25 e solicita ItemUtils.onContainerDestroyed @41 se conteúdo anterior não nulo. `ACBlockRegistry.blockItemProperties()` Code `26961a0e9ab5a59780758d47ec0512a60c5ac8d3deab1d9982f6421393181e81` cria Item.Properties sem override. [Defaults 21.1.250](../EXACT-ITEM-ENTITY-DEFAULTS-21.1.250.md): stack nominal 64, sem durabilidade explícita. O uso/placement genérico e a execução após transformação não foram comprovados neste recorte.
+
+**Efeito adicional no bloco colocado — distinto de inventário.** Supplier lambda$static$163 Code `88f6a8b0ca9d1745667ce7f2923c9902471ff372fe891e480df068a2dc3de39d` instancia UnrefinedWasteBlock (class SHA `72f6127bc522cd40553bdffb919ea42ce4870273cf92282efe533aaed67a046a`, 11/11 métodos), extends FallingBlockWithColor (SHA `de17b8426736df4bdb494111279c53ddf61b5c0db981af04cf22b87c679c6b64`, 3/3, extends FallingBlock). strength .5F, luz 3, emissive true, dustColor 60928; collision shape box(0.1,0.1,0.1,15.9,14,15.9) em unidades 1/16 bloco, visual e support full block. `entityInside` Code `dae1b651c6bfafb537b8a61157d58ae7996f37c71aa06699343736110c887a34` exige LivingEntity @2 e ausência de RESISTS_RADIATION no tipo @26. Solicita setDeltaMovement(vx×0.9,vy,vz×0.9) @49 e addEffect(IRRADIATED,4000 ticks, amp0 default) @78; retorno ignorado. Não há guarda explícita de servidor, Hazmat, creative, efeito existente, dano direto, owner ou cooldown nesse corpo. A cada callback elegível, não necessariamente a cada tick físico; não confundir forma de colisão com raio de aura. Amp0 não executa tick periódico próprio, mas pode bloquear heal por consumidor de presença. AnimateTick nextInt(2)==0 e face vizinha não oclusiva ou não sólida seleciona GAMMAROACH/HAZMAT_BREATHE; apenas apresentação. FallingBlockWithColor.codec delega unsupportedBlockCodec; não inferir persistência de entidade caindo.
+
+Fieldrefs de gameplay: NuclearFurnaceBlockEntity.destroyWhileCritical @18 lê default state após currentWaste=0; AcidFluidType.onVaporize @150 solicita setBlockAndUpdate @164 e descarta retorno; TremorzillaEntity.createEggBeddingBlockState @0–14 retorna default state. Esses são caminhos de produção/uso distintos, não provas de resultado. Receita de Waste Drum referencia UNREFINED_WASTE e há receita própria e loot, listados abaixo. Pendentes corpos completos de consumidores, falling block e world safety. Perks de velocidade, duração do status, resistência e exposição de inventário têm fronteiras diferentes; não alterar tag global nem duplicar callbacks.
+
+**Fieldrefs do registry neste recorte:**
+
+| Owner/método | Offset | Opcode | Code SHA-256 |
+|---|---:|---|---|
+| `ACBlockRegistry.<clinit>` | 2333 | `putstatic` | `d4e20fc9df025209351d92f78283942e0817358a21a30b62c4b68dc9d93f082a` |
+| `NuclearFurnaceBlockEntity.destroyWhileCritical` | 18 | `getstatic` | `e354ae78664f5167d9de96453ae69aab7127eecfbcd41f80bba944538cca575c` |
+| `AcidFluidType.onVaporize` | 150 | `getstatic` | `3065c4ada2540a1fcb0443062ea37a42b189618dd00468280c16a8d8925ab872` |
+| `TremorzillaEntity.createEggBeddingBlockState` | 0 | `getstatic` | `f0560e61af0b64a782ae929e838e59b56a484e445593f5ae11c56c0dac02aaac` |
+| `ACCreativeTabRegistry.lambda$static$10` | 916 | `getstatic` | `4a6ee5775221aa148147d7baedc4aa322f92ac71ff99476dccb039250004171e` |
+
+**Atribuição completa de referências literais/possíveis tags no recorte data/:**
+
+| Recurso | Caminho JSON / relação | SHA-256 |
+|---|---|---|
+| `data/alexscaves/loot_table/blocks/unrefined_waste.json` | `["pools",0,"entries",0,"name"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `a905215e2de34cbd75862b4d181c3b8513def796a19c713013771ba2733c3b70` |
+| `data/alexscaves/recipe/furnace/uranium_shard_blasting.json` | `["ingredient","item"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `3655bc694c8f900b9e9001651fe3da845328ce0741581354f42950ae9a5cb1b7` |
+| `data/alexscaves/recipe/furnace/uranium_shard_smelting.json` | `["ingredient","item"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `eadb37b66ecdaf22c44bc45c4fdb28f3a9816a97b23252afa57ca6eabecd16ac` |
+| `data/alexscaves/recipe/unrefined_waste.json` | `["result","id"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `12be3df081d4158df0b1d984cb90921b95e5d5301853677dc2de5f3a0952c332` |
+| `data/alexscaves/recipe/waste_drum.json` | `["key","U","item"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `b5cdde5c8cbbbe0ae634c77784bef704f2533736d9c6415a46e2870a40006062` |
+| `data/alexscaves/worldgen/configured_feature/unrefined_waste_replace_mud.json` | `["config","targets",0,"state","Name"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `a0560578c70d161ff0b66c8d791d2b2ef9dc0783de57cb11ac57be6cbb8ea1f1` |
+| `data/minecraft/tags/block/mineable/shovel.json` | `["values",1]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `4e5ec0ebe7259c65a96dd89934e0a54d91c082e3ae0c154486e3314d1760dff2` |
+
+**Estado:** NOT_CERTIFIED / NO_MUTATION / NOT_TESTED; as lacunas indicadas acima não foram promovidas.

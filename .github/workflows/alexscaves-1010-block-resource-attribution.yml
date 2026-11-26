@@ -9,6 +9,9 @@ on:
       - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
       - 'docs/qa/alexscaves_1010_four_items_downstream_250_probe.py'
       - 'docs/qa/alexscaves_1010_nuclear_explosion_effect_probe.py'
+      - 'docs/qa/alexscaves_1010_block_resource_attribution_seal.py'
+      - 'docs/qa/alexscaves_1010_food_identity_keybind_probe.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BLOCK-RESOURCE-ATTRIBUTION-SEAL-1.0.10.json'
       - '.github/workflows/alexscaves-1010-block-resource-attribution.yml'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BLOCK-RESOURCE-ATTRIBUTION-1.0.10.md'
   workflow_dispatch:
@@ -37,6 +40,11 @@ jobs:
           python3 docs/qa/alexscaves_1010_block_resource_attribution_probe.py --jar build/block-resource/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/block-resource/report.json
           python3 docs/qa/alexscaves_1010_block_resource_attribution_probe.py --jar build/block-resource/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/block-resource/replay.json
           cmp build/block-resource/report.json build/block-resource/replay.json
+      - name: Replay native food reference and verify individual certificate seal
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_block_resource_attribution_seal.py
+          python3 docs/qa/alexscaves_1010_food_identity_keybind_probe.py --jar build/block-resource/publisher.jar --keybind-manifest "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-KEYBIND-USING-ARMOR-CONTRACT-1.0.10.json" --javap "$JAVA_HOME/bin/javap" --output build/block-resource/food-report.json
+          python3 docs/qa/alexscaves_1010_block_resource_attribution_seal.py --report build/block-resource/report.json --food-report build/block-resource/food-report.json --seal "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BLOCK-RESOURCE-ATTRIBUTION-SEAL-1.0.10.json"
       - uses: actions/upload-artifact@v7
         if: always()
         with:

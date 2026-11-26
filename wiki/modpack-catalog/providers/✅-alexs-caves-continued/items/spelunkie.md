@@ -50,3 +50,31 @@ Fronteira de consumo distribuída: [EXACT-FOOD-STATUS-SETTLEMENT-21.1.250](../EX
 ACFoods N=2, m=0.1F: saturação nominal 0.4 antes de clamps/float; fast e pedido adicional +4 HP. Ramo de alimentar Gammaroach por mobInteract, já auditado acima, não é finishUsingItem do jogador. Não aplicar cura do alimento automaticamente ao mob nem debitar duas vezes.
 
 Evidência compartilhada: [matriz de reconciliação](../EXACT-CATALOG-INHERITED-BOUNDARIES-1.0.10.md). Mantidos NOT_CERTIFIED, NO_MUTATION e NOT_TESTED; nenhuma promoção por herança isolada.
+
+
+## Resultado do censo causal — #1240
+
+[Run 45903382213/job 140194260474](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45903382213/job/140194260474): sete checks e dois relatórios byte-idênticos de 227.057 bytes SHA-256 `9708b284726f23dded9e4ad5268296f5ae437bd7aa115ea1bf62e7bc0abdd7a2`, 1.563 JSONs. [Dossiê](../EXACT-BLOCK-RESOURCE-ATTRIBUTION-1.0.10.md) · [Selo por ID](../EXACT-BLOCK-RESOURCE-ATTRIBUTION-SEAL-1.0.10.json).
+
+Censo de recursos identifica receita, loot toxic_ruins e o advancement feed_gammaroach. **Correção do gate de alimentação:** GammaroachEntity.mobInteract @44–62 permite o ramo quando (!client && getTarget()==player) OU !isFed(), após item exato e resultado ancestral diferente de SUCCESS; não é uma guarda server-only. Se esse ramo passa, débito @78 fora de instabuild, setFed(true) @83, pedidos de limpar last-hurt/target, evento 49 e SUCCESS. O estado fed e suas transições posteriores não foram projetados integralmente; não declarar duração ou docilidade garantida.
+
+**Fieldrefs do registry neste recorte:**
+
+| Owner/método | Offset | Opcode | Code SHA-256 |
+|---|---:|---|---|
+| `GammaroachEntity.handleEntityEvent` | 10 | `getstatic` | `da80bb889a66f31ea3c0169f390aa46010005f2f211aa89b5b08136c6ff1e29c` |
+| `GammaroachEntity.mobInteract` | 23 | `getstatic` | `23ba92bcf6a861083d2e30e080133bc5f2a966d8e246cd48bb5363754b772252` |
+| `ACItemRegistry.<clinit>` | 1372 | `putstatic` | `bb73db4c0f1d1c84abdf5ab1c07defd24db79e5e8c754b8c9f9ec8481a84a84a` |
+| `ACCreativeTabRegistry.lambda$static$10` | 241 | `getstatic` | `4a6ee5775221aa148147d7baedc4aa322f92ac71ff99476dccb039250004171e` |
+
+**Atribuição completa de referências literais/possíveis tags no recorte data/:**
+
+| Recurso | Caminho JSON / relação | SHA-256 |
+|---|---|---|
+| `data/alexscaves/advancement/alexscaves/eat_radiation_foods.json` | `["criteria","spelunkie","conditions","item","items",0]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `65354ae00dc1f3892bb40cd45b773e7c47099b08c946532496ee52b4f16727e1` |
+| `data/alexscaves/advancement/alexscaves/feed_gammaroach.json` | `["criteria","interact","conditions","item","items",0]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `010644892c8853a842bd94febac8533e9ba396d12e9d90c63824fc49105039cc` |
+| `data/alexscaves/advancement/alexscaves/feed_gammaroach.json` | `["display","icon","id"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `010644892c8853a842bd94febac8533e9ba396d12e9d90c63824fc49105039cc` |
+| `data/alexscaves/loot_table/chests/toxic_ruins.json` | `["pools",0,"entries",2,"name"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `2bb1a858fc213060eb83765487b0f91093c81b7d53b7913364b1265571d3ffe3` |
+| `data/alexscaves/recipe/spelunkie.json` | `["result","id"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `8761dd34f821ab4be7053432b242b7e2658ff7435cb1151f945269ec370f6773` |
+
+**Estado:** NOT_CERTIFIED / NO_MUTATION / NOT_TESTED; as lacunas indicadas acima não foram promovidas.
