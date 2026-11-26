@@ -19,3 +19,11 @@ Não há override próprio onDestroyed na classe RadioactiveBlockItem. Não tran
 ## Integração e validação
 
 Sem hook mutador verificado. Não duplicar aplicação de status, consumo, cloud, descarte, explosão ou XP; não alterar proteção Hazmat global. Perks de exposição e mitigação são apenas possibilidades conceituais. WorldEffectPolicy deve preservar autoridade de Black Arcana sem presumir interceptação do provider. Pendências: ACBlockRegistry.blockItemProperties, BlockItemWithSupplier/placement, bloco específico, recipes/loot/tags transitivos, stack defaults, dispatch real, aceitação de addEffect, multiplayer e persistência, comportamento do bloco no mundo. Contrato parcial; não certificar por identidade isolada. QA física NOT_TESTED.
+
+## Evidência complementar: fronteiras de exposição, recursos e engine
+
+O dispatcher certificado [Ticking Item](../systems/ticking-item.md) liga ItemStack.inventoryTick à interface nativa e encaminha a entidade portadora e selected; não converte seleção em condição de irradiação. O certificado das quatro identidades [RadioactiveItem](../EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md) fixa a mesma lógica Code SHA do acInventoryTick, mas NÃO certifica o placement ou o bloco correspondente. A proteção Hazmat vale para o coeficiente do produtor, não concede imunidade global. O risco por chamada é nominal; não calcular probabilidade por segundo supondo frequência/stack constantes ou independência após o primeiro efeito. A modlist atual confirma NeoForge 21.1.250. Custo de crafting, colocação e exposição são caminhos distintos.
+
+Receitas furnace/uranium_shard_blasting.json e furnace/uranium_shard_smelting.json (SHA-256 `3655bc694c8f900b9e9001651fe3da845328ce0741581354f42950ae9a5cb1b7` e `eadb37b66ecdaf22c44bc45c4fdb28f3a9816a97b23252afa57ca6eabecd16ac`): ambas declaram ingrediente unrefined_waste, resultado uranium_shard, 100 ticks e XP 1.0. A duração igual nos dois tipos é do recurso, não convenção presumida do vanilla. Transformar insumo altera identidade e não duplica cast, efeito ou XP. Sem inferir comportamento do bloco colocado.
+
+Os recursos acima foram relidos no log SHA-exato da prova suplementar (job 139819307102). Limites de bloco colocado e consumidores não enumerados permanecem explícitos. `NOT_CERTIFIED / NO_MUTATION / NOT_TESTED`.

@@ -1,0 +1,46 @@
+name: Alex's Caves 1.0.10 radioactive blocks and exact item resource attribution
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/qa/alexscaves_1010_block_resource_attribution_probe.py'
+      - 'docs/qa/alexscaves_1010_radioactive_consumer_census.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
+      - 'docs/qa/alexscaves_1010_four_items_downstream_250_probe.py'
+      - 'docs/qa/alexscaves_1010_nuclear_explosion_effect_probe.py'
+      - '.github/workflows/alexscaves-1010-block-resource-attribution.yml'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BLOCK-RESOURCE-ATTRIBUTION-1.0.10.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  block_resource_attribution:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile and test exact identity and resource scope
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_block_resource_attribution_probe.py
+          python3 docs/qa/alexscaves_1010_block_resource_attribution_probe.py --self-test
+      - name: Fetch exact publisher artifact
+        run: |
+          mkdir -p build/block-resource
+          curl --fail --silent --show-error --location --retry 3 --max-time 180 'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' --output build/block-resource/publisher.jar
+      - name: Audit and replay exact bindings, owners and resource attribution
+        run: |
+          python3 docs/qa/alexscaves_1010_block_resource_attribution_probe.py --jar build/block-resource/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/block-resource/report.json
+          python3 docs/qa/alexscaves_1010_block_resource_attribution_probe.py --jar build/block-resource/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/block-resource/replay.json
+          cmp build/block-resource/report.json build/block-resource/replay.json
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: block-resource-attribution
+          path: build/block-resource/report.json
+          if-no-files-found: warn
+          retention-days: 14
