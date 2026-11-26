@@ -12,6 +12,8 @@ on:
       - 'docs/qa/alexscaves_1010_nuclear_explosion_effect_probe.py'
       - 'docs/qa/alexscaves_1010_remote_detonator_block_callbacks_probe.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOOD-IDENTITY-KEYBIND-CLOSURE-1.0.10.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-KEYBIND-USING-ARMOR-CONTRACT-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/keybind-using-armor.md'
       - 'docs/qa/alexscaves_1010_four_items_downstream_250_probe.py'
   workflow_dispatch:
 permissions:
@@ -36,10 +38,10 @@ jobs:
           curl --fail --silent --show-error --location --retry 3 --max-time 180 'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' --output build/food-identity-keybind/publisher.jar
       - name: Project exact field consumers and selected native methods
         run: |
-          python3 docs/qa/alexscaves_1010_food_identity_keybind_probe.py --jar build/food-identity-keybind/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/food-identity-keybind/report.json
+          python3 docs/qa/alexscaves_1010_food_identity_keybind_probe.py --jar build/food-identity-keybind/publisher.jar --keybind-manifest "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-KEYBIND-USING-ARMOR-CONTRACT-1.0.10.json" --javap "$JAVA_HOME/bin/javap" --output build/food-identity-keybind/report.json
       - name: Replay identical bounded projection
         run: |
-          python3 docs/qa/alexscaves_1010_food_identity_keybind_probe.py --jar build/food-identity-keybind/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/food-identity-keybind/replay.json
+          python3 docs/qa/alexscaves_1010_food_identity_keybind_probe.py --jar build/food-identity-keybind/publisher.jar --keybind-manifest "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-KEYBIND-USING-ARMOR-CONTRACT-1.0.10.json" --javap "$JAVA_HOME/bin/javap" --output build/food-identity-keybind/replay.json
           cmp build/food-identity-keybind/report.json build/food-identity-keybind/replay.json
           test "$(wc -c < build/food-identity-keybind/report.json)" -eq 765144
           echo '6c8e0c98af51b60fe40d3bd0b326fb909525f1780b2086740748e158b6bd20ea  build/food-identity-keybind/report.json' | sha256sum -c -

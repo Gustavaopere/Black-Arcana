@@ -111,13 +111,45 @@ def self_test():
     key=("callback","()V")
     require(select(Stub(),{key:{}},key)=={"name":"callback","descriptor":"()V","executable":False},"no-Code regression")
     print("PASS five identity and abstract declaration checks")
+
+def validate_keybind(jar,report,manifest):
+    data=json.loads(manifest.read_text(encoding="utf8"))
+    require(data["claims"]["mutation"]=="NO_MUTATION" and data["claims"]["mutating_hook"]=="NOT_VERIFIED" and data["claims"]["physical_qa"]=="NOT_TESTED" and not data["claims"]["provider_universe_closed"],"scope")
+    require(set(data["axes"])=={"identity","behavior","parameters","targeting","costs","integration","validation"},"axes")
+    raw=canonical(report).encode()
+    require(digest(raw)==data["report"]["sha256"] and len(raw)==data["report"]["bytes"],"sealed native report")
+    interface=data["interface"]["owner"];impl=data["interface"]["implementer"]
+    require(interface==ROOT+"server/item/KeybindUsingArmor" and impl==ROOT+"server/item/DarknessArmorItem","interface identity")
+    row=report["owners"][interface]
+    require(row["class_sha256"]==data["interface"]["class_sha256"] and row["methods"]==[data["interface"]["declaration"]] and len(row["declarations"])==1,"single abstract callback")
+    with ZipFile(jar) as z:
+        parents={}
+        for path in sorted(p for p in z.namelist() if p.endswith(".class")):
+            rd=ClassReader(z.read(path));parents[rd.name]=(rd.parent,rd.interfaces)
+        def assignable(name,seen):
+            if name==interface:return True
+            if name in seen or name not in parents:return False
+            parent,interfaces=parents[name]
+            return any(assignable(x,seen|{name}) for x in [parent,*interfaces] if x)
+        require([n for n in sorted(parents) if n!=interface and assignable(n,set())]==[impl],"complete native implementer hierarchy")
+    for pin in data["method_pins"]:
+        owner=next(x for x in report["owners"] if x.endswith("/"+pin["owner"]))
+        require(any(m["name"]==pin["name"] and m.get("code_sha256")==pin["code_sha256"] for m in report["owners"][owner]["methods"]),"method pin "+pin["name"])
+    dispatch=next(m for m in report["owners"][ROOT+"server/message/ArmorKeyMessage"]["methods"] if m["name"]=="lambda$handle$0")
+    impl_body=next(m for m in report["owners"][impl]["methods"] if m["name"]=="onKeyPacket")
+    for body,sites in [(dispatch,[(35,"getEntity"),(53,"clamp"),(80,"getItemBySlot"),(116,"onKeyPacket")]),(impl_body,[(16,"canChargeUp"),(33,"putInt"),(39,"setTag"),(84,"addEffect")])]:
+        for at,name in sites:require(any(x["offset"]==at and x["name"]==name for x in body["typed_members"]),"causal pivot "+name)
+    require(not any(x["opcode"].startswith("iload") and (x["opcode"]=="iload_3" or x["operand"]=="3") for x in impl_body["local_accesses"]),"key semantics drift")
+    print("PASS keybind static certificate identity, hierarchy, method and causal gates")
+
 if __name__=="__main__":
-    ap=argparse.ArgumentParser();ap.add_argument("--jar",type=Path);ap.add_argument("--javap",default="javap");ap.add_argument("--output",type=Path);ap.add_argument("--self-test",action="store_true")
+    ap=argparse.ArgumentParser();ap.add_argument("--jar",type=Path);ap.add_argument("--javap",default="javap");ap.add_argument("--output",type=Path);ap.add_argument("--self-test",action="store_true");ap.add_argument("--keybind-manifest",type=Path)
     a=ap.parse_args()
     if a.self_test:self_test()
     else:
         require(a.jar and a.output and not a.output.exists(),"write once")
         report=inspect(a.jar,a.javap);raw=canonical(report).encode();require(len(raw)<=10000000,"report budget")
+        if a.keybind_manifest:validate_keybind(a.jar,report,a.keybind_manifest)
         with a.output.open("xb") as f:f.write(raw)
         print("REPORT_SHA256",digest(raw),"BYTES",len(raw))
         for owner,row in report["owners"].items():
