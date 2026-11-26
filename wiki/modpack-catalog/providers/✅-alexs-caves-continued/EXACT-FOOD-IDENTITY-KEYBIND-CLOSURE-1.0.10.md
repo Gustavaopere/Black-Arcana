@@ -31,3 +31,7 @@ Keybind: ArmorKeyMessage serializa três int na ordem equipmentSlot/playerId/typ
 ## KeybindUsingArmor: proposta de certificação delimitada
 
 [Ficha](systems/keybind-using-armor.md), [selo](EXACT-KEYBIND-USING-ARMOR-CONTRACT-1.0.10.json). Interface sem Code, um implementador nativo conhecido, dispatch completo e limites de autorização. Nova HEAD deve comprovar hierarquia transitiva de 1555 classfiles, pins e pivôs da resolução de entidade/slot e reset/efeito. O contrato não certifica segurança do protocolo, aceitação de efeitos, mutação, QA ou novo cast. A promoção de ledger só vale canonicamente após CI e merge.
+
+## Correção do ledger
+
+Runs 45797378490 e 45797378333: auditorias nativas precedentes concluíram, gate check_perk_ready_indexes rejeitou locators .json de identity/validation; o validator exige .md local. O ledger agora aponta para este dossiê Markdown, que referencia o selo JSON e os replays. Ordem original preservada, nenhuma certificação anterior alterada, sem modificar o validator. CI nova obrigatória.
