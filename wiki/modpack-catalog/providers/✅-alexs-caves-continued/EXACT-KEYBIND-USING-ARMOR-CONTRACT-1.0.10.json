@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "version": "1.0.10",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size": 75279314
+  },
+  "claims": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "static_technical_contract": "CERTIFIED_STATIC_7_AXES",
+    "mutation": "NO_MUTATION",
+    "runtime_dispatch": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "perk_certification": "NOT_CERTIFIED",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "axes": {
+    "identity": "Interface class SHA and single abstract method, exact descriptor; hierarchy and sole native implementer gated by publisher census.",
+    "behavior": "Bidirectional transport, enqueue, context resolution, clamped slot, typed dispatch and native implementation; no independent cast.",
+    "parameters": "Three signed int fields in wire order; clamped slot; key unused by implementation; configured effect duration belongs to existing Cloak contract.",
+    "targeting": "Packet-selected player in context level, slot item implementing interface; not verified sender-to-target authorization.",
+    "costs": "No own mana, item or cooldown debit; implementation requests supplied-stack charge reset before addEffect, not proof of effect acceptance.",
+    "integration": "Existing Cloak action and ACCompat custom data; no safe mutation, packet replay or inferred Mastery.",
+    "validation": "Exact publisher two identical replays, pinned SHA, causal pivots and hierarchy gate; no physical QA."
+  },
+  "report": {
+    "sha256": "6c8e0c98af51b60fe40d3bd0b326fb909525f1780b2086740748e158b6bd20ea",
+    "bytes": 765144,
+    "run_id": 45796533259,
+    "job_id": 139828495853,
+    "head": "9c16b9c73452706148f666156a815b75696311de"
+  },
+  "interface": {
+    "owner": "com/github/alexmodguy/alexscaves/server/item/KeybindUsingArmor",
+    "class_sha256": "6ed129bf051acf5b551e2e96ed898c818304fe99e0298fb9f0a5ebf226bc3b86",
+    "declaration": {
+      "name": "onKeyPacket",
+      "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "executable": false
+    },
+    "implementer": "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem"
+  },
+  "method_pins": [
+    {
+      "owner": "ArmorKeyMessage",
+      "name": "lambda$handle$0",
+      "code_sha256": "0641114dc3b38ccf47d158b49226b2d4afe39ab7bf8d104faa58686c052f0e60"
+    },
+    {
+      "owner": "ArmorKeyMessage",
+      "name": "handle",
+      "code_sha256": "3dfa9769bbdbc6e6d5e5239e2904841e01683c735561e99885da8a83ff026905"
+    },
+    {
+      "owner": "ArmorKeyMessage",
+      "name": "read",
+      "code_sha256": "bfa0ff4d6c5f4739c08652943aa7e2bda6e6c9fe0584fe4f73c40c974356e88c"
+    },
+    {
+      "owner": "ArmorKeyMessage",
+      "name": "write",
+      "code_sha256": "953c1d44fac650e7d5a0216a589d50586469dcf757926a0816a98c826e6bc208"
+    },
+    {
+      "owner": "DarknessArmorItem",
+      "name": "onKeyPacket",
+      "code_sha256": "89c7304d0aecfa82668ee6c50df9b63911773cac5363fa241278819ad1b12286"
+    },
+    {
+      "owner": "ACNetwork",
+      "name": "registerPayloads",
+      "code_sha256": "de5583c030c814cc0056b433a84b017fd4a5e24de8c5953f4649a3649878bd7a"
+    },
+    {
+      "owner": "ACNetwork",
+      "name": "lambda$registerPayloads$0",
+      "code_sha256": "cfa43e477d3bb6eb24224f020fe26081e6aa032924e8378198ada9b9b6455697"
+    },
+    {
+      "owner": "ACNetwork$NeoForgeContext",
+      "name": "getSender",
+      "code_sha256": "ba5bee8479142d9291b2f653661e626c31c63a612cf3eb0b90f0bf4b674c4794"
+    }
+  ]
+}

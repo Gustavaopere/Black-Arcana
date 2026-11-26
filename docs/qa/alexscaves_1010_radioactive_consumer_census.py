@@ -158,12 +158,33 @@ def self_test():
     require(hits["data/test/recipe/unrelated_name.json"][0]["relation"] == "POTENTIAL_TAG_REFERENCE", "tag distinction")
     print("PASS six resource and identity checks")
 
+
+def validate_seal(report, raw, manifest_path):
+    seal = json.loads(manifest_path.read_text(encoding="utf8"))
+    require(seal["claims"]["mutation"] == "NO_MUTATION" and not seal["claims"]["provider_universe_closed"], "claim scope")
+    require(seal["claims"]["mutating_hook"] == "NOT_VERIFIED" and seal["claims"]["physical_qa"] == "NOT_TESTED", "no promotion")
+    require(len(raw) == seal["census"]["bytes"] and digest(raw) == seal["census"]["sha256"], "sealed exact census")
+    require(report["data_json_scanned"] == seal["census"]["data_json_scanned"] and set(seal["objects"]) == IDS, "identity roster")
+    for item, row in seal["objects"].items():
+        require(report["factory_pins"][row["factory"]] == row["factory_code_sha256"], "factory pin")
+        sites = [(owner, method["name"], site["offset"], site["opcode"])
+                 for owner, data in report["field_consumers"].items()
+                 for method in data["methods"] for site in method["sites"]
+                 if site["field"] == row["registry_field"]]
+        require(len(sites) == 2 and (REG, "<clinit>", row["registry_putstatic_offset"], "putstatic") in sites, "registry field site")
+        require(any(owner.endswith("/ACCreativeTabRegistry") and name == "lambda$static$10" and offset == row["creative_getstatic_offset"] and op == "getstatic" for owner, name, offset, op in sites), "creative tab site")
+        hits = [{"path": path, "sha256": resource["sha256"], "location": hit["path"], "relation": hit["relation"], "token": hit["token"]}
+                for path, resource in sorted(report["resource_consumers"].items()) for hit in resource["hits"] if hit["id"] == item]
+        require(hits == row["resources"], "resource identity and path seal " + item)
+    print("PASS four individually sealed registry and resource scopes")
+
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--jar", type=Path)
     p.add_argument("--output", type=Path)
     p.add_argument("--javap", default="javap")
     p.add_argument("--self-test", action="store_true")
+    p.add_argument("--seal", type=Path)
     a = p.parse_args()
     if a.self_test:
         self_test()
@@ -171,6 +192,8 @@ if __name__ == "__main__":
         require(a.jar and a.output and not a.output.exists(), "write once")
         report = inspect(a.jar, a.javap)
         raw = canonical(report).encode()
+        if a.seal:
+            validate_seal(report, raw, a.seal)
         require(len(raw) <= 8_000_000, "report budget")
         with a.output.open("xb") as f:
             f.write(raw)
@@ -180,7 +203,7 @@ if __name__ == "__main__":
             for method in row["methods"]:
                 for site in method["sites"]:
                     print("FIELD_SITE", json.dumps({"owner": owner, "name": method["name"],
-                          "descriptor": method["descriptor"], "code_sha256": method["code_sha256"],
+                          "method_descriptor": method["descriptor"], "code_sha256": method["code_sha256"],
                           **site}, sort_keys=True))
         for path, row in report["resource_consumers"].items():
             print("RESOURCE", json.dumps({"path": path, **row}, sort_keys=True))

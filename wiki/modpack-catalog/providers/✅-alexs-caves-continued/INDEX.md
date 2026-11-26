@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 137/184.**
+**Fichas catalogadas (somente fichas detectadas): 142/184.**
 
-**Barra das fichas catalogadas:** `██████████████░░░░░░ 74.5%`
+**Barra das fichas catalogadas:** `███████████████░░░░░ 77.2%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 137/184.**
+**Homologadas para perks (somente fichas detectadas): 142/184.**
 
-**Barra dos contratos técnicos estáticos:** `██████████████░░░░░░ 74.5%`
+**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 77.2%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -118,7 +118,7 @@
 | ✅ | Candy Cane Hook | [items/candy-cane-hook.md](items/candy-cane-hook.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Book | [items/cave-book.md](items/cave-book.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Map | [items/cave-map.md](items/cave-map.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Charred Remnant | [items/charred-remnant.md](items/charred-remnant.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Charred Remnant | [items/charred-remnant.md](items/charred-remnant.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Chocolate Ice Cream Scoop | [items/chocolate-ice-cream-scoop.md](items/chocolate-ice-cream-scoop.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Cinder Brick | [items/cinder-brick.md](items/cinder-brick.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cloak Of Darkness | [items/cloak-of-darkness.md](items/cloak-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -129,7 +129,7 @@
 | ✅ | Diving Helmet | [items/diving-helmet.md](items/diving-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Leggings | [items/diving-leggings.md](items/diving-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Fertilizer | [items/fertilizer.md](items/fertilizer.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Fissile Core | [items/fissile-core.md](items/fissile-core.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Fissile Core | [items/fissile-core.md](items/fissile-core.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Floater | [items/floater.md](items/floater.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gazing Pearl | [items/gazing-pearl.md](items/gazing-pearl.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gingerbread Boots | [items/gingerbread-boots.md](items/gingerbread-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -188,8 +188,8 @@
 | ⚠️ | Trilocaris Bucket | [items/trilocaris-bucket.md](items/trilocaris-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Tripodfish Bucket | [items/tripodfish-bucket.md](items/tripodfish-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Unrefined Waste | [items/unrefined-waste.md](items/unrefined-waste.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Uranium Shard | [items/uranium-shard.md](items/uranium-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Uranium | [items/uranium.md](items/uranium.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Uranium Shard | [items/uranium-shard.md](items/uranium-shard.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Uranium | [items/uranium.md](items/uranium.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Vanilla Ice Cream Scoop | [items/vanilla-ice-cream-scoop.md](items/vanilla-ice-cream-scoop.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Waste Drum | [items/waste-drum.md](items/waste-drum.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Anvil Combination | [systems/anvil-combination.md](systems/anvil-combination.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -203,7 +203,7 @@
 | ✅ | Food Builder | [systems/food-builder.md](systems/food-builder.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Foods | [systems/foods.md](systems/foods.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Item Registry | [systems/item-registry.md](systems/item-registry.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Keybind Using Armor | [systems/keybind-using-armor.md](systems/keybind-using-armor.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Keybind Using Armor | [systems/keybind-using-armor.md](systems/keybind-using-armor.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Repairable Item | [systems/repairable-item.md](systems/repairable-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Scaffolding Placement | [systems/scaffolding-placement.md](systems/scaffolding-placement.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Swing Control Item | [systems/swing-control-item.md](systems/swing-control-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -218,8 +218,8 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ⚠️ | Equipment | 6/9 (66.7%) | 6 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 38/81 (46.9%) | 38 | [Abrir índice](items/INDEX.md) |
-| ⚠️ | Systems | 15/16 (93.8%) | 15 | [Abrir índice](systems/INDEX.md) |
+| ⚠️ | Items | 42/81 (51.9%) | 42 | [Abrir índice](items/INDEX.md) |
+| ✅ | Systems | 16/16 (100.0%) | 16 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
 
