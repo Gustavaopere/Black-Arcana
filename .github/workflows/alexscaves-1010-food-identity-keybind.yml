@@ -41,6 +41,8 @@ jobs:
         run: |
           python3 docs/qa/alexscaves_1010_food_identity_keybind_probe.py --jar build/food-identity-keybind/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/food-identity-keybind/replay.json
           cmp build/food-identity-keybind/report.json build/food-identity-keybind/replay.json
+          test "$(wc -c < build/food-identity-keybind/report.json)" -eq 765144
+          echo '6c8e0c98af51b60fe40d3bd0b326fb909525f1780b2086740748e158b6bd20ea  build/food-identity-keybind/report.json' | sha256sum -c -
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7
