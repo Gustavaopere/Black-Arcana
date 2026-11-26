@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 137/149.**
+**Fichas catalogadas (somente fichas detectadas): 137/154.**
 
-**Barra das fichas catalogadas:** `██████████████████░░ 91.9%`
+**Barra das fichas catalogadas:** `█████████████████░░░ 89.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 137/149.**
+**Homologadas para perks (somente fichas detectadas): 137/154.**
 
-**Barra dos contratos técnicos estáticos:** `██████████████████░░ 91.9%`
+**Barra dos contratos técnicos estáticos:** `█████████████████░░░ 89.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -108,6 +108,8 @@
 | ✅ | Frostmint Spear | [equipment/frostmint-spear.md](equipment/frostmint-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Galena Gauntlet | [equipment/galena-gauntlet.md](equipment/galena-gauntlet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Limestone Spear | [equipment/limestone-spear.md](equipment/limestone-spear.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Ortholance | [equipment/ortholance.md](equipment/ortholance.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Primitive Club | [equipment/primitive-club.md](equipment/primitive-club.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shot Gum | [equipment/shot-gum.md](equipment/shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Alex Meal | [items/alex-meal.md](items/alex-meal.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Biome Treat | [items/biome-treat.md](items/biome-treat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -146,6 +148,7 @@
 | ✅ | Pewen Chest Boat | [items/pewen-chest-boat.md](items/pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Primordial Helmet | [items/primordial-helmet.md](items/primordial-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Primordial Pants | [items/primordial-pants.md](items/primordial-pants.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Primordial Soup | [items/primordial-soup.md](items/primordial-soup.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Primordial Tunic | [items/primordial-tunic.md](items/primordial-tunic.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Purple Soda Bottle | [items/purple-soda-bottle.md](items/purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Radgill Bucket | [items/radgill-bucket.md](items/radgill-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -153,6 +156,8 @@
 | ⚠️ | Remote Detonator | [items/remote-detonator.md](items/remote-detonator.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Resistor Shield | [items/resistor-shield.md](items/resistor-shield.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Sea Pig Bucket | [items/sea-pig-bucket.md](items/sea-pig-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Seething Stew | [items/seething-stew.md](items/seething-stew.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Serene Salad | [items/serene-salad.md](items/serene-salad.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [items/thornwood-boat.md](items/thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Chest Boat | [items/thornwood-chest-boat.md](items/thornwood-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Trilocaris Bucket | [items/trilocaris-bucket.md](items/trilocaris-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -182,8 +187,8 @@
 | ✅ | Damage Types | 11/11 (100.0%) | 11 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
-| ⚠️ | Equipment | 6/7 (85.7%) | 6 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 38/48 (79.2%) | 38 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Equipment | 6/9 (66.7%) | 6 | [Abrir índice](equipment/INDEX.md) |
+| ⚠️ | Items | 38/51 (74.5%) | 38 | [Abrir índice](items/INDEX.md) |
 | ⚠️ | Systems | 15/16 (93.8%) | 15 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
