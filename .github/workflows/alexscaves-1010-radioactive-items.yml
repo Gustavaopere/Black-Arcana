@@ -46,6 +46,7 @@ jobs:
       - name: Project and replay block item binding candidates
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_radioactive_block_bindings_probe.py
+          python3 docs/qa/alexscaves_1010_radioactive_block_bindings_probe.py --self-test
           python3 docs/qa/alexscaves_1010_radioactive_block_bindings_probe.py --jar build/radioactive-items/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/radioactive-items/bindings.json
           python3 docs/qa/alexscaves_1010_radioactive_block_bindings_probe.py --jar build/radioactive-items/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/radioactive-items/bindings-replay.json
           cmp build/radioactive-items/bindings.json build/radioactive-items/bindings-replay.json

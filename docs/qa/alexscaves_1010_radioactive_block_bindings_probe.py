@@ -25,29 +25,30 @@ def inspect(jar,javap):
         proc=subprocess.run([javap,"-classpath",str(jar),"-p","-c","-s",P.replace("/","." )],capture_output=True,text=True,timeout=90)
         require(proc.returncode==0,"javap selector")
         lines=proc.stdout.splitlines()
-        heads=[i for i,l in enumerate(lines) if re.match(r"^  \\S",l) and " getBlockSupplier(" in l]
+        heads=[i for i,l in enumerate(lines) if re.match(r"^  \S",l) and " getBlockSupplier(" in l]
         require(len(heads)==1,"selector heading")
         start=heads[0]
-        end=next((i for i in range(start+1,len(lines)) if re.match(r"^  \\S",lines[i])),len(lines))
-        arms=[l.strip() for l in lines[start:end] if re.fullmatch(r"\\s*(?:-?\\d+|default):\\s+\\d+\\s*",l)]
+        end=next((i for i in range(start+1,len(lines)) if re.match(r"^  \S",lines[i])),len(lines))
+        arms=[l.strip() for l in lines[start:end] if re.fullmatch(r"\s*(?:-?\d+|default):\s+\d+\s*",l)]
+        require(bool(arms),"switch mapping absent")
         helpers=[]
         for k,b in sorted(body.items()):
             if k==selected:continue
-            if any(op.startswith("invoke") and re.search(r"(?:\\.| )getBlockSupplier:",sym) for op,_,sym in b.values()):
+            if any(op.startswith("invoke") and re.search(r"(?:\.| )getBlockSupplier:",sym) for op,_,sym in b.values()):
                 require(len(b)<=1200,"selector caller scope")
                 helpers.append(projection(rd,k,b,declarations[k]))
-        require(len(helpers)<=40,"selector callers budget")
+        require(1<=len(helpers)<=40,"selector callers budget")
         helper_names={x["name"] for x in helpers}
         windows=[]
         for k,b in sorted(body.items()):
             offsets=sorted(b)
             for i,at in enumerate(offsets):
                 op,arg,sym=b[at]
-                if not op.startswith("invoke") or not any(re.search(r"(?:\\.| )"+re.escape(n)+":",sym) for n in helper_names):continue
+                if not op.startswith("invoke") or not any(re.search(r"(?:\.| )"+re.escape(n)+":",sym) for n in helper_names):continue
                 window=[{"offset":q,"opcode":b[q][0],"operand":b[q][1],"symbol":b[q][2]} for q in offsets[max(0,i-15):i+7]]
-                if any(any(token in v["symbol"].lower() for token in ("uranium","radioactive","nuclear","waste","radrock")) for v in window):
+                if k[0]=="<clinit>" or any(any(token in v["symbol"].lower() for token in ("uranium","radioactive","nuclear","waste","radrock")) for v in window):
                     windows.append({"method":k[0],"descriptor":k[1],"code_sha256":declarations[k]["code_sha256"],"offset":at,"window":window})
-        require(len(windows)<=120,"binding candidate budget")
+        require(len(windows)<=600,"binding candidate budget")
         # Class-specific switch table helpers, if present.
         related={}
         for ref in selector["typed_members"]:
@@ -62,11 +63,24 @@ def inspect(jar,javap):
                     rows.append(projection(reader,k,parsed[k],v))
             related[owner]={"sha256":digest(data),"methods":rows}
         return {"scope":"BINDING_CANDIDATES_NOT_CERTIFIED","class_sha256":digest(raw),"selector":selector,"switch_arms":arms,"helper_methods":helpers,"candidate_windows":windows,"switch_helpers":related,"mutation":"NO_MUTATION"}
+def self_test():
+    require(bool(re.match(r"^  \S","  private static java.util.function.Supplier getBlockSupplier(int, java.util.function.Supplier);")),"selector heading regression")
+    require(bool(re.fullmatch(r"\s*(?:-?\d+|default):\s+\d+\s*","       7: 81")),"switch arm regression")
+    require(bool(re.search(r"(?:\.| )getBlockSupplier:","Method getBlockSupplier:(I)Ljava/util/function/Supplier;")),"helper reference regression")
+    require(not re.match(r"^  \S","    Code:"),"method boundary")
+    print("PASS four parser regression checks")
+
 if __name__=="__main__":
+    import sys
+    if sys.argv[1:]==["--self-test"]:
+        self_test();sys.exit(0)
     ap=argparse.ArgumentParser()
     ap.add_argument("--jar",type=Path,required=True);ap.add_argument("--javap",default="javap");ap.add_argument("--output",type=Path,required=True)
     a=ap.parse_args();require(not a.output.exists(),"write once")
-    report=inspect(a.jar,a.javap);data=canonical(report).encode();require(len(data)<=2000000,"report budget")
+    report=inspect(a.jar,a.javap);data=canonical(report).encode();require(len(data)<=5000000,"report budget")
     with a.output.open("xb") as f:f.write(data)
     print("BINDING_REPORT_SHA256",digest(data),"BYTES",len(data))
-    for k,v in report.items():print("BLOCK_BINDING",json.dumps({"key":k,"value":v},sort_keys=True))
+    for k,v in report.items():
+        if k=="candidate_windows":
+            for row in v:print("BLOCK_WINDOW",json.dumps(row,sort_keys=True))
+        else:print("BLOCK_BINDING",json.dumps({"key":k,"value":v},sort_keys=True))
