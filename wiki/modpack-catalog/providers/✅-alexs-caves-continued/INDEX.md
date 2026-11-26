@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 137/168.**
+**Fichas catalogadas (somente fichas detectadas): 137/184.**
 
-**Barra das fichas catalogadas:** `████████████████░░░░ 81.5%`
+**Barra das fichas catalogadas:** `██████████████░░░░░░ 74.5%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 137/168.**
+**Homologadas para perks (somente fichas detectadas): 137/184.**
 
-**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 81.5%`
+**Barra dos contratos técnicos estáticos:** `██████████████░░░░░░ 74.5%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -119,8 +119,11 @@
 | ✅ | Cave Book | [items/cave-book.md](items/cave-book.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Map | [items/cave-map.md](items/cave-map.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Charred Remnant | [items/charred-remnant.md](items/charred-remnant.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Chocolate Ice Cream Scoop | [items/chocolate-ice-cream-scoop.md](items/chocolate-ice-cream-scoop.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Cinder Brick | [items/cinder-brick.md](items/cinder-brick.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cloak Of Darkness | [items/cloak-of-darkness.md](items/cloak-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Darkened Apple | [items/darkened-apple.md](items/darkened-apple.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Depth Charge | [items/depth-charge.md](items/depth-charge.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Boots | [items/diving-boots.md](items/diving-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Chestplate | [items/diving-chestplate.md](items/diving-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Helmet | [items/diving-helmet.md](items/diving-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -136,6 +139,7 @@
 | ✅ | Glow Ink Bomb | [items/glow-ink-bomb.md](items/glow-ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gossamer Worm Bucket | [items/gossamer-worm-bucket.md](items/gossamer-worm-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Green Soylent | [items/green-soylent.md](items/green-soylent.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Guano | [items/guano.md](items/guano.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Boots | [items/hazmat-boots.md](items/hazmat-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Chestplate | [items/hazmat-chestplate.md](items/hazmat-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Leggings | [items/hazmat-leggings.md](items/hazmat-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -155,6 +159,7 @@
 | ✅ | Primordial Pants | [items/primordial-pants.md](items/primordial-pants.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Primordial Soup | [items/primordial-soup.md](items/primordial-soup.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Primordial Tunic | [items/primordial-tunic.md](items/primordial-tunic.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Purple Soda Bottle Rocket | [items/purple-soda-bottle-rocket.md](items/purple-soda-bottle-rocket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Purple Soda Bottle | [items/purple-soda-bottle.md](items/purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Quarry Smasher | [items/quarry-smasher.md](items/quarry-smasher.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Radgill Bucket | [items/radgill-bucket.md](items/radgill-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -163,11 +168,21 @@
 | ✅ | Rainbounce Boots | [items/rainbounce-boots.md](items/rainbounce-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Remote Detonator | [items/remote-detonator.md](items/remote-detonator.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Resistor Shield | [items/resistor-shield.md](items/resistor-shield.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sack Of Sating | [items/sack-of-sating.md](items/sack-of-sating.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Sea Pig Bucket | [items/sea-pig-bucket.md](items/sea-pig-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Seeking Arrow | [items/seeking-arrow.md](items/seeking-arrow.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Seething Stew | [items/seething-stew.md](items/seething-stew.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Serene Salad | [items/serene-salad.md](items/serene-salad.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sharpened Candy Cane | [items/sharpened-candy-cane.md](items/sharpened-candy-cane.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Slam | [items/slam.md](items/slam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Spelunkie | [items/spelunkie.md](items/spelunkie.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Submarine | [items/submarine.md](items/submarine.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sweetberry Ice Cream Scoop | [items/sweetberry-ice-cream-scoop.md](items/sweetberry-ice-cream-scoop.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sweetish Fish Blue Bucket | [items/sweetish-fish-blue-bucket.md](items/sweetish-fish-blue-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sweetish Fish Green Bucket | [items/sweetish-fish-green-bucket.md](items/sweetish-fish-green-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sweetish Fish Pink Bucket | [items/sweetish-fish-pink-bucket.md](items/sweetish-fish-pink-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sweetish Fish Red Bucket | [items/sweetish-fish-red-bucket.md](items/sweetish-fish-red-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sweetish Fish Yellow Bucket | [items/sweetish-fish-yellow-bucket.md](items/sweetish-fish-yellow-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [items/thornwood-boat.md](items/thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Chest Boat | [items/thornwood-chest-boat.md](items/thornwood-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Trilocaris Bucket | [items/trilocaris-bucket.md](items/trilocaris-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -175,6 +190,7 @@
 | ⚠️ | Unrefined Waste | [items/unrefined-waste.md](items/unrefined-waste.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Uranium Shard | [items/uranium-shard.md](items/uranium-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Uranium | [items/uranium.md](items/uranium.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Vanilla Ice Cream Scoop | [items/vanilla-ice-cream-scoop.md](items/vanilla-ice-cream-scoop.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Waste Drum | [items/waste-drum.md](items/waste-drum.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Anvil Combination | [systems/anvil-combination.md](systems/anvil-combination.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Armor Material | [systems/armor-material.md](systems/armor-material.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -202,7 +218,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ⚠️ | Equipment | 6/9 (66.7%) | 6 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 38/65 (58.5%) | 38 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Items | 38/81 (46.9%) | 38 | [Abrir índice](items/INDEX.md) |
 | ⚠️ | Systems | 15/16 (93.8%) | 15 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
