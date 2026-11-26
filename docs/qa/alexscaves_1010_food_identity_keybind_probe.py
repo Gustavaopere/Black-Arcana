@@ -3,7 +3,7 @@
 import argparse, json, re
 from pathlib import Path
 from zipfile import ZipFile
-from alexscaves_1010_armor_material_audit import ClassReader, canonical, digest, require, verify_artifact
+from alexscaves_1010_armor_material_audit import ClassReader, AuditError, canonical, digest, require, verify_artifact
 from alexscaves_1010_enchantable_item_probe import disassemble
 from alexscaves_1010_four_items_downstream_250_probe import projection
 
@@ -41,8 +41,14 @@ def strings(value,path=()):
     elif isinstance(value,str) and value in IDS:yield [*path]
 def select(rd,body,key):
     decl=next(d for d in rd.methods if (d["name"],d["descriptor"])==key)
-    require(len(body[key])<=1600,"selected body over budget")
-    return projection(rd,key,body[key],decl)
+    if "code_sha256" not in decl:
+        require(not body[key],"abstract declaration with instructions")
+        return {"name":key[0],"descriptor":key[1],"executable":False}
+    require(0<len(body[key])<=1600,"selected body over budget "+rd.name+"."+key[0])
+    try:
+        return {**projection(rd,key,body[key],decl),"executable":True}
+    except AuditError as err:
+        raise AuditError(rd.name+"."+key[0]+key[1]+": "+str(err)) from err
 def inspect(jar,javap):
     verify_artifact(jar)
     result={"scope":"STATIC_CLOSURE_CANDIDATE_ONLY","mutation":"NO_MUTATION","provider_universe_closed":False,"mutating_hook":"NOT_VERIFIED","physical_qa":"NOT_TESTED","owners":{},"field_consumers":{},"resource_consumers":{}}
@@ -58,7 +64,7 @@ def inspect(jar,javap):
             if owner not in SELECTED and owner not in ITEM_CLASSES and owner!=REG and not refs and not typed:continue
             if owner in PINS:require(digest(raw)==PINS[owner],"class pin "+owner)
             parsed=disassemble(jar,javap,owner)
-            methods=[];field_sites=[];cp={x["index"] for x in refs};selected_cp={x["index"] for x in typed}
+            methods=[];field_sites=[];deferred=[];cp={x["index"] for x in refs};selected_cp={x["index"] for x in typed}
             for key,body in sorted(parsed.items()):
                 hits=[];typed_hits=[];offsets=sorted(body)
                 for i,at in enumerate(offsets):
@@ -71,10 +77,15 @@ def inspect(jar,javap):
                 if hits:field_sites.append({"name":key[0],"descriptor":key[1],"code_sha256":next(d["code_sha256"] for d in rd.methods if (d["name"],d["descriptor"])==key),"sites":hits})
                 explicit=(owner in ITEM_CLASSES or owner==REG and key[0] in FACTORIES or owner in SELECTED and (SELECTED[owner] is None or key[0] in SELECTED[owner]))
                 # The registry initializer is large; preserve causal windows there.
-                if explicit or (hits or typed_hits) and owner!=REG and len(body)<=1600:
+                if explicit:
                     methods.append(select(rd,parsed,key))
+                elif (hits or typed_hits) and owner!=REG:
+                    try:
+                        methods.append(select(rd,parsed,key))
+                    except AuditError as err:
+                        deferred.append({"name":key[0],"descriptor":key[1],"code_sha256":next(d.get("code_sha256") for d in rd.methods if (d["name"],d["descriptor"])==key),"reason":str(err),"typed_offsets":typed_hits,"field_offsets":[x["offset"] for x in hits]})
             if refs:result["field_consumers"][owner]={"class_sha256":digest(raw),"refs":refs,"sites":field_sites}
-            result["owners"][owner]={"class_sha256":digest(raw),"parent":rd.parent,"interfaces":rd.interfaces,"fields":rd.fields,"declarations":[{"name":v["name"],"descriptor":v["descriptor"],"code_sha256":v.get("code_sha256")} for v in rd.methods],"methods":methods}
+            result["owners"][owner]={"class_sha256":digest(raw),"parent":rd.parent,"interfaces":rd.interfaces,"fields":rd.fields,"declarations":[{"name":v["name"],"descriptor":v["descriptor"],"code_sha256":v.get("code_sha256")} for v in rd.methods],"methods":methods,"deferred_candidates":deferred}
         require(set(PINS)|set(SELECTED)<=set(result["owners"]),"selected owner absent")
         require(1<=len(result["field_consumers"])<=70 and len(result["owners"])<=100,"owner budget")
         require(sum(len(x["methods"]) for x in result["owners"].values())<=350,"method budget")
@@ -94,7 +105,12 @@ def self_test():
     require(list(strings({"items":["alexscaves:green_soylent","alexscaves:green_soylent_extra"]}))==[["items",0]],"exact resource token")
     require(list(strings({"alexscaves:slam":True}))==[["alexscaves:slam"]],"resource key")
     require(not list(strings({"item":"other:slam"})),"namespace")
-    print("PASS four identity scope checks")
+    class Stub:
+        name="test/Interface"
+        methods=[{"name":"callback","descriptor":"()V"}]
+    key=("callback","()V")
+    require(select(Stub(),{key:{}},key)=={"name":"callback","descriptor":"()V","executable":False},"no-Code regression")
+    print("PASS five identity and abstract declaration checks")
 if __name__=="__main__":
     ap=argparse.ArgumentParser();ap.add_argument("--jar",type=Path);ap.add_argument("--javap",default="javap");ap.add_argument("--output",type=Path);ap.add_argument("--self-test",action="store_true")
     a=ap.parse_args()
@@ -107,6 +123,7 @@ if __name__=="__main__":
         for owner,row in report["owners"].items():
             print("OWNER",owner,row["class_sha256"],"DECLARATIONS",len(row["declarations"]),"PROJECTED",len(row["methods"]))
             for method in row["methods"]:print("SEMANTIC",json.dumps({"owner":owner,**method},sort_keys=True))
+            for method in row["deferred_candidates"]:print("DEFERRED_CONSUMER",json.dumps({"owner":owner,**method},sort_keys=True))
         for owner,row in report["field_consumers"].items():
             for method in row["sites"]:
                 for site in method["sites"]:print("FIELD_SITE",json.dumps({"owner":owner,"name":method["name"],"descriptor":method["descriptor"],"code_sha256":method["code_sha256"],**site},sort_keys=True))

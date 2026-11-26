@@ -65,6 +65,8 @@ jobs:
           python3 docs/qa/alexscaves_1010_food_health_reference.py --javap "$JAVA_HOME/bin/javap" --output build/food-health-reference/report.json
           python3 docs/qa/alexscaves_1010_food_health_reference.py --javap "$JAVA_HOME/bin/javap" --output build/food-health-reference/replay.json
           cmp build/food-health-reference/report.json build/food-health-reference/replay.json
+          test "$(wc -c < build/food-health-reference/report.json)" -eq 149285
+          echo '41e941487c560cc8deb700af7952801d31731c83986e56770c13f29d0dea8e67  build/food-health-reference/report.json' | sha256sum -c -
       - uses: actions/upload-artifact@v7
         if: always()
         with:
