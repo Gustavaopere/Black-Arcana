@@ -18,7 +18,7 @@ Sem shrink, mana, cooldown fixo, custo de durabilidade, projétil, AOE, dano dir
 
 ## Recursos observados
 
-Modelo `assets/alexscaves/models/item/uranium_shard.json`, SHA-256 `15f131243832b2881b5ad538063ca25be062e09e323da3cdfce780707bc58963`. 
+Modelo `assets/alexscaves/models/item/uranium_shard.json`, SHA-256 `15f131243832b2881b5ad538063ca25be062e09e323da3cdfce780707bc58963`.
 - `data/alexscaves/recipe/furnace/uranium_shard_blasting.json` SHA-256 `3655bc694c8f900b9e9001651fe3da845328ce0741581354f42950ae9a5cb1b7`; resultado 1 unidade(s), tipo minecraft:blasting.
 - `data/alexscaves/recipe/furnace/uranium_shard_smelting.json` SHA-256 `eadb37b66ecdaf22c44bc45c4fdb28f3a9816a97b23252afa57ca6eabecd16ac`; resultado 1 unidade(s), tipo minecraft:smelting.
 - `data/alexscaves/recipe/uranium_shard_from_uranium.json` SHA-256 `4215121770c453e01b84366646b0bef8e429185a473effe02998677a83354cc1`; resultado 9 unidade(s), tipo minecraft:crafting_shapeless. Não atribuir XP/Mastery a receita declarativa.

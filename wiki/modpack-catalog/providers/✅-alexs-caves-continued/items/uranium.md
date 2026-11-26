@@ -18,7 +18,7 @@ Sem shrink, mana, cooldown fixo, custo de durabilidade, projétil, AOE, dano dir
 
 ## Recursos observados
 
-Modelo `assets/alexscaves/models/item/uranium.json`, SHA-256 `3bf06c51a263c24b25e727d84b932d6912122d11f72d9a622856431588c86cb1`. 
+Modelo `assets/alexscaves/models/item/uranium.json`, SHA-256 `3bf06c51a263c24b25e727d84b932d6912122d11f72d9a622856431588c86cb1`.
 - `data/alexscaves/recipe/furnace/uranium_from_radrock_ore_blasting.json` SHA-256 `de85a2c37a6c544283f5c92ca9a28bcc60d5e1001560e685d1ac46649c75be03`; resultado 1 unidade(s), tipo minecraft:blasting.
 - `data/alexscaves/recipe/furnace/uranium_from_radrock_ore_smelting.json` SHA-256 `6df9a2fbf5c309bf952c858a06a568e625ed72396340e26150e1a881917a791e`; resultado 1 unidade(s), tipo minecraft:smelting.
 - `data/alexscaves/recipe/uranium_from_block.json` SHA-256 `1917b3f4af98eb1d27c449c30d13756de10288313f89adfdfa50bffc678e3249`; resultado 9 unidade(s), tipo minecraft:crafting_shapeless.

@@ -39,7 +39,7 @@ Sem novas fichas ou certificados, sem alteração dos índices compartilhados e 
 
 ## Resultado observado
 
-Run 45794089694/job 139820167569, HEAD `27c5bbc7780abbb2efe9bf2c4db615be5d0e7b3c`, 42 declarações (32 próprias e 10 factories), 11 owners tipados, 35 JSON, 8 checks e dois replays de 425337 bytes SHA-256 `aa6b3b052b975590f56dd2fa62773fe907346495093ef1842b0405de17b585a2`. [CI](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45794089694/job/139820167569). Dez fichas parciais, incluindo cinco variantes de Sweetish Fish; tooltip de SackOfSating reconciliado como componente, não raiz. Cada ficha fixa métodos e parâmetros; nenhuma certificação. 
+Run 45794089694/job 139820167569, HEAD `27c5bbc7780abbb2efe9bf2c4db615be5d0e7b3c`, 42 declarações (32 próprias e 10 factories), 11 owners tipados, 35 JSON, 8 checks e dois replays de 425337 bytes SHA-256 `aa6b3b052b975590f56dd2fa62773fe907346495093ef1842b0405de17b585a2`. [CI](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45794089694/job/139820167569). Dez fichas parciais, incluindo cinco variantes de Sweetish Fish; tooltip de SackOfSating reconciliado como componente, não raiz. Cada ficha fixa métodos e parâmetros; nenhuma certificação.
 
 - [Sack Of Sating](items/sack-of-sating.md)
 - [Seeking Arrow](items/seeking-arrow.md)
