@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 38/81.**
+**Fichas catalogadas (somente fichas detectadas): 42/81.**
 
-**Barra das fichas catalogadas:** `█████████░░░░░░░░░░░ 46.9%`
+**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 51.9%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 38/81.**
+**Homologadas para perks (somente fichas detectadas): 42/81.**
 
-**Barra dos contratos técnicos estáticos:** `█████████░░░░░░░░░░░ 46.9%`
+**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 51.9%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -27,7 +27,7 @@
 | ✅ | Candy Cane Hook | [ficha/candy-cane-hook.md](candy-cane-hook.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Book | [ficha/cave-book.md](cave-book.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Map | [ficha/cave-map.md](cave-map.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Charred Remnant | [ficha/charred-remnant.md](charred-remnant.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Charred Remnant | [ficha/charred-remnant.md](charred-remnant.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Chocolate Ice Cream Scoop | [ficha/chocolate-ice-cream-scoop.md](chocolate-ice-cream-scoop.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Cinder Brick | [ficha/cinder-brick.md](cinder-brick.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cloak Of Darkness | [ficha/cloak-of-darkness.md](cloak-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -38,7 +38,7 @@
 | ✅ | Diving Helmet | [ficha/diving-helmet.md](diving-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Leggings | [ficha/diving-leggings.md](diving-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Fertilizer | [ficha/fertilizer.md](fertilizer.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Fissile Core | [ficha/fissile-core.md](fissile-core.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Fissile Core | [ficha/fissile-core.md](fissile-core.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Floater | [ficha/floater.md](floater.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gazing Pearl | [ficha/gazing-pearl.md](gazing-pearl.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gingerbread Boots | [ficha/gingerbread-boots.md](gingerbread-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -97,8 +97,8 @@
 | ⚠️ | Trilocaris Bucket | [ficha/trilocaris-bucket.md](trilocaris-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Tripodfish Bucket | [ficha/tripodfish-bucket.md](tripodfish-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Unrefined Waste | [ficha/unrefined-waste.md](unrefined-waste.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Uranium Shard | [ficha/uranium-shard.md](uranium-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Uranium | [ficha/uranium.md](uranium.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Uranium Shard | [ficha/uranium-shard.md](uranium-shard.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Uranium | [ficha/uranium.md](uranium.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Vanilla Ice Cream Scoop | [ficha/vanilla-ice-cream-scoop.md](vanilla-ice-cream-scoop.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Waste Drum | [ficha/waste-drum.md](waste-drum.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 

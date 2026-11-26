@@ -1,6 +1,6 @@
 # Uranium
 
-**Estado:** ⚠️ PARCIAL / STATIC_DISCOVERY_ONLY. `static_contract=NOT_CERTIFIED; mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED; NO_MUTATION`. Sem nova raiz semântica certificada.
+**Contrato estático:** ✅ `CERTIFIED_STATIC_7_AXES / STATIC_TECHNICAL_CATALOG_ONLY` (candidato à CI e merge), exclusivamente produtor passivo individual. `mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED; perk_certification=NOT_CERTIFIED; NO_MUTATION`. Provider OPEN; zero novas raízes.
 
 ## Identidade e autoridade
 
@@ -14,7 +14,7 @@ Cria MobEffectInstance(IRRADIATED,1800) @129 (amp0 default da referência vanill
 
 ## Custos, estado e integração
 
-Sem shrink, mana, cooldown fixo, custo de durabilidade, projétil, AOE, dano direto, alcance/LOS ou owner ofensivo próprio no corpo. Alvo é o portador LivingEntity; estado do efeito é da engine. Sem NBT/UUID persistente próprio demonstrado; sincronização visual não é settlement. Não repetir tick, aplicar status novamente, alterar proteção Hazmat ou conceder Mastery por tentativa. Possíveis parâmetros conceituais: exposição por stack, mitigação e duração; hook real não verificado. Pendentes: dispatcher/engine efetivos, contexto de inventário, componentes/stack defaults, efeitos de outros produtores, aquisição e consumers indiretos (inclusive usos de crafting e loot), proteção, persistência de status, multiplayer, QA física.
+Sem shrink, mana, cooldown fixo, custo de durabilidade, projétil, AOE, dano direto, alcance/LOS ou owner ofensivo próprio no corpo. Alvo é o portador LivingEntity; estado do efeito é da engine. Sem NBT/UUID persistente próprio demonstrado; sincronização visual não é settlement. Não repetir tick, aplicar status novamente, alterar proteção Hazmat ou conceder Mastery por tentativa. Possíveis parâmetros conceituais: exposição por stack, mitigação e duração; hook real não verificado. Limites: dispatcher de referência, aquisição e consumers declarativos aprofundados abaixo. Engine transformado, componentes/stack efetivos, aceitação e persistência de status, configuração, multiplayer e QA física NÃO VERIFICADOS. Outros produtores permanecem em seus próprios contratos.
 
 ## Recursos observados
 
@@ -32,3 +32,26 @@ Classfile SHA-256 `6a46aa885ce5e5728c22691033b0a0f892d69f6c6fa7dd86a96c8f33c81d9
 |---|---:|---|
 | `<init>(Lnet/minecraft/world/item/Item$Properties;F)V` | 7 | `93f4d18041315ae466b5ad1ce20b90499a83ae756a7ad294dca4c80b70aa0ba3` |
 | `acInventoryTick(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V` | 73 | `a98c07b15db89b72116500877e23e3f95db45ec8223dfeaa00fb76980bacc47d` |
+
+## Fechamento individual de consumidores — #1238
+
+[Run 45890629613/job 140152124649](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45890629613/job/140152124649), duas reproduções de 34.975 bytes SHA-256 `b3407f8baf4ce60a35f0ba7cc06cbf5d042e6d02f3d3781a4f48c8e45f267cf5`, 1.563 JSONs. [Dossiê e sete eixos](../EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md) · [selo](../EXACT-RADIOACTIVE-ITEM-CERTIFICATION-1.0.10.json). Registry `URANIUM` putstatic @1287 no <clinit> Code bb73db4c0f1d1c84abdf5ab1c07defd24db79e5e8c754b8c9f9ec8481a84a84a; creative tab lambda$static$10 getstatic @181, Code 4a6ee5775221aa148147d7baedc4aa322f92ac71ff99476dccb039250004171e. São os dois sites Fieldref exatos desse ID; não prova ausência de lookup dinâmico. Factory lambda$static$58, nenhuma raridade explícita, sem stack cap explicitado; construtor e tick são os dois únicos corpos próprios de RadioactiveItem. Sem novo scheduler ou raiz.
+
+| Recurso publisher (path) | Localização / relação | SHA-256 |
+|---|---|---|
+| `data/alexscaves/advancement/alexscaves/uranium.json` | `["criteria","uranium","conditions","items",0,"items",0]` · DIRECT_ID | `2e6d5553588bc880b21d4cd4ad7ac9e4993b941492bde79b0eaad334641045c9` |
+| `data/alexscaves/advancement/alexscaves/uranium.json` | `["display","icon","id"]` · DIRECT_ID | `2e6d5553588bc880b21d4cd4ad7ac9e4993b941492bde79b0eaad334641045c9` |
+| `data/alexscaves/loot_table/blocks/radrock_uranium_ore.json` | `["pools",0,"entries",0,"children",1,"name"]` · DIRECT_ID | `becdff9650a01a57d34cebfbbbcc76f65353b5fd9815c8546d1693402319dc3d` |
+| `data/alexscaves/loot_table/entities/tremorzilla.json` | `["pools",0,"entries",0,"name"]` · DIRECT_ID | `e5af3d07cb54d975d5df25db8d966e2895f695d7a7d6e9c2c3cceccea80f025c` |
+| `data/alexscaves/recipe/block_of_uranium.json` | `["key","N","item"]` · DIRECT_ID | `99771f9748bf1ae78015ebb3925edfeebc2a77a3911c2ae8f9bdb1e5ae70e071` |
+| `data/alexscaves/recipe/furnace/uranium_from_radrock_ore_blasting.json` | `["result","id"]` · DIRECT_ID | `de85a2c37a6c544283f5c92ca9a28bcc60d5e1001560e685d1ac46649c75be03` |
+| `data/alexscaves/recipe/furnace/uranium_from_radrock_ore_smelting.json` | `["result","id"]` · DIRECT_ID | `6df9a2fbf5c309bf952c858a06a568e625ed72396340e26150e1a881917a791e` |
+| `data/alexscaves/recipe/nuclear_furnace_component.json` | `["key","U","tag"]` · POTENTIAL_TAG_REFERENCE | `f084ca5773472b927d9a7887c22c3a5facdb194c23fa2a759cafea7f612c9133` |
+| `data/alexscaves/recipe/nuclear_siren.json` | `["key","U","tag"]` · POTENTIAL_TAG_REFERENCE | `173f86a6edec05c6cc83faa5d06f9c73491d8aed32daaf0ae21a26fb58ae8981` |
+| `data/alexscaves/recipe/uranium_from_block.json` | `["result","id"]` · DIRECT_ID | `1917b3f4af98eb1d27c449c30d13756de10288313f89adfdfa50bffc678e3249` |
+| `data/alexscaves/recipe/uranium_from_shard.json` | `["result","id"]` · DIRECT_ID | `b8b3b77e00e6e6406af3e58fea493965b5dd0265da9d9cc2224767df671487b3` |
+| `data/alexscaves/recipe/uranium_rod.json` | `["key","U","tag"]` · POTENTIAL_TAG_REFERENCE | `3ebac04bed9428bf988727236ef45bc407831ea2ada3efa2f2173627e854db35` |
+| `data/alexscaves/recipe/uranium_shard_from_uranium.json` | `["ingredients",0,"item"]` · DIRECT_ID | `4215121770c453e01b84366646b0bef8e429185a473effe02998677a83354cc1` |
+| `data/c/tags/item/raw_materials/uranium.json` | `["values",0]` · DIRECT_ID | `c071eddd2b2fd03508ac73d29772ea8c0395e27ab26f358223c62699a2b9f211` |
+
+**Fronteira estática:** o [dispatcher ACTickingItem](../systems/ticking-item.md) encaminha stack, level, entity e selected no HEAD de ItemStack.inventoryTick; este produtor não usa selected. Hazmat é contador por identidade/slot; o coeficiente local não é redução universal de dano. Referência oficial do construtor MobEffectInstance(Holder,I) passa amplifier 0 @3 (Code SHA `24931801535be6734bb46587ae621201d1762f5143dfe56f82debdabe241bef0`, [job](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45797651887/job/139832340081)). [Irradiated](../effects/irradiated.md) não executa tick periódico para amp0; presença pode cancelar LivingHealEvent conforme resistência, sem provar bloqueio de toda cura. Efeito pode ser rejeitado; mensagem não é aceite. Campos locais não possuem configuração dinâmica per-player demonstrada; nenhum NBT próprio/owner ofensivo. Não reexecutar tick ou aplicar status, dano ou XP por conta própria. A aquisição referencial acima não fixa loot/receita selecionados nem custo em runtime. Sem hook seguro, `NO_MUTATION / fail-closed`.
