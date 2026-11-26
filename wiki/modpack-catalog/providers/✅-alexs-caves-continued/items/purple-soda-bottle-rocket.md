@@ -20,3 +20,11 @@ Classfile SHA-256 `bbc633c61e6226a10cbf00bce158c2a272d3a7f1ee40dd03b3a049d8c957f
 | `use(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;` | 38 | `1c75677a6269c8119f804f5fac20e9acfc4cbf61f66758045b3dd49bdc3a9159` |
 
 Limites gerais: inspeção estática do publisher, sem prova de runtime transformado, aceitação de chamadas, compatibilidade ou proteção de mundo. `NO_MUTATION / FAIL_CLOSED / PHYSICAL_QA_NOT_TESTED`.
+
+## Downstream nativo — #1236
+
+[Run 45797529084/job 139831910862](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45797529084/job/139831910862), HEAD `39127f8fbc3fcf51c82e00956ea785f97d75df28`: dois relatórios SHA-256 `f8d679937def972ac001dd8d9517fb46d3f7f5a4a0580db4e128e5b21cd94557`, 1.535.579 bytes. [Dossiê](../EXACT-PROJECTILE-MACHINE-DOWNSTREAM-1.0.10.md).
+
+Owner SodaBottleRocketEntity, class SHA-256 `73a4d9bb64f255503ffeca52e8576aa4570052a75ba7c87767bb9ff8b9d53877`, FireworkRocketEntity, 8/8 métodos próprios. tick()V Code `bd67a7ad6729d27559db4d396e51b3e0ce1c4a44a4327adbf31103d5e909ec7f` chama super.tick @1, incrementa phageAge, no cliente solicita cinco partículas PURPLE_SODA_BUBBLE; não equivale a propulsão. handleEntityEvent(B)V Code `96191cb135d3dc51c8fbf3edb9a38a7bcdc1b65774daf5deff2953112796838a` trata evento 17 com apresentação FROSTMINT_EXPLOSION, SNOWFLAKE, PURPLE_SODA_BUBBLE e som de foguete dependente da câmera; não comprova dano, AOE ou congelamento real. getItem retorna stack PURPLE_SODA_BOTTLE_ROCKET. Pendem construtores e dados herdados de FireworkRocketEntity, propulsão, explosão, duração, owner/attachment, NBT e liquidação do uso. Não transformar efeitos visuais em status ou dano adicional.
+
+Estado mantido: STATIC_DISCOVERY_ONLY / NOT_CERTIFIED / NO_MUTATION / NOT_TESTED. Sem nova raiz ou hook.

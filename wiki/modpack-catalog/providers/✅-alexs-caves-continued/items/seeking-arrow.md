@@ -19,3 +19,11 @@ Classfile SHA-256 `f80ae3ca44d5cdd7dd1b359d4a44a74acbb1edc4a7d526dd6d41a0e8433b5
 | `createArrow(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/projectile/AbstractArrow;` | 6 | `b006d85505577c41d8f4be8729e6a7ad6c8b7c06da12829286a202a314b89a07` |
 
 Limites gerais: inspeção estática do publisher, sem prova de runtime transformado, aceitação de chamadas, compatibilidade ou proteção de mundo. `NO_MUTATION / FAIL_CLOSED / PHYSICAL_QA_NOT_TESTED`.
+
+## Downstream nativo — #1236
+
+[Run 45797529084/job 139831910862](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45797529084/job/139831910862), HEAD `39127f8fbc3fcf51c82e00956ea785f97d75df28`: dois relatórios SHA-256 `f8d679937def972ac001dd8d9517fb46d3f7f5a4a0580db4e128e5b21cd94557`, 1.535.579 bytes. [Dossiê](../EXACT-PROJECTILE-MACHINE-DOWNSTREAM-1.0.10.md).
+
+Owner SeekingArrowEntity, class SHA-256 `1102754436829c3dcadb1450d6ab15efb354a3f4e58a2a262a78c5013d7f0e25`, AbstractArrow, 13/13 declarações projetadas. defineSynchedData define ARC_TOWARDS_ENTITY_ID=-1. tick()V Code `76d06bfb3e8ebaacab0bc2866c839ec1cf0b7d091a0b82c5a156aa5565c10e98` (185 instruções): super.tick, não executa homing quando inGround ou stopSeeking. Busca alvo no servidor enquanto ID=-1; consulta AABB inflada com valor min(10,3+tickCount/4) observado nos operandos (divisão inteira no recorte), predicado canHitEntity, comparação de distância, exclui ownedBy e aliado do owner quando presente. Ao selecionar toca som de lock-on e grava ID; quando há alvo resolve Level.getEntity, calcula vetor até posição+0.65F*altura em Y, exige distância > largura do alvo; solicita movimento = movimento anterior×0.30000001192092896D + vetor normalizado×0.699999988079071D. doPostHurtEffects marca stopSeeking=true; NBT desse estado não comprovado. Sem afirmar alcance esférico, velocidade final, acerto garantido, dano ou custo do arco. Perks de homing, targeting e velocidade devem manter filtros e autoridade. Pendem limites de AbstractArrow/EntityType, tags, eventos, persistência e compatibilidade.
+
+Estado mantido: STATIC_DISCOVERY_ONLY / NOT_CERTIFIED / NO_MUTATION / NOT_TESTED. Sem nova raiz ou hook.
