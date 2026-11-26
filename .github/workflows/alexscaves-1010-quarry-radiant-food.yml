@@ -40,6 +40,8 @@ jobs:
         run: |
           python3 docs/qa/alexscaves_1010_quarry_radiant_food_probe.py --jar build/quarry-radiant-food/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/quarry-radiant-food/replay.json
           cmp build/quarry-radiant-food/report.json build/quarry-radiant-food/replay.json
+          test "$(wc -c < build/quarry-radiant-food/report.json)" -eq 156541
+          echo '2bd27341d274f749e8c80b0a0e77e6f37571a92545293d910e7b47deb1cdb945  build/quarry-radiant-food/report.json' | sha256sum -c -
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7

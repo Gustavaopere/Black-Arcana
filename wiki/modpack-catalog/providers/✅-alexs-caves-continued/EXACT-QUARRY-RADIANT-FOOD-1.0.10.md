@@ -1,6 +1,6 @@
 # Quarry Smasher, Radiant Essence e alimentos antirradiação — descoberta 1.0.10
 
-**DISCOVERY_ONLY / NO_MUTATION / NOT_CERTIFIED / NOT_TESTED.** Base canônica `2f4d5c0b296039a7afa701e8465d89c4b8394e78`. Modlist sibling #19, publisher `alexscaves-1.0.10-neoforge+1.21.1.jar`, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c32e9f2e95bffae0e7c`, 75.279.314 bytes. Nova coleta pendente; sem novo dump físico.
+**DISCOVERY_ONLY / NO_MUTATION / NOT_CERTIFIED / NOT_TESTED.** Base canônica `2f4d5c0b296039a7afa701e8465d89c4b8394e78`. Modlist sibling #19, publisher `alexscaves-1.0.10-neoforge+1.21.1.jar`, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c32e9f2e95bffae0e7c`, 75.279.314 bytes. Coleta observada abaixo; sem novo dump físico.
 
 ## Reconciliação alfabética anterior
 
@@ -28,3 +28,18 @@ Fonte: [registro](systems/item-registry.md). Factories de Radiant Essence e Lico
 ## Reprodução proposta
 
 [Auditor](../../../../docs/qa/alexscaves_1010_quarry_radiant_food_probe.py) verifica hash/tamanho/roster do JAR, seis factories Code SHA-exatas e seus targets, corpos próprios, referências tipadas e recursos JSON delimitados por nome. [Workflow](../../../../.github/workflows/alexscaves-1010-quarry-radiant-food.yml) exige dois relatórios idênticos. O limite de recursos por filename não prova todos os JSONs transitivos; consumidores tipados não excluem reflexão ou transforms. Sem novas fichas/certificados, índices, hooks, Stage ou QA física nesta proposta. Próximo após coleta: RadioactiveBlockItem, RadioactiveItem e RadioactiveOnDestroyedBlockItem. NO_MUTATION / fail-closed.
+
+## Resultado binário observado
+
+[Run 45748227744 / job 139669398914](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45748227744/job/139669398914), HEAD `247a4c7adec94b3c99a28fd1aadb668b07dc3ef3`: oito checks, 17 declarações projetadas (3 Quarry, 2 Radiant, 6 RadiationRemovingFood, 6 factories), quatro owners com referências tipadas e 17 JSONs por filename. Dois relatórios byte-idênticos, 156.541 bytes, SHA-256 `2bd27341d274f749e8c80b0a0e77e6f37571a92545293d910e7b47deb1cdb945`. A nova HEAD sela tamanho/digest e precisa reproduzi-los.
+
+Quarry: filtro NO_SPECTATORS AND isPickable, AABB expandida pela visão×5 e inflada 1, olho dentro de AABB candidata bloqueia; hit BLOCK cria entidade inativa e testa noCollision; spawn booleano descartado antes de evento e débito. Não audita mineração downstream. Radiant: construtor comum e tooltip condicional de LICOWITCH, consumidores por ID ainda não fechados. Food: getEffect(IRRADIATED) e FoodProperties não nulos; setHealth(min(maxHealth,health+ceil(nutrition×1.5F+1F))) antes do super; não remove efeito. Factory GREEN_SOYLENT confirma perfil SOYLENT_GREEN, N=3. Recuperação nominal 6/7/4 HP respectivamente Green Soylent/SLAM/SPELUNKIE. Não presumir resultado físico.
+
+- [Green Soylent](items/green-soylent.md)
+- [Licowitch Radiant Essence](items/licowitch-radiant-essence.md)
+- [Quarry Smasher](items/quarry-smasher.md)
+- [Radiant Essence](items/radiant-essence.md)
+- [Slam](items/slam.md)
+- [Spelunkie](items/spelunkie.md)
+
+Seis fichas parciais adicionadas, 137/160 no recorte proposto, 59/81 classes com disposição. O recorte de itens de suporte (incluindo as duas essências) não cria casts ou raízes semânticas. No hook verificado. Próximo: RadioactiveBlockItem, RadioactiveItem, RadioactiveOnDestroyedBlockItem.

@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 137/154.**
+**Fichas catalogadas (somente fichas detectadas): 137/160.**
 
-**Barra das fichas catalogadas:** `█████████████████░░░ 89.0%`
+**Barra das fichas catalogadas:** `█████████████████░░░ 85.6%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 137/154.**
+**Homologadas para perks (somente fichas detectadas): 137/160.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████████░░░ 89.0%`
+**Barra dos contratos técnicos estáticos:** `█████████████████░░░ 85.6%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -132,6 +132,7 @@
 | ✅ | Gingerbread Leggings | [items/gingerbread-leggings.md](items/gingerbread-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Glow Ink Bomb | [items/glow-ink-bomb.md](items/glow-ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gossamer Worm Bucket | [items/gossamer-worm-bucket.md](items/gossamer-worm-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Green Soylent | [items/green-soylent.md](items/green-soylent.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Boots | [items/hazmat-boots.md](items/hazmat-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Chestplate | [items/hazmat-chestplate.md](items/hazmat-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Leggings | [items/hazmat-leggings.md](items/hazmat-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -142,6 +143,7 @@
 | ✅ | Ink Bomb | [items/ink-bomb.md](items/ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Jelly Bean | [items/jelly-bean.md](items/jelly-bean.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Lanternfish Bucket | [items/lanternfish-bucket.md](items/lanternfish-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Licowitch Radiant Essence | [items/licowitch-radiant-essence.md](items/licowitch-radiant-essence.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Marine Snow | [items/marine-snow.md](items/marine-snow.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Moth Dust | [items/moth-dust.md](items/moth-dust.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [items/pewen-boat.md](items/pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -151,13 +153,17 @@
 | ⚠️ | Primordial Soup | [items/primordial-soup.md](items/primordial-soup.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Primordial Tunic | [items/primordial-tunic.md](items/primordial-tunic.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Purple Soda Bottle | [items/purple-soda-bottle.md](items/purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Quarry Smasher | [items/quarry-smasher.md](items/quarry-smasher.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Radgill Bucket | [items/radgill-bucket.md](items/radgill-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Radiant Essence | [items/radiant-essence.md](items/radiant-essence.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Rainbounce Boots | [items/rainbounce-boots.md](items/rainbounce-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Remote Detonator | [items/remote-detonator.md](items/remote-detonator.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Resistor Shield | [items/resistor-shield.md](items/resistor-shield.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Sea Pig Bucket | [items/sea-pig-bucket.md](items/sea-pig-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Seething Stew | [items/seething-stew.md](items/seething-stew.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Serene Salad | [items/serene-salad.md](items/serene-salad.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Slam | [items/slam.md](items/slam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Spelunkie | [items/spelunkie.md](items/spelunkie.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [items/thornwood-boat.md](items/thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Chest Boat | [items/thornwood-chest-boat.md](items/thornwood-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Trilocaris Bucket | [items/trilocaris-bucket.md](items/trilocaris-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -188,7 +194,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ⚠️ | Equipment | 6/9 (66.7%) | 6 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 38/51 (74.5%) | 38 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Items | 38/57 (66.7%) | 38 | [Abrir índice](items/INDEX.md) |
 | ⚠️ | Systems | 15/16 (93.8%) | 15 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
