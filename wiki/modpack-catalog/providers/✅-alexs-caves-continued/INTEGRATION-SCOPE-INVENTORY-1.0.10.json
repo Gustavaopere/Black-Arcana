@@ -1027,9 +1027,9 @@
     "next_scope": "server/item/GalenaGauntletItem"
   },
   "latest_individual_contract_checkpoint": {
-    "scope": "RESISTOR_SHIELD_CANDIDATE_AND_THREE_PARTIAL_CARDS",
+    "scope": "RESISTOR_INTEGRATED_AND_THIRTEEN_NEW_PARTIAL_CARDS",
     "provider_observed_static_contracts": 137,
-    "provider_observed_cards": 141,
+    "provider_observed_cards": 154,
     "integration_support_contracts": 15,
     "concrete_item_contracts": 38,
     "equipment_contracts": 6,
@@ -1041,7 +1041,20 @@
       "equipment/limestone-spear.md",
       "items/jelly-bean.md",
       "items/remote-detonator.md",
-      "systems/keybind-using-armor.md"
+      "systems/keybind-using-armor.md",
+      "items/gossamer-worm-bucket.md",
+      "items/lanternfish-bucket.md",
+      "items/marine-snow.md",
+      "items/moth-dust.md",
+      "items/radgill-bucket.md",
+      "items/sea-pig-bucket.md",
+      "items/trilocaris-bucket.md",
+      "items/tripodfish-bucket.md",
+      "equipment/ortholance.md",
+      "equipment/primitive-club.md",
+      "items/primordial-soup.md",
+      "items/seething-stew.md",
+      "items/serene-salad.md"
     ],
     "evidence": [
       "items/gazing-pearl.md",
@@ -1049,13 +1062,15 @@
       "items/holocoder.md",
       "items/resistor-shield.md",
       "EXACT-JELLY-KEYBIND-LIMESTONE-1.0.10.md",
-      "EXACT-ITEM-OUTER-CLASS-RECONCILIATION-1.0.10.md"
+      "EXACT-ITEM-OUTER-CLASS-RECONCILIATION-1.0.10.md",
+      "EXACT-MARINE-FISH-MOTH-1.0.10.md",
+      "EXACT-ORTHOLANCE-MIXTURE-CLUB-1.0.10.md"
     ],
-    "historical_checkpoint_note": "Earlier reviewed-prefix and checkpoint fields remain historical. Holocoder integrated in 651d9b25a0d994d413ad1c03fb883c4afc93f4d6. Candidate +1 certificate and +3 partial cards; CI/merge required."
+    "historical_checkpoint_note": "Resistor integrated in f3f48196a0853fe51cefd0dd5ba462b354773dc2; 13 partial cards proposed across #1230 and #1231. No new certificates; CI/merge required."
   },
   "item_class_reconciliation_checkpoint": {
-    "scope": "EXISTING_CARDS_MAPPED_PLUS_NEXT_THREE_DISCOVERY",
-    "base_main": "651d9b25a0d994d413ad1c03fb883c4afc93f4d6",
+    "scope": "EXISTING_CARDS_PLUS_THREE_DISCOVERY_BATCHES",
+    "base_main": "f3f48196a0853fe51cefd0dd5ba462b354773dc2",
     "physical_item_outer_classes": 81,
     "historical_disposition_prefix_classes": 37,
     "additional_existing_classes_mapped": 7,
@@ -1071,8 +1086,24 @@
     "whole_provider_catalog_closed": false,
     "evidence": [
       "EXACT-ITEM-OUTER-CLASS-RECONCILIATION-1.0.10.md",
-      "EXACT-JELLY-KEYBIND-LIMESTONE-1.0.10.md"
+      "EXACT-JELLY-KEYBIND-LIMESTONE-1.0.10.md",
+      "EXACT-MARINE-FISH-MOTH-1.0.10.md",
+      "EXACT-ORTHOLANCE-MIXTURE-CLUB-1.0.10.md"
     ],
-    "limits": "Class inventory is not object/magic universe. Existing mapped cards not added again. Three new candidate cards partial; no new roots."
+    "limits": "55/81 outer classes with documented disposition including existing Magic Conch and Occult Gem, not certificates or entire semantic universe; 26 remaining.",
+    "magic_conch_reconciled": true,
+    "new_discovery_classes": [
+      "server/item/MarineSnowItem",
+      "server/item/ModFishBucketItem",
+      "server/item/MothDustItem"
+    ],
+    "remaining_after_new_discovery": 30,
+    "occult_gem_reconciled": true,
+    "latest_discovery_classes": [
+      "server/item/OrtholanceItem",
+      "server/item/PrehistoricMixtureItem",
+      "server/item/PrimitiveClubItem"
+    ],
+    "remaining_after_latest_discovery": 26
   }
 }

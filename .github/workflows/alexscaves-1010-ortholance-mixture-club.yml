@@ -1,0 +1,52 @@
+name: Alex's Caves 1.0.10 Ortholance, prehistoric mixtures and Primitive Club discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/qa/alexscaves_1010_ortholance_mixture_club_probe.py'
+      - '.github/workflows/alexscaves-1010-ortholance-mixture-club.yml'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
+      - 'docs/qa/alexscaves_1010_galena_211248_spawn_denial_guards_probe.py'
+      - 'docs/qa/alexscaves_1010_nuclear_explosion_effect_probe.py'
+      - 'docs/qa/alexscaves_1010_remote_detonator_block_callbacks_probe.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ORTHOLANCE-MIXTURE-CLUB-1.0.10.md'
+      - 'docs/qa/alexscaves_1010_four_items_downstream_250_probe.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact_ortholance_mixture_club_discovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile probe and test scope
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_ortholance_mixture_club_probe.py
+          python3 docs/qa/alexscaves_1010_ortholance_mixture_club_probe.py --self-test
+      - name: Fetch exact publisher artifact
+        run: |
+          mkdir -p build/ortholance-mixture-club
+          curl --fail --silent --show-error --location --retry 3 --max-time 180 'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' --output build/ortholance-mixture-club/publisher.jar
+      - name: Project three exact item outer classes and typed consumers
+        run: |
+          python3 docs/qa/alexscaves_1010_ortholance_mixture_club_probe.py --jar build/ortholance-mixture-club/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/ortholance-mixture-club/report.json
+      - name: Replay identical bounded projection
+        run: |
+          python3 docs/qa/alexscaves_1010_ortholance_mixture_club_probe.py --jar build/ortholance-mixture-club/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/ortholance-mixture-club/replay.json
+          cmp build/ortholance-mixture-club/report.json build/ortholance-mixture-club/replay.json
+          test "$(wc -c < build/ortholance-mixture-club/report.json)" -eq 384061
+          echo '4c9aefbfedf99868ae394f1a77dfaaa85cd3c5e8b6d1554b44ed41a902d569b1  build/ortholance-mixture-club/report.json' | sha256sum -c -
+      - name: Archive read-only report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ortholance-mixture-club
+          path: build/ortholance-mixture-club/report.json
+          if-no-files-found: warn
+          retention-days: 14
