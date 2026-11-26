@@ -22,3 +22,11 @@ Classfile SHA-256 `925fb7047dddc8044929b0a581af2a4dcf5c6688dd277f445c9bc0dbd1f9d
 | `use(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;` | 72 | `701c3024e6172ec05c20f680119cbced8923fba307c9a639f493ad273394038a` |
 
 Limites gerais: inspeção estática do publisher, sem prova de runtime transformado, aceitação de chamadas, compatibilidade ou proteção de mundo. `NO_MUTATION / FAIL_CLOSED / PHYSICAL_QA_NOT_TESTED`.
+
+## Downstream nativo — #1236
+
+[Run 45797529084/job 139831910862](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45797529084/job/139831910862), HEAD `39127f8fbc3fcf51c82e00956ea785f97d75df28`: dois relatórios SHA-256 `f8d679937def972ac001dd8d9517fb46d3f7f5a4a0580db4e128e5b21cd94557`, 1.535.579 bytes. [Dossiê](../EXACT-PROJECTILE-MACHINE-DOWNSTREAM-1.0.10.md).
+
+Owner DepthChargeEntity, class SHA-256 `d9ecff8deceecb68e066b3675a8835206698180d77a846150dba94eea96094ca`, 10/10 métodos próprios; ThrowableItemProjectile. onHitEntity solicita 2F+nextInt(2) via thrown(projétil,getOwner()) @34 (Code `1e7d5a900fd8da9e27d893763a32fcadd7b9bd426854838017d674a04887dc8c`); onHit chama super e marca hitGround=true. tick()V (93 instruções, Code `f3a759eb6e57e9860d47b3e0645e537dadead702da4c82e845f688743de17f76`): baseTick/checkInsideBlocks, gravidade −0.05000000074505806D no Y se habilitada, move SELF, updateRotation, escala de movimento 0.9900000095367432D. Contato com chão/colisão marca hitGround; em água solicita quatro partículas de bolha; quando hitGround zera movimento, incrementa groundTime e solicita explode se >30 ticks no servidor. explode()V Code `c70fccde78085e05a063ce7d8e63fdd1b217f6ada0aa2861cea26b02eab48d23`: remove KILLED @4, canEntityGrief @12, seleção DESTROY_WITH_DECAY/DESTROY/KEEP pelo gate e gamerule, consulta fluido WATER, instancia MineExplosion @104 (getX(), getY(0.5D), getZ(), argumento 2F; getY(D) é chamada herdada, não soma literal de 0.5 bloco), explode @109 e finalizeExplosion(true) @114. Dano/área de MineExplosion, owner atribuído e aceite de efeitos não inferidos desse argumento. Não ampliar raio, detonação ou duplicar callbacks; world safety pendente.
+
+Estado mantido: STATIC_DISCOVERY_ONLY / NOT_CERTIFIED / NO_MUTATION / NOT_TESTED. Sem nova raiz ou hook.
