@@ -22,3 +22,11 @@ Classfile SHA-256 `925fb7047dddc8044929b0a581af2a4dcf5c6688dd277f445c9bc0dbd1f9d
 | `use(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;` | 72 | `701c3024e6172ec05c20f680119cbced8923fba307c9a639f493ad273394038a` |
 
 Limites gerais: inspeção estática do publisher, sem prova de runtime transformado, aceitação de chamadas, compatibilidade ou proteção de mundo. `NO_MUTATION / FAIL_CLOSED / PHYSICAL_QA_NOT_TESTED`.
+
+## Downstream nativo — #1236
+
+[Run 45797529084/job 139831910862](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45797529084/job/139831910862), HEAD `39127f8fbc3fcf51c82e00956ea785f97d75df28`: dois relatórios SHA-256 `f8d679937def972ac001dd8d9517fb46d3f7f5a4a0580db4e128e5b21cd94557`, 1.535.579 bytes. [Dossiê](../EXACT-PROJECTILE-MACHINE-DOWNSTREAM-1.0.10.md).
+
+Owner GuanoEntity, class SHA-256 `beb2cbe91f41a812179257a3b1b02d65fb0d619194be7b1accc1aa5c96f72d02`, ThrowableItemProjectile, 8/8 métodos próprios. ACEntityRegistry literal guano @911, bootstrap $52 @914, register @919 e GUANO @922. onHitEntity(EntityHitResult)V, 15 instruções, Code SHA `0358e2974d98fcf4e99e70a3e7b6138beacdf63c0ca739a4ba3dd94ffe9a7cf9`: super @2, alvo do hit, DamageSources.thrown(projétil,getOwner()) @18, hurt com 0F @22; nenhum status/dano positivo próprio demonstrado nesse corpo. Não equiparar a FallingGuanoEntity. onHit(HitResult)V Code `1c1de233c682ab30af82e751550f802c6ce536942db64e5076f4e3e383f4512d`: super, servidor broadcast 3 e discard. Evento 3: oito partículas ITEM, velocidade de apresentação (nextFloat−0.5)×0.08 por eixo; não física do projétil. Pendentes: EntityType, owner, hitbox, física, registry ativo, event/dano zero aceito, dispenser, custo efetivo e recursos transitivos. Não conceder Mastery por mero hit visual.
+
+Estado mantido: STATIC_DISCOVERY_ONLY / NOT_CERTIFIED / NO_MUTATION / NOT_TESTED. Sem nova raiz ou hook.
