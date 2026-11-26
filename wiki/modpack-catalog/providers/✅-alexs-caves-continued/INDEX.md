@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 137/184.**
+**Fichas catalogadas (somente fichas detectadas): 138/184.**
 
-**Barra das fichas catalogadas:** `██████████████░░░░░░ 74.5%`
+**Barra das fichas catalogadas:** `███████████████░░░░░ 75.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 137/184.**
+**Homologadas para perks (somente fichas detectadas): 138/184.**
 
-**Barra dos contratos técnicos estáticos:** `██████████████░░░░░░ 74.5%`
+**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 75.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -203,7 +203,7 @@
 | ✅ | Food Builder | [systems/food-builder.md](systems/food-builder.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Foods | [systems/foods.md](systems/foods.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Item Registry | [systems/item-registry.md](systems/item-registry.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Keybind Using Armor | [systems/keybind-using-armor.md](systems/keybind-using-armor.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Keybind Using Armor | [systems/keybind-using-armor.md](systems/keybind-using-armor.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Repairable Item | [systems/repairable-item.md](systems/repairable-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Scaffolding Placement | [systems/scaffolding-placement.md](systems/scaffolding-placement.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Swing Control Item | [systems/swing-control-item.md](systems/swing-control-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -219,7 +219,7 @@
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ⚠️ | Equipment | 6/9 (66.7%) | 6 | [Abrir índice](equipment/INDEX.md) |
 | ⚠️ | Items | 38/81 (46.9%) | 38 | [Abrir índice](items/INDEX.md) |
-| ⚠️ | Systems | 15/16 (93.8%) | 15 | [Abrir índice](systems/INDEX.md) |
+| ✅ | Systems | 16/16 (100.0%) | 16 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
 
