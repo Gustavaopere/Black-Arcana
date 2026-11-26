@@ -36,3 +36,9 @@ Classfile SHA-256 `eb072027b5797f7b96e83cabd58ebdfd3029e5c1e84fa789c620309dd3a57
 [Prova nativa](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45796533259/job/139828495853), HEAD `9c16b9c73452706148f666156a815b75696311de`, dois relatórios 765.144 bytes SHA-256 `6c8e0c98af51b60fe40d3bd0b326fb909525f1780b2086740748e158b6bd20ea`; [referência vanilla](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45796533259/job/139828496659), 149.285 bytes SHA `41e941487c560cc8deb700af7952801d31731c83986e56770c13f29d0dea8e67`. [Dossiê](../EXACT-FOOD-IDENTITY-KEYBIND-CLOSURE-1.0.10.md). 1555 classfiles, Fieldref exato e valores JSON; sem inferência de tags transitivas ou modpack transformado. Permanece parcial.
 
 Fieldref exato encontrado no inicializador e aba criativa (lambda$static$24 @571); não há produtor/consumidor de gameplay próprio identificado por Fieldref do campo neste recorte. Recursos JSON por valores registram referências de crafting/loot/advancement a uma ou outra essência, ainda não atribuídas integralmente por valor aos dois IDs. Não inferir ritual ou consumo de energia; rastrear receitas, loot, tags e bridges genéricos.
+
+## Reconciliação de fronteiras distribuídas
+
+Vínculo comprovado no contrato [Conversion Crucible](../actions/conversion-crucible-biome-conversion.md): receita de Crucible usa uma Radiant Essence e Biome Treat usa duas. É custo de crafting, não evidência de sacrifício no tick, mana ou item ativável. O ritual seleciona stack de oferenda em seu próprio estado. Não transferir a exigência de Licowitch Radiant Essence para esta variante. Permanecem por atribuir recursos de loot e receitas adicionais por ID exato.
+
+Evidência compartilhada: [matriz de reconciliação](../EXACT-CATALOG-INHERITED-BOUNDARIES-1.0.10.md). Mantidos NOT_CERTIFIED, NO_MUTATION e NOT_TESTED; nenhuma promoção por herança isolada.
