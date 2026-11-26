@@ -23,3 +23,11 @@ Classfile SHA-256 `925fb7047dddc8044929b0a581af2a4dcf5c6688dd277f445c9bc0dbd1f9d
 | `use(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;` | 72 | `701c3024e6172ec05c20f680119cbced8923fba307c9a639f493ad273394038a` |
 
 Limites gerais: inspeção estática do publisher, sem prova de runtime transformado, aceitação de chamadas, compatibilidade ou proteção de mundo. `NO_MUTATION / FAIL_CLOSED / PHYSICAL_QA_NOT_TESTED`.
+
+## Downstream nativo — #1236
+
+[Run 45797529084/job 139831910862](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45797529084/job/139831910862), HEAD `39127f8fbc3fcf51c82e00956ea785f97d75df28`: dois relatórios SHA-256 `f8d679937def972ac001dd8d9517fb46d3f7f5a4a0580db4e128e5b21cd94557`, 1.535.579 bytes. [Dossiê](../EXACT-PROJECTILE-MACHINE-DOWNSTREAM-1.0.10.md).
+
+Owner CinderBrickEntity, class SHA-256 `d09510632ca5e4dbb367227830291074fb6f94c1d39bc8fce368db0bf3a76a53`, 8/8 métodos próprios, ThrowableItemProjectile. ACEntityRegistry literal cinder_brick @605, bootstrap $34 @608, register @613 e CINDER_BRICK @616. onHitEntity(EntityHitResult)V, 21 instruções, Code SHA `205c098af1b8b6052cbd3a3861a3061e593a232ada8df6054085cb3d0e306305`: super @2, DamageSources.thrown(projétil,getOwner()) @18, dano solicitado 2F+nextInt(2), isto é 2 ou 3 pontos @34 (retorno não condiciona outro efeito local). onHit(HitResult)V, 47 instruções, Code `9ac286cd7ceb83cf24d022c40cd52ee3fa784e1f9f798c1d05df25591e14e1d1`: super @2; servidor envia evento 3 @21 e discard @25; hit de bloco consulta estado, resistência à explosão <5F, exclui tag UNMOVEABLE e ar, solicita destroyBlock(pos,true) @91. Sem gate próprio de claims ou aceite, não inferir destruição bem-sucedida. Evento 3 solicita oito partículas ITEM. Perks de dano e destruição são caminhos separados; world safety exige boundary real. Restam parâmetros de EntityType, tags efetivas, física, autorização e engine de colisão/owner.
+
+Estado mantido: STATIC_DISCOVERY_ONLY / NOT_CERTIFIED / NO_MUTATION / NOT_TESTED. Sem nova raiz ou hook.

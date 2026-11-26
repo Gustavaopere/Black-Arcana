@@ -31,3 +31,11 @@ Classfile SHA-256 `bf8fe4f6404e3d46f085bc708eb6a260f598cab0fc0a1dec0806bf066fd79
 | `<init>(Lnet/minecraft/world/item/Item$Properties;)V` | 4 | `405f81f0b51683db4ab14a729fb164a2c889439967d0bfe6248ebe8183a4873d` |
 | `use(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;` | 136 | `786b7fe42e93b146d38e303dbe59e941116448b5a22ecc189f35a3ed63387d7d` |
 | `<clinit>()V` | 5 | `fef0684a920e2ab5723f466be061dd4b92fc7ea4ca22187244b6aa7c3c85988f` |
+
+## Downstream nativo — #1236
+
+[Run 45797529084/job 139831911308](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45797529084/job/139831911308), HEAD `39127f8fbc3fcf51c82e00956ea785f97d75df28`: dois relatórios SHA-256 `137a0235d3e00a4fbbe947d6da01ffb50572f57a8a43f62da63847aa81034ff9`, 3.762.090 bytes. [Dossiê](../EXACT-PROJECTILE-MACHINE-DOWNSTREAM-1.0.10.md).
+
+Owner QuarrySmasherEntity, class SHA-256 `6691eb5f3ca50fd3d0c700e7b2464994778efa812e5336f59802c328a73d352a`, Entity, 37/38 declarações projetadas (uma deferred). defineSynchedData Code `b22cdb8a769e17afdc2a21c382907a256008e09f35763e7a906a23d599717492`: QUARRY_POS e TARGET_POS Optional.empty, INACTIVE=true, SLAMMING=false, PULLING_ITEMS_FOR=0. addAdditionalSaveData e readAdditionalSaveData são corpos return-only (Code `149488d869cbef080602a371ab0d39d97af103fb726aaeb02ccd36c06f494e5d`), logo não demonstram persistência própria desses campos; superclass e block entity requerem investigação. hurt(DamageSource,F)Z Code `1edf16ed47aa6cde5c4d03e233105937642f179b6cbadba47cce06d2541f9aa3`: gate invulnerabilidade, acumula damageSustained, broadcast 48, limiar 10 para som ITEM_BREAK, pedidos de drop de ingots AZURE/SCARLET_NEODYMIUM se não removido, remove KILLED. Não converter limiar em HP de LivingEntity. Tick/algoritmo de mineração, vínculo com quarry, limites de trabalho, autoridade e persistência ainda abertos; sem perk de mineração autorizado.
+
+Estado mantido: STATIC_DISCOVERY_ONLY / NOT_CERTIFIED / NO_MUTATION / NOT_TESTED. Sem nova raiz ou hook.

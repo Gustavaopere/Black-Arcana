@@ -22,3 +22,11 @@ Classfile SHA-256 `925fb7047dddc8044929b0a581af2a4dcf5c6688dd277f445c9bc0dbd1f9d
 | `use(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;` | 72 | `701c3024e6172ec05c20f680119cbced8923fba307c9a639f493ad273394038a` |
 
 Limites gerais: inspeção estática do publisher, sem prova de runtime transformado, aceitação de chamadas, compatibilidade ou proteção de mundo. `NO_MUTATION / FAIL_CLOSED / PHYSICAL_QA_NOT_TESTED`.
+
+## Downstream nativo — #1236
+
+[Run 45797529084/job 139831910862](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45797529084/job/139831910862), HEAD `39127f8fbc3fcf51c82e00956ea785f97d75df28`: dois relatórios SHA-256 `f8d679937def972ac001dd8d9517fb46d3f7f5a4a0580db4e128e5b21cd94557`, 1.535.579 bytes. [Dossiê](../EXACT-PROJECTILE-MACHINE-DOWNSTREAM-1.0.10.md).
+
+Owner `ThrownIceCreamScoopEntity`, class SHA-256 `5710f87a67dd8be88e05b1ac01dcc57a4d68f51bc9dc6e226d354fad05fde5e8`, ancestral ThrowableItemProjectile, 8/8 métodos próprios projetados. Registro literal thrown_ice_cream_scoop @1353, bootstrap $78 @1356, register @1361, THROWN_ICE_CREAM_SCOOP @1364. getDefaultItem retorna VANILLA_ICE_CREAM_SCOOP (fallback, não substituição garantida da stack passada pelo lançamento). onHitEntity(EntityHitResult)V, 26 instruções, Code SHA `d5f5b97b7bdddb5f18cecd9e39ab41370fc186314bd223fae3bb9136a31b6eae`: chama super @2, solicita hurt @22 com DamageSources.thrown(projétil,getOwner()) @18 e 0F; depois testa LivingEntity @35 e solicita ACPlatform.cureWithMilk @44. A cura não é gated pelo retorno de hurt; não atribuir dano positivo ou cura de HP. O corpo não discrimina sabores. onHit(HitResult)V Code `6e4a013e798313c5793134eabefb58eb44343f6c3f594220057958a9ccd31ccc`: super @2; servidor envia evento 3 @21 e discard @25; apresentação evento 3 solicita oito partículas ITEM. Pendentes: implementação de cureWithMilk, tipos de efeito efetivamente removidos, hitbox/física/owner herdados, dispenser e liquidação. Perk de dispel deve atuar na fronteira autoritativa real, sem duplicar hurt/cure/consumo.
+
+Estado mantido: STATIC_DISCOVERY_ONLY / NOT_CERTIFIED / NO_MUTATION / NOT_TESTED. Sem nova raiz ou hook.
