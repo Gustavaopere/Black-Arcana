@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 137/160.**
+**Fichas catalogadas (somente fichas detectadas): 137/164.**
 
-**Barra das fichas catalogadas:** `█████████████████░░░ 85.6%`
+**Barra das fichas catalogadas:** `████████████████░░░░ 83.5%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 137/160.**
+**Homologadas para perks (somente fichas detectadas): 137/164.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████████░░░ 85.6%`
+**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 83.5%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -117,6 +117,7 @@
 | ✅ | Candy Cane Hook | [items/candy-cane-hook.md](items/candy-cane-hook.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Book | [items/cave-book.md](items/cave-book.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Map | [items/cave-map.md](items/cave-map.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Charred Remnant | [items/charred-remnant.md](items/charred-remnant.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cloak Of Darkness | [items/cloak-of-darkness.md](items/cloak-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Darkened Apple | [items/darkened-apple.md](items/darkened-apple.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Boots | [items/diving-boots.md](items/diving-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -124,6 +125,7 @@
 | ✅ | Diving Helmet | [items/diving-helmet.md](items/diving-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Leggings | [items/diving-leggings.md](items/diving-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Fertilizer | [items/fertilizer.md](items/fertilizer.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Fissile Core | [items/fissile-core.md](items/fissile-core.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Floater | [items/floater.md](items/floater.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gazing Pearl | [items/gazing-pearl.md](items/gazing-pearl.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gingerbread Boots | [items/gingerbread-boots.md](items/gingerbread-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -168,6 +170,8 @@
 | ✅ | Thornwood Chest Boat | [items/thornwood-chest-boat.md](items/thornwood-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Trilocaris Bucket | [items/trilocaris-bucket.md](items/trilocaris-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Tripodfish Bucket | [items/tripodfish-bucket.md](items/tripodfish-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Uranium Shard | [items/uranium-shard.md](items/uranium-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Uranium | [items/uranium.md](items/uranium.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Anvil Combination | [systems/anvil-combination.md](systems/anvil-combination.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Armor Material | [systems/armor-material.md](systems/armor-material.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Info Item | [systems/cave-info-item.md](systems/cave-info-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -194,7 +198,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ⚠️ | Equipment | 6/9 (66.7%) | 6 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 38/57 (66.7%) | 38 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Items | 38/61 (62.3%) | 38 | [Abrir índice](items/INDEX.md) |
 | ⚠️ | Systems | 15/16 (93.8%) | 15 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅

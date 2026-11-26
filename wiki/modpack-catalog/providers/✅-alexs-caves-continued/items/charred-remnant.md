@@ -1,0 +1,30 @@
+# Charred Remnant
+
+**Estado:** ⚠️ PARCIAL / STATIC_DISCOVERY_ONLY. `static_contract=NOT_CERTIFIED; mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED; NO_MUTATION`. Sem nova raiz semântica certificada.
+
+## Identidade e autoridade
+
+`alexscaves:charred_remnant`, item de suporte radioativo, classe `RadioactiveItem` (extends Item). Factory `ACItemRegistry.lambda$static$74`, Code SHA-256 `a8f68e374288c6495c5ab854c9c17cd777cc30b4be5e4e71a31e41531873d736`. Parâmetro do construtor `0.0005F`; raridade/stack defaults herdados, não definidos explicitamente pela factory. [Registry](../systems/item-registry.md). Minecraft 1.21.1 / NeoForge / Java 21; modlist sibling #19, publisher `alexscaves-1.0.10-neoforge+1.21.1.jar`, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`, 75.279.314 bytes. [Run 45750603107/job 139677193397](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45750603107/job/139677193397), HEAD `afb4f82f63f94391648bf53803b1a297e6540dcb`, dois relatórios iguais 232.851 bytes, SHA-256 `b8fd8880d0f888ee137a436ec0aa81ea7916c6e6883acc0237d2915525499c97`. [Dossiê](../EXACT-RADIOACTIVE-ITEMS-1.0.10.md). Sem dump físico novo.
+
+## Comportamento, ativação e parâmetros
+
+Irradiação passiva do portador, não um cast. Construtor guarda `randomChanceOfRadiation` @7. `acInventoryTick(ItemStack,Level,Entity,boolean)V` retorna se cliente (@4), entidade não LivingEntity (@11), Player criativo (@40) ou presença de IRRADIATED (@87). O booleano de seleção não é lido. Não exige Player nos demais casos, não busca vizinhos nem consulta explicitamente tag resists_radiation. Calcula em float `q=(float)count×0.0005F` @44–53; `m=1F−(float)HazmatArmorItem.getWornAmount(carrier)/4F` @55–66. Solicita aplicação se `nextFloat()<q×m` (@91–105). Sem clamp explícito; comparação com RNG limita efetivamente entrada no ramo para valores usuais. Com stack de 1 e zero peças, 0.05% nominal por chamada; exemplo stack de 64 sem proteção: 3.2% nominal. Não confundir chamada de tick com frequência efetiva do dispatcher. [Hazmat Mask](hazmat-mask.md) documenta contador por identidade e slot (0..4); quatro peças zeram o multiplicador deste produtor, não outras fontes.
+
+Cria MobEffectInstance(IRRADIATED,1800) @129 (amp0 default da referência vanilla); pede addEffect @138 e descarta retorno. Envia UpdateEffectVisualityEntityMessage @160/163 com ambos IDs do portador, tipo 0 e duração da instância; não comprova aceitação do efeito. A presença do status impede novas tentativas deste caminho. [Irradiated](../effects/irradiated.md) documenta shouldTick amp<=0 falso e cancelamento de LivingHealEvent em não resistentes; [Radiation](../damage-types/radiation.md) pertence ao efeito, não há hurt próprio neste owner.
+
+## Custos, estado e integração
+
+Sem shrink, mana, cooldown fixo, custo de durabilidade, projétil, AOE, dano direto, alcance/LOS ou owner ofensivo próprio no corpo. Alvo é o portador LivingEntity; estado do efeito é da engine. Sem NBT/UUID persistente próprio demonstrado; sincronização visual não é settlement. Não repetir tick, aplicar status novamente, alterar proteção Hazmat ou conceder Mastery por tentativa. Possíveis parâmetros conceituais: exposição por stack, mitigação e duração; hook real não verificado. Pendentes: dispatcher/engine efetivos, contexto de inventário, componentes/stack defaults, efeitos de outros produtores, aquisição e consumers indiretos (inclusive usos de crafting e loot), proteção, persistência de status, multiplayer, QA física.
+
+## Recursos observados
+
+Modelo `assets/alexscaves/models/item/charred_remnant.json`, SHA-256 `80a00f331adb75f57ff684f54b72b33f325a0f099c096924c6b9c424b90a1540`. Nenhuma receita resultante encontrada no recorte de filename; não comprova inexistência de receita ou loot. Não atribuir XP/Mastery a receita declarativa.
+
+## Localizadores
+
+Classfile SHA-256 `6a46aa885ce5e5728c22691033b0a0f892d69f6c6fa7dd86a96c8f33c81d9436`.
+
+| Método e descritor | Instruções | Code SHA-256 |
+|---|---:|---|
+| `<init>(Lnet/minecraft/world/item/Item$Properties;F)V` | 7 | `93f4d18041315ae466b5ad1ce20b90499a83ae756a7ad294dca4c80b70aa0ba3` |
+| `acInventoryTick(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V` | 73 | `a98c07b15db89b72116500877e23e3f95db45ec8223dfeaa00fb76980bacc47d` |

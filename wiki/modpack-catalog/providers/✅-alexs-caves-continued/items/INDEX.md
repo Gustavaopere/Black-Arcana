@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 38/57.**
+**Fichas catalogadas (somente fichas detectadas): 38/61.**
 
-**Barra das fichas catalogadas:** `█████████████░░░░░░░ 66.7%`
+**Barra das fichas catalogadas:** `████████████░░░░░░░░ 62.3%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 38/57.**
+**Homologadas para perks (somente fichas detectadas): 38/61.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 66.7%`
+**Barra dos contratos técnicos estáticos:** `████████████░░░░░░░░ 62.3%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -26,6 +26,7 @@
 | ✅ | Candy Cane Hook | [ficha/candy-cane-hook.md](candy-cane-hook.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Book | [ficha/cave-book.md](cave-book.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Map | [ficha/cave-map.md](cave-map.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Charred Remnant | [ficha/charred-remnant.md](charred-remnant.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cloak Of Darkness | [ficha/cloak-of-darkness.md](cloak-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Darkened Apple | [ficha/darkened-apple.md](darkened-apple.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Boots | [ficha/diving-boots.md](diving-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -33,6 +34,7 @@
 | ✅ | Diving Helmet | [ficha/diving-helmet.md](diving-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Leggings | [ficha/diving-leggings.md](diving-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Fertilizer | [ficha/fertilizer.md](fertilizer.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Fissile Core | [ficha/fissile-core.md](fissile-core.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Floater | [ficha/floater.md](floater.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gazing Pearl | [ficha/gazing-pearl.md](gazing-pearl.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gingerbread Boots | [ficha/gingerbread-boots.md](gingerbread-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -77,6 +79,8 @@
 | ✅ | Thornwood Chest Boat | [ficha/thornwood-chest-boat.md](thornwood-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Trilocaris Bucket | [ficha/trilocaris-bucket.md](trilocaris-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Tripodfish Bucket | [ficha/tripodfish-bucket.md](tripodfish-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Uranium Shard | [ficha/uranium-shard.md](uranium-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Uranium | [ficha/uranium.md](uranium.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 

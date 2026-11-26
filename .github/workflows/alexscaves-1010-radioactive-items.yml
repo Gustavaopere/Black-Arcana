@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'docs/qa/alexscaves_1010_radioactive_items_probe.py'
+      - 'docs/qa/alexscaves_1010_radioactive_block_bindings_probe.py'
       - '.github/workflows/alexscaves-1010-radioactive-items.yml'
       - 'docs/qa/alexscaves_1010_armor_material_audit.py'
       - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
@@ -40,11 +41,21 @@ jobs:
         run: |
           python3 docs/qa/alexscaves_1010_radioactive_items_probe.py --jar build/radioactive-items/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/radioactive-items/replay.json
           cmp build/radioactive-items/report.json build/radioactive-items/replay.json
+          test "$(wc -c < build/radioactive-items/report.json)" -eq 232851
+          echo 'b8fd8880d0f888ee137a436ec0aa81ea7916c6e6883acc0237d2915525499c97  build/radioactive-items/report.json' | sha256sum -c -
+      - name: Project and replay block item binding candidates
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_radioactive_block_bindings_probe.py
+          python3 docs/qa/alexscaves_1010_radioactive_block_bindings_probe.py --jar build/radioactive-items/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/radioactive-items/bindings.json
+          python3 docs/qa/alexscaves_1010_radioactive_block_bindings_probe.py --jar build/radioactive-items/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/radioactive-items/bindings-replay.json
+          cmp build/radioactive-items/bindings.json build/radioactive-items/bindings-replay.json
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: radioactive-items
-          path: build/radioactive-items/report.json
+          path: |
+            build/radioactive-items/report.json
+            build/radioactive-items/bindings.json
           if-no-files-found: warn
           retention-days: 14
