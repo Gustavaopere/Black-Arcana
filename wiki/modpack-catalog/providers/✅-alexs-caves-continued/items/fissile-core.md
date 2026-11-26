@@ -1,6 +1,6 @@
 # Fissile Core
 
-**Estado:** ⚠️ PARCIAL / STATIC_DISCOVERY_ONLY. `static_contract=NOT_CERTIFIED; mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED; NO_MUTATION`. Sem nova raiz semântica certificada.
+**Contrato estático:** ✅ `CERTIFIED_STATIC_7_AXES / STATIC_TECHNICAL_CATALOG_ONLY` (candidato à CI e merge), exclusivamente produtor passivo individual. `mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED; perk_certification=NOT_CERTIFIED; NO_MUTATION`. Provider OPEN; zero novas raízes.
 
 ## Identidade e autoridade
 
@@ -14,7 +14,7 @@ Cria MobEffectInstance(IRRADIATED,1800) @129 (amp0 default da referência vanill
 
 ## Custos, estado e integração
 
-Sem shrink, mana, cooldown fixo, custo de durabilidade, projétil, AOE, dano direto, alcance/LOS ou owner ofensivo próprio no corpo. Alvo é o portador LivingEntity; estado do efeito é da engine. Sem NBT/UUID persistente próprio demonstrado; sincronização visual não é settlement. Não repetir tick, aplicar status novamente, alterar proteção Hazmat ou conceder Mastery por tentativa. Possíveis parâmetros conceituais: exposição por stack, mitigação e duração; hook real não verificado. Pendentes: dispatcher/engine efetivos, contexto de inventário, componentes/stack defaults, efeitos de outros produtores, aquisição e consumers indiretos (inclusive usos de crafting e loot), proteção, persistência de status, multiplayer, QA física.
+Sem shrink, mana, cooldown fixo, custo de durabilidade, projétil, AOE, dano direto, alcance/LOS ou owner ofensivo próprio no corpo. Alvo é o portador LivingEntity; estado do efeito é da engine. Sem NBT/UUID persistente próprio demonstrado; sincronização visual não é settlement. Não repetir tick, aplicar status novamente, alterar proteção Hazmat ou conceder Mastery por tentativa. Possíveis parâmetros conceituais: exposição por stack, mitigação e duração; hook real não verificado. Limites: dispatcher de referência, aquisição e consumers declarativos aprofundados abaixo. Engine transformado, componentes/stack efetivos, aceitação e persistência de status, configuração, multiplayer e QA física NÃO VERIFICADOS. Outros produtores permanecem em seus próprios contratos.
 
 ## Recursos observados
 
@@ -28,3 +28,16 @@ Classfile SHA-256 `6a46aa885ce5e5728c22691033b0a0f892d69f6c6fa7dd86a96c8f33c81d9
 |---|---:|---|
 | `<init>(Lnet/minecraft/world/item/Item$Properties;F)V` | 7 | `93f4d18041315ae466b5ad1ce20b90499a83ae756a7ad294dca4c80b70aa0ba3` |
 | `acInventoryTick(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V` | 73 | `a98c07b15db89b72116500877e23e3f95db45ec8223dfeaa00fb76980bacc47d` |
+
+## Fechamento individual de consumidores — #1238
+
+[Run 45890629613/job 140152124649](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45890629613/job/140152124649), duas reproduções de 34.975 bytes SHA-256 `b3407f8baf4ce60a35f0ba7cc06cbf5d042e6d02f3d3781a4f48c8e45f267cf5`, 1.563 JSONs. [Dossiê e sete eixos](../EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md) · [selo](../EXACT-RADIOACTIVE-ITEM-CERTIFICATION-1.0.10.json). Registry `FISSILE_CORE` putstatic @1525 no <clinit> Code bb73db4c0f1d1c84abdf5ab1c07defd24db79e5e8c754b8c9f9ec8481a84a84a; creative tab lambda$static$10 getstatic @376, Code 4a6ee5775221aa148147d7baedc4aa322f92ac71ff99476dccb039250004171e. São os dois sites Fieldref exatos desse ID; não prova ausência de lookup dinâmico. Factory lambda$static$73, UNCOMMON explícita, sem stack cap explicitado; construtor e tick são os dois únicos corpos próprios de RadioactiveItem. Sem novo scheduler ou raiz.
+
+| Recurso publisher (path) | Localização / relação | SHA-256 |
+|---|---|---|
+| `data/alexscaves/loot_table/entities/nucleeper.json` | `["pools",0,"entries",0,"name"]` · DIRECT_ID | `58f12936877c0f8789d8d34229b2d9a162d405fd24856be462e1b2a3f09c702e` |
+| `data/alexscaves/recipe/nuclear_bomb.json` | `["key","F","item"]` · DIRECT_ID | `94b861eaf1860011598df08221f3ccc8e8eb41485bd6cba07eb605364e4d081c` |
+| `data/alexscaves/recipe/raygun.json` | `["key","F","item"]` · DIRECT_ID | `4aeb48d407b8ece970e3740b7cb6af379b44356c1686459887a2f4ed9b34a81b` |
+| `data/alexscaves/recipe/remote_detonator.json` | `["key","F","item"]` · DIRECT_ID | `d0d8b3f95160749b813b7e4818941f39aeb90d63188a591a595ce5fb9cb8cf82` |
+
+**Fronteira estática:** o [dispatcher ACTickingItem](../systems/ticking-item.md) encaminha stack, level, entity e selected no HEAD de ItemStack.inventoryTick; este produtor não usa selected. Hazmat é contador por identidade/slot; o coeficiente local não é redução universal de dano. Referência oficial do construtor MobEffectInstance(Holder,I) passa amplifier 0 @3 (Code SHA `24931801535be6734bb46587ae621201d1762f5143dfe56f82debdabe241bef0`, [job](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45797651887/job/139832340081)). [Irradiated](../effects/irradiated.md) não executa tick periódico para amp0; presença pode cancelar LivingHealEvent conforme resistência, sem provar bloqueio de toda cura. Efeito pode ser rejeitado; mensagem não é aceite. Campos locais não possuem configuração dinâmica per-player demonstrada; nenhum NBT próprio/owner ofensivo. Não reexecutar tick ou aplicar status, dano ou XP por conta própria. A aquisição referencial acima não fixa loot/receita selecionados nem custo em runtime. Sem hook seguro, `NO_MUTATION / fail-closed`.

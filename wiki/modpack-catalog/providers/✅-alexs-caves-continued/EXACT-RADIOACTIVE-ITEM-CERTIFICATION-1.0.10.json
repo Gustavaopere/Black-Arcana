@@ -1,0 +1,395 @@
+{
+  "schema_version": 1,
+  "version": "1.0.10",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size": 75279314
+  },
+  "claims": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "static_technical_contract": "CERTIFIED_STATIC_7_AXES",
+    "mutation": "NO_MUTATION",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "perk_certification": "NOT_CERTIFIED",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "native": {
+    "owner": "com/github/alexmodguy/alexscaves/server/item/RadioactiveItem",
+    "class_sha256": "6a46aa885ce5e5728c22691033b0a0f892d69f6c6fa7dd86a96c8f33c81d9436",
+    "methods": {
+      "<init>": "93f4d18041315ae466b5ad1ce20b90499a83ae756a7ad294dca4c80b70aa0ba3",
+      "acInventoryTick": "a98c07b15db89b72116500877e23e3f95db45ec8223dfeaa00fb76980bacc47d"
+    },
+    "report": {
+      "sha256": "b8fd8880d0f888ee137a436ec0aa81ea7916c6e6883acc0237d2915525499c97",
+      "bytes": 232851,
+      "run": 45750603107,
+      "job": 139677193397
+    }
+  },
+  "census": {
+    "sha256": "b3407f8baf4ce60a35f0ba7cc06cbf5d042e6d02f3d3781a4f48c8e45f267cf5",
+    "bytes": 34975,
+    "run": 45890629613,
+    "job": 140152124649,
+    "data_json_scanned": 1563
+  },
+  "vanilla_reference": {
+    "job": 139832340081,
+    "constructor_code_sha256": "24931801535be6734bb46587ae621201d1762f5143dfe56f82debdabe241bef0",
+    "amplifier": 0
+  },
+  "objects": {
+    "alexscaves:charred_remnant": {
+      "card": "items/charred-remnant.md",
+      "registry_field": "CHARRED_REMNANT",
+      "factory": "lambda$static$74",
+      "factory_code_sha256": "a8f68e374288c6495c5ab854c9c17cd777cc30b4be5e4e71a31e41531873d736",
+      "rate_float_nominal": 0.0005,
+      "registry_putstatic_offset": 1542,
+      "creative_getstatic_offset": 391,
+      "resources": [
+        {
+          "path": "data/alexscaves/loot_table/entities/brainiac.json",
+          "sha256": "e980256852693e1544da74236adf3eed02a99335d92ebddb18f46e7eec7409f9",
+          "location": [
+            "pools",
+            2,
+            "entries",
+            0,
+            "name"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:charred_remnant"
+        },
+        {
+          "path": "data/alexscaves/recipe/nuclear_furnace_component.json",
+          "sha256": "f084ca5773472b927d9a7887c22c3a5facdb194c23fa2a759cafea7f612c9133",
+          "location": [
+            "key",
+            "C",
+            "item"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:charred_remnant"
+        },
+        {
+          "path": "data/alexscaves/recipe/nuclear_siren.json",
+          "sha256": "173f86a6edec05c6cc83faa5d06f9c73491d8aed32daaf0ae21a26fb58ae8981",
+          "location": [
+            "key",
+            "C",
+            "item"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:charred_remnant"
+        }
+      ]
+    },
+    "alexscaves:fissile_core": {
+      "card": "items/fissile-core.md",
+      "registry_field": "FISSILE_CORE",
+      "factory": "lambda$static$73",
+      "factory_code_sha256": "97c2de487a982e04941e1183de8616b31f8ca5d1b29a6fd9a009ac03cbe85d20",
+      "rate_float_nominal": 0.001,
+      "registry_putstatic_offset": 1525,
+      "creative_getstatic_offset": 376,
+      "resources": [
+        {
+          "path": "data/alexscaves/loot_table/entities/nucleeper.json",
+          "sha256": "58f12936877c0f8789d8d34229b2d9a162d405fd24856be462e1b2a3f09c702e",
+          "location": [
+            "pools",
+            0,
+            "entries",
+            0,
+            "name"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:fissile_core"
+        },
+        {
+          "path": "data/alexscaves/recipe/nuclear_bomb.json",
+          "sha256": "94b861eaf1860011598df08221f3ccc8e8eb41485bd6cba07eb605364e4d081c",
+          "location": [
+            "key",
+            "F",
+            "item"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:fissile_core"
+        },
+        {
+          "path": "data/alexscaves/recipe/raygun.json",
+          "sha256": "4aeb48d407b8ece970e3740b7cb6af379b44356c1686459887a2f4ed9b34a81b",
+          "location": [
+            "key",
+            "F",
+            "item"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:fissile_core"
+        },
+        {
+          "path": "data/alexscaves/recipe/remote_detonator.json",
+          "sha256": "d0d8b3f95160749b813b7e4818941f39aeb90d63188a591a595ce5fb9cb8cf82",
+          "location": [
+            "key",
+            "F",
+            "item"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:fissile_core"
+        }
+      ]
+    },
+    "alexscaves:uranium": {
+      "card": "items/uranium.md",
+      "registry_field": "URANIUM",
+      "factory": "lambda$static$58",
+      "factory_code_sha256": "1e1c9e0dfea75205c2e2c0d0be0a2bf12982fc02d8ad825bb6b1dfd62e883a0f",
+      "rate_float_nominal": 0.001,
+      "registry_putstatic_offset": 1287,
+      "creative_getstatic_offset": 181,
+      "resources": [
+        {
+          "path": "data/alexscaves/advancement/alexscaves/uranium.json",
+          "sha256": "2e6d5553588bc880b21d4cd4ad7ac9e4993b941492bde79b0eaad334641045c9",
+          "location": [
+            "criteria",
+            "uranium",
+            "conditions",
+            "items",
+            0,
+            "items",
+            0
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium"
+        },
+        {
+          "path": "data/alexscaves/advancement/alexscaves/uranium.json",
+          "sha256": "2e6d5553588bc880b21d4cd4ad7ac9e4993b941492bde79b0eaad334641045c9",
+          "location": [
+            "display",
+            "icon",
+            "id"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium"
+        },
+        {
+          "path": "data/alexscaves/loot_table/blocks/radrock_uranium_ore.json",
+          "sha256": "becdff9650a01a57d34cebfbbbcc76f65353b5fd9815c8546d1693402319dc3d",
+          "location": [
+            "pools",
+            0,
+            "entries",
+            0,
+            "children",
+            1,
+            "name"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium"
+        },
+        {
+          "path": "data/alexscaves/loot_table/entities/tremorzilla.json",
+          "sha256": "e5af3d07cb54d975d5df25db8d966e2895f695d7a7d6e9c2c3cceccea80f025c",
+          "location": [
+            "pools",
+            0,
+            "entries",
+            0,
+            "name"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium"
+        },
+        {
+          "path": "data/alexscaves/recipe/block_of_uranium.json",
+          "sha256": "99771f9748bf1ae78015ebb3925edfeebc2a77a3911c2ae8f9bdb1e5ae70e071",
+          "location": [
+            "key",
+            "N",
+            "item"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium"
+        },
+        {
+          "path": "data/alexscaves/recipe/furnace/uranium_from_radrock_ore_blasting.json",
+          "sha256": "de85a2c37a6c544283f5c92ca9a28bcc60d5e1001560e685d1ac46649c75be03",
+          "location": [
+            "result",
+            "id"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium"
+        },
+        {
+          "path": "data/alexscaves/recipe/furnace/uranium_from_radrock_ore_smelting.json",
+          "sha256": "6df9a2fbf5c309bf952c858a06a568e625ed72396340e26150e1a881917a791e",
+          "location": [
+            "result",
+            "id"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium"
+        },
+        {
+          "path": "data/alexscaves/recipe/nuclear_furnace_component.json",
+          "sha256": "f084ca5773472b927d9a7887c22c3a5facdb194c23fa2a759cafea7f612c9133",
+          "location": [
+            "key",
+            "U",
+            "tag"
+          ],
+          "relation": "POTENTIAL_TAG_REFERENCE",
+          "token": "c:raw_materials/uranium"
+        },
+        {
+          "path": "data/alexscaves/recipe/nuclear_siren.json",
+          "sha256": "173f86a6edec05c6cc83faa5d06f9c73491d8aed32daaf0ae21a26fb58ae8981",
+          "location": [
+            "key",
+            "U",
+            "tag"
+          ],
+          "relation": "POTENTIAL_TAG_REFERENCE",
+          "token": "c:raw_materials/uranium"
+        },
+        {
+          "path": "data/alexscaves/recipe/uranium_from_block.json",
+          "sha256": "1917b3f4af98eb1d27c449c30d13756de10288313f89adfdfa50bffc678e3249",
+          "location": [
+            "result",
+            "id"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium"
+        },
+        {
+          "path": "data/alexscaves/recipe/uranium_from_shard.json",
+          "sha256": "b8b3b77e00e6e6406af3e58fea493965b5dd0265da9d9cc2224767df671487b3",
+          "location": [
+            "result",
+            "id"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium"
+        },
+        {
+          "path": "data/alexscaves/recipe/uranium_rod.json",
+          "sha256": "3ebac04bed9428bf988727236ef45bc407831ea2ada3efa2f2173627e854db35",
+          "location": [
+            "key",
+            "U",
+            "tag"
+          ],
+          "relation": "POTENTIAL_TAG_REFERENCE",
+          "token": "c:raw_materials/uranium"
+        },
+        {
+          "path": "data/alexscaves/recipe/uranium_shard_from_uranium.json",
+          "sha256": "4215121770c453e01b84366646b0bef8e429185a473effe02998677a83354cc1",
+          "location": [
+            "ingredients",
+            0,
+            "item"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium"
+        },
+        {
+          "path": "data/c/tags/item/raw_materials/uranium.json",
+          "sha256": "c071eddd2b2fd03508ac73d29772ea8c0395e27ab26f358223c62699a2b9f211",
+          "location": [
+            "values",
+            0
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium"
+        }
+      ]
+    },
+    "alexscaves:uranium_shard": {
+      "card": "items/uranium-shard.md",
+      "registry_field": "URANIUM_SHARD",
+      "factory": "lambda$static$59",
+      "factory_code_sha256": "1e1c9e0dfea75205c2e2c0d0be0a2bf12982fc02d8ad825bb6b1dfd62e883a0f",
+      "rate_float_nominal": 0.001,
+      "registry_putstatic_offset": 1304,
+      "creative_getstatic_offset": 166,
+      "resources": [
+        {
+          "path": "data/alexscaves/loot_table/entities/tremorzilla.json",
+          "sha256": "e5af3d07cb54d975d5df25db8d966e2895f695d7a7d6e9c2c3cceccea80f025c",
+          "location": [
+            "pools",
+            1,
+            "entries",
+            0,
+            "name"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium_shard"
+        },
+        {
+          "path": "data/alexscaves/recipe/furnace/uranium_shard_blasting.json",
+          "sha256": "3655bc694c8f900b9e9001651fe3da845328ce0741581354f42950ae9a5cb1b7",
+          "location": [
+            "result",
+            "id"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium_shard"
+        },
+        {
+          "path": "data/alexscaves/recipe/furnace/uranium_shard_smelting.json",
+          "sha256": "eadb37b66ecdaf22c44bc45c4fdb28f3a9816a97b23252afa57ca6eabecd16ac",
+          "location": [
+            "result",
+            "id"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium_shard"
+        },
+        {
+          "path": "data/alexscaves/recipe/uranium_from_shard.json",
+          "sha256": "b8b3b77e00e6e6406af3e58fea493965b5dd0265da9d9cc2224767df671487b3",
+          "location": [
+            "key",
+            "N",
+            "item"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium_shard"
+        },
+        {
+          "path": "data/alexscaves/recipe/uranium_shard_from_uranium.json",
+          "sha256": "4215121770c453e01b84366646b0bef8e429185a473effe02998677a83354cc1",
+          "location": [
+            "result",
+            "id"
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium_shard"
+        },
+        {
+          "path": "data/c/tags/item/nuggets/uranium.json",
+          "sha256": "812ccf2d4ef906dadbdd5037736bea12e5b3036b807089c65802213bd2a77795",
+          "location": [
+            "values",
+            0
+          ],
+          "relation": "DIRECT_ID",
+          "token": "alexscaves:uranium_shard"
+        }
+      ]
+    }
+  }
+}
