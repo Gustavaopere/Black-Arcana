@@ -11383,6 +11383,50 @@
           "reason": "Replays nativos, dependências, 45446993318, 45461121524, 45478837398, 45528205575, 45649275425, 45651021466 (54228 bytes SHA e9257edc70e7a3ff00ca1fbe1d2fbe3aedb18e4a6879f8e10c9ae899f0d4b282); CI da promoção."
         }
       }
+    },
+    "✅-alexs-caves-continued/systems/keybind-using-armor.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOOD-IDENTITY-KEYBIND-CLOSURE-1.0.10.md",
+          "reason": "Interface class SHA and single abstract method, exact descriptor; hierarchy and sole native implementer gated by publisher census."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/keybind-using-armor.md",
+          "reason": "Bidirectional transport, enqueue, context resolution, clamped slot, typed dispatch and native implementation; no independent cast."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/keybind-using-armor.md",
+          "reason": "Three signed int fields in wire order; clamped slot; key unused by implementation; configured effect duration belongs to existing Cloak contract."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/keybind-using-armor.md",
+          "reason": "Packet-selected player in context level, slot item implementing interface; not verified sender-to-target authorization."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/keybind-using-armor.md",
+          "reason": "No own mana, item or cooldown debit; implementation requests supplied-stack charge reset before addEffect, not proof of effect acceptance."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/keybind-using-armor.md",
+          "reason": "Existing Cloak action and ACCompat custom data; no safe mutation, packet replay or inferred Mastery."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOOD-IDENTITY-KEYBIND-CLOSURE-1.0.10.md",
+          "reason": "Exact publisher two identical replays, pinned SHA, causal pivots and hierarchy gate; no physical QA."
+        }
+      }
     }
   },
   "providers": {},

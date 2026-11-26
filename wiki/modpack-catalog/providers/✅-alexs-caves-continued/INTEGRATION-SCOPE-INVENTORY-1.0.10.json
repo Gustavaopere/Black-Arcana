@@ -558,7 +558,27 @@
         "EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.json",
         "EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.json"
       ],
-      "partial_cards": []
+      "partial_cards": [],
+      "current_documented_static_contracts": 16,
+      "current_cards": [
+        "systems/anvil-combination.md",
+        "systems/armor-material.md",
+        "systems/cave-info-item.md",
+        "systems/client-extension.md",
+        "systems/custom-armor-post-render.md",
+        "systems/destroyed-item.md",
+        "systems/dynamic-attributes.md",
+        "systems/enchantable-item.md",
+        "systems/food-builder.md",
+        "systems/foods.md",
+        "systems/item-registry.md",
+        "systems/keybind-using-armor.md",
+        "systems/repairable-item.md",
+        "systems/scaffolding-placement.md",
+        "systems/swing-control-item.md",
+        "systems/ticking-item.md"
+      ],
+      "current_evidence": "EXACT-KEYBIND-USING-ARMOR-CONTRACT-1.0.10.json"
     },
     "item_contracts": {
       "cards": [
@@ -1027,10 +1047,10 @@
     "next_scope": "server/item/GalenaGauntletItem"
   },
   "latest_individual_contract_checkpoint": {
-    "scope": "EIGHT_RADIOACTIVE_AND_SIXTEEN_LATE_PARTIAL_CARDS_CANDIDATE",
-    "provider_observed_static_contracts": 137,
+    "scope": "KEYBIND_SUPPORT_CERTIFICATE_AND_SIX_PARTIAL_FOOD_IDENTITY_UPDATES_CANDIDATE",
+    "provider_observed_static_contracts": 138,
     "provider_observed_cards": 184,
-    "integration_support_contracts": 15,
+    "integration_support_contracts": 16,
     "concrete_item_contracts": 38,
     "equipment_contracts": 6,
     "semantic_magic_roots_added": 0,
@@ -1041,7 +1061,6 @@
       "equipment/limestone-spear.md",
       "items/jelly-bean.md",
       "items/remote-detonator.md",
-      "systems/keybind-using-armor.md",
       "items/gossamer-worm-bucket.md",
       "items/lanternfish-bucket.md",
       "items/marine-snow.md",
@@ -1099,9 +1118,11 @@
       "EXACT-RADIOACTIVE-ITEMS-1.0.10.md",
       "EXACT-LATE-CONCRETE-ITEMS-1.0.10.md",
       "EXACT-TERMINAL-ITEM-HELPERS-1.0.10.md",
-      "EXACT-LATE-ITEM-RECONCILIATION-1.0.10.md"
+      "EXACT-LATE-ITEM-RECONCILIATION-1.0.10.md",
+      "EXACT-FOOD-IDENTITY-KEYBIND-CLOSURE-1.0.10.md",
+      "EXACT-KEYBIND-USING-ARMOR-CONTRACT-1.0.10.json"
     ],
-    "historical_checkpoint_note": "24 partial cards proposed across #1233 and #1234; eight previously mapped classes reconciled; all 81 outer classes with recorded disposition in bounded inventory, provider not closed. No new certificates; CI/merge required."
+    "historical_checkpoint_note": "24 cards integrated in #1233, one proposed support certificate in #1235, six partial cards supplemented, no new cards. CI and merge required."
   },
   "item_class_reconciliation_checkpoint": {
     "scope": "ALL_81_OBSERVED_ITEM_OUTER_CLASSES_WITH_DOCUMENTED_DISPOSITION_NOT_CERTIFICATION",
