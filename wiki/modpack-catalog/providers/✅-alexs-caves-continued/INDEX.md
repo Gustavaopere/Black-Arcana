@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 142/184.**
+**Fichas catalogadas (somente fichas detectadas): 144/184.**
 
-**Barra das fichas catalogadas:** `███████████████░░░░░ 77.2%`
+**Barra das fichas catalogadas:** `███████████████░░░░░ 78.3%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 142/184.**
+**Homologadas para perks (somente fichas detectadas): 144/184.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 77.2%`
+**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 78.3%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -138,7 +138,7 @@
 | ✅ | Gingerbread Leggings | [items/gingerbread-leggings.md](items/gingerbread-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Glow Ink Bomb | [items/glow-ink-bomb.md](items/glow-ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gossamer Worm Bucket | [items/gossamer-worm-bucket.md](items/gossamer-worm-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Green Soylent | [items/green-soylent.md](items/green-soylent.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Green Soylent | [items/green-soylent.md](items/green-soylent.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Guano | [items/guano.md](items/guano.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Boots | [items/hazmat-boots.md](items/hazmat-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Chestplate | [items/hazmat-chestplate.md](items/hazmat-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -174,7 +174,7 @@
 | ⚠️ | Seething Stew | [items/seething-stew.md](items/seething-stew.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Serene Salad | [items/serene-salad.md](items/serene-salad.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Sharpened Candy Cane | [items/sharpened-candy-cane.md](items/sharpened-candy-cane.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Slam | [items/slam.md](items/slam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Slam | [items/slam.md](items/slam.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Spelunkie | [items/spelunkie.md](items/spelunkie.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Submarine | [items/submarine.md](items/submarine.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Sweetberry Ice Cream Scoop | [items/sweetberry-ice-cream-scoop.md](items/sweetberry-ice-cream-scoop.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -218,7 +218,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ⚠️ | Equipment | 6/9 (66.7%) | 6 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 42/81 (51.9%) | 42 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Items | 44/81 (54.3%) | 44 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 16/16 (100.0%) | 16 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅

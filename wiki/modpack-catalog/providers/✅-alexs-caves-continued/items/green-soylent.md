@@ -1,6 +1,6 @@
 # Green Soylent
 
-**Estado:** ⚠️ PARCIAL / STATIC_DISCOVERY_ONLY. `static_contract=NOT_CERTIFIED; mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED; NO_MUTATION`. Sem nova raiz semântica certificada.
+**Contrato estático:** ✅ `CERTIFIED_STATIC_7_AXES / STATIC_TECHNICAL_CATALOG_ONLY` (candidato à CI e merge), produtor individual de efeito ao consumir. `mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED; perk_certification=NOT_CERTIFIED; NO_MUTATION`. Provider OPEN; zero novas raízes.
 
 **Autoridade:** Alex's Caves Continued (alexscaves) 1.0.10, Minecraft 1.21.1 / NeoForge / Java 21; modlist sibling #19. Publisher `alexscaves-1.0.10-neoforge+1.21.1.jar`, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c32e9f2e95bffae0e7c`. [Replay](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45748227744/job/139669398914), HEAD `247a4c7adec94b3c99a28fd1aadb668b07dc3ef3`, dois relatórios byte-idênticos de 156.541 bytes, SHA-256 `2bd27341d274f749e8c80b0a0e77e6f37571a92545293d910e7b47deb1cdb945`. [Dossiê](../EXACT-QUARRY-RADIANT-FOOD-1.0.10.md). Sem novo dump instalado ou configuração efetiva.
 
@@ -50,3 +50,33 @@ Fronteira de consumo distribuída: [EXACT-FOOD-STATUS-SETTLEMENT-21.1.250](../EX
 ACFoods N=3, m=0.35F, saturação nominal 2.1 antes dos clamps/float. alwaysEat e DRINK, som Honey, pedido adicional de +6 HP pelo ramo próprio; não confundir com saturação, dano negativo ou cura aceita. UUID específico do produtor por morte não se converte em chance universal de drop.
 
 Evidência compartilhada: [matriz de reconciliação](../EXACT-CATALOG-INHERITED-BOUNDARIES-1.0.10.md). Mantidos NOT_CERTIFIED, NO_MUTATION e NOT_TESTED; nenhuma promoção por herança isolada.
+
+
+## Resultado do censo causal — #1240
+
+[Run 45903382213/job 140194260474](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45903382213/job/140194260474): sete checks e dois relatórios byte-idênticos de 227.057 bytes SHA-256 `9708b284726f23dded9e4ad5268296f5ae437bd7aa115ea1bf62e7bc0abdd7a2`, 1.563 JSONs. [Dossiê](../EXACT-BLOCK-RESOURCE-ATTRIBUTION-1.0.10.md) · [Selo por ID](../EXACT-BLOCK-RESOURCE-ATTRIBUTION-SEAL-1.0.10.json).
+
+O censo anterior comprova exatamente sete Fieldrefs do ID (registro, aba criativa, quatro métodos de identidade no item e produtor CommonEvents.livingDie). Neste último, ramo @433–439 exige Player; @443–457 compara UUID textual com constante literal particular (ver Code SHA já selado; não é teste de Brainiac ou de qualquer morte); @468–498 solicita uma stack com 1+nextInt(9), de 1 a 9 unidades, e descarta retorno. Loot de Brainiac é caminho JSON independente, não condição do callback de Player. Perfil alwaysEat permite início pelo helper, não cancela regras posteriores; efeito próprio é recuperação condicional +6 HP nominal, sem remoção de Irradiated. `Item.Properties` não fixa cap específico na factory, default nominal 64 pelo [referencial distribuído](../EXACT-ITEM-ENTITY-DEFAULTS-21.1.250.md). Tag minecraft:meat é declarativa, não atributo ou dano. Este contrato delimita o produtor próprio, o fluxo de consumo comprovado e referências de aquisição; não certifica listeners, loot final, efeito de outros mods, nem a classe inteira de cada consumidor genérico.
+
+**Fieldrefs do registry neste recorte:**
+
+| Owner/método | Offset | Opcode | Code SHA-256 |
+|---|---:|---|---|
+| `CommonEvents.livingDie` | 468 | `getstatic` | `3dd919f82cf80b2b0a9251e34c2e37bfec88b39d913608ae6772d710f06e83e2` |
+| `ACItemRegistry.<clinit>` | 1406 | `putstatic` | `bb73db4c0f1d1c84abdf5ab1c07defd24db79e5e8c754b8c9f9ec8481a84a84a` |
+| `RadiationRemovingFoodItem.getDrinkingSound` | 1 | `getstatic` | `36a176cc7735c7e2fcb124863d65acf689fb87ec524794370353d877db61304c` |
+| `RadiationRemovingFoodItem.getEatingSound` | 1 | `getstatic` | `01180b25ba8578fc01fdab577670421cbb36a035fabcba9c0a24f9144e71aab5` |
+| `RadiationRemovingFoodItem.getUseAnimation` | 1 | `getstatic` | `e53be8f21a6e791b319aa27e1a766f828f2a1d7df5c867ec27c4b98d061b054d` |
+| `RadiationRemovingFoodItem.use` | 1 | `getstatic` | `810904916f3dd43bc1974ab9e157520d1923b9409611687cd3cf7b1f5ad80568` |
+| `ACCreativeTabRegistry.lambda$static$10` | 271 | `getstatic` | `4a6ee5775221aa148147d7baedc4aa322f92ac71ff99476dccb039250004171e` |
+
+**Atribuição completa de referências literais/possíveis tags no recorte data/:**
+
+| Recurso | Caminho JSON / relação | SHA-256 |
+|---|---|---|
+| `data/alexscaves/advancement/alexscaves/eat_radiation_foods.json` | `["criteria","green_soylent","conditions","item","items",0]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `65354ae00dc1f3892bb40cd45b773e7c47099b08c946532496ee52b4f16727e1` |
+| `data/alexscaves/loot_table/chests/toxic_ruins.json` | `["pools",0,"entries",4,"name"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `2bb1a858fc213060eb83765487b0f91093c81b7d53b7913364b1265571d3ffe3` |
+| `data/alexscaves/loot_table/entities/brainiac.json` | `["pools",0,"entries",0,"name"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `e980256852693e1544da74236adf3eed02a99335d92ebddb18f46e7eec7409f9` |
+| `data/minecraft/tags/item/meat.json` | `["values",4]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `139179de8b4b7b9ba3ca67eea074e200adece9575f7cc6186f7895dc7cad5dd1` |
+
+**Fechamento estático candidato:** identidade, comportamento próprio, parâmetros, target consumidor, custos, fronteiras de integração e validação reunidos; campo de evidência individual no ledger. A execução transformada, configurações, aceite físico e mutação permanecem não verificados. `NO_MUTATION / fail-closed`; não duplicar efeitos/consumo/XP.

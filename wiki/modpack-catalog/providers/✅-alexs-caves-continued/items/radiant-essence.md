@@ -42,3 +42,34 @@ Fieldref exato encontrado no inicializador e aba criativa (lambda$static$24 @571
 Vínculo comprovado no contrato [Conversion Crucible](../actions/conversion-crucible-biome-conversion.md): receita de Crucible usa uma Radiant Essence e Biome Treat usa duas. É custo de crafting, não evidência de sacrifício no tick, mana ou item ativável. O ritual seleciona stack de oferenda em seu próprio estado. Não transferir a exigência de Licowitch Radiant Essence para esta variante. Permanecem por atribuir recursos de loot e receitas adicionais por ID exato.
 
 Evidência compartilhada: [matriz de reconciliação](../EXACT-CATALOG-INHERITED-BOUNDARIES-1.0.10.md). Mantidos NOT_CERTIFIED, NO_MUTATION e NOT_TESTED; nenhuma promoção por herança isolada.
+
+
+## Resultado do censo causal — #1240
+
+[Run 45903382213/job 140194260474](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45903382213/job/140194260474): sete checks e dois relatórios byte-idênticos de 227.057 bytes SHA-256 `9708b284726f23dded9e4ad5268296f5ae437bd7aa115ea1bf62e7bc0abdd7a2`, 1.563 JSONs. [Dossiê](../EXACT-BLOCK-RESOURCE-ATTRIBUTION-1.0.10.md) · [Selo por ID](../EXACT-BLOCK-RESOURCE-ATTRIBUTION-SEAL-1.0.10.json).
+
+Censo por identidade confirma quatro receitas que referenciam a essência (Biome Treat, Confection Oven, Conversion Crucible e Sundrop), loot de baús licowitch_tower e licowitch_tower_secret, loot da entidade Licowitch, advancement e tag gingerbread_man_steals. É ingrediente/objeto de suporte, não efeito de uso. O consumidor da tag de roubo e condições/quantidades efetivas de loot e receitas não se encerram apenas pelos caminhos JSON. Não transferir nenhuma dessas referências a Licowitch Radiant Essence.
+
+**Fieldrefs do registry neste recorte:**
+
+| Owner/método | Offset | Opcode | Code SHA-256 |
+|---|---:|---|---|
+| `ACItemRegistry.<clinit>` | 3208 | `putstatic` | `bb73db4c0f1d1c84abdf5ab1c07defd24db79e5e8c754b8c9f9ec8481a84a84a` |
+| `ACCreativeTabRegistry.lambda$static$24` | 571 | `getstatic` | `c43d1cfbc0fb2efd284f7d75f30f232e5038ddfa264a58d5253e0164cb599c5d` |
+
+**Atribuição completa de referências literais/possíveis tags no recorte data/:**
+
+| Recurso | Caminho JSON / relação | SHA-256 |
+|---|---|---|
+| `data/alexscaves/advancement/alexscaves/radiant_essence.json` | `["criteria","mussel","conditions","items",0,"items",0]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `e5bda54d69d6c8b8c9ce52c87a66a04571d1ce30267674dcb222a2a64bc57092` |
+| `data/alexscaves/advancement/alexscaves/radiant_essence.json` | `["display","icon","id"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `e5bda54d69d6c8b8c9ce52c87a66a04571d1ce30267674dcb222a2a64bc57092` |
+| `data/alexscaves/loot_table/chests/licowitch_tower.json` | `["pools",0,"entries",9,"name"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `0d9f0a4837eb424eab1be3e2a1e95acd760e2a9e26b8650b4e53d8507ef67f60` |
+| `data/alexscaves/loot_table/chests/licowitch_tower_secret.json` | `["pools",0,"entries",3,"name"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `3b1f2655803b2eb8b8b3d57bf56d58b75964b29aaa7b93fd7672f03347836f86` |
+| `data/alexscaves/loot_table/entities/licowitch.json` | `["pools",0,"entries",0,"name"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `157ba186f052f989fc31bd016ae3352eaa77c58ec1a8a639c91774f239e34526` |
+| `data/alexscaves/recipe/biome_treat.json` | `["key","E","item"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `c7b6b504ec21125773b6f65e5a5d4a591da98dcb3266ecf04108d855658f9012` |
+| `data/alexscaves/recipe/confection_oven.json` | `["key","E","item"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `3d0c85d36ca04ccb0aaa7fadd4048debe4c73d41195a7276c3f898845422b034` |
+| `data/alexscaves/recipe/conversion_crucible.json` | `["key","E","item"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `7d3f31cbbca2a3a02076ad057861bf8a1d9a167864b250a16ec76d1ce9ce4271` |
+| `data/alexscaves/recipe/sundrop.json` | `["key","R","item"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `08f21af8c4340fcbabe9e964a7e463901760793da4db97c9c6f2e5c00a32358d` |
+| `data/alexscaves/tags/item/gingerbread_man_steals.json` | `["values",6]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `59c2591008e62e6bb91011202fa7aa2200fd950f9da55d309dbf0bea243682f8` |
+
+**Estado:** NOT_CERTIFIED / NO_MUTATION / NOT_TESTED; as lacunas indicadas acima não foram promovidas.

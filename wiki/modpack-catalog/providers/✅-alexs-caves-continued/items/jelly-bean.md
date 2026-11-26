@@ -25,3 +25,29 @@ Próximos gates: produtores de POTION_CONTENTS e Rainbow, valores de ACFoods, Po
 [Prova nativa](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45796533259/job/139828495853), HEAD `9c16b9c73452706148f666156a815b75696311de`, dois relatórios 765.144 bytes SHA-256 `6c8e0c98af51b60fe40d3bd0b326fb909525f1780b2086740748e158b6bd20ea`; [referência vanilla](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45796533259/job/139828496659), 149.285 bytes SHA `41e941487c560cc8deb700af7952801d31731c83986e56770c13f29d0dea8e67`. [Dossiê](../EXACT-FOOD-IDENTITY-KEYBIND-CLOSURE-1.0.10.md). 1555 classfiles, Fieldref exato e valores JSON; sem inferência de tags transitivas ou modpack transformado. Permanece parcial.
 
 ACFoods.JELLY_BEAN N1 m bits 3d4ccccd, sem efeito próprio declarado; finishUsingItem não chama super, não prova atualização de FoodData. PotionItem.use referencial delega ItemUtils.startUsingInstantly. GummyBearEntity.createJellybean Code `32a3e91f97ff7fb2d1d43eca02dfdf79a41ad80bca76b93f80578165307788cd` resolve digestingEffect em BuiltInRegistries.POTION @7; se nulo cria ItemStack JELLY_BEAN; senão ACEffectRegistry.createJellybean Code `5726e6ef99a36f1d369980be69c04f1105182ca41f3e9c68bd6378f032626b18` encaminha item e Potion a ACCompat.potionStack @12. ACCompat.potionEffects Code `cfb23f71a3385db6d2a487c4d733f5fdc6fec2e9be5177807a28c82c6610e704` chama contentsOf→PotionContents.getAllEffects; applyInstantenousEffect Code `061e7ceb46bd78233f4e56ba3a28a9fa1eb1561754dd2e2fe2db2a143446cf1a` delega MobEffect.applyInstantenousEffect, argumento Level não é encaminhado. Pendentes contentsOf/potionStack, componente e producers digestingEffect/Rainbow, codecs e efeitos específicos. Sem novo efeito universal.
+
+
+## Resultado do censo causal — #1240
+
+[Run 45903382213/job 140194260474](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45903382213/job/140194260474): sete checks e dois relatórios byte-idênticos de 227.057 bytes SHA-256 `9708b284726f23dded9e4ad5268296f5ae437bd7aa115ea1bf62e7bc0abdd7a2`, 1.563 JSONs. [Dossiê](../EXACT-BLOCK-RESOURCE-ATTRIBUTION-1.0.10.md) · [Selo por ID](../EXACT-BLOCK-RESOURCE-ATTRIBUTION-SEAL-1.0.10.json).
+
+Censo por valor exato atribui somente dois recursos data/ ao ID: advancement jelly_bean (critério de inventário e ícone) e tag `create:not_potion`, não prova regra ativa de Create no modpack. GummyBearEntity continua produtor condicionado ao componente, e a tag não remove o override PotionItem. A ausência de receita direta nesta varredura não prova inexistência de obtenção. Pendem contentsOf/potionStack, produtores Rainbow/digestingEffect e consumidor externo dessa tag.
+
+**Fieldrefs do registry neste recorte:**
+
+| Owner/método | Offset | Opcode | Code SHA-256 |
+|---|---:|---|---|
+| `ClientProxy.onItemColors` | 104 | `getstatic` | `3249fa89f491fcb3d7e484ad238786a747b0d8b72cda962c143ad829d3de137d` |
+| `GummyBearEntity.createJellybean` | 24 | `getstatic` | `32a3e91f97ff7fb2d1d43eca02dfdf79a41ad80bca76b93f80578165307788cd` |
+| `ACItemRegistry.<clinit>` | 3497 | `putstatic` | `bb73db4c0f1d1c84abdf5ab1c07defd24db79e5e8c754b8c9f9ec8481a84a84a` |
+| `ACEffectRegistry.createJellybean` | 0 | `getstatic` | `5726e6ef99a36f1d369980be69c04f1105182ca41f3e9c68bd6378f032626b18` |
+
+**Atribuição completa de referências literais/possíveis tags no recorte data/:**
+
+| Recurso | Caminho JSON / relação | SHA-256 |
+|---|---|---|
+| `data/alexscaves/advancement/alexscaves/jelly_bean.json` | `["criteria","mussel","conditions","items",0,"items",0]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `1b485b00a3cb83e02cbaa72325a52cba07e9805236a18da2f1906f80993ade96` |
+| `data/alexscaves/advancement/alexscaves/jelly_bean.json` | `["display","icon","id"]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `1b485b00a3cb83e02cbaa72325a52cba07e9805236a18da2f1906f80993ade96` |
+| `data/create/tags/item/not_potion.json` | `["values",0]` · DIRECT_ID_REGISTRY_CONTEXT_REQUIRED | `89f9d44bd9edd2465cdb9cfc604fa094d661540a16a478989ce8e460a14dc23d` |
+
+**Estado:** NOT_CERTIFIED / NO_MUTATION / NOT_TESTED; as lacunas indicadas acima não foram promovidas.

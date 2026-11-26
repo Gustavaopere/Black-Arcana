@@ -42,3 +42,22 @@ ConversionCrucibleBlockEntity.rerollWantedItem()V (100 instruções) Code `9080d
 Vínculo comprovado no contrato [Conversion Crucible](../actions/conversion-crucible-biome-conversion.md): witch mode com duração positiva seleciona este item em rerollWantedItem @53–82; fill é limitado a seis e conversão normal fica suprimida. ConversionCrucibleBlock.acUse @0–222, BE.tick @672–837 (scan de itens a cada cinco ticks de servidor), consumeItem @0–42: compara identidade de item, não exige igualdade integral de NBT; uso manual fornece cópia unitária e solicita redução fora de creative, stack caída é consumida diretamente. Expiração @948–1006 redefine target/cor/request/display/fill; estado inclui WantStack, DisplayStack, ConvertingToBiome, FilledLevel, BiomeColor, SplashTimer, ConversionTime, WitchModeDuration. Não demonstra owner persistido na seleção nem nova magia própria. Perk de custo, fill ou modo witch deve respeitar autoridade do Crucible e não reexecutar consumo.
 
 Evidência compartilhada: [matriz de reconciliação](../EXACT-CATALOG-INHERITED-BOUNDARIES-1.0.10.md). Mantidos NOT_CERTIFIED, NO_MUTATION e NOT_TESTED; nenhuma promoção por herança isolada.
+
+
+## Resultado do censo causal — #1240
+
+[Run 45903382213/job 140194260474](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45903382213/job/140194260474): sete checks e dois relatórios byte-idênticos de 227.057 bytes SHA-256 `9708b284726f23dded9e4ad5268296f5ae437bd7aa115ea1bf62e7bc0abdd7a2`, 1.563 JSONs. [Dossiê](../EXACT-BLOCK-RESOURCE-ATTRIBUTION-1.0.10.md) · [Selo por ID](../EXACT-BLOCK-RESOURCE-ATTRIBUTION-SEAL-1.0.10.json).
+
+Censo exato de 1.563 JSONs data/ encontrou **zero** referências por ID ou fecho de tags para esta variante. Fieldrefs nativos anteriores são três: registro @3225, tooltip @1 e ConversionCrucibleBlockEntity.rerollWantedItem @65. Logo não atribuir os quatro crafts, baús, loot de Licowitch, advancement ou tag de roubo à variante; a única função causal confirmada é a oferta exigida no modo Witch do Crucible. Origem adquirível por outros caminhos (incluindo produtores genéricos) ainda não fechada. Não certificar obtenção/consumo adicional por inferência.
+
+**Fieldrefs do registry neste recorte:**
+
+| Owner/método | Offset | Opcode | Code SHA-256 |
+|---|---:|---|---|
+| `ConversionCrucibleBlockEntity.rerollWantedItem` | 65 | `getstatic` | `9080d12830d6ebb9aad3579a00b99e33a9a2bcb4aa757076d841e2896fdfbe03` |
+| `ACItemRegistry.<clinit>` | 3225 | `putstatic` | `bb73db4c0f1d1c84abdf5ab1c07defd24db79e5e8c754b8c9f9ec8481a84a84a` |
+| `RadiantEssenceItem.appendHoverText` | 1 | `getstatic` | `2cf2cc3c9812d17f0b3d424ab2bcd09b587bfc018c23725b19fdfe91a6d4ba9b` |
+
+Nenhum hit de data/ no recorte literal/tag; não prova inexistência de produtores dinâmicos.
+
+**Estado:** NOT_CERTIFIED / NO_MUTATION / NOT_TESTED; as lacunas indicadas acima não foram promovidas.

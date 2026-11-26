@@ -1,0 +1,1247 @@
+{
+  "schema_version": 1,
+  "version": "1.0.10",
+  "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c32e9f2e95bffae0e7c",
+  "claims": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "mutation": "NO_MUTATION",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "perk_certification": "NOT_CERTIFIED",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "reports": {
+    "block_resource": {
+      "sha256": "9708b284726f23dded9e4ad5268296f5ae437bd7aa115ea1bf62e7bc0abdd7a2",
+      "bytes": 227057,
+      "run": 45903382213,
+      "job": 140194260474,
+      "resources": 50,
+      "hits": 65,
+      "field_sites": 23,
+      "data_json_scanned": 1563
+    },
+    "food_identity": {
+      "sha256": "6c8e0c98af51b60fe40d3bd0b326fb909525f1780b2086740748e158b6bd20ea",
+      "bytes": 765144,
+      "run": 45796533259,
+      "job": 139828495853
+    }
+  },
+  "objects": {
+    "alexscaves:block_of_uranium": {
+      "card": "items/block-of-uranium.md",
+      "registry_field": "BLOCK_OF_URANIUM",
+      "registry_kind": "block",
+      "static_contract": "NOT_CERTIFIED",
+      "resources": [
+        {
+          "resource": "data/alexscaves/loot_table/blocks/block_of_uranium.json",
+          "sha256": "57cbb67895d67a34ba717e1c8f586c8209ba8dc43babddecc90afbeb8043e857",
+          "path": [
+            "pools",
+            0,
+            "entries",
+            0,
+            "name"
+          ],
+          "token": "alexscaves:block_of_uranium",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/block_of_uranium.json",
+          "sha256": "99771f9748bf1ae78015ebb3925edfeebc2a77a3911c2ae8f9bdb1e5ae70e071",
+          "path": [
+            "result",
+            "id"
+          ],
+          "token": "alexscaves:block_of_uranium",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/nuclear_bomb.json",
+          "sha256": "94b861eaf1860011598df08221f3ccc8e8eb41485bd6cba07eb605364e4d081c",
+          "path": [
+            "key",
+            "B",
+            "tag"
+          ],
+          "token": "c:storage_blocks/uranium",
+          "kind": "value",
+          "relation": "POTENTIAL_BLOCK_TAG_REFERENCE"
+        },
+        {
+          "resource": "data/alexscaves/recipe/nuclear_bomb.json",
+          "sha256": "94b861eaf1860011598df08221f3ccc8e8eb41485bd6cba07eb605364e4d081c",
+          "path": [
+            "key",
+            "B",
+            "tag"
+          ],
+          "token": "c:storage_blocks/uranium",
+          "kind": "value",
+          "relation": "POTENTIAL_ITEM_TAG_REFERENCE"
+        },
+        {
+          "resource": "data/alexscaves/recipe/uranium_from_block.json",
+          "sha256": "1917b3f4af98eb1d27c449c30d13756de10288313f89adfdfa50bffc678e3249",
+          "path": [
+            "ingredients",
+            0,
+            "item"
+          ],
+          "token": "alexscaves:block_of_uranium",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/tags/block/gloomoth_light_sources.json",
+          "sha256": "9aeda81133fcd264d5968a8cf77ce272e2d0645d07d0a7752642cc8bf767a866",
+          "path": [
+            "values",
+            12
+          ],
+          "token": "alexscaves:block_of_uranium",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/c/tags/block/storage_blocks/uranium.json",
+          "sha256": "d7add0ba72b543411eeb285f314b141a9195dd054e3e6e76bd31f66cdac80dd8",
+          "path": [
+            "values",
+            0
+          ],
+          "token": "alexscaves:block_of_uranium",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/c/tags/item/storage_blocks/uranium.json",
+          "sha256": "d7add0ba72b543411eeb285f314b141a9195dd054e3e6e76bd31f66cdac80dd8",
+          "path": [
+            "values",
+            0
+          ],
+          "token": "alexscaves:block_of_uranium",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/minecraft/tags/block/mineable/pickaxe.json",
+          "sha256": "99e22d2a271e04796bc030a61f34273b8f1c5f14723c167dcd3b0c97501ed030",
+          "path": [
+            "values",
+            75
+          ],
+          "token": "alexscaves:block_of_uranium",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/minecraft/tags/block/needs_iron_tool.json",
+          "sha256": "5fc249e25f5b3b98b6783ba19be2fba34cc6eee1f1b7829156e41054c22dd8cf",
+          "path": [
+            "values",
+            2
+          ],
+          "token": "alexscaves:block_of_uranium",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        }
+      ],
+      "field_sites": [
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+          "name": "<clinit>",
+          "offset": 2304,
+          "opcode": "putstatic",
+          "code_sha256": "d4e20fc9df025209351d92f78283942e0817358a21a30b62c4b68dc9d93f082a"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/entity/living/TremorzillaEntity",
+          "name": "tick",
+          "offset": 3189,
+          "opcode": "getstatic",
+          "code_sha256": "de5ac1743a5711b29c50c50a519dd3df346d8e887544af72ec4a8f28873f7745"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCreativeTabRegistry",
+          "name": "lambda$static$10",
+          "offset": 886,
+          "opcode": "getstatic",
+          "code_sha256": "4a6ee5775221aa148147d7baedc4aa322f92ac71ff99476dccb039250004171e"
+        }
+      ]
+    },
+    "alexscaves:radrock_uranium_ore": {
+      "card": "items/radrock-uranium-ore.md",
+      "registry_field": "RADROCK_URANIUM_ORE",
+      "registry_kind": "block",
+      "static_contract": "NOT_CERTIFIED",
+      "resources": [
+        {
+          "resource": "data/alexscaves/loot_table/blocks/radrock_uranium_ore.json",
+          "sha256": "becdff9650a01a57d34cebfbbbcc76f65353b5fd9815c8546d1693402319dc3d",
+          "path": [
+            "pools",
+            0,
+            "entries",
+            0,
+            "children",
+            0,
+            "name"
+          ],
+          "token": "alexscaves:radrock_uranium_ore",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/furnace/uranium_from_radrock_ore_blasting.json",
+          "sha256": "de85a2c37a6c544283f5c92ca9a28bcc60d5e1001560e685d1ac46649c75be03",
+          "path": [
+            "ingredient",
+            "item"
+          ],
+          "token": "alexscaves:radrock_uranium_ore",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/furnace/uranium_from_radrock_ore_smelting.json",
+          "sha256": "6df9a2fbf5c309bf952c858a06a568e625ed72396340e26150e1a881917a791e",
+          "path": [
+            "ingredient",
+            "item"
+          ],
+          "token": "alexscaves:radrock_uranium_ore",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/worldgen/biome/toxic_caves.json",
+          "sha256": "396e1d282725781721312aee1ed75ba80647b9bc340fe3671b4f28b0a031fd99",
+          "path": [
+            "features",
+            6,
+            30
+          ],
+          "token": "alexscaves:radrock_uranium_ore",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/worldgen/configured_feature/radrock_uranium_ore.json",
+          "sha256": "091804a364f0c8b3827a973fbbddf06294cc9c809a0d52c0d0b8636e9d7d3e3f",
+          "path": [
+            "config",
+            "targets",
+            0,
+            "state",
+            "Name"
+          ],
+          "token": "alexscaves:radrock_uranium_ore",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/worldgen/placed_feature/radrock_uranium_ore.json",
+          "sha256": "272f7844e97ada492683a809502dcbd7b34846b7fa0cc792c3e1acdf49603f03",
+          "path": [
+            "feature"
+          ],
+          "token": "alexscaves:radrock_uranium_ore",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/c/tags/block/ores.json",
+          "sha256": "677ffe4c260894fb525d5f3d325a48a0a4057d3e6429ccc97b419534b530cecd",
+          "path": [
+            "values",
+            0
+          ],
+          "token": "#c:ores/uranium",
+          "kind": "value",
+          "relation": "POTENTIAL_BLOCK_TAG_REFERENCE"
+        },
+        {
+          "resource": "data/c/tags/block/ores/uranium.json",
+          "sha256": "3218a4e06c632f81ec987f7b87c30070459ef456067fe7f4f59ea6ffef0d0540",
+          "path": [
+            "values",
+            0
+          ],
+          "token": "alexscaves:radrock_uranium_ore",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/minecraft/tags/block/mineable/pickaxe.json",
+          "sha256": "99e22d2a271e04796bc030a61f34273b8f1c5f14723c167dcd3b0c97501ed030",
+          "path": [
+            "values",
+            62
+          ],
+          "token": "alexscaves:radrock_uranium_ore",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/minecraft/tags/block/needs_iron_tool.json",
+          "sha256": "5fc249e25f5b3b98b6783ba19be2fba34cc6eee1f1b7829156e41054c22dd8cf",
+          "path": [
+            "values",
+            0
+          ],
+          "token": "alexscaves:radrock_uranium_ore",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        }
+      ],
+      "field_sites": [
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+          "name": "<clinit>",
+          "offset": 2071,
+          "opcode": "putstatic",
+          "code_sha256": "d4e20fc9df025209351d92f78283942e0817358a21a30b62c4b68dc9d93f082a"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCreativeTabRegistry",
+          "name": "lambda$static$10",
+          "offset": 601,
+          "opcode": "getstatic",
+          "code_sha256": "4a6ee5775221aa148147d7baedc4aa322f92ac71ff99476dccb039250004171e"
+        }
+      ]
+    },
+    "alexscaves:unrefined_waste": {
+      "card": "items/unrefined-waste.md",
+      "registry_field": "UNREFINED_WASTE",
+      "registry_kind": "block",
+      "static_contract": "NOT_CERTIFIED",
+      "resources": [
+        {
+          "resource": "data/alexscaves/loot_table/blocks/unrefined_waste.json",
+          "sha256": "a905215e2de34cbd75862b4d181c3b8513def796a19c713013771ba2733c3b70",
+          "path": [
+            "pools",
+            0,
+            "entries",
+            0,
+            "name"
+          ],
+          "token": "alexscaves:unrefined_waste",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/furnace/uranium_shard_blasting.json",
+          "sha256": "3655bc694c8f900b9e9001651fe3da845328ce0741581354f42950ae9a5cb1b7",
+          "path": [
+            "ingredient",
+            "item"
+          ],
+          "token": "alexscaves:unrefined_waste",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/furnace/uranium_shard_smelting.json",
+          "sha256": "eadb37b66ecdaf22c44bc45c4fdb28f3a9816a97b23252afa57ca6eabecd16ac",
+          "path": [
+            "ingredient",
+            "item"
+          ],
+          "token": "alexscaves:unrefined_waste",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/unrefined_waste.json",
+          "sha256": "12be3df081d4158df0b1d984cb90921b95e5d5301853677dc2de5f3a0952c332",
+          "path": [
+            "result",
+            "id"
+          ],
+          "token": "alexscaves:unrefined_waste",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/waste_drum.json",
+          "sha256": "b5cdde5c8cbbbe0ae634c77784bef704f2533736d9c6415a46e2870a40006062",
+          "path": [
+            "key",
+            "U",
+            "item"
+          ],
+          "token": "alexscaves:unrefined_waste",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/worldgen/configured_feature/unrefined_waste_replace_mud.json",
+          "sha256": "a0560578c70d161ff0b66c8d791d2b2ef9dc0783de57cb11ac57be6cbb8ea1f1",
+          "path": [
+            "config",
+            "targets",
+            0,
+            "state",
+            "Name"
+          ],
+          "token": "alexscaves:unrefined_waste",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/minecraft/tags/block/mineable/shovel.json",
+          "sha256": "4e5ec0ebe7259c65a96dd89934e0a54d91c082e3ae0c154486e3314d1760dff2",
+          "path": [
+            "values",
+            1
+          ],
+          "token": "alexscaves:unrefined_waste",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        }
+      ],
+      "field_sites": [
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+          "name": "<clinit>",
+          "offset": 2333,
+          "opcode": "putstatic",
+          "code_sha256": "d4e20fc9df025209351d92f78283942e0817358a21a30b62c4b68dc9d93f082a"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/block/blockentity/NuclearFurnaceBlockEntity",
+          "name": "destroyWhileCritical",
+          "offset": 18,
+          "opcode": "getstatic",
+          "code_sha256": "e354ae78664f5167d9de96453ae69aab7127eecfbcd41f80bba944538cca575c"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/block/fluid/AcidFluidType",
+          "name": "onVaporize",
+          "offset": 150,
+          "opcode": "getstatic",
+          "code_sha256": "3065c4ada2540a1fcb0443062ea37a42b189618dd00468280c16a8d8925ab872"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/entity/living/TremorzillaEntity",
+          "name": "createEggBeddingBlockState",
+          "offset": 0,
+          "opcode": "getstatic",
+          "code_sha256": "f0560e61af0b64a782ae929e838e59b56a484e445593f5ae11c56c0dac02aaac"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCreativeTabRegistry",
+          "name": "lambda$static$10",
+          "offset": 916,
+          "opcode": "getstatic",
+          "code_sha256": "4a6ee5775221aa148147d7baedc4aa322f92ac71ff99476dccb039250004171e"
+        }
+      ]
+    },
+    "alexscaves:waste_drum": {
+      "card": "items/waste-drum.md",
+      "registry_field": "WASTE_DRUM",
+      "registry_kind": "block",
+      "static_contract": "NOT_CERTIFIED",
+      "resources": [
+        {
+          "resource": "data/alexscaves/advancement/alexscaves/stop_nuclear_furnace_meltdown.json",
+          "sha256": "ae6d3f12a76838420c21771f1f6731cbe5e882c627f9fd73f0669caaea329baa",
+          "path": [
+            "display",
+            "icon",
+            "id"
+          ],
+          "token": "alexscaves:waste_drum",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/advancement/alexscaves/tame_tremorzilla.json",
+          "sha256": "c6833f5fe81d3119d3b816654a51a37c17a87fae08e4445fb9b56a37744f5733",
+          "path": [
+            "display",
+            "icon",
+            "id"
+          ],
+          "token": "alexscaves:waste_drum",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/loot_table/blocks/waste_drum.json",
+          "sha256": "5cb7972f440fdcac2ad056338fc559b988eefdae98a2645a006307a20f6eba99",
+          "path": [
+            "pools",
+            0,
+            "entries",
+            0,
+            "name"
+          ],
+          "token": "alexscaves:waste_drum",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/loot_table/chests/toxic_ruins.json",
+          "sha256": "2bb1a858fc213060eb83765487b0f91093c81b7d53b7913364b1265571d3ffe3",
+          "path": [
+            "pools",
+            0,
+            "entries",
+            8,
+            "name"
+          ],
+          "token": "alexscaves:waste_drum",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/waste_drum.json",
+          "sha256": "b5cdde5c8cbbbe0ae634c77784bef704f2533736d9c6415a46e2870a40006062",
+          "path": [
+            "result",
+            "id"
+          ],
+          "token": "alexscaves:waste_drum",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/tags/block/ferromagnetic_blocks.json",
+          "sha256": "250cf29361aba28c02ec0706b11bc2d48780bc6d7aafd189a5372fde4a53a3f0",
+          "path": [
+            "values",
+            5
+          ],
+          "token": "alexscaves:waste_drum",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/tags/block/raycat_sleeps_on.json",
+          "sha256": "0d337411d9951d91ee83614cb159fb718e30716e59b61630870272531ca18cb9",
+          "path": [
+            "values",
+            1
+          ],
+          "token": "alexscaves:waste_drum",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/tags/item/ferromagnetic_items.json",
+          "sha256": "d56b9514fe890d6b4eb1e256fd418683e7ec9aeb7032592168671f6851548dbf",
+          "path": [
+            "values",
+            4
+          ],
+          "token": "alexscaves:waste_drum",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/tags/item/galena_gauntlet_crystallization_items.json",
+          "sha256": "a66bc2d0071dac61445130165f3acbd050694a8613113d47293237557167fd05",
+          "path": [
+            "values",
+            0
+          ],
+          "token": "#alexscaves:ferromagnetic_items",
+          "kind": "value",
+          "relation": "POTENTIAL_ITEM_TAG_REFERENCE"
+        },
+        {
+          "resource": "data/minecraft/tags/block/mineable/pickaxe.json",
+          "sha256": "99e22d2a271e04796bc030a61f34273b8f1c5f14723c167dcd3b0c97501ed030",
+          "path": [
+            "values",
+            68
+          ],
+          "token": "alexscaves:waste_drum",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/minecraft/tags/block/needs_stone_tool.json",
+          "sha256": "25c340d57a0e318082610740495630260f10dfea29abf425953b31dfc42e8620",
+          "path": [
+            "values",
+            24
+          ],
+          "token": "alexscaves:waste_drum",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        }
+      ],
+      "field_sites": [
+        {
+          "owner": "com/github/alexmodguy/alexscaves/client/render/entity/ThrownWasteDrumEntityRenderer",
+          "name": "render",
+          "offset": 199,
+          "opcode": "getstatic",
+          "code_sha256": "58a0d6857b4cf2c7d556e81da572d14c3ab794fae3e14c8fe20df0b6eee9f757"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/client/render/entity/layer/BrainiacBackBarrelLayer",
+          "name": "render",
+          "offset": 120,
+          "opcode": "getstatic",
+          "code_sha256": "ccc03afe7c9979daa431cedbe6800f1eb43cf00a9623f9ca2374af301219bee8"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/compat/jei/NuclearFurnaceRecipeCategory",
+          "name": "setRecipe",
+          "offset": 95,
+          "opcode": "getstatic",
+          "code_sha256": "ab7932e66cc36902383baf46ad7171408e3b2807e44773cd6d2c47c5207162f2"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+          "name": "<clinit>",
+          "offset": 2204,
+          "opcode": "putstatic",
+          "code_sha256": "d4e20fc9df025209351d92f78283942e0817358a21a30b62c4b68dc9d93f082a"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/block/blockentity/NuclearFurnaceBlockEntity",
+          "name": "tick",
+          "offset": 793,
+          "opcode": "getstatic",
+          "code_sha256": "7a4ceaf1732f7423d0041531e1310c4f54e19317c4c5fd45f3011bc65eb2f2f1"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/block/blockentity/NuclearFurnaceBlockEntity",
+          "name": "tick",
+          "offset": 844,
+          "opcode": "getstatic",
+          "code_sha256": "7a4ceaf1732f7423d0041531e1310c4f54e19317c4c5fd45f3011bc65eb2f2f1"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/entity/living/BrainiacEntity$PickupBarrelGoal",
+          "name": "isValidTarget",
+          "offset": 11,
+          "opcode": "getstatic",
+          "code_sha256": "71c620f72a07525dacda3022b40a45a2d527701960671cb4d73d0d372206d12a"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/entity/living/BrainiacEntity",
+          "name": "dropEquipment",
+          "offset": 23,
+          "opcode": "getstatic",
+          "code_sha256": "a4d82afdbc333fcbab4f8bfbeab6cfd5750f5d08cf51d047218f564c7afd4c8f"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/entity/living/TremorzillaEntity",
+          "name": "mobInteract",
+          "offset": 30,
+          "opcode": "getstatic",
+          "code_sha256": "066e9d6d6927ee7d1c5f70722329856ac3df8b5a4a6f1831756f7485cd9eabf2"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/entity/living/TremorzillaEntity",
+          "name": "registerGoals",
+          "offset": 110,
+          "opcode": "getstatic",
+          "code_sha256": "36b12278d2793a72073efd211439367c9c11de278f4e6f6fa98547e0c06f0cbf"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/entity/living/TremorzillaEntity",
+          "name": "tick",
+          "offset": 3214,
+          "opcode": "getstatic",
+          "code_sha256": "de5ac1743a5711b29c50c50a519dd3df346d8e887544af72ec4a8f28873f7745"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCreativeTabRegistry",
+          "name": "lambda$static$10",
+          "offset": 841,
+          "opcode": "getstatic",
+          "code_sha256": "4a6ee5775221aa148147d7baedc4aa322f92ac71ff99476dccb039250004171e"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCreativeTabRegistry",
+          "name": "lambda$static$8",
+          "offset": 4,
+          "opcode": "getstatic",
+          "code_sha256": "f2bbaa648ab9f12380b4ceceeed6e4da53680426601d3f32515519e614b7477f"
+        }
+      ]
+    },
+    "alexscaves:green_soylent": {
+      "card": "items/green-soylent.md",
+      "registry_field": "GREEN_SOYLENT",
+      "registry_kind": "item",
+      "static_contract": "CERTIFIED_STATIC_7_AXES",
+      "resources": [
+        {
+          "resource": "data/alexscaves/advancement/alexscaves/eat_radiation_foods.json",
+          "sha256": "65354ae00dc1f3892bb40cd45b773e7c47099b08c946532496ee52b4f16727e1",
+          "path": [
+            "criteria",
+            "green_soylent",
+            "conditions",
+            "item",
+            "items",
+            0
+          ],
+          "token": "alexscaves:green_soylent",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/loot_table/chests/toxic_ruins.json",
+          "sha256": "2bb1a858fc213060eb83765487b0f91093c81b7d53b7913364b1265571d3ffe3",
+          "path": [
+            "pools",
+            0,
+            "entries",
+            4,
+            "name"
+          ],
+          "token": "alexscaves:green_soylent",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/loot_table/entities/brainiac.json",
+          "sha256": "e980256852693e1544da74236adf3eed02a99335d92ebddb18f46e7eec7409f9",
+          "path": [
+            "pools",
+            0,
+            "entries",
+            0,
+            "name"
+          ],
+          "token": "alexscaves:green_soylent",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/minecraft/tags/item/meat.json",
+          "sha256": "139179de8b4b7b9ba3ca67eea074e200adece9575f7cc6186f7895dc7cad5dd1",
+          "path": [
+            "values",
+            4
+          ],
+          "token": "alexscaves:green_soylent",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        }
+      ],
+      "field_sites": [
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/event/CommonEvents",
+          "name": "livingDie",
+          "offset": 468,
+          "opcode": "getstatic",
+          "code_sha256": "3dd919f82cf80b2b0a9251e34c2e37bfec88b39d913608ae6772d710f06e83e2"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+          "name": "<clinit>",
+          "offset": 1406,
+          "opcode": "putstatic",
+          "code_sha256": "bb73db4c0f1d1c84abdf5ab1c07defd24db79e5e8c754b8c9f9ec8481a84a84a"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/item/RadiationRemovingFoodItem",
+          "name": "getDrinkingSound",
+          "offset": 1,
+          "opcode": "getstatic",
+          "code_sha256": "36a176cc7735c7e2fcb124863d65acf689fb87ec524794370353d877db61304c"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/item/RadiationRemovingFoodItem",
+          "name": "getEatingSound",
+          "offset": 1,
+          "opcode": "getstatic",
+          "code_sha256": "01180b25ba8578fc01fdab577670421cbb36a035fabcba9c0a24f9144e71aab5"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/item/RadiationRemovingFoodItem",
+          "name": "getUseAnimation",
+          "offset": 1,
+          "opcode": "getstatic",
+          "code_sha256": "e53be8f21a6e791b319aa27e1a766f828f2a1d7df5c867ec27c4b98d061b054d"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/item/RadiationRemovingFoodItem",
+          "name": "use",
+          "offset": 1,
+          "opcode": "getstatic",
+          "code_sha256": "810904916f3dd43bc1974ab9e157520d1923b9409611687cd3cf7b1f5ad80568"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCreativeTabRegistry",
+          "name": "lambda$static$10",
+          "offset": 271,
+          "opcode": "getstatic",
+          "code_sha256": "4a6ee5775221aa148147d7baedc4aa322f92ac71ff99476dccb039250004171e"
+        }
+      ]
+    },
+    "alexscaves:slam": {
+      "card": "items/slam.md",
+      "registry_field": "SLAM",
+      "registry_kind": "item",
+      "static_contract": "CERTIFIED_STATIC_7_AXES",
+      "resources": [
+        {
+          "resource": "data/alexscaves/advancement/alexscaves/eat_radiation_foods.json",
+          "sha256": "65354ae00dc1f3892bb40cd45b773e7c47099b08c946532496ee52b4f16727e1",
+          "path": [
+            "criteria",
+            "slam",
+            "conditions",
+            "item",
+            "items",
+            0
+          ],
+          "token": "alexscaves:slam",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/advancement/alexscaves/eat_radiation_foods.json",
+          "sha256": "65354ae00dc1f3892bb40cd45b773e7c47099b08c946532496ee52b4f16727e1",
+          "path": [
+            "display",
+            "icon",
+            "id"
+          ],
+          "token": "alexscaves:slam",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/loot_table/chests/toxic_ruins.json",
+          "sha256": "2bb1a858fc213060eb83765487b0f91093c81b7d53b7913364b1265571d3ffe3",
+          "path": [
+            "pools",
+            0,
+            "entries",
+            3,
+            "name"
+          ],
+          "token": "alexscaves:slam",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/slam.json",
+          "sha256": "7b175ec118b769b550dc8c509068e278c93afa4b31f6961df20f7b60e13f4956",
+          "path": [
+            "result",
+            "id"
+          ],
+          "token": "alexscaves:slam",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/minecraft/tags/item/meat.json",
+          "sha256": "139179de8b4b7b9ba3ca67eea074e200adece9575f7cc6186f7895dc7cad5dd1",
+          "path": [
+            "values",
+            3
+          ],
+          "token": "alexscaves:slam",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        }
+      ],
+      "field_sites": [
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+          "name": "<clinit>",
+          "offset": 1389,
+          "opcode": "putstatic",
+          "code_sha256": "bb73db4c0f1d1c84abdf5ab1c07defd24db79e5e8c754b8c9f9ec8481a84a84a"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCreativeTabRegistry",
+          "name": "lambda$static$10",
+          "offset": 256,
+          "opcode": "getstatic",
+          "code_sha256": "4a6ee5775221aa148147d7baedc4aa322f92ac71ff99476dccb039250004171e"
+        }
+      ]
+    },
+    "alexscaves:spelunkie": {
+      "card": "items/spelunkie.md",
+      "registry_field": "SPELUNKIE",
+      "registry_kind": "item",
+      "static_contract": "NOT_CERTIFIED",
+      "resources": [
+        {
+          "resource": "data/alexscaves/advancement/alexscaves/eat_radiation_foods.json",
+          "sha256": "65354ae00dc1f3892bb40cd45b773e7c47099b08c946532496ee52b4f16727e1",
+          "path": [
+            "criteria",
+            "spelunkie",
+            "conditions",
+            "item",
+            "items",
+            0
+          ],
+          "token": "alexscaves:spelunkie",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/advancement/alexscaves/feed_gammaroach.json",
+          "sha256": "010644892c8853a842bd94febac8533e9ba396d12e9d90c63824fc49105039cc",
+          "path": [
+            "criteria",
+            "interact",
+            "conditions",
+            "item",
+            "items",
+            0
+          ],
+          "token": "alexscaves:spelunkie",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/advancement/alexscaves/feed_gammaroach.json",
+          "sha256": "010644892c8853a842bd94febac8533e9ba396d12e9d90c63824fc49105039cc",
+          "path": [
+            "display",
+            "icon",
+            "id"
+          ],
+          "token": "alexscaves:spelunkie",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/loot_table/chests/toxic_ruins.json",
+          "sha256": "2bb1a858fc213060eb83765487b0f91093c81b7d53b7913364b1265571d3ffe3",
+          "path": [
+            "pools",
+            0,
+            "entries",
+            2,
+            "name"
+          ],
+          "token": "alexscaves:spelunkie",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/spelunkie.json",
+          "sha256": "8761dd34f821ab4be7053432b242b7e2658ff7435cb1151f945269ec370f6773",
+          "path": [
+            "result",
+            "id"
+          ],
+          "token": "alexscaves:spelunkie",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        }
+      ],
+      "field_sites": [
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/entity/living/GammaroachEntity",
+          "name": "handleEntityEvent",
+          "offset": 10,
+          "opcode": "getstatic",
+          "code_sha256": "da80bb889a66f31ea3c0169f390aa46010005f2f211aa89b5b08136c6ff1e29c"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/entity/living/GammaroachEntity",
+          "name": "mobInteract",
+          "offset": 23,
+          "opcode": "getstatic",
+          "code_sha256": "23ba92bcf6a861083d2e30e080133bc5f2a966d8e246cd48bb5363754b772252"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+          "name": "<clinit>",
+          "offset": 1372,
+          "opcode": "putstatic",
+          "code_sha256": "bb73db4c0f1d1c84abdf5ab1c07defd24db79e5e8c754b8c9f9ec8481a84a84a"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCreativeTabRegistry",
+          "name": "lambda$static$10",
+          "offset": 241,
+          "opcode": "getstatic",
+          "code_sha256": "4a6ee5775221aa148147d7baedc4aa322f92ac71ff99476dccb039250004171e"
+        }
+      ]
+    },
+    "alexscaves:jelly_bean": {
+      "card": "items/jelly-bean.md",
+      "registry_field": "JELLY_BEAN",
+      "registry_kind": "item",
+      "static_contract": "NOT_CERTIFIED",
+      "resources": [
+        {
+          "resource": "data/alexscaves/advancement/alexscaves/jelly_bean.json",
+          "sha256": "1b485b00a3cb83e02cbaa72325a52cba07e9805236a18da2f1906f80993ade96",
+          "path": [
+            "criteria",
+            "mussel",
+            "conditions",
+            "items",
+            0,
+            "items",
+            0
+          ],
+          "token": "alexscaves:jelly_bean",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/advancement/alexscaves/jelly_bean.json",
+          "sha256": "1b485b00a3cb83e02cbaa72325a52cba07e9805236a18da2f1906f80993ade96",
+          "path": [
+            "display",
+            "icon",
+            "id"
+          ],
+          "token": "alexscaves:jelly_bean",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/create/tags/item/not_potion.json",
+          "sha256": "89f9d44bd9edd2465cdb9cfc604fa094d661540a16a478989ce8e460a14dc23d",
+          "path": [
+            "values",
+            0
+          ],
+          "token": "alexscaves:jelly_bean",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        }
+      ],
+      "field_sites": [
+        {
+          "owner": "com/github/alexmodguy/alexscaves/client/ClientProxy",
+          "name": "onItemColors",
+          "offset": 104,
+          "opcode": "getstatic",
+          "code_sha256": "3249fa89f491fcb3d7e484ad238786a747b0d8b72cda962c143ad829d3de137d"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/entity/living/GummyBearEntity",
+          "name": "createJellybean",
+          "offset": 24,
+          "opcode": "getstatic",
+          "code_sha256": "32a3e91f97ff7fb2d1d43eca02dfdf79a41ad80bca76b93f80578165307788cd"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+          "name": "<clinit>",
+          "offset": 3497,
+          "opcode": "putstatic",
+          "code_sha256": "bb73db4c0f1d1c84abdf5ab1c07defd24db79e5e8c754b8c9f9ec8481a84a84a"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry",
+          "name": "createJellybean",
+          "offset": 0,
+          "opcode": "getstatic",
+          "code_sha256": "5726e6ef99a36f1d369980be69c04f1105182ca41f3e9c68bd6378f032626b18"
+        }
+      ]
+    },
+    "alexscaves:radiant_essence": {
+      "card": "items/radiant-essence.md",
+      "registry_field": "RADIANT_ESSENCE",
+      "registry_kind": "item",
+      "static_contract": "NOT_CERTIFIED",
+      "resources": [
+        {
+          "resource": "data/alexscaves/advancement/alexscaves/radiant_essence.json",
+          "sha256": "e5bda54d69d6c8b8c9ce52c87a66a04571d1ce30267674dcb222a2a64bc57092",
+          "path": [
+            "criteria",
+            "mussel",
+            "conditions",
+            "items",
+            0,
+            "items",
+            0
+          ],
+          "token": "alexscaves:radiant_essence",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/advancement/alexscaves/radiant_essence.json",
+          "sha256": "e5bda54d69d6c8b8c9ce52c87a66a04571d1ce30267674dcb222a2a64bc57092",
+          "path": [
+            "display",
+            "icon",
+            "id"
+          ],
+          "token": "alexscaves:radiant_essence",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/loot_table/chests/licowitch_tower.json",
+          "sha256": "0d9f0a4837eb424eab1be3e2a1e95acd760e2a9e26b8650b4e53d8507ef67f60",
+          "path": [
+            "pools",
+            0,
+            "entries",
+            9,
+            "name"
+          ],
+          "token": "alexscaves:radiant_essence",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/loot_table/chests/licowitch_tower_secret.json",
+          "sha256": "3b1f2655803b2eb8b8b3d57bf56d58b75964b29aaa7b93fd7672f03347836f86",
+          "path": [
+            "pools",
+            0,
+            "entries",
+            3,
+            "name"
+          ],
+          "token": "alexscaves:radiant_essence",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/loot_table/entities/licowitch.json",
+          "sha256": "157ba186f052f989fc31bd016ae3352eaa77c58ec1a8a639c91774f239e34526",
+          "path": [
+            "pools",
+            0,
+            "entries",
+            0,
+            "name"
+          ],
+          "token": "alexscaves:radiant_essence",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/biome_treat.json",
+          "sha256": "c7b6b504ec21125773b6f65e5a5d4a591da98dcb3266ecf04108d855658f9012",
+          "path": [
+            "key",
+            "E",
+            "item"
+          ],
+          "token": "alexscaves:radiant_essence",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/confection_oven.json",
+          "sha256": "3d0c85d36ca04ccb0aaa7fadd4048debe4c73d41195a7276c3f898845422b034",
+          "path": [
+            "key",
+            "E",
+            "item"
+          ],
+          "token": "alexscaves:radiant_essence",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/conversion_crucible.json",
+          "sha256": "7d3f31cbbca2a3a02076ad057861bf8a1d9a167864b250a16ec76d1ce9ce4271",
+          "path": [
+            "key",
+            "E",
+            "item"
+          ],
+          "token": "alexscaves:radiant_essence",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/recipe/sundrop.json",
+          "sha256": "08f21af8c4340fcbabe9e964a7e463901760793da4db97c9c6f2e5c00a32358d",
+          "path": [
+            "key",
+            "R",
+            "item"
+          ],
+          "token": "alexscaves:radiant_essence",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        },
+        {
+          "resource": "data/alexscaves/tags/item/gingerbread_man_steals.json",
+          "sha256": "59c2591008e62e6bb91011202fa7aa2200fd950f9da55d309dbf0bea243682f8",
+          "path": [
+            "values",
+            6
+          ],
+          "token": "alexscaves:radiant_essence",
+          "kind": "value",
+          "relation": "DIRECT_ID_REGISTRY_CONTEXT_REQUIRED"
+        }
+      ],
+      "field_sites": [
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+          "name": "<clinit>",
+          "offset": 3208,
+          "opcode": "putstatic",
+          "code_sha256": "bb73db4c0f1d1c84abdf5ab1c07defd24db79e5e8c754b8c9f9ec8481a84a84a"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCreativeTabRegistry",
+          "name": "lambda$static$24",
+          "offset": 571,
+          "opcode": "getstatic",
+          "code_sha256": "c43d1cfbc0fb2efd284f7d75f30f232e5038ddfa264a58d5253e0164cb599c5d"
+        }
+      ]
+    },
+    "alexscaves:licowitch_radiant_essence": {
+      "card": "items/licowitch-radiant-essence.md",
+      "registry_field": "LICOWITCH_RADIANT_ESSENCE",
+      "registry_kind": "item",
+      "static_contract": "NOT_CERTIFIED",
+      "resources": [],
+      "field_sites": [
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/block/blockentity/ConversionCrucibleBlockEntity",
+          "name": "rerollWantedItem",
+          "offset": 65,
+          "opcode": "getstatic",
+          "code_sha256": "9080d12830d6ebb9aad3579a00b99e33a9a2bcb4aa757076d841e2896fdfbe03"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+          "name": "<clinit>",
+          "offset": 3225,
+          "opcode": "putstatic",
+          "code_sha256": "bb73db4c0f1d1c84abdf5ab1c07defd24db79e5e8c754b8c9f9ec8481a84a84a"
+        },
+        {
+          "owner": "com/github/alexmodguy/alexscaves/server/item/RadiantEssenceItem",
+          "name": "appendHoverText",
+          "offset": 1,
+          "opcode": "getstatic",
+          "code_sha256": "2cf2cc3c9812d17f0b3d424ab2bcd09b587bfc018c23725b19fdfe91a6d4ba9b"
+        }
+      ]
+    }
+  }
+}
