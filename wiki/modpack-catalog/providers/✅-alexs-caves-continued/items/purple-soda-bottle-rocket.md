@@ -28,3 +28,9 @@ Limites gerais: inspeção estática do publisher, sem prova de runtime transfor
 Owner SodaBottleRocketEntity, class SHA-256 `73a4d9bb64f255503ffeca52e8576aa4570052a75ba7c87767bb9ff8b9d53877`, FireworkRocketEntity, 8/8 métodos próprios. tick()V Code `bd67a7ad6729d27559db4d396e51b3e0ce1c4a44a4327adbf31103d5e909ec7f` chama super.tick @1, incrementa phageAge, no cliente solicita cinco partículas PURPLE_SODA_BUBBLE; não equivale a propulsão. handleEntityEvent(B)V Code `96191cb135d3dc51c8fbf3edb9a38a7bcdc1b65774daf5deff2953112796838a` trata evento 17 com apresentação FROSTMINT_EXPLOSION, SNOWFLAKE, PURPLE_SODA_BUBBLE e som de foguete dependente da câmera; não comprova dano, AOE ou congelamento real. getItem retorna stack PURPLE_SODA_BOTTLE_ROCKET. Pendem construtores e dados herdados de FireworkRocketEntity, propulsão, explosão, duração, owner/attachment, NBT e liquidação do uso. Não transformar efeitos visuais em status ou dano adicional.
 
 Estado mantido: STATIC_DISCOVERY_ONLY / NOT_CERTIFIED / NO_MUTATION / NOT_TESTED. Sem nova raiz ou hook.
+
+## Reconciliação de fronteiras distribuídas
+
+Receita shapeless direta (SHA-256 `7717bf0d3c751da91753396ce37b5f7cfed578b139c956c11b5e490139ad7962`): três purple_soda_bottle mais um frostmint, saída três foguetes. Isso não prova dano, duração de propulsão nem componentes de explosão. Herança de FireworkRocketEntity deve ser auditada separadamente de apresentação de partículas e de lançamento de ThrowableProjectile. Não incrementar Mastery por efeito cosmético.
+
+Evidência compartilhada: [matriz de reconciliação](../EXACT-CATALOG-INHERITED-BOUNDARIES-1.0.10.md). Mantidos NOT_CERTIFIED, NO_MUTATION e NOT_TESTED; nenhuma promoção por herança isolada.
