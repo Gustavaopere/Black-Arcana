@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 5/83.**
+**Fichas catalogadas (somente fichas detectadas): 15/83.**
 
-**Barra das fichas catalogadas:** `█░░░░░░░░░░░░░░░░░░░ 6.0%`
+**Barra das fichas catalogadas:** `███░░░░░░░░░░░░░░░░░ 18.1%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 5/83.**
+**Homologadas para perks (somente fichas detectadas): 15/83.**
 
-**Barra dos contratos técnicos estáticos:** `█░░░░░░░░░░░░░░░░░░░ 6.0%`
+**Barra dos contratos técnicos estáticos:** `███░░░░░░░░░░░░░░░░░ 18.1%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -25,16 +25,16 @@
 | ✅ | Mist Form | [blood/mist-form.md](blood/mist-form.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Deep Sensor | [eldritch/deep-sensor.md](eldritch/deep-sensor.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Echo Cast | [eldritch/echo-cast.md](eldritch/echo-cast.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Mana Transcription | [eldritch/mana-transcription.md](eldritch/mana-transcription.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Moonlight | [eldritch/moonlight.md](eldritch/moonlight.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Otherworld Lens | [eldritch/otherworld-lens.md](eldritch/otherworld-lens.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Palette Shift | [eldritch/palette-shift.md](eldritch/palette-shift.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Spectral Wing | [eldritch/spectral-wing.md](eldritch/spectral-wing.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Anchor Blink | [ender/anchor-blink.md](ender/anchor-blink.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Arcane Beam | [ender/arcane-beam.md](ender/arcane-beam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Arcane Blast | [ender/arcane-blast.md](ender/arcane-blast.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Assist Wings | [ender/assist-wings.md](ender/assist-wings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Auto Magnet | [ender/auto-magnet.md](ender/auto-magnet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Mana Transcription | [eldritch/mana-transcription.md](eldritch/mana-transcription.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Moonlight | [eldritch/moonlight.md](eldritch/moonlight.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Otherworld Lens | [eldritch/otherworld-lens.md](eldritch/otherworld-lens.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Palette Shift | [eldritch/palette-shift.md](eldritch/palette-shift.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Spectral Wing | [eldritch/spectral-wing.md](eldritch/spectral-wing.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Anchor Blink | [ender/anchor-blink.md](ender/anchor-blink.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Arcane Beam | [ender/arcane-beam.md](ender/arcane-beam.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Arcane Blast | [ender/arcane-blast.md](ender/arcane-blast.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Assist Wings | [ender/assist-wings.md](ender/assist-wings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Auto Magnet | [ender/auto-magnet.md](ender/auto-magnet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Demicreator Wings | [ender/demicreator-wings.md](ender/demicreator-wings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Long Stride | [ender/long-stride.md](ender/long-stride.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Mana Slash | [ender/mana-slash.md](ender/mana-slash.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -109,8 +109,8 @@
 | Catálogo | Subpasta | Fichas catalogadas / observadas | Contratos estáticos | Índice |
 |---|---|---:|---:|---|
 | ✅ | Blood | 3/3 (100.0%) | 3 | [Abrir índice](blood/INDEX.md) |
-| ⚠️ | Eldritch | 2/7 (28.6%) | 2 | [Abrir índice](eldritch/INDEX.md) |
-| ⚠️ | Ender | 0/15 (0.0%) | 0 | [Abrir índice](ender/INDEX.md) |
+| ✅ | Eldritch | 7/7 (100.0%) | 7 | [Abrir índice](eldritch/INDEX.md) |
+| ⚠️ | Ender | 5/15 (33.3%) | 5 | [Abrir índice](ender/INDEX.md) |
 | ⚠️ | Evocation | 0/17 (0.0%) | 0 | [Abrir índice](evocation/INDEX.md) |
 | ⚠️ | Fire | 0/5 (0.0%) | 0 | [Abrir índice](fire/INDEX.md) |
 | ⚠️ | Holy | 0/11 (0.0%) | 0 | [Abrir índice](holy/INDEX.md) |

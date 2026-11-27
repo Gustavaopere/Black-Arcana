@@ -30,12 +30,21 @@ BA=M+"world/entity/animal/Bucketable"
 SL=M+"server/level/ServerLevel"
 SELECT={
     IR:{"lambda$static$92","lambda$static$91"},
-    C:{"getOrCreateTag"},
+    C:{"getOrCreateTag","setTag","setHoverName","asOutput","asInput","getCompound","getBoolean"},
+    P+"misc/ACPlatform":{"dispenserPos","dispenserState","dispenserLevel"},
+    M+"world/item/ItemStack":{"consume","shrink"},
+    M+"world/item/DispensibleContainerItem":{"emptyContents","checkExtraContent"},
+    M+"world/item/component/CustomData":{"copyTag","of","loadInto"},
+    M+"core/dispenser/DefaultDispenseItemBehavior":{"dispense","execute","spawnItem"},
+    M+"world/entity/player/Player":{"hasInfiniteMaterials","mayUseItemAt"},
+    M+"server/level/ServerPlayer":{"mayUseItemAt","hasInfiniteMaterials"},
+    M+"world/level/ServerLevelAccessor":{"addFreshEntityWithPassengers"},
+    M+"world/level/entity/PersistentEntitySectionManager":{"addNewEntity","addEntity","addEntityWithoutEvent","addEntityUuid"},
     BU:{"use","emptyContents","getEmptySuccessItem","checkExtraContent","playEmptySound","getContent"},
     MB:{"<init>","checkExtraContent","spawn","appendHoverText","playEmptySound"},
     BA:{"bucketMobPickup","saveDefaultDataToBucketTag","loadDefaultDataFromBucketTag","getBucketItemStack","saveToBucketTag","loadFromBucketTag","setFromBucket","fromBucket"},
-    ET:{"spawn","create","createDefaultStackConfig","createDefaultStackConfigForMob","updateCustomEntityTag"},
-    SL:{"addFreshEntity","addEntity","tryAddFreshEntityWithPassengers","addWithUUID"},
+    ET:{"spawn","create","createDefaultStackConfig","createDefaultStackConfigForMob","updateCustomEntityTag","appendDefaultStackConfig","appendCustomEntityStackConfig","getYOffset"},
+    SL:{"addFreshEntity","addEntity","tryAddFreshEntityWithPassengers","addWithUUID","addFreshEntityWithPassengers","mayInteract"},
     M+"world/item/ItemUtils":{"createFilledResult"},
     M+"world/level/block/DispenserBlock":{"getDispenseMethod","dispenseFrom"},
     M+"world/level/Level":{"mayInteract"},
@@ -44,10 +53,15 @@ SELECT={
 REQUIRED={
     I:{"<init>","checkExtraContent","spawnFish","addExtraAttributes","appendHoverText"},
     IR:{"lambda$static$92","lambda$static$91"},
-    C:{"getOrCreateTag"},
+    C:{"getOrCreateTag","setTag","setHoverName","asOutput","asInput","getCompound","getBoolean"},
+    P+"misc/ACPlatform":{"dispenserPos","dispenserState","dispenserLevel"},
+    M+"world/item/ItemStack":{"consume"},
+    M+"core/dispenser/DefaultDispenseItemBehavior":{"dispense"},
+    M+"world/entity/player/Player":{"mayUseItemAt"},
+    M+"world/level/entity/PersistentEntitySectionManager":{"addNewEntity"},
     BU:{"use","emptyContents"},
     BA:{"bucketMobPickup"},
-    ET:{"spawn"},
+    ET:{"spawn","appendDefaultStackConfig","getYOffset"},
     SL:{"addFreshEntity","addEntity"},
 }
 PINS={I:"9d22e586625f298993fbbf86b59ff2369cc3dccd9a9115b23d52778ed4c112dc",
@@ -57,9 +71,22 @@ CODE_PINS={
     (IR,"lambda$static$92"):"6ee50396f6047acee481212ad62d3c4cbd750e9f550376efcf754d6068cb5eae",
     (I,"spawnFish"):"bd106b4cdeed0c33da4a95b9fe241ce074bebe0f7404a8d863d9ded5a9233945",
     (I,"checkExtraContent"):"9afd208eba966e70dffc5385cd7ea9cfe66cc0b4cbe2d5629ff94fee058eb89b",
+    (IR,"lambda$static$91"):"17ddd17374a6af404edd3800059ef59916e856e35318f410ae35626c71e4da88",
+    (C,"getOrCreateTag"):"a8448548804ce53e0c9885bf54fe139fc7fe736431265ba7bf0aeaf2cbefc8c8",
 }
 EXACT={ET:{("spawn","(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/MobSpawnType;ZZ)Lnet/minecraft/world/entity/Entity;")},
-       C:{("getOrCreateTag","(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;")}}
+       C:{("getOrCreateTag","(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"),
+          ("setTag","(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V"),
+          ("setHoverName","(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/network/chat/Component;)Lnet/minecraft/world/item/ItemStack;"),
+          ("asOutput","(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;"),
+          ("asInput","(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;"),
+          ("getBoolean","(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Z"),
+          ("getCompound","(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;")},
+       P+"misc/ACPlatform":{("dispenserPos","(Lnet/minecraft/core/dispenser/BlockSource;)Lnet/minecraft/core/BlockPos;"),
+          ("dispenserState","(Lnet/minecraft/core/dispenser/BlockSource;)Lnet/minecraft/world/level/block/state/BlockState;"),
+          ("dispenserLevel","(Lnet/minecraft/core/dispenser/BlockSource;)Lnet/minecraft/world/level/Level;")},
+       M+"world/item/ItemStack":{("consume","(ILnet/minecraft/world/entity/LivingEntity;)V")},
+       M+"core/dispenser/DefaultDispenseItemBehavior":{("dispense","(Lnet/minecraft/core/dispenser/BlockSource;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;")}}
 ENTITY_METHODS={"<init>","mobInteract","interact","getBucketItemStack","saveToBucketTag","loadFromBucketTag","setFromBucket","fromBucket","getPickupSound","addAdditionalSaveData","readAdditionalSaveData","defineSynchedData","requiresCustomPersistence","removeWhenFarAway","finalizeSpawn"}
 LIMITS={"static_contract":"NOT_CERTIFIED","mutating_hook":"NOT_VERIFIED","physical_qa":"NOT_TESTED","mutation":"NO_MUTATION","provider_universe_closed":False,"semantic_magic_roots_delta":0,"runtime_loaded_bytes":"NOT_OBSERVED","actual_spawn_acceptance":"NOT_VERIFIED"}
 
@@ -207,7 +234,7 @@ def inspect(a):
             require(len(raw)<=100000,"resource size")
             resources[path]={"sha256":digest(raw),"bytes":len(raw),"data":json.loads(raw)}
         require(resources.get("assets/alexscaves/models/item/gossamer_worm_bucket.json",{}).get("sha256")=="b78cc41faf66a35938ce69ba9935026346186c89a2f1507571bbdb54b9b6945c","model pin")
-    report={"schema_version":2,"scope":"GOSSAMER_WORM_BUCKET_DISCOVERY_ONLY","artifact":artifact,"entity":entity,"dispenser":dispenser,"registry":reg,"lineage":lineage,"classes":records,"typed_consumers":consumers,"resources":resources,"limits":LIMITS}
+    report={"schema_version":3,"scope":"GOSSAMER_WORM_BUCKET_DISCOVERY_ONLY","artifact":artifact,"entity":entity,"dispenser":dispenser,"registry":reg,"lineage":lineage,"classes":records,"typed_consumers":consumers,"resources":resources,"limits":LIMITS}
     data=canonical(report).encode()
     require(len(data)<=10000000,"report byte budget")
     a.output.parent.mkdir(parents=True,exist_ok=True)

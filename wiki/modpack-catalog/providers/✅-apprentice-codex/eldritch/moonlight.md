@@ -2,7 +2,7 @@
 
 - **Provider:** Apprentice's Codex
 - **Mod ID:** `apprenticecodex`
-- **Installed JAR:** `apprentice_codex-0.9.7.1+mc1.21.1.jar`
+- **Installed JAR:** `apprentice_codex-1.0.1.1-mc1.21.1.jar`
 - **Registry ID:** `apprenticecodex:moon_light`
 - **Iron's school:** Eldritch
 - **Levels:** 1–3
@@ -10,9 +10,10 @@
 - **Cast type:** Long
 - **Cooldown:** 8 s
 - **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+- **Binary pin:** SHA-256 `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86`; SHA-1 `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF`; 11.870.671 bytes
+- **Historical source provenance:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (0.9.7.1; documental only, not the certification baseline)
 
-## Exact source coefficients
+## Exact 1.0.1.1 bytecode coefficients
 
 - `baseSpellPower = 1200`
 - `spellPowerPerLevel = 900`
@@ -42,7 +43,7 @@ The provider's katana/charge-cut entities own exact hit, dispel/interruption and
 
 ## Acquisition
 
-Registered through Iron's spell registry. Exact 0.9.7.1 scroll/loot availability remains in the provider-wide acquisition audit.
+Registered through Iron's spell registry. Exact scroll/loot availability remains in the provider-wide acquisition audit.
 
 ## Deduplication
 
@@ -50,22 +51,33 @@ Occupies the **uninterruptible Eldritch flash-cut / long spatial slash / magic-e
 
 ## Confidence
 
-`SOURCE-PINNED SPELL + PROVIDER GUIDE / KATANA+CHARGE-CUT INTERNAL EFFECT DETAILS + RUNTIME CONFIG QA PENDING`
+`SHA_EXACT_BINARY_BEHAVIOR 1.0.1.1 / STATIC_TECHNICAL_CATALOG_ONLY / mutating_hook=NOT_VERIFIED / physical_qa=NOT_TESTED / config efetiva e QA físico pendentes`
 
-## Localizadores para Codex — source exato
+## Localizadores e certificação — JAR 1.0.1.1
 
-- **Registry + identidade:** `apprenticecodex:moon_light` → `SpellRegistry.reg("moon_light", MoonLight::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.moonlight.MoonLight`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/moonlight/MoonLight.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+- **Artefato:** `apprentice_codex-1.0.1.1-mc1.21.1.jar`; SHA-256 `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86`; SHA-1 `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF`; 11.870.671 bytes.
+- **Registro/identidade:** `apprenticecodex:moon_light` → construtor de `jp.aquafactory.apprenticecodex.spell.moonlight.MoonLight`; pacote e classe confirmados no inventário e no bytecode do JAR físico.
+- **Evidência primária:** `javap -classpath <JAR> -p -s -c`/`-v` (`scratch/javap1011.txt`, `scratch/javap1011_v.txt`) e decompilação Vineflower 1.12.0 (`scratch/vf_apprentice1011/`). Síntese auditável: [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).
+- **Leitura para perks:** usar somente os fluxos, constantes e consumidores desta ficha. Evento, setter, callback ou estado provider-owned não é promovido a hook mutador sem ponto de chamada, consumidor do valor alterado e restrições de execução demonstrados.
+- **Contrato:** host Iron's controla casting/mana/cooldown; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana não duplica custo, hit, estado ou efeito. Sem hook comprovado: **⚠️ condicionado/fail-closed**.
+- **Pendências:** configuração efetiva do pack, canais herdados de `AbstractSpell`, multiplicadores de dano instalados e QA físico/Survival. O source 0.9.7.1 permanece apenas histórico; equivalência com o JAR não é assumida.
 
-## Engenharia causal aprofundada — armas conjuradas e efeitos derivados (2026-10-14)
+## Engenharia causal — ancoragem 1.0.1.1
 
-**Registry ID:** `apprenticecodex:moon_light`. **Source fixado:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (versão declarada 0.9.7.1). Classe e helpers: [MoonLight.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/moonlight/MoonLight.java); [MoonLightKatanaEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/moonlight/MoonLightKatanaEntity.java); [MoonLightChargeCutEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/moonlight/MoonLightChargeCutEntity.java); [MoonLightCounterspellEffect.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/moonlight/MoonLightCounterspellEffect.java).
+**Fluxo verificado:** `MoonLight` charge/standby → `MoonLightKatanaEntity` slash → `MoonLightChargeCutEntity` segment advances over the verified process duration with `damagedEntityIds` guard → `MoonLightCounterspellEffect` only after an accepted hit. The katana, spatial cut and counterspell are one semantic root.
 
-**Cadeia causal verificada no source:** MoonLight.onCastTickWithWeapon mantém carregamento/standby; onCastCompleteWithWeapon só após sucesso executa slash da katana e instancia uma MoonLightChargeCutEntity. MoonLightKatanaEntity.slash usa hitsAabb e só ativa MoonLightCounterspellEffect após dano bem-sucedido. MoonLightChargeCutEntity.tick avança o segmento ao longo de PROCESS_DURATION_TICKS=15 após delay, guarda damagedEntityIds e causa no máximo um dano por UUID dentro da entidade; após dano chama o mesmo efeito de counterspell. MoonLightCounterspellEffect respeita CounterSpellEvent cancelado e remove casting/recasts/effects apenas no fluxo autorizado.
+**Constantes/cálculo:** Declared coefficients: `baseSpellPower=1200`, `spellPowerPerLevel=900`, `baseManaCost=120`, `manaCostPerLevel=30`, `castTime=40`, LEGENDARY, Long, cooldown `8.0`, uninterruptible. Raw damage is `spellPower/100 * DamageMultiplierKey.MOON_LIGHT`; reach is `8+(level-1)*8`. Standby starts from `STANDBY_START_DELAY_TICK=10`, scaled by effective cast duration.
 
-**QA direcionado (pendente):** Counterspell de terceiros, efeitos de cura/cure removidos, hit double entre katana e segmento (efeitos do mesmo cast), restart durante segmento e restrições de PvP.
+**Limites:** Effective school/mana/cooldown/power channels, the installed `MOON_LIGHT` multiplier, third-party counterspell ordering, duplicate katana/cut settlement and Survival/PvP QA remain `NÃO VERIFICADOS`.
 
-**Authority/boundary:** o cast, mana, recast e cooldown base permanecem no Iron's; armas, projetos e efeitos são do Apprentice's Codex. Uma rajada, hit, hitbox, tracer, loot extra ou counterspell derivado **não é novo cast** e não autoriza recompensa/XP/Mastery independente. Black Arcana não replica custos, damage, loot, hit ou efeitos externos. Integração com RPG Skill Tree ⛔ fail-closed até receipt/callback server-side unívoco e homologado. ⚠️ Esta inspeção source-level não comprova o corpo dos métodos no JAR compilado, configs ativas ou QA físico de modpack.
+## Estado da certificação
+
+- `claim_scope`: `STATIC_TECHNICAL_CATALOG_ONLY`
+- `evidence_grade`: `SHA_EXACT_BINARY_BEHAVIOR`
+- `version`: `1.0.1.1`
+- `artifact_sha256`: `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86`
+- `artifact_sha1`: `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF`
+- `mutating_hook`: `NOT_VERIFIED`
+- `physical_qa`: `NOT_TESTED`
+- `implementation_in_main`: `NOT_APPLICABLE`
+- **Resultado:** ✅ contrato técnico estático reancorado; ⚠️ hook mutador, config efetiva, canais herdados e QA físico permanecem pendentes; ⛔ sem homologação para perks/Mastery.

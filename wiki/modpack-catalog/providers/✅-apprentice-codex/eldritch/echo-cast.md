@@ -22,12 +22,12 @@
 | Recurso | Mana do Iron's (`baseManaCost=50`, `manaCostPerLevel=0`) |
 | Spell power | `baseSpellPower=0`, `spellPowerPerLevel=0` |
 | Aquisição | `setAllowCrafting(false)`, `requiresLearning()=false`, `allowLooting()=false`, `HiddenFromEldritchResearch` |
-| JAR exato | `apprentice_codex-1.0.1-mc1.21.1.jar` |
-| SHA-256 do JAR | `47018AD8C6C6187B17C6BFC4D4F2FFF44EA2ED560719EBB6566A750715757947` |
-| SHA-1 do JAR | `3077999F51299A53A0AF1B8A1AEC22F4099E36A3` |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
 | Ambiente | Minecraft 1.21.1 · NeoForge 21.1.250 · Java 21 (JDK 21.0.12 na inspeção) |
 | Classe de implementação | `jp.aquafactory.apprenticecodex.spell.echocast.EchoCast` |
-| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md) |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
 ## 2. Localizadores para o Codex
 
@@ -45,7 +45,7 @@
 | Efeitos de repeat | `MulticastEchoStaffMobEffectHandler` / `MulticastEchoStaffMobEffectProfileManager` |
 | Config | `jp.aquafactory.apprenticecodex.config.item.MulticastEchoStaffServerConfig` |
 
-Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`, `EXIT=0`, 347.597 bytes), não publicados integralmente.
+Descritores e offsets JVM foram reconsultados no JAR 1.0.1.1: saída `scratch/javap1011_legacy.txt` (`javap -classpath <JAR> -p -s -c`, `EXIT=0`, 233.376 bytes, SHA-256 `F59E0944BA6C04BF5A2B3A28145C9403B225EDF7EEC8425D4A0B6E189F63CCF3`) e anotações/constantes em `scratch/javap1011_v.txt` (`EXIT=0`), não publicadas integralmente.
 
 ## 3. Casting / execução
 
@@ -58,7 +58,7 @@ Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`,
 
 O repeat não é feito por `EchoCast` em si. `MulticastEchoStaffCastHelper.isEchoTarget` exclui explicitamente o próprio `Echo Cast` e exige que o item de cast seja `MulticastEchoStaff`.
 
-Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.getManaCost(int)` (`(I)I`, offsets 0–29) calcula `(baseManaCost + manaCostPerLevel*(level-1)) * MANA_MULTIPLIER` e trunca com `d2i`; `getSpellCooldown()` (`()I`, offsets 0–18) calcula `COOLDOWN_IN_SECONDS * 20.0d` e trunca com `d2i`; `getCastTime(int)` (`(I)I`, offsets 0–16) retorna `0` para `CastType.INSTANT` e o campo `castTime` nos demais tipos — aqui `CastType.LONG` com `20` ticks. `getLevelFor(int,LivingEntity)` (`(ILnet/minecraft/world/entity/LivingEntity;)I`, offsets 0–64) aplica Curios e `ModifySpellLevelEvent`. Assim, `50`, `0`, `0`, `0`, `0.0` e `castTime=20` são coeficientes declarados pelo Apprentice Codex; mana e cooldown efetivos dependem da config instalada do Iron's, atributos e eventos, **NÃO VERIFICADOS**. O cooldown final do repeat é calculado pelo provider, conforme a seção 5. Ver âncoras em [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md).
+Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.getManaCost(int)` (`(I)I`, offsets 0–29) calcula `(baseManaCost + manaCostPerLevel*(level-1)) * MANA_MULTIPLIER` e trunca com `d2i`; `getSpellCooldown()` (`()I`, offsets 0–18) calcula `COOLDOWN_IN_SECONDS * 20.0d` e trunca com `d2i`; `getCastTime(int)` (`(I)I`, offsets 0–16) retorna `0` para `CastType.INSTANT` e o campo `castTime` nos demais tipos — aqui `CastType.LONG` com `20` ticks. `getLevelFor(int,LivingEntity)` (`(ILnet/minecraft/world/entity/LivingEntity;)I`, offsets 0–64) aplica Curios e `ModifySpellLevelEvent`. Assim, `50`, `0`, `0`, `0`, `0.0` e `castTime=20` são coeficientes declarados pelo Apprentice Codex; mana e cooldown efetivos dependem da config instalada do Iron's, atributos e eventos, **NÃO VERIFICADOS**. O cooldown final do repeat é calculado pelo provider, conforme a seção 5. Ver âncoras em [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).
 
 ## 4. Targeting / geometria
 
@@ -120,10 +120,10 @@ Assinatura ocupada: "buff de repetição condicionado a staff que reexecuta a pr
 - ⚠️ Configuração efetiva do pack (delay, multiplicadores, caps, perfis) não lida; apenas defaults de código afirmados.
 - ⚠️ `physical_qa=NOT_TESTED`: sem cliente, servidor, Survival, PvP ou modpack real.
 - ⚠️ Catálogo completo de perfis de ataque/efeito por spellId não enumerado neste lote; tratado como provider-owned.
-- ⚠️ Universo integral do provider não encerrado: recorte observado de 5 fichas.
+- ⚠️ Universo integral do provider não encerrado: recorte observado de 15 fichas.
 
 ## Localizadores para Codex — resumo operacional
 
 - Não confundir `cooldownSeconds=0.0` da magia com o cooldown final do fluxo de repeat.
 - Não awardar procs/mastery por cada repetição sem decisão explícita de design; a repetição é causalmente dependente do cast original.
-- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md) para hashes, comandos e limites da prova.
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) para hashes, comandos e limites da prova.
