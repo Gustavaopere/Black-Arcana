@@ -1,0 +1,1566 @@
+{
+  "additional_ritual_recipes": {
+    "frostling_shard": {
+      "central_item": "alshanex_familiars:pet_soul",
+      "particle": "minecraft:snowflake",
+      "peripheral_inputs": [
+        {
+          "consume": true,
+          "count": 1,
+          "item": "minecraft:blue_ice"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:arcane_essence"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:ice_rune"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:frozen_bone"
+        }
+      ],
+      "recipe_id": "alshanex_familiars:ritual_recipes/frostling_shard",
+      "resource": "data/alshanex_familiars/recipe/ritual_recipes/frostling_shard.json",
+      "resource_sha256": "da170f851a13d200f6e201518d788d90ccbbd82740fe45acd0ff64f841231a4b",
+      "result_components_explicit": false,
+      "result_count_explicit": false,
+      "result_item": "alshanex_familiars:frostling_shard",
+      "type": "alshanex_familiars:ritual_recipe"
+    },
+    "hunter_shard": {
+      "central_item": "alshanex_familiars:pet_soul",
+      "particle": "minecraft:crit",
+      "peripheral_inputs": [
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:hogskin"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:arcane_essence"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "minecraft:crossbow"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "minecraft:rabbit_foot"
+        }
+      ],
+      "recipe_id": "alshanex_familiars:ritual_recipes/hunter_shard",
+      "resource": "data/alshanex_familiars/recipe/ritual_recipes/hunter_shard.json",
+      "resource_sha256": "cbe0aa9f5abfda200f8dfcaa42dc36dd43d8881710adb4a18055f225925ab770",
+      "result_components_explicit": false,
+      "result_count_explicit": false,
+      "result_item": "alshanex_familiars:hunter_shard",
+      "type": "alshanex_familiars:ritual_recipe"
+    },
+    "lightning_mage_shard": {
+      "central_item": "alshanex_familiars:pet_soul",
+      "particle": "irons_spellbooks:electricity",
+      "peripheral_inputs": [
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:lightning_bottle"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:arcane_essence"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:lightning_rune"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "minecraft:lightning_rod"
+        }
+      ],
+      "recipe_id": "alshanex_familiars:ritual_recipes/lightning_mage_shard",
+      "resource": "data/alshanex_familiars/recipe/ritual_recipes/lightning_mage_shard.json",
+      "resource_sha256": "476e89f5d13c4ce133435b11eb78e670a50db132e6ad67c00e3d423b2a8aff96",
+      "result_components_explicit": false,
+      "result_count_explicit": false,
+      "result_item": "alshanex_familiars:lightning_mage_shard",
+      "type": "alshanex_familiars:ritual_recipe"
+    },
+    "magic_power_tier_2": {
+      "central_item": "alshanex_familiars:magic_power_tier_1",
+      "particle": "irons_spellbooks:cleanse",
+      "peripheral_inputs": [
+        {
+          "consume": true,
+          "count": 1,
+          "item": "minecraft:ghast_tear"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:cinder_essence"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "minecraft:blaze_rod"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:hogskin"
+        }
+      ],
+      "recipe_id": "alshanex_familiars:ritual_recipes/magic_power_tier_2",
+      "resource": "data/alshanex_familiars/recipe/ritual_recipes/magic_power_tier_2.json",
+      "resource_sha256": "328b2a4879e22a6b7a66393a3958e5937ddc617a539a8fe8cf740addc5c67d26",
+      "result_components_explicit": false,
+      "result_count_explicit": false,
+      "result_item": "alshanex_familiars:magic_power_tier_2",
+      "type": "alshanex_familiars:ritual_recipe"
+    },
+    "magic_power_tier_3": {
+      "central_item": "alshanex_familiars:magic_power_tier_2",
+      "particle": "irons_spellbooks:cleanse",
+      "peripheral_inputs": [
+        {
+          "consume": false,
+          "count": 1,
+          "item": "irons_spellbooks:divine_soulshard"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "minecraft:end_crystal"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "minecraft:end_rod"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:dragonskin"
+        }
+      ],
+      "recipe_id": "alshanex_familiars:ritual_recipes/magic_power_tier_3",
+      "resource": "data/alshanex_familiars/recipe/ritual_recipes/magic_power_tier_3.json",
+      "resource_sha256": "673bc997e74167cb874959a7ab7f73ea2773a31dd4b4c6e6fbf4b742344561b1",
+      "result_components_explicit": false,
+      "result_count_explicit": false,
+      "result_item": "alshanex_familiars:magic_power_tier_3",
+      "type": "alshanex_familiars:ritual_recipe"
+    },
+    "magic_resist_tier_2": {
+      "central_item": "alshanex_familiars:magic_resist_tier_1",
+      "particle": "irons_spellbooks:unstable_ender",
+      "peripheral_inputs": [
+        {
+          "consume": true,
+          "count": 1,
+          "item": "minecraft:ghast_tear"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:cinder_essence"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "minecraft:warped_fungus"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:hogskin"
+        }
+      ],
+      "recipe_id": "alshanex_familiars:ritual_recipes/magic_resist_tier_2",
+      "resource": "data/alshanex_familiars/recipe/ritual_recipes/magic_resist_tier_2.json",
+      "resource_sha256": "cb6635b9812bfc828d52e474917ce55dd74b0fd28161a5c93e77be8a8daf2d04",
+      "result_components_explicit": false,
+      "result_count_explicit": false,
+      "result_item": "alshanex_familiars:magic_resist_tier_2",
+      "type": "alshanex_familiars:ritual_recipe"
+    },
+    "magic_resist_tier_3": {
+      "central_item": "alshanex_familiars:magic_resist_tier_2",
+      "particle": "irons_spellbooks:unstable_ender",
+      "peripheral_inputs": [
+        {
+          "consume": false,
+          "count": 1,
+          "item": "irons_spellbooks:divine_soulshard"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "minecraft:popped_chorus_fruit"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "minecraft:crying_obsidian"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:dragonskin"
+        }
+      ],
+      "recipe_id": "alshanex_familiars:ritual_recipes/magic_resist_tier_3",
+      "resource": "data/alshanex_familiars/recipe/ritual_recipes/magic_resist_tier_3.json",
+      "resource_sha256": "b526e59f225d56a4737745854eda875ce97c6acdf146fec7411b25dc5e09e465",
+      "result_components_explicit": false,
+      "result_count_explicit": false,
+      "result_item": "alshanex_familiars:magic_resist_tier_3",
+      "type": "alshanex_familiars:ritual_recipe"
+    },
+    "summoner_shard": {
+      "central_item": "alshanex_familiars:pet_soul",
+      "particle": "minecraft:sculk_charge_pop",
+      "peripheral_inputs": [
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:ruined_book"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:arcane_essence"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:eldritch_manuscript"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "minecraft:sculk_catalyst"
+        }
+      ],
+      "recipe_id": "alshanex_familiars:ritual_recipes/summoner_shard",
+      "resource": "data/alshanex_familiars/recipe/ritual_recipes/summoner_shard.json",
+      "resource_sha256": "ca75dd95ebc2c96bf71ee9fcb99177816fd790c7ba6ae7e27d7bb54c6ca30445",
+      "result_components_explicit": false,
+      "result_count_explicit": false,
+      "result_item": "alshanex_familiars:summoner_shard",
+      "type": "alshanex_familiars:ritual_recipe"
+    },
+    "truth_mirror": {
+      "central_item": "irons_spellbooks:visibility_ring",
+      "particle": "minecraft:enchanted_hit",
+      "peripheral_inputs": [
+        {
+          "consume": true,
+          "count": 1,
+          "item": "minecraft:gold_ingot"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:mithril_ingot"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:shriving_stone"
+        },
+        {
+          "consume": true,
+          "count": 1,
+          "item": "irons_spellbooks:divine_pearl"
+        }
+      ],
+      "recipe_id": "alshanex_familiars:ritual_recipes/truth_mirror",
+      "resource": "data/alshanex_familiars/recipe/ritual_recipes/truth_mirror.json",
+      "resource_sha256": "b5c16686aa5b853955eb832be74fa5ae0beb2f3801f7742f6b31ee3ef9a7acff",
+      "result_components_explicit": false,
+      "result_count_explicit": false,
+      "result_item": "alshanex_familiars:truth_mirror",
+      "type": "alshanex_familiars:ritual_recipe"
+    }
+  },
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "library_consumers": {
+    "net/alshanex/familiarslib/entity/AbstractSpellCastingPet": {
+      "class_sha256": "26238122e4cbf4f9345925e1bc07b330cf74f91187308056f377a3da2da522a0",
+      "methods": [
+        {
+          "access": 1,
+          "anchors": [
+            {
+              "fact": "getOwnerUUID:",
+              "offset": 9
+            },
+            {
+              "fact": "OwnerHelper.getAndCacheOwner:",
+              "offset": 12
+            }
+          ],
+          "code_sha256": "26d68fc434e3fd0096780c29037b2fca1510c92bf0ced29aaf29b0e066a52510",
+          "code_size": 16,
+          "descriptor": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "exception_handlers": [],
+          "instruction_count": 8,
+          "max_locals": 1,
+          "max_stack": 3,
+          "name": "getSummoner"
+        },
+        {
+          "access": 1,
+          "anchors": [
+            {
+              "fact": "Player.getItemInHand:",
+              "offset": 2
+            },
+            {
+              "fact": "AbstractFamiliarStorageBlockEntity.isOwner:",
+              "offset": 64
+            },
+            {
+              "fact": "FamiliarConsumableIntegration.handleConsumableInteraction:",
+              "offset": 87
+            },
+            {
+              "fact": "Level.isClientSide:",
+              "offset": 250
+            },
+            {
+              "fact": "getOwnerUUID:",
+              "offset": 257
+            },
+            {
+              "fact": "FamiliarConsumableIntegration.handleConsumableInteraction:",
+              "offset": 316
+            }
+          ],
+          "code_sha256": "b3ffbb1de9a5f620a4fbda3577b41d4fc0b67a1a4cfa357edf1b7bb0b9fb200d",
+          "code_size": 721,
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
+          "exception_handlers": [],
+          "instruction_count": 324,
+          "max_locals": 11,
+          "max_stack": 11,
+          "name": "mobInteract"
+        }
+      ],
+      "superclass": "io/redspace/ironsspellbooks/entity/mobs/abstract_spell_casting_mob/AbstractSpellCastingMob"
+    },
+    "net/alshanex/familiarslib/util/consumables/FamiliarConsumableComponent": {
+      "class_sha256": "af766586e210a80e1a4ad9c3f4a26934bface5bde9fdac9768b9b3c876d4f36c",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "bc7a2bea7c3c631aee6c7c34259b98b16a7176064ae11e6f13577049a774e6a0",
+          "code_size": 12,
+          "descriptor": "()I",
+          "exception_handlers": [],
+          "instruction_count": 6,
+          "max_locals": 1,
+          "max_stack": 2,
+          "name": "getBonus"
+        },
+        {
+          "access": 1,
+          "code_sha256": "bf0d0c7b55848cc27a48bcba8a4f5b6c4788b89a4dcd15a910a5e593c20ca5ec",
+          "code_size": 12,
+          "descriptor": "()I",
+          "exception_handlers": [],
+          "instruction_count": 6,
+          "max_locals": 1,
+          "max_stack": 2,
+          "name": "getLimit"
+        }
+      ],
+      "superclass": "java/lang/Record"
+    },
+    "net/alshanex/familiarslib/util/consumables/FamiliarConsumableIntegration": {
+      "class_sha256": "50e0c5de763142adcce18a38fd92eba13ccd951247a826440bd73618100c1172",
+      "methods": [
+        {
+          "access": 9,
+          "anchors": [
+            {
+              "fact": "Level.isClientSide:",
+              "offset": 17
+            },
+            {
+              "fact": "FamiliarConsumableComponent.getLimit:",
+              "offset": 41
+            },
+            {
+              "fact": "if_icmplt 113",
+              "offset": 50
+            },
+            {
+              "fact": "getMaxUsableTier:",
+              "offset": 119
+            },
+            {
+              "fact": "FamiliarConsumableComponent.getBonus:",
+              "offset": 222
+            },
+            {
+              "fact": "Math.min:",
+              "offset": 234
+            },
+            {
+              "fact": "ConsumableData.setValue:",
+              "offset": 247
+            },
+            {
+              "fact": "FamiliarConsumableSystem.applyAttributeModifiers:",
+              "offset": 259
+            },
+            {
+              "fact": "iconst_1",
+              "offset": 276
+            },
+            {
+              "fact": "ItemStack.shrink:",
+              "offset": 277
+            }
+          ],
+          "code_sha256": "faa494619e3c1fdf179430b183fc3dcef1b1f9043bbc020cfc2298e98e597e01",
+          "code_size": 369,
+          "descriptor": "(Lnet/alshanex/familiarslib/entity/AbstractSpellCastingPet;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResult;",
+          "exception_handlers": [],
+          "instruction_count": 173,
+          "max_locals": 14,
+          "max_stack": 9,
+          "name": "handleConsumableInteraction"
+        },
+        {
+          "access": 10,
+          "code_sha256": "3748d089a73d8f66811eeb388cb545a9e4ef848fd9c92f160ff5dcac8998b5a7",
+          "code_size": 35,
+          "descriptor": "(Lnet/alshanex/familiarslib/util/consumables/FamiliarConsumableSystem$ConsumableData;Lnet/alshanex/familiarslib/util/consumables/FamiliarConsumableSystem$ConsumableType;)I",
+          "exception_handlers": [],
+          "instruction_count": 21,
+          "max_locals": 4,
+          "max_stack": 3,
+          "name": "getMaxUsableTier"
+        },
+        {
+          "access": 9,
+          "code_sha256": "0f4cf99d107ff2e51217d1279292b2ee5d819772089531b64107bca7077ee2bf",
+          "code_size": 16,
+          "descriptor": "(Lnet/alshanex/familiarslib/entity/AbstractSpellCastingPet;Lnet/minecraft/nbt/CompoundTag;)V",
+          "exception_handlers": [],
+          "instruction_count": 10,
+          "max_locals": 4,
+          "max_stack": 2,
+          "name": "saveConsumableData"
+        },
+        {
+          "access": 9,
+          "code_sha256": "a86e88fe7744ee3c2adc5490e4fe3642fe70e4ad639906766b379bc369f7cac2",
+          "code_size": 16,
+          "descriptor": "(Lnet/alshanex/familiarslib/entity/AbstractSpellCastingPet;Lnet/minecraft/nbt/CompoundTag;)V",
+          "exception_handlers": [],
+          "instruction_count": 10,
+          "max_locals": 4,
+          "max_stack": 2,
+          "name": "loadConsumableData"
+        },
+        {
+          "access": 9,
+          "code_sha256": "d22d334839a3b9f24166332e591c723420efe341345cc1584c8604a92caf7f18",
+          "code_size": 11,
+          "descriptor": "(Lnet/alshanex/familiarslib/entity/AbstractSpellCastingPet;)V",
+          "exception_handlers": [],
+          "instruction_count": 7,
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "applyConsumableModifiers"
+        },
+        {
+          "access": 9,
+          "code_sha256": "58a0b31c6d6f008cde1aa48ab4f2b46e9b4f3ef7addeacc433866ffaa09de1af",
+          "code_size": 11,
+          "descriptor": "(Lnet/alshanex/familiarslib/entity/AbstractSpellCastingPet;Lnet/alshanex/familiarslib/util/consumables/FamiliarConsumableSystem$ConsumableType;)I",
+          "exception_handlers": [],
+          "instruction_count": 7,
+          "max_locals": 3,
+          "max_stack": 2,
+          "name": "getMaxUsableTier"
+        }
+      ],
+      "superclass": "java/lang/Object"
+    },
+    "net/alshanex/familiarslib/util/consumables/FamiliarConsumableSystem": {
+      "class_sha256": "6929ab466bf2f07507251b7de1c2197067eb22356959a24f1f17767d586297a7",
+      "methods": [
+        {
+          "access": 9,
+          "anchors": [
+            {
+              "fact": "AttributeRegistry.SPELL_POWER:",
+              "offset": 124
+            },
+            {
+              "fact": "double 100.0d",
+              "offset": 140
+            },
+            {
+              "fact": "ADD_MULTIPLIED_BASE:",
+              "offset": 155
+            },
+            {
+              "fact": "AttributeInstance.addPermanentModifier:",
+              "offset": 167
+            },
+            {
+              "fact": "AttributeRegistry.SPELL_RESIST:",
+              "offset": 185
+            },
+            {
+              "fact": "double 100.0d",
+              "offset": 201
+            },
+            {
+              "fact": "ADD_MULTIPLIED_BASE:",
+              "offset": 216
+            },
+            {
+              "fact": "AttributeInstance.addPermanentModifier:",
+              "offset": 228
+            }
+          ],
+          "code_sha256": "8ed6958f3ca25e657bf0f206754f467cb94a61ab384c872189464df61752a20d",
+          "code_size": 293,
+          "descriptor": "(Lnet/alshanex/familiarslib/entity/AbstractSpellCastingPet;Lnet/alshanex/familiarslib/util/consumables/FamiliarConsumableSystem$ConsumableData;)V",
+          "exception_handlers": [],
+          "instruction_count": 134,
+          "max_locals": 11,
+          "max_stack": 6,
+          "name": "applyAttributeModifiers"
+        }
+      ],
+      "superclass": "java/lang/Object"
+    },
+    "net/alshanex/familiarslib/util/consumables/FamiliarConsumableSystem$ConsumableData": {
+      "class_sha256": "be4587e845730220b232ba9e2e5b79e4782f22e0a112a6c34abc55ed6f8b3836",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "8e43591a8b3f665ed2f86be7249780e46c1e7aff860a751f3b4b7f5d83388eca",
+          "code_size": 71,
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "exception_handlers": [],
+          "instruction_count": 36,
+          "max_locals": 2,
+          "max_stack": 3,
+          "name": "saveToNBT"
+        },
+        {
+          "access": 1,
+          "code_sha256": "f5e4262bcaeb50e40af023959888969b4034cb5e8660ff43c0d4d1b64b9f74ed",
+          "code_size": 80,
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "exception_handlers": [],
+          "instruction_count": 40,
+          "max_locals": 2,
+          "max_stack": 3,
+          "name": "loadFromNBT"
+        },
+        {
+          "access": 1,
+          "code_sha256": "3b27a320c0bcbda17744ff4a87b55b86e30e3c16f4afc652bc32464bb5d41228",
+          "code_size": 118,
+          "descriptor": "(Lnet/alshanex/familiarslib/util/consumables/FamiliarConsumableSystem$ConsumableType;)I",
+          "exception_handlers": [],
+          "instruction_count": 39,
+          "max_locals": 2,
+          "max_stack": 4,
+          "name": "getValue"
+        },
+        {
+          "access": 1,
+          "code_sha256": "bb291a74d1dcc81ca25b57bcf60b34f095ece7958e7301fbeb2a4af2ab2f5735",
+          "code_size": 108,
+          "descriptor": "(Lnet/alshanex/familiarslib/util/consumables/FamiliarConsumableSystem$ConsumableType;I)V",
+          "exception_handlers": [],
+          "instruction_count": 39,
+          "max_locals": 3,
+          "max_stack": 3,
+          "name": "setValue"
+        }
+      ],
+      "superclass": "java/lang/Object"
+    },
+    "net/alshanex/familiarslib/util/consumables/FamiliarConsumableSystem$ConsumableType": {
+      "class_sha256": "3bafc2b6f611c26edd99a86de5e9f81ad66b9697d7a9db59b2ecf2455b8a8865",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "48ab6286d1f3f42691be4f846c397811536dc37d5d0e93ba5fe1f7272369245a",
+          "code_size": 9,
+          "descriptor": "(I)I",
+          "exception_handlers": [],
+          "instruction_count": 7,
+          "max_locals": 2,
+          "max_stack": 3,
+          "name": "getTierBonus"
+        },
+        {
+          "access": 1,
+          "code_sha256": "b2aeec87c287697c5f1be82b68c654550dd62a5c6b87b9a2f5976d2ced0f4529",
+          "code_size": 9,
+          "descriptor": "(I)I",
+          "exception_handlers": [],
+          "instruction_count": 7,
+          "max_locals": 2,
+          "max_stack": 3,
+          "name": "getTierLimit"
+        },
+        {
+          "access": 8,
+          "anchors": [
+            {
+              "fact": "String SPELL_POWER",
+              "offset": 106
+            },
+            {
+              "fact": "iconst_5",
+              "offset": 119
+            },
+            {
+              "fact": "bipush 15",
+              "offset": 123
+            },
+            {
+              "fact": "bipush 30",
+              "offset": 136
+            },
+            {
+              "fact": "bipush 45",
+              "offset": 141
+            },
+            {
+              "fact": "Field SPELL_POWER:",
+              "offset": 149
+            },
+            {
+              "fact": "String SPELL_RESIST",
+              "offset": 156
+            },
+            {
+              "fact": "iconst_5",
+              "offset": 169
+            },
+            {
+              "fact": "bipush 15",
+              "offset": 173
+            },
+            {
+              "fact": "bipush 30",
+              "offset": 186
+            },
+            {
+              "fact": "bipush 45",
+              "offset": 191
+            },
+            {
+              "fact": "Field SPELL_RESIST:",
+              "offset": 199
+            }
+          ],
+          "code_sha256": "89569fd57e56c0a284a57f90211e9e59b9e9ba33abbc1435fc474be9323c618e",
+          "code_size": 303,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 195,
+          "max_locals": 0,
+          "max_stack": 10,
+          "name": "<clinit>"
+        }
+      ],
+      "superclass": "java/lang/Enum"
+    }
+  },
+  "mutating_hook": "NOT_VERIFIED",
+  "mutation": "NO_MUTATION",
+  "output_item_bindings": {
+    "frostling_shard": {
+      "bootstrap_index": 43,
+      "constructor_owner": "net/alshanex/alshanex_familiars/item/shards/FrostlingShard",
+      "descriptor": "()V"
+    },
+    "hunter_shard": {
+      "bootstrap_index": 39,
+      "constructor_owner": "net/alshanex/alshanex_familiars/item/shards/HunterShard",
+      "descriptor": "()V"
+    },
+    "lightning_mage_shard": {
+      "bootstrap_index": 41,
+      "constructor_owner": "net/alshanex/alshanex_familiars/item/shards/MageShard",
+      "descriptor": "()V"
+    },
+    "magic_power_tier_2": {
+      "bootstrap_index": 62,
+      "descriptor": "()Lnet/minecraft/world/item/Item;",
+      "method": "lambda$static$40"
+    },
+    "magic_power_tier_3": {
+      "bootstrap_index": 63,
+      "descriptor": "()Lnet/minecraft/world/item/Item;",
+      "method": "lambda$static$41"
+    },
+    "magic_resist_tier_2": {
+      "bootstrap_index": 65,
+      "descriptor": "()Lnet/minecraft/world/item/Item;",
+      "method": "lambda$static$43"
+    },
+    "magic_resist_tier_3": {
+      "bootstrap_index": 66,
+      "descriptor": "()Lnet/minecraft/world/item/Item;",
+      "method": "lambda$static$44"
+    },
+    "summoner_shard": {
+      "bootstrap_index": 42,
+      "constructor_owner": "net/alshanex/alshanex_familiars/item/shards/SummonerShard",
+      "descriptor": "()V"
+    },
+    "truth_mirror": {
+      "bootstrap_index": 50,
+      "constructor_owner": "net/alshanex/alshanex_familiars/item/TruthMirror",
+      "descriptor": "()V"
+    }
+  },
+  "perk_certification": "NOT_CERTIFIED",
+  "physical_qa": "NOT_TESTED",
+  "provider_classes": {
+    "net/alshanex/alshanex_familiars/item/TruthMirror": {
+      "class_sha256": "19f0507b24940eb971ee495ad831b87ae80fe3e810d00b099641c196027154d3",
+      "methods": [
+        {
+          "access": 1,
+          "anchors": [
+            {
+              "fact": "iconst_1",
+              "offset": 14
+            },
+            {
+              "fact": "Item$Properties.stacksTo:",
+              "offset": 15
+            },
+            {
+              "fact": "iconst_3",
+              "offset": 18
+            },
+            {
+              "fact": "Item$Properties.durability:",
+              "offset": 19
+            }
+          ],
+          "code_sha256": "42f8fa74a03b00c084d4687bfb1edb47eb9cf683af88a4b71cbbc49d953aa19f",
+          "code_size": 26,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 12,
+          "max_locals": 1,
+          "max_stack": 3,
+          "name": "<init>"
+        },
+        {
+          "access": 1,
+          "anchors": [
+            {
+              "fact": "Level.isClientSide:",
+              "offset": 18
+            },
+            {
+              "fact": "getIsImpostor:",
+              "offset": 26
+            },
+            {
+              "fact": "ifeq 482",
+              "offset": 32
+            },
+            {
+              "fact": "getSummoner:",
+              "offset": 37
+            },
+            {
+              "fact": "ifnonnull 233",
+              "offset": 40
+            },
+            {
+              "fact": "Level.addFreshEntity:",
+              "offset": 103
+            },
+            {
+              "fact": "pop",
+              "offset": 106
+            },
+            {
+              "fact": "AbstractSpellCastingPet.remove:",
+              "offset": 208
+            },
+            {
+              "fact": "triggerRevealAdvancement:",
+              "offset": 227
+            },
+            {
+              "fact": "LivingEntity.is:",
+              "offset": 239
+            },
+            {
+              "fact": "ifeq 482",
+              "offset": 242
+            },
+            {
+              "fact": "IllusionistPetEntity.setOwnerUUID:",
+              "offset": 315
+            },
+            {
+              "fact": "Level.addFreshEntity:",
+              "offset": 355
+            },
+            {
+              "fact": "pop",
+              "offset": 358
+            },
+            {
+              "fact": "AbstractSpellCastingPet.remove:",
+              "offset": 460
+            },
+            {
+              "fact": "triggerRevealAdvancement:",
+              "offset": 479
+            },
+            {
+              "fact": "EquipmentSlot.MAINHAND:",
+              "offset": 485
+            },
+            {
+              "fact": "ItemStack.hurtAndBreak:",
+              "offset": 488
+            },
+            {
+              "fact": "InteractionResult.SUCCESS:",
+              "offset": 491
+            },
+            {
+              "fact": "InteractionResult.FAIL:",
+              "offset": 495
+            }
+          ],
+          "code_sha256": "3c8a93adc2cb7ad7adf278b73cb046461fc5cfe50c334f75b0fdfb21d54441a8",
+          "code_size": 499,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
+          "exception_handlers": [],
+          "instruction_count": 210,
+          "max_locals": 8,
+          "max_stack": 18,
+          "name": "interactLivingEntity"
+        },
+        {
+          "access": 2,
+          "anchors": [
+            {
+              "fact": "CriteriaTriggersRegistry.ILLUSIONIST_REVEAL_TRIGGER:",
+              "offset": 0
+            }
+          ],
+          "code_sha256": "8a39fc63a7301ba939f1a2d04ff029c2d728837b6d4afe781d75612f379de6ee",
+          "code_size": 14,
+          "descriptor": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "exception_handlers": [],
+          "instruction_count": 6,
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "triggerRevealAdvancement"
+        }
+      ],
+      "superclass": "net/minecraft/world/item/Item"
+    },
+    "net/alshanex/alshanex_familiars/item/shards/FrostlingShard": {
+      "class_sha256": "0c7b49c3fb9f3f1d10ee98f781b7e27fbd72babbbb5dc2f00982d9b9323520c4",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "d6f7264189858f154b120ac2e9b76f4b4dae9ddb629e4ec627af7810207e1a24",
+          "code_size": 5,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 3,
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "<init>"
+        },
+        {
+          "access": 4,
+          "anchors": [
+            {
+              "fact": "EntityRegistry.FROSTLING_PET:",
+              "offset": 4
+            },
+            {
+              "fact": "iconst_0",
+              "offset": 21
+            },
+            {
+              "fact": "FrostlingPetEntity.setIsImpostor:",
+              "offset": 25
+            },
+            {
+              "fact": "BlockPos.getCenter:",
+              "offset": 31
+            },
+            {
+              "fact": "dconst_1",
+              "offset": 35
+            },
+            {
+              "fact": "Player.getYRot:",
+              "offset": 46
+            },
+            {
+              "fact": "fneg",
+              "offset": 49
+            },
+            {
+              "fact": "FrostlingPetEntity.setYRot:",
+              "offset": 50
+            },
+            {
+              "fact": "Level.addFreshEntity:",
+              "offset": 56
+            },
+            {
+              "fact": "pop",
+              "offset": 59
+            }
+          ],
+          "code_sha256": "d2962a2dd55e65ca419674a55b8f7a1b8abf3cf0692914f50ddd6848e86262b1",
+          "code_size": 61,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;)V",
+          "exception_handlers": [],
+          "instruction_count": 30,
+          "max_locals": 5,
+          "max_stack": 8,
+          "name": "spawnFamiliar"
+        }
+      ],
+      "superclass": "net/alshanex/familiarslib/item/AbstractRuneItem"
+    },
+    "net/alshanex/alshanex_familiars/item/shards/HunterShard": {
+      "class_sha256": "cdc20bbf2110813a896137bb5336aa05bb2352a8809212b74d4782532d5bd9fa",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "d6f7264189858f154b120ac2e9b76f4b4dae9ddb629e4ec627af7810207e1a24",
+          "code_size": 5,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 3,
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "<init>"
+        },
+        {
+          "access": 4,
+          "anchors": [
+            {
+              "fact": "EntityRegistry.HUNTER_PET:",
+              "offset": 4
+            },
+            {
+              "fact": "iconst_0",
+              "offset": 21
+            },
+            {
+              "fact": "HunterPetEntity.setIsImpostor:",
+              "offset": 25
+            },
+            {
+              "fact": "BlockPos.getCenter:",
+              "offset": 31
+            },
+            {
+              "fact": "dconst_1",
+              "offset": 35
+            },
+            {
+              "fact": "Player.getYRot:",
+              "offset": 46
+            },
+            {
+              "fact": "fneg",
+              "offset": 49
+            },
+            {
+              "fact": "HunterPetEntity.setYRot:",
+              "offset": 50
+            },
+            {
+              "fact": "Level.addFreshEntity:",
+              "offset": 56
+            },
+            {
+              "fact": "pop",
+              "offset": 59
+            }
+          ],
+          "code_sha256": "d2962a2dd55e65ca419674a55b8f7a1b8abf3cf0692914f50ddd6848e86262b1",
+          "code_size": 61,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;)V",
+          "exception_handlers": [],
+          "instruction_count": 30,
+          "max_locals": 5,
+          "max_stack": 8,
+          "name": "spawnFamiliar"
+        }
+      ],
+      "superclass": "net/alshanex/familiarslib/item/AbstractRuneItem"
+    },
+    "net/alshanex/alshanex_familiars/item/shards/MageShard": {
+      "class_sha256": "7d2e5fc25988b8617615119148b5161a2c360d716d7c4469043a6f1dff78756a",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "d6f7264189858f154b120ac2e9b76f4b4dae9ddb629e4ec627af7810207e1a24",
+          "code_size": 5,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 3,
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "<init>"
+        },
+        {
+          "access": 4,
+          "anchors": [
+            {
+              "fact": "EntityRegistry.MAGE_PET:",
+              "offset": 4
+            },
+            {
+              "fact": "iconst_0",
+              "offset": 21
+            },
+            {
+              "fact": "MagePetEntity.setIsImpostor:",
+              "offset": 25
+            },
+            {
+              "fact": "BlockPos.getCenter:",
+              "offset": 31
+            },
+            {
+              "fact": "dconst_1",
+              "offset": 35
+            },
+            {
+              "fact": "Player.getYRot:",
+              "offset": 46
+            },
+            {
+              "fact": "fneg",
+              "offset": 49
+            },
+            {
+              "fact": "MagePetEntity.setYRot:",
+              "offset": 50
+            },
+            {
+              "fact": "Level.addFreshEntity:",
+              "offset": 56
+            },
+            {
+              "fact": "pop",
+              "offset": 59
+            }
+          ],
+          "code_sha256": "d2962a2dd55e65ca419674a55b8f7a1b8abf3cf0692914f50ddd6848e86262b1",
+          "code_size": 61,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;)V",
+          "exception_handlers": [],
+          "instruction_count": 30,
+          "max_locals": 5,
+          "max_stack": 8,
+          "name": "spawnFamiliar"
+        }
+      ],
+      "superclass": "net/alshanex/familiarslib/item/AbstractRuneItem"
+    },
+    "net/alshanex/alshanex_familiars/item/shards/SummonerShard": {
+      "class_sha256": "2c540406f3937f116390ca50d9951de0501f106c80b851d645c1a4d54332e409",
+      "methods": [
+        {
+          "access": 1,
+          "code_sha256": "d6f7264189858f154b120ac2e9b76f4b4dae9ddb629e4ec627af7810207e1a24",
+          "code_size": 5,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 3,
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "<init>"
+        },
+        {
+          "access": 4,
+          "anchors": [
+            {
+              "fact": "EntityRegistry.SUMMONER_PET:",
+              "offset": 4
+            },
+            {
+              "fact": "iconst_0",
+              "offset": 21
+            },
+            {
+              "fact": "SummonerPetEntity.setIsImpostor:",
+              "offset": 25
+            },
+            {
+              "fact": "BlockPos.getCenter:",
+              "offset": 31
+            },
+            {
+              "fact": "dconst_1",
+              "offset": 35
+            },
+            {
+              "fact": "Player.getYRot:",
+              "offset": 46
+            },
+            {
+              "fact": "fneg",
+              "offset": 49
+            },
+            {
+              "fact": "SummonerPetEntity.setYRot:",
+              "offset": 50
+            },
+            {
+              "fact": "Level.addFreshEntity:",
+              "offset": 56
+            },
+            {
+              "fact": "pop",
+              "offset": 59
+            }
+          ],
+          "code_sha256": "d2962a2dd55e65ca419674a55b8f7a1b8abf3cf0692914f50ddd6848e86262b1",
+          "code_size": 61,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;)V",
+          "exception_handlers": [],
+          "instruction_count": 30,
+          "max_locals": 5,
+          "max_stack": 8,
+          "name": "spawnFamiliar"
+        }
+      ],
+      "superclass": "net/alshanex/familiarslib/item/AbstractRuneItem"
+    },
+    "net/alshanex/alshanex_familiars/registry/EntityRegistry": {
+      "class_sha256": "a557f37a1cab4b5f0393a42764b8eb378f2b3f80063e424f46a7a539b4c54372",
+      "methods": [
+        {
+          "access": 8,
+          "anchors": [
+            {
+              "fact": "String mage_pet",
+              "offset": 14
+            },
+            {
+              "fact": "Field MAGE_PET:",
+              "offset": 24
+            },
+            {
+              "fact": "String summoner_pet",
+              "offset": 46
+            },
+            {
+              "fact": "Field SUMMONER_PET:",
+              "offset": 56
+            },
+            {
+              "fact": "String hunter_pet",
+              "offset": 78
+            },
+            {
+              "fact": "Field HUNTER_PET:",
+              "offset": 88
+            },
+            {
+              "fact": "String illusionist_pet",
+              "offset": 110
+            },
+            {
+              "fact": "Field ILLUSIONIST_PET:",
+              "offset": 120
+            },
+            {
+              "fact": "String frostling_pet",
+              "offset": 203
+            },
+            {
+              "fact": "Field FROSTLING_PET:",
+              "offset": 213
+            }
+          ],
+          "code_sha256": "c15ffc8df41bdfb8f12ef20d1225563cb5857f2b3132e6043437339a1123e1a3",
+          "code_size": 441,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 140,
+          "max_locals": 0,
+          "max_stack": 3,
+          "name": "<clinit>"
+        }
+      ],
+      "superclass": "java/lang/Object"
+    },
+    "net/alshanex/alshanex_familiars/registry/ItemRegistry": {
+      "class_sha256": "8fcd3011758d2967de766e532c0715fb14c49e63f16a221b668f578903da0236",
+      "methods": [
+        {
+          "access": 4106,
+          "anchors": [
+            {
+              "fact": "bipush 64",
+              "offset": 11
+            },
+            {
+              "fact": "Rarity.EPIC:",
+              "offset": 16
+            },
+            {
+              "fact": "ComponentRegistry.FAMILIAR_CONSUMABLE:",
+              "offset": 22
+            },
+            {
+              "fact": "ConsumableType.SPELL_RESIST:",
+              "offset": 37
+            },
+            {
+              "fact": "iconst_3",
+              "offset": 40
+            },
+            {
+              "fact": "Item$Properties.component:",
+              "offset": 44
+            }
+          ],
+          "code_sha256": "cc951ae9bf4f53a5b2dc6a38733d8ca2951f5d64366c6f8293f90ddd6db2889a",
+          "code_size": 51,
+          "descriptor": "()Lnet/minecraft/world/item/Item;",
+          "exception_handlers": [],
+          "instruction_count": 20,
+          "max_locals": 0,
+          "max_stack": 8,
+          "name": "lambda$static$44"
+        },
+        {
+          "access": 4106,
+          "anchors": [
+            {
+              "fact": "bipush 64",
+              "offset": 11
+            },
+            {
+              "fact": "Rarity.RARE:",
+              "offset": 16
+            },
+            {
+              "fact": "ComponentRegistry.FAMILIAR_CONSUMABLE:",
+              "offset": 22
+            },
+            {
+              "fact": "ConsumableType.SPELL_RESIST:",
+              "offset": 37
+            },
+            {
+              "fact": "iconst_2",
+              "offset": 40
+            },
+            {
+              "fact": "Item$Properties.component:",
+              "offset": 44
+            }
+          ],
+          "code_sha256": "252bc97cf29fd3abf2019f30d2d51ce2112bf9a06b43a0cfdb734bb733119b56",
+          "code_size": 51,
+          "descriptor": "()Lnet/minecraft/world/item/Item;",
+          "exception_handlers": [],
+          "instruction_count": 20,
+          "max_locals": 0,
+          "max_stack": 8,
+          "name": "lambda$static$43"
+        },
+        {
+          "access": 4106,
+          "anchors": [
+            {
+              "fact": "bipush 64",
+              "offset": 11
+            },
+            {
+              "fact": "Rarity.EPIC:",
+              "offset": 16
+            },
+            {
+              "fact": "ComponentRegistry.FAMILIAR_CONSUMABLE:",
+              "offset": 22
+            },
+            {
+              "fact": "ConsumableType.SPELL_POWER:",
+              "offset": 37
+            },
+            {
+              "fact": "iconst_3",
+              "offset": 40
+            },
+            {
+              "fact": "Item$Properties.component:",
+              "offset": 44
+            }
+          ],
+          "code_sha256": "22bfccc662c10bb1fff2d0fa29ed052d885311743509f8dc351a223f317dd45a",
+          "code_size": 51,
+          "descriptor": "()Lnet/minecraft/world/item/Item;",
+          "exception_handlers": [],
+          "instruction_count": 20,
+          "max_locals": 0,
+          "max_stack": 8,
+          "name": "lambda$static$41"
+        },
+        {
+          "access": 4106,
+          "anchors": [
+            {
+              "fact": "bipush 64",
+              "offset": 11
+            },
+            {
+              "fact": "Rarity.RARE:",
+              "offset": 16
+            },
+            {
+              "fact": "ComponentRegistry.FAMILIAR_CONSUMABLE:",
+              "offset": 22
+            },
+            {
+              "fact": "ConsumableType.SPELL_POWER:",
+              "offset": 37
+            },
+            {
+              "fact": "iconst_2",
+              "offset": 40
+            },
+            {
+              "fact": "Item$Properties.component:",
+              "offset": 44
+            }
+          ],
+          "code_sha256": "4814d3f547619188231eb266fb61897af071d5dc0d2a339fe2e0fb29f7f5d26a",
+          "code_size": 51,
+          "descriptor": "()Lnet/minecraft/world/item/Item;",
+          "exception_handlers": [],
+          "instruction_count": 20,
+          "max_locals": 0,
+          "max_stack": 8,
+          "name": "lambda$static$40"
+        },
+        {
+          "access": 8,
+          "anchors": [
+            {
+              "fact": "String frostling_shard",
+              "offset": 772
+            },
+            {
+              "fact": "InvokeDynamic #43:get:",
+              "offset": 775
+            },
+            {
+              "fact": "DeferredRegister.register:",
+              "offset": 780
+            },
+            {
+              "fact": "Field FROSTLING_RUNE:",
+              "offset": 783
+            },
+            {
+              "fact": "String hunter_shard",
+              "offset": 704
+            },
+            {
+              "fact": "InvokeDynamic #39:get:",
+              "offset": 707
+            },
+            {
+              "fact": "DeferredRegister.register:",
+              "offset": 712
+            },
+            {
+              "fact": "Field HUNTER_RUNE:",
+              "offset": 715
+            },
+            {
+              "fact": "String lightning_mage_shard",
+              "offset": 738
+            },
+            {
+              "fact": "InvokeDynamic #41:get:",
+              "offset": 741
+            },
+            {
+              "fact": "DeferredRegister.register:",
+              "offset": 746
+            },
+            {
+              "fact": "Field MAGE_RUNE:",
+              "offset": 749
+            },
+            {
+              "fact": "String magic_power_tier_2",
+              "offset": 1108
+            },
+            {
+              "fact": "InvokeDynamic #62:get:",
+              "offset": 1111
+            },
+            {
+              "fact": "DeferredRegister.register:",
+              "offset": 1116
+            },
+            {
+              "fact": "Field MAGIC_POWER_TIER_2:",
+              "offset": 1119
+            },
+            {
+              "fact": "String magic_power_tier_3",
+              "offset": 1125
+            },
+            {
+              "fact": "InvokeDynamic #63:get:",
+              "offset": 1128
+            },
+            {
+              "fact": "DeferredRegister.register:",
+              "offset": 1133
+            },
+            {
+              "fact": "Field MAGIC_POWER_TIER_3:",
+              "offset": 1136
+            },
+            {
+              "fact": "String magic_resist_tier_2",
+              "offset": 1159
+            },
+            {
+              "fact": "InvokeDynamic #65:get:",
+              "offset": 1162
+            },
+            {
+              "fact": "DeferredRegister.register:",
+              "offset": 1167
+            },
+            {
+              "fact": "Field MAGIC_RESIST_TIER_2:",
+              "offset": 1170
+            },
+            {
+              "fact": "String magic_resist_tier_3",
+              "offset": 1176
+            },
+            {
+              "fact": "InvokeDynamic #66:get:",
+              "offset": 1179
+            },
+            {
+              "fact": "DeferredRegister.register:",
+              "offset": 1184
+            },
+            {
+              "fact": "Field MAGIC_RESIST_TIER_3:",
+              "offset": 1187
+            },
+            {
+              "fact": "String summoner_shard",
+              "offset": 755
+            },
+            {
+              "fact": "InvokeDynamic #42:get:",
+              "offset": 758
+            },
+            {
+              "fact": "DeferredRegister.register:",
+              "offset": 763
+            },
+            {
+              "fact": "Field SUMMONER_RUNE:",
+              "offset": 766
+            },
+            {
+              "fact": "String truth_mirror",
+              "offset": 904
+            },
+            {
+              "fact": "InvokeDynamic #50:get:",
+              "offset": 907
+            },
+            {
+              "fact": "DeferredRegister.register:",
+              "offset": 912
+            },
+            {
+              "fact": "Field TRUTH_MIRROR:",
+              "offset": 915
+            }
+          ],
+          "code_sha256": "b83168893c5ac8bc0adc7c6de471ad91ca00f0e4e1e21ee1b1e241bf688ace13",
+          "code_size": 1293,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 385,
+          "max_locals": 0,
+          "max_stack": 3,
+          "name": "<clinit>"
+        }
+      ],
+      "superclass": "java/lang/Object"
+    }
+  },
+  "provider_universe_closed": false,
+  "publisher_ritual_recipe_ids": [
+    "archmage_shard",
+    "druid_shard",
+    "frostling_shard",
+    "hunter_shard",
+    "lightning_mage_shard",
+    "magic_power_tier_2",
+    "magic_power_tier_3",
+    "magic_resist_tier_2",
+    "magic_resist_tier_3",
+    "summoner_shard",
+    "truth_mirror"
+  ],
+  "publisher_version": "4.0.3",
+  "schema_version": 1,
+  "shared_druid_seal": "EXACT-4.0.3-DRUID-RITUAL.json",
+  "shared_druid_seal_sha256": "e5e27a118c3bcca08e2dbdeed1a2edb585febf1d64f8cba285e44c6dbba5d5c2"
+}

@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 2/18.**
+**Fichas catalogadas (somente fichas detectadas): 11/18.**
 
-**Barra das fichas catalogadas:** `██░░░░░░░░░░░░░░░░░░ 11.1%`
+**Barra das fichas catalogadas:** `████████████░░░░░░░░ 61.1%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 2/18.**
+**Homologadas para perks (somente fichas detectadas): 11/18.**
 
-**Barra dos contratos técnicos estáticos:** `██░░░░░░░░░░░░░░░░░░ 11.1%`
+**Barra dos contratos técnicos estáticos:** `████████████░░░░░░░░ 61.1%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -22,15 +22,15 @@
 |---|---|---|---|---|---|
 | ✅ | Archmage Shard | [rituals/archmage-shard.md](rituals/archmage-shard.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Druid Shard | [rituals/druid-shard.md](rituals/druid-shard.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Frostling Shard | [rituals/frostling-shard.md](rituals/frostling-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Hunter Shard | [rituals/hunter-shard.md](rituals/hunter-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Lightning Mage Shard | [rituals/lightning-mage-shard.md](rituals/lightning-mage-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Magic Power Tier 2 | [rituals/magic-power-tier-2.md](rituals/magic-power-tier-2.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Magic Power Tier 3 | [rituals/magic-power-tier-3.md](rituals/magic-power-tier-3.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Magic Resist Tier 2 | [rituals/magic-resist-tier-2.md](rituals/magic-resist-tier-2.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Magic Resist Tier 3 | [rituals/magic-resist-tier-3.md](rituals/magic-resist-tier-3.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Summoner Shard | [rituals/summoner-shard.md](rituals/summoner-shard.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Truth Mirror | [rituals/truth-mirror.md](rituals/truth-mirror.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Frostling Shard | [rituals/frostling-shard.md](rituals/frostling-shard.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Hunter Shard | [rituals/hunter-shard.md](rituals/hunter-shard.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Lightning Mage Shard | [rituals/lightning-mage-shard.md](rituals/lightning-mage-shard.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Magic Power Tier 2 | [rituals/magic-power-tier-2.md](rituals/magic-power-tier-2.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Magic Power Tier 3 | [rituals/magic-power-tier-3.md](rituals/magic-power-tier-3.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Magic Resist Tier 2 | [rituals/magic-resist-tier-2.md](rituals/magic-resist-tier-2.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Magic Resist Tier 3 | [rituals/magic-resist-tier-3.md](rituals/magic-resist-tier-3.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Summoner Shard | [rituals/summoner-shard.md](rituals/summoner-shard.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Truth Mirror | [rituals/truth-mirror.md](rituals/truth-mirror.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | End Mayhem | [spells/end-mayhem.md](spells/end-mayhem.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Fire Fist | [spells/fire-fist.md](spells/fire-fist.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Ice Age | [spells/ice-age.md](spells/ice-age.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -43,7 +43,7 @@
 
 | Catálogo | Subpasta | Fichas catalogadas / observadas | Contratos estáticos | Índice |
 |---|---|---:|---:|---|
-| ⚠️ | Rituals | 2/11 (18.2%) | 2 | [Abrir índice](rituals/INDEX.md) |
+| ✅ | Rituals | 11/11 (100.0%) | 11 | [Abrir índice](rituals/INDEX.md) |
 | ⚠️ | Spells | 0/7 (0.0%) | 0 | [Abrir índice](spells/INDEX.md) |
 
 ## Critério do ✅

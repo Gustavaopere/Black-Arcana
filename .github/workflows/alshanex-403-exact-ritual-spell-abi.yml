@@ -8,6 +8,7 @@ on:
       - 'docs/qa/alshanex_403_exact_ritual_spell_abi.py'
       - 'docs/qa/alshanex_403_exact_ritual_spell_abi_test.py'
       - 'docs/qa/alshanex_403_archmage_ritual_contract.py'
+      - 'docs/qa/alshanex_403_remaining_rituals.py'
       - 'docs/qa/alexscaves_1010_action_contract_audit.py'
       - 'docs/qa/alexscaves_1010_armor_material_audit.py'
       - 'wiki/modpack-catalog/providers/✅-alshanex-familiars/**'
@@ -18,6 +19,7 @@ on:
       - 'docs/qa/alshanex_403_exact_ritual_spell_abi.py'
       - 'docs/qa/alshanex_403_exact_ritual_spell_abi_test.py'
       - 'docs/qa/alshanex_403_archmage_ritual_contract.py'
+      - 'docs/qa/alshanex_403_remaining_rituals.py'
       - 'docs/qa/alexscaves_1010_action_contract_audit.py'
       - 'docs/qa/alexscaves_1010_armor_material_audit.py'
       - 'wiki/modpack-catalog/providers/✅-alshanex-familiars/**'
@@ -53,7 +55,7 @@ jobs:
           python3 docs/qa/alshanex_403_exact_ritual_spell_abi.py \
             --jar build/alshanex-403/provider.jar \
             --output build/alshanex-403/evidence.json
-      - name: Replay the pinned Archmage and Druid Shard ritual contracts
+      - name: Replay the 11 pinned ritual contracts
         shell: bash
         run: |
           set -euo pipefail
@@ -61,9 +63,9 @@ jobs:
             --connect-timeout 20 --max-time 120 \
             'https://cursemaven.com/curse/maven/familiarslib-1316458/8059464/familiarslib-1316458-8059464.jar' \
             --output build/alshanex-403/familiarslib.jar
-          python3 docs/qa/alshanex_403_archmage_ritual_contract.py \
+          python3 docs/qa/alshanex_403_remaining_rituals.py \
             --jar build/alshanex-403/provider.jar \
-            --familiarslib build/alshanex-403/familiarslib.jar --ritual druid_shard --verify
+            --familiarslib build/alshanex-403/familiarslib.jar --verify
       - name: Publish metadata only; never upload third-party archive or disassembly
         if: always()
         uses: actions/upload-artifact@v7

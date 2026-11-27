@@ -11691,6 +11691,384 @@
           "reason": "Replays both pinned publisher artifacts, shared altar seal, exact recipe, retention and resupply branch anchors, registry and downstream method."
         }
       }
+    },
+    "✅-alshanex-familiars/rituals/frostling-shard.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "4.0.3",
+      "artifact_sha1": "e5051c2385a426d05bf203ba8081a23d891f6686",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "SHA-exact publisher 4.0.3 recipe, registered item and verified bootstrap binding."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/frostling-shard.md",
+          "reason": "Server matches exact ingredients, settles the central result and clears consumable inputs; Automator transport is separate."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/frostling-shard.md",
+          "reason": "Cardinal positions at two blocks, 100 valid increments, particle cadence of ten, and 20 active ticks per transfer."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/frostling-shard.md",
+          "reason": "The ritual targets the altar inventories and requests the visual minecraft:snowflake; no craft damage or projectile."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/frostling-shard.md",
+          "reason": "One central alshanex_familiars:pet_soul and 4 peripheral items consumed; No separate mana, XP or player cooldown in the craft."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/frostling-shard.md",
+          "reason": "FamiliarsLib consumes one shard and delegates spawn to FrostlingShard; the insertion result is discarded. Hook and Mastery attribution remain unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "Replays both pinned JARs, Archmage and Druid seals, full ritual roster, specific recipe, and bounded output consumer methods."
+        }
+      }
+    },
+    "✅-alshanex-familiars/rituals/hunter-shard.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "4.0.3",
+      "artifact_sha1": "e5051c2385a426d05bf203ba8081a23d891f6686",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "SHA-exact publisher 4.0.3 recipe, registered item and verified bootstrap binding."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/hunter-shard.md",
+          "reason": "Server matches exact ingredients, settles the central result and clears consumable inputs; Automator transport is separate."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/hunter-shard.md",
+          "reason": "Cardinal positions at two blocks, 100 valid increments, particle cadence of ten, and 20 active ticks per transfer."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/hunter-shard.md",
+          "reason": "The ritual targets the altar inventories and requests the visual minecraft:crit; no craft damage or projectile."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/hunter-shard.md",
+          "reason": "One central alshanex_familiars:pet_soul and 4 peripheral items consumed; No separate mana, XP or player cooldown in the craft."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/hunter-shard.md",
+          "reason": "FamiliarsLib consumes one shard and delegates spawn to HunterShard; the insertion result is discarded. Hook and Mastery attribution remain unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "Replays both pinned JARs, Archmage and Druid seals, full ritual roster, specific recipe, and bounded output consumer methods."
+        }
+      }
+    },
+    "✅-alshanex-familiars/rituals/lightning-mage-shard.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "4.0.3",
+      "artifact_sha1": "e5051c2385a426d05bf203ba8081a23d891f6686",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "SHA-exact publisher 4.0.3 recipe, registered item and verified bootstrap binding."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/lightning-mage-shard.md",
+          "reason": "Server matches exact ingredients, settles the central result and clears consumable inputs; Automator transport is separate."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/lightning-mage-shard.md",
+          "reason": "Cardinal positions at two blocks, 100 valid increments, particle cadence of ten, and 20 active ticks per transfer."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/lightning-mage-shard.md",
+          "reason": "The ritual targets the altar inventories and requests the visual irons_spellbooks:electricity; no craft damage or projectile."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/lightning-mage-shard.md",
+          "reason": "One central alshanex_familiars:pet_soul and 4 peripheral items consumed; No separate mana, XP or player cooldown in the craft."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/lightning-mage-shard.md",
+          "reason": "FamiliarsLib consumes one shard and delegates spawn to MageShard; the insertion result is discarded. Hook and Mastery attribution remain unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "Replays both pinned JARs, Archmage and Druid seals, full ritual roster, specific recipe, and bounded output consumer methods."
+        }
+      }
+    },
+    "✅-alshanex-familiars/rituals/magic-power-tier-2.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "4.0.3",
+      "artifact_sha1": "e5051c2385a426d05bf203ba8081a23d891f6686",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "SHA-exact publisher 4.0.3 recipe, registered item and verified bootstrap binding."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-power-tier-2.md",
+          "reason": "Server matches exact ingredients, settles the central result and clears consumable inputs; Automator transport is separate."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-power-tier-2.md",
+          "reason": "Cardinal positions at two blocks, 100 valid increments, particle cadence of ten, and 20 active ticks per transfer."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-power-tier-2.md",
+          "reason": "The ritual targets the altar inventories and requests the visual irons_spellbooks:cleanse; no craft damage or projectile."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-power-tier-2.md",
+          "reason": "One central alshanex_familiars:magic_power_tier_1 and 4 peripheral items consumed; No separate mana, XP or player cooldown in the craft."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-power-tier-2.md",
+          "reason": "FamiliarsLib 1.7.1 applies SPELL_POWER tier 2 after crafting, with native cap, ownership and attribute gates. Hook and Mastery attribution remain unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "Replays both pinned JARs, Archmage and Druid seals, full ritual roster, specific recipe, and bounded output consumer methods."
+        }
+      }
+    },
+    "✅-alshanex-familiars/rituals/magic-power-tier-3.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "4.0.3",
+      "artifact_sha1": "e5051c2385a426d05bf203ba8081a23d891f6686",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "SHA-exact publisher 4.0.3 recipe, registered item and verified bootstrap binding."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-power-tier-3.md",
+          "reason": "Server matches exact ingredients, settles the central result and clears consumable inputs; Automator transport is separate."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-power-tier-3.md",
+          "reason": "Cardinal positions at two blocks, 100 valid increments, particle cadence of ten, and 20 active ticks per transfer."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-power-tier-3.md",
+          "reason": "The ritual targets the altar inventories and requests the visual irons_spellbooks:cleanse; no craft damage or projectile."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-power-tier-3.md",
+          "reason": "One central alshanex_familiars:magic_power_tier_2 and 3 peripheral items consumed; irons_spellbooks:divine_soulshard required and retained. No separate mana, XP or player cooldown in the craft."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-power-tier-3.md",
+          "reason": "FamiliarsLib 1.7.1 applies SPELL_POWER tier 3 after crafting, with native cap, ownership and attribute gates. Hook and Mastery attribution remain unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "Replays both pinned JARs, Archmage and Druid seals, full ritual roster, specific recipe, and bounded output consumer methods."
+        }
+      }
+    },
+    "✅-alshanex-familiars/rituals/magic-resist-tier-2.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "4.0.3",
+      "artifact_sha1": "e5051c2385a426d05bf203ba8081a23d891f6686",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "SHA-exact publisher 4.0.3 recipe, registered item and verified bootstrap binding."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-resist-tier-2.md",
+          "reason": "Server matches exact ingredients, settles the central result and clears consumable inputs; Automator transport is separate."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-resist-tier-2.md",
+          "reason": "Cardinal positions at two blocks, 100 valid increments, particle cadence of ten, and 20 active ticks per transfer."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-resist-tier-2.md",
+          "reason": "The ritual targets the altar inventories and requests the visual irons_spellbooks:unstable_ender; no craft damage or projectile."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-resist-tier-2.md",
+          "reason": "One central alshanex_familiars:magic_resist_tier_1 and 4 peripheral items consumed; No separate mana, XP or player cooldown in the craft."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-resist-tier-2.md",
+          "reason": "FamiliarsLib 1.7.1 applies SPELL_RESIST tier 2 after crafting, with native cap, ownership and attribute gates. Hook and Mastery attribution remain unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "Replays both pinned JARs, Archmage and Druid seals, full ritual roster, specific recipe, and bounded output consumer methods."
+        }
+      }
+    },
+    "✅-alshanex-familiars/rituals/magic-resist-tier-3.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "4.0.3",
+      "artifact_sha1": "e5051c2385a426d05bf203ba8081a23d891f6686",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "SHA-exact publisher 4.0.3 recipe, registered item and verified bootstrap binding."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-resist-tier-3.md",
+          "reason": "Server matches exact ingredients, settles the central result and clears consumable inputs; Automator transport is separate."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-resist-tier-3.md",
+          "reason": "Cardinal positions at two blocks, 100 valid increments, particle cadence of ten, and 20 active ticks per transfer."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-resist-tier-3.md",
+          "reason": "The ritual targets the altar inventories and requests the visual irons_spellbooks:unstable_ender; no craft damage or projectile."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-resist-tier-3.md",
+          "reason": "One central alshanex_familiars:magic_resist_tier_2 and 3 peripheral items consumed; irons_spellbooks:divine_soulshard required and retained. No separate mana, XP or player cooldown in the craft."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/magic-resist-tier-3.md",
+          "reason": "FamiliarsLib 1.7.1 applies SPELL_RESIST tier 3 after crafting, with native cap, ownership and attribute gates. Hook and Mastery attribution remain unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "Replays both pinned JARs, Archmage and Druid seals, full ritual roster, specific recipe, and bounded output consumer methods."
+        }
+      }
+    },
+    "✅-alshanex-familiars/rituals/summoner-shard.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "4.0.3",
+      "artifact_sha1": "e5051c2385a426d05bf203ba8081a23d891f6686",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "SHA-exact publisher 4.0.3 recipe, registered item and verified bootstrap binding."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/summoner-shard.md",
+          "reason": "Server matches exact ingredients, settles the central result and clears consumable inputs; Automator transport is separate."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/summoner-shard.md",
+          "reason": "Cardinal positions at two blocks, 100 valid increments, particle cadence of ten, and 20 active ticks per transfer."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/summoner-shard.md",
+          "reason": "The ritual targets the altar inventories and requests the visual minecraft:sculk_charge_pop; no craft damage or projectile."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/summoner-shard.md",
+          "reason": "One central alshanex_familiars:pet_soul and 4 peripheral items consumed; No separate mana, XP or player cooldown in the craft."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/summoner-shard.md",
+          "reason": "FamiliarsLib consumes one shard and delegates spawn to SummonerShard; the insertion result is discarded. Hook and Mastery attribution remain unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "Replays both pinned JARs, Archmage and Druid seals, full ritual roster, specific recipe, and bounded output consumer methods."
+        }
+      }
+    },
+    "✅-alshanex-familiars/rituals/truth-mirror.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "4.0.3",
+      "artifact_sha1": "e5051c2385a426d05bf203ba8081a23d891f6686",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "SHA-exact publisher 4.0.3 recipe, registered item and verified bootstrap binding."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/truth-mirror.md",
+          "reason": "Server matches exact ingredients, settles the central result and clears consumable inputs; Automator transport is separate."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/truth-mirror.md",
+          "reason": "Cardinal positions at two blocks, 100 valid increments, particle cadence of ten, and 20 active ticks per transfer."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/truth-mirror.md",
+          "reason": "The ritual targets the altar inventories and requests the visual minecraft:enchanted_hit; no craft damage or projectile."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/truth-mirror.md",
+          "reason": "One central irons_spellbooks:visibility_ring and 4 peripheral items consumed; No separate mana, XP or player cooldown in the craft."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/rituals/truth-mirror.md",
+          "reason": "TruthMirror checks familiar type, logical side, impostor status and resolved summoner before the applicable reveal branch. Hook and Mastery attribution remain unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-REMAINING-RITUALS.md",
+          "reason": "Replays both pinned JARs, Archmage and Druid seals, full ritual roster, specific recipe, and bounded output consumer methods."
+        }
+      }
     }
   },
   "providers": {},

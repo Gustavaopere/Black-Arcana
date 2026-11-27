@@ -23,14 +23,15 @@ RUNE = 'net/alshanex/familiarslib/item/AbstractRuneItem'
 DRUID_SEAL = SEAL.with_name('EXACT-4.0.3-DRUID-RITUAL.json')
 DRUID = 'item/shards/DruidShard'
 ITEM_REGISTRY = 'registry/ItemRegistry'
+SOUL = 'alshanex_familiars:pet_soul'
 RECIPES = {
     'archmage_shard': (
-        'minecraft:end_rod',
+        SOUL, 'minecraft:end_rod',
         (('irons_spellbooks:legendary_ink', True), ('irons_spellbooks:arcane_essence', True),
          ('irons_spellbooks:arcane_rune', True), ('irons_spellbooks:magic_cloth', True)),
     ),
     'druid_shard': (
-        'minecraft:composter',
+        SOUL, 'minecraft:composter',
         (('irons_spellbooks:greater_oakskin_elixir', True), ('irons_spellbooks:arcane_essence', True),
          ('irons_spellbooks:nature_rune', True), ('minecraft:spore_blossom', False)),
     ),
@@ -124,12 +125,11 @@ def verify_artifact(path, expected):
     return {'bytes': size, 'sha1': sha1, 'sha256': sha256}
 
 
-def inspect_recipe(archive, ritual='archmage_shard'):
+def inspect_recipe(archive, ritual, specification):
     resource = PREFIX + ritual + '.json'
     raw = archive.read(resource)
     recipe = json.loads(raw, object_pairs_hook=unique_pairs)
-    particle, inputs = RECIPES[ritual]
-    center = 'alshanex_familiars:pet_soul'
+    center, particle, inputs = specification
     result = 'alshanex_familiars:' + ritual
     require(set(recipe) == {'type', 'central_item', 'inputs', 'result', 'particle_type'}, 'recipe fields drift')
     require(recipe['type'] == RITUAL_TYPE and recipe['central_item'] == {'item': center},
@@ -190,7 +190,7 @@ def audit(jar, library, javap):
     dependency = verify_artifact(library, LIBRARY)
     with zipfile.ZipFile(jar) as archive:
         require(len(archive.namelist()) == len(set(archive.namelist())), 'duplicate publisher ZIP path')
-        recipe = inspect_recipe(archive)
+        recipe = inspect_recipe(archive, 'archmage_shard', RECIPES['archmage_shard'])
         factory = item_factory(archive, 37, SHARD)
         classes = {BASE + name: inspect_class(archive, jar, javap, BASE + name, names, PROVIDER_PIVOTS.get(name, {}))
                    for name, names in METHODS.items()}
@@ -211,7 +211,7 @@ def audit_druid(jar, library, javap):
     shared = canonical(audit(jar, library, javap))
     require(shared == SEAL.read_text(encoding='utf-8'), 'shared Archmage Shard seal drift')
     with zipfile.ZipFile(jar) as archive:
-        recipe = inspect_recipe(archive, 'druid_shard')
+        recipe = inspect_recipe(archive, 'druid_shard', RECIPES['druid_shard'])
         factory = item_factory(archive, 38, DRUID)
         classes = {BASE + name: inspect_class(
             archive, jar, javap, BASE + name, set(pivots), pivots,
