@@ -41,10 +41,15 @@
 | Quebra por ataque | `MistFormEvents.onLivingDamage(Post)` |
 | Pass-through | `MistFormCollisionHelper.canPassThrough(BlockState,CollisionContext)` |
 | Restrição de movimento | `MistFormMovementRestrictionHelper.ignoresMovementRestriction(Entity,BlockState)` |
+| Colisão — mixin | `jp.aquafactory.apprenticecodex.mixin.BlockStateBaseMistFormCollisionMixin` → `BlockBehaviour$BlockStateBase.getCollisionShape(...)`, `@Inject(RETURN, cancellable=true)` |
+| Movimento — mixin | `jp.aquafactory.apprenticecodex.mixin.EntityMistFormMovementRestrictionMixin` → `Entity.makeStuckInBlock`, `@Inject(HEAD, cancellable=true)` |
+| Pulo/fluido — mixin | `jp.aquafactory.apprenticecodex.mixin.LivingEntityMistFormMixin` → `LivingEntity.getJumpBoostPower` (`RETURN`) e `LivingEntity.canStandOnFluid` (`HEAD`), ambos `cancellable=true` |
+| Config | `jp.aquafactory.apprenticecodex.config.spell.MistFormServerConfig` (`passableBlockDenylist`, `isPassableBlockDenied`, `setPassableBlockDenylistForGameTest`) |
+| Registro de mixins | `mixins.apprenticecodex.json` (linhas 41, 44, 67; `injectors.defaultRequire=1`) |
 | Render | `MistFormClientRenderEvent.onRenderPlayerPre(Pre)` |
 | Supressão de awareness | `SummonedFirearmTools.suppressNearbyAwareness(level, entity, entity, 32.0)` |
 
-Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`, `EXIT=0`, 347.597 bytes), não publicados integralmente.
+Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`, `EXIT=0`, 347.597 bytes) e, para config/efeito/helpers/mixins, em `scratch/javap_mistform.txt` e `scratch/javap_mistform_v.txt` (`EXIT=0`), não publicados integralmente.
 
 ## 3. Casting / execução
 
@@ -53,6 +58,8 @@ Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`,
 3. Imediatamente chama `SummonedFirearmTools.suppressNearbyAwareness` com raio `32.0` blocos. O efeito dessa supressão é provider-owned e não foi observado em execução.
 4. `super.onCast(...)` completa o fluxo do host.
 5. Som de início: `SoundRegistry.MIST_FORM_START`; fim: `SoundRegistry.MIST_FORM_FINISHED`; animação inicial: `SpellAnimations.CAST_KNEELING_PRAYER`.
+
+Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.getManaCost(int)` (`(I)I`, offsets 0–29) calcula `(baseManaCost + manaCostPerLevel*(level-1)) * MANA_MULTIPLIER` e trunca com `d2i`; `getSpellCooldown()` (`()I`, offsets 0–18) calcula `COOLDOWN_IN_SECONDS * 20.0d` e trunca com `d2i`; `getCastTime(int)` (`(I)I`, offsets 0–16) retorna o campo `castTime` porque o tipo é `CastType.LONG` — `30` ticks. `getSpellPower(int,Entity)` (`(ILnet/minecraft/world/entity/Entity;)F`, offsets 0–79) multiplica ainda por `AttributeRegistry.SPELL_POWER`, `SchoolType.getPowerFor(LivingEntity)` e `POWER_MULTIPLIER`; `getLevelFor(int,LivingEntity)` (`(ILnet/minecraft/world/entity/LivingEntity;)I`, offsets 0–64) aplica Curios e `ModifySpellLevelEvent`. Assim, `150`, `30`, `50`, `15`, `30.0` e `castTime=30` são coeficientes declarados pelo Apprentice Codex; mana, cooldown, power, duração e nível efetivos dependem da config instalada do Iron's, atributos e eventos, **NÃO VERIFICADOS**. Ver âncoras em [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md).
 
 ## 4. Targeting / geometria
 
@@ -63,7 +70,9 @@ Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`,
 | Nenhuma AOE ofensiva | `N/A`: a magia não calcula dano nem caixa de ataque. |
 | Colisão | `MistFormCollisionHelper` exige `Player` com efeito, bloco em `TagRegistry.Blocks.MIST_FORM_PASSABLE` e ausência do bloco na denylist de servidor. |
 | Movimento | `MistFormMovementRestrictionHelper` exige `Player` com efeito e bloco em `TagRegistry.Blocks.MIST_FORM_IGNORES_MOVEMENT_RESTRICTION`. |
-| Alcance de colisão/movimento | NÃO VERIFICADO: os dois helpers existem, mas nenhum callsite foi demonstrado no escopo decompilado examinado. Não promover como hook. |
+| Callsite de colisão | `BlockStateBaseMistFormCollisionMixin.apprenticecodex$removeMistFormPassableCollision(...)`, offsets 0–33: se a forma retornada não estiver vazia, chama `asState()` e `MistFormCollisionHelper.canPassThrough(...)`; quando verdadeiro, `setReturnValue(Shapes.empty())`. |
+| Callsite de movimento | `EntityMistFormMovementRestrictionMixin.apprenticecodex$ignoreMistFormMovementRestriction(BlockState,Vec3,CallbackInfo)`, offsets 0–15: chama `MistFormMovementRestrictionHelper.ignoresMovementRestriction(...)` e, quando verdadeiro, `CallbackInfo.cancel()`. |
+| Bônus de pulo | `LivingEntityMistFormMixin.apprenticecodex$addMistFormJumpPower(CallbackInfoReturnable<Float>)`, offsets 0–44: exige `LivingEntity` com `EffectRegistry.MIST_FORM`, lê o retorno, soma literal `0.3f` e chama `setReturnValue(...)`. |
 
 ## 5. Resultado
 
@@ -72,9 +81,9 @@ Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`,
   - `Attributes.STEP_HEIGHT`, ID `apprenticecodex:mist_form_step_height`, `Operation.ADD_VALUE`, `+0.5`;
   - `AttributeRegistry.FIRE_MAGIC_RESIST`, ID `apprenticecodex:mist_form_fire_resist`, `Operation.ADD_VALUE`, `-1.0`;
   - `AttributeRegistry.HOLY_MAGIC_RESIST`, ID `apprenticecodex:mist_form_holy_resist`, `Operation.ADD_VALUE`, `-1.0`.
-- `JUMP_POWER_ADDITION = 0.3F` é declarado, mas nenhum `addAttributeModifier` correspondente foi encontrado no construtor: **NÃO VERIFICADO** como consumer.
+- `JUMP_POWER_ADDITION = 0.3F` é declarado como campo `float` na fonte de apoio; o `javap` confirma a existência do campo. Nenhum `addAttributeModifier` foi encontrado no construtor. O bônus efetivo de `+0.3` decorre do literal `0.3f` somado no callback `apprenticecodex$addMistFormJumpPower`; não foi demonstrada leitura do campo nas classes inspecionadas. Registrado como declaração auxiliar, não como consumer verificado.
 - Slow fall: `PlayerTickEvent.Pre`, quando não `onGround`, não voando, não elytra e não passenger; se `movement.y < -0.08`, vira `-0.08`; `fallDistance=0`.
-- Fluid standing: `canStandOnFluid` retorna falso com shift, spectator, passenger, sem efeito ou ao tocar fluido; nesse último caso desativa por `20` ticks. Com suporte encontrado, alinha `player.y` a `surfaceY + 0.02` dentro dos limites `-0.35`/`+0.65`, zera movimento vertical descendente, marca `onGround=true` e zera `fallDistance`. A varredura usa `FLUID_SCAN_BELOW=0.18`, `FLUID_SCAN_ABOVE=0.08`, `FLUID_SURFACE_EPSILON=0.02`.
+- Fluid standing: o gancho é `LivingEntityMistFormMixin.apprenticecodex$standOnFluidInMistForm(FluidState,CallbackInfoReturnable<Boolean>)`, offsets 0–48, injetado em `canStandOnFluid` no `HEAD`. O callback ignora fluido vazio; para `Player`, aceita `MistFormEvents.canStandOnFluid` ou `LongStrideFluidMovement.canStandOnFluid` e força retorno `true`. O cálculo provider-owned retorna falso com shift, spectator, passenger, sem efeito ou ao tocar fluido; nesse último caso desativa por `20` ticks. Com suporte encontrado, alinha `player.y` a `surfaceY + 0.02` dentro dos limites `-0.35`/`+0.65`, zera movimento vertical descendente, marca `onGround=true` e zera `fallDistance`. A varredura usa `FLUID_SCAN_BELOW=0.18`, `FLUID_SCAN_ABOVE=0.08`, `FLUID_SURFACE_EPSILON=0.02`.
 - Partículas: `DustParticleOptions(0.88, 0.98, 1.0, 0.85)`, duas por tick par (`tickCount % 2 == 0`) no `ServerLevel`.
 - Render: `MistFormClientRenderEvent` cancela `RenderPlayerEvent.Pre` para jogadores com o efeito.
 - Quebra: `LivingDamageEvent.Post` com `EventPriority.LOWEST`; se `newDamage > 0`, fonte for `LivingEntity` diferente da vítima e atacante tiver o efeito, `attacker.removeEffect(MIST_FORM)`.
@@ -90,13 +99,14 @@ Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`,
 | Step height | `+0.5` `ADD_VALUE` | blocos |
 | Resistências | `-1.0` `ADD_VALUE` para Fogo e Holy | attribute do Iron's |
 | Queda | clamp em `-0.08` | blocos/tick |
-| Denylist de phasing | `mistFormPassableBlockDenylist`, default lista vazia | config de servidor; valor instalado **NÃO VERIFICADO** |
+| Denylist de phasing | `mistFormPassableBlockDenylist`, default lista vazia; aceita IDs de bloco e entradas `#tag`; consultada por `ApprenticeCodexServerConfig.isMistFormPassableBlockDenied(BlockState)` | config de servidor; valor instalado **NÃO VERIFICADO** |
+| Bônus de pulo | `+0.3` | `float`; literal no callback do mixin, não modificação de atributo |
 | Cooldown / cast time | `30.0` s / `30` ticks | `DefaultConfig` e campo |
 
 ## 7. Possibilidades de perks
 
 - **A — atributo nativo:** spell power, mana, cast time e cooldown via `AbstractSpell`; não é hook de mutação demonstrado.
-- **B — evento/callback verificado:** `PlayerTickEvent.Pre` e `LivingDamageEvent.Post` são observadores do provider. Não foi demonstrado que uma perk possa alterar duração, slow fall ou quebra sem substituir o listener. **NO_MUTATION / fail-closed**.
+- **B — evento/callback verificado:** `PlayerTickEvent.Pre` e `LivingDamageEvent.Post` são observadores do provider; os três mixins são interceptações provider-owned do vanilla para o jogador com o efeito. Não foi demonstrado que uma perk externa possa alterar duração, slow fall, colisão, movimento, fluid standing ou pulo sem substituir o listener/mixin com contrato de owner. **NO_MUTATION / fail-closed**.
 - **C — adapter condicionado:** mudar a lista de blocos passáveis ou os modificadores exigiria holder de efeito/config com contrato explícito. **CONDICIONADO**.
 - **D — sem hook demonstrado:** transformar a imunidade em AOE ofensiva, estender duração por hit ou remover a quebra por ataque não tem API/mixin seguro comprovado neste escopo.
 - `mutating_hook = NOT_VERIFIED`.
@@ -114,9 +124,9 @@ Assinatura ocupada: "canalização que transforma o caster em névoa, altera mob
 ## 10. Verificação e pendências
 
 - ✅ Identidade, versão e hash do JAR; registro e classe; coeficientes; duração; atributos; tick; quebra; limites de validação.
-- ⚠️ Configuraçãoefetiva do pack (denylist, multiplicadores) não lida.
+- ✅ Callsites de `MistFormCollisionHelper` e `MistFormMovementRestrictionHelper` e bônus de pulo localizados nos três mixins registrados no JAR 1.0.1; `JUMP_POWER_ADDITION` permanece como declaração sem consumer demonstrado.
+- ⚠️ Configuração efetiva do pack (denylist, multiplicadores) não lida; **NÃO VERIFICADO**.
 - ⚠️ `physical_qa=NOT_TESTED`: sem cliente, servidor, Survival, PvP ou modpack real.
-- ⚠️ Callsites de `MistFormCollisionHelper` e `MistFormMovementRestrictionHelper` não demonstrados; consumidor de `JUMP_POWER_ADDITION` não localizado.
 - ⚠️ Universo integral do provider não encerrado: recorte observado de 5 fichas.
 
 ## Localizadores para Codex — resumo operacional

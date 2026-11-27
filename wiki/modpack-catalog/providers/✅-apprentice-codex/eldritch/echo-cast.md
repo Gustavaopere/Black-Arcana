@@ -58,6 +58,8 @@ Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`,
 
 O repeat não é feito por `EchoCast` em si. `MulticastEchoStaffCastHelper.isEchoTarget` exclui explicitamente o próprio `Echo Cast` e exige que o item de cast seja `MulticastEchoStaff`.
 
+Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.getManaCost(int)` (`(I)I`, offsets 0–29) calcula `(baseManaCost + manaCostPerLevel*(level-1)) * MANA_MULTIPLIER` e trunca com `d2i`; `getSpellCooldown()` (`()I`, offsets 0–18) calcula `COOLDOWN_IN_SECONDS * 20.0d` e trunca com `d2i`; `getCastTime(int)` (`(I)I`, offsets 0–16) retorna `0` para `CastType.INSTANT` e o campo `castTime` nos demais tipos — aqui `CastType.LONG` com `20` ticks. `getLevelFor(int,LivingEntity)` (`(ILnet/minecraft/world/entity/LivingEntity;)I`, offsets 0–64) aplica Curios e `ModifySpellLevelEvent`. Assim, `50`, `0`, `0`, `0`, `0.0` e `castTime=20` são coeficientes declarados pelo Apprentice Codex; mana e cooldown efetivos dependem da config instalada do Iron's, atributos e eventos, **NÃO VERIFICADOS**. O cooldown final do repeat é calculado pelo provider, conforme a seção 5. Ver âncoras em [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md).
+
 ## 4. Targeting / geometria
 
 | Propriedade | Valor e consumidor |

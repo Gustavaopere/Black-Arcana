@@ -58,7 +58,7 @@ Os descriptors completos e os offsets JVM estão em `scratch/javap_check.txt` (3
 4. Cria `BloodBrandKunai` com `EntityRegistry.BLOOD_BRAND_KUNAI`, define posição, `setDamage`, `setBurstDamage`, `setBurstRange(5)`, `setProjectileVelocity(forward)` e chama `serverLevel.addFreshEntity(projectile)`.
 5. `super.onCast(...)` completa o fluxo do Iron's.
 
-Guardas e custos são owned pelo Iron's; o valor efetivo de mana em um nível depende da semântica de `AbstractSpell.getManaCost`, não afirmado além dos coeficientes acima.
+Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.getManaCost(int)` (`(I)I`, offsets 0–29) calcula `(baseManaCost + manaCostPerLevel*(level-1)) * SpellConfigParameter.MANA_MULTIPLIER` e trunca com `d2i`; `getSpellCooldown()` (`()I`, offsets 0–18) calcula `COOLDOWN_IN_SECONDS * 20.0d` e trunca com `d2i`; `getCastTime(int)` (`(I)I`, offsets 0–16) retorna `0` para `CastType.INSTANT`. Assim, `35`, `10`, `4.0` e `castTime=0` são coeficientes declarados pelo Apprentice Codex; mana/cooldown efetivos dependem da config instalada do Iron's, **NÃO VERIFICADA**. `getSpellPower(int,Entity)` (`(ILnet/minecraft/world/entity/Entity;)F`, offsets 0–79) aplica ainda `AttributeRegistry.SPELL_POWER`, `SchoolType.getPowerFor(LivingEntity)` e `POWER_MULTIPLIER`. Ver âncoras em [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md).
 
 ## 4. Targeting / geometria
 
@@ -69,7 +69,7 @@ Guardas e custos são owned pelo Iron's; o valor efetivo de mana em um nível de
 | Raio do burst | `5` blocos, repassado por `setBurstRange` e persistido em `BloodBrandState.range`. |
 | Geometria do burst | `BloodBrandBurst` usa `HashSet<UUID>` de entidades já atingidas, AABB inflada pelo raio, distância até a AABB do alvo e `Utils.hasLineOfSight(level, center, targetBox.getCenter(), false)`. Sem linha de visão, o alvo não é atingido. |
 | Projétil | `SPEED=1.68`; `LIFE_TICKS=100`; `AIR_DRAG=0.99` (`Vec3.scale(0.99)` em `tick()`); aceleração `-0.03` bloco/tick² aplicada quando `!isNoGravity()`; `setViewScale(8.0)` no construtor. |
-| Divergência de bytecode | A decompilação exibe `GRAVITY = 0.03`, mas o bytecode aplica `Vec3.add(0.0, -0.03d, 0.0)`. Valor efetivo documentado: **-0.03**. |
+| Gravidade | `GRAVITY = 0.03` é magnitude positiva declarada; em `tick()` o delta recebe `Vec3.add(0.0, -0.03d, 0.0)` quando `!isNoGravity()`. Aceleração vertical efetiva: **-0.03 bloco/tick²**. Constante e aceleração são grandezas distintas; nenhum consumo de `GRAVITY` foi demonstrado nas classes inspecionadas. |
 
 ## 5. Resultado
 
