@@ -60,6 +60,13 @@ EXACT={ET:{("spawn","(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/wor
 ENTITY_METHODS={"<init>","mobInteract","interact","getBucketItemStack","saveToBucketTag","loadFromBucketTag","setFromBucket","fromBucket","getPickupSound","addAdditionalSaveData","readAdditionalSaveData","defineSynchedData","requiresCustomPersistence","removeWhenFarAway","finalizeSpawn"}
 LIMITS={"static_contract":"NOT_CERTIFIED","mutating_hook":"NOT_VERIFIED","physical_qa":"NOT_TESTED","mutation":"NO_MUTATION","provider_universe_closed":False,"semantic_magic_roots_delta":0,"runtime_loaded_bytes":"NOT_OBSERVED","actual_spawn_acceptance":"NOT_VERIFIED"}
 
+def class_paths(names):
+    # Same ordering and bytes as the sealed publisher roster.
+    return sorted(p for p in names if p.endswith(".class"))
+
+def roster_digest(paths):
+    return digest(("\n".join(paths)+"\n").encode())
+
 def inspect(a):
     verify_artifact(a.publisher)
     verify_universal(a.universal,"universal")
@@ -75,9 +82,12 @@ def inspect(a):
             require(len(z.namelist())==len(set(z.namelist())),"duplicate archive entry")
         roster=[(n,z,set(z.namelist())) for n,z in archives]
         cp=":".join(map(str,(a.server,a.universal,a.srg,a.publisher)))
-        classes=sorted(p[:-6] for p in mod.namelist() if p.endswith(".class"))
-        require(len(classes)==1555,"publisher roster")
-        require(digest(("\n".join(x+".class" for x in classes)+"\n").encode())=="2296d31ecc7fabb375922b8ad23c7a25c3e969bdfd80d5e1aa602034ae5d62ed","class roster pin")
+        paths=class_paths(mod.namelist())
+        require(len(paths)==1555,"publisher roster")
+        actual_roster=roster_digest(paths)
+        print("PUBLISHER_CLASS_ROSTER_SHA256",actual_roster,flush=True)
+        require(actual_roster=="2296d31ecc7fabb375922b8ad23c7a25c3e969bdfd80d5e1aa602034ae5d62ed","class roster pin")
+        classes=[p[:-6] for p in paths]
         # Resolve named candidates from the binary, then require registry linkage.
         entities=[x for x in classes if x.rsplit("/",1)[-1]=="GossamerWormEntity"]
         dispensers=[x for x in classes if x.rsplit("/",1)[-1]=="FluidContainerDispenseItemBehavior"]
@@ -163,6 +173,12 @@ def inspect(a):
     print("DISCOVERY_ONLY NO_MUTATION NO_PHYSICAL_QA")
 
 def self_test():
+    fixture=["a/Fish.class","a/Fish$Inner.class","a/Fish.json","a/Other.class"]
+    expected=["a/Fish$Inner.class","a/Fish.class","a/Other.class"]
+    require(class_paths(fixture)==expected,"class path order regression")
+    require(roster_digest(class_paths(fixture))==digest(b"a/Fish$Inner.class\na/Fish.class\na/Other.class\n"),"canonical roster serialization")
+    legacy=[x+".class" for x in sorted(p[:-6] for p in fixture if p.endswith(".class"))]
+    require(roster_digest(legacy)!=roster_digest(expected),"fixture must detect legacy ordering bug")
     require(set(PINS)=={I,IR},"prior identity pin scope")
     require({"lambda$static$91","lambda$static$92"}<=REQUIRED[IR],"fluid supplier/identity")
     require(all(set(n for n,d in values)<=SELECT[owner] for owner,values in EXACT.items()),"exact descriptor selector scope")
