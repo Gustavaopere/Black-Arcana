@@ -22,6 +22,13 @@ W = P+"entity/item/GuanoEntity"
 R = P+"entity/ACEntityRegistry"
 IR = P+"item/ACItemRegistry"
 D = IR+"$5"
+N = "net/neoforged/neoforge/"
+CH = N+"common/CommonHooks"
+DC = N+"common/damagesource/DamageContainer"
+DS = M+"world/damagesource/DamageScaling"
+SF = N+"common/damagesource/IScalingFunction"
+HOOKS = {"isEntityInvulnerableTo","onEntityIncomingDamage","onDamageBlock","onLivingKnockBack","onLivingDamagePre","onLivingDamagePost"}
+CONTAINER = {"<init>","getNewDamage","setNewDamage","setBlockedDamage","setReduction","getReduction","getPostAttackInvulnerabilityTicks","setPostAttackInvulnerabilityTicks","getOriginalDamage"}
 ALL = {I,W,D}
 FACTORIES = {
     "lambda$static$121":"279cb235c5eba0d207bae281636c396354915b06416eb9bec09335bdb108cd6d",
@@ -33,7 +40,6 @@ SELECT = {
     P+"misc/ACPlatform":{"getEntitySpawningPacket"},
     P+"misc/ACCompat":{"itemParticle"},
     M+"world/entity/Entity":{"hurt","isInvulnerableTo"},
-    M+"world/entity/LivingEntity":{"hurt","actuallyHurt","isInvulnerableTo","knockback"},
     M+"world/entity/player/Player":{"hurt"},
     M+"server/level/ServerPlayer":{"hurt"},
     M+"world/entity/projectile/ProjectileUtil":{"getHitResultOnMoveVector","getEntityHitResult"},
@@ -44,12 +50,23 @@ SELECT = {
     M+"world/entity/EntityType$Builder": {"sized","setUpdateInterval","setShouldReceiveVelocityUpdates","build"},
     M+"world/entity/EntityType": {"getDimensions","clientTrackingRange","updateInterval","trackDeltas"},
     M+"world/damagesource/DamageSources": {"thrown"},
-    M+"world/item/ItemStack": {"shrink","getCount","setCount","copyWithCount"},
     P+"misc/AbstractProjectileDispenseBehavior": {"execute","getProjectile","getPower","getUncertainty"},
     M+"core/dispenser/DefaultDispenseItemBehavior": {"dispense"},
     M+"world/level/block/DispenserBlock": {"registerBehavior","getDispensePosition"},
     M+"server/level/ServerLevel": {"addFreshEntity","addEntity"},
-    "net/neoforged/neoforge/event/EventHooks": {"onProjectileImpact","onLivingIncomingDamage","onLivingDamagePre","onLivingDamagePost","onLivingAttack"},
+    N+"event/EventHooks": {"onProjectileImpact"},
+    CH: HOOKS,
+    DC: CONTAINER,
+    DS: {"<clinit>","<init>","getScalingFunction"},
+    SF: {"scaleDamage"},
+    N+"event/entity/living/LivingShieldBlockEvent":{"<init>","getBlocked","shieldDamage","getBlockedDamage","getDamageContainer","setBlocked","setBlockedDamage"},
+    N+"event/entity/living/LivingKnockBackEvent":{"<init>","getStrength","getRatioX","getRatioZ","setStrength","setRatioX","setRatioZ"},
+    N+"event/entity/living/LivingIncomingDamageEvent":{"<init>","getContainer","getAmount","setAmount","setCanceled"},
+    N+"event/entity/living/LivingDamageEvent$Pre":{"<init>","getNewDamage","setNewDamage","getContainer"},
+    N+"event/entity/living/LivingDamageEvent$Post":{"<init>","getNewDamage","getOriginalDamage","getReduction"},
+    M+"world/damagesource/DamageSource":{"is","getEntity","getDirectEntity","getSourcePosition"},
+    M+"world/entity/LivingEntity":{"hurt","actuallyHurt","isInvulnerableTo","knockback","getDamageAfterArmorAbsorb","getDamageAfterMagicAbsorb"},
+    M+"world/item/ItemStack":{"shrink","grow","getCount","setCount","copyWithCount"},
 }
 REQUIRED = {
     I: {"<init>","use"},
@@ -64,6 +81,10 @@ REQUIRED = {
     M+"world/damagesource/DamageSources": {"thrown"},
     P+"misc/AbstractProjectileDispenseBehavior": {"execute"},
     M+"server/level/ServerLevel": {"addFreshEntity"},
+    CH: HOOKS,
+    DC: {"<init>","getNewDamage","setNewDamage","setBlockedDamage","setReduction","getReduction","getPostAttackInvulnerabilityTicks"},
+    DS: {"getScalingFunction"},
+    SF: {"scaleDamage"},
 }
 PINS = {
     I:"925fb7047dddc8044929b0a581af2a4dcf5c6688dd277f445c9bc0dbd1f9d57d",
@@ -71,6 +92,8 @@ PINS = {
     D:"52e59afa55413b17530f60de11bebd7700fad23b72b8b219657ba792ae2ebf47",
     R:"7d7c91ddbb534d7c0e86a590ef7d7c3154ec2a628153c31e9fc7318a4b29e072",
     P+"misc/AbstractProjectileDispenseBehavior":"1f733bdb487927c5d4f5d995c439c0bd8de4f611b239128c4f5a70bb88ce15a0",
+    M+"world/entity/LivingEntity":"52130dfb8dc4b5c48ec1ef12bf19b40ff29f6e38fc25b02b94202553f75ce5f4",
+    M+"world/entity/player/Player":"277a886c7267e82baa4378282e3c892f16338c0a6a779f1cf361a0af7d7b09fd",
 }
 RESOURCES = {
     "assets/alexscaves/models/item/guano.json":"44b059c49c984d04155d9c70d2445daed232eca41a9bcd9d2f93ea115cfaa0c2",
@@ -130,6 +153,74 @@ def guano_resources(paths):
               (p.startswith(prefixes) and p.rsplit("/",1)[-1] in
                {"guano.json","guano_block.json","guano_layer.json","falling_guano.json"})]
     return candidates,selected
+
+def tag_id(path):
+    match=re.fullmatch(r"data/([^/]+)/tags/damage_type/(.+)\.json",path)
+    return match[1]+":"+match[2] if match else None
+
+def tag_entry(value):
+    if isinstance(value,dict):
+        value=value.get("id")
+    require(isinstance(value,str),"damage tag entry id")
+    return value
+
+def damage_tag_contributions(archives):
+    # Preserve raw contributions from each artifact separately. This is not a
+    # datapack stack or a claim about effective runtime tag membership.
+    rows=[]
+    damage=[]
+    for source,z in archives:
+        for path in sorted(z.namelist()):
+            ident=tag_id(path)
+            if ident is None and path!="data/minecraft/damage_type/thrown.json":
+                continue
+            raw=z.read(path)
+            require(len(raw)<=100000,"damage resource byte budget")
+            data=json.loads(raw)
+            row={"source":source,"path":path,"sha256":digest(raw),"bytes":len(raw),"data":data}
+            if ident is None:
+                damage.append(row)
+            else:
+                require(isinstance(data.get("values"),list),"damage tag values")
+                row["tag"]=ident
+                rows.append(row)
+    require(len(rows)<=500 and sum(r["bytes"] for r in rows)<=2000000,"damage tag census budget")
+    reached=set()
+    while True:
+        more={r["tag"] for r in rows if any(v=="minecraft:thrown" or
+               (v.startswith("#") and v[1:] in reached) for v in map(tag_entry,r["data"]["values"]))}
+        if more<=reached:
+            break
+        reached.update(more)
+    queried={"minecraft:"+n for n in ("is_projectile","is_fall","is_fire","is_freezing","damages_helmet",
+             "bypasses_invulnerability","bypasses_cooldown","no_anger","no_impact","no_knockback")}
+    return {"scope":"DISTRIBUTED_CONTRIBUTIONS_NOT_EFFECTIVE_DATAPACK_ORDER",
+            "tag_file_count":len(rows),"thrown_damage_type_files":damage,
+            "candidate_positive_tags":sorted(reached),"queried_tags":sorted(queried),
+            "projected_contributions":[r for r in rows if r["tag"] in reached|queried],
+            "all_contribution_roster":[{k:r[k] for k in ("source","path","sha256","tag","bytes")} for r in rows]}
+
+def publisher_consumers(mod,jar,javap,paths):
+    result=[]
+    for path in paths:
+        raw=mod.read(path)
+        rd=ClassReader(raw)
+        require(rd.name+".class"==path and rd.major==65,"publisher census class identity")
+        refs=rd.typed_refs(W)
+        for target in (IR,R):
+            refs.extend(x for x in rd.typed_refs(target)
+                        if x.get("kind")=="field_reference" and x.get("name")=="GUANO")
+        if not refs:
+            continue
+        require(len(result)<60,"Guano consumer owner budget")
+        member_refs=[x for x in refs if x["kind"] in
+                     {"field_reference","method_reference","interface_method_reference"}]
+        sites=census_sites(rd,disassemble(jar,javap,rd.name),member_refs) if member_refs else []
+        result.append({"owner":rd.name,"class_sha256":digest(raw),
+                       "typed_references":refs,"member_instruction_sites":sites})
+    require(bool(result),"Guano consumer census empty")
+    return {"scope":"EXACT_TYPED_REFERENCES_AND_MEMBER_SITES_NOT_DYNAMIC_DISPATCH",
+            "class_entries_scanned":len(paths),"owners":result}
 
 def inspect(args):
     select = {k:set(v) for k,v in SELECT.items()}
@@ -193,6 +284,8 @@ def inspect(args):
             require(any(x["name"]=="<clinit>" for x in sites),"registry initialization absent "+field)
             census.append({"owner":owner,"class_sha256":digest(raw),"refs":refs,"methods":sites})
         require(any(m["name"]=="setup" for m in census[0]["methods"]),"dispenser registration site absent")
+        damage_tags=damage_tag_contributions(archives)
+        consumers=publisher_consumers(mod,args.publisher,args.javap,paths)
         classes = {}
         for owner in sorted(ALL | set(select)):
             found = [(name,z) for name,z,entries in roster if owner+".class" in entries]
@@ -210,7 +303,8 @@ def inspect(args):
                 require(rd.parent==P+"misc/AbstractProjectileDispenseBehavior","dispenser superclass mismatch")
             if owner==P+"misc/AbstractProjectileDispenseBehavior":
                 require(any(d["name"]=="execute" and d.get("code_sha256")=="b44158b7c89f9a6f6e5473c1e0de31a90057ef824782947e0646fe0a2335e6ef" for d in rd.methods),"dispenser execute Code pin")
-            decls=[d for d in rd.methods if owner in ALL or d["name"] in select.get(owner,set())]
+            decls=[d for d in rd.methods if owner in ALL or d["name"] in select.get(owner,set()) or
+                   (owner in (DS,SF) and d["name"].startswith("lambda$"))]
             require(required.get(owner,set()) <= {d["name"] for d in decls},"required declaration absent "+owner)
             require(len(decls)<=120,"method budget "+owner)
             parsed=disassemble(cp,args.javap,owner)
@@ -232,8 +326,9 @@ def inspect(args):
             classes[owner]={"present":True,"source":source,"available_sources":[k for k,_ in found],
                             "class_sha256":sha,"parent":rd.parent,"interfaces":rd.interfaces,
                             "fields":rd.fields,"declarations":rd.methods,"methods":methods}
-    report={"schema_version":2,"scope":"GUANO_IMPACT_DISCOVERY_ONLY",
-            "artifact":artifact,"classes":classes,"entity_registry":reg,"resources":resources,"resource_census":resource_census,"registry_sites":census,"limits":LIMITS}
+    report={"schema_version":3,"scope":"GUANO_IMPACT_DISCOVERY_ONLY",
+            "artifact":artifact,"classes":classes,"entity_registry":reg,"resources":resources,"resource_census":resource_census,"registry_sites":census,
+            "damage_tag_contributions":damage_tags,"publisher_consumers":consumers,"limits":LIMITS}
     data=canonical(report).encode()
     require(len(data)<=10_000_000,"report byte budget")
     args.output.parent.mkdir(parents=True,exist_ok=True)
@@ -247,6 +342,8 @@ def inspect(args):
     print("REGISTRY",json.dumps(reg,sort_keys=True))
     print("REGISTRY_SITES",json.dumps(census,sort_keys=True))
     print("RESOURCES",json.dumps(resources,sort_keys=True))
+    print("DAMAGE_TAG_CONTRIBUTIONS",json.dumps(damage_tags,sort_keys=True))
+    print("PUBLISHER_CONSUMERS",json.dumps(consumers,sort_keys=True))
     print("DISCOVERY_ONLY NO_MUTATION NO_PHYSICAL_QA")
 
 def self_test():
@@ -261,6 +358,10 @@ def self_test():
     require(len(candidates)==4 and len(selected)==3,"resource scope regression")
     require(fixture[0] in candidates and fixture[0] not in selected,"retain candidate without projecting unrelated model")
     require(set(RESOURCES)<=set(selected),"pinned resources retained")
+    require(REQUIRED[CH]==HOOKS and REQUIRED[DC]<=CONTAINER,"exact damage callsite coverage")
+    require(tag_id("data/minecraft/tags/damage_type/is_projectile.json")=="minecraft:is_projectile","tag path")
+    require(tag_id("data/minecraft/tags/item/thrown.json") is None,"exclude unrelated tag registry")
+    require(tag_entry({"id":"#minecraft:is_projectile","required":False})=="#minecraft:is_projectile","optional reference")
     require(REQUIRED[W] >= {"onHit","onHitEntity"},"impact coverage")
     require(REQUIRED[D] >= {"getProjectile"},"dispenser coverage")
     require(LIMITS["static_contract"]=="NOT_CERTIFIED" and LIMITS["mutation"]=="NO_MUTATION","policy")
