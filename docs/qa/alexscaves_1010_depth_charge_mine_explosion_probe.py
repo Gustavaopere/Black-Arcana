@@ -6,12 +6,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 from zipfile import ZipFile
 
 from alexscaves_1010_armor_material_audit import ClassReader, canonical, digest, require, verify_artifact, SHA1, SHA256, SIZE
 from alexscaves_1010_enchantable_item_probe import disassemble
 from alexscaves_1010_four_items_downstream_250_probe import projection, identified, verify_universal, ARTIFACTS
+from alexscaves_1010_galena_211248_spawn_denial_guards_probe import refs
 from alexscaves_1010_remote_detonator_block_callbacks_probe import registry
 
 P = "com/github/alexmodguy/alexscaves/server/"
@@ -23,6 +25,7 @@ C = P+"misc/ACPlatform"
 K = P+"misc/ACCompat"
 R = P+"entity/ACEntityRegistry"
 IR = P+"item/ACItemRegistry"
+TAG = P+"misc/ACTagRegistry"
 N = "net/neoforged/neoforge/"
 # Exact downstream call descriptors from run 46050487545.
 EXACT = {
@@ -47,7 +50,7 @@ SELECT = {
     IR: set(FACTORIES),
     C: {"canEntityGrief","explosion","ignoreExplosion"},
     K: {"gameRule","explosionKnockback"},
-    P+"misc/ACTagRegistry": {"<clinit>"},
+    TAG: {"<clinit>"},
     M+"world/entity/LivingEntity": {"ignoreExplosion","getAttributeValue","getAttribute"},
     M+"world/item/enchantment/EnchantmentHelper": {"modifyKnockback","modifyExplosionKnockback","getExplosionKnockbackAfterDampener"},
     M+"world/level/storage/loot/LootParams$Builder": {"withParameter","withOptionalParameter","create"},
@@ -92,6 +95,33 @@ LIMITS = {"static_contract":"NOT_CERTIFIED","mutating_hook":"NOT_VERIFIED",
           "runtime_loaded_bytes":"NOT_OBSERVED","provider_universe_closed":False,
           "semantic_magic_roots_delta":0,"actual_effect_acceptance":"NOT_VERIFIED",
           "world_safety":"BLOCKED"}
+
+def tag_field_windows(rd, body, decl):
+    # Full scan for exact constant-pool field writes; project only bounded
+    # predecessor windows, never claim whole <clinit> semantic coverage.
+    offsets=sorted(body)
+    hits=[]
+    for i,at in enumerate(offsets):
+        op,arg,_=body[at]
+        if op!="putstatic":
+            continue
+        match=re.match(r"#(\d+)(?:\s|,|$)",arg)
+        require(match is not None,"unresolved tag field write")
+        cp=int(match[1])
+        require(rd.pool[cp][0]==9,"invalid tag field reference")
+        _,owner,nd=rd.resolve(cp)
+        _,name,desc=nd
+        if (owner,name,desc)!=(TAG,"UNMOVEABLE","Lnet/minecraft/tags/TagKey;"):
+            continue
+        window={q:body[q] for q in offsets[max(0,i-12):i+1]}
+        hits.append({"offset":at,"typed_members":refs(rd,window),
+                     "instructions":[{"offset":q,"opcode":v[0],"operand":v[1],"symbol":v[2]}
+                                     for q,v in sorted(window.items())]})
+    require(len(hits)==1,"UNMOVEABLE field write missing or ambiguous")
+    return {"name":decl["name"],"descriptor":decl["descriptor"],
+            "code_sha256":decl["code_sha256"],"instruction_count":len(body),
+            "scope":"EXACT_FIELD_WRITE_WITH_BOUNDED_PREDECESSOR_WINDOW",
+            "complete_method_projection":False,"field_write_windows":hits}
 
 def inspect(args):
     select = {k:set(v) for k,v in SELECT.items()}
@@ -169,7 +199,10 @@ def inspect(args):
                     continue
                 require(key in parsed and parsed[key],"body absent "+owner+str(key))
                 print("PROJECTING",owner,key[0],key[1],flush=True)
-                methods.append({"executable":True,**projection(rd,key,parsed[key],d)})
+                if owner==TAG and key==("<clinit>","()V"):
+                    methods.append({"executable":True,**tag_field_windows(rd,parsed[key],d)})
+                else:
+                    methods.append({"executable":True,**projection(rd,key,parsed[key],d)})
             if owner in ALL:
                 require({(d["name"],d["descriptor"]) for d in decls if "code_sha256" in d} ==
                         {k for k,v in parsed.items() if v},"complete executable roster mismatch "+owner)
@@ -206,6 +239,7 @@ def inspect(args):
 def self_test():
     require(set(PINS) <= ALL | set(SELECT),"pins out of scope")
     require(len(FACTORIES)==2,"identity pins")
+    require(SELECT[TAG]=={"<clinit>"},"tag scope drift")
     require({n for n,d in EXACT[C]}=={"explosion","ignoreExplosion","canEntityGrief"},"wrapper coverage")
     require({n for n,d in EXACT[K]}=={"explosionKnockback"},"knockback coverage")
     require(all(owner in PINS for owner in EXACT),"exact owner pin coverage")
