@@ -11977,6 +11977,49 @@
           "reason": "Observed two byte-identical reports on run 45922106512/job 140254983280, 18 owners and 118 projections, hash and length pinned for final CI; prior sealed publisher proofs."
         }
       }
+    },
+    "✅-alexs-caves-continued/equipment/primitive-club.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/primitive-club.md",
+          "reason": "Publisher 1.0.10 exact club/registry class and direct factory Code SHA, bootstrap 52 and pinned recipe."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/primitive-club.md",
+          "reason": "All 16 own item and 3 StunnedEffect methods, attack and status gates, sweep, Bonking death/loot delegation, exact replays."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/primitive-club.md",
+          "reason": "Durability 120, +8 attack, Swiftwood speed formula, RNG 0.8F, duration 150..299/80..159, secondary 1F, effect modifier and lifecycle."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/primitive-club.md",
+          "reason": "AABB side L+1.2F, distance, projectile predicate, alliance direction, primary acceptance gate; no own LOS or count cap."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/primitive-club.md",
+          "reason": "Wear requests 1/2, damageability/creative/durability downstream, repair material and anvil boundary, recipe."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/primitive-club.md",
+          "reason": "Effect Applicable/Added/Remove/Expired, incoming damage and death boundaries, status source null, no repeat of loot, hit, effect or Mastery. NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/primitive-club.md",
+          "reason": "Two identical schema 1 and schema 2 replays on run 45940756715/job 140314259633, 19/21 owners, 99/111 projections; both hashes and lengths pinned, 42/42 workflows at discovery HEAD."
+        }
+      }
     }
   },
   "providers": {},
