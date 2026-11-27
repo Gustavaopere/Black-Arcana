@@ -1,6 +1,10 @@
 # Alex's Caves Continued 1.0.10 — índice de 51 encantamentos para perks
 
-**Recorte atual — quatro itens radioativos:** **142/184 contratos estáticos entre fichas observadas**, 16/16 suportes, **42/81 itens concretos**, 6/9 equipamentos. [Dossiê e selo](EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md). +4 contratos de produtores passivos, zero novas raízes; provider OPEN, NO_MUTATION, hook/QA não verificados. CI final e merge obrigatórios.
+**Recorte atual — Ortholance:** **144/184 contratos estáticos entre fichas observadas**, 16/16 suportes, **42/81 itens concretos**, 8/9 equipamentos. [Ficha e replay](equipment/ortholance.md). +1 contrato candidato, zero novas raízes, 51/51 encantamentos preservados; provider OPEN, NO_MUTATION, hook/QA não verificados. CI final e merge obrigatórios.
+
+**Recorte anterior — Limestone Spear:** **143/184 contratos estáticos entre fichas observadas**, 16/16 suportes, **42/81 itens concretos**, 7/9 equipamentos. [Ficha e replays](equipment/limestone-spear.md). +1 contrato estático candidato, zero novas raízes; provider OPEN, NO_MUTATION, hook/QA não verificados. CI final e merge obrigatórios.
+
+**Recorte anterior — quatro itens radioativos:** **142/184 contratos estáticos entre fichas observadas**, 16/16 suportes, **42/81 itens concretos**, 6/9 equipamentos. [Dossiê e selo](EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md). +4 contratos de produtores passivos, zero novas raízes; provider OPEN, NO_MUTATION, hook/QA não verificados. CI final e merge obrigatórios.
 
 **Checkpoint anterior — Keybind Using Armor e aprofundamento de alimentos/essências:** **138/184 contratos estáticos entre fichas observadas**, 16/16 suportes, **38/81 itens concretos** e 6/9 equipamentos. [Dossiê](EXACT-FOOD-IDENTITY-KEYBIND-CLOSURE-1.0.10.md) propõe um certificado estático de suporte; seis fichas parciais aprofundadas. Encantamentos 51/51 preservados, 81/81 classes de itens com disposição, provider OPEN, NO_MUTATION, sem novo cast/raiz, hook ou QA física. Candidato; CI e merge obrigatórios.
 

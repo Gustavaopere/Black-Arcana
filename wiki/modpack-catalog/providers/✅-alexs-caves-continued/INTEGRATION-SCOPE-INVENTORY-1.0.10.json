@@ -311,7 +311,9 @@
         "equipment/shot-gum.md",
         "equipment/extinction-spear.md",
         "equipment/frostmint-spear.md",
-        "equipment/galena-gauntlet.md"
+        "equipment/galena-gauntlet.md",
+        "equipment/limestone-spear.md",
+        "equipment/ortholance.md"
       ],
       "family_universe_closed": false,
       "evidence": "EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md",
@@ -320,9 +322,11 @@
         "EXACT-GUMBALL-CONTRACTS-1.0.10.md",
         "EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.md",
         "EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
-        "equipment/galena-gauntlet.md"
+        "equipment/galena-gauntlet.md",
+        "equipment/limestone-spear.md",
+        "equipment/ortholance.md"
       ],
-      "documented_static_contracts": 6
+      "documented_static_contracts": 8
     },
     "damage_types": {
       "documented_static_contracts": 9,
@@ -1047,18 +1051,17 @@
     "next_scope": "server/item/GalenaGauntletItem"
   },
   "latest_individual_contract_checkpoint": {
-    "scope": "FOUR_RADIOACTIVE_ITEM_INDIVIDUAL_STATIC_CERTIFICATES_CANDIDATE",
-    "provider_observed_static_contracts": 142,
+    "scope": "ORTHOLANCE_INDIVIDUAL_STATIC_CERTIFICATE_CANDIDATE",
+    "provider_observed_static_contracts": 144,
     "provider_observed_cards": 184,
     "integration_support_contracts": 16,
     "concrete_item_contracts": 42,
-    "equipment_contracts": 6,
+    "equipment_contracts": 8,
     "semantic_magic_roots_added": 0,
     "whole_provider_catalog_closed": false,
     "mutating_hook": "NOT_VERIFIED",
     "physical_qa": "NOT_TESTED",
     "remaining_observed_partial_cards": [
-      "equipment/limestone-spear.md",
       "items/jelly-bean.md",
       "items/remote-detonator.md",
       "items/gossamer-worm-bucket.md",
@@ -1069,7 +1072,6 @@
       "items/sea-pig-bucket.md",
       "items/trilocaris-bucket.md",
       "items/tripodfish-bucket.md",
-      "equipment/ortholance.md",
       "equipment/primitive-club.md",
       "items/primordial-soup.md",
       "items/seething-stew.md",
@@ -1118,9 +1120,11 @@
       "EXACT-FOOD-IDENTITY-KEYBIND-CLOSURE-1.0.10.md",
       "EXACT-KEYBIND-USING-ARMOR-CONTRACT-1.0.10.json",
       "EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md",
-      "EXACT-RADIOACTIVE-ITEM-CERTIFICATION-1.0.10.json"
+      "EXACT-RADIOACTIVE-ITEM-CERTIFICATION-1.0.10.json",
+      "equipment/limestone-spear.md",
+      "equipment/ortholance.md"
     ],
-    "historical_checkpoint_note": "Keybind #1235 merged; four individual passive radiation certificates candidate #1238, no new cards or roots. Final CI and merge required."
+    "historical_checkpoint_note": "Prior checkpoint 143/184 merged at 0c8804c854a258c4c3069f744aa15bfcf31d54d5. Ortholance engine replays observed; candidate 144/184. Final CI and merge required."
   },
   "item_class_reconciliation_checkpoint": {
     "scope": "ALL_81_OBSERVED_ITEM_OUTER_CLASSES_WITH_DOCUMENTED_DISPOSITION_NOT_CERTIFICATION",

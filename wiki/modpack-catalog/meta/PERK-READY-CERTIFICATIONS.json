@@ -11691,6 +11691,92 @@
           "reason": "Replays both pinned publisher artifacts, shared altar seal, exact recipe, retention and resupply branch anchors, registry and downstream method."
         }
       }
+    },
+    "✅-alexs-caves-continued/equipment/limestone-spear.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/limestone-spear.md",
+          "reason": "Publisher-exact item and projectile factory, registry ID and class hashes; exact 1.0.10 artifact."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/limestone-spear.md",
+          "reason": "Charge/release, native 4F trident impact, boolean-gated post-hit, inherited collision, pickup and persistence; observed schema 1 and 2."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/limestone-spear.md",
+          "reason": "Stack 16, melee +3/-3, power curve, 2.5F times charge, inaccuracy 1F, .5 by .5 registration, gravity and drag; direct damage independent of velocity."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/limestone-spear.md",
+          "reason": "Native segment, bounding-box queries, leftOwner, PvP and impact-cancellation/deflection gates; no own AOE."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/limestone-spear.md",
+          "reason": "Recipe yields four, shrink(1) outside instabuild regardless of spawn boolean, inherited damageability and pickup boundaries."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/limestone-spear.md",
+          "reason": "Default stack substitution, generic bonus vs TRIDENT actual source, provider and inherited engine authority; NO_MUTATION and no Mastery award on mere request."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/limestone-spear.md",
+          "reason": "Two byte-identical replays for each schema on recorded GitHub Actions jobs, exact hashes fixed in final workflow; runtime dispatch and physical QA remain unverified."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/equipment/ortholance.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/ortholance.md",
+          "reason": "Publisher 1.0.10 exact item/registry and WaveEntity class hashes, factory and sealed native roster."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/ortholance.md",
+          "reason": "13 own item and 29 wave methods, charged launch, direct hit, wave tick and slam, two replayed reports and prior enchantment proofs."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/ortholance.md",
+          "reason": "Durability 340, melee +5/-2.4, charge 0..60, impulse and emission formulas, wave dimensions and damage/knockback/lifecycle."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/ortholance.md",
+          "reason": "Direct AABB/LOS with 128D engine limit; wave own scaled AABB and owner/Deep One filters, NO_SPECTATORS, distinct damage sources."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/ortholance.md",
+          "reason": "One requested wear per eligible release, melee/mining boundaries, item damageability/creative/enchantment processing, barter and no spawn-settlement refund."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/ortholance.md",
+          "reason": "Real attribute and knockback event boundaries; UUID owner vs direct field, no mutation, no duplicate hit/spawn/cost, external runtime unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/ortholance.md",
+          "reason": "Observed two byte-identical reports on run 45922106512/job 140254983280, 18 owners and 118 projections, hash and length pinned for final CI; prior sealed publisher proofs."
+        }
+      }
     }
   },
   "providers": {},

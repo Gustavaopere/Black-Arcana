@@ -92,7 +92,8 @@ jobs:
             --javap "$JAVA_HOME/bin/javap" \
             --output build/ortholance-engine/report-replay.json
           cmp build/ortholance-engine/report.json build/ortholance-engine/report-replay.json
-          sha256sum build/ortholance-engine/report.json
+          test "$(wc -c < build/ortholance-engine/report.json)" = 1831026
+          echo '7773e7a8453dc08eea220cf9d0a114273e31244dadb1cfa2fc8f5bc3d4573f7c  build/ortholance-engine/report.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
