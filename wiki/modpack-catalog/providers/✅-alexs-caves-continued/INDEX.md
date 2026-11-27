@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 143/184.**
+**Fichas catalogadas (somente fichas detectadas): 144/184.**
 
-**Barra das fichas catalogadas:** `███████████████░░░░░ 77.7%`
+**Barra das fichas catalogadas:** `███████████████░░░░░ 78.3%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 143/184.**
+**Homologadas para perks (somente fichas detectadas): 144/184.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 77.7%`
+**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 78.3%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -108,7 +108,7 @@
 | ✅ | Frostmint Spear | [equipment/frostmint-spear.md](equipment/frostmint-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Galena Gauntlet | [equipment/galena-gauntlet.md](equipment/galena-gauntlet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Limestone Spear | [equipment/limestone-spear.md](equipment/limestone-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Ortholance | [equipment/ortholance.md](equipment/ortholance.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Ortholance | [equipment/ortholance.md](equipment/ortholance.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Primitive Club | [equipment/primitive-club.md](equipment/primitive-club.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shot Gum | [equipment/shot-gum.md](equipment/shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Alex Meal | [items/alex-meal.md](items/alex-meal.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -217,7 +217,7 @@
 | ✅ | Damage Types | 11/11 (100.0%) | 11 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
-| ⚠️ | Equipment | 7/9 (77.8%) | 7 | [Abrir índice](equipment/INDEX.md) |
+| ⚠️ | Equipment | 8/9 (88.9%) | 8 | [Abrir índice](equipment/INDEX.md) |
 | ⚠️ | Items | 42/81 (51.9%) | 42 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 16/16 (100.0%) | 16 | [Abrir índice](systems/INDEX.md) |
 
