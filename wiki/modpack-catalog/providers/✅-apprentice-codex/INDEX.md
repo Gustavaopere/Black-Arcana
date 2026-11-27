@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 15/83.**
+**Fichas catalogadas (somente fichas detectadas): 25/83.**
 
-**Barra das fichas catalogadas:** `███░░░░░░░░░░░░░░░░░ 18.1%`
+**Barra das fichas catalogadas:** `██████░░░░░░░░░░░░░░ 30.1%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 15/83.**
+**Homologadas para perks (somente fichas detectadas): 25/83.**
 
-**Barra dos contratos técnicos estáticos:** `███░░░░░░░░░░░░░░░░░ 18.1%`
+**Barra dos contratos técnicos estáticos:** `██████░░░░░░░░░░░░░░ 30.1%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -35,16 +35,16 @@
 | ✅ | Arcane Blast | [ender/arcane-blast.md](ender/arcane-blast.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Assist Wings | [ender/assist-wings.md](ender/assist-wings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Auto Magnet | [ender/auto-magnet.md](ender/auto-magnet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Demicreator Wings | [ender/demicreator-wings.md](ender/demicreator-wings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Long Stride | [ender/long-stride.md](ender/long-stride.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Mana Slash | [ender/mana-slash.md](ender/mana-slash.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Manifestation Grimoire | [ender/manifestation-grimoire.md](ender/manifestation-grimoire.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Mantis Leap | [ender/mantis-leap.md](ender/mantis-leap.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Mirage Avoidance | [ender/mirage-avoidance.md](ender/mirage-avoidance.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Personal Shelf | [ender/personal-shelf.md](ender/personal-shelf.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Remote Eye | [ender/remote-eye.md](ender/remote-eye.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Rift Hole | [ender/rift-hole.md](ender/rift-hole.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Servant Gaze | [ender/servant-gaze.md](ender/servant-gaze.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Demicreator Wings | [ender/demicreator-wings.md](ender/demicreator-wings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Long Stride | [ender/long-stride.md](ender/long-stride.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Mana Slash | [ender/mana-slash.md](ender/mana-slash.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Manifestation Grimoire | [ender/manifestation-grimoire.md](ender/manifestation-grimoire.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Mantis Leap | [ender/mantis-leap.md](ender/mantis-leap.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Mirage Avoidance | [ender/mirage-avoidance.md](ender/mirage-avoidance.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Personal Shelf | [ender/personal-shelf.md](ender/personal-shelf.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Remote Eye | [ender/remote-eye.md](ender/remote-eye.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Rift Hole | [ender/rift-hole.md](ender/rift-hole.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Servant Gaze | [ender/servant-gaze.md](ender/servant-gaze.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Archer Multiple | [evocation/archer-multiple.md](evocation/archer-multiple.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Auto Turret | [evocation/auto-turret.md](evocation/auto-turret.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Bound Bow | [evocation/bound-bow.md](evocation/bound-bow.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -110,7 +110,7 @@
 |---|---|---:|---:|---|
 | ✅ | Blood | 3/3 (100.0%) | 3 | [Abrir índice](blood/INDEX.md) |
 | ✅ | Eldritch | 7/7 (100.0%) | 7 | [Abrir índice](eldritch/INDEX.md) |
-| ⚠️ | Ender | 5/15 (33.3%) | 5 | [Abrir índice](ender/INDEX.md) |
+| ✅ | Ender | 15/15 (100.0%) | 15 | [Abrir índice](ender/INDEX.md) |
 | ⚠️ | Evocation | 0/17 (0.0%) | 0 | [Abrir índice](evocation/INDEX.md) |
 | ⚠️ | Fire | 0/5 (0.0%) | 0 | [Abrir índice](fire/INDEX.md) |
 | ⚠️ | Holy | 0/11 (0.0%) | 0 | [Abrir índice](holy/INDEX.md) |

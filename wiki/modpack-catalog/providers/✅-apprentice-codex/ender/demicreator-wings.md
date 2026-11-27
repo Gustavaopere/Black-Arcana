@@ -1,93 +1,123 @@
 # Demi-creator Wings
 
-- **Provider:** Apprentice's Codex
-- **Mod ID:** `apprenticecodex`
-- **Installed JAR:** `apprentice_codex-0.9.7.1+mc1.21.1.jar`
-- **Registry ID:** `apprenticecodex:demicreator_wings`
-- **Iron's school:** Ender
-- **Levels:** 1–3
-- **Minimum rarity:** Epic
-- **Cast type:** Long
-- **Cooldown:** 90 s
-- **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+**Estado do contrato:** ✅ `COMPLETE_PERK_READY` — `STATIC_TECHNICAL_CATALOG_ONLY` · `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`.
 
-## Exact source coefficients
+> O ✅ cobre exclusivamente a documentação estática SHA-exata deste objeto. Não homologa hook mutador, execução no pack, configuração efetiva, universo integral do provider nem QA físico.
 
-- `baseSpellPower = 800`
-- `spellPowerPerLevel = 250`
-- `baseManaCost = 300`
-- `manaCostPerLevel = 100`
-- `castTime = 40 ticks`
-- recast count: `2`
+## 1. Identidade e proveniência
 
-Activation-area value:
+| Campo | Valor verificado |
+|---|---|
+| Provider | Apprentice's Codex |
+| Mod ID | `apprenticecodex` |
+| Nome de exibição | Demi-creator Wings (nome funcional, não traduzido) |
+| Registry ID | `apprenticecodex:demicreator_wings` |
+| Host | Iron's Spells 'n Spellbooks (`AbstractSpell`) |
+| Escola | `SchoolRegistry.ENDER_RESOURCE` (Ender) |
+| Raridade mínima | `SpellRarity.EPIC` |
+| Níveis | 1–3 (`DefaultConfig.setMaxLevel(3)`) |
+| Tipo de cast | `CastType.LONG` |
+| Cooldown declarado | `90.0` s |
+| Recurso | Mana do Iron's (`baseManaCost=300`, `manaCostPerLevel=100`) |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
+| Ambiente | Minecraft 1.21.1 · NeoForge · Java 21 (JDK 21.0.12 na inspeção) |
+| Classe de implementação | `jp.aquafactory.apprenticecodex.spell.demicreatorwings.DemicreatorWings` |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-`1 + round(spellPower / 100)`
+As versões 0.9.7.1 e 1.0.1 ficam registradas apenas como histórico; nenhum de seus valores foi reaproveitado sem confirmação no artefato físico 1.0.1.1.
 
-Duration:
+## 2. Localizadores para o Codex
 
-`20 * round(30 * spellPower / 800)` ticks.
+| Elemento | Localizador |
+|---|---|
+| Registro | `SpellRegistry.reg("demicreator_wings", DemicreatorWings::new)` |
+| Config | `DemicreatorWings.config` (`new DefaultConfig().setMinRarity(EPIC).setSchoolResource(ENDER_RESOURCE).setMaxLevel(3).setCooldownSeconds(90.0).build()`) |
+| Coeficientes | `DemicreatorWings.<init>()`: `baseSpellPower=800`, `spellPowerPerLevel=250`, `baseManaCost=300`, `manaCostPerLevel=100`, `castTime=40` |
+| Área | `DemicreatorWings.getActivateArea(int,LivingEntity)` → `1 + Math.round(power/100.0F)` |
+| Duração | `DemicreatorWings.getDuration(int,LivingEntity)` → `20 * Math.round(30.0F * power / 800.0F)` |
+| Recast | `DemicreatorWings.getRecastCount(int,LivingEntity)` → `2` |
+| Gate de cast | `DemicreatorWings.checkPreCastConditions(...)`: exige `Player`, recast de fechamento ou `ApprenticeCodexServerConfig.isDemicreatorWingsDimensionAllowed(...)` |
+| Ciclo | `DemicreatorWings.onCast(...)` (abre/fecha), `onRecastFinished(...)`, `onServerCastComplete(...)` |
+| Núcleo | `jp.aquafactory.apprenticecodex.spell.demicreatorwings.DemicreatorWingsCoreEntity` |
+| Asa | `jp.aquafactory.apprenticecodex.spell.demicreatorwings.DemicreatorWingEntity` (`DemicreatorWingsWingEntity`) |
+| Manager | `jp.aquafactory.apprenticecodex.spell.demicreatorwings.DemicreatorWingsManager` (`activate`, `deactivate`, `ensureFlightGranted`, `isInsideCoreArea`, `stripGrantedFlight`) |
+| Evento de voo | `jp.aquafactory.apprenticecodex.spell.demicreatorwings.DemicreatorWingsFlightEvent` |
+| Estado persistente | `capability.codexspelldata.spellstates.DemicreatorWingsState` (`active`, `coreEntityId`, `wingEntityId`, `grantedFlight`) |
+| Config de dimensão | `config.spell.DemicreatorWingsServerConfig` → `SpellDimensionRestrictionServerConfig` |
 
-At unmodified default spell power, the nominal values are approximately:
+Bytecode reconsultado no JAR 1.0.1.1: saída `scratch/javap1011_ender10.txt` (`javap -classpath <JAR> -p -s -c`, `EXIT=0`, 38 classes, SHA-256 `0095E23B21918E38B4BD7D6C47DA8C3503753F0F988C00AB04A786060E2C50E5`) e decompilação Vineflower consolidada em `scratch/ender10_sources.txt` (55 arquivos, SHA-256 `F3953EB8FCFB793EC501694E054E3C3CBE187E557B09B6CF158828692A97A645`).
 
-| Level | Area value | Duration |
-|---:|---:|---:|
-| 1 | 9 | 30 s |
-| 2 | 12 | 39 s |
-| 3 | 14 | 49 s |
+## 3. Casting / execução
 
-The exact geometric interpretation of the manager's area value should be taken from runtime/manager audit rather than relabeled as diameter/radius without evidence.
+1. `AbstractSpell` resolve intenção, mana, cooldown e nível; `castTime=40` e `CastType.LONG`.
+2. `checkPreCastConditions` exige `Player`. Com recast ativo: se o jogador não é `ServerPlayer` ou possui core ativo, grava `DemicreatorWingsCastData.closeCast()` e aprovoca o cast de fechamento; se o recast está obsoleto sem core, remove com `RecastResult.USED_ALL_RECASTS`. Sem recast, rejeita dimensões não permitidas pela config e grava `openCast()`.
+3. `onCast` em `ServerPlayer`: `closeCast` → `DemicreatorWingsManager.deactivate(server,true)`; caso contrário `activate(server, spellLevel, castSource, playerMagicData, spell)`.
+4. `activate` chama `deactivate(player,false)`, cria `DemicreatorWingsCoreEntity` com `getActivateArea(...)` e `getDuration(...)`, posiciona no jogador, cria `DemicreatorWingsWingEntity`, grava IDs/estado e registra `RecastInstance` com `getRecastCount(...)=2` e duração `getDuration(...)`.
+5. `onRecastFinished` → `deactivate(player,false)`; `onServerCastComplete` limpa `additionalCastData`.
 
-## Provider lifecycle
+Coeficientes herdados de `AbstractSpell` (mana/cooldown/cast time/spell power) são declarados pelo addon; valores efetivos dependem da config instalada do Iron's, atributos, Curios e eventos — **NÃO VERIFICADOS**.
 
-The spell is player-only and rejects dimensions disallowed by provider configuration. The first cast activates a `DemicreatorWingsManager` core/session; an active recast path deactivates it. Timeout also deactivates provider state.
+## 4. Targeting / geometria
 
-The public guide describes a fixed core that grants temporary creative-style flight only inside the bounded area, ending on recast, expiry or leaving the valid zone.
+| Propriedade | Valor e consumidor |
+|---|---|
+| Área de ativação | `1 + round(power/100)`; nominal **9 / 12 / 14** nos níveis 1–3 sem modificadores. Passada como `allowedRadius` ao `DemicreatorWingsCoreEntity`. |
+| Duração | `20 * round(30*power/800)` ticks; nominal **600 / 780 / 980 ticks (30 / 39 / 49 s)**. Consumida pela entidade core e pelo `RecastInstance`. |
+| Interpretação geométrica | `DemicreatorWingsManager.isInsideCoreArea(ServerPlayer,core)` testa `abs(player.x-core.x) <= core.getAllowedRadius()` **e** `abs(player.z-core.z) <= core.getAllowedRadius()`. **Não há condição Y nesse método**: a fronteira examinada é quadrada em X/Z, não esfera/volume 3D certificado. Regras de colisão da entidade core exigem auditoria separada. |
+| Entidades gerenciadas | core + asa, ambas com owner (`TraceableEntity` no core) e IDs persistidos no estado. |
 
-## Authority
+O valor de área é uma grandeza do manager; rotulá-lo como raio ou diâmetro sem evidência do consumidor não é permitido.
 
-This is provider-owned temporary flight. Black Arcana must not create a second flight permission flag or duplicate duration/recast management. RPG progression must not award Mastery per flight tick.
+## 5. Resultado
 
-## Acquisition
+- **Licença de voo:** `DemicreatorWingsManager.ensureFlightGranted` só opera com `state.active=true`, fora de `instabuild` e espectador; quando necessário marca `abilities.mayfly=true`, chama `onUpdateAbilities()` e registra `state.grantedFlight=true`.
+- **Tick de voo:** `DemicreatorWingsFlightEvent.onPlayerTick(PlayerTickEvent.Pre)` desativa se o core não existe ou o jogador sai da área, revalida a asa e zera `fallDistance`.
+- **Limpeza:** `deactivate` descarta core/asa, chama `stripGrantedFlight` e remove recast quando solicitado. `stripGrantedFlight` define `flying=false` e `mayfly=false` **somente se** `state.grantedFlight` estava ligado; não há negociação com outras fontes de `mayfly` nesse corpo. Login, logout, troca de dimensão e morte acionam limpeza.
+- **Apresentação:** SoundRegistry `VANILLA_POWER_TUNING` (início) e `VANILLA_POWER_ACTIVATE` (fim); partículas da entidade core/asa pertencem ao provider.
+- Limites do manager: `ALERT_THRESHOLD_TICKS=200`, `ALERT_FAST_THRESHOLD_TICKS=60`, `ALERT_INTERVAL_TICKS=20`, `ALERT_FAST_INTERVAL_TICKS=10`.
 
-Registered through Iron's spell registry. Exact survival acquisition remains provider-wide audit work.
+## 6. Scaling e caps
 
-## Deduplication
+| Parâmetro | Fórmula literal | Unidade / ownership |
+|---|---|---|
+| Spell power | `800 + 250*(level-1)` | float; internamente `AbstractSpell.getSpellPower` aplica atributo, escola e multiplicador |
+| Mana | `300 + 100*(level-1)` | Iron's mana; default declarado |
+| Área | `1 + round(power/100)` | valor do manager; consumido como `allowedRadius` em X/Z |
+| Duração | `20 * round(30*power/800)` | ticks |
+| Recast | `2` | contagem Iron's |
+| Cooldown | `90.0` s | `DefaultConfig` |
+| gate de dimensão | `DemicreatorWingsServerConfig.isDimensionAllowed` | config do servidor; conteúdo instalado **NÃO VERIFICADO** |
 
-Occupies the **bounded temporary creative-flight zone tied to a provider-managed core/recast lifecycle** niche.
+## 7. Possibilidades de perks
 
-## Confidence
+- **A — atributo nativo:** spell power/mana/cooldown via `AbstractSpell`; contrato do host, não hook de mutação deste objeto.
+- **B — evento/callback verificado:** `PlayerTickEvent.Pre` e os handlers de login/logout/morte são observadores do provider; a existência deles **não** autoriza alterar a área, a duração ou a licença de voo. `setForGameTest` de `DemicreatorWingsServerConfig` é utilitário de teste, não contrato de perk em runtime.
+- **C — adapter condicionado:** mudar área/duração/recast exigiria substituir `DemicreatorWingsManager`/`DemicreatorWingsCoreEntity` com contrato explícito de owner, recast e limpeza de `mayfly`. **CONDICIONADO**.
+- **D — sem hook demonstrado:** não há API/mixin seguro comprovado para transformar a licença de voo em área maior, estender duração ou conceder voo extra sem duplicar `mayfly`. **NO_MUTATION / fail-closed**.
+- `mutating_hook = NOT_VERIFIED`.
 
-`SOURCE-PINNED SPELL / EXACT CAST+AREA-VALUE+DURATION FORMULAS+RECAST / MANAGER GEOMETRY+FLIGHT PERMISSION EDGE CASES+RUNTIME QA PENDING`
+## 8. Causalidade
 
-## Localizadores para Codex — source exato
+`um cast → um core + uma asa → estado de voo → recast/timeout/saída da área → limpeza`.
 
-- **Registry + identidade:** `apprenticecodex:demicreator_wings` → `SpellRegistry.reg("demicreator_wings", DemicreatorWings::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.demicreatorwings.DemicreatorWings`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/demicreatorwings/DemicreatorWings.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+Voo, ticks em voo e recast são uma sessão provider-owned. Black Arcana não deve criar segundo flag de voo nem duplicar duração/recast; RPG não deve pagar Mastery por tick de voo. A ausência de negociação com outras fontes de `mayfly` é risco real a testar, não bug universal comprovado.
 
----
+## 9. Concepção de nova magia
 
-## Engenharia causal aprofundada — 0.9.7.1 (audit de source, 2026-10-13)
+Assinatura ocupada: "zona temporária limitada de voo criativo atrelada a core/recast". Uma magia Black Arcana original precisaria de semântica materialmente distinta (por exemplo, mobilidade sem concessão de `mayfly` ou sem núcleo persistente) para não duplicar esta identidade. Nenhuma implementação foi realizada.
 
-**Prova rastreável:** [`demicreatorwings/DemicreatorWings.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/demicreatorwings/DemicreatorWings.java) · [`demicreatorwings/DemicreatorWingsManager.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/demicreatorwings/DemicreatorWingsManager.java) · [`demicreatorwings/DemicreatorWingsFlightEvent.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/demicreatorwings/DemicreatorWingsFlightEvent.java) · [`demicreatorwings/DemicreatorWingsCoreEntity.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/demicreatorwings/DemicreatorWingsCoreEntity.java). Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (declara 0.9.7.1); o JAR físico da modlist tem identidade/versionamento corroborados, **sem equivalência dos corpos compilados demonstrada**.
+## 10. Verificação e pendências
 
-### Domínio espacial, licença de voo e cleanup
+- ✅ Identidade/hash do JAR, registro, classe, construtor, fórmulas de área/duração, recast, geometria X/Z, licença de voo e limpeza confirmados no bytecode 1.0.1.1.
+- ⚠️ Configuração efetiva de dimensão e multiplicadores instalados não lidos.
+- ⚠️ `physical_qa=NOT_TESTED`: sem cliente, servidor, Survival, PvP, outras fontes de voo ou modpack real.
+- ⚠️ Universo integral do provider não encerrado: recorte observado de 15 fichas Ender neste lote.
 
-- **Ativação do núcleo:** `DemicreatorWingsManager.activate` primeiro chama `deactivate(player,false)`, cria `DemicreatorWingsCoreEntity` e `DemicreatorWingsWingEntity`, grava IDs em `DEMICREATOR_WINGS_STATE` e registra `RecastInstance` de Iron's. `deactivate(player,true)` descarta entidades gerenciadas, retira voo concedido pela habilidade e remove recast.
-- **Geometria realmente verificada:** `isInsideCoreArea(ServerPlayer,core)` testa **`abs(player.x-core.x)<=core.getAllowedRadius()` e `abs(player.z-core.z)<=core.getAllowedRadius()`**. **Não contém condição Y nesse método.** Portanto a fronteira da autorização examinada é horizontal em X/Z (região quadrada axis-aligned nessa etapa), não esfera/volume tridimensional certificado. As regras da entidade core e colisão exigem auditoria separada.
-- **Permissão temporária:** `ensureFlightGranted` só opera com estado ativo e evita sobrescrever criativo (`instabuild`) ou espectador; quando necessário marca `abilities.mayfly=true` e `state.grantedFlight=true`. O tick `DemicreatorWingsFlightEvent.onPlayerTick(PlayerTickEvent.Pre)` desativa se o core do player não existe ou ele sai dessa área, revalida wing e zera `fallDistance`.
-- **Lifecycle:** login, logout, troca de dimensão e morte acionam `deactivate(player,true)`. `stripGrantedFlight` pode definir `abilities.flying=false` e `abilities.mayfly=false` quando `state.grantedFlight` estava ligado; **não possui nesse corpo uma negociação com outros providers de `mayfly`**. Risco de interferência com benefícios legítimos de outras fontes, a testar sem concluir bug universal.
-- **Perks:** voo concedido, ticks em voo, alertas e recast constituem uma sessão provider-owned; BA não gerencia `mayfly` externo e RPG não deve pagar Mastery por tick. QA de deactivation, dimensão, death, survival, outras fontes de flight e reconexão é gate pré-adapter.
+## Localizadores para Codex — resumo operacional
 
-### Perfil para integração de perks e QA
-
-- **A / atributo e rank:** stats e estado de Iron's/Codex são lidos do provider, sem sobrescrita automática. Valores efetivos dependem de configuração e outros mods.
-- **B / causalidade:** raiz `apprenticecodex:demicreator_wings`, mantendo eventos, tarefas e recursos da cadeia sob authority externa; não atribuir Mastery por cada callback de efeito secundário.
-- **C/D / política:** nenhuma API/hook de RPG Skill Tree homologada pela simples presença desses métodos. **⛔** fail-closed para adapter e **⚠️** QA da versão instalada (JAR, host, Survival, servidor, multiplayer, dependências opcionais e claims).
-- **Clean-room:** somente especificação factual própria; não transplantar implementação upstream.
-
-[Matriz causal desta etapa](../PERK-ENGINEERING-MATRIX-HIGH-RISK-0.9.7.1.md).
+- `getActivateArea`/`getDuration` são métodos package-private da spell; não presumir setters mutáveis por perk.
+- `isInsideCoreArea` é X/Z sem Y: qualquer alteração de geometria precisa demonstrar o consumidor e a autoridade do core.
+- `stripGrantedFlight` só atua quando `state.grantedFlight=true`; não sobrescrever `mayfly` de terceiros.
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) para hashes, comandos e limites da prova.

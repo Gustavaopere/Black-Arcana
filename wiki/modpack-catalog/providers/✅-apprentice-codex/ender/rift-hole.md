@@ -1,89 +1,126 @@
 # Rift Hole
 
-- **Provider:** Apprentice's Codex
-- **Mod ID:** `apprenticecodex`
-- **Installed JAR:** `apprentice_codex-0.9.7.1+mc1.21.1.jar`
-- **Registry ID:** `apprenticecodex:rift_hole`
-- **Iron's school:** Ender
-- **Levels:** 1–3
-- **Minimum rarity:** Epic
-- **Cast type:** Instant
-- **Cooldown:** 10 s
-- **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+**Estado do contrato:** ✅ `COMPLETE_PERK_READY` — `STATIC_TECHNICAL_CATALOG_ONLY` · `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`.
 
-## Exact source coefficients
+> O ✅ cobre exclusivamente a documentação estática SHA-exata deste objeto. Não homologa hook mutador, execução no pack, configuração efetiva, universo integral do provider nem QA físico.
 
-- `baseSpellPower = 100`
-- `spellPowerPerLevel = 25`
-- `baseManaCost = 150`
-- `manaCostPerLevel = 50`
-- source field `castTime = 30 ticks` while `getCastType()` returns `INSTANT`; exact player-facing timing should therefore be confirmed in runtime rather than assuming the field is consumed
-- open duration: `200 ticks = 10 s`
-- recast count: `2`
-- tunnel radius on the plane: `1`, producing a potential **3×3** cross-section
-- targeting range: `8 + 8 * spellPower / 100`
-- tunnel depth: `floor(range)`, minimum 1
+## 1. Identidade e proveniência
 
-At default unmodified spell power, nominal ranges are **16 / 18 / 20 blocks** for levels 1–3.
+| Campo | Valor verificado |
+|---|---|
+| Provider | Apprentice's Codex |
+| Mod ID | `apprenticecodex` |
+| Registry ID | `apprenticecodex:rift_hole` |
+| Host | Iron's Spells 'n Spellbooks (`AbstractSpell`) |
+| Interface | `IClientBlockTargetingSpell` |
+| Escola | `SchoolRegistry.ENDER_RESOURCE` (Ender) |
+| Raridade mínima | `SpellRarity.EPIC` |
+| Níveis | 1–3 (`DefaultConfig.setMaxLevel(3)`) |
+| Tipo de cast | `CastType.INSTANT` (com `castTime=30` no construtor; ver §3) |
+| Cooldown declarado | `10.0` s |
+| Recurso | Mana do Iron's (`baseManaCost=150`, `manaCostPerLevel=50`) |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
+| Ambiente | Minecraft 1.21.1 · NeoForge · Java 21 (JDK 21.0.12 na inspeção) |
+| Classe de implementação | `jp.aquafactory.apprenticecodex.spell.rifthole.RiftHole` |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-## Server-authoritative world mutation
+As versões 0.9.7.1 e 1.0.1 permanecem como histórico; nenhum valor foi reaproveitado sem confirmação no artefato físico 1.0.1.1.
 
-The provider requires a server-validated block target and rejects disallowed dimensions. It constructs a tunnel plan, applying a provider safety predicate before replacing each eligible block.
+## 2. Localizadores para o Codex
 
-For every replaced position it stores the original block state in the provider `RiftHoleBlockEntity`, plus caster/tunnel identity and expiry time. Recast or timeout closes the tunnel by restoring only provider blocks belonging to the matching tunnel UUID.
+| Elemento | Localizador |
+|---|---|
+| Registro | `SpellRegistry.reg("rift_hole", RiftHole::new)` |
+| Config | `RiftHole.config` (`EPIC`, nível 3, cooldown `10.0`) |
+| Coeficientes | `RiftHole.<init>()`: `baseSpellPower=100`, `spellPowerPerLevel=25`, `baseManaCost=150`, `manaCostPerLevel=50`, `castTime=30` |
+| Constantes | `DURATION_TICKS=200`, `TUNNEL_RADIUS=1` |
+| Alcance | `RiftHole.getRange(int,LivingEntity)` → `8 + 8*power/100` |
+| Profundidade | `getTunnelDepth(int,LivingEntity)` → `max(1, floor(range))` |
+| Cliente | `getClientBlockTargetingRange(...)` → `getRange(...)` |
+| Recast | `RiftHole.getRecastCount(...)` → `2` |
+| Gate de cast | `RiftHole.checkPreCastConditions(...)`: recast ativo fecha; senão exige dimensão permitida e `buildTunnelPlan` com alvo válido |
+| Dados de cast | `RiftHole.RiftHoleCastData` (`createOpenCastData(UUID.randomUUID(), tunnelPlan)`, `createCloseCastData()`) |
+| Planejamento | `buildTunnelPlan(...)`, `BlockTargetingHelper.getValidatedPendingTarget(...)` |
+| Abertura/fechamento | `openTunnel(...)`, `closeTunnel(...)`, `onRecastFinished(...)` |
+| Segurança | `RiftHoleBlockSafety.isTargetBlock`, `passesCommonChecks`, `isTunnelFullBlock`, `canReplace`, `hasUnsafeRestoreBehavior` |
+| Tag | `TagRegistry.Blocks.RIFT_HOLE_TUNNEL_DENYLIST` |
+| Entidade de bloco | `RiftHoleBlockEntity` (`originalState`, `casterUuid`, `tunnelUuid`, `expireGameTime`, `matchesTunnel`) |
 
-This is a bounded temporary world mutation with an explicit restore path; it is not a permanent excavation spell.
+Bytecode: `scratch/javap1011_ender10.txt` (`javap -classpath <JAR> -p -s -c`, `EXIT=0`, SHA-256 `0095E23B21918E38B4BD7D6C47DA8C3503753F0F988C00AB04A786060E2C50E5`); decompilação: `scratch/ender10_sources.txt` (SHA-256 `F3953EB8FCFB793EC501694E054E3C3CBE187E557B09B6CF158828692A97A645`).
 
-## Safety boundary
+## 3. Casting / execução
 
-`RIFT_HOLE_TUNNEL_DENYLIST` exists in the exact provider tag registry, and `RiftHoleBlockSafety` remains provider authority for what may be replaced.
+1. `castTime=30` existe como campo, mas `getCastType()` retorna `CastType.INSTANT`. A ficha registra ambos literalmente; **o timing apresentado ao jogador não foi verificado em runtime** — não afirmar que o campo é consumido.
+2. Sem recast ativo, `checkPreCastConditions` exige `ApprenticeCodexServerConfig.isRiftHoleDimensionAllowed(level.dimension().location())` e `buildTunnelPlan`: valida o alvo via `BlockTargetingHelper.getValidatedPendingTarget`, exige `RiftHoleBlockSafety.isTargetBlock(hitPos)` e plano não vazio; grava `RiftHoleCastData.createOpenCastData(UUID.randomUUID(), plano)`.
+3. Com recast ativo cujo cast data é `RiftHoleCastData` com túnel, converte para `createCloseCastData()` e o cast fecha o túnel.
+4. `onCast` em `ServerLevel`: `isCloseCast` → `closeTunnel` + `removeActiveRecast`; `isOpenCast` → `openTunnel`, que cria `RecastInstance(..., 200 ticks, castData.copy())`.
+5. `onRecastFinished` fecha o túnel; `onServerCastComplete` reseta/limpa `additionalCastData`.
 
-Black Arcana must not reapply this mutation or restoration through a second `WorldEffectPolicy` transaction after the provider has settled it. A Black Arcana-originated portable-hole mechanic would still require its own policy and must demonstrate a real semantic gap.
+## 4. Targeting / geometria
 
-## Causality
+| Propriedade | Valor e consumidor |
+|---|---|
+| Alcance de targeting | `8 + 8*power/100` blocos; nominal **16 / 18 / 20** nos níveis 1–3 sem modificadores |
+| Profundidade do túnel | `max(1, floor(range))` blocos a partir do alvo validado |
+| Seção transversal | `TUNNEL_RADIUS=1` no plano, resultando em até **3×3** posições, sujeitas às checagens de segurança |
+| Duração | `DURATION_TICKS=200` ticks (10 s) |
+| Recast | `2`, usado para reabrir/fechar dentro da sessão |
+| Dimensões | gate `ApprenticeCodexServerConfig.isRiftHoleDimensionAllowed`; conteúdo **NÃO VERIFICADO** |
+| Perfil do bloco | `isTunnelFullBlock` exige collision shape de bloco cheio; shapes não cúbicos não passam |
 
-Opening, active recast state and closing belong to one provider tunnel lifecycle. Closing/restoration is cleanup, not a new spell/progression event.
+A abertura pode ser **parcial**: `openTunnel` reavalia `canReplace` no estado atual de cada posição e só substitui as elegíveis. Não afirmar túnel completo garantido.
 
-## Acquisition
+## 5. Critérios de substituição e restauração
 
-Registered through Iron's spell registry. Exact survival acquisition remains provider-wide audit work.
+- `passesCommonChecks`: rejeita ar, estados substituíveis, `TagRegistry.Blocks.RIFT_HOLE_TUNNEL_DENYLIST`, fluidos e `getDestroySpeed < 0`.
+- `canReplace`: acrescenta exclusão de BlockEntity existente, `PushReaction != NORMAL`, saída analógica e `isSignalSource`.
+- `openTunnel`: coloca `BlockRegistry.RIFT_HOLE` e, no `RiftHoleBlockEntity`, grava `originalState`, `casterUuid`, `tunnelUuid` e `expireGameTime = gameTime + 200`.
+- `closeTunnel`: percorre em ordem reversa e exige ainda bloco `RIFT_HOLE` e `matchesTunnel(tunnelId)` antes de restaurar `getOriginalState()`. Se o mundo mudou, não força restauração de bloco estranho.
+- Expiração autônoma da block entity é consequência do mesmo ciclo de vida; não é um novo cast.
 
-## Deduplication
+## 6. Scaling e caps
 
-Occupies the **temporary bounded portable tunnel with stateful block restoration** niche.
+| Parâmetro | Fórmula literal | Unidade / ownership |
+|---|---|---|
+| Spell power | `100 + 25*(level-1)` | float; `getSpellPower` do host |
+| Mana | `150 + 50*(level-1)` | Iron's mana |
+| Alcance | `8 + 8*power/100` | blocos |
+| Profundidade | `max(1, floor(range))` | blocos |
+| Duração | `200` | ticks |
+| Recast | `2` | Iron's recast |
+| Cooldown | `10.0` s | `DefaultConfig` |
+| `castTime` | `30` | campo; `CastType.INSTANT` no `getCastType()` |
 
-## Confidence
+## 7. Possibilidades de perks
 
-`SOURCE-PINNED SPELL / EXACT RANGE+DURATION+CROSS-SECTION+RESTORE IDENTITY / CAST-TYPE-vs-CAST-TIME RUNTIME UX + DENYLIST CONTENT + PACK QA PENDING`
+- **A — atributo nativo:** spell power/mana/cooldown via `AbstractSpell`; o alcance responde ao spell power.
+- **B — evento verificado:** `checkPreCastConditions`, `openTunnel` e `closeTunnel` são fluxos do provider; não há API de mutação segura demonstrada para alterar raio/profundidade/restauração.
+- **C — adapter condicionado:** qualquer mudança de geometria ou política de blocos exigiria substituir `buildTunnelPlan`, `RiftHoleBlockSafety` e a block entity com contrato de restauração por UUID. **CONDICIONADO**.
+- **D — sem hook demonstrado:** não há hook comprovado para tornar o túnel permanente, ignorar a denylist ou duplicar a restauração sem risco de corromper estado. **NO_MUTATION / fail-closed**.
+- `mutating_hook = NOT_VERIFIED`.
 
-## Localizadores para Codex — source exato
+## 8. Causalidade
 
-- **Registry + identidade:** `apprenticecodex:rift_hole` → `SpellRegistry.reg("rift_hole", RiftHole::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.rifthole.RiftHole`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/rifthole/RiftHole.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+`um cast → um plano de túnel → abertura parcial com estado por bloco → recast/timeout → restauração por tunnel UUID`.
 
----
+A mutação do mundo é provider-owned e liquidada pelo addon. Black Arcana não deve reaplicar abertura/restauração via segunda `WorldEffectPolicy` transaction. Uma mecânica BA equivalente exigiria política própria e gap semântico real.
 
-## Engenharia causal aprofundada — 0.9.7.1 (audit de source, 2026-10-13)
+## 9. Concepção de nova magia
 
-**Prova rastreável:** [`rifthole/RiftHole.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/rifthole/RiftHole.java) · [`rifthole/RiftHoleBlockSafety.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/rifthole/RiftHoleBlockSafety.java) · [`rifthole/RiftHoleBlockEntity.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/rifthole/RiftHoleBlockEntity.java). Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`, mod ID `apprenticecodex`. Identidade e versão do JAR são da modlist física; **não há prova de equivalência de cada corpo de método com o JAR compilado**.
+Assinatura ocupada: "túnel temporário limitado com restauração stateful por bloco". Nenhuma implementação foi realizada.
 
-### Critérios exatos de substituição e reparação
+## 10. Verificação e pendências
 
-- **Admissão de bloco:** `RiftHoleBlockSafety.passesCommonChecks` rejeita ar, estados substituíveis, a tag `TagRegistry.Blocks.RIFT_HOLE_TUNNEL_DENYLIST`, fluidos e `getDestroySpeed<0`. `isTunnelFullBlock` exige collision shape de bloco cheio, portanto escadas e outras shapes não cúbicas não passam. O alvo inicial e o corpo do túnel compartilham checagens comuns, mas podem levar a resultados parciais diferentes.
-- **Restauração segura:** `canReplace` acrescenta exclusão de BlockEntity, reação de pistão diferente de `PushReaction.NORMAL`, bloco com saída analógica ou `isSignalSource`. São checagens do **provider**, não equivalentes a um hook geral de claims.
-- **Abertura:** `openTunnel` percorre posições de `RiftHoleCastData`, testa `canReplace` novamente no estado **atual**, coloca `BlockRegistry.RIFT_HOLE` e, quando obtém `RiftHoleBlockEntity`, grava estado anterior, caster UUID, tunnel UUID e `expireGameTime=gameTime+DURATION_TICKS`. Depois cria `RecastInstance` com os dados copiados; a abertura pode ser parcialmente aplicada quando posições deixam de ser elegíveis.
-- **Fechamento:** `closeTunnel` processa posições em ordem reversa, exigindo ainda o bloco `RIFT_HOLE` e `matchesTunnel(tunnelId)` na block entity antes de repor `getOriginalState()`. Se o mundo mudou, esse fechamento deliberadamente **não força** a restauração de um bloco estranho. Expiração própria do `RiftHoleBlockEntity` deve ser verificada separadamente.
-- **Boundary:** cada bloco substituído é consequência do cast `rift_hole`; recast/timeout/restore são cleanup. Exigir testes de unload, chunks, BlockEntity, alteração de bloco por terceiros, denylist datapack e proteção de claims; não executar novamente o túnel pelo `WorldEffectPolicy` do Black Arcana.
+- ✅ Identidade/hash, coeficientes, alcance/profundidade, seção 3×3, duração, recast, gates e critérios de restauração confirmados no bytecode 1.0.1.1.
+- ⚠️ Conteúdo da denylist, config de dimensão e o uso efetivo de `castTime=30` em runtime não certificados.
+- ⚠️ `physical_qa=NOT_TESTED`: sem servidor real, unload/reload de chunks, alteração de bloco por terceiros, claims ou PvP.
+- ⚠️ Universo integral do provider não encerrado.
 
-### Perfil para integração de perks e QA
+## Localizadores para Codex — resumo operacional
 
-- **A / stats e rank:** ler apenas os atributos declarados no host Iron's e os state objects que o addon expõe; stat dinâmica e duração efetiva exigem ambiente, item e configuração. Nenhuma alteração de mana/cooldown do Iron's por Black Arcana.
-- **B / causalidade:** uma ação primária `apprenticecodex:rift_hole`; filhos, efeitos retardados, limpeza ou automação pertencem à raiz do provider. Sem `cast UUID`/contrato de retorno validado, o BA e RPG não devem inferir reward do resultado observado.
-- **C/D / segurança:** ⛔ adapter de Mastery/perks enquanto inexistir contrato seguro. ⚠️ QA: servidor real, replay, NBT/relog, cross-dimension, compat opcional, ordenação e anti-double-processing. Não houve GameTest do provider nesta auditoria.
-- **Clean-room:** análise factual e documentação próprias; código upstream não foi incorporado.
-
-[Matriz causal desta etapa](../PERK-ENGINEERING-MATRIX-HIGH-RISK-0.9.7.1.md).
+- `castTime=30` + `CastType.INSTANT` é uma contradição aparente a resolver por QA, não valor a "corrigir" no paper.
+- A restauração só casa se `matchesTunnel(tunnelUuid)` for verdadeiro; não reprocessar por terceiros.
+- Nenhum ponto de mutação segura demonstrado; manter fail-closed.
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).

@@ -1,83 +1,125 @@
 # Personal Shelf
 
-- **Provider:** Apprentice's Codex
-- **Mod ID:** `apprenticecodex`
-- **Installed JAR:** `apprentice_codex-0.9.7.1+mc1.21.1.jar`
-- **Registry ID:** `apprenticecodex:personal_shelf`
-- **Iron's school:** Ender
-- **Levels:** 1
-- **Minimum rarity:** Rare
-- **Cast type:** Long
-- **Cooldown:** 5 s
-- **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+**Estado do contrato:** ✅ `COMPLETE_PERK_READY` — `STATIC_TECHNICAL_CATALOG_ONLY` · `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`.
 
-## Exact source coefficients
+> O ✅ cobre exclusivamente a documentação estática SHA-exata deste objeto. Não homologa hook mutador, execução no pack, configuração efetiva, universo integral do provider nem QA físico.
 
-- `baseSpellPower = 0`
-- `spellPowerPerLevel = 0`
-- `baseManaCost = 50`
-- `manaCostPerLevel = 0`
-- `castTime = 20 ticks`
-- targeting/placement range: `8 blocks`
+## 1. Identidade e proveniência
 
-## Server-authoritative placement
+| Campo | Valor verificado |
+|---|---|
+| Provider | Apprentice's Codex |
+| Mod ID | `apprenticecodex` |
+| Registry ID | `apprenticecodex:personal_shelf` |
+| Host | Iron's Spells 'n Spellbooks (`AbstractSpell`) |
+| Interfaces | `IClientBlockTargetingSpell`, `IClientPlacementPreviewSpell` |
+| Escola | `SchoolRegistry.ENDER_RESOURCE` (Ender) |
+| Raridade mínima | `SpellRarity.RARE` |
+| Níveis | 1 (`DefaultConfig.setMaxLevel(1)`) |
+| Tipo de cast | `CastType.LONG` |
+| Cooldown declarado | `5.0` s |
+| Recurso | Mana do Iron's (`baseManaCost=50`, `manaCostPerLevel=0`) |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
+| Ambiente | Minecraft 1.21.1 · NeoForge · Java 21 (JDK 21.0.12 na inspeção) |
+| Classe de implementação | `jp.aquafactory.apprenticecodex.spell.personalshelf.PersonalShelf` |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-The client can provide targeting/preview intent, but the provider validates the target again on the server before casting. The server rejects non-placeable locations and creates `PERSONAL_SHELF_CHEST` only after validation.
+As versões 0.9.7.1 e 1.0.1 permanecem como histórico; nenhum valor foi reaproveitado sem confirmação no artefato físico 1.0.1.1.
 
-Sneaking at cast time records an **export mode** plus placement facing in serialized cast data. The created block entity is initialized with the caster/player identity and the provider's shelf/export state.
+## 2. Localizadores para o Codex
 
-This is a concrete example of provider-owned client-preview/server-settlement separation; Black Arcana must not add a second placement transaction.
+| Elemento | Localizador |
+|---|---|
+| Registro | `SpellRegistry.reg("personal_shelf", PersonalShelf::new)` |
+| Config | `PersonalShelf.config` (`RARE`, nível 1, cooldown `5.0`) |
+| Coeficientes | `PersonalShelf.<init>()`: `baseSpellPower=0`, `spellPowerPerLevel=0`, `baseManaCost=50`, `manaCostPerLevel=0`, `castTime=20` |
+| Alcance | `PersonalShelf.getRange()` → `8.0`; replicado em `getClientBlockTargetingRange(...)` e `setLifeRange(...)` |
+| Gate de cast | `PersonalShelf.checkPreCastConditions(...)` → `findPlaceData(...)`; falha envia `ui.apprenticecodex.cant_place` |
+| Dados de cast | `PersonalShelf.PersonalShelfCastData` (`position`, `exportMode`, `exportFacing`; buffer + NBT `HasPosition`/`PositionX,Y,Z`/`ExportMode`/`HasExportFacing`/`ExportFacing`) |
+| Validação de alvo | `BlockTargetingHelper.findClientPlacePos`, `BlockTools.findPlacePos`, `BlockTargetingHelper.validateTarget` |
+| Preview | `PersonalShelf.getClientPlacementPreview(...)` → `ClientPlacementPreviewData.singleBlockColumn(...)` |
+| Mutação | `PersonalShelf.onCast(...)`: `level.setBlockAndUpdate(..., BlockRegistry.PERSONAL_SHELF_CHEST.defaultBlockState())` |
+| Bloco | `PersonalShelfChestBlock` (`EXPORT_MODE` BooleanProperty, `SHAPE=Block.box(2,1,2,14,14,14)`) |
+| BlockEntity | `PersonalShelfChestBlockEntity` (`serverTick`, `expireAndCloseOpenMenus`, `exportItem`, `setLifeRange`, `keepOwnerRange=10.0` default) |
+| Inventário | `Capabilities.getPersonalInventory(owner).getHandler()` (não os slots transientes do bloco) |
 
-## What it does
+Bytecode: `scratch/javap1011_ender10.txt` (`javap -classpath <JAR> -p -s -c`, `EXIT=0`, SHA-256 `0095E23B21918E38B4BD7D6C47DA8C3503753F0F988C00AB04A786060E2C50E5`); decompilação: `scratch/ender10_sources.txt` (SHA-256 `F3953EB8FCFB793EC501694E054E3C3CBE187E557B09B6CF158828692A97A645`).
 
-The guide describes a temporary personal/private storage interface and a sneaking transfer/export mode toward a container. The exact inventory persistence/storage backing remains provider implementation authority.
+## 3. Casting / execução
 
-## World-effect boundary
+1. `AbstractSpell` resolve mana/cooldown/nível; `castTime=20`, `CastType.LONG`.
+2. `checkPreCastConditions` chama `findPlaceData`: tenta `BlockTargetingHelper.findClientPlacePos` com `getRange()=8`; se vazio, usa `BlockTools.findPlacePos`. Grava `position`, `exportFacing` e `exportMode = entity.isShiftKeyDown()` no `PersonalShelfCastData`. Avisa `ui.apprenticecodex.personal_shelf.for_export_mode` se export.
+3. `getClientPlacementPreview` valida `BlockTargetData` e devolve preview de coluna de um bloco em `pos + (0.5,0,0.5)`. O cliente fornece intenção; o servidor revalida.
+4. `onCast` relê o cast data, exige `placeState.canBeReplaced()`, coloca `PERSONAL_SHELF_CHEST`, inicializa `chestEntity.setShelfData(caster, exportMode, exportFacing)`, chama `setLifeRange(getRange())` e emite 32 partículas `ParticleTypes.REVERSE_PORTAL`.
+5. `onServerCastComplete` reseta e limpa `additionalCastData`.
 
-Personal Shelf changes the world by creating a provider block. That mutation is already settled by Apprentice's Codex. It is not retroactively re-run through Black Arcana `WorldEffectPolicy`.
+Valores efetivos de mana/cooldown/cast time e atributos instalados **NÃO VERIFICADOS**.
 
-A Black Arcana-originated analogous world effect would still require Black Arcana policy and a real semantic gap.
+## 4. Targeting / geometria
 
-## Acquisition
+| Propriedade | Valor e consumidor |
+|---|---|
+| Alcance de targeting/placement | `8.0` blocos, mesmo valor para cliente e servidor |
+| Preview | coluna de um bloco centralizada em X/Z |
+| Substituição | `BlockState.canBeReplaced()` no destino |
+| Bloco criado | `BlockRegistry.PERSONAL_SHELF_CHEST`, `defaultBlockState()` |
+| `keepOwnerRange` | default `10.0` no BlockEntity, mas `PersonalShelf.onCast` chama `setLifeRange(8.0)` — o valor efetivo da spell é `8.0` |
+| Expiração por distância | três diferenças absolutas `X`, `Y` e `Z` **separadamente** `<= keepOwnerRange`; não é raio euclidiano |
+| Export | `exportMode && exportFacing != null`, destino em `pos.relative(exportFacing)` com `IItemHandler` via `Capabilities.ItemHandler.BLOCK` na face oposta |
 
-Registered through Iron's spell registry. Exact survival acquisition remains provider-wide audit work.
+A distância é uma caixa cúbica em X/Y/Z, não uma esfera. Rotular como raio Euclidiano seria incorreto.
 
-## Deduplication
+## 5. Resultado (BlockEntity e exportação)
 
-Occupies the **temporary personal magical storage/block interface with export mode** niche.
+- `serverTick` ressincroniza `EXPORT_MODE` do block state se divergente do `isExportMode` interno.
+- Sem owner, owner removido, owner offline ou fora do cubo de `keepOwnerRange`: `expireAndCloseOpenMenus` fecha menus abertos registrados em `openers`, remove o bloco com `removeBlock(pos,false)` e emite partículas `REVERSE_PORTAL` (32, spreads `0.2`) e som `VANILLA_DISAPPEAR_MAGICAL_ENTITY`.
+- `exportItem`: se `exportCooldownTick>0`, decrementa; caso contrário obtém `IItemHandler` do inventário pessoal do owner e percorre `slotLimit = Math.min(54, source.getSlots())`. Para cada slot não vazio: simula `insertItem(target,stack,true)`, calcula `inserted`, confirma com `insertItem(...,false)` e só então chama `source.extractItem(i, insertedReal, false)`, toca efeitos e fixa `EXPORT_COOLDOWN_TICK=5`.
+- A inserção real ocorre **antes** da extração da origem. Não há rollback no corpo examinado se `extractItem` retornar menos que `insertedReal`; sinalizar como risco de QA com handlers de terceiros, não como exploit comprovado.
 
-## Confidence
+**Deltas corrigidos neste lote:** a ficha histórica citava `PersonalInventory.MAX_SIZE`; o JAR `1.0.1.1` usa literalmente `Math.min(54, source.getSlots())`. Também passa a constar o default `keepOwnerRange=10.0` diferenciado do `setLifeRange(8.0)` da spell.
 
-`SOURCE-PINNED SPELL / EXACT COST+RANGE+SERVER TARGET VALIDATION / STORAGE LIFETIME+INVENTORY BACKING+PACK RUNTIME QA PENDING`
+## 6. Scaling e caps
 
-## Localizadores para Codex — source exato
+| Parâmetro | Fórmula literal | Unidade / ownership |
+|---|---|---|
+| Spell power | `0 + 0*(level-1)` | sem escalonamento |
+| Mana | `50 + 0*(level-1)` | Iron's mana |
+| Cast time | `20` ticks | `DefaultConfig` + campo |
+| Alcance | `8.0` | blocos, cliente e servidor |
+| `keepOwnerRange` | `10.0` default → `8.0` via `setLifeRange` | BlockEntity NBT `KeepOwnerRange` |
+| Cooldown de export | `5` ticks | `EXPORT_COOLDOWN_TICK` |
+| Slots de export | `min(54, slots)` | por tick |
 
-- **Registry + identidade:** `apprenticecodex:personal_shelf` → `SpellRegistry.reg("personal_shelf", PersonalShelf::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.personalshelf.PersonalShelf`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/personalshelf/PersonalShelf.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+## 7. Possibilidades de perks
 
----
+- **A — atributo nativo:** mana/cooldown/cast time via `AbstractSpell`; não há parâmetro de spell power aplicável.
+- **B — evento verificado:** `MovementInput`/`BlockTarget` e `serverTick` são pontos de execução do provider; não são hooks de mutação segura demonstrados.
+- **C — adapter condicionado:** alterar alcance,janela de posse ou cadência de export exigiria substituir `getRange`, `setLifeRange` e `exportItem`, com contrato de persistência NBT e transação de inventário. **CONDICIONADO**.
+- **D — sem hook demonstrado:** não há API segura comprovada para mudar a geometria de posse ou o export sem duplicar o bloco e o storage. **NO_MUTATION / fail-closed**.
+- `mutating_hook = NOT_VERIFIED`.
 
-## Engenharia causal aprofundada — entidades 0.9.7.1
+## 8. Causalidade
 
-**Fonte lida:** [`personalshelf/PersonalShelf.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/personalshelf/PersonalShelf.java) · [`personalshelf/PersonalShelfChestBlockEntity.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/personalshelf/PersonalShelfChestBlockEntity.java) · [`personalshelf/PersonalShelfChestBlock.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/personalshelf/PersonalShelfChestBlock.java). Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` alinhado à release declarada 0.9.7.1. Versão e SHA do JAR são da modlist física; **corpos de bytecode destes métodos não foram provados como equivalentes ao source**.
+`um cast → um bloco provider-owned → tick de posse/export → expiração/remoção`.
 
-### Execução, persistência e efeitos secundários
+O bloco, o storage pessoal e o export são consequências da mesma raiz `personal_shelf`; não são casts adicionais. Black Arcana não deve reprocessar a mutação do mundo via `WorldEffectPolicy` nem cobrar mana/XP por slot exportado.
 
-- **Bloco e ownership:** `PersonalShelf` resolve alvo/colocação sob checagens da spell; a `PersonalShelfChestBlockEntity` armazena owner UUID, modo de exportação, face de saída e `keepOwnerRange`. `serverTick` exige owner online/no mesmo nível e não removido; para distância, usa **três diferenças absolutas X/Y/Z <= keepOwnerRange**, não raio euclidiano.
-- **Expiração:** owner ausente/fora de alcance leva a `expireAndCloseOpenMenus`: fecha menus de players registrados como `openers`, remove o bloco via `serverLevel.removeBlock(pos,false)`, emite partículas e som. Um state de export mode divergente do block state é ressincronizado. O armazenamento persistente subjacente é `Capabilities.getPersonalInventory(owner)`, não os slots transientes do bloco invocado.
-- **Automação:** `exportItem` só roda se modo/face habilitados, cooldown vencido, BlockEntity de destino e `Capabilities.ItemHandler.BLOCK` disponíveis na face oposta; requer owner online. Percorre no máximo `PersonalInventory.MAX_SIZE` slots, simula `ItemHandlerHelper.insertItem(targetHandler,stack,true)` e confirma em `insertItem(...,false)`; em seguida extrai `insertedReal` do source. Quando movimentação foi positiva, fixa `EXPORT_COOLDOWN_TICK=5` e encerra tick.
-- **Ponto de concorrência:** inserção no destino ocorre **antes** da extração da origem nesse método, e o trecho não exibe rollback do destino caso `source.extractItem` entregue menos que `insertedReal`. Não afirmar exploit comprovado, mas sinalizar QA com capabilities de inventário de terceiros e transações concorrentes.
-- **Risco:** item exportado, fechamento de menu e expiração são consequências provider-native da mesma spell; não cobrar custo de mana/XP por slot adicional via BA, nem confundir UI com autoridade de storage.
+## 9. Concepção de nova magia
 
-### Boundary para perks e QA
+Assinatura ocupada: "container temporário pessoal com export mode direcional e posse por proximidade cúbica". Uma magia original precisaria de semântica materialmente distinta para não duplicar a identidade. Nenhuma implementação foi realizada.
 
-- **Raiz:** `apprenticecodex:personal_shelf`, já contabilizada no registry 83/83. Spawn, cleanup, tick, drop, item handling e efeitos causais **não** são novos casts contáveis.
-- **Autoridade:** Iron's mantém escola, casting, mana e recast padrão; Apprentice's Codex detém entidades, itens e efeitos auxiliares; Black Arcana mantém apenas sua própria pipeline de magia/rituais, política de efeitos de mundo, Corruption e Strain.
-- **Bloqueio:** ⛔ nenhuma API ou bridge de Mastery/perks confirmada para executar intervenções seguras; não deduzir rewards de eventos locais.
-- **Pendências:** ⚠️ equivalência source/JAR, configuração, servidor dedicado com modpack real, multiplayer/PvP, inventários de terceiros, proteção de claims, save/reload e edge cases de entidades. Nenhuma prova de QA físico do provider nesta atualização.
+## 10. Verificação e pendências
 
-[Matriz de lifecycle](../PERK-ENGINEERING-MATRIX-LIFECYCLE-0.9.7.1.md).
+- ✅ Identidade/hash, coeficientes, alcance, validação cliente/servidor, cast data, BlockEntity, limites de export e limpeza confirmados no bytecode 1.0.1.1.
+- ⚠️ Conteúdo efetivo de `getPersonalInventory`, proteção de claims e handlers de inventário de terceiros não lidos/testados.
+- ⚠️ `physical_qa=NOT_TESTED`: sem servidor real, multiplayer/PvP, save/reload ou export transacional.
+- ⚠️ Universo integral do provider não encerrado.
+
+## Localizadores para Codex — resumo operacional
+
+- `getRange()=8` é usado tanto no targeting quanto em `setLifeRange`; o default `10.0` do BlockEntity é sobrescrito na criação pela spell.
+- `min(54, slots)` é o limite real de varredura de export no JAR 1.0.1.1.
+- Nenhum ponto de mutação segura demonstrado; manter fail-closed.
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).
