@@ -108,7 +108,8 @@ jobs:
               --output "build/primitive-club-engine/$output.json"
           done
           cmp build/primitive-club-engine/effect-delegation.json build/primitive-club-engine/effect-delegation-replay.json
-          sha256sum build/primitive-club-engine/effect-delegation.json
+          test "$(wc -c < build/primitive-club-engine/effect-delegation.json)" = 1960281
+          echo 'cda3c973b8cab11860a8e4fea345856f33a8c080f232de2e9c0c9fc16fd750b4  build/primitive-club-engine/effect-delegation.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7

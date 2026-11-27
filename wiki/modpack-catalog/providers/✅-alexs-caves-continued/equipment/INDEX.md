@@ -2,21 +2,21 @@
 
 > Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
 
-**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+**Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
 
-**Fichas catalogadas (somente fichas detectadas): 8/9.**
+**Fichas catalogadas (somente fichas detectadas): 9/9.**
 
-**Barra das fichas catalogadas:** `█████████████████░░░ 88.9%`
+**Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 8/9.**
+**Homologadas para perks (somente fichas detectadas): 9/9.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████████░░░ 88.9%`
+**Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
-**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
+**Contratos desta subpasta:** ✅ contratos técnicos estáticos de todas as fichas detectadas certificados; recorte documental, sem homologação de hooks mutadores, QA físico ou universo integral do provider.
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
@@ -27,7 +27,7 @@
 | ✅ | Galena Gauntlet | [ficha/galena-gauntlet.md](galena-gauntlet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Limestone Spear | [ficha/limestone-spear.md](limestone-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Ortholance | [ficha/ortholance.md](ortholance.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Primitive Club | [ficha/primitive-club.md](primitive-club.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Primitive Club | [ficha/primitive-club.md](primitive-club.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shot Gum | [ficha/shot-gum.md](shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅

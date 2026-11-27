@@ -313,7 +313,8 @@
         "equipment/frostmint-spear.md",
         "equipment/galena-gauntlet.md",
         "equipment/limestone-spear.md",
-        "equipment/ortholance.md"
+        "equipment/ortholance.md",
+        "equipment/primitive-club.md"
       ],
       "family_universe_closed": false,
       "evidence": "EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md",
@@ -324,9 +325,10 @@
         "EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
         "equipment/galena-gauntlet.md",
         "equipment/limestone-spear.md",
-        "equipment/ortholance.md"
+        "equipment/ortholance.md",
+        "equipment/primitive-club.md"
       ],
-      "documented_static_contracts": 8
+      "documented_static_contracts": 9
     },
     "damage_types": {
       "documented_static_contracts": 9,
@@ -1051,12 +1053,12 @@
     "next_scope": "server/item/GalenaGauntletItem"
   },
   "latest_individual_contract_checkpoint": {
-    "scope": "ORTHOLANCE_INDIVIDUAL_STATIC_CERTIFICATE_CANDIDATE",
-    "provider_observed_static_contracts": 144,
+    "scope": "PRIMITIVE_CLUB_INDIVIDUAL_STATIC_CERTIFICATE_CANDIDATE",
+    "provider_observed_static_contracts": 145,
     "provider_observed_cards": 184,
     "integration_support_contracts": 16,
     "concrete_item_contracts": 42,
-    "equipment_contracts": 8,
+    "equipment_contracts": 9,
     "semantic_magic_roots_added": 0,
     "whole_provider_catalog_closed": false,
     "mutating_hook": "NOT_VERIFIED",
@@ -1072,7 +1074,6 @@
       "items/sea-pig-bucket.md",
       "items/trilocaris-bucket.md",
       "items/tripodfish-bucket.md",
-      "equipment/primitive-club.md",
       "items/primordial-soup.md",
       "items/seething-stew.md",
       "items/serene-salad.md",
@@ -1122,9 +1123,10 @@
       "EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md",
       "EXACT-RADIOACTIVE-ITEM-CERTIFICATION-1.0.10.json",
       "equipment/limestone-spear.md",
-      "equipment/ortholance.md"
+      "equipment/ortholance.md",
+      "equipment/primitive-club.md"
     ],
-    "historical_checkpoint_note": "Prior checkpoint 143/184 merged at 0c8804c854a258c4c3069f744aa15bfcf31d54d5. Ortholance engine replays observed; candidate 144/184. Final CI and merge required."
+    "historical_checkpoint_note": "Prior checkpoint 144/184 merged at c7e8959621c318e433f7b90d5897785aa224a8c1; reconciled Apprentice Codex merge 2e6c0adc0b72cf2e57ddfa0638b309a1c94070fa. Primitive Club schema 1/2 replays approved; candidate 145/184, equipment 9/9 observed. Final CI and merge required."
   },
   "item_class_reconciliation_checkpoint": {
     "scope": "ALL_81_OBSERVED_ITEM_OUTER_CLASSES_WITH_DOCUMENTED_DISPOSITION_NOT_CERTIFICATION",

@@ -2,6 +2,206 @@
   "schema_version": 1,
   "definition": "COMPLETE_PERK_READY denotes complete scoped STATIC technical catalog of one object with version, targeting applicability and bounded evidence; it NEVER certifies a mutating hook, live gameplay, installed config or provider-wide 100%.",
   "objects": {
+    "✅-apprentice-codex/blood/blood-brand.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1",
+      "artifact_sha1": "3077999f51299a53a0af1b8a1aec22f4099e36a3",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contratos estáticos de Blood Brand no JAR físico 1.0.1; não homologa mutação, config efetiva, QA físico nem universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1, mod ID, classe e registro ancorados no dossiê selado, sem reaproveitar a fonte 0.9.7.1 como certificação."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/blood-brand.md",
+          "reason": "Fluxo registro -> producao -> consumidor -> efeito rastreado no bytecode da versao exata, com estados, limites e divergencias documentados na ficha."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/blood-brand.md",
+          "reason": "Formulas, constantes, unidades e limites com localizadores de classe e metodo no artefato exato; valores efetivos de configuracao permanecem separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/blood-brand.md",
+          "reason": "Ficha documenta filtros, geometria, proprietario e causalidade, ou N/A justificado, sem promover visual ou helper em raio de combate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/blood-brand.md",
+          "reason": "Mana, cooldown, cast time e aquisicao sao distintos de valores ainda nao observados no pack; apenas defaults e constantes verificadas sao afirmados."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/blood-brand.md",
+          "reason": "Autoridade do provider e ausencia de hook mutador seguro sao explicadas; evento, setter ou callback existente nao e promovido a contrato de perk."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
+          "reason": "Revisao estatica de segunda passagem contra javap/decompilacao do artefato exato; QA fisico e hooks mutadores continuam nao verificados."
+        }
+      }
+    },
+    "✅-apprentice-codex/blood/higanbana.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1",
+      "artifact_sha1": "3077999f51299a53a0af1b8a1aec22f4099e36a3",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contratos estáticos de Higanbana no JAR físico 1.0.1; não homologa mutação, config efetiva, QA físico nem universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1, mod ID, classe e registro ancorados no dossiê selado, sem reaproveitar a fonte 0.9.7.1 como certificação."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/higanbana.md",
+          "reason": "Fluxo registro -> producao -> consumidor -> efeito rastreado no bytecode da versao exata, com estados, limites e divergencias documentados na ficha."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/higanbana.md",
+          "reason": "Formulas, constantes, unidades e limites com localizadores de classe e metodo no artefato exato; valores efetivos de configuracao permanecem separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/higanbana.md",
+          "reason": "Ficha documenta filtros, geometria, proprietario e causalidade, ou N/A justificado, sem promover visual ou helper em raio de combate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/higanbana.md",
+          "reason": "Mana, cooldown, cast time e aquisicao sao distintos de valores ainda nao observados no pack; apenas defaults e constantes verificadas sao afirmados."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/higanbana.md",
+          "reason": "Autoridade do provider e ausencia de hook mutador seguro sao explicadas; evento, setter ou callback existente nao e promovido a contrato de perk."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
+          "reason": "Revisao estatica de segunda passagem contra javap/decompilacao do artefato exato; QA fisico e hooks mutadores continuam nao verificados."
+        }
+      }
+    },
+    "✅-apprentice-codex/blood/mist-form.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1",
+      "artifact_sha1": "3077999f51299a53a0af1b8a1aec22f4099e36a3",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contratos estáticos de Mist Form no JAR físico 1.0.1; não homologa mutação, config efetiva, QA físico nem universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1, mod ID, classe e registro ancorados no dossiê selado, sem reaproveitar a fonte 0.9.7.1 como certificação."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/mist-form.md",
+          "reason": "Fluxo registro -> producao -> consumidor -> efeito rastreado no bytecode da versao exata, com estados, limites e divergencias documentados na ficha."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/mist-form.md",
+          "reason": "Formulas, constantes, unidades e limites com localizadores de classe e metodo no artefato exato; valores efetivos de configuracao permanecem separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/mist-form.md",
+          "reason": "Ficha documenta filtros, geometria, proprietario e causalidade, ou N/A justificado, sem promover visual ou helper em raio de combate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/mist-form.md",
+          "reason": "Mana, cooldown, cast time e aquisicao sao distintos de valores ainda nao observados no pack; apenas defaults e constantes verificadas sao afirmados."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/mist-form.md",
+          "reason": "Autoridade do provider e ausencia de hook mutador seguro sao explicadas; evento, setter ou callback existente nao e promovido a contrato de perk."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
+          "reason": "Revisao estatica de segunda passagem contra javap/decompilacao do artefato exato; QA fisico e hooks mutadores continuam nao verificados."
+        }
+      }
+    },
+    "✅-apprentice-codex/eldritch/deep-sensor.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1",
+      "artifact_sha1": "3077999f51299a53a0af1b8a1aec22f4099e36a3",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contratos estáticos de Deep Sensor no JAR físico 1.0.1; não homologa mutação, config efetiva, QA físico nem universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1, mod ID, classe e registro ancorados no dossiê selado, sem reaproveitar a fonte 0.9.7.1 como certificação."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/deep-sensor.md",
+          "reason": "Fluxo registro -> producao -> consumidor -> efeito rastreado no bytecode da versao exata, com estados, limites e divergencias documentados na ficha."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/deep-sensor.md",
+          "reason": "Formulas, constantes, unidades e limites com localizadores de classe e metodo no artefato exato; valores efetivos de configuracao permanecem separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/deep-sensor.md",
+          "reason": "Ficha documenta filtros, geometria, proprietario e causalidade, ou N/A justificado, sem promover visual ou helper em raio de combate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/deep-sensor.md",
+          "reason": "Mana, cooldown, cast time e aquisicao sao distintos de valores ainda nao observados no pack; apenas defaults e constantes verificadas sao afirmados."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/deep-sensor.md",
+          "reason": "Autoridade do provider e ausencia de hook mutador seguro sao explicadas; evento, setter ou callback existente nao e promovido a contrato de perk."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
+          "reason": "Revisao estatica de segunda passagem contra javap/decompilacao do artefato exato; QA fisico e hooks mutadores continuam nao verificados."
+        }
+      }
+    },
+    "✅-apprentice-codex/eldritch/echo-cast.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1",
+      "artifact_sha1": "3077999f51299a53a0af1b8a1aec22f4099e36a3",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contratos estáticos de Echo Cast no JAR físico 1.0.1; não homologa mutação, config efetiva, QA físico nem universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1, mod ID, classe e registro ancorados no dossiê selado, sem reaproveitar a fonte 0.9.7.1 como certificação."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/echo-cast.md",
+          "reason": "Fluxo registro -> producao -> consumidor -> efeito rastreado no bytecode da versao exata, com estados, limites e divergencias documentados na ficha."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/echo-cast.md",
+          "reason": "Formulas, constantes, unidades e limites com localizadores de classe e metodo no artefato exato; valores efetivos de configuracao permanecem separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/echo-cast.md",
+          "reason": "Ficha documenta filtros, geometria, proprietario e causalidade, ou N/A justificado, sem promover visual ou helper em raio de combate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/echo-cast.md",
+          "reason": "Mana, cooldown, cast time e aquisicao sao distintos de valores ainda nao observados no pack; apenas defaults e constantes verificadas sao afirmados."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/echo-cast.md",
+          "reason": "Autoridade do provider e ausencia de hook mutador seguro sao explicadas; evento, setter ou callback existente nao e promovido a contrato de perk."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
+          "reason": "Revisao estatica de segunda passagem contra javap/decompilacao do artefato exato; QA fisico e hooks mutadores continuam nao verificados."
+        }
+      }
+    },
     "✅-ars-nouveau/glyphs/augments/amplify.md": {
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
@@ -11775,6 +11975,49 @@
         "validation": {
           "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/ortholance.md",
           "reason": "Observed two byte-identical reports on run 45922106512/job 140254983280, 18 owners and 118 projections, hash and length pinned for final CI; prior sealed publisher proofs."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/equipment/primitive-club.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/primitive-club.md",
+          "reason": "Publisher 1.0.10 exact club/registry class and direct factory Code SHA, bootstrap 52 and pinned recipe."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/primitive-club.md",
+          "reason": "All 16 own item and 3 StunnedEffect methods, attack and status gates, sweep, Bonking death/loot delegation, exact replays."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/primitive-club.md",
+          "reason": "Durability 120, +8 attack, Swiftwood speed formula, RNG 0.8F, duration 150..299/80..159, secondary 1F, effect modifier and lifecycle."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/primitive-club.md",
+          "reason": "AABB side L+1.2F, distance, projectile predicate, alliance direction, primary acceptance gate; no own LOS or count cap."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/primitive-club.md",
+          "reason": "Wear requests 1/2, damageability/creative/durability downstream, repair material and anvil boundary, recipe."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/primitive-club.md",
+          "reason": "Effect Applicable/Added/Remove/Expired, incoming damage and death boundaries, status source null, no repeat of loot, hit, effect or Mastery. NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/primitive-club.md",
+          "reason": "Two identical schema 1 and schema 2 replays on run 45940756715/job 140314259633, 19/21 owners, 99/111 projections; both hashes and lengths pinned, 42/42 workflows at discovery HEAD."
         }
       }
     }
