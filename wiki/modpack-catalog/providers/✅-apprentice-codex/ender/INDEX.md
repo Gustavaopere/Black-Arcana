@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 0/15.**
+**Fichas catalogadas (somente fichas detectadas): 5/15.**
 
-**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra das fichas catalogadas:** `██████░░░░░░░░░░░░░░ 33.3%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 0/15.**
+**Homologadas para perks (somente fichas detectadas): 5/15.**
 
-**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra dos contratos técnicos estáticos:** `██████░░░░░░░░░░░░░░ 33.3%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -20,11 +20,11 @@
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
-| ⚠️ | Anchor Blink | [ficha/anchor-blink.md](anchor-blink.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Arcane Beam | [ficha/arcane-beam.md](arcane-beam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Arcane Blast | [ficha/arcane-blast.md](arcane-blast.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Assist Wings | [ficha/assist-wings.md](assist-wings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Auto Magnet | [ficha/auto-magnet.md](auto-magnet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Anchor Blink | [ficha/anchor-blink.md](anchor-blink.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Arcane Beam | [ficha/arcane-beam.md](arcane-beam.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Arcane Blast | [ficha/arcane-blast.md](arcane-blast.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Assist Wings | [ficha/assist-wings.md](assist-wings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Auto Magnet | [ficha/auto-magnet.md](auto-magnet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Demicreator Wings | [ficha/demicreator-wings.md](demicreator-wings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Long Stride | [ficha/long-stride.md](long-stride.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Mana Slash | [ficha/mana-slash.md](mana-slash.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |

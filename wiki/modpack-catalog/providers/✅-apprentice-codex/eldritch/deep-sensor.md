@@ -19,12 +19,12 @@
 | Tipo de cast | `CastType.INSTANT` |
 | Cooldown declarado | `100.0` s |
 | Recurso | Mana do Iron's (`baseManaCost=60`, `manaCostPerLevel=20`) |
-| JAR exato | `apprentice_codex-1.0.1-mc1.21.1.jar` |
-| SHA-256 do JAR | `47018AD8C6C6187B17C6BFC4D4F2FFF44EA2ED560719EBB6566A750715757947` |
-| SHA-1 do JAR | `3077999F51299A53A0AF1B8A1AEC22F4099E36A3` |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
 | Ambiente | Minecraft 1.21.1 · NeoForge 21.1.250 · Java 21 (JDK 21.0.12 na inspeção) |
 | Classe de implementação | `jp.aquafactory.apprenticecodex.spell.deepsensor.DeepSensor` |
-| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md) |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
 ## 2. Localizadores para o Codex
 
@@ -42,7 +42,7 @@
 | Efeito | `jp.aquafactory.apprenticecodex.effect.SenseSensor` |
 | Rede | `jp.aquafactory.apprenticecodex.network.packet.DeepSensorObservationsPacket` |
 
-Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`, `EXIT=0`, 347.597 bytes), não publicados integralmente.
+Descritores e offsets JVM foram reconsultados no JAR 1.0.1.1: saída `scratch/javap1011_legacy.txt` (`javap -classpath <JAR> -p -s -c`, `EXIT=0`, 233.376 bytes, SHA-256 `F59E0944BA6C04BF5A2B3A28145C9403B225EDF7EEC8425D4A0B6E189F63CCF3`) e anotações/constantes em `scratch/javap1011_v.txt` (`EXIT=0`), não publicadas integralmente.
 
 ## 3. Casting / execução
 
@@ -55,7 +55,7 @@ Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`,
 
 Som de cast: `SoundEvents.SCULK_SENSOR_PLACE`; animação: `SpellAnimations.TOUCH_GROUND_ANIMATION`.
 
-Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.getManaCost(int)` (`(I)I`, offsets 0–29) calcula `(baseManaCost + manaCostPerLevel*(level-1)) * MANA_MULTIPLIER` e trunca com `d2i`; `getSpellCooldown()` (`()I`, offsets 0–18) calcula `COOLDOWN_IN_SECONDS * 20.0d` e trunca com `d2i`; `getCastTime(int)` (`(I)I`, offsets 0–16) retorna `0` para `CastType.INSTANT`. `getSpellPower(int,Entity)` (`(ILnet/minecraft/world/entity/Entity;)F`, offsets 0–79) multiplica ainda por `AttributeRegistry.SPELL_POWER`, `SchoolType.getPowerFor(LivingEntity)` e `POWER_MULTIPLIER`; `getLevelFor(int,LivingEntity)` (`(ILnet/minecraft/world/entity/LivingEntity;)I`, offsets 0–64) aplica Curios e `ModifySpellLevelEvent`. Assim, `60`, `20`, `100`, `50`, `100.0` e `castTime=0` são coeficientes declarados pelo Apprentice Codex; mana, cooldown, power, duração e nível efetivos dependem da config instalada do Iron's, atributos e eventos, **NÃO VERIFICADOS**. Ver âncoras em [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md).
+Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.getManaCost(int)` (`(I)I`, offsets 0–29) calcula `(baseManaCost + manaCostPerLevel*(level-1)) * MANA_MULTIPLIER` e trunca com `d2i`; `getSpellCooldown()` (`()I`, offsets 0–18) calcula `COOLDOWN_IN_SECONDS * 20.0d` e trunca com `d2i`; `getCastTime(int)` (`(I)I`, offsets 0–16) retorna `0` para `CastType.INSTANT`. `getSpellPower(int,Entity)` (`(ILnet/minecraft/world/entity/Entity;)F`, offsets 0–79) multiplica ainda por `AttributeRegistry.SPELL_POWER`, `SchoolType.getPowerFor(LivingEntity)` e `POWER_MULTIPLIER`; `getLevelFor(int,LivingEntity)` (`(ILnet/minecraft/world/entity/LivingEntity;)I`, offsets 0–64) aplica Curios e `ModifySpellLevelEvent`. Assim, `60`, `20`, `100`, `50`, `100.0` e `castTime=0` são coeficientes declarados pelo Apprentice Codex; mana, cooldown, power, duração e nível efetivos dependem da config instalada do Iron's, atributos e eventos, **NÃO VERIFICADOS**. Ver âncoras em [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).
 
 ## 4. Targeting / geometria
 
@@ -119,10 +119,10 @@ Assinatura ocupada: "efeito de detecção por vibração com raio 24, filtro de 
 - ⚠️ Configuração efetiva do pack não lida; nenhum valor de config foi promovido.
 - ⚠️ `physical_qa=NOT_TESTED`: sem cliente, servidor, Survival, PvP ou modpack real.
 - ⚠️ `SenseSensor` como efeito autônomo não auditado além do registration/consumo pelo listener; comportamento de IA/hostilidades não observado.
-- ⚠️ Universo integral do provider não encerrado: recorte observado de 5 fichas.
+- ⚠️ Universo integral do provider não encerrado: recorte observado de 15 fichas.
 
 ## Localizadores para Codex — resumo operacional
 
 - Não confundir `getRange()` informativo com raio de dano: aqui ambos são `N/A` ofensivo e `24` de listener.
 - Não tratar eventos cancelados ou pacotes como ponto de mutação por perk sem contrato demonstrado.
-- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md) para hashes, comandos e limites da prova.
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) para hashes, comandos e limites da prova.

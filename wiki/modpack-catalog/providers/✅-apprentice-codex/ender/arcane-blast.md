@@ -2,7 +2,7 @@
 
 - **Provider:** Apprentice's Codex
 - **Mod ID:** `apprenticecodex`
-- **Installed JAR:** `apprentice_codex-0.9.7.1+mc1.21.1.jar`
+- **Installed JAR:** `apprentice_codex-1.0.1.1-mc1.21.1.jar`
 - **Registry ID:** `apprenticecodex:arcane_blast`
 - **Iron's school:** Ender
 - **Levels:** 1–10
@@ -10,9 +10,10 @@
 - **Cast type:** Long
 - **Cooldown:** 1 s
 - **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+- **Binary pin:** SHA-256 `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86`; SHA-1 `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF`; 11.870.671 bytes
+- **Historical source provenance:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (0.9.7.1; documental only, not the certification baseline)
 
-## Exact source coefficients
+## Exact 1.0.1.1 bytecode coefficients
 
 - `baseSpellPower = 40`
 - `spellPowerPerLevel = 5`
@@ -36,7 +37,7 @@ The server raycasts from the caster eye using a narrow `0.1` width and accepts o
 
 Arcane Charge amplifier is capped by this cast path at `2`, producing up to three charge tiers (`0..2`). The effect is provider state later consumed by Arcane Beam.
 
-The public guide describes the spell as an internal arcane explosion/beam-like strike that accelerates mana circulation, bypasses armor and is ineffective against the provider's demonic targets. Exact demon-tag membership remains provider data/runtime authority.
+The public guide describes the spell as an internal arcane explosion/beam-like strike that accelerates mana circulation, bypasses armor and is ineffective against the provider's demonic targets. Armor bypass and demon eligibility were not demonstrated in the inspected bytecode and are not promoted as static facts; exact demon-tag membership remains provider data/runtime authority.
 
 ## Causality
 
@@ -44,7 +45,7 @@ One successful Arcane Blast is one provider hit plus one Arcane Charge state mut
 
 ## Acquisition
 
-Registered through Iron's spell registry. Exact 0.9.7.1 survival scroll/loot/crafting availability remains part of the provider-wide acquisition audit.
+Registered through Iron's spell registry. Exact survival scroll/loot/crafting availability for the 1.0.1.1 artifact remains part of the provider-wide acquisition audit.
 
 ## Deduplication
 
@@ -52,21 +53,33 @@ Occupies the **fast direct Ender/arcane hit that builds a short-lived charge res
 
 ## Confidence
 
-`SOURCE-PINNED SPELL / EXACT DAMAGE+RANGE+CHARGE PATH / PACK CONFIG MULTIPLIER + DEMON ELIGIBILITY + RUNTIME QA PENDING`
+`SHA_EXACT_BINARY_BEHAVIOR 1.0.1.1 / STATIC_TECHNICAL_CATALOG_ONLY / mutating_hook=NOT_VERIFIED / physical_qa=NOT_TESTED / config efetiva e QA físico pendentes`
 
-## Localizadores para Codex — source exato
+## Localizadores e certificação — JAR 1.0.1.1
 
-- **Registry + identidade:** `apprenticecodex:arcane_blast` → `SpellRegistry.reg("arcane_blast", ArcaneBlast::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.arcaneblast.ArcaneBlast`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/arcaneblast/ArcaneBlast.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+- **Artefato:** `apprentice_codex-1.0.1.1-mc1.21.1.jar`; SHA-256 `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86`; SHA-1 `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF`; 11.870.671 bytes.
+- **Registro/identidade:** `apprenticecodex:arcane_blast` → construtor de `jp.aquafactory.apprenticecodex.spell.arcaneblast.ArcaneBlast`; pacote e classe confirmados no inventário e no bytecode do JAR físico.
+- **Evidência primária:** `javap -classpath <JAR> -p -s -c`/`-v` (`scratch/javap1011.txt`, `scratch/javap1011_v.txt`) e decompilação Vineflower 1.12.0 (`scratch/vf_apprentice1011/`). Síntese auditável: [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).
+- **Leitura para perks:** usar somente os fluxos, constantes e consumidores desta ficha. Evento, setter, callback ou estado provider-owned não é promovido a hook mutador sem ponto de chamada, consumidor do valor alterado e restrições de execução demonstrados.
+- **Contrato:** host Iron's controla casting/mana/cooldown; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana não duplica custo, hit, estado ou efeito. Sem hook comprovado: **⚠️ condicionado/fail-closed**.
+- **Pendências:** configuração efetiva do pack, canais herdados de `AbstractSpell`, multiplicadores de dano instalados e QA físico/Survival. O source 0.9.7.1 permanece apenas histórico; equivalência com o JAR não é assumida.
 
-## Engenharia de perks — cadeia causal exata
+## Engenharia causal — ancoragem 1.0.1.1
 
-- **`ArcaneBlast`** implementa `ICastHighlightSpell` com raycast `RAYCAST_WIDTH=0.1`, filtro `CombatTools.isValidCombatTarget`, e `getRange = 16+4*getSpellPower(level,caster)/10`.
-- **Dano:** `getDamage=(getSpellPower/10)*DamageMultiplierKey.ARCANE_BLAST`, aplicado por `CombatTools.applyDamage` com `DamageTypes.ARCANE_BLAST`. Não prosseguir com charge se o hit não for aceito.
-- **Carga ao acertar:** `ARCANE_CHARGE` é criado com duração `200` ticks, amplificador `0`, ou aumentado para `min(amplifier+1,2)` se já ativo.
-- **Perks:** power altera dano **e alcance simultaneamente**; stack de carga tem cap próprio 2, e o consumo posterior pelo Arcane Beam é outra fase do mesmo provider. Não tratar charge como novo cast.
+**Fluxo verificado:** Server raycast from caster eye with `RAYCAST_WIDTH=0.1` and `CombatTools.isValidCombatTarget` → accepted hit applies `DamageTypes.ARCANE_BLAST` via `CombatTools.applyDamage` → on accepted hit only, `ARCANE_CHARGE` is created for `200` ticks at amplifier `0` or incremented to `min(amplifier+1,2)` → Arcane Beam later consumes that provider state.
 
-**Confiança:** source auditado do commit fixado 0.9.7.1; hooks externos de mutação e teste em Survival permanecem pendentes.
+**Constantes/cálculo:** Declared coefficients: `baseSpellPower=40`, `spellPowerPerLevel=5`, `baseManaCost=20`, `manaCostPerLevel=4`, `castTime=30`, COMMON, Long, cooldown `1.0`; damage `power/10 * DamageMultiplierKey.ARCANE_BLAST`; reach `16+4*power/10`; charge amplifier cap `2`.
+
+**Limites:** Installed damage multiplier, demon-tag membership, effective config and physical QA remain `NÃO VERIFICADOS`. One hit plus one charge mutation is one root action, not two offensive casts.
+
+## Estado da certificação
+
+- `claim_scope`: `STATIC_TECHNICAL_CATALOG_ONLY`
+- `evidence_grade`: `SHA_EXACT_BINARY_BEHAVIOR`
+- `version`: `1.0.1.1`
+- `artifact_sha256`: `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86`
+- `artifact_sha1`: `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF`
+- `mutating_hook`: `NOT_VERIFIED`
+- `physical_qa`: `NOT_TESTED`
+- `implementation_in_main`: `NOT_APPLICABLE`
+- **Resultado:** ✅ contrato técnico estático reancorado; ⚠️ hook mutador, config efetiva, canais herdados e QA físico permanecem pendentes; ⛔ sem homologação para perks/Mastery.

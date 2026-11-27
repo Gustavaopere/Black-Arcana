@@ -20,12 +20,12 @@
 | Cast time | `30` ticks |
 | Cooldown declarado | `30.0` s |
 | Recurso | Mana do Iron's (`baseManaCost=150`, `manaCostPerLevel=30`) |
-| JAR exato | `apprentice_codex-1.0.1-mc1.21.1.jar` |
-| SHA-256 do JAR | `47018AD8C6C6187B17C6BFC4D4F2FFF44EA2ED560719EBB6566A750715757947` |
-| SHA-1 do JAR | `3077999F51299A53A0AF1B8A1AEC22F4099E36A3` |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
 | Ambiente | Minecraft 1.21.1 · NeoForge 21.1.250 · Java 21 (JDK 21.0.12 na inspeção) |
 | Classe de implementação | `jp.aquafactory.apprenticecodex.spell.mistform.MistForm` |
-| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md) |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
 ## 2. Localizadores para o Codex
 
@@ -49,7 +49,7 @@
 | Render | `MistFormClientRenderEvent.onRenderPlayerPre(Pre)` |
 | Supressão de awareness | `SummonedFirearmTools.suppressNearbyAwareness(level, entity, entity, 32.0)` |
 
-Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`, `EXIT=0`, 347.597 bytes) e, para config/efeito/helpers/mixins, em `scratch/javap_mistform.txt` e `scratch/javap_mistform_v.txt` (`EXIT=0`), não publicados integralmente.
+Descritores e offsets JVM foram reconsultados no JAR 1.0.1.1: saída `scratch/javap1011_legacy.txt` (`javap -classpath <JAR> -p -s -c`, `EXIT=0`, 233.376 bytes, SHA-256 `F59E0944BA6C04BF5A2B3A28145C9403B225EDF7EEC8425D4A0B6E189F63CCF3`) e anotações/constantes em `scratch/javap1011_v.txt` (`EXIT=0`), não publicadas integralmente.
 
 ## 3. Casting / execução
 
@@ -59,7 +59,7 @@ Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`,
 4. `super.onCast(...)` completa o fluxo do host.
 5. Som de início: `SoundRegistry.MIST_FORM_START`; fim: `SoundRegistry.MIST_FORM_FINISHED`; animação inicial: `SpellAnimations.CAST_KNEELING_PRAYER`.
 
-Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.getManaCost(int)` (`(I)I`, offsets 0–29) calcula `(baseManaCost + manaCostPerLevel*(level-1)) * MANA_MULTIPLIER` e trunca com `d2i`; `getSpellCooldown()` (`()I`, offsets 0–18) calcula `COOLDOWN_IN_SECONDS * 20.0d` e trunca com `d2i`; `getCastTime(int)` (`(I)I`, offsets 0–16) retorna o campo `castTime` porque o tipo é `CastType.LONG` — `30` ticks. `getSpellPower(int,Entity)` (`(ILnet/minecraft/world/entity/Entity;)F`, offsets 0–79) multiplica ainda por `AttributeRegistry.SPELL_POWER`, `SchoolType.getPowerFor(LivingEntity)` e `POWER_MULTIPLIER`; `getLevelFor(int,LivingEntity)` (`(ILnet/minecraft/world/entity/LivingEntity;)I`, offsets 0–64) aplica Curios e `ModifySpellLevelEvent`. Assim, `150`, `30`, `50`, `15`, `30.0` e `castTime=30` são coeficientes declarados pelo Apprentice Codex; mana, cooldown, power, duração e nível efetivos dependem da config instalada do Iron's, atributos e eventos, **NÃO VERIFICADOS**. Ver âncoras em [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md).
+Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.getManaCost(int)` (`(I)I`, offsets 0–29) calcula `(baseManaCost + manaCostPerLevel*(level-1)) * MANA_MULTIPLIER` e trunca com `d2i`; `getSpellCooldown()` (`()I`, offsets 0–18) calcula `COOLDOWN_IN_SECONDS * 20.0d` e trunca com `d2i`; `getCastTime(int)` (`(I)I`, offsets 0–16) retorna o campo `castTime` porque o tipo é `CastType.LONG` — `30` ticks. `getSpellPower(int,Entity)` (`(ILnet/minecraft/world/entity/Entity;)F`, offsets 0–79) multiplica ainda por `AttributeRegistry.SPELL_POWER`, `SchoolType.getPowerFor(LivingEntity)` e `POWER_MULTIPLIER`; `getLevelFor(int,LivingEntity)` (`(ILnet/minecraft/world/entity/LivingEntity;)I`, offsets 0–64) aplica Curios e `ModifySpellLevelEvent`. Assim, `150`, `30`, `50`, `15`, `30.0` e `castTime=30` são coeficientes declarados pelo Apprentice Codex; mana, cooldown, power, duração e nível efetivos dependem da config instalada do Iron's, atributos e eventos, **NÃO VERIFICADOS**. Ver âncoras em [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).
 
 ## 4. Targeting / geometria
 
@@ -124,13 +124,13 @@ Assinatura ocupada: "canalização que transforma o caster em névoa, altera mob
 ## 10. Verificação e pendências
 
 - ✅ Identidade, versão e hash do JAR; registro e classe; coeficientes; duração; atributos; tick; quebra; limites de validação.
-- ✅ Callsites de `MistFormCollisionHelper` e `MistFormMovementRestrictionHelper` e bônus de pulo localizados nos três mixins registrados no JAR 1.0.1; `JUMP_POWER_ADDITION` permanece como declaração sem consumer demonstrado.
+- ✅ Callsites de `MistFormCollisionHelper` e `MistFormMovementRestrictionHelper` e bônus de pulo localizados nos três mixins registrados no JAR 1.0.1.1; `JUMP_POWER_ADDITION` permanece como declaração sem consumer demonstrado.
 - ⚠️ Configuração efetiva do pack (denylist, multiplicadores) não lida; **NÃO VERIFICADO**.
 - ⚠️ `physical_qa=NOT_TESTED`: sem cliente, servidor, Survival, PvP ou modpack real.
-- ⚠️ Universo integral do provider não encerrado: recorte observado de 5 fichas.
+- ⚠️ Universo integral do provider não encerrado: recorte observado de 15 fichas.
 
 ## Localizadores para Codex — resumo operacional
 
 - Não presumir que helper, atributo ou evento seja ponto mutável por perk; todos são provider-owned e fail-closed.
 - Para qualquer bridge, preservar a regra "atacar remove o efeito" e não duplicar custo, cooldown ou proc por tick.
-- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md) para hashes, comandos e limites da prova.
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) para hashes, comandos e limites da prova.
