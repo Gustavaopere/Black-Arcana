@@ -43,7 +43,7 @@ SELECT = {
     M+"world/entity/EntityType": {"getDimensions","clientTrackingRange","updateInterval","trackDeltas"},
     M+"world/damagesource/DamageSources": {"thrown"},
     M+"world/item/ItemStack": {"shrink","getCount","setCount","copyWithCount"},
-    M+"core/dispenser/AbstractProjectileDispenseBehavior": {"execute","getProjectile","getPower","getUncertainty"},
+    P+"misc/AbstractProjectileDispenseBehavior": {"execute","getProjectile","getPower","getUncertainty"},
     M+"core/dispenser/DefaultDispenseItemBehavior": {"dispense"},
     M+"world/level/block/DispenserBlock": {"registerBehavior","getDispensePosition"},
     M+"server/level/ServerLevel": {"addFreshEntity","addEntity"},
@@ -59,12 +59,13 @@ REQUIRED = {
     M+"world/entity/projectile/ThrowableProjectile": {"tick"},
     M+"world/entity/projectile/ThrowableItemProjectile": {"setItem","getItem"},
     M+"world/damagesource/DamageSources": {"thrown"},
-    M+"core/dispenser/AbstractProjectileDispenseBehavior": {"execute"},
+    P+"misc/AbstractProjectileDispenseBehavior": {"execute"},
     M+"server/level/ServerLevel": {"addFreshEntity"},
 }
 PINS = {
     I:"925fb7047dddc8044929b0a581af2a4dcf5c6688dd277f445c9bc0dbd1f9d57d",
     W:"d09510632ca5e4dbb367227830291074fb6f94c1d39bc8fce368db0bf3a76a53",
+    P+"misc/AbstractProjectileDispenseBehavior":"1f733bdb487927c5d4f5d995c439c0bd8de4f611b239128c4f5a70bb88ce15a0",
 }
 RESOURCES = {
     "assets/alexscaves/models/item/cinder_brick.json":"7d738ea07d4d3f596242aa02220dabce47a6d420d98b6510e1793bf20e319769",
@@ -178,6 +179,10 @@ def inspect(args):
             rd=ClassReader(raw)
             require(rd.name==owner and rd.major==65,"class identity "+owner)
             require(owner not in PINS or sha==PINS[owner],"prior class pin "+owner)
+            if owner==D:
+                require(rd.parent==P+"misc/AbstractProjectileDispenseBehavior","dispenser superclass mismatch")
+            if owner==P+"misc/AbstractProjectileDispenseBehavior":
+                require(any(d["name"]=="execute" and d.get("code_sha256")=="b44158b7c89f9a6f6e5473c1e0de31a90057ef824782947e0646fe0a2335e6ef" for d in rd.methods),"dispenser execute Code pin")
             decls=[d for d in rd.methods if owner in ALL or d["name"] in select.get(owner,set())]
             require(required.get(owner,set()) <= {d["name"] for d in decls},"required declaration absent "+owner)
             require(len(decls)<=120,"method budget "+owner)
