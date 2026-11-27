@@ -120,6 +120,18 @@ def census_sites(rd, parsed, refs):
 def inspect(args):
     select = {k:set(v) for k,v in SELECT.items()}
     required = {k:set(v) for k,v in REQUIRED.items()}
+    if args.schema == 2:
+        extra = {
+            "net/neoforged/neoforge/event/entity/living/MobEffectEvent$Remove": {"<init>","getCure"},
+            M+"world/entity/projectile/ThrowableItemProjectile": {"lambda$readAdditionalSaveData$0"},
+            M+"world/entity/EntityType$Builder": {"<init>","lambda$setUpdateInterval$1","lambda$setShouldReceiveVelocityUpdates$3"},
+            M+"world/entity/EntityType": {"defaultTrackingRangeSupplier","defaultUpdateIntervalSupplier"},
+            M+"world/level/entity/PersistentEntitySectionManager": {"addNewEntity","addEntity"},
+        }
+        for owner,names in extra.items():
+            select.setdefault(owner,set()).update(names)
+        required.setdefault("net/neoforged/neoforge/event/entity/living/MobEffectEvent$Remove",set()).add("<init>")
+        required.setdefault(M+"world/entity/projectile/ThrowableItemProjectile",set()).add("lambda$readAdditionalSaveData$0")
     verify_artifact(args.publisher)
     verify_universal(args.universal, "universal")
     require(not args.output.exists(), "write-once report required")
@@ -175,6 +187,32 @@ def inspect(args):
         require(any(x["owner"]==W and any(m["name"]=="onHitEntity" and any(
             a["member"]["owner"]==C and a["offset"]==44 for a in m["sites"]) for m in x["methods"]) for x in census),"cure callsite absent")
         require(any(x["owner"]==IR and any(m["name"]=="<clinit>" for m in x["methods"]) for x in census),"variant registry field sites absent")
+        resource_census={}
+        if args.schema == 2:
+            ids={f"alexscaves:{flavor}_ice_cream_scoop" for flavor in MODELS}
+            paths={f"{flavor}_ice_cream_scoop" for flavor in MODELS}
+            data_files=sorted(p for p in mod.namelist() if p.startswith("data/") and p.endswith(".json"))
+            require(len(data_files)<=10000,"data JSON census budget")
+            def walk(value, location=()):
+                if isinstance(value,dict):
+                    for key,item in sorted(value.items()):
+                        yield from walk(item,location+(key,))
+                elif isinstance(value,list):
+                    for index,item in enumerate(value):
+                        yield from walk(item,location+(index,))
+                elif isinstance(value,str) and value in ids:
+                    yield {"path":list(location),"value":value}
+            resources_found={}
+            for path in data_files:
+                raw=mod.read(path)
+                require(len(raw)<=2_000_000,"data JSON byte budget")
+                value=json.loads(raw)
+                hits=list(walk(value))
+                if hits or path.rsplit("/",1)[-1][:-5] in paths:
+                    resources_found[path]={"sha256":digest(raw),"bytes":len(raw),"hits":hits,"data":value}
+            require(len(resources_found)<=60,"matched data resource budget")
+            resource_census={"data_json_files_scanned":len(data_files),
+                             "matched":resources_found,"coverage":"EXACT_STRING_VALUES_OR_MATCHING_BASENAME_ONLY"}
         classes = {}
         for owner in sorted(ALL | set(select)):
             found = [(name,z) for name,z,entries in roster if owner+".class" in entries]
@@ -212,6 +250,9 @@ def inspect(args):
                             "fields":rd.fields,"declarations":rd.methods,"methods":methods}
     report={"schema_version":1,"scope":"ICE_CREAM_SCOOP_CURE_DISCOVERY_ONLY",
             "artifact":artifact,"classes":classes,"entity_registry":reg,"resources":resources,"typed_census":census,"limits":LIMITS}
+    if args.schema == 2:
+        report["schema_version"]=2
+        report["resource_census"]=resource_census
     data=canonical(report).encode()
     require(len(data)<=10_000_000,"report byte budget")
     args.output.parent.mkdir(parents=True,exist_ok=True)
@@ -225,6 +266,8 @@ def inspect(args):
     print("REGISTRY",json.dumps(reg,sort_keys=True))
     print("CENSUS",json.dumps(census,sort_keys=True))
     print("RESOURCES",json.dumps(resources,sort_keys=True))
+    if args.schema == 2:
+        print("RESOURCE_CENSUS",json.dumps(resource_census,sort_keys=True))
     print("DISCOVERY_ONLY NO_MUTATION NO_PHYSICAL_QA")
 
 def self_test():
@@ -248,6 +291,7 @@ if __name__=="__main__":
     for name in ("installer","server","srg","universal","publisher","output"):
         p.add_argument("--"+name,type=Path)
     p.add_argument("--javap",default="javap")
+    p.add_argument("--schema",type=int,choices=(1,2),default=1)
     p.add_argument("--self-test",action="store_true")
     a=p.parse_args()
     if a.self_test:

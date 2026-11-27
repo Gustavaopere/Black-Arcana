@@ -92,12 +92,30 @@ jobs:
             --javap "$JAVA_HOME/bin/javap" \
             --output build/ice-cream-scoop-cure/report-replay.json
           cmp build/ice-cream-scoop-cure/report.json build/ice-cream-scoop-cure/report-replay.json
-          sha256sum build/ice-cream-scoop-cure/report.json
+          test "$(wc -c < build/ice-cream-scoop-cure/report.json)" = 1066455
+          echo 'b839c6a00f19fe9d044ff6af8dff3a5c22e9b4e041aedde27d5d318fc345fd8f  build/ice-cream-scoop-cure/report.json' | sha256sum -c -
+      - name: Inspect acquisition data and delegated removal and projectile state
+        run: |
+          for output in acquisition-delegation acquisition-delegation-replay; do
+            python3 docs/qa/alexscaves_1010_ice_cream_scoop_cure_probe.py \
+              --schema 2 \
+              --installer build/ice-cream-scoop-cure/installer.jar \
+              --server build/ice-cream-scoop-cure/libraries/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-server.jar \
+              --srg build/ice-cream-scoop-cure/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
+              --universal build/ice-cream-scoop-cure/universal.jar \
+              --publisher build/ice-cream-scoop-cure/publisher.jar \
+              --javap "$JAVA_HOME/bin/javap" \
+              --output "build/ice-cream-scoop-cure/$output.json"
+          done
+          cmp build/ice-cream-scoop-cure/acquisition-delegation.json build/ice-cream-scoop-cure/acquisition-delegation-replay.json
+          sha256sum build/ice-cream-scoop-cure/acquisition-delegation.json
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: ice-cream-scoop-cure
-          path: build/ice-cream-scoop-cure/report.json
+          path: |
+            build/ice-cream-scoop-cure/report.json
+            build/ice-cream-scoop-cure/acquisition-delegation.json
           if-no-files-found: warn
           retention-days: 14
