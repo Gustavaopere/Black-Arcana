@@ -93,11 +93,37 @@ jobs:
             --output build/limestone-impact-engine/report-replay.json
           cmp build/limestone-impact-engine/report.json build/limestone-impact-engine/report-replay.json
           sha256sum build/limestone-impact-engine/report.json
+      - name: Verify pinned schema-1 report
+        run: |
+          test "$(wc -c < build/limestone-impact-engine/report.json)" = 1419329
+          echo '81e062b4ab8f99df9a682f63aaf3d7b0bee398b759002b9c57d23fe71da465dd  build/limestone-impact-engine/report.json' | sha256sum -c -
+      - name: Collect missing registry operands, movement, pickup and debit
+        run: |
+          python3 docs/qa/alexscaves_1010_limestone_impact_engine_probe.py \
+            --installer build/limestone-impact-engine/installer.jar \
+            --server build/limestone-impact-engine/libraries/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-server.jar \
+            --srg build/limestone-impact-engine/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
+            --universal build/limestone-impact-engine/universal.jar \
+            --publisher build/limestone-impact-engine/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --extended --output build/limestone-impact-engine/extended.json
+          python3 docs/qa/alexscaves_1010_limestone_impact_engine_probe.py \
+            --installer build/limestone-impact-engine/installer.jar \
+            --server build/limestone-impact-engine/libraries/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-server.jar \
+            --srg build/limestone-impact-engine/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
+            --universal build/limestone-impact-engine/universal.jar \
+            --publisher build/limestone-impact-engine/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --extended --output build/limestone-impact-engine/extended-replay.json
+          cmp build/limestone-impact-engine/extended.json build/limestone-impact-engine/extended-replay.json
+          sha256sum build/limestone-impact-engine/extended.json
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: limestone-impact-engine
-          path: build/limestone-impact-engine/report.json
+          path: |
+            build/limestone-impact-engine/report.json
+            build/limestone-impact-engine/extended.json
           if-no-files-found: warn
           retention-days: 14

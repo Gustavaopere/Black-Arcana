@@ -60,7 +60,30 @@ LIMITS = {"static_contract":"NOT_CERTIFIED","mutating_hook":"NOT_VERIFIED",
           "runtime_loaded_bytes":"NOT_OBSERVED","provider_universe_closed":False,
           "semantic_magic_roots_delta":0,"actual_effect_acceptance":"NOT_VERIFIED"}
 
+# Extended coverage is opt-in: schema 1 must replay unchanged.
+EXT_SELECT = {
+    A: {"setOwner", "getDefaultGravity", "getWaterInertia", "shouldFall", "startFalling"},
+    J: {"getMovementToShoot", "checkLeftOwner", "hitTargetOrDeflectSelf"},
+    M+"world/item/ItemStack": {"grow", "setCount", "isDamageableItem", "getMaxDamage"},
+    M+"world/entity/EntityType$Builder": {"setUpdateInterval", "setShouldReceiveVelocityUpdates"},
+    M+"world/entity/Entity": {"applyGravity", "getGravity", "isPickable"},
+    M+"world/item/enchantment/EnchantmentHelper": {"runIterationOnItem", "runIterationOnEquipment"},
+    P+"entity/ACEntityRegistry": {"lambda$static$23"},
+}
+EXT_REQUIRED = {
+    A: {"setOwner"},
+    J: {"getMovementToShoot"},
+    M+"world/item/ItemStack": {"grow", "setCount"},
+    P+"entity/ACEntityRegistry": {"lambda$static$23"},
+}
 def inspect(args):
+    select = {k:set(v) for k,v in SELECT.items()}
+    required = {k:set(v) for k,v in REQUIRED.items()}
+    if args.extended:
+        for owner,names in EXT_SELECT.items():
+            select.setdefault(owner,set()).update(names)
+        for owner,names in EXT_REQUIRED.items():
+            required.setdefault(owner,set()).update(names)
     verify_artifact(args.publisher)
     verify_universal(args.universal, "universal")
     require(not args.output.exists(), "write-once report required")
@@ -79,10 +102,10 @@ def inspect(args):
         roster = [(name,z,set(z.namelist())) for name,z in archives]
         cp = ":".join(map(str,(args.server,args.universal,args.srg,args.publisher)))
         classes = {}
-        for owner in sorted(ALL | set(SELECT)):
+        for owner in sorted(ALL | set(select)):
             found = [(name,z) for name,z,entries in roster if owner+".class" in entries]
             if not found:
-                require(owner not in REQUIRED,"required owner absent "+owner)
+                require(owner not in required,"required owner absent "+owner)
                 classes[owner] = {"present":False}
                 continue
             source,z = found[0]
@@ -91,8 +114,8 @@ def inspect(args):
             rd=ClassReader(raw)
             require(rd.name==owner and rd.major==65,"class identity "+owner)
             require(owner not in PINS or sha==PINS[owner],"prior class pin "+owner)
-            decls=[d for d in rd.methods if owner in ALL or d["name"] in SELECT.get(owner,set())]
-            require(REQUIRED.get(owner,set()) <= {d["name"] for d in decls},"required declaration absent "+owner)
+            decls=[d for d in rd.methods if owner in ALL or d["name"] in select.get(owner,set())]
+            require(required.get(owner,set()) <= {d["name"] for d in decls},"required declaration absent "+owner)
             require(len(decls)<=120,"method budget "+owner)
             parsed=disassemble(cp,args.javap,owner)
             methods=[]
@@ -113,6 +136,9 @@ def inspect(args):
         require(bool(reg["bootstrap_links"]),"Limestone Spear registry handle absent")
     report={"schema_version":1,"scope":"LIMESTONE_SPEAR_IMPACT_ENGINE_DISCOVERY_ONLY",
             "artifact":artifact,"classes":classes,"entity_registry":reg,"limits":LIMITS}
+    if args.extended:
+        report["schema_version"]=2
+        report["scope"]="LIMESTONE_SPEAR_EXTENDED_ENGINE_DISCOVERY_ONLY"
     data=canonical(report).encode()
     require(len(data)<=6_000_000,"report byte budget")
     args.output.parent.mkdir(parents=True,exist_ok=True)
@@ -139,6 +165,7 @@ if __name__=="__main__":
         p.add_argument("--"+name,type=Path)
     p.add_argument("--javap",default="javap")
     p.add_argument("--self-test",action="store_true")
+    p.add_argument("--extended",action="store_true")
     a=p.parse_args()
     if a.self_test:
         self_test()
