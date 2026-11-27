@@ -6,13 +6,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 from zipfile import ZipFile
 
 from alexscaves_1010_armor_material_audit import ClassReader, canonical, digest, require, verify_artifact, SHA1, SHA256, SIZE
 from alexscaves_1010_enchantable_item_probe import disassemble
 from alexscaves_1010_four_items_downstream_250_probe import projection, identified, verify_universal, ARTIFACTS
-from alexscaves_1010_remote_detonator_block_callbacks_probe import registry
+from alexscaves_1010_galena_211248_spawn_denial_guards_probe import refs
+from alexscaves_1010_nuclear_explosion_effect_probe import bootstrap
 
 P="com/github/alexmodguy/alexscaves/server/"
 M="net/minecraft/"
@@ -49,7 +51,8 @@ REQUIRED={
     SL:{"addFreshEntity","addEntity"},
 }
 PINS={I:"9d22e586625f298993fbbf86b59ff2369cc3dccd9a9115b23d52778ed4c112dc",
-      IR:"114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1"}
+      IR:"114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+      ER:"7d7c91ddbb534d7c0e86a590ef7d7c3154ec2a628153c31e9fc7318a4b29e072"}
 CODE_PINS={
     (IR,"lambda$static$92"):"6ee50396f6047acee481212ad62d3c4cbd750e9f550376efcf754d6068cb5eae",
     (I,"spawnFish"):"bd106b4cdeed0c33da4a95b9fe241ce074bebe0f7404a8d863d9ded5a9233945",
@@ -66,6 +69,57 @@ def class_paths(names):
 
 def roster_digest(paths):
     return digest(("\n".join(paths)+"\n").encode())
+
+def member_identity(rd, arg):
+    match=re.match(r"#(\d+)(?:\s|,|$)",arg)
+    require(match is not None,"unresolved registry member")
+    cp=int(match[1])
+    require(0<cp<len(rd.pool),"invalid registry member index")
+    require(rd.pool[cp][0] in (9,10,11),"registry member kind")
+    _,owner,nd=rd.resolve(cp)
+    return owner,nd[1],nd[2]
+
+def entity_registry_binding(mod, jar, javap, entity):
+    # Scan all putstatic instructions, but project only the exact field write
+    # and its preceding registration sequence. No broad reverse closure over
+    # unrelated registry setup/attribute consumers.
+    raw=mod.read(ER+".class")
+    rd=ClassReader(raw)
+    require(rd.name==ER and digest(raw)==PINS[ER],"entity registry identity pin")
+    parsed=disassemble(jar,javap,ER)
+    init=parsed[("<clinit>","()V")]
+    offsets=sorted(init)
+    writes=[]
+    for i,at in enumerate(offsets):
+        op,arg,_=init[at]
+        if op=="putstatic" and member_identity(rd,arg)==(ER,"GOSSAMER_WORM","Ljava/util/function/Supplier;"):
+            writes.append(i)
+    require(len(writes)==1,"GOSSAMER_WORM exact registry write")
+    i=writes[0]
+    require(i>=4,"registry window size")
+    window={q:init[q] for q in offsets[i-4:i+1]}
+    require([v[0] for v in window.values()]==["getstatic","ldc_w" if init[offsets[i-3]][0]=="ldc_w" else "ldc","invokedynamic","invokevirtual","putstatic"],"registry registration sequence")
+    require(init[offsets[i-3]][2]=="String gossamer_worm","registry resource path")
+    require(member_identity(rd,init[offsets[i-1]][1])==("net/neoforged/neoforge/registries/DeferredRegister","register","(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/neoforged/neoforge/registries/DeferredHolder;"),"registry register descriptor")
+    links=bootstrap(rd,window)
+    require(len(links)==1,"registry bootstrap site")
+    handles=[v for v in links[0]["handles"] if v["owner"]==ER and v["kind"]==6 and v["descriptor"]=="()Lnet/minecraft/world/entity/EntityType;"]
+    require(len(handles)==1,"exact entity factory handle")
+    factory=(handles[0]["name"],handles[0]["descriptor"])
+    require(factory in parsed and bool(parsed[factory]),"registry factory body")
+    body=parsed[factory]
+    # In the selected factory, require a constructor method handle for the
+    # exact entity. Do not infer identity from the simple class name alone.
+    direct=[v for row in bootstrap(rd,body) for v in row["handles"] if v["owner"]==entity and v["kind"]==8 and v["name"]=="<init>" and v["descriptor"]=="(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V"]
+    require(len(direct)==1,"entity constructor handle")
+    decl=next(d for d in rd.methods if (d["name"],d["descriptor"])==factory)
+    require("code_sha256" in decl,"entity factory Code")
+    report={"owner":ER,"class_sha256":digest(raw),"scope":"EXACT_REGISTRY_FIELD_WRITE_WINDOW_AND_FACTORY","complete_initializer_projection":False,
+            "registration_window":[{"offset":q,"opcode":v[0],"operand":v[1],"symbol":v[2]} for q,v in window.items()],
+            "typed_members":refs(rd,window),"bootstrap_links":links,
+            "factory":{"name":factory[0],"descriptor":factory[1],"code_sha256":decl["code_sha256"],"constructor_handles":direct}}
+    print("ENTITY_REGISTRY_BINDING",json.dumps(report,sort_keys=True),flush=True)
+    return report
 
 def inspect(a):
     verify_artifact(a.publisher)
@@ -93,11 +147,9 @@ def inspect(a):
         dispensers=[x for x in classes if x.rsplit("/",1)[-1]=="FluidContainerDispenseItemBehavior"]
         require(len(entities)==1 and len(dispensers)==1,"entity or dispenser candidate missing/ambiguous")
         entity=entities[0]; dispenser=dispensers[0]
-        reg=registry(mod,a.publisher,a.javap,ER,{entity})
-        require(any("gossamer_worm" in json.dumps(row).lower() for row in reg["bootstrap_links"]),"gossamer registry identity")
+        reg=entity_registry_binding(mod,a.publisher,a.javap,entity)
         select={k:set(v) for k,v in SELECT.items()}
-        select[ER]={x["method"] for x in reg["nested_factories"]+reg["constructor_factories"]}
-        require(bool(select[ER]),"entity factory missing")
+        select[ER]={reg["factory"]["name"]}
         # Actual superclass chain, not inferred from the entity's name.
         lineage=[]; cursor=entity
         for _ in range(16):
@@ -155,7 +207,7 @@ def inspect(a):
             require(len(raw)<=100000,"resource size")
             resources[path]={"sha256":digest(raw),"bytes":len(raw),"data":json.loads(raw)}
         require(resources.get("assets/alexscaves/models/item/gossamer_worm_bucket.json",{}).get("sha256")=="b78cc41faf66a35938ce69ba9935026346186c89a2f1507571bbdb54b9b6945c","model pin")
-    report={"schema_version":1,"scope":"GOSSAMER_WORM_BUCKET_DISCOVERY_ONLY","artifact":artifact,"entity":entity,"dispenser":dispenser,"registry":reg,"lineage":lineage,"classes":records,"typed_consumers":consumers,"resources":resources,"limits":LIMITS}
+    report={"schema_version":2,"scope":"GOSSAMER_WORM_BUCKET_DISCOVERY_ONLY","artifact":artifact,"entity":entity,"dispenser":dispenser,"registry":reg,"lineage":lineage,"classes":records,"typed_consumers":consumers,"resources":resources,"limits":LIMITS}
     data=canonical(report).encode()
     require(len(data)<=10000000,"report byte budget")
     a.output.parent.mkdir(parents=True,exist_ok=True)
@@ -179,7 +231,7 @@ def self_test():
     require(roster_digest(class_paths(fixture))==digest(b"a/Fish$Inner.class\na/Fish.class\na/Other.class\n"),"canonical roster serialization")
     legacy=[x+".class" for x in sorted(p[:-6] for p in fixture if p.endswith(".class"))]
     require(roster_digest(legacy)!=roster_digest(expected),"fixture must detect legacy ordering bug")
-    require(set(PINS)=={I,IR},"prior identity pin scope")
+    require(set(PINS)=={I,IR,ER},"prior identity pin scope")
     require({"lambda$static$91","lambda$static$92"}<=REQUIRED[IR],"fluid supplier/identity")
     require(all(set(n for n,d in values)<=SELECT[owner] for owner,values in EXACT.items()),"exact descriptor selector scope")
     require(LIMITS["static_contract"]=="NOT_CERTIFIED" and LIMITS["mutation"]=="NO_MUTATION","policy")
