@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 from zipfile import ZipFile
 
@@ -32,7 +33,7 @@ FACTORIES = {
 FIELDS = {"CHOCOLATE_ICE_CREAM_SCOOP","SWEETBERRY_ICE_CREAM_SCOOP","VANILLA_ICE_CREAM_SCOOP"}
 SELECT = {
     C: {"cureWithMilk"},
-    IR: set(FACTORIES) | {"setup"},
+    IR: set(FACTORIES),
     L: {"removeEffectsCuredBy","removeAllEffects","removeEffect","removeEffectNoUpdate","onEffectRemoved"},
     M+"world/effect/MobEffectInstance": {"getCures","getEffect"},
     M+"world/effect/MobEffect": {"fillEffectCures","removeAttributeModifiers"},
@@ -76,6 +77,46 @@ LIMITS = {"static_contract":"NOT_CERTIFIED","mutating_hook":"NOT_VERIFIED",
           "runtime_loaded_bytes":"NOT_OBSERVED","provider_universe_closed":False,
           "semantic_magic_roots_delta":0,"actual_effect_acceptance":"NOT_VERIFIED"}
 
+MEMBER_OPS = {"getstatic","putstatic","getfield","putfield","invokestatic","invokevirtual","invokespecial","invokeinterface"}
+
+def member_at(rd, instruction):
+    op,arg,_ = instruction
+    if op not in MEMBER_OPS:
+        return None
+    match=re.match(r"#(\d+)(?:\s|,|$)",arg)
+    require(match is not None,"unresolved member operand")
+    idx=int(match[1])
+    require(0<idx<len(rd.pool) and rd.pool[idx][0] in (9,10,11),"invalid member operand")
+    tag,owner,signature=rd.resolve(idx)
+    return {"kind":tag,"owner":owner,"name":signature[1],"descriptor":signature[2],"cp_index":idx}
+
+def census_sites(rd, parsed, refs):
+    indices={r["index"] for r in refs}
+    declarations={(m["name"],m["descriptor"]):m for m in rd.methods}
+    result=[]
+    for key,body in sorted(parsed.items()):
+        offsets=sorted(body)
+        members={at:member_at(rd,body[at]) for at in offsets if body[at][0] in MEMBER_OPS}
+        hits=[at for at,v in members.items() if v["cp_index"] in indices]
+        if not hits:
+            continue
+        require(key in declarations,"site method missing declaration")
+        require(len(hits)<=100,"site budget")
+        windows=[]
+        for at in hits:
+            i=offsets.index(at)
+            around=offsets[max(0,i-12):i+13]
+            windows.append({"offset":at,"member":members[at],
+                "context":[{"offset":a,"opcode":body[a][0],
+                            **({"member":members[a]} if a in members else {}),
+                            **({"literal":body[a][2]} if body[a][2].startswith("String ") else {})}
+                           for a in around]})
+        result.append({"name":key[0],"descriptor":key[1],"code_sha256":declarations[key]["code_sha256"],
+                       "instruction_count":len(body),"member_count":len(members),"coverage":"EXACT_TARGET_SITES_AND_BOUNDED_CONTEXT",
+                       "sites":windows})
+    require(len(result)<=100,"consumer method site budget")
+    return result
+
 def inspect(args):
     select = {k:set(v) for k,v in SELECT.items()}
     required = {k:set(v) for k,v in REQUIRED.items()}
@@ -113,25 +154,27 @@ def inspect(args):
         for path in sorted(mod.namelist()):
             if not path.endswith(".class"):
                 continue
-            rd=ClassReader(mod.read(path))
+            raw=mod.read(path)
+            rd=ClassReader(raw)
+            require(path==rd.name+".class" and rd.major==65,"census class identity")
             refs=[x for x in rd.typed_refs(IR) if x.get("kind")=="field_reference" and x.get("name") in FIELDS]
             refs += [x for x in rd.typed_refs(C) if x.get("kind")=="method_reference" and x.get("name")=="cureWithMilk"]
             if refs:
-                census.append({"owner":rd.name,"refs":refs})
-                # Include methods using the exact member; no name-only owner guessing.
                 parsed=disassemble(args.publisher,args.javap,rd.name)
-                names=set()
-                for k,body in parsed.items():
-                    for offset,(op,operand,symbol) in body.items():
-                        if op not in {"getstatic","putstatic","invokestatic"}:
-                            continue
-                        if any(operand.split(",")[0].strip()=="#"+str(x["index"]) for x in refs):
-                            if k[0]!="<clinit>":
-                                names.add(k[0])
-                if names:
-                    select.setdefault(rd.name,set()).update(names)
+                sites=census_sites(rd,parsed,refs)
+                census.append({"owner":rd.name,"class_sha256":digest(raw),"refs":refs,"methods":sites})
+                for method in sites:
+                    # Keep full projections only for causal cure callers and bounded
+                    # methods; large registry/presentation consumers remain explicit
+                    # callsite evidence, including clinit and setup.
+                    if method["name"]=="<clinit>" or method["member_count"]>180 or method["instruction_count"]>1600:
+                        continue
+                    if any(site["member"]["owner"]==C for site in method["sites"]):
+                        select.setdefault(rd.name,set()).add(method["name"])
         require(len(census)<=40,"typed census owner budget")
-        require(any(x["owner"]==W for x in census),"cure callsite absent")
+        require(any(x["owner"]==W and any(m["name"]=="onHitEntity" and any(
+            a["member"]["owner"]==C and a["offset"]==44 for a in m["sites"]) for m in x["methods"]) for x in census),"cure callsite absent")
+        require(any(x["owner"]==IR and any(m["name"]=="<clinit>" for m in x["methods"]) for x in census),"variant registry field sites absent")
         classes = {}
         for owner in sorted(ALL | set(select)):
             found = [(name,z) for name,z,entries in roster if owner+".class" in entries]
@@ -156,6 +199,7 @@ def inspect(args):
                     methods.append({"name":key[0],"descriptor":key[1],"executable":False})
                     continue
                 require(key in parsed and parsed[key],"body absent "+owner+str(key))
+                print("PROJECTING",owner,key[0],key[1],flush=True)
                 methods.append({"executable":True,**projection(rd,key,parsed[key],d)})
             if owner in ALL:
                 require({(d["name"],d["descriptor"]) for d in decls if "code_sha256" in d} ==
@@ -188,7 +232,16 @@ def self_test():
     require(len(FACTORIES)==6 and len(MODELS)==3,"variant coverage")
     require(REQUIRED[C]=={"cureWithMilk"},"milk cure coverage")
     require(LIMITS["static_contract"]=="NOT_CERTIFIED" and LIMITS["mutation"]=="NO_MUTATION","policy")
-    print("PASS: discovery scope and policy guards")
+    class Fixture:
+        pool=[None,(9,None),(10,None)]
+        methods=[{"name":"test","descriptor":"()V","code_sha256":"fixture"}]
+        def resolve(self,index):
+            return [9,IR,[12,"VANILLA_ICE_CREAM_SCOOP","Ljava/util/function/Supplier;"]] if index==1 else [10,C,[12,"cureWithMilk","(Lnet/minecraft/world/entity/LivingEntity;)V"]]
+    body={0:("getstatic","#1",""),3:("invokestatic","#2",""),6:("return","","")}
+    result=census_sites(Fixture(),{("test","()V"):body},[{"index":2}])
+    require(len(result)==1 and len(result[0]["sites"])==1 and result[0]["sites"][0]["offset"]==3,"exact site fixture")
+    require(census_sites(Fixture(),{("test","()V"):body},[{"index":99}])==[],"nonmatching site fixture")
+    print("PASS: discovery scope, exact callsite and policy guards")
 
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
