@@ -67,6 +67,21 @@ LIMITS = {"static_contract":"NOT_CERTIFIED","mutating_hook":"NOT_VERIFIED",
           "runtime_loaded_bytes":"NOT_OBSERVED","provider_universe_closed":False,
           "semantic_magic_roots_delta":0,"actual_effect_acceptance":"NOT_VERIFIED"}
 
+def verify_club_registry(reg):
+    # Direct NEW factories are not nested invokedynamic factories.
+    descriptor = "()Lnet/minecraft/world/item/Item;"
+    candidates = [x for x in reg["constructor_factories"]
+                  if x["method"] == "lambda$static$40" and x["descriptor"] == descriptor
+                  and any(y["owner"] == I for y in x["constructor_owners"])]
+    require(len(candidates) == 1,"club direct constructor factory absent or ambiguous")
+    links = [x for x in reg["bootstrap_links"] if x["bootstrap_index"] == 52
+             and any(y["owner"] == R and y["name"] == "lambda$static$40"
+                     and y["descriptor"] == descriptor and y["kind"] == 6
+                     for y in x["handles"])
+             and any(y["symbol"] == "String primitive_club" for y in x["symbolic_context"])
+             and any(y["symbol"].startswith("Field PRIMITIVE_CLUB:") for y in x["symbolic_context"])]
+    require(len(links) == 1,"club registry bootstrap identity absent or ambiguous")
+
 def inspect(args):
     select = {k:set(v) for k,v in SELECT.items()}
     required = {k:set(v) for k,v in REQUIRED.items()}
@@ -89,8 +104,7 @@ def inspect(args):
         cp = ":".join(map(str,(args.server,args.universal,args.srg,args.publisher)))
         require(sum(p.endswith(".class") for p in mod.namelist())==1555,"publisher class roster")
         reg=registry(mod,args.publisher,args.javap,R,{I})
-        require(bool(reg["bootstrap_links"]),"club registry handle absent")
-        require("lambda$static$40" in {x["method"] for x in reg["nested_factories"]},"club factory binding absent")
+        verify_club_registry(reg)
         recipe_path="data/alexscaves/recipe/primitive_club.json"
         recipe=mod.read(recipe_path)
         require(digest(recipe)=="b93f005c5632388ca6f34e3a114a8e0a4cf1c2ae99ae9bb0ed2edc2c73dddcc0","recipe pin")
@@ -123,6 +137,8 @@ def inspect(args):
             if owner in ALL:
                 require({(d["name"],d["descriptor"]) for d in decls if "code_sha256" in d} ==
                         {k for k,v in parsed.items() if v},"complete executable roster mismatch "+owner)
+            if owner == R:
+                require(any(d["name"]=="lambda$static$40" and d.get("code_sha256")=="f88517fec12d13fcfc61890e09e7310f0a000ab35eea36adc82ddd7af3bab032" for d in decls),"club factory Code hash drift")
             classes[owner]={"present":True,"source":source,"available_sources":[k for k,_ in found],
                             "class_sha256":sha,"parent":rd.parent,"interfaces":rd.interfaces,
                             "fields":rd.fields,"declarations":rd.methods,"methods":methods}
@@ -147,7 +163,25 @@ def self_test():
     require(REQUIRED[I] >= {"acHurtEnemy","onLeftClickEntity","onEntitySwing"},"producer coverage")
     require(REQUIRED[L] >= {"addEffect","canBeAffected","tickEffects"},"effect coverage")
     require(LIMITS["static_contract"]=="NOT_CERTIFIED" and LIMITS["mutation"]=="NO_MUTATION","policy")
-    print("PASS: discovery scope and policy guards")
+    fixture = {"constructor_factories":[{"method":"lambda$static$40","descriptor":"()Lnet/minecraft/world/item/Item;",
+                "constructor_owners":[{"offset":0,"owner":I}]}],
+               "nested_factories":[],
+               "bootstrap_links":[{"bootstrap_index":52,"handles":[{"kind":6,"owner":R,"name":"lambda$static$40",
+                  "descriptor":"()Lnet/minecraft/world/item/Item;"}],"symbolic_context":[
+                  {"symbol":"String primitive_club"},{"symbol":"Field PRIMITIVE_CLUB:Ljava/util/function/Supplier;"}]}]}
+    verify_club_registry(fixture)
+    from copy import deepcopy
+    from alexscaves_1010_armor_material_audit import AuditError
+    for field in ("constructor_factories","bootstrap_links"):
+        bad=deepcopy(fixture)
+        bad[field]=[]
+        try:
+            verify_club_registry(bad)
+        except AuditError:
+            pass
+        else:
+            raise AssertionError("missing "+field+" accepted")
+    print("PASS: discovery scope, direct factory and negative guards")
 
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
