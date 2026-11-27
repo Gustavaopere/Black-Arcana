@@ -11607,6 +11607,90 @@
           "reason": "Original exact native report and new exact census reproduced twice; identity, resource and method pins; final CI required."
         }
       }
+    },
+    "✅-alshanex-familiars/rituals/archmage-shard.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "4.0.3",
+      "artifact_sha1": "e5051c2385a426d05bf203ba8081a23d891f6686",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-ARCHMAGE-RITUAL.md",
+          "reason": "Publisher 4.0.3 SHA-1/SHA-256/size, exact recipe path and holder ID, serializer and item registration."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-ARCHMAGE-RITUAL.md",
+          "reason": "Server-side four-statue ingredient match, consumption and central output. Automator supply, transfer and collection are bounded separately."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-ARCHMAGE-RITUAL.md",
+          "reason": "Cardinal offsets of two blocks, four counts of one, 100 eligible counter increments, particles every ten, and 20-tick automated transfers."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-ARCHMAGE-RITUAL.md",
+          "reason": "The targets are the block inventories. End rod and blastwave are particles. Ritual craft issues no damage, projectile, mob effect or direct summon."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-ARCHMAGE-RITUAL.md",
+          "reason": "Familiar Soul replaced by one shard and four declared consumable peripheral stacks cleared. No ritual mana, XP or player cooldown operation."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-ARCHMAGE-RITUAL.md",
+          "reason": "Provider owns matching, contents, clock and delivery. Downstream use is a separate spawn request. No verified mutation, perk authority or Mastery attribution."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-ARCHMAGE-RITUAL.md",
+          "reason": "Reproduce both pinned JAR fingerprints, recipe facts, class and method hashes, and selected JVM anchors. Physical modpack QA remains pending."
+        }
+      }
+    },
+    "✅-alshanex-familiars/rituals/druid-shard.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "4.0.3",
+      "artifact_sha1": "e5051c2385a426d05bf203ba8081a23d891f6686",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-DRUID-RITUAL.md",
+          "reason": "SHA-exact publisher 4.0.3 recipe, holder ID, DRUID_RUNE and constructor supplied by bootstrap 38."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-DRUID-RITUAL.md",
+          "reason": "Matching by total counts, three peripheral debits, retained Spore Blossom, one central shard and automated transfer."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-DRUID-RITUAL.md",
+          "reason": "Cardinal offsets of two blocks, 100 valid counter increments, particles every ten, and 20 active ticks per transfer."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-DRUID-RITUAL.md",
+          "reason": "Craft operates on the central and peripheral block inventories. Composter and Evocation Blastwave are visual; damage and projectile mechanics are inapplicable."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-DRUID-RITUAL.md",
+          "reason": "One Familiar Soul and one of each of three consumed inputs, with one Spore Blossom required and retained. No mana, XP or player cooldown."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-DRUID-RITUAL.md",
+          "reason": "Native inventory and clock authority, automator reuse of a retained catalyst and separate FamiliarsLib consumer. Hook and Mastery attribution remain unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-DRUID-RITUAL.md",
+          "reason": "Replays both pinned publisher artifacts, shared altar seal, exact recipe, retention and resupply branch anchors, registry and downstream method."
+        }
+      }
     }
   },
   "providers": {},
