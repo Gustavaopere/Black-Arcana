@@ -121,6 +121,16 @@ def census_sites(rd, parsed, refs):
     require(len(result)<=100,"consumer method site budget")
     return result
 
+def guano_resources(paths):
+    # Record the full filename-candidate census; project only resources
+    # directly relevant to item/recipe/loot/advancement identity.
+    candidates=sorted(p for p in paths if p.endswith(".json") and "guano" in p.rsplit("/",1)[-1])
+    prefixes=("data/alexscaves/recipe/","data/alexscaves/loot_table/","data/alexscaves/advancement/")
+    selected=[p for p in candidates if p in RESOURCES or
+              (p.startswith(prefixes) and p.rsplit("/",1)[-1] in
+               {"guano.json","guano_block.json","guano_layer.json","falling_guano.json"})]
+    return candidates,selected
+
 def inspect(args):
     select = {k:set(v) for k,v in SELECT.items()}
     required = {k:set(v) for k,v in REQUIRED.items()}
@@ -161,9 +171,14 @@ def inspect(args):
             raw=mod.read(path)
             require(digest(raw)==expected,"resource pin "+path)
             resources[path]={"sha256":digest(raw),"bytes":len(raw),"data":json.loads(raw)}
-        candidates=[p for p in sorted(mod.namelist()) if p.endswith(".json") and "guano" in p.rsplit("/",1)[-1]]
-        require(len(candidates)<=40,"guano resource candidate budget")
-        for path in candidates:
+        candidates,selected=guano_resources(mod.namelist())
+        require(len("\n".join(candidates).encode())<=100000,"guano path census byte budget")
+        require(len(selected)<=40,"guano resource projection budget")
+        resource_census={"candidate_paths":candidates,"projected_paths":selected,
+                         "candidate_count":len(candidates),"projection_count":len(selected),
+                         "scope":"FILENAME_CANDIDATES_ONLY_NOT_TRANSITIVE_REFERENCES"}
+        print("GUANO_RESOURCE_CENSUS",json.dumps(resource_census,sort_keys=True),flush=True)
+        for path in selected:
             raw=mod.read(path)
             require(len(raw)<=100000,"resource size")
             resources[path]={"sha256":digest(raw),"bytes":len(raw),"data":json.loads(raw)}
@@ -217,8 +232,8 @@ def inspect(args):
             classes[owner]={"present":True,"source":source,"available_sources":[k for k,_ in found],
                             "class_sha256":sha,"parent":rd.parent,"interfaces":rd.interfaces,
                             "fields":rd.fields,"declarations":rd.methods,"methods":methods}
-    report={"schema_version":1,"scope":"GUANO_IMPACT_DISCOVERY_ONLY",
-            "artifact":artifact,"classes":classes,"entity_registry":reg,"resources":resources,"registry_sites":census,"limits":LIMITS}
+    report={"schema_version":2,"scope":"GUANO_IMPACT_DISCOVERY_ONLY",
+            "artifact":artifact,"classes":classes,"entity_registry":reg,"resources":resources,"resource_census":resource_census,"registry_sites":census,"limits":LIMITS}
     data=canonical(report).encode()
     require(len(data)<=10_000_000,"report byte budget")
     args.output.parent.mkdir(parents=True,exist_ok=True)
@@ -237,6 +252,15 @@ def inspect(args):
 def self_test():
     require(set(PINS) <= ALL | set(SELECT),"pins out of scope")
     require(len(FACTORIES)==2 and len(RESOURCES)==2,"identity pins")
+    fixture=["assets/alexscaves/models/block/guano_layer_1.json",
+             "assets/alexscaves/models/item/guano.json",
+             "data/alexscaves/loot_table/blocks/guano_layer.json",
+             "data/alexscaves/recipe/guano_block.json",
+             "data/alexscaves/recipe/unrelated.json"]
+    candidates,selected=guano_resources(fixture)
+    require(len(candidates)==4 and len(selected)==3,"resource scope regression")
+    require(fixture[0] in candidates and fixture[0] not in selected,"retain candidate without projecting unrelated model")
+    require(set(RESOURCES)<=set(selected),"pinned resources retained")
     require(REQUIRED[W] >= {"onHit","onHitEntity"},"impact coverage")
     require(REQUIRED[D] >= {"getProjectile"},"dispenser coverage")
     require(LIMITS["static_contract"]=="NOT_CERTIFIED" and LIMITS["mutation"]=="NO_MUTATION","policy")
