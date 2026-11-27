@@ -40,3 +40,11 @@ No caminho herdado ThrowableProjectile.tick (Code `1a43e9d55ff6e07f0c7a778cfeb9e
 getDefaultItem vanilla coincide com esta variante, mas não autoriza descartar dados da stack de lançamento. Hurt zero não prova dano e cureWithMilk não prova efeito aceito ou cura de HP. placed_feature homônimo não demonstra obtenção do item.
 
 Evidência compartilhada: [matriz de reconciliação](../EXACT-CATALOG-INHERITED-BOUNDARIES-1.0.10.md). Mantidos NOT_CERTIFIED, NO_MUTATION e NOT_TESTED; nenhuma promoção por herança isolada.
+
+## Auditoria complementar — dissipação e variantes
+
+Recorte agrupado por entidade compartilhada, a partir da primeira ficha alfabética pendente não reservada (Chocolate). As três variantes continuam com identidades distintas; não são três novas raízes mágicas. A ficha de vanilla conserva seus próprios hashes de factory, supplier e modelo.
+
+A chamada observada em `ThrownIceCreamScoopEntity.onHitEntity @44` tem owner exato `com/github/alexmodguy/alexscaves/server/misc/ACPlatform`, descriptor `(Lnet/minecraft/world/entity/LivingEntity;)V`. Não assumir que cureWithMilk cura HP, remove todos os efeitos ou seja executado apenas após dano aceito. A tentativa de hurt com valor zero e a dissipação são operações separadas; nenhuma delas é recibo de Mastery.
+
+Nova [sonda](../../../../../docs/qa/alexscaves_1010_ice_cream_scoop_cure_probe.py) e [workflow](../../../../../.github/workflows/alexscaves-1010-ice-cream-scoop-cure.yml) pinam seis Code hashes (três factories e três suppliers), três modelos, classes do item/projétil e artefatos distribuídos NeoForge 21.1.250. Projetam os corpos próprios, ACPlatform.cureWithMilk, registro EntityType, candidatos de remoção/curas e fronteiras de projétil, spawn, custo e persistência; censo tipado dos campos de cada variante e método de cura no JAR de 1555 classes, com seleção de consumidores. Nomes opcionais de métodos são seletores de descoberta, não APIs confirmadas. Dois relatórios byte-idênticos exigidos; resultados ainda não observados. Não há prova de dispenser, lista efetiva de efeitos removíveis, classificação de cura ou aprovação de hook neste novo recorte até analisar o replay. `NOT_CERTIFIED / NO_MUTATION / fail-closed`.
