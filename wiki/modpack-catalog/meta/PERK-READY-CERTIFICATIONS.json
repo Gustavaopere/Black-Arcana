@@ -12047,15 +12047,15 @@
         },
         "parameters": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/mana-transcription.md",
-          "reason": "Coeficientes declarados 500 mana, 100 ticks, power 0 e XP calculado pela logic sem constante inventada."
+          "reason": "Coeficientes declarados 500 mana, 100 ticks, power 0 e XP calculado pela lógica sem constante inventada."
         },
         "targeting": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/mana-transcription.md",
-          "reason": "Hands no cast, anti-swap tick a tick e re-resolucao antes de mutar item ou XP."
+          "reason": "Hands no cast, anti-swap tick a tick e re-resolução antes de mutar item ou XP."
         },
         "costs": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/mana-transcription.md",
-          "reason": "Mana herdada do Iron's; XP e mutação de itens pertencem ao provider; valores efetivos nao verificados."
+          "reason": "Mana herdada do Iron's; XP e mutação de itens pertencem ao provider; valores efetivos não verificados."
         },
         "integration": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/mana-transcription.md",
@@ -12097,7 +12097,7 @@
         },
         "targeting": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/moonlight.md",
-          "reason": "Hit do provider, guard damagedEntityIds e counterspell apôs aceitação; sem novo anti-magic."
+          "reason": "Hit do provider, guard damagedEntityIds e counterspell após aceitação; sem novo anti-magic."
         },
         "costs": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/moonlight.md",
@@ -12143,7 +12143,7 @@
         },
         "targeting": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/otherworld-lens.md",
-          "reason": "ServerPlayer, IClientBlockTargetingSpell e revalidanção por tick; superfície tempor­ria, não portal."
+          "reason": "ServerPlayer, IClientBlockTargetingSpell e revalidação por tick; superfície temporária, não portal."
         },
         "costs": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/otherworld-lens.md",
@@ -12197,7 +12197,7 @@
         },
         "integration": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/palette-shift.md",
-          "reason": "Evento HIGHEST é provider-owned; ausência de ponto mutador seguro demonstrado mantem NO_MUTATION."
+          "reason": "Evento HIGHEST é provider-owned; ausência de ponto mutador seguro demonstrado mantém NO_MUTATION."
         },
         "validation": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
@@ -12235,7 +12235,7 @@
         },
         "targeting": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/spectral-wing.md",
-          "reason": "Estado provider-owned único; montaria, elytra, ­gua e natação são gateados no fluxo verificado."
+          "reason": "Estado provider-owned único; montaria, elytra, água e natação são gateados no fluxo verificado."
         },
         "costs": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/spectral-wing.md",
@@ -12373,7 +12373,7 @@
         },
         "targeting": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/arcane-blast.md",
-          "reason": "Hit aceito é o único gerador de charge; bypass de armadura e elegibilidade demoníaca não promovidos a fato est­tico."
+          "reason": "Hit aceito é o único gerador de charge; bypass de armadura e elegibilidade demoníaca não promovidos a fato estático."
         },
         "costs": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/arcane-blast.md",
@@ -12461,7 +12461,7 @@
         },
         "parameters": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/auto-magnet.md",
-          "reason": "Power 100+25, mana 40+10, cast 0, cooldown 0.0, range 8+(level-1)*4, custo 0.0/10.0 e ³rbita 1.4/1.2/0.06981317007977318."
+          "reason": "Power 100+25, mana 40+10, cast 0, cooldown 0.0, range 8+(level-1)*4, custo 0.0/10.0 e órbita 1.4/1.2/0.06981317007977318."
         },
         "targeting": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/auto-magnet.md",
@@ -12473,7 +12473,7 @@
         },
         "integration": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/auto-magnet.md",
-          "reason": "Inserção final no invent­rio e pickup de XP são vanilla/host; nenhum hook mutador demonstrado."
+          "reason": "Inserção final no inventário e pickup de XP são vanilla/host; nenhum hook mutador demonstrado."
         },
         "validation": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
