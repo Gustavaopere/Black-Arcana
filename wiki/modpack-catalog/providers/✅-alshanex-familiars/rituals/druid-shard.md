@@ -1,32 +1,39 @@
-# Druid Shard ritual
+# Druid Shard
 
-- **Provider:** Alshanex's Familiars
-- **Mod ID:** `alshanex_familiars`
-- **Exact installed JAR:** `alshanex_familiars-1.21.1_v4.0.3.jar`
-- **Exact recipe path:** `data/alshanex_familiars/recipe/ritual_recipes/druid_shard.json`
-- **Recipe type:** `alshanex_familiars:ritual_recipe`
-- **Result ID:** `alshanex_familiars:druid_shard`
-- **Semantic class:** provider ritual/rite
-- **Semantic state:** `COUNTED_EXACT`
+**✅ Contrato técnico estático do ritual** · Alshanex’s Familiars 4.0.3 · `STATIC_TECHNICAL_CATALOG_ONLY`
 
-## Exact-current evidence
+O altar transforma uma Familiar Soul em um Druid Shard. A flor de esporos ocupa uma das quatro estátuas e permanece disponível para o próximo ciclo. [Evidência no JAR exato](../EXACT-4.0.3-DRUID-RITUAL.md)
 
-The hash-matched 4.0.3 JAR packages this JSON as a custom `alshanex_familiars:ritual_recipe`, and the exact structured result points to `alshanex_familiars:druid_shard`. It is therefore cataloged as one discrete provider ritual identity, not as an ordinary crafting recipe.
+| Identidade | Valor |
+|---|---|
+| Receita | `alshanex_familiars:ritual_recipes/druid_shard` |
+| Tipo | `alshanex_familiars:ritual_recipe` |
+| Saída | `alshanex_familiars:druid_shard` |
+| Contagem semântica | `COUNTED_EXACT` · um ritual do provider |
 
-## Mechanics / acquisition
+## Custo e montagem
 
-Exact ingredient quantities, altar/environment conditions, execution time, ownership rules, costs and settlement behavior are **NÃO VERIFICADO** in this identity page. Those details remain provider-owned until separately required and evidenced.
+O núcleo recebe `alshanex_familiars:pet_soul`. As quatro estátuas ficam a dois blocos nos pontos cardeais e na mesma altura do núcleo. A ordem dos itens nas estátuas é livre. `RitualRecipeType.matches` exige quatro unidades no total, uma de cada item abaixo.
 
-## Authority / deduplication
+| Item periférico | Quantidade | Destino ao concluir |
+|---|---:|---|
+| `irons_spellbooks:greater_oakskin_elixir` | 1 | Consumido |
+| `irons_spellbooks:arcane_essence` | 1 | Consumido |
+| `irons_spellbooks:nature_rune` | 1 | Consumido |
+| `minecraft:spore_blossom` | 1 | Retido |
 
-Black Arcana does not execute or settle this provider ritual on Alshanex's behalf. A semantically similar Black Arcana ritual requires a real independent delta and remains subject to Black Arcana's own ritual transaction, hazard and world-safety contracts.
+`RitualHelper.clearItemsFromPedestals` pula o ingrediente quando `consume=false`. A flor continua obrigatória para o matching. O núcleo substitui a alma por uma unidade de Druid Shard. Custos de mana e XP e cooldown de jogador são inaplicáveis ao craft.
 
-## Provenance
+## Duração, alvo e resultado
 
-Read-only exact-artifact structured-resource inspection only. No upstream implementation, assets or prose are copied/adapted.
+O servidor conclui ao atingir **100 incrementos válidos** em `RitualCorePedestalEntity.tick`, cerca de 5 s com montagem contínua a 20 TPS. Retirar um periférico pausa o contador enquanto a alma continuar no núcleo e elegível. Trocar o item central reinicia o progresso. `minecraft:composter` é a partícula solicitada a cada 10 incrementos, e a conclusão solicita o efeito visual de Evocation. Núcleo e estátuas são os receptores do craft. Dano, projétil, status de combate e alcance de alvo vivo são inaplicáveis. [Contrato comum do altar](../EXACT-4.0.3-ARCHMAGE-RITUAL.md)
 
-## Schema exato do recurso — 2026-10-29
+## Ritual Automator e uso posterior
 
-No JAR 4.0.3 SHA-validado: `central_item` é objeto; `inputs` contém **4 objetos**, cada qual com `ingredient` objeto, `count` explícito e `consume` explícito; `result.id` é `alshanex_familiars:druid_shard`; `particle_type` é string. **1/4** entrada (posição **4** na lista) declara `consume=false`; as outras três declaram outro valor.
+O Automator usa o ID completo da receita para abastecer a partir do inventário abaixo dele. Reconhece a flor compatível na estátua e marca seu requisito como atendido enquanto ela permanecer ali. Cada voo dura 20 ticks de processamento. A coleta pede a inserção do shard no armazenamento e solicita drop do restante se necessário. O núcleo continua fazendo o matching pela montagem presente. [Seleção, abastecimento e coleta](../EXACT-4.0.3-DRUID-RITUAL.md#ritual-automator)
 
-É **estrutura de receita**, não prova de consumo efetivo, execução transacional, duração ou autorização de automação. Evidência [run 40933045252](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40933045252), artifact `12922838095`; ver [matriz exata](../EXACT-4.0.3-RITUAL-SCHEMA-SPELL-ABI-20261029.md). Não duplicar settlement de Alshanex.
+Ao usar o shard em bloco, `AbstractRuneItem.useOn` do FamiliarsLib 1.7.1 reduz a stack em uma unidade e chama `DruidShard.spawnFamiliar`. O override cria `DruidPetEntity` com `DRUID_PET`, marca impostor falso e solicita spawn no centro do bloco mais um bloco em Y, com yaw igual a `-Player.getYRot()`. O override descarta o booleano de `Level.addFreshEntity`. Aceitação do spawn, domesticação e autoria efetiva ficam fora da certificação do ritual. [Métodos e localizadores](../EXACT-4.0.3-DRUID-RITUAL.md#binding-e-uso-do-shard)
+
+## Integração e QA
+
+Alshanex gerencia o relógio, o consumo e a entrega. As fichas de RPG Skill Tree e Enshrouded podem usar os parâmetros documentados de custo, retenção de catalisador e duração. A mutação desses valores e a atribuição de Mastery ainda exigem um contrato do provider. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `perk_certification=NOT_CERTIFIED`, `mutation=NO_MUTATION`. [Reprodução](../EXACT-4.0.3-DRUID-RITUAL.md#reprodução)

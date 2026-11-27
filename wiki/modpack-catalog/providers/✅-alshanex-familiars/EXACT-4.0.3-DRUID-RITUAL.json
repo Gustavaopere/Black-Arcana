@@ -1,0 +1,250 @@
+{
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "item_factory": {
+    "bootstrap_index": 38,
+    "constructor_owner": "net/alshanex/alshanex_familiars/item/shards/DruidShard",
+    "descriptor": "()V"
+  },
+  "mutating_hook": "NOT_VERIFIED",
+  "mutation": "NO_MUTATION",
+  "perk_certification": "NOT_CERTIFIED",
+  "physical_qa": "NOT_TESTED",
+  "provider_classes": {
+    "net/alshanex/alshanex_familiars/block/entity/RitualAutomatorBlockEntity": {
+      "class_sha256": "9d18980a7544a86d26c252048d343ceda123673021a64e59c825bfc239a9db76",
+      "methods": [
+        {
+          "access": 2,
+          "anchors": [
+            {
+              "fact": "Ingredient.test:",
+              "offset": 214
+            },
+            {
+              "fact": "ifne 267",
+              "offset": 231
+            }
+          ],
+          "code_sha256": "5cad2d69252d3bdb5897cb5522277b2fcadaedb3c2c6a7586c8086784115db49",
+          "code_size": 272,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/alshanex/alshanex_familiars/block/entity/RitualCorePedestalEntity;Ljava/util/List;Lnet/alshanex/alshanex_familiars/recipe_types/RitualRecipeType;Lnet/neoforged/neoforge/items/IItemHandler;)Z",
+          "exception_handlers": [],
+          "instruction_count": 114,
+          "max_locals": 13,
+          "max_stack": 5,
+          "name": "performCleanup"
+        },
+        {
+          "access": 2,
+          "anchors": [
+            {
+              "fact": "removeNeed:",
+              "offset": 152
+            },
+            {
+              "fact": "removeNeed:",
+              "offset": 207
+            }
+          ],
+          "code_sha256": "513b7cb1efed20ba91decae1f373ed7c14208a9f7963c5c8ba8d7532408f9979",
+          "code_size": 360,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/alshanex/alshanex_familiars/block/entity/RitualCorePedestalEntity;Ljava/util/List;Lnet/alshanex/alshanex_familiars/recipe_types/RitualRecipeType;Lnet/neoforged/neoforge/items/IItemHandler;)V",
+          "exception_handlers": [],
+          "instruction_count": 145,
+          "max_locals": 11,
+          "max_stack": 5,
+          "name": "performSupply"
+        },
+        {
+          "access": 2,
+          "anchors": [
+            {
+              "fact": "Ingredient.test:",
+              "offset": 30
+            },
+            {
+              "fact": "List.remove:",
+              "offset": 38
+            }
+          ],
+          "code_sha256": "a6e0dbf38b35602127db2e55a506c3117d840e530d3b5117632658de0dc4f197",
+          "code_size": 52,
+          "descriptor": "(Ljava/util/List;Lnet/minecraft/world/item/ItemStack;)V",
+          "exception_handlers": [],
+          "instruction_count": 24,
+          "max_locals": 5,
+          "max_stack": 2,
+          "name": "removeNeed"
+        }
+      ],
+      "superclass": "net/minecraft/world/level/block/entity/BlockEntity"
+    },
+    "net/alshanex/alshanex_familiars/item/shards/DruidShard": {
+      "class_sha256": "b0d19d0105af6ca9afe563a383f43c98540abb249f7e5c2497f119b7d444ea82",
+      "methods": [
+        {
+          "access": 4,
+          "anchors": [
+            {
+              "fact": "EntityRegistry.DRUID_PET:",
+              "offset": 4
+            },
+            {
+              "fact": "iconst_0",
+              "offset": 21
+            },
+            {
+              "fact": "DruidPetEntity.setIsImpostor:",
+              "offset": 25
+            },
+            {
+              "fact": "BlockPos.getCenter:",
+              "offset": 31
+            },
+            {
+              "fact": "dconst_1",
+              "offset": 35
+            },
+            {
+              "fact": "Player.getYRot:",
+              "offset": 46
+            },
+            {
+              "fact": "fneg",
+              "offset": 49
+            },
+            {
+              "fact": "DruidPetEntity.setYRot:",
+              "offset": 50
+            },
+            {
+              "fact": "Level.addFreshEntity:",
+              "offset": 56
+            },
+            {
+              "fact": "pop",
+              "offset": 59
+            }
+          ],
+          "code_sha256": "d2962a2dd55e65ca419674a55b8f7a1b8abf3cf0692914f50ddd6848e86262b1",
+          "code_size": 61,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;)V",
+          "exception_handlers": [],
+          "instruction_count": 30,
+          "max_locals": 5,
+          "max_stack": 8,
+          "name": "spawnFamiliar"
+        }
+      ],
+      "superclass": "net/alshanex/familiarslib/item/AbstractRuneItem"
+    },
+    "net/alshanex/alshanex_familiars/registry/ItemRegistry": {
+      "class_sha256": "8fcd3011758d2967de766e532c0715fb14c49e63f16a221b668f578903da0236",
+      "methods": [
+        {
+          "access": 8,
+          "anchors": [
+            {
+              "fact": "String druid_shard",
+              "offset": 687
+            },
+            {
+              "fact": "InvokeDynamic #38:get:",
+              "offset": 690
+            },
+            {
+              "fact": "DeferredRegister.register:",
+              "offset": 695
+            },
+            {
+              "fact": "Field DRUID_RUNE:",
+              "offset": 698
+            }
+          ],
+          "code_sha256": "b83168893c5ac8bc0adc7c6de471ad91ca00f0e4e1e21ee1b1e241bf688ace13",
+          "code_size": 1293,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "instruction_count": 385,
+          "max_locals": 0,
+          "max_stack": 3,
+          "name": "<clinit>"
+        }
+      ],
+      "superclass": "java/lang/Object"
+    },
+    "net/alshanex/alshanex_familiars/util/rituals/RitualHelper": {
+      "class_sha256": "f54c779f990f45341280d30689b6b412040aa956c08b5231e829be20e53fc33f",
+      "methods": [
+        {
+          "access": 9,
+          "anchors": [
+            {
+              "fact": "RitualIngredient.consume:",
+              "offset": 143
+            },
+            {
+              "fact": "ifne 152",
+              "offset": 146
+            },
+            {
+              "fact": "goto 119",
+              "offset": 149
+            },
+            {
+              "fact": "FamiliarStatueEntity.setHeldItem:",
+              "offset": 228
+            }
+          ],
+          "code_sha256": "0eb95a5467e498612df204de400e82f8c4192e8fe3c0c66ff8e92f1b0ad24ee8",
+          "code_size": 269,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V",
+          "exception_handlers": [],
+          "instruction_count": 102,
+          "max_locals": 15,
+          "max_stack": 5,
+          "name": "clearItemsFromPedestals"
+        }
+      ],
+      "superclass": "java/lang/Object"
+    }
+  },
+  "provider_universe_closed": false,
+  "publisher_version": "4.0.3",
+  "recipe": {
+    "central_item": "alshanex_familiars:pet_soul",
+    "particle": "minecraft:composter",
+    "peripheral_inputs": [
+      {
+        "consume": true,
+        "count": 1,
+        "item": "irons_spellbooks:greater_oakskin_elixir"
+      },
+      {
+        "consume": true,
+        "count": 1,
+        "item": "irons_spellbooks:arcane_essence"
+      },
+      {
+        "consume": true,
+        "count": 1,
+        "item": "irons_spellbooks:nature_rune"
+      },
+      {
+        "consume": false,
+        "count": 1,
+        "item": "minecraft:spore_blossom"
+      }
+    ],
+    "recipe_id": "alshanex_familiars:ritual_recipes/druid_shard",
+    "resource": "data/alshanex_familiars/recipe/ritual_recipes/druid_shard.json",
+    "resource_sha256": "157c741fe3875fe70d128b10faff8188c6f71c2297fee89923360a8ebb22bb4c",
+    "result_components_explicit": false,
+    "result_count_explicit": false,
+    "result_item": "alshanex_familiars:druid_shard",
+    "type": "alshanex_familiars:ritual_recipe"
+  },
+  "schema_version": 1,
+  "shared_ritual_seal": "EXACT-4.0.3-ARCHMAGE-RITUAL.json",
+  "shared_ritual_seal_sha256": "fee3e649cae14a28e778f43c42b8052d074b84b5292007f229219e81bdc1a490"
+}

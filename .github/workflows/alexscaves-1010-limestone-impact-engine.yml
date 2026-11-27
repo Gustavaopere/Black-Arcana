@@ -116,7 +116,8 @@ jobs:
             --javap "$JAVA_HOME/bin/javap" \
             --extended --output build/limestone-impact-engine/extended-replay.json
           cmp build/limestone-impact-engine/extended.json build/limestone-impact-engine/extended-replay.json
-          sha256sum build/limestone-impact-engine/extended.json
+          test "$(wc -c < build/limestone-impact-engine/extended.json)" = 1563592
+          echo '90890c6dd6193fb48d12f1f48c7800fb1e8d173036959354e2d15cb5e00e1987  build/limestone-impact-engine/extended.json' | sha256sum -c -
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7

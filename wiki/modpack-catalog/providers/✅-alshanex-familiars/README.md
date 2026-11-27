@@ -53,7 +53,7 @@ The exact JAR packages eleven JSON resources whose type is precisely `alshanex_f
 | `summoner_shard` | `alshanex_familiars:summoner_shard` | [Summoner Shard](rituals/summoner-shard.md) |
 | `truth_mirror` | `alshanex_familiars:truth_mirror` | [Truth Mirror](rituals/truth-mirror.md) |
 
-The provider Wiki independently documents the custom ritual subsystem and shard acquisition through rituals. Exact ingredient quantities, altar conditions, timing, multiplayer ownership and runtime settlement are intentionally not inferred from identity alone.
+The provider Wiki documents the ritual subsystem and shard acquisition. The Archmage Shard and Druid Shard cards cover the exact altar layout, ingredients, 100-increment clock and Automator transfer rules. Druid uses a retained Spore Blossom catalyst. The other ritual rows show resource identities. See the [provider index](INDEX.md) for current certification and QA states.
 
 ## Semantic-magic result
 
