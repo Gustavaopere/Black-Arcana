@@ -6,9 +6,9 @@
 
 **Barra dos providers catalogados:** `░░░░░░░░░░░░░░░░░░░░ 2.4%`
 
-**Fichas catalogadas (somente fichas detectadas): 541/2496.**
+**Fichas catalogadas (somente fichas detectadas): 551/2496.**
 
-**Barra das fichas catalogadas:** `████░░░░░░░░░░░░░░░░ 21.7%`
+**Barra das fichas catalogadas:** `████░░░░░░░░░░░░░░░░ 22.1%`
 
 **Escopo:** pastas atuais de providers; a modlist pode conter outros mods/sistemas ainda não representados. Objetos ausentes do catálogo não são presumidos inexistentes.
 
@@ -18,9 +18,9 @@
 
 **Próximo na fila alfabética:** Alexs Caves Continued.
 
-**Fichas com contrato técnico estático certificado: 291/2496.**
+**Fichas com contrato técnico estático certificado: 301/2496.**
 
-**Barra das fichas estáticas observadas:** `██░░░░░░░░░░░░░░░░░░ 11.7%`
+**Barra das fichas estáticas observadas:** `██░░░░░░░░░░░░░░░░░░ 12.1%`
 
 **Mods com escopo integral certificado: 0/164.**
 
@@ -45,7 +45,7 @@
 | ⚠️ | Apothic Compats | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-apothic-compats/INDEX.md) |
 | ⚠️ | Apothic Enchanting | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-apothic-enchanting/INDEX.md) |
 | ⚠️ | Apothic Spawners | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-apothic-spawners/INDEX.md) |
-| ⚠️ | Apprentice Codex | 5/83 (6.0%) | 5 | ⚠️ | ⚠️ 0/83 verificados | ⚠️ 0/83 testados | [Ver fichas](✅-apprentice-codex/INDEX.md) |
+| ⚠️ | Apprentice Codex | 15/83 (18.1%) | 15 | ⚠️ | ⚠️ 0/83 verificados | ⚠️ 0/83 testados | [Ver fichas](✅-apprentice-codex/INDEX.md) |
 | ⚠️ | Ars Additions | 0/36 (0.0%) | 0 | ⚠️ | ⚠️ 0/36 verificados | ⚠️ 0/36 testados | [Ver fichas](✅-ars-additions/INDEX.md) |
 | ⚠️ | Ars Controle | 0/15 (0.0%) | 0 | ⚠️ | ⚠️ 0/15 verificados | ⚠️ 0/15 testados | [Ver fichas](✅-ars-controle/INDEX.md) |
 | ⚠️ | Ars Creo | 0/6 (0.0%) | 0 | ⚠️ | ⚠️ 0/6 verificados | ⚠️ 0/6 testados | [Ver fichas](✅-ars-creo/INDEX.md) |

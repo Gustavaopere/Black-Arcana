@@ -12020,6 +12020,466 @@
           "reason": "Two identical schema 1 and schema 2 replays on run 45940756715/job 140314259633, 19/21 owners, 99/111 projections; both hashes and lengths pinned, 42/42 workflows at discovery HEAD."
         }
       }
+    },
+    "✅-apprentice-codex/eldritch/mana-transcription.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Mana Transcription no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro ancorados no dossiê do lote; fonte 0.9.7.1 é apenas histórica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/mana-transcription.md",
+          "reason": "Fluxo XP, modos EXTRACTION/RESET e transação provider-owned reancorados no bytecode 1.0.1.1."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/mana-transcription.md",
+          "reason": "Coeficientes declarados 500 mana, 100 ticks, power 0 e XP calculado pela logic sem constante inventada."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/mana-transcription.md",
+          "reason": "Hands no cast, anti-swap tick a tick e re-resolucao antes de mutar item ou XP."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/mana-transcription.md",
+          "reason": "Mana herdada do Iron's; XP e mutação de itens pertencem ao provider; valores efetivos nao verificados."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/mana-transcription.md",
+          "reason": "Sem hook mutador demonstrado; NO_MUTATION e fail-closed para Black Arcana/RPG."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura contra javap -c/-v e decompilação Vineflower do artefato exato; hooks e QA físico continuam não verificados."
+        }
+      }
+    },
+    "✅-apprentice-codex/eldritch/moonlight.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Moonlight no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro ancorados no dossiê do lote; fonte 0.9.7.1 é apenas histórica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/moonlight.md",
+          "reason": "Fluxo charge, katana, charge-cut e counterspell rastreados no bytecode 1.0.1.1."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/moonlight.md",
+          "reason": "Power 1200+900, mana 120+30, cast 40, dano power/100*MOON_LIGHT e alcance 8+(level-1)*8."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/moonlight.md",
+          "reason": "Hit do provider, guard damagedEntityIds e counterspell apôs aceitação; sem novo anti-magic."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/moonlight.md",
+          "reason": "Mana/cooldown/power efetivos e multiplicador MOON_LIGHT instalado permanecem NAO VERIFICADOS."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/moonlight.md",
+          "reason": "Efeitos e estado provider-owned; nenhum contrato mutador seguro demonstrado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura contra javap -c/-v e decompilação Vineflower do artefato exato; hooks e QA físico continuam não verificados."
+        }
+      }
+    },
+    "✅-apprentice-codex/eldritch/otherworld-lens.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Otherworld Lens no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro ancorados no dossiê do lote; fonte 0.9.7.1 é apenas histórica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/otherworld-lens.md",
+          "reason": "Target 8 blocos, validação de bloco/face/ar, sessão UUID e cleanup rastreados no bytecode 1.0.1.1."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/otherworld-lens.md",
+          "reason": "Mana 35, cast 300, range 8 e KEEP_RANGE_SQ=144.0 como raio de manutenção distinto."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/otherworld-lens.md",
+          "reason": "ServerPlayer, IClientBlockTargetingSpell e revalidanção por tick; superfície tempor­ria, não portal."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/otherworld-lens.md",
+          "reason": "Mana/cooldown efetivos e custo de config instalada permanecem NAO VERIFICADOS."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/otherworld-lens.md",
+          "reason": "Sessão e bloco são provider-owned; sem segundo camera/session state ou hook demonstrado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura contra javap -c/-v e decompilação Vineflower do artefato exato; hooks e QA físico continuam não verificados."
+        }
+      }
+    },
+    "✅-apprentice-codex/eldritch/palette-shift.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Palette Shift no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro ancorados no dossiê do lote; fonte 0.9.7.1 é apenas histórica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/palette-shift.md",
+          "reason": "Gate de Pastel Staff, PALETTE_RECEPTION 600 ticks e SpellPreCastEvent HIGHEST rastreados no bytecode 1.0.1.1."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/palette-shift.md",
+          "reason": "Mana 50, cast 0, cooldown 30.0, allowCrafting=false, requiresLearning=false e HiddenFromEldritchResearch."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/palette-shift.md",
+          "reason": "Mainhand/offhand staff e captura da próxima magia; o cancelamento não é um segundo cast bem-sucedido."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/palette-shift.md",
+          "reason": "Mana/cooldown efetivos e comportamento de config instalada permanecem NAO VERIFICADOS."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/palette-shift.md",
+          "reason": "Evento HIGHEST é provider-owned; ausência de ponto mutador seguro demonstrado mantem NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura contra javap -c/-v e decompilação Vineflower do artefato exato; hooks e QA físico continuam não verificados."
+        }
+      }
+    },
+    "✅-apprentice-codex/eldritch/spectral-wing.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Spectral Wing no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro ancorados no dossiê do lote; fonte 0.9.7.1 é apenas histórica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/spectral-wing.md",
+          "reason": "Preconditions, launch, recast boost e SpectralWingFlightEvent rastreados no bytecode 1.0.1.1."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/spectral-wing.md",
+          "reason": "Mana 150, cast 0, cooldown 2.0, launch 0.75/1.05, boost 2.75/0.22, spin 10, visual 20, grace 10 e water grace 4."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/spectral-wing.md",
+          "reason": "Estado provider-owned único; montaria, elytra, ­gua e natação são gateados no fluxo verificado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/spectral-wing.md",
+          "reason": "Mana/cooldown efetivos e interação com flight mods permanecem NAO VERIFICADOS."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/spectral-wing.md",
+          "reason": "Nenhum segundo controlador de movimento espelha o estado do provider; hook mutador não demonstrado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura contra javap -c/-v e decompilação Vineflower do artefato exato; hooks e QA físico continuam não verificados."
+        }
+      }
+    },
+    "✅-apprentice-codex/ender/anchor-blink.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Anchor Blink no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro ancorados no dossiê do lote; fonte 0.9.7.1 é apenas histórica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/anchor-blink.md",
+          "reason": "Throw, anchor, resolveTeleportDestination, Utils.handleSpellTeleport e janela de proteção rastreados no bytecode 1.0.1.1."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/anchor-blink.md",
+          "reason": "Power 400+200, mana 80, cast 10, dano power/100*multiplier, speed 1.8, range min(128,16*power/100), dagger 160/60 e proteção 40 ticks."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/anchor-blink.md",
+          "reason": "Item gate no offhand, alvo por look direction e validação de borda/hitbox/fluidos no teleporte."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/anchor-blink.md",
+          "reason": "Mana/cooldown efetivos e multiplicador instalado permanecem NAO VERIFICADOS."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/anchor-blink.md",
+          "reason": "Edge Dancer cleanup e teleporte pertencem à raiz única; sem segundo settlement ou hook comprovado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura contra javap -c/-v e decompilação Vineflower do artefato exato; hooks e QA físico continuam não verificados."
+        }
+      }
+    },
+    "✅-apprentice-codex/ender/arcane-beam.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Arcane Beam no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro ancorados no dossiê do lote; fonte 0.9.7.1 é apenas histórica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/arcane-beam.md",
+          "reason": "Entity owner-linked, reclip, cadência tickCount%5!=0 e consume de Arcane Charge rastreados no bytecode 1.0.1.1."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/arcane-beam.md",
+          "reason": "Power 200+100, mana 5+5, cast 60, cooldown 12.0, range 32, radius 0.25, dano (1+power/100)*multiplier e bonus por charge."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/arcane-beam.md",
+          "reason": "Beam contínuo com 4 ticks de dano em cada 5; dedup de vítima por cast não demonstrado no método examinado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/arcane-beam.md",
+          "reason": "Multiplicador instalado, mana/cooldown efetivos e DPS real permanecem NAO VERIFICADOS."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/arcane-beam.md",
+          "reason": "Pacote correto spell.arcanebeam; nenhum ponto de mutação segura demonstrado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura contra javap -c/-v e decompilação Vineflower do artefato exato; hooks e QA físico continuam não verificados."
+        }
+      }
+    },
+    "✅-apprentice-codex/ender/arcane-blast.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Arcane Blast no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro ancorados no dossiê do lote; fonte 0.9.7.1 é apenas histórica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/arcane-blast.md",
+          "reason": "Raycast 0.1, CombatTools.applyDamage e ARCANE_CHARGE 200 ticks com amp cap 2 rastreados no bytecode 1.0.1.1."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/arcane-blast.md",
+          "reason": "Power 40+5, mana 20+4, cast 30, cooldown 1.0, dano power/10*multiplier e alcance 16+4*power/10."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/arcane-blast.md",
+          "reason": "Hit aceito é o único gerador de charge; bypass de armadura e elegibilidade demoníaca não promovidos a fato est­tico."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/arcane-blast.md",
+          "reason": "Multiplicador instalado e mana/cooldown efetivos permanecem NAO VERIFICADOS."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/arcane-blast.md",
+          "reason": "Um hit mais uma mutação de charge são uma raiz; nenhum contrato mutador verificado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura contra javap -c/-v e decompilação Vineflower do artefato exato; hooks e QA físico continuam não verificados."
+        }
+      }
+    },
+    "✅-apprentice-codex/ender/assist-wings.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Assist Wings no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro ancorados no dossiê do lote; fonte 0.9.7.1 é apenas histórica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/assist-wings.md",
+          "reason": "Counter server-owned, gate Hoverride Broom, SyncAssistWingsJumpPacket e REMOVAL_GRACE_TICKS=10 rastreados no bytecode 1.0.1.1."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/assist-wings.md",
+          "reason": "Power 100+100, mana 20, cast 0, cooldown 0.0, saltos 1+level e impulso 0.6+jumpBoostPower."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/assist-wings.md",
+          "reason": "Montaria não autorizada falha; saltos repetidos pertencem ao mesmo mechanic provider."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/assist-wings.md",
+          "reason": "Config efetiva, compatibilidade de broom e server/client prediction permanecem NAO VERIFICADOS."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/assist-wings.md",
+          "reason": "Fall protection e estado de asa são provider-owned; nenhum hook mutador seguro demonstrado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura contra javap -c/-v e decompilação Vineflower do artefato exato; hooks e QA físico continuam não verificados."
+        }
+      }
+    },
+    "✅-apprentice-codex/ender/auto-magnet.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Auto Magnet no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro ancorados no dossiê do lote; fonte 0.9.7.1 é apenas histórica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/auto-magnet.md",
+          "reason": "Toggle server-owned, modos NORMAL/REVERSE, loop de 2 ticks e passe de XP sem tryConsumeCollectMana rastreados no bytecode 1.0.1.1."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/auto-magnet.md",
+          "reason": "Power 100+25, mana 40+10, cast 0, cooldown 0.0, range 8+(level-1)*4, custo 0.0/10.0 e ³rbita 1.4/1.2/0.06981317007977318."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/auto-magnet.md",
+          "reason": "Familiar owner-linked; coleta de itens cobra mana por lote e a passe de XP não chama a cobrança no caminho examinado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/auto-magnet.md",
+          "reason": "disableCollectManaCost default false no JAR; config efetiva e canais de mana instalados permanecem NAO VERIFICADOS."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/auto-magnet.md",
+          "reason": "Inserção final no invent­rio e pickup de XP são vanilla/host; nenhum hook mutador demonstrado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura contra javap -c/-v e decompilação Vineflower do artefato exato; hooks e QA físico continuam não verificados."
+        }
+      }
     }
   },
   "providers": {},

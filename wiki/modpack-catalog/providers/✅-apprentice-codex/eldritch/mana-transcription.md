@@ -2,7 +2,7 @@
 
 - **Provider:** Apprentice's Codex
 - **Mod ID:** `apprenticecodex`
-- **Installed JAR:** `apprentice_codex-0.9.7.1+mc1.21.1.jar`
+- **Installed JAR:** `apprentice_codex-1.0.1.1-mc1.21.1.jar`
 - **Registry ID:** `apprenticecodex:mana_transcription`
 - **Iron's school:** Eldritch
 - **Levels:** 1
@@ -10,9 +10,10 @@
 - **Cast type:** Long
 - **Cooldown:** 4 s
 - **Resource:** Iron's mana + provider-required player XP/operation item
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+- **Binary pin:** SHA-256 `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86`; SHA-1 `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF`; 11.870.671 bytes
+- **Historical source provenance:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (0.9.7.1; documental only, not the certification baseline)
 
-## Exact source config
+## Exact 1.0.1.1 bytecode config
 
 - `baseManaCost = 500`
 - `manaCostPerLevel = 0`
@@ -64,7 +65,7 @@ These are provider-owned transactional mutations. Black Arcana must never consum
 
 ## What it does
 
-Provider guide semantics match the source: channel mana and experience through items in both hands to transcribe an enchantment onto an unwritten Book and Quill, or use a compatible catalyst to remove prior anvil work.
+Provider guide semantics are compatible with the 1.0.1.1 bytecode flow: channel mana and experience through items in both hands to transcribe an enchantment onto an unwritten Book and Quill, or use a compatible catalyst to remove prior anvil work.
 
 ## Acquisition
 
@@ -76,22 +77,33 @@ Occupies the **high-cost magical enchantment extraction / repair-cost reset** ut
 
 ## Confidence
 
-`SOURCE-PINNED SPELL + SERVER TRANSACTION PATH / EXACT XP FORMULA + RESET ITEM TAG INVENTORY + FULL RUNTIME QA PENDING`
+`SHA_EXACT_BINARY_BEHAVIOR 1.0.1.1 / STATIC_TECHNICAL_CATALOG_ONLY / mutating_hook=NOT_VERIFIED / physical_qa=NOT_TESTED / config efetiva e QA físico pendentes`
 
-## Localizadores para Codex — source exato
+## Localizadores e certificação — JAR 1.0.1.1
 
-- **Registry + identidade:** `apprenticecodex:mana_transcription` → `SpellRegistry.reg("mana_transcription", ManaTranscription::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.manatranscription.ManaTranscription`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/manatranscription/ManaTranscription.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+- **Artefato:** `apprentice_codex-1.0.1.1-mc1.21.1.jar`; SHA-256 `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86`; SHA-1 `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF`; 11.870.671 bytes.
+- **Registro/identidade:** `apprenticecodex:mana_transcription` → construtor de `jp.aquafactory.apprenticecodex.spell.manatranscription.ManaTranscription`; pacote e classe confirmados no inventário e no bytecode do JAR físico.
+- **Evidência primária:** `javap -classpath <JAR> -p -s -c`/`-v` (`scratch/javap1011.txt`, `scratch/javap1011_v.txt`) e decompilação Vineflower 1.12.0 (`scratch/vf_apprentice1011/`). Síntese auditável: [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).
+- **Leitura para perks:** usar somente os fluxos, constantes e consumidores desta ficha. Evento, setter, callback ou estado provider-owned não é promovido a hook mutador sem ponto de chamada, consumidor do valor alterado e restrições de execução demonstrados.
+- **Contrato:** host Iron's controla casting/mana/cooldown; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana não duplica custo, hit, estado ou efeito. Sem hook comprovado: **⚠️ condicionado/fail-closed**.
+- **Pendências:** configuração efetiva do pack, canais herdados de `AbstractSpell`, multiplicadores de dano instalados e QA físico/Survival. O source 0.9.7.1 permanece apenas histórico; equivalência com o JAR não é assumida.
 
-## Engenharia causal aprofundada — utilidades, persistência e recursos (2026-10-14)
+## Engenharia causal — ancoragem 1.0.1.1
 
-**Registry:** `apprenticecodex:mana_transcription`. **Proveniência source:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (versão declarada 0.9.7.1); classes e helpers: [ManaTranscription.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/manatranscription/ManaTranscription.java); [ManaTranscriptionLogic.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/manatranscription/ManaTranscriptionLogic.java).
+**Fluxo verificado:** `ServerPlayer` → `ManaTranscriptionLogic` resolve `EXTRACTION`/`RESET` from the held main/offhand pair → XP check → resolution and hand state locked in `ManaTranscription$ManaTranscriptionCastData` → every server cast tick revalidates the hands → `onCast` re-resolves and requires a match before `giveExperiencePoints(-requiredXp)` and the provider-owned enchantment/book or repair-cost mutation.
 
-**Cadeia causal no código-fonte:** ManaTranscription.checkPreCastConditions exige ServerPlayer, resolve item principal e material da offhand via ManaTranscriptionLogic, verifica experiência e registra ManaTranscriptionCastData com mãos e resolução congeladas. onServerCastTick cancela cast se mãos mudarem; onCast revalida mãos, resolução e XP, debita XP via giveExperiencePoints(-requiredExperience) e então executa extraction (remove encantamento/cria livro) ou reset de repair cost. O projeto separa custo XP do custo de mana do host; o source localizado não comprova atomicidade de XP+mutação após falhas ou crash.
+**Constantes/cálculo:** Declared coefficients: `baseManaCost=500`, `manaCostPerLevel=0`, `baseSpellPower=0`, `spellPowerPerLevel=0`, `castTime=100`, cooldown `4.0`, LEGENDARY, Long. `getEffectiveCastTime` deliberately forces the spell's own cast time. The required XP is produced by provider logic from the held-item state and is not promoted here to an unsupported fixed constant.
 
-**QA prioritário pendente:** Troca de slots/Curios durante casting, state no reload, exploração por dupla invocação, consumo de livro e XP, reparo/curses, integridade quando inventário cheio ou falha de alteração.
+**Limites:** The source pin 0.9.7.1 is historical; this flow is reanchored in the 1.0.1.1 bytecode/decompilation. Atomicity of XP + item mutation after crash/failure, effective config, inherited mana/cooldown channels and physical QA remain `NÃO VERIFICADOS`. No second XP/item/mana settlement may be added.
 
-**Governança:** o host Iron's controla cast/mana/recast; o addon controla o estado/efeito/custo especializado verificado. Um pulso, dano periódico, bloco, item gerado, job tick, cast visual ou cast derivado não é uma identidade semântica nova nem gatilho de Mastery/XP automático. Black Arcana não reprocessa recursos, eventos, mutação do mundo ou callback dos providers. ⚠️ Source-level não comprova bytecode idêntico/config efetiva/teste físico. ⛔ Nenhum contrato de RPG Skill Tree perks/Mastery homologado: fail-closed.
+## Estado da certificação
+
+- `claim_scope`: `STATIC_TECHNICAL_CATALOG_ONLY`
+- `evidence_grade`: `SHA_EXACT_BINARY_BEHAVIOR`
+- `version`: `1.0.1.1`
+- `artifact_sha256`: `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86`
+- `artifact_sha1`: `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF`
+- `mutating_hook`: `NOT_VERIFIED`
+- `physical_qa`: `NOT_TESTED`
+- `implementation_in_main`: `NOT_APPLICABLE`
+- **Resultado:** ✅ contrato técnico estático reancorado; ⚠️ hook mutador, config efetiva, canais herdados e QA físico permanecem pendentes; ⛔ sem homologação para perks/Mastery.
