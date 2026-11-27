@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 118/134.**
+**Fichas catalogadas (somente fichas detectadas): 142/184.**
 
-**Barra das fichas catalogadas:** `█████████████████░░░ 88.1%`
+**Barra das fichas catalogadas:** `███████████████░░░░░ 77.2%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 118/134.**
+**Homologadas para perks (somente fichas detectadas): 142/184.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████████░░░ 88.1%`
+**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 77.2%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -106,43 +106,92 @@
 | ✅ | Dreadbow | [equipment/dreadbow.md](equipment/dreadbow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Extinction Spear | [equipment/extinction-spear.md](equipment/extinction-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Frostmint Spear | [equipment/frostmint-spear.md](equipment/frostmint-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Galena Gauntlet | [equipment/galena-gauntlet.md](equipment/galena-gauntlet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Galena Gauntlet | [equipment/galena-gauntlet.md](equipment/galena-gauntlet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Limestone Spear | [equipment/limestone-spear.md](equipment/limestone-spear.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Ortholance | [equipment/ortholance.md](equipment/ortholance.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Primitive Club | [equipment/primitive-club.md](equipment/primitive-club.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shot Gum | [equipment/shot-gum.md](equipment/shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Alex Meal | [items/alex-meal.md](items/alex-meal.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Biome Treat | [items/biome-treat.md](items/biome-treat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Block Of Uranium | [items/block-of-uranium.md](items/block-of-uranium.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Burrowing Arrow | [items/burrowing-arrow.md](items/burrowing-arrow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Candy Cane Hook | [items/candy-cane-hook.md](items/candy-cane-hook.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Book | [items/cave-book.md](items/cave-book.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Map | [items/cave-map.md](items/cave-map.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Charred Remnant | [items/charred-remnant.md](items/charred-remnant.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Chocolate Ice Cream Scoop | [items/chocolate-ice-cream-scoop.md](items/chocolate-ice-cream-scoop.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Cinder Brick | [items/cinder-brick.md](items/cinder-brick.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cloak Of Darkness | [items/cloak-of-darkness.md](items/cloak-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Darkened Apple | [items/darkened-apple.md](items/darkened-apple.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Depth Charge | [items/depth-charge.md](items/depth-charge.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Boots | [items/diving-boots.md](items/diving-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Chestplate | [items/diving-chestplate.md](items/diving-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Helmet | [items/diving-helmet.md](items/diving-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Leggings | [items/diving-leggings.md](items/diving-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Fertilizer | [items/fertilizer.md](items/fertilizer.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Fissile Core | [items/fissile-core.md](items/fissile-core.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Floater | [items/floater.md](items/floater.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gazing Pearl | [items/gazing-pearl.md](items/gazing-pearl.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gingerbread Boots | [items/gingerbread-boots.md](items/gingerbread-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gingerbread Chestplate | [items/gingerbread-chestplate.md](items/gingerbread-chestplate.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gingerbread Helmet | [items/gingerbread-helmet.md](items/gingerbread-helmet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gingerbread Leggings | [items/gingerbread-leggings.md](items/gingerbread-leggings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Hazmat Boots | [items/hazmat-boots.md](items/hazmat-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Hazmat Chestplate | [items/hazmat-chestplate.md](items/hazmat-chestplate.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Hazmat Leggings | [items/hazmat-leggings.md](items/hazmat-leggings.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Hazmat Mask | [items/hazmat-mask.md](items/hazmat-mask.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gazing Pearl | [items/gazing-pearl.md](items/gazing-pearl.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gingerbread Boots | [items/gingerbread-boots.md](items/gingerbread-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gingerbread Chestplate | [items/gingerbread-chestplate.md](items/gingerbread-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gingerbread Helmet | [items/gingerbread-helmet.md](items/gingerbread-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gingerbread Leggings | [items/gingerbread-leggings.md](items/gingerbread-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Glow Ink Bomb | [items/glow-ink-bomb.md](items/glow-ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gossamer Worm Bucket | [items/gossamer-worm-bucket.md](items/gossamer-worm-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Green Soylent | [items/green-soylent.md](items/green-soylent.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Guano | [items/guano.md](items/guano.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Hazmat Boots | [items/hazmat-boots.md](items/hazmat-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Hazmat Chestplate | [items/hazmat-chestplate.md](items/hazmat-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Hazmat Leggings | [items/hazmat-leggings.md](items/hazmat-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Hazmat Mask | [items/hazmat-mask.md](items/hazmat-mask.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Holocoder | [items/holocoder.md](items/holocoder.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hood Of Darkness | [items/hood-of-darkness.md](items/hood-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Hot Chocolate Bottle | [items/hot-chocolate-bottle.md](items/hot-chocolate-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Ink Bomb | [items/ink-bomb.md](items/ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Jelly Bean | [items/jelly-bean.md](items/jelly-bean.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Lanternfish Bucket | [items/lanternfish-bucket.md](items/lanternfish-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Licowitch Radiant Essence | [items/licowitch-radiant-essence.md](items/licowitch-radiant-essence.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Marine Snow | [items/marine-snow.md](items/marine-snow.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Moth Dust | [items/moth-dust.md](items/moth-dust.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Boat | [items/pewen-boat.md](items/pewen-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Pewen Chest Boat | [items/pewen-chest-boat.md](items/pewen-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Primordial Helmet | [items/primordial-helmet.md](items/primordial-helmet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Primordial Pants | [items/primordial-pants.md](items/primordial-pants.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Primordial Tunic | [items/primordial-tunic.md](items/primordial-tunic.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Primordial Helmet | [items/primordial-helmet.md](items/primordial-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Primordial Pants | [items/primordial-pants.md](items/primordial-pants.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Primordial Soup | [items/primordial-soup.md](items/primordial-soup.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Primordial Tunic | [items/primordial-tunic.md](items/primordial-tunic.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Purple Soda Bottle Rocket | [items/purple-soda-bottle-rocket.md](items/purple-soda-bottle-rocket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Purple Soda Bottle | [items/purple-soda-bottle.md](items/purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Rainbounce Boots | [items/rainbounce-boots.md](items/rainbounce-boots.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Quarry Smasher | [items/quarry-smasher.md](items/quarry-smasher.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Radgill Bucket | [items/radgill-bucket.md](items/radgill-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Radiant Essence | [items/radiant-essence.md](items/radiant-essence.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Radrock Uranium Ore | [items/radrock-uranium-ore.md](items/radrock-uranium-ore.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Rainbounce Boots | [items/rainbounce-boots.md](items/rainbounce-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Remote Detonator | [items/remote-detonator.md](items/remote-detonator.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Resistor Shield | [items/resistor-shield.md](items/resistor-shield.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Resistor Shield | [items/resistor-shield.md](items/resistor-shield.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sack Of Sating | [items/sack-of-sating.md](items/sack-of-sating.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sea Pig Bucket | [items/sea-pig-bucket.md](items/sea-pig-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Seeking Arrow | [items/seeking-arrow.md](items/seeking-arrow.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Seething Stew | [items/seething-stew.md](items/seething-stew.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Serene Salad | [items/serene-salad.md](items/serene-salad.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sharpened Candy Cane | [items/sharpened-candy-cane.md](items/sharpened-candy-cane.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Slam | [items/slam.md](items/slam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Spelunkie | [items/spelunkie.md](items/spelunkie.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Submarine | [items/submarine.md](items/submarine.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sweetberry Ice Cream Scoop | [items/sweetberry-ice-cream-scoop.md](items/sweetberry-ice-cream-scoop.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sweetish Fish Blue Bucket | [items/sweetish-fish-blue-bucket.md](items/sweetish-fish-blue-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sweetish Fish Green Bucket | [items/sweetish-fish-green-bucket.md](items/sweetish-fish-green-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sweetish Fish Pink Bucket | [items/sweetish-fish-pink-bucket.md](items/sweetish-fish-pink-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sweetish Fish Red Bucket | [items/sweetish-fish-red-bucket.md](items/sweetish-fish-red-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sweetish Fish Yellow Bucket | [items/sweetish-fish-yellow-bucket.md](items/sweetish-fish-yellow-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Boat | [items/thornwood-boat.md](items/thornwood-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Thornwood Chest Boat | [items/thornwood-chest-boat.md](items/thornwood-chest-boat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Trilocaris Bucket | [items/trilocaris-bucket.md](items/trilocaris-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Tripodfish Bucket | [items/tripodfish-bucket.md](items/tripodfish-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Unrefined Waste | [items/unrefined-waste.md](items/unrefined-waste.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Uranium Shard | [items/uranium-shard.md](items/uranium-shard.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Uranium | [items/uranium.md](items/uranium.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Vanilla Ice Cream Scoop | [items/vanilla-ice-cream-scoop.md](items/vanilla-ice-cream-scoop.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Waste Drum | [items/waste-drum.md](items/waste-drum.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Anvil Combination | [systems/anvil-combination.md](systems/anvil-combination.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Armor Material | [systems/armor-material.md](systems/armor-material.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cave Info Item | [systems/cave-info-item.md](systems/cave-info-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -154,6 +203,7 @@
 | ✅ | Food Builder | [systems/food-builder.md](systems/food-builder.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Foods | [systems/foods.md](systems/foods.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Item Registry | [systems/item-registry.md](systems/item-registry.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Keybind Using Armor | [systems/keybind-using-armor.md](systems/keybind-using-armor.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Repairable Item | [systems/repairable-item.md](systems/repairable-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Scaffolding Placement | [systems/scaffolding-placement.md](systems/scaffolding-placement.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Swing Control Item | [systems/swing-control-item.md](systems/swing-control-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -167,9 +217,9 @@
 | ✅ | Damage Types | 11/11 (100.0%) | 11 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
-| ⚠️ | Equipment | 5/6 (83.3%) | 5 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 20/35 (57.1%) | 20 | [Abrir índice](items/INDEX.md) |
-| ✅ | Systems | 15/15 (100.0%) | 15 | [Abrir índice](systems/INDEX.md) |
+| ⚠️ | Equipment | 6/9 (66.7%) | 6 | [Abrir índice](equipment/INDEX.md) |
+| ⚠️ | Items | 42/81 (51.9%) | 42 | [Abrir índice](items/INDEX.md) |
+| ✅ | Systems | 16/16 (100.0%) | 16 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
 

@@ -310,7 +310,8 @@
         "equipment/desolate-dagger.md",
         "equipment/shot-gum.md",
         "equipment/extinction-spear.md",
-        "equipment/frostmint-spear.md"
+        "equipment/frostmint-spear.md",
+        "equipment/galena-gauntlet.md"
       ],
       "family_universe_closed": false,
       "evidence": "EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md",
@@ -318,9 +319,10 @@
         "EXACT-DREADBOW-CONTRACTS-1.0.10.md",
         "EXACT-GUMBALL-CONTRACTS-1.0.10.md",
         "EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.md",
-        "EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md"
+        "EXACT-FLOATER-FROSTMINT-CATALOG-1.0.10.md",
+        "equipment/galena-gauntlet.md"
       ],
-      "documented_static_contracts": 5
+      "documented_static_contracts": 6
     },
     "damage_types": {
       "documented_static_contracts": 9,
@@ -556,7 +558,27 @@
         "EXACT-BURROWING-CAVE-ITEMS-CATALOG-1.0.10.json",
         "EXACT-DARKNESS-ITEMS-CATALOG-1.0.10.json"
       ],
-      "partial_cards": []
+      "partial_cards": [],
+      "current_documented_static_contracts": 16,
+      "current_cards": [
+        "systems/anvil-combination.md",
+        "systems/armor-material.md",
+        "systems/cave-info-item.md",
+        "systems/client-extension.md",
+        "systems/custom-armor-post-render.md",
+        "systems/destroyed-item.md",
+        "systems/dynamic-attributes.md",
+        "systems/enchantable-item.md",
+        "systems/food-builder.md",
+        "systems/foods.md",
+        "systems/item-registry.md",
+        "systems/keybind-using-armor.md",
+        "systems/repairable-item.md",
+        "systems/scaffolding-placement.md",
+        "systems/swing-control-item.md",
+        "systems/ticking-item.md"
+      ],
+      "current_evidence": "EXACT-KEYBIND-USING-ARMOR-CONTRACT-1.0.10.json"
     },
     "item_contracts": {
       "cards": [
@@ -1023,5 +1045,170 @@
     "semantic_magic_roots_added": 0,
     "whole_provider_catalog_closed": false,
     "next_scope": "server/item/GalenaGauntletItem"
+  },
+  "latest_individual_contract_checkpoint": {
+    "scope": "FOUR_RADIOACTIVE_ITEM_INDIVIDUAL_STATIC_CERTIFICATES_CANDIDATE",
+    "provider_observed_static_contracts": 142,
+    "provider_observed_cards": 184,
+    "integration_support_contracts": 16,
+    "concrete_item_contracts": 42,
+    "equipment_contracts": 6,
+    "semantic_magic_roots_added": 0,
+    "whole_provider_catalog_closed": false,
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "remaining_observed_partial_cards": [
+      "equipment/limestone-spear.md",
+      "items/jelly-bean.md",
+      "items/remote-detonator.md",
+      "items/gossamer-worm-bucket.md",
+      "items/lanternfish-bucket.md",
+      "items/marine-snow.md",
+      "items/moth-dust.md",
+      "items/radgill-bucket.md",
+      "items/sea-pig-bucket.md",
+      "items/trilocaris-bucket.md",
+      "items/tripodfish-bucket.md",
+      "equipment/ortholance.md",
+      "equipment/primitive-club.md",
+      "items/primordial-soup.md",
+      "items/seething-stew.md",
+      "items/serene-salad.md",
+      "items/green-soylent.md",
+      "items/licowitch-radiant-essence.md",
+      "items/quarry-smasher.md",
+      "items/radiant-essence.md",
+      "items/slam.md",
+      "items/spelunkie.md",
+      "items/radrock-uranium-ore.md",
+      "items/waste-drum.md",
+      "items/block-of-uranium.md",
+      "items/unrefined-waste.md",
+      "items/sack-of-sating.md",
+      "items/seeking-arrow.md",
+      "items/sharpened-candy-cane.md",
+      "items/purple-soda-bottle-rocket.md",
+      "items/submarine.md",
+      "items/sweetish-fish-red-bucket.md",
+      "items/sweetish-fish-green-bucket.md",
+      "items/sweetish-fish-blue-bucket.md",
+      "items/sweetish-fish-yellow-bucket.md",
+      "items/sweetish-fish-pink-bucket.md",
+      "items/chocolate-ice-cream-scoop.md",
+      "items/cinder-brick.md",
+      "items/depth-charge.md",
+      "items/guano.md",
+      "items/sweetberry-ice-cream-scoop.md",
+      "items/vanilla-ice-cream-scoop.md"
+    ],
+    "evidence": [
+      "items/gazing-pearl.md",
+      "equipment/galena-gauntlet.md",
+      "items/holocoder.md",
+      "items/resistor-shield.md",
+      "EXACT-JELLY-KEYBIND-LIMESTONE-1.0.10.md",
+      "EXACT-ITEM-OUTER-CLASS-RECONCILIATION-1.0.10.md",
+      "EXACT-MARINE-FISH-MOTH-1.0.10.md",
+      "EXACT-ORTHOLANCE-MIXTURE-CLUB-1.0.10.md",
+      "EXACT-QUARRY-RADIANT-FOOD-1.0.10.md",
+      "EXACT-RADIOACTIVE-ITEMS-1.0.10.md",
+      "EXACT-LATE-CONCRETE-ITEMS-1.0.10.md",
+      "EXACT-TERMINAL-ITEM-HELPERS-1.0.10.md",
+      "EXACT-LATE-ITEM-RECONCILIATION-1.0.10.md",
+      "EXACT-FOOD-IDENTITY-KEYBIND-CLOSURE-1.0.10.md",
+      "EXACT-KEYBIND-USING-ARMOR-CONTRACT-1.0.10.json",
+      "EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md",
+      "EXACT-RADIOACTIVE-ITEM-CERTIFICATION-1.0.10.json"
+    ],
+    "historical_checkpoint_note": "Keybind #1235 merged; four individual passive radiation certificates candidate #1238, no new cards or roots. Final CI and merge required."
+  },
+  "item_class_reconciliation_checkpoint": {
+    "scope": "ALL_81_OBSERVED_ITEM_OUTER_CLASSES_WITH_DOCUMENTED_DISPOSITION_NOT_CERTIFICATION",
+    "base_main": "f3f48196a0853fe51cefd0dd5ba462b354773dc2",
+    "physical_item_outer_classes": 81,
+    "historical_disposition_prefix_classes": 37,
+    "additional_existing_classes_mapped": 7,
+    "additional_existing_cards_mapped": 14,
+    "additional_existing_cards_certified": 14,
+    "observed_classes_with_existing_dispositions_or_mapped_cards": 44,
+    "next_three_partial_classes": [
+      "server/item/JellyBeanItem",
+      "server/item/KeybindUsingArmor",
+      "server/item/LimestoneSpearItem"
+    ],
+    "remaining_after_next_three": 34,
+    "whole_provider_catalog_closed": false,
+    "evidence": [
+      "EXACT-ITEM-OUTER-CLASS-RECONCILIATION-1.0.10.md",
+      "EXACT-JELLY-KEYBIND-LIMESTONE-1.0.10.md",
+      "EXACT-MARINE-FISH-MOTH-1.0.10.md",
+      "EXACT-ORTHOLANCE-MIXTURE-CLUB-1.0.10.md",
+      "EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+      "EXACT-QUARRY-RADIANT-FOOD-1.0.10.md",
+      "EXACT-RADIOACTIVE-ITEMS-1.0.10.md",
+      "EXACT-LATE-ITEM-RECONCILIATION-1.0.10.md",
+      "EXACT-LATE-CONCRETE-ITEMS-1.0.10.md",
+      "EXACT-TERMINAL-ITEM-HELPERS-1.0.10.md"
+    ],
+    "limits": "81/81 physical outer item classes have a mapped, partial, support, or historical documented disposition; not all are individually certified, not all downstream objects/families surveyed, no semantic provider closure.",
+    "magic_conch_reconciled": true,
+    "new_discovery_classes": [
+      "server/item/MarineSnowItem",
+      "server/item/ModFishBucketItem",
+      "server/item/MothDustItem"
+    ],
+    "remaining_after_new_discovery": 30,
+    "occult_gem_reconciled": true,
+    "latest_discovery_classes": [
+      "server/item/OrtholanceItem",
+      "server/item/PrehistoricMixtureItem",
+      "server/item/PrimitiveClubItem"
+    ],
+    "remaining_after_latest_discovery": 26,
+    "primordial_armor_reconciled": true,
+    "fourth_discovery_classes": [
+      "server/item/QuarrySmasherItem",
+      "server/item/RadiantEssenceItem",
+      "server/item/RadiationRemovingFoodItem"
+    ],
+    "remaining_after_fourth_discovery": 22,
+    "fifth_discovery_classes": [
+      "server/item/RadioactiveBlockItem",
+      "server/item/RadioactiveItem",
+      "server/item/RadioactiveOnDestroyedBlockItem"
+    ],
+    "radioactive_direct_item_mapped": true,
+    "radioactive_block_classes_pending_id_binding": 0,
+    "remaining_without_mapped_or_closed_disposition": 0,
+    "radioactive_block_ids": [
+      "radrock_uranium_ore",
+      "waste_drum",
+      "block_of_uranium",
+      "unrefined_waste"
+    ],
+    "late_existing_class_reconciliation": [
+      "RainbounceBootsItem",
+      "RaygunItem",
+      "RemoteDetonatorItem",
+      "ResistorShieldItem",
+      "SeaStaffItem",
+      "ShotGumItem",
+      "SugarStaffItem",
+      "TotemOfPossessionItem"
+    ],
+    "late_discovery_class_reconciliation": [
+      "SackOfSatingItem",
+      "SeekingArrowItem",
+      "SharpenedCandyCaneItem",
+      "SodaBottleRocketItem",
+      "SubmarineItem",
+      "SweetishFishBucketItem",
+      "tooltip/SackOfSatingTooltip",
+      "SpearItem",
+      "ThrownProjectileItem",
+      "UpdatesStackTags",
+      "dispenser/FluidContainerDispenseItemBehavior"
+    ],
+    "outer_classes_with_documented_disposition": 81
   }
 }

@@ -1,0 +1,320 @@
+{
+  "limits": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "effects_accepted_in_world": "NOT_VERIFIED",
+    "installed_dump_comparison": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "new_spell_roots": 0,
+    "other_radiation_sources_complete": false,
+    "perk_certification": "NOT_CERTIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "runtime_dispatch": "NOT_VERIFIED",
+    "status": "CERTIFIED_STATIC_7_AXES",
+    "transformed_engine": "NOT_VERIFIED"
+  },
+  "objects": {
+    "hazmat_boots": {
+      "acid_gate": "acidHeight>0.1D, !RESISTS_ACID, random < f before acid damage branch; other armor break path separate",
+      "armor_defense_by_material": 2,
+      "armor_texture": "alexscaves:textures/armor/hazmat_suit_0.png",
+      "axes": [
+        "identity",
+        "behavior",
+        "parameters",
+        "targeting",
+        "costs",
+        "integration",
+        "validation"
+      ],
+      "configured_max_durability": 220,
+      "contribution_to_hazmat_count": 1,
+      "enchantability": 25,
+      "enum_constant": "BOOTS",
+      "enum_ordinal": 3,
+      "environmental_factor_formula": "f=1.0F-(float)piece_count/4.0F",
+      "equipment_slot": "FEET",
+      "factory_instruction_sha256": "98b47d50d57b5b2b450ebc9122290d7c64e83e4a10c1ed68d697aa385bc2afe5",
+      "factory_method": "lambda$static$72",
+      "get_worn_amount_iinc_offset": 107,
+      "irradiated_gate": "random < f+0.1F; hurt requested with amount f, zero when four pieces",
+      "item_card": "items/hazmat-boots.md",
+      "knockback_resistance": 0,
+      "model_sha256": "9f2c5eadcf0340c9327f06c06dd7c6cb45e67c2bb445eb65c59932eb309ac86c",
+      "radioactive_item_gate": "stackCount*randomChanceOfRadiation*f, no already Irradiated, noncreative, server, random < threshold",
+      "recipe_sha256": "93b8a29fdb4b68bcfa0fe20007b7b50146dd52b3c3752dd85f8c7295b4b46465",
+      "repair_material": "alexscaves:polymer_plate",
+      "resource_id": "alexscaves:hazmat_boots",
+      "toughness": 0.5
+    },
+    "hazmat_chestplate": {
+      "acid_gate": "acidHeight>0.1D, !RESISTS_ACID, random < f before acid damage branch; other armor break path separate",
+      "armor_defense_by_material": 4,
+      "armor_texture": "alexscaves:textures/armor/hazmat_suit_0.png",
+      "axes": [
+        "identity",
+        "behavior",
+        "parameters",
+        "targeting",
+        "costs",
+        "integration",
+        "validation"
+      ],
+      "configured_max_durability": 300,
+      "contribution_to_hazmat_count": 1,
+      "enchantability": 25,
+      "enum_constant": "CHESTPLATE",
+      "enum_ordinal": 1,
+      "environmental_factor_formula": "f=1.0F-(float)piece_count/4.0F",
+      "equipment_slot": "CHEST",
+      "factory_instruction_sha256": "73fd8eba0162e856b3f5a7cafe5740a6a056f4ca2043913f0cc16d019ff18c79",
+      "factory_method": "lambda$static$70",
+      "get_worn_amount_iinc_offset": 53,
+      "irradiated_gate": "random < f+0.1F; hurt requested with amount f, zero when four pieces",
+      "item_card": "items/hazmat-chestplate.md",
+      "knockback_resistance": 0,
+      "model_sha256": "e703ac1930ec6d4bb9f73c9f20a022a216313fc5ce0913ec7b1d976357fa3102",
+      "radioactive_item_gate": "stackCount*randomChanceOfRadiation*f, no already Irradiated, noncreative, server, random < threshold",
+      "recipe_sha256": "3d0e4f28afdf152dba0979e294eb615a117df9b01005c614c15545f8a93b2f00",
+      "repair_material": "alexscaves:polymer_plate",
+      "resource_id": "alexscaves:hazmat_chestplate",
+      "toughness": 0.5
+    },
+    "hazmat_leggings": {
+      "acid_gate": "acidHeight>0.1D, !RESISTS_ACID, random < f before acid damage branch; other armor break path separate",
+      "armor_defense_by_material": 5,
+      "armor_texture": "alexscaves:textures/armor/hazmat_suit_1.png",
+      "axes": [
+        "identity",
+        "behavior",
+        "parameters",
+        "targeting",
+        "costs",
+        "integration",
+        "validation"
+      ],
+      "configured_max_durability": 320,
+      "contribution_to_hazmat_count": 1,
+      "enchantability": 25,
+      "enum_constant": "LEGGINGS",
+      "enum_ordinal": 2,
+      "environmental_factor_formula": "f=1.0F-(float)piece_count/4.0F",
+      "equipment_slot": "LEGS",
+      "factory_instruction_sha256": "d6256c917856f0d5e3bd19d46a242d3c34f3e7f7b51663e5bc62d68232c989d1",
+      "factory_method": "lambda$static$71",
+      "get_worn_amount_iinc_offset": 80,
+      "irradiated_gate": "random < f+0.1F; hurt requested with amount f, zero when four pieces",
+      "item_card": "items/hazmat-leggings.md",
+      "knockback_resistance": 0,
+      "model_sha256": "4ef6146199a14fbfbb31a4eae5dcf84545f58b59aadaa09037bca9f01ecb97a6",
+      "radioactive_item_gate": "stackCount*randomChanceOfRadiation*f, no already Irradiated, noncreative, server, random < threshold",
+      "recipe_sha256": "f6ea570fdf26f0bec19e38f155a7c1c748e2c9fd88e0bcf43fe047cbc204dcbc",
+      "repair_material": "alexscaves:polymer_plate",
+      "resource_id": "alexscaves:hazmat_leggings",
+      "toughness": 0.5
+    },
+    "hazmat_mask": {
+      "acid_gate": "acidHeight>0.1D, !RESISTS_ACID, random < f before acid damage branch; other armor break path separate",
+      "armor_defense_by_material": 2,
+      "armor_texture": "alexscaves:textures/armor/hazmat_suit_0.png",
+      "axes": [
+        "identity",
+        "behavior",
+        "parameters",
+        "targeting",
+        "costs",
+        "integration",
+        "validation"
+      ],
+      "configured_max_durability": 260,
+      "contribution_to_hazmat_count": 1,
+      "enchantability": 25,
+      "enum_constant": "HELMET",
+      "enum_ordinal": 0,
+      "environmental_factor_formula": "f=1.0F-(float)piece_count/4.0F",
+      "equipment_slot": "HEAD",
+      "factory_instruction_sha256": "8b2496fa8059bd6ed4971392cd637fd39e45eba140e0b55dc211e6462ab740c5",
+      "factory_method": "lambda$static$69",
+      "get_worn_amount_iinc_offset": 26,
+      "irradiated_gate": "random < f+0.1F; hurt requested with amount f, zero when four pieces",
+      "item_card": "items/hazmat-mask.md",
+      "knockback_resistance": 0,
+      "model_sha256": "8586f9dd6924426baf6a2f1240e684caa3e6925379da6e238e2e997a41adaa8d",
+      "radioactive_item_gate": "stackCount*randomChanceOfRadiation*f, no already Irradiated, noncreative, server, random < threshold",
+      "recipe_sha256": "a073a62a962e49be797c8c189d5b8693697610792c09df059bf93b74377e40f2",
+      "repair_material": "alexscaves:polymer_plate",
+      "resource_id": "alexscaves:hazmat_mask",
+      "toughness": 0.5
+    }
+  },
+  "schema_version": 1,
+  "scope": "ALEXSCAVES_1010_HAZMAT_FOUR_INDIVIDUAL_STATIC_CONTRACTS",
+  "shared_contract": {
+    "acid_block_min_height_strict": 0.1,
+    "acid_extra_weak_to_acid": 10,
+    "acid_other_armor_damage_probability": 0.05,
+    "armor_material_defense_indexed": [
+      2,
+      4,
+      5,
+      2
+    ],
+    "armor_material_durability_indexed": [
+      260,
+      300,
+      320,
+      220
+    ],
+    "count_min_max": [
+      0,
+      4
+    ],
+    "counting_slots": [
+      "HEAD",
+      "CHEST",
+      "LEGS",
+      "FEET"
+    ],
+    "hazmat_armor_durability_not_debited_in_owner_methods": true,
+    "irradiated_damage_probability_offset": 0.1,
+    "irradiated_exhaustion_on_no_piece": 0.4,
+    "no_independent_cast_projectile_world_mutation": true,
+    "owner": "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem",
+    "owner_methods": {
+      "<init>": {
+        "count": 12,
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+        "sha256": "1c59bef51bc767350a0f79f732eac8355d4c7b6c50b864e6b32197f3a1efabf2"
+      },
+      "acArmorTick": {
+        "count": 158,
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;)V",
+        "sha256": "22ce403cc27b77fdb9bfd3402b4afca95eb648290b199f789b9246da65ddd681"
+      },
+      "acInventoryTick": {
+        "count": 16,
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+        "sha256": "ff0bae8a454ba4b5d2f7c0b48a721c45b59e1fc148e9d8f1189b36adf283b0b1"
+      },
+      "getArmorTexture": {
+        "count": 7,
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/lang/String;)Ljava/lang/String;",
+        "sha256": "ab8baef0e1005980872d21af13f7663eadcded42438f6e246db866f4b772aa81"
+      },
+      "getWornAmount": {
+        "count": 40,
+        "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)I",
+        "sha256": "d546af06a43f1aa99eee96014438b2679d3dda44b33dffdd7b73aacbc7400c69"
+      },
+      "initializeClient": {
+        "count": 6,
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "sha256": "241b312ebd6ff1e8ab0719a7fcbfd71c956258d303ba94e3a602770053402fa8"
+      }
+    },
+    "radiation_status_duration_ticks_requested": 1800,
+    "typed_consumers": {
+      "com/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties": {
+        "methods": {
+          "getACArmorModelBase": {
+            "count": 41,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;",
+            "sha256": "869cf27339be87b5b132d627ad041fe1781ae4a6f64b4923cd9616871a4c4886"
+          }
+        },
+        "sites": 1
+      },
+      "com/github/alexmodguy/alexscaves/server/block/AcidBlock": {
+        "methods": {
+          "entityInside": {
+            "count": 174,
+            "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)V",
+            "sha256": "cf7110a18f48f7c9c791fb3229b861bbd67eb18c4a2fade3ede48a9d05ae3a8d"
+          }
+        },
+        "sites": 2
+      },
+      "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": {
+        "methods": {
+          "lambda$static$69": {
+            "count": 6,
+            "descriptor": "()Lnet/minecraft/world/item/Item;",
+            "sha256": "8b2496fa8059bd6ed4971392cd637fd39e45eba140e0b55dc211e6462ab740c5"
+          },
+          "lambda$static$70": {
+            "count": 6,
+            "descriptor": "()Lnet/minecraft/world/item/Item;",
+            "sha256": "73fd8eba0162e856b3f5a7cafe5740a6a056f4ca2043913f0cc16d019ff18c79"
+          },
+          "lambda$static$71": {
+            "count": 6,
+            "descriptor": "()Lnet/minecraft/world/item/Item;",
+            "sha256": "d6256c917856f0d5e3bd19d46a242d3c34f3e7f7b51663e5bc62d68232c989d1"
+          },
+          "lambda$static$72": {
+            "count": 6,
+            "descriptor": "()Lnet/minecraft/world/item/Item;",
+            "sha256": "98b47d50d57b5b2b450ebc9122290d7c64e83e4a10c1ed68d697aa385bc2afe5"
+          }
+        },
+        "sites": 8
+      },
+      "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem": {
+        "methods": {
+          "acInventoryTick": {
+            "count": 16,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+            "sha256": "ff0bae8a454ba4b5d2f7c0b48a721c45b59e1fc148e9d8f1189b36adf283b0b1"
+          }
+        },
+        "sites": 1
+      },
+      "com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem": {
+        "methods": {
+          "acInventoryTick": {
+            "count": 73,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+            "sha256": "75543b1b405f2225b8ca073341059eeb818715f6043312f7d0802f9056f9639f"
+          }
+        },
+        "sites": 1
+      },
+      "com/github/alexmodguy/alexscaves/server/item/RadioactiveItem": {
+        "methods": {
+          "acInventoryTick": {
+            "count": 73,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+            "sha256": "75543b1b405f2225b8ca073341059eeb818715f6043312f7d0802f9056f9639f"
+          }
+        },
+        "sites": 1
+      },
+      "com/github/alexmodguy/alexscaves/server/potion/IrradiatedEffect": {
+        "methods": {
+          "tick": {
+            "count": 42,
+            "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+            "sha256": "16d7936ed5ad148727bc46083451f5329beea0545a46b6d2306c695bc585aed7"
+          }
+        },
+        "sites": 1
+      }
+    }
+  },
+  "sources": {
+    "discovery_seal": "EXACT-HAZMAT-ARMOR-DISCOVERY-1.0.10.json",
+    "material_seal": "EXACT-ARMOR-MATERIAL-1.0.10.json",
+    "minecraft_version": "1.21.1",
+    "native_class_sha256": "289395b93a1a223f2e66a02528ccb4ce3a1a659dd9c82ac071a5b63c32b1c7cb",
+    "official_client_sha256": "499f6897d1837516680f3114072d8106e11c9adcd933fe5cf051b551089b0c99",
+    "official_enum_class_sha256": "304d6345c9ed3d0cdeaea281ed1171b98505b266c04e2b25a023dec665197732",
+    "official_mappings_sha256": "140c47931cccc8fc9e4c22d7603e2d714d1a953a146f51ea7397d95c955536ec",
+    "official_report_sha256": "e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91",
+    "official_version_sha1": "ff7ef54488da4a711f3c8a781a9f79105bbe801a",
+    "publisher_report_sha256": "3ef6aeeeb37e0768e206b0777d7193a5ac55a0732ff06d568573c3edf923a033",
+    "publisher_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "publisher_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "publisher_version": "1.0.10"
+  }
+}

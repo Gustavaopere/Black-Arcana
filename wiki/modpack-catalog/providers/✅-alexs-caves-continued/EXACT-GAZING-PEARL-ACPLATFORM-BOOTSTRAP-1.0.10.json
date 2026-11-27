@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "scope": "GAZING_PEARL_ACPLATFORM_INVOKEDYNAMIC_BOOTSTRAP_ONLY",
+  "artifact": {
+    "filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "installed_copy_verified": false
+  },
+  "evidence": {
+    "run_id": 45013296440,
+    "artifact_id": 14750956691,
+    "report_bytes": 6664,
+    "report_sha256": "5c78b78eba2c51073ff606d8f7b5389b2a5dbfc895877109284a7a2dd9ddca16"
+  },
+  "native": {
+    "owner": "com/github/alexmodguy/alexscaves/server/misc/ACPlatform",
+    "class_sha256": "662a4d2593fe515ed8790bad06d8184d1eb921423033dfd11b3b44142dedc3e6",
+    "bootstrap_count": 3,
+    "bootstrap_table_sha256": "39f12f4b2cc048839381d6964b36bbea75c183cc80e9e86b9dc29c984bfee75f",
+    "bootstrap_index": 0,
+    "constant_pool_index": 136,
+    "invokedynamic_name": "apply",
+    "invokedynamic_descriptor": "(Ljava/util/function/Function;)Ljava/util/function/BiFunction;",
+    "bootstrap_entry": {
+      "arguments": [
+        "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",
+        {
+          "reference": [
+            10,
+            "com/github/alexmodguy/alexscaves/server/misc/ACPlatform",
+            [
+              12,
+              "lambda$computeIfAbsent$1",
+              "(Ljava/util/function/Function;Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/world/level/saveddata/SavedData;"
+            ]
+          ],
+          "reference_kind": 6
+        },
+        "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/world/level/saveddata/SavedData;"
+      ],
+      "handle": {
+        "reference": [
+          10,
+          "java/lang/invoke/LambdaMetafactory",
+          [
+            12,
+            "metafactory",
+            "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;"
+          ]
+        ],
+        "reference_kind": 6
+      }
+    },
+    "methods": [
+      {
+        "name": "computeIfAbsent",
+        "descriptor": "(Lnet/minecraft/world/level/storage/DimensionDataStorage;Ljava/util/function/Function;Ljava/util/function/Function;Ljava/util/function/Supplier;Ljava/lang/String;)Lnet/minecraft/world/level/saveddata/SavedData;",
+        "instruction_count": 11,
+        "instruction_sha256": "625899b736db7a61455db4301becd6996444ea6f58c897da47084cb7a44a3903",
+        "code_sha256": "66492d422ecbe213c0fc8b337f300693b25341c69690610806b86b906c4e78b3"
+      },
+      {
+        "name": "lambda$computeIfAbsent$1",
+        "descriptor": "(Ljava/util/function/Function;Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/world/level/saveddata/SavedData;",
+        "instruction_count": 5,
+        "instruction_sha256": "664d874cd05f359896963334f4c5b3cf81137b1723d2aa4e500aa717979df553",
+        "code_sha256": "5cbb0594bcb4ff83d01c6b409af2de04871b173a69c6ec087c18f4e6f44af60e"
+      }
+    ]
+  },
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  }
+}

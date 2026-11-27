@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Replay the bounded Archmage Shard contract without running provider classes."""
+"""Replay the bounded Alshanex shard ritual contracts without running provider classes."""
 from __future__ import annotations
 
 import argparse
@@ -20,7 +20,21 @@ LIBRARY = (341186, '7fa3f3116e35c12456425ae195924ced33fcc2eb',
            'bf53bc48bb220c268b2db3619c68d75dba15e140bbd2d3799dd85b9299a0e5a9')
 BASE = 'net/alshanex/alshanex_familiars/'
 RUNE = 'net/alshanex/familiarslib/item/AbstractRuneItem'
-RESOURCE = PREFIX + 'archmage_shard.json'
+DRUID_SEAL = SEAL.with_name('EXACT-4.0.3-DRUID-RITUAL.json')
+DRUID = 'item/shards/DruidShard'
+ITEM_REGISTRY = 'registry/ItemRegistry'
+RECIPES = {
+    'archmage_shard': (
+        'minecraft:end_rod',
+        (('irons_spellbooks:legendary_ink', True), ('irons_spellbooks:arcane_essence', True),
+         ('irons_spellbooks:arcane_rune', True), ('irons_spellbooks:magic_cloth', True)),
+    ),
+    'druid_shard': (
+        'minecraft:composter',
+        (('irons_spellbooks:greater_oakskin_elixir', True), ('irons_spellbooks:arcane_essence', True),
+         ('irons_spellbooks:nature_rune', True), ('minecraft:spore_blossom', False)),
+    ),
+}
 CORE = 'block/entity/RitualCorePedestalEntity'
 HELPER = 'util/rituals/RitualHelper'
 AUTOMATOR = 'block/entity/RitualAutomatorBlockEntity'
@@ -44,7 +58,7 @@ METHODS = {
                 'processFlyingItems', 'completeFlight', 'returnToStorageOrDrop', 'saveAdditional',
                 'loadAdditional', 'lambda$tick$0'},
     'util/rituals/FlyingItem': {'<init>', 'tick', 'hasArrived', 'save', 'load'},
-    'registry/ItemRegistry': {'<clinit>', 'lambda$static$1'},
+    ITEM_REGISTRY: {'<clinit>', 'lambda$static$1'},
     'registry/RecipeRegistry': {'<clinit>'},
     SHARD: {'<init>', 'spawnFamiliar'},
 }
@@ -77,8 +91,25 @@ PROVIDER_PIVOTS = {
         'completeFlight': [(12, 'returnToStorageOrDrop:'), (62, 'FamiliarStatueEntity.setHeldItem:'),
                            (100, 'RitualCorePedestalEntity.setHeldItem:')],
     },
-    SHARD: {'spawnFamiliar': [(4, 'EntityRegistry.ARCHMAGE_PET:'), (56, 'Level.addFreshEntity:'),
-                              (59, 'pop')]},
+    ITEM_REGISTRY: {'<clinit>': [(670, 'String archmage_shard'), (673, 'InvokeDynamic #37:get:'),
+                               (678, 'DeferredRegister.register:'), (681, 'Field ARCHMAGE_RUNE:')]},
+    SHARD: {'spawnFamiliar': [(4, 'EntityRegistry.ARCHMAGE_PET:'), (46, 'Player.getYRot:'),
+                              (49, 'fneg'), (50, 'ArchmagePetEntity.setYRot:'),
+                              (56, 'Level.addFreshEntity:'), (59, 'pop')]},
+}
+DRUID_PIVOTS = {
+    HELPER: {'clearItemsFromPedestals': [(143, 'RitualIngredient.consume:'),
+                                        (146, 'ifne 152'), (149, 'goto 119'),
+                                        (228, 'FamiliarStatueEntity.setHeldItem:')]},
+    AUTOMATOR: {'performCleanup': [(214, 'Ingredient.test:'), (231, 'ifne 267')],
+                'performSupply': [(152, 'removeNeed:'), (207, 'removeNeed:')],
+                'removeNeed': [(30, 'Ingredient.test:'), (38, 'List.remove:')]},
+    ITEM_REGISTRY: {'<clinit>': [(687, 'String druid_shard'), (690, 'InvokeDynamic #38:get:'),
+                               (695, 'DeferredRegister.register:'), (698, 'Field DRUID_RUNE:')]},
+    DRUID: {'spawnFamiliar': [(4, 'EntityRegistry.DRUID_PET:'), (21, 'iconst_0'),
+                             (25, 'DruidPetEntity.setIsImpostor:'), (31, 'BlockPos.getCenter:'),
+                             (35, 'dconst_1'), (46, 'Player.getYRot:'), (49, 'fneg'),
+                             (50, 'DruidPetEntity.setYRot:'), (56, 'Level.addFreshEntity:'), (59, 'pop')]},
 }
 LIBRARY_PIVOTS = {'useOn': [(24, 'iconst_1'), (25, 'ItemStack.shrink:'), (33, 'spawnFamiliar:'),
                             (52, 'triggerShardAdvancement:'), (55, 'InteractionResult.SUCCESS:')]}
@@ -93,27 +124,28 @@ def verify_artifact(path, expected):
     return {'bytes': size, 'sha1': sha1, 'sha256': sha256}
 
 
-def inspect_recipe(archive):
-    raw = archive.read(RESOURCE)
+def inspect_recipe(archive, ritual='archmage_shard'):
+    resource = PREFIX + ritual + '.json'
+    raw = archive.read(resource)
     recipe = json.loads(raw, object_pairs_hook=unique_pairs)
-    inputs = ['irons_spellbooks:' + item for item in ('legendary_ink', 'arcane_essence', 'arcane_rune', 'magic_cloth')]
+    particle, inputs = RECIPES[ritual]
     center = 'alshanex_familiars:pet_soul'
-    result = 'alshanex_familiars:archmage_shard'
-    particle = 'minecraft:end_rod'
+    result = 'alshanex_familiars:' + ritual
     require(set(recipe) == {'type', 'central_item', 'inputs', 'result', 'particle_type'}, 'recipe fields drift')
     require(recipe['type'] == RITUAL_TYPE and recipe['central_item'] == {'item': center},
             'recipe type or center drift')
     require(recipe['result'] == {'id': result} and recipe['particle_type'] == particle,
             'recipe output or particle drift')
     require(len(recipe['inputs']) == len(inputs), 'peripheral roster drift')
-    for actual, item in zip(recipe['inputs'], inputs, strict=True):
+    for actual, (item, consume) in zip(recipe['inputs'], inputs, strict=True):
         require(set(actual) == {'ingredient', 'count', 'consume'}
                 and actual['ingredient'] == {'item': item}
-                and type(actual['count']) is int and actual['count'] == 1 and actual['consume'] is True,
+                and type(actual['count']) is int and actual['count'] == 1 and actual['consume'] is consume,
                 'peripheral ingredient drift: ' + item)
-    return {'resource': RESOURCE, 'resource_sha256': digest(raw), 'type': RITUAL_TYPE,
-            'recipe_id': 'alshanex_familiars:ritual_recipes/archmage_shard',
-            'central_item': center, 'peripheral_items': inputs, 'each_count': 1, 'each_consumed': True,
+    return {'resource': resource, 'resource_sha256': digest(raw), 'type': RITUAL_TYPE,
+            'recipe_id': 'alshanex_familiars:ritual_recipes/' + ritual,
+            'central_item': center,
+            'peripheral_inputs': [{'item': item, 'count': 1, 'consume': consume} for item, consume in inputs],
             'result_item': result, 'result_count_explicit': False, 'result_components_explicit': False,
             'particle': particle}
 
@@ -145,12 +177,21 @@ def inspect_class(archive, jar, javap, owner, names, pivots):
     return {'class_sha256': digest(raw), 'superclass': reader.parent, 'methods': selected}
 
 
+def item_factory(archive, bootstrap_index, shard):
+    reader = ClassReader(archive.read(BASE + ITEM_REGISTRY + '.class'))
+    arguments = reader.attributes['bootstrap_methods'][bootstrap_index]['arguments']
+    expected = {'reference_kind': 8, 'reference': [10, BASE + shard, [12, '<init>', '()V']]}
+    require(expected in arguments, 'shard item factory drift: ' + shard)
+    return {'bootstrap_index': bootstrap_index, 'constructor_owner': BASE + shard, 'descriptor': '()V'}
+
+
 def audit(jar, library, javap):
     publisher = verify_artifact(jar, PROVIDER)
     dependency = verify_artifact(library, LIBRARY)
     with zipfile.ZipFile(jar) as archive:
         require(len(archive.namelist()) == len(set(archive.namelist())), 'duplicate publisher ZIP path')
         recipe = inspect_recipe(archive)
+        factory = item_factory(archive, 37, SHARD)
         classes = {BASE + name: inspect_class(archive, jar, javap, BASE + name, names, PROVIDER_PIVOTS.get(name, {}))
                    for name, names in METHODS.items()}
     with zipfile.ZipFile(library) as archive:
@@ -159,7 +200,26 @@ def audit(jar, library, javap):
     require(classes[BASE + SHARD]['superclass'] == RUNE, 'familiar shard superclass drift')
     return {'schema_version': 1, 'publisher_version': '4.0.3', 'publisher_artifact': publisher,
             'familiarslib_version': '1.7.1', 'familiarslib_artifact': dependency, 'recipe': recipe,
+            'item_factory': factory,
             'provider_classes': classes, 'post_craft_library_class': {RUNE: downstream},
+            'claim_scope': 'STATIC_TECHNICAL_CATALOG_ONLY', 'mutating_hook': 'NOT_VERIFIED',
+            'physical_qa': 'NOT_TESTED', 'perk_certification': 'NOT_CERTIFIED',
+            'mutation': 'NO_MUTATION', 'provider_universe_closed': False}
+
+
+def audit_druid(jar, library, javap):
+    shared = canonical(audit(jar, library, javap))
+    require(shared == SEAL.read_text(encoding='utf-8'), 'shared Archmage Shard seal drift')
+    with zipfile.ZipFile(jar) as archive:
+        recipe = inspect_recipe(archive, 'druid_shard')
+        factory = item_factory(archive, 38, DRUID)
+        classes = {BASE + name: inspect_class(
+            archive, jar, javap, BASE + name, set(pivots), pivots,
+        ) for name, pivots in DRUID_PIVOTS.items()}
+    require(classes[BASE + DRUID]['superclass'] == RUNE, 'Druid Shard superclass drift')
+    return {'schema_version': 1, 'publisher_version': '4.0.3',
+            'shared_ritual_seal': SEAL.name, 'shared_ritual_seal_sha256': digest(shared.encode('utf-8')),
+            'recipe': recipe, 'item_factory': factory, 'provider_classes': classes,
             'claim_scope': 'STATIC_TECHNICAL_CATALOG_ONLY', 'mutating_hook': 'NOT_VERIFIED',
             'physical_qa': 'NOT_TESTED', 'perk_certification': 'NOT_CERTIFIED',
             'mutation': 'NO_MUTATION', 'provider_universe_closed': False}
@@ -170,16 +230,18 @@ def main():
     parser.add_argument('--jar', type=Path, required=True)
     parser.add_argument('--familiarslib', type=Path, required=True)
     parser.add_argument('--javap', default='javap')
+    parser.add_argument('--ritual', choices=tuple(RECIPES), default='archmage_shard')
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument('--verify', action='store_true')
     mode.add_argument('--output', type=Path)
     args = parser.parse_args()
-    actual = canonical(audit(args.jar, args.familiarslib, args.javap))
+    inspect, seal = (audit_druid, DRUID_SEAL) if args.ritual == 'druid_shard' else (audit, SEAL)
+    actual = canonical(inspect(args.jar, args.familiarslib, args.javap))
     if args.verify:
-        require(actual == SEAL.read_text(encoding='utf-8'), 'Archmage Shard seal drift')
+        require(actual == seal.read_text(encoding='utf-8'), args.ritual + ' seal drift')
     else:
         args.output.write_text(actual, encoding='utf-8')
-    print('PASS: Alshanex 4.0.3 Archmage Shard manual and automated ritual contract')
+    print(f'PASS: Alshanex 4.0.3 {args.ritual} manual and automated ritual contract')
 
 
 if __name__ == '__main__':

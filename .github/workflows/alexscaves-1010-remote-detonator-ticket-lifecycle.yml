@@ -1,0 +1,51 @@
+name: Alex's Caves 1.0.10 Remote Detonator ticket lifecycle discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-remote-detonator-ticket-lifecycle.yml'
+      - 'docs/qa/alexscaves_1010_remote_detonator_ticket_lifecycle_probe.py'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
+      - 'docs/qa/alexscaves_1010_action_contract_audit.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-REMOTE-DETONATOR-TICKET-LIFECYCLE-1.0.10.*'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ticket_lifecycle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Validate scanner syntax and typed filter
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_remote_detonator_ticket_lifecycle_probe.py
+          python3 docs/qa/alexscaves_1010_remote_detonator_ticket_lifecycle_probe.py --self-test
+      - name: Fetch pinned publisher JAR
+        run: |
+          mkdir -p build/remote-ticket-1010
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/remote-ticket-1010/publisher.jar
+      - name: Enumerate typed controller fields and direct callsites
+        run: |
+          python3 docs/qa/alexscaves_1010_remote_detonator_ticket_lifecycle_probe.py \
+            --jar build/remote-ticket-1010/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/remote-ticket-1010/report.json
+          report=build/remote-ticket-1010/report.json
+          test "$(stat -c %s "$report")" -eq 46004
+          test "$(sha256sum "$report" | cut -d' ' -f1)" = '3c4b8a9c3f66e05e815eb524b3d00aa43534002bfa034b2d5aaa585088baba9c'
+      - name: Archive read-only evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-remote-ticket-lifecycle
+          path: build/remote-ticket-1010/report.json
+          if-no-files-found: warn
+          retention-days: 14

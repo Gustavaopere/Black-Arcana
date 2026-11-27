@@ -1,0 +1,70 @@
+name: Alex's Caves 1.0.10 Galena magnetic weapon return/drop JVM causal audit
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-galena-return-drop-audit.yml'
+      - 'docs/qa/alexscaves_1010_galena_return_drop_probe.py'
+      - 'docs/qa/alexscaves_1010_galena_return_drop_checks.py'
+      - 'docs/qa/alexscaves_1010_galena_gauntlet_discovery.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  galena_return_drop_native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile bounded read-only discovery
+        run: python3 -m py_compile docs/qa/alexscaves_1010_galena_return_drop_probe.py
+      - name: Download verified publisher 1.0.10 JAR
+        run: |
+          mkdir -p build/galena-return-drop-1010
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/galena-return-drop-1010/publisher.jar
+          test "$(sha256sum build/galena-return-drop-1010/publisher.jar | cut -d ' ' -f1)" = \
+            '36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c'
+          test "$(wc -c < build/galena-return-drop-1010/publisher.jar)" -eq 75279314
+      - name: Reconstruct exact Galena caller report
+        run: |
+          python3 docs/qa/alexscaves_1010_galena_gauntlet_discovery.py \
+            --jar build/galena-return-drop-1010/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/galena-return-drop-1010/caller-report.json \
+            > build/galena-return-drop-1010/caller-discovery.log
+          test "$(sha256sum build/galena-return-drop-1010/caller-report.json | cut -d ' ' -f1)" = \
+            'c91a48f9892be09c4ab951c8083703b0c5ffbb026fc43e7d808c2033dde8bba9'
+      - name: Audit return/drop callers and ACCompat spawnAtLocation helper
+        run: |
+          python3 docs/qa/alexscaves_1010_galena_return_drop_probe.py \
+            --jar build/galena-return-drop-1010/publisher.jar \
+            --caller-report build/galena-return-drop-1010/caller-report.json \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/galena-return-drop-1010/return-drop-report.json \
+            > build/galena-return-drop-1010/return-drop-discovery.log
+      - name: Verify exact return/drop nine-method JVM causal seal and adversarial changes
+        run: |
+          test "$(sha256sum build/galena-return-drop-1010/return-drop-report.json | cut -d ' ' -f1)" = \
+            '8cff541420b4bbca8820aa419ed73cf01478c4a881c7f6afa12e256f6a9ae916'
+          test "$(wc -c < build/galena-return-drop-1010/return-drop-report.json)" -eq 188299
+          python3 docs/qa/alexscaves_1010_galena_return_drop_checks.py \
+            --report build/galena-return-drop-1010/return-drop-report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-GAUNTLET-RETURN-DROP-1.0.10.json' \
+            --adversarial
+      - name: Preserve read-only publisher JVM evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-galena-return-drop-evidence
+          path: |
+            build/galena-return-drop-1010/return-drop-report.json
+            build/galena-return-drop-1010/return-drop-discovery.log
+          if-no-files-found: warn
+          retention-days: 14

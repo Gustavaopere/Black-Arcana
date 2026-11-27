@@ -1,0 +1,88 @@
+name: Alex's Caves Galena NeoForge 21.1.248 entity join causal patch discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-galena-neoforge-211248-join-flow.yml'
+      - 'docs/qa/alexscaves_1010_galena_neoforge_211248_join_flow_probe.py'
+      - 'docs/qa/alexscaves_1010_galena_neoforge_211248_join_flow_checks.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-JOIN-FLOW-21.1.248.*'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source_patch_flow:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Python syntax and pure synthetic invariants
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_neoforge_211248_join_flow_probe.py docs/qa/alexscaves_1010_galena_neoforge_211248_join_flow_checks.py
+          python3 docs/qa/alexscaves_1010_galena_neoforge_211248_join_flow_probe.py --selftest
+      - name: Fetch official SHA-exact NeoForge 21.1.248 userdev
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/galena-211248-join-flow
+          file='neoforge-21.1.248-userdev.jar'
+          base='https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248'
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 "$base/$file" -o "build/galena-211248-join-flow/$file"
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 60 "$base/$file.sha256" -o "build/galena-211248-join-flow/$file.sha256"
+          expected="$(head -c 64 "build/galena-211248-join-flow/$file.sha256")"
+          [[ "$expected" =~ ^[0-9a-fA-F]{64}$ ]]
+          actual="$(sha256sum "build/galena-211248-join-flow/$file" | cut -d' ' -f1)"
+          test "$actual" = "${expected,,}"
+          test "$actual" = '9278d08154a82927391ed5257481f56d6d0fcb147822c6a79ec9b5129799e79a'
+          test "$(stat -c %s "build/galena-211248-join-flow/$file")" -eq 3983248
+          echo "OFFICIAL_SHA256 $actual"
+          unzip -tq "build/galena-211248-join-flow/$file"
+      - name: Discover exact patch return/cancellation/notification order without Java bodies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/alexscaves_1010_galena_neoforge_211248_join_flow_probe.py \
+            --userdev build/galena-211248-join-flow/neoforge-21.1.248-userdev.jar \
+            --output build/galena-211248-join-flow/report.json \
+            | tee build/galena-211248-join-flow/probe.log
+      - name: Validate sealed exact report and reject adversarial variants
+        shell: bash
+        run: |
+          set -euo pipefail
+          report=build/galena-211248-join-flow/report.json
+          test "$(stat -c %s "$report")" -eq 8996
+          test "$(sha256sum "$report" | cut -d' ' -f1)" = \
+            '39605a4b034b7e43cc301111b4d7352aad67b5a1dd4cc78cefc6b9f8b31bcce7'
+          python3 docs/qa/alexscaves_1010_galena_neoforge_211248_join_flow_checks.py \
+            --report "$report" \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-JOIN-FLOW-21.1.248.json' \
+            --adversarial
+      - name: Fail-closed statuses, never infer runtime or a mutating hook
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('build/galena-211248-join-flow/report.json').read_text())
+          assert r["scope"]=="GALENA_1010_NEOFORGE_211248_ENTITY_JOIN_CAUSAL_PATCH_DISCOVERY_ONLY"
+          assert r["limits"]["static_contract"]=="NOT_CERTIFIED"
+          assert r["limits"]["mutation"]=="NO_MUTATION"
+          assert r["limits"]["mutating_hook"]=="NOT_VERIFIED"
+          assert r["limits"]["physical_qa"]=="NOT_TESTED"
+          assert r["limits"]["provider_universe_closed"] is False
+          assert r["limits"]["merged_patch_runtime_equivalence"] is False
+          assert r["limits"]["semantic_magic_roots_delta"]==0
+          PY
+      - name: Archive read-only abstract control-flow report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: galena-211248-join-flow-discovery
+          path: |
+            build/galena-211248-join-flow/report.json
+            build/galena-211248-join-flow/probe.log
+          if-no-files-found: warn
+          retention-days: 14

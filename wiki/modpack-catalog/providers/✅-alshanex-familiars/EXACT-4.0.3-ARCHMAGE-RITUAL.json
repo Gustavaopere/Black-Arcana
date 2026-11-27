@@ -6,6 +6,11 @@
     "sha256": "bf53bc48bb220c268b2db3619c68d75dba15e140bbd2d3799dd85b9299a0e5a9"
   },
   "familiarslib_version": "1.7.1",
+  "item_factory": {
+    "bootstrap_index": 37,
+    "constructor_owner": "net/alshanex/alshanex_familiars/item/shards/ArchmageShard",
+    "descriptor": "()V"
+  },
   "mutating_hook": "NOT_VERIFIED",
   "mutation": "NO_MUTATION",
   "perk_certification": "NOT_CERTIFIED",
@@ -785,6 +790,18 @@
               "offset": 4
             },
             {
+              "fact": "Player.getYRot:",
+              "offset": 46
+            },
+            {
+              "fact": "fneg",
+              "offset": 49
+            },
+            {
+              "fact": "ArchmagePetEntity.setYRot:",
+              "offset": 50
+            },
+            {
               "fact": "Level.addFreshEntity:",
               "offset": 56
             },
@@ -965,6 +982,24 @@
         },
         {
           "access": 8,
+          "anchors": [
+            {
+              "fact": "String archmage_shard",
+              "offset": 670
+            },
+            {
+              "fact": "InvokeDynamic #37:get:",
+              "offset": 673
+            },
+            {
+              "fact": "DeferredRegister.register:",
+              "offset": 678
+            },
+            {
+              "fact": "Field ARCHMAGE_RUNE:",
+              "offset": 681
+            }
+          ],
           "code_sha256": "b83168893c5ac8bc0adc7c6de471ad91ca00f0e4e1e21ee1b1e241bf688ace13",
           "code_size": 1293,
           "descriptor": "()V",
@@ -1242,14 +1277,28 @@
   "publisher_version": "4.0.3",
   "recipe": {
     "central_item": "alshanex_familiars:pet_soul",
-    "each_consumed": true,
-    "each_count": 1,
     "particle": "minecraft:end_rod",
-    "peripheral_items": [
-      "irons_spellbooks:legendary_ink",
-      "irons_spellbooks:arcane_essence",
-      "irons_spellbooks:arcane_rune",
-      "irons_spellbooks:magic_cloth"
+    "peripheral_inputs": [
+      {
+        "consume": true,
+        "count": 1,
+        "item": "irons_spellbooks:legendary_ink"
+      },
+      {
+        "consume": true,
+        "count": 1,
+        "item": "irons_spellbooks:arcane_essence"
+      },
+      {
+        "consume": true,
+        "count": 1,
+        "item": "irons_spellbooks:arcane_rune"
+      },
+      {
+        "consume": true,
+        "count": 1,
+        "item": "irons_spellbooks:magic_cloth"
+      }
     ],
     "recipe_id": "alshanex_familiars:ritual_recipes/archmage_shard",
     "resource": "data/alshanex_familiars/recipe/ritual_recipes/archmage_shard.json",

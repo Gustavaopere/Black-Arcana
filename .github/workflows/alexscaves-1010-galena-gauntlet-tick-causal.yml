@@ -1,0 +1,73 @@
+name: Alex's Caves 1.0.10 Galena Gauntlet player targeting exact causal audit
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-galena-gauntlet-tick-causal.yml'
+      - 'docs/qa/alexscaves_1010_galena_gauntlet_tick_checks.py'
+      - 'docs/qa/alexscaves_1010_galena_gauntlet_tick_negative.py'
+      - 'docs/qa/alexscaves_1010_galena_gauntlet_discovery.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-GAUNTLET-PLAYER-TARGETING-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-GAUNTLET-PLAYER-TARGETING-1.0.10.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact_galena_player_targeting_subcontract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile read-only publisher verifier and behavioral checks
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_gauntlet_discovery.py
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_gauntlet_tick_checks.py
+          python3 -m py_compile docs/qa/alexscaves_1010_galena_gauntlet_tick_negative.py
+      - name: Download and SHA-verify installed-version publisher jar
+        run: |
+          mkdir -p build/galena-tick-1010
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/galena-tick-1010/publisher.jar
+          test "$(sha256sum build/galena-tick-1010/publisher.jar | cut -d ' ' -f1)" = \
+            '36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c'
+          test "$(wc -c < build/galena-tick-1010/publisher.jar)" -eq 75279314
+          unzip -tq build/galena-tick-1010/publisher.jar
+      - name: Reproduce full bounded item and MagneticWeaponEntity JVM census
+        run: |
+          python3 docs/qa/alexscaves_1010_galena_gauntlet_discovery.py \
+            --jar build/galena-tick-1010/publisher.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/galena-tick-1010/report.json > build/galena-tick-1010/discovery.log
+          tail -n 15 build/galena-tick-1010/discovery.log
+      - name: Check original 41-method full-class seal
+        run: |
+          python3 docs/qa/alexscaves_1010_galena_gauntlet_static_checks.py \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-GAUNTLET-DISCOVERY-1.0.10.json' \
+            --report build/galena-tick-1010/report.json
+      - name: Check 68 JVM pivots and exact invokedynamic projectile-filter MethodHandle
+        run: |
+          test "$(sha256sum build/galena-tick-1010/report.json | cut -d ' ' -f1)" = \
+            'c91a48f9892be09c4ab951c8083703b0c5ffbb026fc43e7d808c2033dde8bba9'
+          python3 docs/qa/alexscaves_1010_galena_gauntlet_tick_checks.py \
+            --report build/galena-tick-1010/report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-GAUNTLET-PLAYER-TARGETING-1.0.10.json'
+      - name: Reject 15 re-sealed opcodes and one forged projectile predicate MethodHandle
+        run: |
+          python3 docs/qa/alexscaves_1010_galena_gauntlet_tick_negative.py \
+            --report build/galena-tick-1010/report.json \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GALENA-GAUNTLET-PLAYER-TARGETING-1.0.10.json' \
+            --checker docs/qa/alexscaves_1010_galena_gauntlet_tick_checks.py
+      - name: Preserve SHA-pinned compact report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-galena-player-targeting-causal-evidence
+          path: build/galena-tick-1010/report.json
+          if-no-files-found: ignore
+          retention-days: 14

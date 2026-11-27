@@ -53,7 +53,7 @@ jobs:
           python3 docs/qa/alshanex_403_exact_ritual_spell_abi.py \
             --jar build/alshanex-403/provider.jar \
             --output build/alshanex-403/evidence.json
-      - name: Replay the pinned Archmage Shard ritual contract
+      - name: Replay the pinned Archmage and Druid Shard ritual contracts
         shell: bash
         run: |
           set -euo pipefail
@@ -63,7 +63,7 @@ jobs:
             --output build/alshanex-403/familiarslib.jar
           python3 docs/qa/alshanex_403_archmage_ritual_contract.py \
             --jar build/alshanex-403/provider.jar \
-            --familiarslib build/alshanex-403/familiarslib.jar --verify
+            --familiarslib build/alshanex-403/familiarslib.jar --ritual druid_shard --verify
       - name: Publish metadata only; never upload third-party archive or disassembly
         if: always()
         uses: actions/upload-artifact@v7

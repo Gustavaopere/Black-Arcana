@@ -10293,6 +10293,135 @@
         }
       }
     },
+    "✅-alexs-caves-continued/items/ink-bomb.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HOLOCODER-HOT-CHOCOLATE-INK-BOMB-1.0.10.md",
+          "reason": "Individual exact factory boolean false, item model and class identity; shared entity and installed parity boundary."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-INK-BOMB-IMPACT-21.1.250.md",
+          "reason": "Native use, impact, direct LivingEntity and Submarine branch, status and cloud; distinct variant and deflection."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/ink-bomb.md",
+          "reason": "Exact nominal stack, launch speed/spread/rotation, geometry, effect durations/amplifier, cloud lifetime, timers, tracking suppliers."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-INK-BOMB-IMPACT-21.1.250.md",
+          "reason": "Native targeting, collision, branch filters, AABB, horizontal radius, deflection and owner boundaries."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/ink-bomb.md",
+          "reason": "One-unit request, instabuild guard, dispenser, variant-specific barter; no own mana, durability or cooldown."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/ink-bomb.md",
+          "reason": "Static actor and status boundaries, native NBT, stack replacement and AI distinction; no mutating hook or Mastery receipt."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-INK-BOMB-IMPACT-21.1.250.md",
+          "reason": "59 methods in 17 classes; deterministic 465320-byte report with exact SHA, prior seals linked; final branch replay and canonical index CI required."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/glow-ink-bomb.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HOLOCODER-HOT-CHOCOLATE-INK-BOMB-1.0.10.md",
+          "reason": "Individual exact factory boolean true, item model and class identity; shared entity and installed parity boundary."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-INK-BOMB-IMPACT-21.1.250.md",
+          "reason": "Native use, impact, direct LivingEntity and Submarine branch, status and cloud; distinct variant and deflection."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/glow-ink-bomb.md",
+          "reason": "Exact nominal stack, launch speed/spread/rotation, geometry, effect durations/amplifier, cloud lifetime, timers, tracking suppliers."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-INK-BOMB-IMPACT-21.1.250.md",
+          "reason": "Native targeting, collision, branch filters, AABB, horizontal radius, deflection and owner boundaries."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/glow-ink-bomb.md",
+          "reason": "One-unit request, instabuild guard, dispenser, variant-specific barter; no own mana, durability or cooldown."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/glow-ink-bomb.md",
+          "reason": "Static actor and status boundaries, native NBT, stack replacement and AI distinction; no mutating hook or Mastery receipt."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-INK-BOMB-IMPACT-21.1.250.md",
+          "reason": "59 methods in 17 classes; deterministic 465320-byte report with exact SHA, prior seals linked; final branch replay and canonical index CI required."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/hot-chocolate-bottle.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HOLOCODER-HOT-CHOCOLATE-INK-BOMB-1.0.10.md",
+          "reason": "Exact publisher class, two executable bodies, registry supplier $164, recipe and model seals; installed dump parity remains NOT_VERIFIED."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOOD-STATUS-SETTLEMENT-21.1.250.md",
+          "reason": "Native finishUsingItem ancestor and override, contextual food, event-driven stat reset, effect admission and separate Sack of Sating path."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/hot-chocolate-bottle.md",
+          "reason": "16 stack, 40 ticks, nutrition 4, nominal saturation 2, 0.02F Sugar Rush 200 ticks amplifier 0, stat reset and conditional phantom threshold; codec result 1."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/hot-chocolate-bottle.md",
+          "reason": "Self-consuming LivingEntity, ServerPlayer-specific rest reset, separate conditional Sugar Rush temporal field and independent AI item-consumer route; no intrinsic damage, projectile or AOE."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/hot-chocolate-bottle.md",
+          "reason": "Native one-unit consumption request, bottle settlement, recipe, publisher loot and tag inventory consumer; no mana/durability/own cooldown."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/hot-chocolate-bottle.md",
+          "reason": "Bounded read-only native consumption, effect, inventory and stats boundaries. No safe per-player mutating hook or Mastery receipt certified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ITEM-ENTITY-DEFAULTS-21.1.250.md",
+          "reason": "Exact publisher and distributed engine evidence; deterministic prior native, acquisition, lifecycle and codec report seals linked in individual card. Final branch must pass replay and index CI."
+        }
+      }
+    },
     "✅-alexs-caves-continued/items/purple-soda-bottle.md": {
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
@@ -10551,6 +10680,934 @@
         }
       }
     },
+    "✅-alexs-caves-continued/items/gingerbread-helmet.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Gingerbread HELMET item is statically individually verified at HELMET ordinal 0; defense 2, configured maximum damage 130. No runtime ability to mutate shared item caches, no active perk execution, no physical QA or provider universe closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher 1.0.10 SHA-exact; registry lambda$static$187 constructs the HELMET item, official MC1.21.1 type ordinal 0 and unique item model/UUID verified."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Native GingerbreadArmorItem constructor, slot gate HEAD, dynamic attribute assembly, damage-only cache and armor texture resolved from all eight bytecode bodies; runtime acceptance remains untested."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material [2,4,5,2] at ordinal 0: ARMOR ADD_VALUE 2, max durability 130, 25 enchantability; speed modifier 0.1D+0.9D*(float damage/float maxDamage), ADD_MULTIPLIED_BASE."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Equipped HEAD slot is local attribute receiver context; no target ray, projectile, range, area, cast, status application, or independent attack in any of the eight class methods."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No per-query resource debit in native GingerbreadArmorItem; material requests max durability 130 and declares Gingerbread Crumbs for repair, with actual wear and crafting untested."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Shared damage-indexed map suppresses isolated per-player mutation; ACCompat.itemAttributes bridge and inherited ArmorItem dispatch do not verify a safe per-player hook; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Exact 1.0.10 publisher original report, eight methods, factory lambda$static$187, official vanilla enum bytecode with SHA hashes and 24 resealed adversarial mutations; no pack-level gameplay QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/gingerbread-chestplate.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Gingerbread CHESTPLATE item is statically individually verified at CHESTPLATE ordinal 1; defense 4, configured maximum damage 150. No runtime ability to mutate shared item caches, no active perk execution, no physical QA or provider universe closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher 1.0.10 SHA-exact; registry lambda$static$188 constructs the CHESTPLATE item, official MC1.21.1 type ordinal 1 and unique item model/UUID verified."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Native GingerbreadArmorItem constructor, slot gate CHEST, dynamic attribute assembly, damage-only cache and armor texture resolved from all eight bytecode bodies; runtime acceptance remains untested."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material [2,4,5,2] at ordinal 1: ARMOR ADD_VALUE 4, max durability 150, 25 enchantability; speed modifier 0.1D+0.9D*(float damage/float maxDamage), ADD_MULTIPLIED_BASE."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Equipped CHEST slot is local attribute receiver context; no target ray, projectile, range, area, cast, status application, or independent attack in any of the eight class methods."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No per-query resource debit in native GingerbreadArmorItem; material requests max durability 150 and declares Gingerbread Crumbs for repair, with actual wear and crafting untested."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Shared damage-indexed map suppresses isolated per-player mutation; ACCompat.itemAttributes bridge and inherited ArmorItem dispatch do not verify a safe per-player hook; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Exact 1.0.10 publisher original report, eight methods, factory lambda$static$188, official vanilla enum bytecode with SHA hashes and 24 resealed adversarial mutations; no pack-level gameplay QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/gingerbread-leggings.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Gingerbread LEGGINGS item is statically individually verified at LEGGINGS ordinal 2; defense 5, configured maximum damage 160. No runtime ability to mutate shared item caches, no active perk execution, no physical QA or provider universe closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher 1.0.10 SHA-exact; registry lambda$static$189 constructs the LEGGINGS item, official MC1.21.1 type ordinal 2 and unique item model/UUID verified."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Native GingerbreadArmorItem constructor, slot gate LEGS, dynamic attribute assembly, damage-only cache and armor texture resolved from all eight bytecode bodies; runtime acceptance remains untested."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material [2,4,5,2] at ordinal 2: ARMOR ADD_VALUE 5, max durability 160, 25 enchantability; speed modifier 0.1D+0.9D*(float damage/float maxDamage), ADD_MULTIPLIED_BASE."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Equipped LEGS slot is local attribute receiver context; no target ray, projectile, range, area, cast, status application, or independent attack in any of the eight class methods."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No per-query resource debit in native GingerbreadArmorItem; material requests max durability 160 and declares Gingerbread Crumbs for repair, with actual wear and crafting untested."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Shared damage-indexed map suppresses isolated per-player mutation; ACCompat.itemAttributes bridge and inherited ArmorItem dispatch do not verify a safe per-player hook; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Exact 1.0.10 publisher original report, eight methods, factory lambda$static$189, official vanilla enum bytecode with SHA hashes and 24 resealed adversarial mutations; no pack-level gameplay QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/gingerbread-boots.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Gingerbread BOOTS item is statically individually verified at BOOTS ordinal 3; defense 2, configured maximum damage 110. No runtime ability to mutate shared item caches, no active perk execution, no physical QA or provider universe closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher 1.0.10 SHA-exact; registry lambda$static$190 constructs the BOOTS item, official MC1.21.1 type ordinal 3 and unique item model/UUID verified."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Native GingerbreadArmorItem constructor, slot gate FEET, dynamic attribute assembly, damage-only cache and armor texture resolved from all eight bytecode bodies; runtime acceptance remains untested."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material [2,4,5,2] at ordinal 3: ARMOR ADD_VALUE 2, max durability 110, 25 enchantability; speed modifier 0.1D+0.9D*(float damage/float maxDamage), ADD_MULTIPLIED_BASE."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Equipped FEET slot is local attribute receiver context; no target ray, projectile, range, area, cast, status application, or independent attack in any of the eight class methods."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No per-query resource debit in native GingerbreadArmorItem; material requests max durability 110 and declares Gingerbread Crumbs for repair, with actual wear and crafting untested."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Shared damage-indexed map suppresses isolated per-player mutation; ACCompat.itemAttributes bridge and inherited ArmorItem dispatch do not verify a safe per-player hook; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GINGERBREAD-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Exact 1.0.10 publisher original report, eight methods, factory lambda$static$190, official vanilla enum bytecode with SHA hashes and 24 resealed adversarial mutations; no pack-level gameplay QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/hazmat-mask.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Hazmat Mask: seven-axis native static catalog for HEAD, armor 2 and configured max durability 260; zero new casts. Does not guarantee accepted radiation/acid protection, engine transformed dispatch, hooks or gameplay QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher SHA-exact alexscaves 1.0.10, independent class HazmatArmorItem, factory lambda$static$69, exact HELMET/HEAD binding, official MC1.21.1 ordinal 0, recipe/model hash."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Full six-method HazmatArmorItem surface, four-slot getWornAmount and native consumer callsites for radioactive items, IrradiatedEffect and AcidBlock; only Mask visual particle branch."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material ARMOR 2 configured, max durability 260, toughness 0.5, enchantability 25; native environmental factor f=1-n/4, distinct caller guards and requested effects."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "One equipped LivingEntity in exact HEAD slot; passive n counter applies only where caller queries it, no independent cast, AOE, projectile or offensive target."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No mana, cooldown, charge or direct durability debit by owner's six methods; configured max durability 260 and polymer_plate repair reference, actual costs not observed."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Multiple native risk consumers share getWornAmount; no authority-safe per-player extension or verified mutation hook. NO_MUTATION, no extra Irradiated, acid damage or Mastery settlement."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "SHA verified original publisher six methods and seven typed consumer owners, original material seal, official five-value armor enum; read-only exact replay, 34 synthetic adversarial checks; no installed transformed runtime or physical QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/hazmat-chestplate.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Hazmat Chestplate: seven-axis native static catalog for CHEST, armor 4 and configured max durability 300; zero new casts. Does not guarantee accepted radiation/acid protection, engine transformed dispatch, hooks or gameplay QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher SHA-exact alexscaves 1.0.10, independent class HazmatArmorItem, factory lambda$static$70, exact CHESTPLATE/CHEST binding, official MC1.21.1 ordinal 1, recipe/model hash."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Full six-method HazmatArmorItem surface, four-slot getWornAmount and native consumer callsites for radioactive items, IrradiatedEffect and AcidBlock; only Mask visual particle branch."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material ARMOR 4 configured, max durability 300, toughness 0.5, enchantability 25; native environmental factor f=1-n/4, distinct caller guards and requested effects."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "One equipped LivingEntity in exact CHEST slot; passive n counter applies only where caller queries it, no independent cast, AOE, projectile or offensive target."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No mana, cooldown, charge or direct durability debit by owner's six methods; configured max durability 300 and polymer_plate repair reference, actual costs not observed."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Multiple native risk consumers share getWornAmount; no authority-safe per-player extension or verified mutation hook. NO_MUTATION, no extra Irradiated, acid damage or Mastery settlement."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "SHA verified original publisher six methods and seven typed consumer owners, original material seal, official five-value armor enum; read-only exact replay, 34 synthetic adversarial checks; no installed transformed runtime or physical QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/hazmat-leggings.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Hazmat Leggings: seven-axis native static catalog for LEGS, armor 5 and configured max durability 320; zero new casts. Does not guarantee accepted radiation/acid protection, engine transformed dispatch, hooks or gameplay QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher SHA-exact alexscaves 1.0.10, independent class HazmatArmorItem, factory lambda$static$71, exact LEGGINGS/LEGS binding, official MC1.21.1 ordinal 2, recipe/model hash."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Full six-method HazmatArmorItem surface, four-slot getWornAmount and native consumer callsites for radioactive items, IrradiatedEffect and AcidBlock; only Mask visual particle branch."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material ARMOR 5 configured, max durability 320, toughness 0.5, enchantability 25; native environmental factor f=1-n/4, distinct caller guards and requested effects."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "One equipped LivingEntity in exact LEGS slot; passive n counter applies only where caller queries it, no independent cast, AOE, projectile or offensive target."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No mana, cooldown, charge or direct durability debit by owner's six methods; configured max durability 320 and polymer_plate repair reference, actual costs not observed."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Multiple native risk consumers share getWornAmount; no authority-safe per-player extension or verified mutation hook. NO_MUTATION, no extra Irradiated, acid damage or Mastery settlement."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "SHA verified original publisher six methods and seven typed consumer owners, original material seal, official five-value armor enum; read-only exact replay, 34 synthetic adversarial checks; no installed transformed runtime or physical QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/hazmat-boots.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Hazmat Boots: seven-axis native static catalog for FEET, armor 2 and configured max durability 220; zero new casts. Does not guarantee accepted radiation/acid protection, engine transformed dispatch, hooks or gameplay QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Publisher SHA-exact alexscaves 1.0.10, independent class HazmatArmorItem, factory lambda$static$72, exact BOOTS/FEET binding, official MC1.21.1 ordinal 3, recipe/model hash."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Full six-method HazmatArmorItem surface, four-slot getWornAmount and native consumer callsites for radioactive items, IrradiatedEffect and AcidBlock; only Mask visual particle branch."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Material ARMOR 2 configured, max durability 220, toughness 0.5, enchantability 25; native environmental factor f=1-n/4, distinct caller guards and requested effects."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "One equipped LivingEntity in exact FEET slot; passive n counter applies only where caller queries it, no independent cast, AOE, projectile or offensive target."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "No mana, cooldown, charge or direct durability debit by owner's six methods; configured max durability 220 and polymer_plate repair reference, actual costs not observed."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "Multiple native risk consumers share getWornAmount; no authority-safe per-player extension or verified mutation hook. NO_MUTATION, no extra Irradiated, acid damage or Mastery settlement."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HAZMAT-ARMOR-FOUR-PIECES-1.0.10.md",
+          "reason": "SHA verified original publisher six methods and seven typed consumer owners, original material seal, official five-value armor enum; read-only exact replay, 34 synthetic adversarial checks; no installed transformed runtime or physical QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/primordial-helmet.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Primordial Helmet: independently certified native static equipment counter, HELMET ordinal 0, defense 3 and max durability 260. Does not certify actual food/engine/mixin outcomes, safe hook, real modpack QA or provider universe.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "SHA-exact publisher 1.0.10 and official MC 1.21.1 enum mapping; unique item primordial-helmet, ACItemRegistry lambda$static$42, ArmorItem.Type.HELMET ordinal 0, model/recipe resource hashes."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Complete four Code methods of PrimordialArmorItem, exact HEAD worn-count increment @26, bytecode of typed consumers PlayerMixin.ac_eat and DinosaurChopBlock.eat with branch/pivot guards; external mixin application not verified."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Ordinal 0 selects declared nominal armor 3, configured durability 260; per-piece n+1 with n in 0..3, raw meat/chop consumers request nutrition+n and saturationModifier+0.125F*n; actual FoodData settlement not verified."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Equipped LivingEntity HEAD slot, consumers statically call with Player; no offensive target, ray, projectile, AOE, status-effect cast, cooldown or spell scaling in own four methods."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "No own mana, charges, cooldown, cast or durability debit observed; configured max durability 260, repair supplier for alexscaves:tough_hide, not an observed crafting or repair settlement."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "One shared counter is read by two separate consumers; no verified authority-safe per-player mutation hook. Dungeon block changes and FoodData.eat cannot be duplicated; NO_MUTATION and no Mastery/XP grant."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Full original publisher report 659f60f17d549d8c795becc4d7fa7e6b8968cb546b8af002099b44abb65e4f75; official enum report e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91; all referenced method hashes/pivots and 35 adversarial fixtures, no physical gameplay or transformed runtime."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/primordial-tunic.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Primordial Tunic: independently certified native static equipment counter, CHESTPLATE ordinal 1, defense 4 and max durability 300. Does not certify actual food/engine/mixin outcomes, safe hook, real modpack QA or provider universe.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "SHA-exact publisher 1.0.10 and official MC 1.21.1 enum mapping; unique item primordial-tunic, ACItemRegistry lambda$static$43, ArmorItem.Type.CHESTPLATE ordinal 1, model/recipe resource hashes."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Complete four Code methods of PrimordialArmorItem, exact CHEST worn-count increment @53, bytecode of typed consumers PlayerMixin.ac_eat and DinosaurChopBlock.eat with branch/pivot guards; external mixin application not verified."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Ordinal 1 selects declared nominal armor 4, configured durability 300; per-piece n+1 with n in 0..3, raw meat/chop consumers request nutrition+n and saturationModifier+0.125F*n; actual FoodData settlement not verified."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Equipped LivingEntity CHEST slot, consumers statically call with Player; no offensive target, ray, projectile, AOE, status-effect cast, cooldown or spell scaling in own four methods."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "No own mana, charges, cooldown, cast or durability debit observed; configured max durability 300, repair supplier for alexscaves:tough_hide, not an observed crafting or repair settlement."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "One shared counter is read by two separate consumers; no verified authority-safe per-player mutation hook. Dungeon block changes and FoodData.eat cannot be duplicated; NO_MUTATION and no Mastery/XP grant."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Full original publisher report 659f60f17d549d8c795becc4d7fa7e6b8968cb546b8af002099b44abb65e4f75; official enum report e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91; all referenced method hashes/pivots and 35 adversarial fixtures, no physical gameplay or transformed runtime."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/primordial-pants.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Primordial Pants: independently certified native static equipment counter, LEGGINGS ordinal 2, defense 3 and max durability 320. Does not certify actual food/engine/mixin outcomes, safe hook, real modpack QA or provider universe.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "SHA-exact publisher 1.0.10 and official MC 1.21.1 enum mapping; unique item primordial-pants, ACItemRegistry lambda$static$44, ArmorItem.Type.LEGGINGS ordinal 2, model/recipe resource hashes."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Complete four Code methods of PrimordialArmorItem, exact LEGS worn-count increment @80, bytecode of typed consumers PlayerMixin.ac_eat and DinosaurChopBlock.eat with branch/pivot guards; external mixin application not verified."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Ordinal 2 selects declared nominal armor 3, configured durability 320; per-piece n+1 with n in 0..3, raw meat/chop consumers request nutrition+n and saturationModifier+0.125F*n; actual FoodData settlement not verified."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Equipped LivingEntity LEGS slot, consumers statically call with Player; no offensive target, ray, projectile, AOE, status-effect cast, cooldown or spell scaling in own four methods."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "No own mana, charges, cooldown, cast or durability debit observed; configured max durability 320, repair supplier for alexscaves:tough_hide, not an observed crafting or repair settlement."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "One shared counter is read by two separate consumers; no verified authority-safe per-player mutation hook. Dungeon block changes and FoodData.eat cannot be duplicated; NO_MUTATION and no Mastery/XP grant."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PRIMORDIAL-ARMOR-THREE-PIECES-1.0.10.md",
+          "reason": "Full original publisher report 659f60f17d549d8c795becc4d7fa7e6b8968cb546b8af002099b44abb65e4f75; official enum report e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91; all referenced method hashes/pivots and 35 adversarial fixtures, no physical gameplay or transformed runtime."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/rainbounce-boots.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Rainbounce Boots: contract static only; BOOTS ordinal 3, armor nominal 2/durability 66, exact movement/mixin consumer and impulse formula. Does not verify runtime mixin, safe perks or physical gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAINBOUNCE-BOOTS-STATIC-1.0.10.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato, owner classfile, resource ID/factory lambda$static$174 e ArmorItem.Type.BOOTS ordinal 3 no enum oficial Minecraft 1.21.1."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAINBOUNCE-BOOTS-STATIC-1.0.10.md",
+          "reason": "Quatro corpos completos da RainbounceBootsItem e consumidor EntityMixin.ac_move; deslocamento vertical negativo e guarda isSuppressingBounce, pulsos, particulas/sons sob condições locais."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAINBOUNCE-BOOTS-STATIC-1.0.10.md",
+          "reason": "BOOTS nominal defense 2, max durability 66, encantabilidade 40, limiares 0.2 e 0.42, coeficientes verticais 0.7/1.05 e surface 0.15, horizontais Sugar Rush 1.2/1.9."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAINBOUNCE-BOOTS-STATIC-1.0.10.md",
+          "reason": "Apenas LivingEntity com item exato no EquipmentSlot.FEET; consulta getOnPosLegacy tag/sugar_rush, sem alvo adversário, AOE ofensiva, projétil ou raio de cast."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAINBOUNCE-BOOTS-STATIC-1.0.10.md",
+          "reason": "Owner não pede consumo de mana, cast, cooldown, charge ou desgaste ao impulsar; durabilidade/repair nominal do item e comportamento engine herdado continuam não testados."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAINBOUNCE-BOOTS-STATIC-1.0.10.md",
+          "reason": "O Mixin pertence ao provider e não é hook seguro/per-player de Black Arcana; nenhuma mutação, reprocessamento de velocidade, XP/Mastery ou autorização de engine assumida."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAINBOUNCE-BOOTS-STATIC-1.0.10.md",
+          "reason": "Report publisher SHA c7e60198eae632614c4a87acda39f385f49347409f47d0b178f5733362a7be60, official enum e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91, material SHA-exato, verificador adversarial e CI; physical QA not tested."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/gazing-pearl.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Item passivo Gazing Pearl; contrato do snapshot, não IA integral, reputação mutável, perk executável ou QA física.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md",
+          "reason": "Publisher 1.0.10 SHA-exato; cinco métodos, registry bootstrap e recursos de apresentação."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md",
+          "reason": "Callbacks e fluxo de snapshot server-side, getters, storage, tooltip/cor e uso herdado."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md",
+          "reason": "Guardas temporais, limiares de reação, HSB, tipos/defaults NBT e limites do storage."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md",
+          "reason": "UUID da entidade portadora; dano, AOE, cast e projétil próprios não aplicáveis."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md",
+          "reason": "Sem consumo na leitura nativa; stack 1, loot e receita declarativos; uso herdado condicionado."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md",
+          "reason": "ACTickingItem, ACWorldData, CUSTOM_DATA, persistência distribuída; nenhuma mutação autorizada."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gazing-pearl.md",
+          "reason": "Run 45617075809, 42 corpos, replay idêntico e hash fixado 9581e32b5dbc9245c126fb5795d51204e65ac4e02d776889581f3100aba4245b; gate CI da promoção."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/equipment/galena-gauntlet.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Galena Gauntlet: bounded native item/MagneticWeaponEntity contract, external stack and effective datapack/listener inputs conditional; no live settlement, safe perk, QA or provider closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato; 17 métodos do item, 24 da entidade, registro/factory, recursos e geometria nominal."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md",
+          "reason": "Fluxo causal de uso, controle, ataque, mineração, retorno, remoção, persistência, branches e consumidores distribuídos; Player e Teletor separados."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md",
+          "reason": "Duração 72000, cooldown release 5, raycast 30+5L, strike, movimento, dano solicitado, knockback, fogo, mitigação e mineração condicionais."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md",
+          "reason": "AABB 64 de busca de instância, raycast, contato, bloco, retorno, UUID e identidade; geometrias distintas, sem AOE próprio adicional."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md",
+          "reason": "Desgaste solicitado 1 da luva e custos da arma/mineração distintos; receita, reparo, cooldown; transferência sem rollback demonstrado; mana N/A."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md",
+          "reason": "Atributos, encantamentos, eventos e world safety delimitados; NO_MUTATION, sem autorizar novos hits, spawn, restituição ou Mastery."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/galena-gauntlet.md",
+          "reason": "Manifestos/checkers SHA-exatos e replay 45617400804 de 478046 bytes, SHA ca02eac60a6f7577cdfe5436d62c5961f449bba627e86361df048aefb7f09a64; 57/57 workflows na HEAD selada, nova CI após sync."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/holocoder.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Holocoder bounded item/capture and hologram projector representation contract; external concrete entities, listeners, actual inventory/sync and presentation conditional; no summon, mutation or QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/holocoder.md",
+          "reason": "JAR publisher SHA-exato, factory/registry e quatro métodos próprios, block entity e recursos declarativos."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/holocoder.md",
+          "reason": "Captura EntityInteract, inventário/drop, projeção, representação recursiva, estado, render e áudio; efeitos externos condicionais."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/holocoder.md",
+          "reason": "Stack 1, escalas 0.25–3, transição até 10, interpolação, geometria de render e volume/pitch; dano, AOE ofensivo, mana, projétil e cooldown próprios N/A."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/holocoder.md",
+          "reason": "LivingEntity viva não ArmorStand, rotas Player/não-player, alcance efetivo de interação e guardas de bloco; não summon nem AOE."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/holocoder.md",
+          "reason": "Shrink solicitado na captura e projeção, guarda criativa distinta, receita declarativa e fallback sem rollback; sem mana própria."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/holocoder.md",
+          "reason": "CUSTOM_DATA/UUID, blocos, eventos, persistência e limites de authority; NO_MUTATION, não repetir captura/projeção nem creditar Mastery."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/holocoder.md",
+          "reason": "Replays 45525520600, 45539871537 e 45646436758; último 611890 bytes, SHA b3a0f6cda62bacace3859ec5435b6e1b909234aa260fa2f2d79151c2c49831e6, CI da promoção exigida."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/resistor-shield.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Bounded Resistor Shield native item, distributed shield/use/damage/durability and presentation contract; external transformed runtime and actual settlement/PvP remain conditional. No new root, safe mutating hook or QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/resistor-shield.md",
+          "reason": "JAR publisher SHA-exato, factory, registry, 20 métodos próprios, herança e recursos JSON."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/resistor-shield.md",
+          "reason": "Uso, polaridade, pulso, defesa, dano/knockback, desgaste, estado e apresentação/áudio herdado; requests distintos de resultados."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/resistor-shield.md",
+          "reason": "Stack 1, durabilidade 1000, use 72000, pulso 10 e cada 5, 6+3L/2, forças .5/.2, polaridades, contador 0..5 e fórmulas de apresentação."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/resistor-shield.md",
+          "reason": "LivingEntity em AABB 5/1/5, distância<=5, exclusão self/aliados, defesa e filtros da engine; sem projétil próprio."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/resistor-shield.md",
+          "reason": "Pedido de desgaste 1 e defesa 1+floor(dano) condicionais, disable 100, reparo/receita e ITEM_DAMAGE efetivo; sem mana de cast própria."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/resistor-shield.md",
+          "reason": "CUSTOM_DATA, codecs, eventos, lado, autoria e boundaries de segurança; NO_MUTATION, não duplicar hurt/knockback/settlement ou Mastery."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/resistor-shield.md",
+          "reason": "Replays nativos, dependências, 45446993318, 45461121524, 45478837398, 45528205575, 45649275425, 45651021466 (54228 bytes SHA e9257edc70e7a3ff00ca1fbe1d2fbe3aedb18e4a6879f8e10c9ae899f0d4b282); CI da promoção."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/systems/keybind-using-armor.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOOD-IDENTITY-KEYBIND-CLOSURE-1.0.10.md",
+          "reason": "Interface class SHA and single abstract method, exact descriptor; hierarchy and sole native implementer gated by publisher census."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/keybind-using-armor.md",
+          "reason": "Bidirectional transport, enqueue, context resolution, clamped slot, typed dispatch and native implementation; no independent cast."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/keybind-using-armor.md",
+          "reason": "Three signed int fields in wire order; clamped slot; key unused by implementation; configured effect duration belongs to existing Cloak contract."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/keybind-using-armor.md",
+          "reason": "Packet-selected player in context level, slot item implementing interface; not verified sender-to-target authorization."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/keybind-using-armor.md",
+          "reason": "No own mana, item or cooldown debit; implementation requests supplied-stack charge reset before addEffect, not proof of effect acceptance."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/keybind-using-armor.md",
+          "reason": "Existing Cloak action and ACCompat custom data; no safe mutation, packet replay or inferred Mastery."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOOD-IDENTITY-KEYBIND-CLOSURE-1.0.10.md",
+          "reason": "Exact publisher two identical replays, pinned SHA, causal pivots and hierarchy gate; no physical QA."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/charred-remnant.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Individual passive radiation producer only; no new cast, no safe mutation or transformed runtime claim.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md",
+          "reason": "Exact publisher class, individual factory Code hash, registry write/creative read and resource census with separate ID."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/charred-remnant.md",
+          "reason": "Complete RadioactiveItem constructor and acInventoryTick; passive guarded status request and presentation, no own active cast."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/charred-remnant.md",
+          "reason": "Float rate 0.0005 per item in stack times Hazmat factor, actual count input, 1800 ticks amplifier 0 verified by official vanilla reference; no own cap or stack override."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/charred-remnant.md",
+          "reason": "Living carrier only, server guard, creative-player and present-status exclusions; no AOE/LOS/projectile or offensive owner."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/charred-remnant.md",
+          "reason": "No local stack shrink, resource debit, damage to item or cooldown; recipe/loot references are declarative and inherited stack properties not a custom cost."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/charred-remnant.md",
+          "reason": "Composes ACTickingItem, Hazmat and Irradiated contracts; no hook authorization, no duplicate status/cost/Mastery, engine acceptance remains unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md",
+          "reason": "Original exact native report and new exact census reproduced twice; identity, resource and method pins; final CI required."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/fissile-core.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Individual passive radiation producer only; no new cast, no safe mutation or transformed runtime claim.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md",
+          "reason": "Exact publisher class, individual factory Code hash, registry write/creative read and resource census with separate ID."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/fissile-core.md",
+          "reason": "Complete RadioactiveItem constructor and acInventoryTick; passive guarded status request and presentation, no own active cast."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/fissile-core.md",
+          "reason": "Float rate 0.001 per item in stack times Hazmat factor, actual count input, 1800 ticks amplifier 0 verified by official vanilla reference; no own cap or stack override."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/fissile-core.md",
+          "reason": "Living carrier only, server guard, creative-player and present-status exclusions; no AOE/LOS/projectile or offensive owner."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/fissile-core.md",
+          "reason": "No local stack shrink, resource debit, damage to item or cooldown; recipe/loot references are declarative and inherited stack properties not a custom cost."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/fissile-core.md",
+          "reason": "Composes ACTickingItem, Hazmat and Irradiated contracts; no hook authorization, no duplicate status/cost/Mastery, engine acceptance remains unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md",
+          "reason": "Original exact native report and new exact census reproduced twice; identity, resource and method pins; final CI required."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/uranium.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Individual passive radiation producer only; no new cast, no safe mutation or transformed runtime claim.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md",
+          "reason": "Exact publisher class, individual factory Code hash, registry write/creative read and resource census with separate ID."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/uranium.md",
+          "reason": "Complete RadioactiveItem constructor and acInventoryTick; passive guarded status request and presentation, no own active cast."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/uranium.md",
+          "reason": "Float rate 0.001 per item in stack times Hazmat factor, actual count input, 1800 ticks amplifier 0 verified by official vanilla reference; no own cap or stack override."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/uranium.md",
+          "reason": "Living carrier only, server guard, creative-player and present-status exclusions; no AOE/LOS/projectile or offensive owner."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/uranium.md",
+          "reason": "No local stack shrink, resource debit, damage to item or cooldown; recipe/loot references are declarative and inherited stack properties not a custom cost."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/uranium.md",
+          "reason": "Composes ACTickingItem, Hazmat and Irradiated contracts; no hook authorization, no duplicate status/cost/Mastery, engine acceptance remains unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md",
+          "reason": "Original exact native report and new exact census reproduced twice; identity, resource and method pins; final CI required."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/uranium-shard.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Individual passive radiation producer only; no new cast, no safe mutation or transformed runtime claim.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md",
+          "reason": "Exact publisher class, individual factory Code hash, registry write/creative read and resource census with separate ID."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/uranium-shard.md",
+          "reason": "Complete RadioactiveItem constructor and acInventoryTick; passive guarded status request and presentation, no own active cast."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/uranium-shard.md",
+          "reason": "Float rate 0.001 per item in stack times Hazmat factor, actual count input, 1800 ticks amplifier 0 verified by official vanilla reference; no own cap or stack override."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/uranium-shard.md",
+          "reason": "Living carrier only, server guard, creative-player and present-status exclusions; no AOE/LOS/projectile or offensive owner."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/uranium-shard.md",
+          "reason": "No local stack shrink, resource debit, damage to item or cooldown; recipe/loot references are declarative and inherited stack properties not a custom cost."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/uranium-shard.md",
+          "reason": "Composes ACTickingItem, Hazmat and Irradiated contracts; no hook authorization, no duplicate status/cost/Mastery, engine acceptance remains unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RADIOACTIVE-CONSUMER-CENSUS-1.0.10.md",
+          "reason": "Original exact native report and new exact census reproduced twice; identity, resource and method pins; final CI required."
+        }
+      }
+    },
     "✅-alshanex-familiars/rituals/archmage-shard.md": {
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
@@ -10590,6 +11647,48 @@
         "validation": {
           "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-ARCHMAGE-RITUAL.md",
           "reason": "Reproduce both pinned JAR fingerprints, recipe facts, class and method hashes, and selected JVM anchors. Physical modpack QA remains pending."
+        }
+      }
+    },
+    "✅-alshanex-familiars/rituals/druid-shard.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "4.0.3",
+      "artifact_sha1": "e5051c2385a426d05bf203ba8081a23d891f6686",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-DRUID-RITUAL.md",
+          "reason": "SHA-exact publisher 4.0.3 recipe, holder ID, DRUID_RUNE and constructor supplied by bootstrap 38."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-DRUID-RITUAL.md",
+          "reason": "Matching by total counts, three peripheral debits, retained Spore Blossom, one central shard and automated transfer."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-DRUID-RITUAL.md",
+          "reason": "Cardinal offsets of two blocks, 100 valid counter increments, particles every ten, and 20 active ticks per transfer."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-DRUID-RITUAL.md",
+          "reason": "Craft operates on the central and peripheral block inventories. Composter and Evocation Blastwave are visual; damage and projectile mechanics are inapplicable."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-DRUID-RITUAL.md",
+          "reason": "One Familiar Soul and one of each of three consumed inputs, with one Spore Blossom required and retained. No mana, XP or player cooldown."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-DRUID-RITUAL.md",
+          "reason": "Native inventory and clock authority, automator reuse of a retained catalyst and separate FamiliarsLib consumer. Hook and Mastery attribution remain unverified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alshanex-familiars/EXACT-4.0.3-DRUID-RITUAL.md",
+          "reason": "Replays both pinned publisher artifacts, shared altar seal, exact recipe, retention and resupply branch anchors, registry and downstream method."
         }
       }
     }

@@ -1,0 +1,10 @@
+# Minecraft 1.21.1 ArmorItem.Type — historical metadata replay incident (2026-11-24)
+
+The Remote Detonator PR #1185 final-head CI passed its specific seal, but four unrelated existing armor certification workflows rejected the old report hash. Compare archived Hazmat runs [45334081760](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45334081760) (artifact 14893260901) and [45435310799](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45435310799) (artifact 14939988438). Both reports are 11,191 bytes; parsed JSON recursive comparison found exactly three differences, all in metadata:
+- version_url: official /v1/packages/ff7ef54488da4a711f3c8a781a9f79105bbe801a/1.21.1.json -> /v1/packages/c086fab6229047df03bb78951c7a1b8fce8c4892/1.21.1.json
+- version_sha1: ff7ef54488da4a711f3c8a781a9f79105bbe801a -> c086fab6229047df03bb78951c7a1b8fce8c4892
+- version_json_sha256: ab07658fe972925ed0036e383a09e3b4ca6b3f4ee07634233c02a5a1d49a39c9 -> 46bd44d2732fd1cd187724de9b5cab9fc98678d8de46509410659b5c6f103ff8
+
+Historical report SHA-256 e83bef57b5efb722a17fefb237edb7288b1668d99d7dae67e51c1905c174ff91; current metadata report SHA-256 391c3efb12b2e67b8c96e2d84eecf01c018433a05259a09860f0fae4bc5afe2d. Artifact identities, enum class SHA, all instructions and construction rows identical. Both runs used Temurin 21.0.13+9. No binary regression demonstrated.
+
+Replay now authenticates live manifest-selected release metadata and checks its client and mappings descriptors against exact historical pins; then independently fetches and verifies historical metadata by both SHA-1 and SHA-256. It uses the verified historical metadata for the sealed report and emits current provenance in logs. Both artifact bytes must match SHA-1, size and SHA-256. Historical seal and all downstream gates unchanged. Any changed descriptor or unavailable/mismatched historical metadata fails closed. No certificate, provider status, mutation authority or physical QA promotion. Synthetic descriptor rejection cases plus final CI required; live network replay not assumed.

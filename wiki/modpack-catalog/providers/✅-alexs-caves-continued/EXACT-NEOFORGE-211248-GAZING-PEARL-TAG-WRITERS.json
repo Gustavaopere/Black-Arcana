@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "scope": "NEOFORGE_211248_NBT_TAG_WRITERS_DISTRIBUTED_DISCOVERY_ONLY",
+  "evidence": {
+    "run_id": 45058410553,
+    "artifact_id": 14768342779,
+    "report_bytes": 71642,
+    "report_sha256": "c80b30aaac9a243f83af59c581800bb565653adc7fc7d1ada4a6b14546667351"
+  },
+  "distribution": {
+    "installer_sha256": "68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c",
+    "minecraft_srg_bytes": 14246609,
+    "minecraft_srg_sha256": "26ca9c40d7e1681190b428583c38816852218e78df3f8bdb60a59a78503aec71",
+    "minecraft_version": "1.21.1",
+    "modlauncher_loaded_bytes": "NOT_OBSERVED",
+    "neoforge_server_bytes": 5675624,
+    "neoforge_server_sha256": "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359",
+    "neoforge_version": "21.1.248"
+  },
+  "classes": [
+    {
+      "owner": "net/minecraft/nbt/Tag",
+      "source_archive": "INSTALLED_MINECRAFT_SRG",
+      "class_major": 65,
+      "class_sha256": "2e5fb1c98da5019e49f1b6805daf7564f980d83cc1ae0bfc3d8723f336a546ca",
+      "parent": "java/lang/Object",
+      "declared_method_count": 10,
+      "roster_sha256": "a39b988d42ddbf92b5e0987eb064e4d1f356a34a448ca6914b6d36a04d95f95a",
+      "fields": [
+        "OBJECT_HEADER",
+        "ARRAY_HEADER",
+        "OBJECT_REFERENCE",
+        "STRING_SIZE",
+        "TAG_END",
+        "TAG_BYTE",
+        "TAG_SHORT",
+        "TAG_INT",
+        "TAG_LONG",
+        "TAG_FLOAT",
+        "TAG_DOUBLE",
+        "TAG_BYTE_ARRAY",
+        "TAG_STRING",
+        "TAG_LIST",
+        "TAG_COMPOUND",
+        "TAG_INT_ARRAY",
+        "TAG_LONG_ARRAY",
+        "TAG_ANY_NUMERIC",
+        "MAX_DEPTH"
+      ],
+      "methods": [],
+      "non_executable_selected": [
+        {
+          "access": 1025,
+          "descriptor": "()B",
+          "name": "getId"
+        },
+        {
+          "access": 1025,
+          "descriptor": "(Ljava/io/DataOutput;)V",
+          "name": "write"
+        }
+      ]
+    },
+    {
+      "owner": "net/minecraft/nbt/CompoundTag",
+      "source_archive": "NEOFORGE_OVERLAY",
+      "class_major": 65,
+      "class_sha256": "93a9643a11aa61b666871cadeb14be32ff4f813bf97b05951bae389bada15fe6",
+      "parent": "java/lang/Object",
+      "declared_method_count": 64,
+      "roster_sha256": "80eb5f162a8c18280f604c284ccbe5a4b0eb782947afddacbd45753adb7d7812",
+      "fields": [
+        "CODEC",
+        "SELF_SIZE_IN_BYTES",
+        "MAP_ENTRY_SIZE_IN_BYTES",
+        "TYPE",
+        "tags"
+      ],
+      "methods": [
+        {
+          "name": "getId",
+          "descriptor": "()B",
+          "code_sha256": "64674037c774bbed05a1a2b668cdb887eb36dbc305b058015bd0ba282da730cb",
+          "instruction_sha256": "609c326d673baa12873d02005cc8c5c5008539af3da766a7989755a0791d2c5d",
+          "instruction_count": 2,
+          "exception_handlers": []
+        },
+        {
+          "name": "write",
+          "descriptor": "(Ljava/io/DataOutput;)V",
+          "code_sha256": "396856bee5be76314f84a366ffe6419e963856ae0e62c8428d8aadf9ca9f096d",
+          "instruction_sha256": "b14cdd848aafb7f7d5af1a3bb9d997f5a9b96c0827261cc62d99daae1ce4f6a1",
+          "instruction_count": 27,
+          "exception_handlers": []
+        },
+        {
+          "name": "writeNamedTag",
+          "descriptor": "(Ljava/lang/String;Lnet/minecraft/nbt/Tag;Ljava/io/DataOutput;)V",
+          "code_sha256": "167e7d7de97ad5a44ab62e8a1fa5a31f1b5180bf263f65c1ab24888f57c374df",
+          "instruction_sha256": "a3779bf2536479b6e33fe11c39d9a62f9eb668a9526668c32d515c70d33088e4",
+          "instruction_count": 14,
+          "exception_handlers": []
+        }
+      ],
+      "non_executable_selected": []
+    },
+    {
+      "owner": "net/minecraft/nbt/ListTag",
+      "source_archive": "NEOFORGE_OVERLAY",
+      "class_major": 65,
+      "class_sha256": "b9f4d0b453362a71e82e05af6190509694c781e688feee51fe9b6e74f38abb84",
+      "parent": "net/minecraft/nbt/CollectionTag",
+      "declared_method_count": 40,
+      "roster_sha256": "cf46ed1cdc6983307e5c0747114a5225159ea9c19d25b140b0ae93481cf3513d",
+      "fields": [
+        "SELF_SIZE_IN_BYTES",
+        "TYPE",
+        "list",
+        "type"
+      ],
+      "methods": [
+        {
+          "name": "getId",
+          "descriptor": "()B",
+          "code_sha256": "1c57347dfaf7fe51a07376a2535176b04eea60adf3a6310ed44f64376e146b0d",
+          "instruction_sha256": "1f1a292aa4caa43d9ebf3cc9082d7a462462d381f331ec3b9bda405ee1d2b386",
+          "instruction_count": 2,
+          "exception_handlers": []
+        },
+        {
+          "name": "write",
+          "descriptor": "(Ljava/io/DataOutput;)V",
+          "code_sha256": "5f47c238639b72fc0e018b24925f45c38f146887793a003bcedba4a060da6c5a",
+          "instruction_sha256": "3b57690865ecce43db2c23bc85c635d638f5a7bb6013a5328c10156f019aa56c",
+          "instruction_count": 41,
+          "exception_handlers": []
+        }
+      ],
+      "non_executable_selected": []
+    },
+    {
+      "owner": "net/minecraft/nbt/IntTag",
+      "source_archive": "INSTALLED_MINECRAFT_SRG",
+      "class_major": 65,
+      "class_sha256": "0245c8d0134ebd88f1b484c90f72c7a3ace51ae858bde385e0436439d3c95077",
+      "parent": "net/minecraft/nbt/NumericTag",
+      "declared_method_count": 20,
+      "roster_sha256": "162722409c207eb92ef10dd7864f7fb4ce270e064c6ad6692576b449620b516b",
+      "fields": [
+        "SELF_SIZE_IN_BYTES",
+        "TYPE",
+        "data"
+      ],
+      "methods": [
+        {
+          "name": "getId",
+          "descriptor": "()B",
+          "code_sha256": "2aa3b8c641f9fb2da52054da18aeb7ce8524fd71d21f4ce9d042f43f527cc675",
+          "instruction_sha256": "53e91e9f3371b164c67daf2d190d409f30d6b6f30e5a40a709cf996b06147d4e",
+          "instruction_count": 2,
+          "exception_handlers": []
+        },
+        {
+          "name": "write",
+          "descriptor": "(Ljava/io/DataOutput;)V",
+          "code_sha256": "89488334814dae1408986ef0d2c4dce8063e869fbaa7ccbc873fc27037545cac",
+          "instruction_sha256": "82242ac6feb9708febc6bc30aafadc9c5d69d3fd9be6588c3957c2fad673f98d",
+          "instruction_count": 5,
+          "exception_handlers": []
+        }
+      ],
+      "non_executable_selected": []
+    },
+    {
+      "owner": "net/minecraft/nbt/IntArrayTag",
+      "source_archive": "INSTALLED_MINECRAFT_SRG",
+      "class_major": 65,
+      "class_sha256": "8894d67d9f0e9c27b2df9971c685b7cd3dc0696d1c3b2c295fd180773f222088",
+      "parent": "net/minecraft/nbt/CollectionTag",
+      "declared_method_count": 32,
+      "roster_sha256": "3e181411e0dadd4441a2de9b294f398bfc1eae21d1274ca97bf8620211412661",
+      "fields": [
+        "SELF_SIZE_IN_BYTES",
+        "TYPE",
+        "data"
+      ],
+      "methods": [
+        {
+          "name": "getId",
+          "descriptor": "()B",
+          "code_sha256": "3bc3499ef8aacf9993280cdfcf9ae8dc939af86fe3c47e7221b9a3c2f40cbe7a",
+          "instruction_sha256": "f916d945b69c16998622614c7b6c9afc99e8ce6649c790e591afbf5cc68517bf",
+          "instruction_count": 2,
+          "exception_handlers": []
+        },
+        {
+          "name": "write",
+          "descriptor": "(Ljava/io/DataOutput;)V",
+          "code_sha256": "028bd6e40627140ea91ff29b5c2aa5ee91da73dc89822639b7427299c3344999",
+          "instruction_sha256": "b53cfbd0682344321a5b1a0575aadfd2a3b6518750127794a56d0326fc65af5e",
+          "instruction_count": 26,
+          "exception_handlers": []
+        }
+      ],
+      "non_executable_selected": []
+    },
+    {
+      "owner": "net/minecraft/nbt/StringTag",
+      "source_archive": "NEOFORGE_OVERLAY",
+      "class_major": 65,
+      "class_sha256": "4c177a1d925f5645ece0d34ab51a438ec247b02f9ddc805945db49ea8d5be110",
+      "parent": "java/lang/Object",
+      "declared_method_count": 17,
+      "roster_sha256": "38957a76f24dec8c129278b2a2af88b6fcb4319db7ab14edd7e7f7893ee350df",
+      "fields": [
+        "SELF_SIZE_IN_BYTES",
+        "TYPE",
+        "EMPTY",
+        "DOUBLE_QUOTE",
+        "SINGLE_QUOTE",
+        "ESCAPE",
+        "NOT_SET",
+        "data"
+      ],
+      "methods": [
+        {
+          "name": "getId",
+          "descriptor": "()B",
+          "code_sha256": "f0c928136c16477825deffb5af228bb2445687e407432f0fe5e632c82a80e060",
+          "instruction_sha256": "5d24964a1c6247fb6de2cbfcb647c4d7d45bf98731c6533b0972e7c9cd1b3887",
+          "instruction_count": 2,
+          "exception_handlers": []
+        },
+        {
+          "name": "write",
+          "descriptor": "(Ljava/io/DataOutput;)V",
+          "code_sha256": "6391f8568892d55e0a4a6aa3f938b1759fd27deb9fd93cb1728615fb7dc312e0",
+          "instruction_sha256": "0d4816675345744387720a276c5bf3b387a440c08dc89e245a2af1fb2efa5abd",
+          "instruction_count": 5,
+          "exception_handlers": []
+        }
+      ],
+      "non_executable_selected": []
+    }
+  ],
+  "states": {
+    "static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "limits": {
+    "all_tag_implementations_audited": false,
+    "live_modlauncher": "NOT_OBSERVED",
+    "installed_modpack_parity": "NOT_VERIFIED",
+    "filesystem_write_or_restart": "NOT_TESTED",
+    "actual_nbt_reload": "NOT_TESTED",
+    "shutdown_wait_callsite": "NOT_VERIFIED"
+  }
+}
