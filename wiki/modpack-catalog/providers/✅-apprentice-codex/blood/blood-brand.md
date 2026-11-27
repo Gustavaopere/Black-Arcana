@@ -19,14 +19,14 @@
 | Tipo de cast | `CastType.INSTANT` |
 | Cooldown declarado | `4.0` s |
 | Recurso | Mana do Iron's (`baseManaCost=35`, `manaCostPerLevel=10`) |
-| JAR exato | `apprentice_codex-1.0.1-mc1.21.1.jar` |
-| SHA-256 do JAR | `47018AD8C6C6187B17C6BFC4D4F2FFF44EA2ED560719EBB6566A750715757947` |
-| SHA-1 do JAR | `3077999F51299A53A0AF1B8A1AEC22F4099E36A3` |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
 | Ambiente | Minecraft 1.21.1 · NeoForge 21.1.250 · Java 21 (JDK 21.0.12 na inspeção) |
 | Classe de implementação | `jp.aquafactory.apprenticecodex.spell.bloodbrand.BloodBrand` |
-| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md) |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-A versão 0.9.7.1 anterior ficou registrada apenas como histórico; nenhum de seus valores foi reaproveitado sem confirmação no artefato 1.0.1.
+As versões 0.9.7.1 e 1.0.1 ficam registradas apenas como histórico; nenhum de seus valores foi reaproveitado sem confirmação no artefato físico 1.0.1.1.
 
 ## 2. Localizadores para o Codex
 
@@ -46,7 +46,7 @@ A versão 0.9.7.1 anterior ficou registrada apenas como histórico; nenhum de se
 | Eventos | `jp.aquafactory.apprenticecodex.spell.bloodbrand.BloodBrandEvents` (`EntityTickEvent.Post`, `LivingDeathEvent`) |
 | Multiplicador | `ApprenticeCodexServerConfig.damageMultiplier(DamageMultiplierKey.BLOOD_BRAND)` |
 
-Os descriptors completos e os offsets JVM estão em `scratch/javap_check.txt` (347.597 bytes, `javap -p -s -c`, `EXIT=0`), não publicados integralmente.
+Descritores e offsets JVM foram reconsultados no JAR 1.0.1.1: saída `scratch/javap1011_legacy.txt` (`javap -classpath <JAR> -p -s -c`, `EXIT=0`, 233.376 bytes, SHA-256 `F59E0944BA6C04BF5A2B3A28145C9403B225EDF7EEC8425D4A0B6E189F63CCF3`) e anotações/constantes em `scratch/javap1011_v.txt` (`EXIT=0`), não publicadas integralmente.
 
 ## 3. Casting / execução
 
@@ -58,7 +58,7 @@ Os descriptors completos e os offsets JVM estão em `scratch/javap_check.txt` (3
 4. Cria `BloodBrandKunai` com `EntityRegistry.BLOOD_BRAND_KUNAI`, define posição, `setDamage`, `setBurstDamage`, `setBurstRange(5)`, `setProjectileVelocity(forward)` e chama `serverLevel.addFreshEntity(projectile)`.
 5. `super.onCast(...)` completa o fluxo do Iron's.
 
-Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.getManaCost(int)` (`(I)I`, offsets 0–29) calcula `(baseManaCost + manaCostPerLevel*(level-1)) * SpellConfigParameter.MANA_MULTIPLIER` e trunca com `d2i`; `getSpellCooldown()` (`()I`, offsets 0–18) calcula `COOLDOWN_IN_SECONDS * 20.0d` e trunca com `d2i`; `getCastTime(int)` (`(I)I`, offsets 0–16) retorna `0` para `CastType.INSTANT`. Assim, `35`, `10`, `4.0` e `castTime=0` são coeficientes declarados pelo Apprentice Codex; mana/cooldown efetivos dependem da config instalada do Iron's, **NÃO VERIFICADA**. `getSpellPower(int,Entity)` (`(ILnet/minecraft/world/entity/Entity;)F`, offsets 0–79) aplica ainda `AttributeRegistry.SPELL_POWER`, `SchoolType.getPowerFor(LivingEntity)` e `POWER_MULTIPLIER`. Ver âncoras em [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md).
+Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.getManaCost(int)` (`(I)I`, offsets 0–29) calcula `(baseManaCost + manaCostPerLevel*(level-1)) * SpellConfigParameter.MANA_MULTIPLIER` e trunca com `d2i`; `getSpellCooldown()` (`()I`, offsets 0–18) calcula `COOLDOWN_IN_SECONDS * 20.0d` e trunca com `d2i`; `getCastTime(int)` (`(I)I`, offsets 0–16) retorna `0` para `CastType.INSTANT`. Assim, `35`, `10`, `4.0` e `castTime=0` são coeficientes declarados pelo Apprentice Codex; mana/cooldown efetivos dependem da config instalada do Iron's, **NÃO VERIFICADA**. `getSpellPower(int,Entity)` (`(ILnet/minecraft/world/entity/Entity;)F`, offsets 0–79) aplica ainda `AttributeRegistry.SPELL_POWER`, `SchoolType.getPowerFor(LivingEntity)` e `POWER_MULTIPLIER`. Ver âncoras em [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).
 
 ## 4. Targeting / geometria
 
@@ -69,13 +69,14 @@ Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.
 | Raio do burst | `5` blocos, repassado por `setBurstRange` e persistido em `BloodBrandState.range`. |
 | Geometria do burst | `BloodBrandBurst` usa `HashSet<UUID>` de entidades já atingidas, AABB inflada pelo raio, distância até a AABB do alvo e `Utils.hasLineOfSight(level, center, targetBox.getCenter(), false)`. Sem linha de visão, o alvo não é atingido. |
 | Projétil | `SPEED=1.68`; `LIFE_TICKS=100`; `AIR_DRAG=0.99` (`Vec3.scale(0.99)` em `tick()`); aceleração `-0.03` bloco/tick² aplicada quando `!isNoGravity()`; `setViewScale(8.0)` no construtor. |
+| Redirecionamento | `BloodBrandKunai.isAttackable()` retorna `getType().is(EntityTypeTags.REDIRECTABLE_PROJECTILE)`. O comportamento de redirecionamento efetivo é provider/vanilla e não foi testado. |
 | Gravidade | `GRAVITY = 0.03` é magnitude positiva declarada; em `tick()` o delta recebe `Vec3.add(0.0, -0.03d, 0.0)` quando `!isNoGravity()`. Aceleração vertical efetiva: **-0.03 bloco/tick²**. Constante e aceleração são grandezas distintas; nenhum consumo de `GRAVITY` foi demonstrado nas classes inspecionadas. |
 
 ## 5. Resultado
 
-- **Contato:** dano `DamageTypes.BLOOD_BRAND` aplicado por `CombatTools.applyDamage`, com `KnockbackTypes.NO_KNOCKBACK`, escola Blood e owner resolvido por `CombatTools.getDamageSource(level, this, owner, ...)`.
+- **Contato:** dano `DamageTypes.BLOOD_BRAND` aplicado por `CombatTools.applySpellDamage(target, damage, source, SpellRegistry.BLOOD_BRAND.get(), KnockbackTypes.NO_KNOCKBACK)` no JAR 1.0.1.1; owner resolvido por `CombatTools.getDamageSource(level, this, owner, ...)`. O bytecode foi verificado em `BloodBrandKunai`.
 - **Marcação:** `BloodBrandState` associa `casterUuid`, `burstDamage` e `range` à vítima; `BloodBrandEvents` observa tick e morte.
-- **Burst na morte:** `BloodBrandBurst` aplica `burstDamage` a entidades próximas com `DamageTypes.BLOOD_BRAND_BURST`; na variante reforçada por Higanbana usa `DamageTypes.BLOOD_BRAND_HIGANBANA_BURST`. Deduplicação por `HashSet<UUID>` e filtro `CombatTools.isValidCombatTarget(..., caster)`; `Player` não é candidato.
+- **Burst na morte:** `BloodBrandBurst` aplica `burstDamage` a entidades próximas com `DamageTypes.BLOOD_BRAND_BURST` por `CombatTools.applySpellDamage(..., SpellRegistry.BLOOD_BRAND.get(), ...)`; na variante reforçada por Higanbana usa `DamageTypes.BLOOD_BRAND_HIGANBANA_BURST`. Deduplicação por `HashSet<UUID>` e filtro `CombatTools.isValidCombatTarget(..., caster)`; `Player` não é candidato.
 - **Cura:** `healRate = 0.5` no burst normal e `1.0` no reforçado, aplicada sobre `max(0, healthBefore - healthAfter)` de cada alvo dano, somada e curada uma vez no caster via `CombatTools.applySpellHealing`. Provider-owned e não observada em execução.
 - **Interação:** matar uma vítima marcada com Higanbana produz burst reforçado raio/dano `× 1.5`; a causa continua sendo o mesmo `Blood Brand cast`.
 - **Efeitos secundários:** partículas `DustParticleOptions` e som `SoundRegistry.ICE_DAGGER_THROW` no cast.
@@ -90,7 +91,7 @@ Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.
 | Dano bruto de burst | `8 * spellPower/100` | float; `getExplodeDamage()` |
 | Multiplicador de servidor | `ApprenticeCodexServerConfig.damageMultiplier(BLOOD_BRAND)` | default de config `1.0`, faixa `0.1–10.0`; valor instalado **NÃO VERIFICADO** |
 | Raio | `5` constante | blocos |
-| Duração da marca | `200` ticks | observado no fluxo `BloodBrandEvents`, confirmado nas classes 1.0.1 |
+| Duração da marca | `200` ticks | observado no fluxo `BloodBrandEvents`, confirmado nas classes 1.0.1.1 |
 | Cooldown | `4.0` s | `DefaultConfig` |
 
 Nenhum hard cap adicional de número de vítimas foi comprovado no JAR para além do `HashSet` de deduplicação.
@@ -118,11 +119,11 @@ Assinatura ocupada: "projétil de sangue que marca e explode na morte com cura p
 - ✅ Identidade, versão e hash do JAR; registro e classe; coeficientes; fórmulas; targeting; custos; boundary de mutação; limites de validação.
 - ⚠️ Configuração efetiva do pack (multiplicador de dano) não lida.
 - ⚠️ `physical_qa=NOT_TESTED`: sem cliente, servidor, Survival, PvP ou modpack real.
-- ✅ Duração da marca (`200` ticks), heal rate (`0.5`/`1.0`), raio/dano reforçados (`×1.5`) e linha de visão do burst confirmados nas classes 1.0.1.
-- ⚠️ Universo integral do provider não encerrado: recorte observado de 5 fichas.
+- ✅ Duração da marca (`200` ticks), heal rate (`0.5`/`1.0`), raio/dano reforçados (`×1.5`) e linha de visão do burst confirmados nas classes 1.0.1.1.
+- ⚠️ Universo integral do provider não encerrado: recorte observado de 15 fichas.
 
 ## Localizadores para Codex — resumo operacional
 
 - Não presumir que `setBurstRange` ou `setDamage` são pontos mutáveis por perk: são setters internos da entidade, sem callsite externo comprovado.
 - Para qualquer bridge, correlacionar `casterUuid` e burst exatamente uma vez; não duplicar custo, cooldown, mana ou proc.
-- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md) para hashes, comandos e limites da prova.
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) para hashes, comandos e limites da prova.

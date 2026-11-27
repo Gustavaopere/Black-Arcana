@@ -6,19 +6,20 @@
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
       "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
-      "version": "1.0.1",
-      "artifact_sha1": "3077999f51299a53a0af1b8a1aec22f4099e36a3",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
       "mutating_hook": "NOT_VERIFIED",
       "physical_qa": "NOT_TESTED",
-      "scope_note": "Contratos estáticos de Blood Brand no JAR físico 1.0.1; não homologa mutação, config efetiva, QA físico nem universo integral do provider.",
+      "scope_note": "Contrato técnico estático de Blood Brand revalidado no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
       "evidence": {
         "identity": {
-          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
-          "reason": "Identidade SHA-exata do JAR 1.0.1, mod ID, classe e registro ancorados no dossiê selado, sem reaproveitar a fonte 0.9.7.1 como certificação."
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro reancorados no dossiê do lote; 0.9.7.1 e 1.0.1 são históricos."
         },
         "behavior": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/blood-brand.md",
-          "reason": "Fluxo registro -> producao -> consumidor -> efeito rastreado no bytecode da versao exata, com estados, limites e divergencias documentados na ficha."
+          "reason": "Fluxo registro -> producao -> consumidor -> efeito revalidado no bytecode 1.0.1.1, com estados, limites e divergencias documentados na ficha."
         },
         "parameters": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/blood-brand.md",
@@ -37,8 +38,8 @@
           "reason": "Autoridade do provider e ausencia de hook mutador seguro sao explicadas; evento, setter ou callback existente nao e promovido a contrato de perk."
         },
         "validation": {
-          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
-          "reason": "Revisao estatica de segunda passagem contra javap/decompilacao do artefato exato; QA fisico e hooks mutadores continuam nao verificados."
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda passagem estatica contra javap/decompilacao do artefato 1.0.1.1; QA fisico e hooks mutadores continuam nao verificados."
         }
       }
     },
@@ -46,19 +47,20 @@
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
       "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
-      "version": "1.0.1",
-      "artifact_sha1": "3077999f51299a53a0af1b8a1aec22f4099e36a3",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
       "mutating_hook": "NOT_VERIFIED",
       "physical_qa": "NOT_TESTED",
-      "scope_note": "Contratos estáticos de Higanbana no JAR físico 1.0.1; não homologa mutação, config efetiva, QA físico nem universo integral do provider.",
+      "scope_note": "Contrato técnico estático de Higanbana revalidado no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
       "evidence": {
         "identity": {
-          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
-          "reason": "Identidade SHA-exata do JAR 1.0.1, mod ID, classe e registro ancorados no dossiê selado, sem reaproveitar a fonte 0.9.7.1 como certificação."
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro reancorados no dossiê do lote; 0.9.7.1 e 1.0.1 são históricos."
         },
         "behavior": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/higanbana.md",
-          "reason": "Fluxo registro -> producao -> consumidor -> efeito rastreado no bytecode da versao exata, com estados, limites e divergencias documentados na ficha."
+          "reason": "Fluxo registro -> producao -> consumidor -> efeito revalidado no bytecode 1.0.1.1, com estados, limites e divergencias documentados na ficha."
         },
         "parameters": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/higanbana.md",
@@ -77,8 +79,8 @@
           "reason": "Autoridade do provider e ausencia de hook mutador seguro sao explicadas; evento, setter ou callback existente nao e promovido a contrato de perk."
         },
         "validation": {
-          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
-          "reason": "Revisao estatica de segunda passagem contra javap/decompilacao do artefato exato; QA fisico e hooks mutadores continuam nao verificados."
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda passagem estatica contra javap/decompilacao do artefato 1.0.1.1; QA fisico e hooks mutadores continuam nao verificados."
         }
       }
     },
@@ -86,19 +88,20 @@
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
       "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
-      "version": "1.0.1",
-      "artifact_sha1": "3077999f51299a53a0af1b8a1aec22f4099e36a3",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
       "mutating_hook": "NOT_VERIFIED",
       "physical_qa": "NOT_TESTED",
-      "scope_note": "Contratos estáticos de Mist Form no JAR físico 1.0.1; não homologa mutação, config efetiva, QA físico nem universo integral do provider.",
+      "scope_note": "Contrato técnico estático de Mist Form revalidado no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
       "evidence": {
         "identity": {
-          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
-          "reason": "Identidade SHA-exata do JAR 1.0.1, mod ID, classe e registro ancorados no dossiê selado, sem reaproveitar a fonte 0.9.7.1 como certificação."
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro reancorados no dossiê do lote; 0.9.7.1 e 1.0.1 são históricos."
         },
         "behavior": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/mist-form.md",
-          "reason": "Fluxo registro -> producao -> consumidor -> efeito rastreado no bytecode da versao exata, com estados, limites e divergencias documentados na ficha."
+          "reason": "Fluxo registro -> producao -> consumidor -> efeito revalidado no bytecode 1.0.1.1, com estados, limites e divergencias documentados na ficha."
         },
         "parameters": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/blood/mist-form.md",
@@ -117,8 +120,8 @@
           "reason": "Autoridade do provider e ausencia de hook mutador seguro sao explicadas; evento, setter ou callback existente nao e promovido a contrato de perk."
         },
         "validation": {
-          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
-          "reason": "Revisao estatica de segunda passagem contra javap/decompilacao do artefato exato; QA fisico e hooks mutadores continuam nao verificados."
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda passagem estatica contra javap/decompilacao do artefato 1.0.1.1; QA fisico e hooks mutadores continuam nao verificados."
         }
       }
     },
@@ -126,19 +129,20 @@
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
       "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
-      "version": "1.0.1",
-      "artifact_sha1": "3077999f51299a53a0af1b8a1aec22f4099e36a3",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
       "mutating_hook": "NOT_VERIFIED",
       "physical_qa": "NOT_TESTED",
-      "scope_note": "Contratos estáticos de Deep Sensor no JAR físico 1.0.1; não homologa mutação, config efetiva, QA físico nem universo integral do provider.",
+      "scope_note": "Contrato técnico estático de Deep Sensor revalidado no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
       "evidence": {
         "identity": {
-          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
-          "reason": "Identidade SHA-exata do JAR 1.0.1, mod ID, classe e registro ancorados no dossiê selado, sem reaproveitar a fonte 0.9.7.1 como certificação."
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro reancorados no dossiê do lote; 0.9.7.1 e 1.0.1 são históricos."
         },
         "behavior": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/deep-sensor.md",
-          "reason": "Fluxo registro -> producao -> consumidor -> efeito rastreado no bytecode da versao exata, com estados, limites e divergencias documentados na ficha."
+          "reason": "Fluxo registro -> producao -> consumidor -> efeito revalidado no bytecode 1.0.1.1, com estados, limites e divergencias documentados na ficha."
         },
         "parameters": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/deep-sensor.md",
@@ -157,8 +161,8 @@
           "reason": "Autoridade do provider e ausencia de hook mutador seguro sao explicadas; evento, setter ou callback existente nao e promovido a contrato de perk."
         },
         "validation": {
-          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
-          "reason": "Revisao estatica de segunda passagem contra javap/decompilacao do artefato exato; QA fisico e hooks mutadores continuam nao verificados."
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda passagem estatica contra javap/decompilacao do artefato 1.0.1.1; QA fisico e hooks mutadores continuam nao verificados."
         }
       }
     },
@@ -166,19 +170,20 @@
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
       "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
-      "version": "1.0.1",
-      "artifact_sha1": "3077999f51299a53a0af1b8a1aec22f4099e36a3",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
       "mutating_hook": "NOT_VERIFIED",
       "physical_qa": "NOT_TESTED",
-      "scope_note": "Contratos estáticos de Echo Cast no JAR físico 1.0.1; não homologa mutação, config efetiva, QA físico nem universo integral do provider.",
+      "scope_note": "Contrato técnico estático de Echo Cast revalidado no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
       "evidence": {
         "identity": {
-          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
-          "reason": "Identidade SHA-exata do JAR 1.0.1, mod ID, classe e registro ancorados no dossiê selado, sem reaproveitar a fonte 0.9.7.1 como certificação."
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1, mod ID, classe e registro reancorados no dossiê do lote; 0.9.7.1 e 1.0.1 são históricos."
         },
         "behavior": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/echo-cast.md",
-          "reason": "Fluxo registro -> producao -> consumidor -> efeito rastreado no bytecode da versao exata, com estados, limites e divergencias documentados na ficha."
+          "reason": "Fluxo registro -> producao -> consumidor -> efeito revalidado no bytecode 1.0.1.1, com estados, limites e divergencias documentados na ficha."
         },
         "parameters": {
           "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/eldritch/echo-cast.md",
@@ -197,8 +202,8 @@
           "reason": "Autoridade do provider e ausencia de hook mutador seguro sao explicadas; evento, setter ou callback existente nao e promovido a contrato de perk."
         },
         "validation": {
-          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.md",
-          "reason": "Revisao estatica de segunda passagem contra javap/decompilacao do artefato exato; QA fisico e hooks mutadores continuam nao verificados."
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda passagem estatica contra javap/decompilacao do artefato 1.0.1.1; QA fisico e hooks mutadores continuam nao verificados."
         }
       }
     },

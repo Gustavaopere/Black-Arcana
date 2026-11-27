@@ -19,12 +19,12 @@
 | Tipo de cast | `CastType.INSTANT` |
 | Cooldown declarado | `4.0` s |
 | Recurso | Mana do Iron's (`baseManaCost=40`, `manaCostPerLevel=20`) |
-| JAR exato | `apprentice_codex-1.0.1-mc1.21.1.jar` |
-| SHA-256 do JAR | `47018AD8C6C6187B17C6BFC4D4F2FFF44EA2ED560719EBB6566A750715757947` |
-| SHA-1 do JAR | `3077999F51299A53A0AF1B8A1AEC22F4099E36A3` |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
 | Ambiente | Minecraft 1.21.1 · NeoForge 21.1.250 · Java 21 (JDK 21.0.12 na inspeção) |
 | Classe de implementação | `jp.aquafactory.apprenticecodex.spell.higanbana.Higanbana` |
-| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md) |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
 ## 2. Localizadores para o Codex
 
@@ -43,7 +43,7 @@
 | Lifesteal | `jp.aquafactory.apprenticecodex.spell.higanbana.HiganbanaLifestealEvent.onLivingDamage(Post)` |
 | Multiplicador | `ApprenticeCodexServerConfig.damageMultiplier(DamageMultiplierKey.HIGANBANA)` |
 
-Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`, `EXIT=0`, 347.597 bytes), não publicados integralmente.
+Descritores e offsets JVM foram reconsultados no JAR 1.0.1.1: saída `scratch/javap1011_legacy.txt` (`javap -classpath <JAR> -p -s -c`, `EXIT=0`, 233.376 bytes, SHA-256 `F59E0944BA6C04BF5A2B3A28145C9403B225EDF7EEC8425D4A0B6E189F63CCF3`) e anotações/constantes em `scratch/javap1011_v.txt` (`EXIT=0`), não publicadas integralmente.
 
 ## 3. Casting / execução
 
@@ -55,7 +55,7 @@ Descriptors e offsets JVM estão em `scratch/javap_check.txt` (`javap -p -s -c`,
 6. Cada `slash()` decrementa o contador, reinicia standby em `5` ticks e, no último corte, agenda `scheduleRelease(10)`; ao zerar o delay, a katana é descartada.
 7. `onCastCompleteWithWeapon` mantém a arma (`KEEP_WEAPON`) salvo cancelamento (`RELEASE_WEAPON`).
 
-Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.getManaCost(int)` (`(I)I`, offsets 0–29) calcula `(baseManaCost + manaCostPerLevel*(level-1)) * MANA_MULTIPLIER` e trunca com `d2i`; `getSpellCooldown()` (`()I`, offsets 0–18) calcula `COOLDOWN_IN_SECONDS * 20.0d` e trunca com `d2i`; `getCastTime(int)` (`(I)I`, offsets 0–16) retorna `0` para `CastType.INSTANT`. `getSpellPower(int,Entity)` (`(ILnet/minecraft/world/entity/Entity;)F`, offsets 0–79) multiplica ainda por `AttributeRegistry.SPELL_POWER`, `SchoolType.getPowerFor(LivingEntity)` e `POWER_MULTIPLIER`; `getLevelFor(int,LivingEntity)` (`(ILnet/minecraft/world/entity/LivingEntity;)I`, offsets 0–64) aplica Curios e `ModifySpellLevelEvent`. Assim, `40`, `20`, `100`, `100`, `4.0` e `castTime=0` são coeficientes declarados pelo Apprentice Codex; mana, cooldown, power e nível efetivos dependem da config instalada do Iron's, atributos e eventos, **NÃO VERIFICADOS**. Ver âncoras em [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md).
+Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.getManaCost(int)` (`(I)I`, offsets 0–29) calcula `(baseManaCost + manaCostPerLevel*(level-1)) * MANA_MULTIPLIER` e trunca com `d2i`; `getSpellCooldown()` (`()I`, offsets 0–18) calcula `COOLDOWN_IN_SECONDS * 20.0d` e trunca com `d2i`; `getCastTime(int)` (`(I)I`, offsets 0–16) retorna `0` para `CastType.INSTANT`. `getSpellPower(int,Entity)` (`(ILnet/minecraft/world/entity/Entity;)F`, offsets 0–79) multiplica ainda por `AttributeRegistry.SPELL_POWER`, `SchoolType.getPowerFor(LivingEntity)` e `POWER_MULTIPLIER`; `getLevelFor(int,LivingEntity)` (`(ILnet/minecraft/world/entity/LivingEntity;)I`, offsets 0–64) aplica Curios e `ModifySpellLevelEvent`. Assim, `40`, `20`, `100`, `100`, `4.0` e `castTime=0` são coeficientes declarados pelo Apprentice Codex; mana, cooldown, power e nível efetivos dependem da config instalada do Iron's, atributos e eventos, **NÃO VERIFICADOS**. Ver âncoras em [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).
 
 ## 4. Targeting / geometria
 
@@ -71,7 +71,7 @@ Guardas e custos são owned pelo Iron's. No JAR físico do host, `AbstractSpell.
 
 ## 5. Resultado
 
-- Cada corte aplica `CombatTools.applyDamage` com `DamageTypes.HIGANBANA`, escola Blood e `KnockbackTypes.NO_KNOCKBACK`.
+- Cada corte aplica `CombatTools.applySpellDamage(hit.entity(), damage, source, SpellRegistry.HIGANBANA.get(), KnockbackTypes.NO_KNOCKBACK)` com `DamageTypes.HIGANBANA` no JAR 1.0.1.1; o bytecode foi verificado em `HiganbanaKatanaEntity`.
 - Se o dano foi aplicado, `playDrainFeedback` toca `SoundRegistry.SLASH_DRAIN` e emite 20 partículas vermelhas no `ServerPlayer`.
 - Som por corte: `SoundRegistry.KATANA_SLASH` e `SoundEvents.PLAYER_ATTACK_SWEEP`.
 - Lifesteal: `LivingDamageEvent.Post` somente no servidor; exige `event.getSource().is(DamageTypes.HIGANBANA)`, `getSource().getEntity()` como `LivingEntity`, `newDamage > 0`; cura `dealtDamage * 0.5F` via `CombatTools.applySpellHealing`, com a escola da magia. O listener não possui guarda explícita `attacker != victim`.
@@ -115,10 +115,10 @@ Assinatura ocupada: "arma conjurada que executa quatro cortes orientados com dre
 - ⚠️ Configuração efetiva do pack (multiplicador de dano) não lida.
 - ⚠️ `physical_qa=NOT_TESTED`: sem cliente, servidor, Survival, PvP ou modpack real.
 - ⚠️ Consumo efetivo de `getAttackDepth()` fora do tooltip e do próprio provider não rastreado além de `Higanbana.getRange()`.
-- ⚠️ Universo integral do provider não encerrado: recorte observado de 5 fichas.
+- ⚠️ Universo integral do provider não encerrado: recorte observado de 15 fichas.
 
 ## Localizadores para Codex — resumo operacional
 
 - Não tratar `setDamage`, `setRemainingSlashCount` ou `setFirstSlashStandby` como pontos mutáveis por perk: são setters internos da entidade, sem callsite externo comprovado.
 - Correlacionar `DamageTypes.HIGANBANA` com o lifesteal exatamente uma vez por evento de dano.
-- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.md) para hashes, comandos e limites da prova.
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) para hashes, comandos e limites da prova.
