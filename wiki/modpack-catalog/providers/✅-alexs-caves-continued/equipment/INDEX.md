@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 6/9.**
+**Fichas catalogadas (somente fichas detectadas): 7/9.**
 
-**Barra das fichas catalogadas:** `█████████████░░░░░░░ 66.7%`
+**Barra das fichas catalogadas:** `███████████████░░░░░ 77.8%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 6/9.**
+**Homologadas para perks (somente fichas detectadas): 7/9.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 66.7%`
+**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 77.8%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -25,7 +25,7 @@
 | ✅ | Extinction Spear | [ficha/extinction-spear.md](extinction-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Frostmint Spear | [ficha/frostmint-spear.md](frostmint-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Galena Gauntlet | [ficha/galena-gauntlet.md](galena-gauntlet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Limestone Spear | [ficha/limestone-spear.md](limestone-spear.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Limestone Spear | [ficha/limestone-spear.md](limestone-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Ortholance | [ficha/ortholance.md](ortholance.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Primitive Club | [ficha/primitive-club.md](primitive-club.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shot Gum | [ficha/shot-gum.md](shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
