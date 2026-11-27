@@ -2,27 +2,27 @@
 
 > Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
 
-**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+**Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
 
-**Fichas catalogadas (somente fichas detectadas): 0/3.**
+**Fichas catalogadas (somente fichas detectadas): 3/3.**
 
-**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 0/3.**
+**Homologadas para perks (somente fichas detectadas): 3/3.**
 
-**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
-**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
+**Contratos desta subpasta:** ✅ contratos técnicos estáticos de todas as fichas detectadas certificados; recorte documental, sem homologação de hooks mutadores, QA físico ou universo integral do provider.
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
-| ⚠️ | Blood Brand | [ficha/blood-brand.md](blood-brand.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Higanbana | [ficha/higanbana.md](higanbana.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Mist Form | [ficha/mist-form.md](mist-form.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Blood Brand | [ficha/blood-brand.md](blood-brand.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Higanbana | [ficha/higanbana.md](higanbana.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Mist Form | [ficha/mist-form.md](mist-form.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 

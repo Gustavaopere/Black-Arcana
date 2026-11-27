@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 0/7.**
+**Fichas catalogadas (somente fichas detectadas): 2/7.**
 
-**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra das fichas catalogadas:** `█████░░░░░░░░░░░░░░░ 28.6%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 0/7.**
+**Homologadas para perks (somente fichas detectadas): 2/7.**
 
-**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra dos contratos técnicos estáticos:** `█████░░░░░░░░░░░░░░░ 28.6%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -20,8 +20,8 @@
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
-| ⚠️ | Deep Sensor | [ficha/deep-sensor.md](deep-sensor.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Echo Cast | [ficha/echo-cast.md](echo-cast.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Deep Sensor | [ficha/deep-sensor.md](deep-sensor.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Echo Cast | [ficha/echo-cast.md](echo-cast.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Mana Transcription | [ficha/mana-transcription.md](mana-transcription.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Moonlight | [ficha/moonlight.md](moonlight.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Otherworld Lens | [ficha/otherworld-lens.md](otherworld-lens.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
