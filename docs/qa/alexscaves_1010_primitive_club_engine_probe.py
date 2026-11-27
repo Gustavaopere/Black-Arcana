@@ -85,6 +85,18 @@ def verify_club_registry(reg):
 def inspect(args):
     select = {k:set(v) for k,v in SELECT.items()}
     required = {k:set(v) for k,v in REQUIRED.items()}
+    if args.schema == 2:
+        # Exact delegated callsites discovered in schema 1; retain schema 1 seal.
+        extra = {
+            "net/neoforged/neoforge/common/CommonHooks": {"canMobEffectBeApplied"},
+            "net/neoforged/neoforge/event/EventHooks": {"onEffectRemoved"},
+            M+"world/effect/MobEffectInstance": {"onEffectStarted","onEffectAdded","isShorterDurationThan","hasRemainingDuration","isInfiniteDuration"},
+            M+"world/effect/MobEffect$AttributeTemplate": {"create"},
+            L: {"die","dropCustomDeathLoot"},
+        }
+        for owner,names in extra.items():
+            select.setdefault(owner,set()).update(names)
+            required.setdefault(owner,set()).update(names)
     verify_artifact(args.publisher)
     verify_universal(args.universal, "universal")
     require(not args.output.exists(), "write-once report required")
@@ -142,7 +154,7 @@ def inspect(args):
             classes[owner]={"present":True,"source":source,"available_sources":[k for k,_ in found],
                             "class_sha256":sha,"parent":rd.parent,"interfaces":rd.interfaces,
                             "fields":rd.fields,"declarations":rd.methods,"methods":methods}
-    report={"schema_version":1,"scope":"PRIMITIVE_CLUB_ENGINE_DISCOVERY_ONLY",
+    report={"schema_version":args.schema,"scope":"PRIMITIVE_CLUB_ENGINE_DISCOVERY_ONLY" if args.schema==1 else "PRIMITIVE_CLUB_EFFECT_DELEGATION_DISCOVERY_ONLY",
             "artifact":artifact,"classes":classes,"item_registry":reg,"resources":resources,"limits":LIMITS}
     data=canonical(report).encode()
     require(len(data)<=10_000_000,"report byte budget")
@@ -188,6 +200,7 @@ if __name__=="__main__":
     for name in ("installer","server","srg","universal","publisher","output"):
         p.add_argument("--"+name,type=Path)
     p.add_argument("--javap",default="javap")
+    p.add_argument("--schema",type=int,choices=(1,2),default=1)
     p.add_argument("--self-test",action="store_true")
     a=p.parse_args()
     if a.self_test:

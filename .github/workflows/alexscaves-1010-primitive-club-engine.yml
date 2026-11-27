@@ -92,12 +92,30 @@ jobs:
             --javap "$JAVA_HOME/bin/javap" \
             --output build/primitive-club-engine/report-replay.json
           cmp build/primitive-club-engine/report.json build/primitive-club-engine/report-replay.json
-          sha256sum build/primitive-club-engine/report.json
+          test "$(wc -c < build/primitive-club-engine/report.json)" = 1849329
+          echo '6a88cd3ea7ce1f8ebb7d7f0fd9e0c832e31cbc94275b2c3dc2049022d2915044  build/primitive-club-engine/report.json' | sha256sum -c -
+      - name: Inspect and independently reproduce effect acceptance and death delegation
+        run: |
+          for output in effect-delegation effect-delegation-replay; do
+            python3 docs/qa/alexscaves_1010_primitive_club_engine_probe.py \
+              --schema 2 \
+              --installer build/primitive-club-engine/installer.jar \
+              --server build/primitive-club-engine/libraries/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-server.jar \
+              --srg build/primitive-club-engine/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
+              --universal build/primitive-club-engine/universal.jar \
+              --publisher build/primitive-club-engine/publisher.jar \
+              --javap "$JAVA_HOME/bin/javap" \
+              --output "build/primitive-club-engine/$output.json"
+          done
+          cmp build/primitive-club-engine/effect-delegation.json build/primitive-club-engine/effect-delegation-replay.json
+          sha256sum build/primitive-club-engine/effect-delegation.json
       - name: Archive bounded discovery report
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: primitive-club-engine
-          path: build/primitive-club-engine/report.json
+          path: |
+            build/primitive-club-engine/report.json
+            build/primitive-club-engine/effect-delegation.json
           if-no-files-found: warn
           retention-days: 14
