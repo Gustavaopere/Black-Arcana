@@ -23,6 +23,21 @@ C = P+"misc/ACPlatform"
 K = P+"misc/ACCompat"
 R = P+"entity/ACEntityRegistry"
 IR = P+"item/ACItemRegistry"
+N = "net/neoforged/neoforge/"
+# Exact downstream call descriptors from run 46050487545.
+EXACT = {
+    C: {("explosion","(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;DDDFLnet/minecraft/world/level/Explosion$BlockInteraction;)Lnet/minecraft/world/level/Explosion;"),
+        ("ignoreExplosion","(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Explosion;)Z"),
+        ("canEntityGrief","(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Z")},
+    K: {("explosionKnockback","(Lnet/minecraft/world/entity/LivingEntity;D)D")},
+    N+"event/EventHooks": {("canEntityGrief","(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Z")},
+    M+"world/level/Level": {("setBlock","(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z")},
+}
+CODE_PINS = {
+    (X,"explode","()V"):"ce8f370d8fc22956863854365bea6563c2f2b4ddfa2698505f5dd98015d6d0c5",
+    (X,"finalizeExplosion","(Z)V"):"9f2dd8143197e28d90a4605e2ebd93b80823a683f6c8bc3e4e3c5b0e0d74c4b3",
+    (C,"canEntityGrief","(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Z"):"47ba69b4ee560a4248ee86ce07505de2eeeeedeaa1bd5acfb88294ecda37a50a",
+}
 ALL = {I,W,X}
 FACTORIES = {
     "lambda$static$112":"620d93b80cee080c5a16582cdc36b279266c396c9c32312ab22b450cb5394f5c",
@@ -30,9 +45,14 @@ FACTORIES = {
 }
 SELECT = {
     IR: set(FACTORIES),
-    C: {"canEntityGrief"},
-    K: {"gameRule"},
-    M+"world/entity/Entity": {"baseTick","move","getY","remove","getInBlockState","checkInsideBlocks","isInWater"},
+    C: {"canEntityGrief","explosion","ignoreExplosion"},
+    K: {"gameRule","explosionKnockback"},
+    P+"misc/ACTagRegistry": {"<clinit>"},
+    M+"world/entity/LivingEntity": {"ignoreExplosion","getAttributeValue","getAttribute"},
+    M+"world/item/enchantment/EnchantmentHelper": {"modifyKnockback","modifyExplosionKnockback","getExplosionKnockbackAfterDampener"},
+    M+"world/level/storage/loot/LootParams$Builder": {"withParameter","withOptionalParameter","create"},
+    M+"world/level/block/Block": {"popResource","getExplosionResistance","spawnAfterBreak","getDrops"},
+    M+"world/entity/Entity": {"ignoreExplosion","baseTick","move","getY","remove","getInBlockState","checkInsideBlocks","isInWater"},
     M+"world/entity/projectile/Projectile": {"onHit","onHitEntity","getOwner","setOwner","addAdditionalSaveData","readAdditionalSaveData","updateRotation","shootFromRotation"},
     M+"world/entity/projectile/ThrowableProjectile": {"<init>","tick"},
     M+"world/entity/projectile/ThrowableItemProjectile": {"<init>","setItem","getItem","addAdditionalSaveData","readAdditionalSaveData"},
@@ -40,11 +60,11 @@ SELECT = {
     M+"world/level/Explosion": {"<init>","getDirectSourceEntity","getIndirectSourceEntity","getDamageSource","getToBlow","getHitPlayers","interactsWithBlocks","getSeenPercent"},
     M+"world/level/ExplosionDamageCalculator": {"getBlockExplosionResistance","shouldBlockExplode","shouldDamageEntity","getEntityDamageAmount","getKnockbackMultiplier"},
     M+"world/level/EntityBasedExplosionDamageCalculator": {"getBlockExplosionResistance","shouldBlockExplode"},
-    M+"world/level/Level": {"getEntities","getBlockState","getFluidState","destroyBlock"},
-    M+"world/level/block/state/BlockBehaviour$BlockStateBase": {"onExplosionHit"},
+    M+"world/level/Level": {"getEntities","getBlockState","getFluidState","destroyBlock","setBlock","markAndNotifyBlock"},
+    M+"world/level/block/state/BlockBehaviour$BlockStateBase": {"onExplosionHit","spawnAfterBreak","getDrops"},
     M+"world/damagesource/DamageSources": {"thrown","explosion"},
     M+"server/level/ServerLevel": {"addFreshEntity","addEntity"},
-    "net/neoforged/neoforge/event/EventHooks": {"onExplosionStart","onExplosionDetonate","getMobGriefingEvent"},
+    "net/neoforged/neoforge/event/EventHooks": {"onExplosionStart","onExplosionDetonate","getMobGriefingEvent","canEntityGrief"},
     "net/neoforged/neoforge/common/CommonHooks": {"canEntityGrief"},
 }
 REQUIRED = {
@@ -61,6 +81,11 @@ REQUIRED = {
 PINS = {
     I:"925fb7047dddc8044929b0a581af2a4dcf5c6688dd277f445c9bc0dbd1f9d57d",
     W:"d9ecff8deceecb68e066b3675a8835206698180d77a846150dba94eea96094ca",
+    X:"84ad7a97c853ee0825fa3ff3b7d570cc1b8d4a23e40b06cd918e7226e2656922",
+    C:"662a4d2593fe515ed8790bad06d8184d1eb921423033dfd11b3b44142dedc3e6",
+    K:"333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+    N+"event/EventHooks":"f810377f87c95c04bb4de7a7ac68e8f4862f9ca33a34cc74e067e65e2a92d66b",
+    M+"world/level/Level":"74a062f0d480674152fa4665bd7b483fca52de8dd3b07178c1a6c40d3fae3fae",
 }
 LIMITS = {"static_contract":"NOT_CERTIFIED","mutating_hook":"NOT_VERIFIED",
           "physical_qa":"NOT_TESTED","mutation":"NO_MUTATION",
@@ -71,6 +96,9 @@ LIMITS = {"static_contract":"NOT_CERTIFIED","mutating_hook":"NOT_VERIFIED",
 def inspect(args):
     select = {k:set(v) for k,v in SELECT.items()}
     required = {k:set(v) for k,v in REQUIRED.items()}
+    for owner,keys in EXACT.items():
+        select.setdefault(owner,set()).update(n for n,d in keys)
+        required.setdefault(owner,set()).update(n for n,d in keys)
     verify_artifact(args.publisher)
     verify_universal(args.universal, "universal")
     require(not args.output.exists(), "write-once report required")
@@ -99,6 +127,11 @@ def inspect(args):
         raw=mod.read(path)
         require(digest(raw)=="f8ae5ab1ee385e03594e596f8664f500223ebf9b0edeccd3e4ca8ce5d9aece48","model pin")
         resources={path:{"sha256":digest(raw),"bytes":len(raw),"data":json.loads(raw)}}
+        # Packaged tag candidates, not effective datapack state.
+        tag_paths=sorted(p for p in mod.namelist() if p.startswith("data/") and "/tags/" in p and p.endswith(".json") and ("unmoveable" in p.lower() or "unmovable" in p.lower()))
+        for tag_path in tag_paths:
+            tag_raw=mod.read(tag_path)
+            resources[tag_path]={"sha256":digest(tag_raw),"bytes":len(tag_raw),"data":json.loads(tag_raw)}
         consumers=[]
         for path in sorted(p for p in mod.namelist() if p.endswith(".class")):
             rd=ClassReader(mod.read(path))
@@ -106,7 +139,7 @@ def inspect(args):
             refs=rd.typed_refs(X)
             if refs:
                 consumers.append({"owner":rd.name,"typed_refs":refs})
-        require(len(consumers)<=40 and any(x["owner"]==W for x in consumers),"mine explosion census")
+        require({x["owner"] for x in consumers}=={W,X,P+"entity/living/MineGuardianEntity"},"prior mine explosion typed census drift")
         classes = {}
         for owner in sorted(ALL | set(select)):
             found = [(name,z) for name,z,entries in roster if owner+".class" in entries]
@@ -122,6 +155,10 @@ def inspect(args):
             require(owner not in PINS or sha==PINS[owner],"prior class pin "+owner)
             decls=[d for d in rd.methods if owner in ALL or d["name"] in select.get(owner,set())]
             require(required.get(owner,set()) <= {d["name"] for d in decls},"required declaration absent "+owner)
+            require(EXACT.get(owner,set()) <= {(d["name"],d["descriptor"]) for d in decls if "code_sha256" in d},"required exact executable descriptor absent "+owner)
+            for d in decls:
+                pin=CODE_PINS.get((owner,d["name"],d["descriptor"]))
+                require(pin is None or d.get("code_sha256")==pin,"prior Code pin drift "+owner+"."+d["name"])
             require(len(decls)<=120,"method budget "+owner)
             parsed=disassemble(cp,args.javap,owner)
             methods=[]
@@ -142,7 +179,12 @@ def inspect(args):
             classes[owner]={"present":True,"source":source,"available_sources":[k for k,_ in found],
                             "class_sha256":sha,"parent":rd.parent,"interfaces":rd.interfaces,
                             "fields":rd.fields,"declarations":rd.methods,"methods":methods}
-    report={"schema_version":1,"scope":"DEPTH_CHARGE_MINE_EXPLOSION_DISCOVERY_ONLY",
+    water_sites=[{"method":m["name"],"descriptor":m["descriptor"],"code_sha256":m["code_sha256"],"site":site}
+                 for m in classes[X]["methods"] for site in m.get("typed_members",[])
+                 if site["owner"]==X and site["name"]=="underwaterSound"]
+    require(any(row["site"]["opcode"]=="getfield" for row in water_sites),"underwaterSound reader absent")
+    report={"schema_version":2,"scope":"DEPTH_CHARGE_MINE_EXPLOSION_WRAPPERS_DISCOVERY_ONLY",
+            "underwater_sound_sites":water_sites,"packaged_unmoveable_tag_candidates":tag_paths,
             "artifact":artifact,"classes":classes,"entity_registry":reg,"resources":resources,"mine_explosion_consumers":consumers,"limits":LIMITS}
     data=canonical(report).encode()
     require(len(data)<=10_000_000,"report byte budget")
@@ -156,12 +198,18 @@ def inspect(args):
             print("SEMANTIC",json.dumps({"owner":owner,**method},sort_keys=True))
     print("REGISTRY",json.dumps(reg,sort_keys=True))
     print("CONSUMERS",json.dumps(consumers,sort_keys=True))
+    print("UNDERWATER_SOUND_SITES",json.dumps(water_sites,sort_keys=True))
+    print("PACKAGED_TAG_CANDIDATES",json.dumps(tag_paths))
     print("RESOURCES",json.dumps(resources,sort_keys=True))
     print("DISCOVERY_ONLY NO_MUTATION NO_PHYSICAL_QA")
 
 def self_test():
     require(set(PINS) <= ALL | set(SELECT),"pins out of scope")
     require(len(FACTORIES)==2,"identity pins")
+    require({n for n,d in EXACT[C]}=={"explosion","ignoreExplosion","canEntityGrief"},"wrapper coverage")
+    require({n for n,d in EXACT[K]}=={"explosionKnockback"},"knockback coverage")
+    require(all(owner in PINS for owner in EXACT),"exact owner pin coverage")
+    require(all(owner in PINS for owner,n,d in CODE_PINS),"Code pin owner coverage")
     require(REQUIRED[W] >= {"tick","explode","onHit","onHitEntity"},"own tick coverage")
     require(REQUIRED[X] >= {"<init>","explode","finalizeExplosion"},"explosion coverage")
     require(LIMITS["static_contract"]=="NOT_CERTIFIED" and LIMITS["mutation"]=="NO_MUTATION","policy")
