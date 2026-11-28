@@ -30,8 +30,12 @@ SELECT={
     P+"block/MusselBlock":{"<clinit>","<init>","createBlockStateDefinition","updateShape","getFluidState","getStateForPlacement","canSurvive","randomTick","tick","getShape"},
     M+"world/item/context/UseOnContext":{"<init>","getPlayer","getItemInHand","getClickedPos","getClickLocation","getLevel"},
     M+"world/item/ItemStack":{"useOn","onItemUse","shrink","grow","setCount","getCount","copy","copyWithCount","isEmpty","getMaxStackSize","<init>"},
-    M+"world/item/Item":{"useOn","getMaxStackSize","<init>"},
-    M+"world/item/Item$Properties":{"<init>","buildAndValidateComponents"},
+    M+"world/item/Item":{"useOn","getMaxStackSize","<init>","byBlock"},
+    M+"world/item/Item$Properties":{"<init>","buildAndValidateComponents","buildComponents"},
+    M+"world/item/BlockItem":{"registerBlocks"},
+    M+"world/item/StandingAndWallBlockItem":{"registerBlocks","<init>"},
+    M+"world/item/Items":{"registerItem","registerBlock"},
+    M+"core/component/DataComponents":set(),
     M+"world/level/block/Block":{"asItem"},
     M+"world/level/block/BaseCoralWallFanBlock":{"asItem"},
     M+"world/entity/Entity":{"spawnAtLocation"},
@@ -141,6 +145,19 @@ def inspect(a):
                     tag_sites.append({"owner":tag_rd.name,"method":key[0],"code_sha256":decl["code_sha256"],"offset":at,
                         "window":[{"offset":q,"opcode":body[q][0],"operand":body[q][1],"symbol":body[q][2]} for q in offsets[max(0,i-6):i+1]]})
         require(len(tag_sites)==2,"two exact tag registration sites")
+        item_rd=ClassReader(ov.read(M+"world/item/Items.class") if M+"world/item/Items.class" in index[0][2] else mc.read(M+"world/item/Items.class"))
+        item_init=disassemble(cp,a.javap,item_rd.name)
+        coral_bindings=[]
+        for key,body in sorted(item_init.items()):
+            if key[0]!="<clinit>":continue
+            offsets=sorted(body)
+            for i,at in enumerate(offsets):
+                op,arg,sym=body[at]
+                if op=="getstatic" and any("Blocks."+c+"_CORAL_WALL_FAN:" in sym for c in ("TUBE","BRAIN","BUBBLE","FIRE","HORN")) and "DEAD_" not in sym:
+                    decl=next(d for d in item_rd.methods if (d["name"],d["descriptor"])==key)
+                    coral_bindings.append({"owner":item_rd.name,"code_sha256":decl["code_sha256"],"offset":at,
+                       "window":[{"offset":q,"opcode":body[q][0],"operand":body[q][1],"symbol":body[q][2]} for q in offsets[max(0,i-8):i+16]]})
+        require(len(coral_bindings)==5,"five living wall fan bindings")
         for owner in sorted(set(SELECT)|{I}|loot_owners):
             found=[(n,z) for n,z,paths in index if owner+".class" in paths]
             if not found:
@@ -182,8 +199,8 @@ def inspect(a):
                 resources[p]={"sha256":digest(raw),"bytes":len(raw),"refs":hits,"data":obj}
         require(len(resources)<=100,"resource hit budget")
         require(digest(mod.read("assets/alexscaves/models/item/marine_snow.json"))=="179f4314608e9b3f7b8351759bc30e0a1641620c978e909f568e9daf31e4451c","model pin")
-    report={"schema":3,"artifact":artifact,"classes":classes,"publisher_candidates":candidates,
-            "data_json_count":len(paths),"resources":resources,"field_sites":field_sites,"loot_string_owners":digestion,"loot_owners":sorted(loot_owners),"tag_sites":tag_sites,"limits":LIMITS}
+    report={"schema":4,"artifact":artifact,"classes":classes,"publisher_candidates":candidates,
+            "data_json_count":len(paths),"resources":resources,"field_sites":field_sites,"loot_string_owners":digestion,"loot_owners":sorted(loot_owners),"tag_sites":tag_sites,"coral_bindings":coral_bindings,"limits":LIMITS}
     data=canonical(report).encode();require(len(data)<=12000000,"report budget")
     a.output.parent.mkdir(parents=True,exist_ok=True)
     with a.output.open("xb") as f:f.write(data)
@@ -195,6 +212,7 @@ def inspect(a):
     print("RESOURCES",json.dumps(resources,sort_keys=True))
     print("FIELD_SITES",json.dumps(field_sites,sort_keys=True))
     print("TAG_SITES",json.dumps(tag_sites,sort_keys=True))
+    print("CORAL_BINDINGS",json.dumps(coral_bindings,sort_keys=True))
     print("LOOT_CANDIDATES",json.dumps({"strings":digestion,"owners":sorted(loot_owners)},sort_keys=True))
     print("DISCOVERY_ONLY NO_MUTATION NO_PHYSICAL_QA")
 
