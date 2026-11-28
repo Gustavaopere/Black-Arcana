@@ -12735,6 +12735,52 @@
         "integration": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/servant-gaze.md", "reason": "Staff nao e familiar BA; shouldBeSaved=false impede presumir persistencia apos restart."},
         "validation": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Segunda leitura contra bytecode e decompilacao do artefato exato; nenhum reward de Mastery por tick de torre promovido."}
       }
+    },
+    "✅-alexs-caves-continued/items/depth-charge.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+      "artifact_size_bytes": 75279314,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Depth Charge manual, entidade, MineExplosion e consumidores diretos SHA-exatos; não comprova dispatch físico, claims, loot efetivo, mutação nem universo integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
+          "reason": "Factory, registry e modelo SHA-exatos, tag e entidade; modlist #019 e publisher pinados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
+          "reason": "Uso e tick próprio, 32ª atualização elegível, MineExplosion, efeitos solicitados e callback condicional; censo publisher de 1555 classes."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
+          "reason": "Angle, speed, dispersão, gravidade, drag, dimensões, tracking, temporização, fórmula de dano e raio; ausência de alcance fixo."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
+          "reason": "AABB, distância normalizada, exposição por amostras, ignoreExplosion, dano e knockback; gates de blocos e contato condicional."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
+          "reason": "Shrink(1) condicionado a instabuild, spawn sem receipt, loot e crafting declarativos, sem cooldown/mana próprios."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
+          "reason": "Owner/UUID, save/load herdado, packet, recusa de spawn, política de blocos e consumidores compartilhados; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
+          "reason": "Dois replays schema 4 de 2084194 bytes SHA-256 ef61a49077fb21638212873cbfabcfb1bf23e0d95189f04cabcd9babc6a6bd26, run 46090631197/job 140810449309; CI final exigida."
+        }
+      }
     }
   },
   "providers": {},
