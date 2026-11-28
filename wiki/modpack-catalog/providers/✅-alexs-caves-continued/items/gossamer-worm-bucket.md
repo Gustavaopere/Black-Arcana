@@ -117,3 +117,16 @@ Schema 3 da sonda amplia apenas o downstream causal: ACCompat asInput/asOutput, 
 ### Gate final desta revisão
 
 Fechados corpos dos wrappers e fronteiras causais acima no escopo distribuído; lacunas de implementação observadas permanecem: appendCustomNameConfig e lambda de ENTITY_DATA, grow/split e liquidação de inventário, alcance exato do POV hit, hooks de autorização/mundo efetivamente carregados, persistência física, efeitos multipart e atributos próprios fora do recorte de transporte. Não confundir cobertura do item com contrato integral do mob. Sem prova de integração mutadora individual; nenhum novo cast, dano mágico, root, ledger ou índice promovido. `STATIC_DISCOVERY_ONLY / NOT_CERTIFIED / NO_MUTATION / NOT_TESTED`. A CI específica schema 3 está aprovada no HEAD de coleta; a revisão documental requer seus próprios checks.
+
+
+## Terceira coleta preparada — assentamento de recursos e targeting
+
+Retomada a partir da main `90be29b5fc21c1a357e545809c8057fa3625119b` e modlist sibling `b05e2536461bc0a9c526dc47a38e3b9af62d941c`, #001 NeoForge 21.1.250, #019 Alex's Caves Continued 1.0.10. Sem nova medição local do JAR. Preservados os resultados de schema 3 acima. Commit da sonda schema 4 `72ecd861ad7a1941c9f86f4a8f7afce375fb6885`.
+
+- Consumer de nome e ENTITY_DATA: o replay anterior registra appendDefaultStackConfig @2 → appendCustomNameConfig, @8 → appendCustomEntityStackConfig; bootstrap #6 @28 aponta para lambda$appendCustomEntityStackConfig$3(ServerLevel,Player,CustomData,Entity)V. O bootstrap #4 de createDefaultStackConfig aponta para lambda$createDefaultStackConfig$1(Entity)V. A nova projeção exige descritores exatos, resolve os handles internos de appendCustomNameConfig a partir do corpo e preserva a distinção entre CUSTOM_NAME, ENTITY_DATA e FishBucketTag. Não pressupõe o que a lambda faz.
+- Targeting: BucketItem.use @28 invoca getPlayerPOVHitResult(Level,Player,ClipContext.Fluid)BlockHitResult; selecionar declaração Item, alcance do jogador e consumidores. Não atribuir antecipadamente uma distância fixa ou autorização de alvo.
+- Custos: ItemUtils.createFilledResult usa Inventory.contains(ItemStack)Z @20, add(ItemStack)Z @31/57 e Player.drop(ItemStack,Z)ItemEntity @66. Projetar seleção de slot, limites da stack e fallback; grow/split e métodos de contagem, com descritores exatos para a mutação e métodos de inventário. Não confundir retorno lógico, stack liquidada e item físico inserido.
+- CompoundTag: projetar getters/contains/copy e identificar o comportamento de ausência/tipo; não presumir sanitização.
+- A sonda mantém pins, duas reproduções e orçamento de projeção. Os nomes candidatos que não correspondam a declaração exigida permanecem explicitamente não resolvidos. Resultado schema 4 PENDENTE; nenhum hook, alteração de runtime, novo cast/raiz, ledger ou índice promovido. O certificado parcial só poderá ser revisto após o replay e exame das fronteiras restantes, inclusive eventual estado multipart relevante e QA física.
+
+`STATIC_DISCOVERY_ONLY / NOT_CERTIFIED / NO_MUTATION / NOT_TESTED`.
