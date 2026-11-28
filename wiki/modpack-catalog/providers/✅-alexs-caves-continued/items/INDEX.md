@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 45/81.**
+**Fichas catalogadas (somente fichas detectadas): 46/81.**
 
-**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 55.6%`
+**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 56.8%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 45/81.**
+**Homologadas para perks (somente fichas detectadas): 46/81.**
 
-**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 55.6%`
+**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 56.8%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -68,7 +68,7 @@
 | ✅ | Primordial Pants | [ficha/primordial-pants.md](primordial-pants.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Primordial Soup | [ficha/primordial-soup.md](primordial-soup.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Primordial Tunic | [ficha/primordial-tunic.md](primordial-tunic.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Purple Soda Bottle Rocket | [ficha/purple-soda-bottle-rocket.md](purple-soda-bottle-rocket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Purple Soda Bottle Rocket | [ficha/purple-soda-bottle-rocket.md](purple-soda-bottle-rocket.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Purple Soda Bottle | [ficha/purple-soda-bottle.md](purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Quarry Smasher | [ficha/quarry-smasher.md](quarry-smasher.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Radgill Bucket | [ficha/radgill-bucket.md](radgill-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |

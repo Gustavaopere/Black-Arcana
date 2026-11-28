@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 148/184.**
+**Fichas catalogadas (somente fichas detectadas): 149/184.**
 
-**Barra das fichas catalogadas:** `████████████████░░░░ 80.4%`
+**Barra das fichas catalogadas:** `████████████████░░░░ 81.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 148/184.**
+**Homologadas para perks (somente fichas detectadas): 149/184.**
 
-**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 80.4%`
+**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 81.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -159,7 +159,7 @@
 | ✅ | Primordial Pants | [items/primordial-pants.md](items/primordial-pants.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Primordial Soup | [items/primordial-soup.md](items/primordial-soup.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Primordial Tunic | [items/primordial-tunic.md](items/primordial-tunic.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Purple Soda Bottle Rocket | [items/purple-soda-bottle-rocket.md](items/purple-soda-bottle-rocket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Purple Soda Bottle Rocket | [items/purple-soda-bottle-rocket.md](items/purple-soda-bottle-rocket.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Purple Soda Bottle | [items/purple-soda-bottle.md](items/purple-soda-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Quarry Smasher | [items/quarry-smasher.md](items/quarry-smasher.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Radgill Bucket | [items/radgill-bucket.md](items/radgill-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -218,7 +218,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 9/9 (100.0%) | 9 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 45/81 (55.6%) | 45 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Items | 46/81 (56.8%) | 46 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 16/16 (100.0%) | 16 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
