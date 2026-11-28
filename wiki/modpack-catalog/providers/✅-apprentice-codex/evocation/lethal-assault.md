@@ -1,60 +1,115 @@
 # Lethal Assault
 
-- **Provider:** Apprentice's Codex
-- **Registry ID:** `apprenticecodex:lethal_assault`
-- **Iron's school:** Evocation
-- **Levels:** 1–5
-- **Minimum rarity:** Uncommon
-- **Cast type:** Instant
-- **Cooldown:** 1.5 s
-- **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+**Estado do contrato:** ✅ `COMPLETE_PERK_READY` — `STATIC_TECHNICAL_CATALOG_ONLY` · `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `mutation=NO_MUTATION` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED`.
 
-## Exact source coefficients
+> O ✅ cobre exclusivamente a documentação estática SHA-exata deste objeto. Não homologa hook mutador, execução no pack, configuração efetiva, universo integral do provider nem QA físico.
 
-- `baseSpellPower = 500`
-- `spellPowerPerLevel = 200`
-- `baseManaCost = 20`
-- `manaCostPerLevel = 5`
-- `castTime = 0`
-- burst size: **3**
-- range: **48 blocks**
-- damage per burst projectile: `(spellPower / 300) * providerDamageMultiplier`
+## 1. Identidade e proveniência
 
-The source explicitly divides the spell-power contribution by three because the summoned rifle fires a three-shot burst.
+| Campo | Valor verificado |
+|---|---|
+| Provider | Apprentice's Codex |
+| Mod ID | `apprenticecodex` |
+| Registry ID | `apprenticecodex:lethal_assault` |
+| Host | Iron's Spells 'n Spellbooks (`AbstractSummonWeaponSpell<LethalAssaultRifleEntity>`) |
+| Interfaces | `IMagiAgentSuitAffectedSpell` |
+| Escola | `SchoolRegistry.EVOCATION_RESOURCE` (Evocation) |
+| Raridade mínima declarada | `UNCOMMON` |
+| Níveis declarados | 1–5 (`setMaxLevel(5)`) |
+| Tipo de cast | `INSTANT` |
+| Cooldown declarado | `1.5 s` |
+| Recurso | Mana do Iron's (`baseManaCost=20`, `manaCostPerLevel=5`) |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
+| Ambiente | Minecraft 1.21.1 · NeoForge · Java 21 (JDK 21.0.12 na inspeção) |
+| Classe de implementação | `jp.aquafactory.apprenticecodex.spell.lethalassault.LethalAssault` |
+| Auxiliares da mesma raiz | `LethalAssaultRifleEntity`, `LethalAssaultRifleRenderer`, `GunSpellTracerPacket` |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-## Provider lifecycle
+As versões 0.9.7.1 e 1.0.1 permanecem como histórico; nenhum valor foi reaproveitado sem confirmação no artefato físico 1.0.1.1. Os coeficientes declarados não são os valores efetivos instalados: mana, cooldown, spell power, nível, raridade e multiplicadores do host permanecem `NÃO VERIFICADOS` (`AbstractSpell` lê `SpellConfigManager`, atributos, Curios e eventos).
 
-An instant cast creates/reuses a summoned rifle entity through `AbstractSummonWeaponSpell`. At initial cast completion the provider snapshots the current damage into the rifle and starts the three-round firing sequence. Weapon presentation and burst execution remain provider-owned.
+## 2. Localizadores para o Codex
 
-`IMagiAgentSuitAffectedSpell` means provider equipment may change interruption semantics; that compatibility is not reproduced by Black Arcana.
+| Elemento | Localizador |
+|---|---|
+| Registro | `SpellRegistry.reg("lethal_assault", LethalAssault::new)` |
+| Config | `UNCOMMON`, nível 5, cooldown `1.5`, `EVOCATION_RESOURCE` |
+| Coeficientes | <init>: `baseSpellPower=500`, `spellPowerPerLevel=200`, `baseManaCost=20`, `manaCostPerLevel=5`, `castTime=0` |
+| Dano/alcance | `getDamage` → `power/300 * damageMultiplier(LETHAL_ASSAULT)`; `getRange()=48`; `getBurstCount()=3` |
+| Rifle | `MAX_RECOIL_TICK=2`, disparos nos ticks `5/8/11`, descarte no tick `20` |
+| Raycast | `RaycastTools.raycastFromEye(owner,48,0.5,isValidCombatTarget)`; mira com largura `1.0` |
+| Tracer | `GunSpellTracerPacket(firePosition,target,24.0F,8.0F)` |
+| Suit | `canBeInterrupted` delega a `canBeInterruptedWithMagiAgentSuit` |
 
-## Causality and progression
+Bytecode: scratch/javap1011_evocation10.txt (`javap -classpath <JAR> -p -s -c`, 61 classes, EXIT=0, SHA-256 `B872A0B86732D7EAE026532ED358AD9BBDFB7B1D7BCFCA2C6B35F13EADD9A2D5`); decompilação de apoio: scratch/evocation10_sources.txt (44 fontes Vineflower 1.12.0, SHA-256 `BCAF5695AA5346DABC0D976D8EBFA327B7622570230DE48B4330396876448387`). Constantes e fórmulas decisivas foram confrontadas com o bytecode; em divergência, o bytecode prevalece.
 
-The three shots are one spell cast and one summoned-weapon burst. Do not award spell Mastery three times merely because the provider emits three attack resolutions.
+## 3. Casting / execução
 
-## Deduplication
+1. `onCastNoWeapon` cria `LethalAssaultRifleEntity`; `onInitialCastWithWeapon` chama `weapon.startFiring(getDamage(...))`, zerando `firingTick` e `released`.
+2. `tickOnServer` segura a posição de standby `(-0.8,1.1,0.1)`, mira com raycast de largura `1.0` e incrementa `firingTick`.
+3. `shouldFire` dispara nos ticks `5`, `8` e `11`; no tick `20` a entidade é descartada e no tick `11` ela é liberada (`released=true`).
+4. `fire` faz raycast de `48` blocos com largura `0.5`, aplica `DamageTypes.LETHAL_ASSAULT` via `applySpellDamage(...,NO_KNOCKBACK)` ao alvo válido e envia partículas de muzzle/tracer.
+5. `recoilTick=2` é sincronizado; o renderer interpola recuo com deslocamento `0.25` e ângulo `8.0°`.
+6. `onCastCompleteWithWeapon` retorna `KEEP_WEAPON` somente sem cancelamento; `onAntiMagic` descarta o rifle; `IMagiAgentSuitAffectedSpell` altera apenas a interrompibilidade.
 
-Occupies the **instant summoned 48-block three-round magical rifle burst** niche.
+## 4. Targeting / geometria
 
-## Confidence
+| Propriedade | Valor e consumidor |
+|---|---|
+| Alcance | `48` blocos para disparo e mira |
+| Raycast de disparo | largura `0.5`, validação `isValidCombatTarget` |
+| Raycast de mira | largura `1.0` |
+| Burst | `3` disparos nos ticks `5/8/11` |
+| Recuo | `2` ticks, `0.25` bloco e `8.0°` no renderer |
+| Tracer | velocidade `24.0`, comprimento `8.0` |
 
-`SOURCE-PINNED SPELL / EXACT CONFIG+3-SHOT COUNT+RANGE+DAMAGE / RIFLE SHOT TIMING+COLLISION+MAGI AGENT SUIT DETAILS QA PENDING`
+## 5. Resultado
 
-## Localizadores para Codex — source exato
+- Cada disparo é um hit-scan; não há projétil persistente catalogado nesta raiz.
+- O dano é o mesmo valor calculado no cast para os três disparos.
+- `KEEP_WEAPON`/`RELEASE_WEAPON` controlam a retenção da arma dentro da mesma raiz.
 
-- **Registry + identidade:** `apprenticecodex:lethal_assault` → `SpellRegistry.reg("lethal_assault", LethalAssault::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.lethalassault.LethalAssault`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/lethalassault/LethalAssault.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+## 6. Scaling e caps
 
-## Engenharia causal aprofundada — armas conjuradas e efeitos derivados (2026-10-14)
+| Parâmetro | Fórmula literal | Unidade / ownership |
+|---|---|---|
+| Spell power | `500 + 200*(level-1)` | float declarado |
+| Dano por disparo | `power/300 * damageMultiplier(LETHAL_ASSAULT)` | config **NÃO VERIFICADA** |
+| Burst | `3` disparos | constante |
+| Mana/cooldown/cast | `20+5*(level-1)` / `1.5` s / `0` ticks (`INSTANT`) | host + config **NÃO VERIFICADA** |
 
-**Registry ID:** `apprenticecodex:lethal_assault`. **Source fixado:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (versão declarada 0.9.7.1). Classe e helpers: [LethalAssault.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/lethalassault/LethalAssault.java); [LethalAssaultRifleEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/lethalassault/LethalAssaultRifleEntity.java).
+## 7. Possibilidades de perks
 
-**Cadeia causal verificada no source:** LethalAssault.onCastNoWeapon cria rifle; onInitialCastWithWeapon define o dano que será usado na sequência, e onCastCompleteWithWeapon mantém arma se cast não cancelado. LethalAssaultRifleEntity.tickOnServer executa sequência temporizada de três tiros em FIRST_FIRE_TICK=5, SECOND_FIRE_TICK=8, LAST_FIRE_TICK=11; a entidade é descartada em DISCARD_TICK=20, ou sem owner. fire revalida alvo por raycast e chama CombatTools.applyDamage uma vez por tiro válido; tracers são renderização.
+- **A — atributo nativo:** dano responde ao poder; mana/cooldown ao `AbstractSpell`.
+- **B — evento verificado:** `IMagiAgentSuitAffectedSpell` altera interrompibilidade, não parâmetros de disparo.
+- **C — adapter condicionado:** mudar burst, cadência ou alcance exigiria substituir raiz e entidade, com `GunSpellTracerPacket`. **CONDICIONADO**.
+- **D — sem hook demonstrado:** não há contrato seguro para transformar o hit-scan em projétil persistente ou remover a janela de recuo. **NO_MUTATION** / fail-closed.
 
-**QA direcionado (pendente):** Interrupção no meio da sequência, alvo mudando entre disparos, início do firing e modificação de dano, relog/owner, dupla contagem de ataques como casts.
+- `mutating_hook = NOT_VERIFIED`; `mutation = NO_MUTATION` (fail-closed).
 
-**Authority/boundary:** o cast, mana, recast e cooldown base permanecem no Iron's; armas, projetos e efeitos são do Apprentice's Codex. Uma rajada, hit, hitbox, tracer, loot extra ou counterspell derivado **não é novo cast** e não autoriza recompensa/XP/Mastery independente. Black Arcana não replica custos, damage, loot, hit ou efeitos externos. Integração com RPG Skill Tree ⛔ fail-closed até receipt/callback server-side unívoco e homologado. ⚠️ Esta inspeção source-level não comprova o corpo dos métodos no JAR compilado, configs ativas ou QA físico de modpack.
+## 8. Causalidade
+
+`um cast instantâneo → rifle → três hit-scans nos ticks 5/8/11 → tracer/recuo → descarte no tick 20`.
+
+
+## 9. Concepção de nova magia
+
+Assinatura ocupada: "rajada de rifle hit-scan com recuo". Nenhuma implementação foi realizada.
+
+## 10. Verificação e pendências
+
+- ✅ identidade/hash, coeficientes 500/200/20/5/0, burst 3, alcance 48, ticks 5/8/11/20, tracer 24/8 e `IMagiAgentSuitAffectedSpell` confirmados no bytecode 1.0.1.1.
+- ⚠️ multiplicador/mana efetivos, acerto real em PvP e sincronia de tracer em lag não certificados.
+- ⚠️ `physical_qa=NOT_TESTED`: sem servidor Survival, PvP, portais, montarias, recast em combate real ou teleportes.
+- ⚠️ Universo integral do provider não encerrado; homologação integral permanece `NOT_CERTIFIED`.
+
+
+## Localizadores para Codex — resumo operacional
+
+- `castTime=0` é coerente com `CastType.INSTANT`.
+- Os três disparos usam o mesmo dano calculado no cast.
+- `KEEP_WEAPON` mantém o rifle até o descarte no tick 20.
+- Nenhum ponto de mutação segura demonstrado; manter fail-closed.
+
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).

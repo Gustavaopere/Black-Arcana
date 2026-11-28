@@ -12611,6 +12611,256 @@
         "validation": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Segunda leitura contra bytecode e decompilacao do artefato exato; i-frame limitada a Mob conforme evento examinado."}
       }
     },
+    "✅-apprentice-codex/evocation/archer-multiple.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Archer Multiple no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.archermultiple ancorados no dossiê do lote 3."},
+        "behavior": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/archer-multiple.md", "reason": "Quatro arcos persistentes, prioridade de alvo e auto-alvo em caixa frontal, carga/cooldown e cancelamento por login/logout/dimensao/morte rastreados no bytecode."},
+        "parameters": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/archer-multiple.md", "reason": "Construtor 200/50/70/30/30, quatro arcos, duracao 600 ticks, recast 2, alvo 64, carga 15/cooldown 8 e caixa 24.0/8.0/8.0."},
+        "targeting": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/archer-multiple.md", "reason": "Pre-cast com TargetEntityCastData, auto-alvo a cada 10 ticks, perda de visao em 20 ticks e keep-fire em 40 ticks."},
+        "costs": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/archer-multiple.md", "reason": "Multiplicador instalado, mana/cooldown efetivos e sincronia de UUID/dimensao em portais permanecem NAO VERIFICADOS."},
+        "integration": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/archer-multiple.md", "reason": "Arcos, cast data e eventos pertencem a raiz unica; nenhum objeto semantico novo por disparo."},
+        "validation": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Segunda leitura contra bytecode e decompilacao do artefato exato; USER_CANCEL e DEATH verificados nos eventos."}
+      }
+    },
+    "✅-apprentice-codex/evocation/auto-turret.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Auto Turret no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.autoturret ancorados no dossiê do lote 3."},
+        "behavior": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/auto-turret.md", "reason": "Placement validado no cliente e servidor, torre PathfinderMob com mira/carga/disparo e restock por mana do owner rastreados no bytecode."},
+        "parameters": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/auto-turret.md", "reason": "Construtor 100/40/80/20/40, dano 4*power/100, municao 8+round(8*power/100), HP 20+10*(level-1), restock getManaCost/4, descarte 100 ticks quando a municao se esgota."},
+        "targeting": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/auto-turret.md", "reason": "Placement em 8 blocos, caixa 0.9x1.6x0.9, inflate(0.1), FOLLOW_RANGE 24 e descarte apos 100 ticks."},
+        "costs": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/auto-turret.md", "reason": "Multiplicador instalado, mana efetiva, preview em lag e persistencia real permanecem NAO VERIFICADOS."},
+        "integration": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/auto-turret.md", "reason": "Torre, placement helper e restock compoem a mesma raiz; shouldBeSaved=false impede presumir persistencia."},
+        "validation": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Segunda leitura contra bytecode e decompilacao do artefato exato; restock restrito ao owner com SyncManaPacket."}
+      }
+    },
+    "✅-apprentice-codex/evocation/bound-bow.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Bound Bow no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.boundbow ancorados no dossiê do lote 3."},
+        "behavior": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/bound-bow.md", "reason": "Substituicao da mao principal por arco gerado com UUID, captura de SUMMON_DAMAGE, recast e exclusividade com Bound Sword/Edge Dancer rastreados no bytecode."},
+        "parameters": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/bound-bow.md", "reason": "Construtor 100/50/50/150/30, duracao 2400, recast 2, power<130 -> 0, senao 1+floor((power-130)/30) com cap de config."},
+        "targeting": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/bound-bow.md", "reason": "Sem alvo de raycast; estado amarrado a mao principal e restaurado na desativacao."},
+        "costs": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/bound-bow.md", "reason": "Cap efetivo, custo de forge de flecha, multiplicador e mana/cooldown instalados permanecem NAO VERIFICADOS."},
+        "integration": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/bound-bow.md", "reason": "Arco e gerente pertencem a raiz unica; talisma remove cooldown apenas no recast."},
+        "validation": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Segunda leitura contra bytecode e decompilacao do artefato exato; captura de SUMMON_DAMAGE ocorre no cast."}
+      }
+    },
+    "✅-apprentice-codex/evocation/bound-sword.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Bound Sword no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.boundsword ancorados no dossiê do lote 3."},
+        "behavior": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/bound-sword.md", "reason": "Espada(s) geradas nas maos, dano capturado no cast, gate de dual wield por mods externos e Shift no pre-cast rastreados no bytecode."},
+        "parameters": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/bound-sword.md", "reason": "Construtor 100/50/50/150/30, duracao 2400, recast 2, dano (3+3*power/100)*SUMMON_DAMAGE*multiplier."},
+        "targeting": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/bound-sword.md", "reason": "Sem alvo de raycast; second sword exige ModList bettercombat/epicfight e !hasRecast && compat && Shift."},
+        "costs": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/bound-sword.md", "reason": "Valor de SUMMON_DAMAGE, multiplicador instalado e comportamento real com mods externos permanecem NAO VERIFICADOS."},
+        "integration": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/bound-sword.md", "reason": "Espadas, estado e eventos compoem a raiz unica; offhand original e restaurado quando gerado."},
+        "validation": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Segunda leitura contra bytecode e decompilacao do artefato exato; gate de compat e Shift verificados no pre-cast."}
+      }
+    },
+    "✅-apprentice-codex/evocation/call-broom.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Call Broom no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.callbroom ancorados no dossiê do lote 3."},
+        "behavior": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/call-broom.md", "reason": "Validacao de Curio unico, recall/summon de brooma com UUID no item, montaria imediata e limpeza em login/logout/remocao rastreados no bytecode."},
+        "parameters": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/call-broom.md", "reason": "Construtor 0/0/20/0/20, RECALL_DISTANCE 8.0 e RECALL_DISTANCE_SQR 64.0, allowCrafting=false, allowLooting=false."},
+        "targeting": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/call-broom.md", "reason": "Sem raycast; varredura de broomas em server.getAllLevels(), recusa se passageiro ou entidade ocupada."},
+        "costs": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/call-broom.md", "reason": "Multiplicador/mana efetivos e comportamento em portais e montaria PvP permanecem NAO VERIFICADOS."},
+        "integration": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/call-broom.md", "reason": "Curio, estado de deployment e manager compoem a raiz unica; falha de montaria reverte o estado."},
+        "validation": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Segunda leitura contra bytecode e decompilacao do artefato exato; distancia 8/64 e todas as dimensoes verificadas."}
+      }
+    },
+    "✅-apprentice-codex/evocation/companion-trunk.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Companion Trunk no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.companiontrunk ancorados no dossiê do lote 3."},
+        "behavior": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/companion-trunk.md", "reason": "Toggle de bau companheiro, normalizacao de entidades possuidas, spawn com offsets de Y e inventario ligado a capability rastreados no bytecode."},
+        "parameters": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/companion-trunk.md", "reason": "Construtor 10/10/10/0/0, HP round(power) com piso 1.0, DEFAULT_MAX_HEALTH 20.0, recolha em distancia^2 4.0, raio 3 e offsets {0,1,-1,2,-2}."},
+        "targeting": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/companion-trunk.md", "reason": "Sem raycast; entidade 0.95x1.1, follow 3.0/1.75 e teleporte 24.0."},
+        "costs": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/companion-trunk.md", "reason": "Multiplicador/mana efetivos, persistencia do inventario e follow em portais permanecem NAO VERIFICADOS."},
+        "integration": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/companion-trunk.md", "reason": "Spell, manager, entidade e inventario compoem a raiz unica; um bau por jogador."},
+        "validation": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Segunda leitura contra bytecode e decompilacao do artefato exato; piso de HP e limiar de recolha verificados."}
+      }
+    },
+    "✅-apprentice-codex/evocation/edge-dancer.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Edge Dancer no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.edgedancer ancorados no dossiê do lote 3."},
+        "behavior": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/edge-dancer.md", "reason": "Gate de SpellSideEdge na mao principal, espelho gerado no offhand, duracao escalada e validacao de slot rastreados no bytecode."},
+        "parameters": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/edge-dancer.md", "reason": "Construtor 100/100/50/0/40, duracao round(1200*power/100), recast 2, allowCrafting=false, allowLooting=false."},
+        "targeting": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/edge-dancer.md", "reason": "Sem raycast; exige SpellSideEdge no primeiro cast e mantem espelho apenas em slots permitidos."},
+        "costs": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/edge-dancer.md", "reason": "Multiplicador/mana efetivos e comportamento real do espelho em combate permanecem NAO VERIFICADOS."},
+        "integration": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/edge-dancer.md", "reason": "Arma, espelho, estado e eventos compoem a raiz unica; desativa Bound Sword/Bow."},
+        "validation": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Segunda leitura contra bytecode e decompilacao do artefato exato; gate e exclusividade verificados."}
+      }
+    },
+    "✅-apprentice-codex/evocation/feather-rush.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Feather Rush no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.featherrush ancorados no dossiê do lote 3."},
+        "behavior": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/feather-rush.md", "reason": "Asa conjurada, rajadas quantizadas por RPM, projeteis com recuo/avante e evento de gravidade do jogador rastreados no bytecode."},
+        "parameters": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/feather-rush.md", "reason": "Construtor 100/75/4/2/100, dano (1+2.5*power/100), RPM alvo max(1,round(300+600*(power-100)/300)) sem clamp superior, burst minimo 2/2, cone 45 graus, vida 100, recuo 10 a 0.05 e avante 1.75."},
+        "targeting": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/feather-rush.md", "reason": "Direcao de avanco em cone de 45 graus em torno do olhar; recuo com yaw 35+/-22.5 e pitch 0-60."},
+        "costs": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/feather-rush.md", "reason": "Multiplicador instalado, RPM real em servidor e sincronia de estado em lag permanecem NAO VERIFICADOS."},
+        "integration": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/feather-rush.md", "reason": "Asa, projeteis e evento de gravidade pertencem a raiz unica; RELEASE_WEAPON ao final."},
+        "validation": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Segunda leitura contra bytecode e decompilacao do artefato exato; ACTIVE_TICK_GRACE=2 e fallDistance=0 verificados."}
+      }
+    },
+    "✅-apprentice-codex/evocation/fujin.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Fujin no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.fujin ancorados no dossiê do lote 3."},
+        "behavior": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/fujin.md", "reason": "Katana conjurada com slashes periodicos e projeteis de varredura com dedup, oclusao e anti-magia rastreados no bytecode."},
+        "parameters": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/fujin.md", "reason": "Construtor 100/75/5/1/100, dano (1+power/200), alcance 10, primeiro slash no tick 10, intervalo 5 e velocidade 3.0."},
+        "targeting": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/fujin.md", "reason": "Hitbox 5.0x1.5 varrida em passos de 0.125, victimUuids por projetil, clip de bloco e descarte em 1.25*range."},
+        "costs": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/fujin.md", "reason": "Multiplicador/mana efetivos, DPS real e comportamento com partes de entidade permanecem NAO VERIFICADOS."},
+        "integration": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/fujin.md", "reason": "Katana e corte compoem a raiz unica; dano sem knockback via DamageTypes.FUJIN."},
+        "validation": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Segunda leitura contra bytecode e decompilacao do artefato exato; dedup e oclusao verificados."}
+      }
+    },
+    "✅-apprentice-codex/evocation/lethal-assault.md":     {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato técnico estático de Lethal Assault no JAR físico 1.0.1.1; não homologa mutação, config efetiva, QA físico, universo integral do provider nem implementação na main.",
+      "evidence": {
+        "identity": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.lethalassault ancorados no dossiê do lote 3."},
+        "behavior": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/lethal-assault.md", "reason": "Rifle conjurado com tres hit-scans, raycast de mira, tracer/recoil e descarte no tick 20 rastreados no bytecode."},
+        "parameters": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/lethal-assault.md", "reason": "Construtor 500/200/20/5/0, dano power/300, burst 3, alcance 48, disparos nos ticks 5/8/11, recuo 2 e tracer 24.0/8.0."},
+        "targeting": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/lethal-assault.md", "reason": "Raycast de disparo com largura 0.5 e mira com largura 1.0; sem projeteis persistentes."},
+        "costs": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/lethal-assault.md", "reason": "Multiplicador/mana efetivos, acerto real em PvP e sincronia de tracer em lag permanecem NAO VERIFICADOS."},
+        "integration": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/lethal-assault.md", "reason": "Rifle e tracer pertencem a raiz unica; IMagiAgentSuitAffectedSpell afeta apenas interrompibilidade."},
+        "validation": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Segunda leitura contra bytecode e decompilacao do artefato exato; KEEP_WEAPON e descarte no tick 20 verificados."}
+      }
+    },
     "✅-apprentice-codex/ender/mirage-avoidance.md":     {
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
@@ -12779,6 +13029,98 @@
         "validation": {
           "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
           "reason": "Dois replays schema 4 de 2084194 bytes SHA-256 ef61a49077fb21638212873cbfabcfb1bf23e0d95189f04cabcd9babc6a6bd26, run 46090631197/job 140810449309; CI final exigida."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/gossamer-worm-bucket.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+      "artifact_size_bytes": 75279314,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato individual delimitado à captura e transporte do animal pelo item, não à IA/combate integral do mob; sem runtime/QA ou hook certificado.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gossamer-worm-bucket.md",
+          "reason": "Factory $92 e fluido $91, registry $40, classe individual e publisher/model pinado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gossamer-worm-bucket.md",
+          "reason": "Captura e soltura via Bucketable, ModFishBucketItem, BucketItem, dispenser, fronteiras de aceite e recusa."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gossamer-worm-bucket.md",
+          "reason": "Stack nominal 1, dimensões/partes, movimento 0.1, HP 10 declarados, ar 2000 após load, alcance via atributo; ausência de dano/mana/cooldown próprios."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gossamer-worm-bucket.md",
+          "reason": "Raycast de olhos com BLOCK_INTERACTION_RANGE, OUTLINE/Fluid.NONE, permissão de colocação; captura em entidade viva com balde de água; não AOE."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gossamer-worm-bucket.md",
+          "reason": "Consume, creative, stack/inventory e fallback toss, evento cancelável e booleano de spawn descartado; aquisição por captura."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gossamer-worm-bucket.md",
+          "reason": "FishBucketTag, CUSTOM_DATA e ENTITY_DATA distintos, FromBucket, persistência, owner não próprio, multipart não equivale a summons; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gossamer-worm-bucket.md",
+          "reason": "Schema 5 run 46094303735/job 140822035239, dois relatórios 2379853 bytes SHA-256 c9275d19e66b94acf68bd21caa9e18387a95e7eb813bea806fdb9850ac12d8c2; CI 42/42 naquele HEAD."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/lanternfish-bucket.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+      "artifact_size_bytes": 75279314,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato individual delimitado à captura e transporte do animal pelo item, não à IA/combate integral do mob; sem runtime/QA ou hook certificado.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/lanternfish-bucket.md",
+          "reason": "Factory $80/$79, registry $36, LanternfishEntity e modelo SHA-exatos."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/lanternfish-bucket.md",
+          "reason": "Captura individual, soltura compartilhada com identidade comprovada, dispenser, callbacks e recusa de engine; estado de cardume separado."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/lanternfish-bucket.md",
+          "reason": "Stack nominal 1, dimensões 0.5x0.4, HP 2, movimento 0.15, ar 2000 restaurado e dryOut próprio da entidade; ausência de cast/dano/AOE próprios."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/lanternfish-bucket.md",
+          "reason": "Captura em entidade viva com water bucket; raycast de bloco por atributo e permissões da engine exata; cardume não targeting de item."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/lanternfish-bucket.md",
+          "reason": "Captura, consume/creative, retorno de balde e descarte; loot de peixe não balde; boundaries compartilhados comprovados."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/lanternfish-bucket.md",
+          "reason": "FishBucketTag individual, FromBucket, CUSTOM_NAME/ENTITY_DATA, grupo/líder não gravados explicitamente, recusa de spawn e toss; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/lanternfish-bucket.md",
+          "reason": "Schema 2 run 46094534407/job 140822758163, dois relatórios 398523 bytes SHA-256 c8e493ad2c6a692b61f62fec73e2f4f31c1e36f1911e70fed8e41a01fd66f007; engine schema 5 comprovada em run 46094303735."
         }
       }
     }

@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 43/81.**
+**Fichas catalogadas (somente fichas detectadas): 45/81.**
 
-**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 53.1%`
+**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 55.6%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 43/81.**
+**Homologadas para perks (somente fichas detectadas): 45/81.**
 
-**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 53.1%`
+**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 55.6%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -46,7 +46,7 @@
 | ✅ | Gingerbread Helmet | [ficha/gingerbread-helmet.md](gingerbread-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gingerbread Leggings | [ficha/gingerbread-leggings.md](gingerbread-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Glow Ink Bomb | [ficha/glow-ink-bomb.md](glow-ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gossamer Worm Bucket | [ficha/gossamer-worm-bucket.md](gossamer-worm-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gossamer Worm Bucket | [ficha/gossamer-worm-bucket.md](gossamer-worm-bucket.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Green Soylent | [ficha/green-soylent.md](green-soylent.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Guano | [ficha/guano.md](guano.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Boots | [ficha/hazmat-boots.md](hazmat-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -58,7 +58,7 @@
 | ✅ | Hot Chocolate Bottle | [ficha/hot-chocolate-bottle.md](hot-chocolate-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Ink Bomb | [ficha/ink-bomb.md](ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Jelly Bean | [ficha/jelly-bean.md](jelly-bean.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Lanternfish Bucket | [ficha/lanternfish-bucket.md](lanternfish-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Lanternfish Bucket | [ficha/lanternfish-bucket.md](lanternfish-bucket.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Licowitch Radiant Essence | [ficha/licowitch-radiant-essence.md](licowitch-radiant-essence.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Marine Snow | [ficha/marine-snow.md](marine-snow.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Moth Dust | [ficha/moth-dust.md](moth-dust.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |

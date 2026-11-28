@@ -1,114 +1,114 @@
 # Call Broom
 
-- **Provider:** Apprentice's Codex
-- **Registry ID:** `apprenticecodex:call_broom`
-- **Iron's school:** Evocation
-- **Levels:** 1
-- **Minimum rarity:** Rare
-- **Cast type:** Long
-- **Cooldown:** 1 s
-- **Resource:** Iron's mana
-- **Ordinary crafting:** disabled
-- **Ordinary looting:** disabled
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+**Estado do contrato:** ✅ `COMPLETE_PERK_READY` — `STATIC_TECHNICAL_CATALOG_ONLY` · `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `mutation=NO_MUTATION` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED`.
 
-## Exact source coefficients
+> O ✅ cobre exclusivamente a documentação estática SHA-exata deste objeto. Não homologa hook mutador, execução no pack, configuração efetiva, universo integral do provider nem QA físico.
 
-- `baseSpellPower = 0`
-- `spellPowerPerLevel = 0`
-- `baseManaCost = 20`
-- `manaCostPerLevel = 0`
-- `castTime = 20 ticks / 1 s`
-- recall-distance threshold for an unoccupied deployed broom: **8 blocks**
-- requires a unique equipped provider broom resolved through `BroomCurioSupport.findUniqueEquippedBroom(...)`
+## 1. Identidade e proveniência
 
-## Admission
+| Campo | Valor verificado |
+|---|---|
+| Provider | Apprentice's Codex |
+| Mod ID | `apprenticecodex` |
+| Registry ID | `apprenticecodex:call_broom` |
+| Host | Iron's Spells 'n Spellbooks (`AbstractSpell`) |
+| Interfaces | sem interface adicional declarada |
+| Escola | `SchoolRegistry.EVOCATION_RESOURCE` (Evocation) |
+| Raridade mínima declarada | `RARE` |
+| Níveis declarados | 1 (`setMaxLevel(1)`) |
+| Tipo de cast | `LONG` |
+| Cooldown declarado | `1.0 s` |
+| Recurso | Mana do Iron's (`baseManaCost=20`, `manaCostPerLevel=0`) |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
+| Ambiente | Minecraft 1.21.1 · NeoForge · Java 21 (JDK 21.0.12 na inspeção) |
+| Classe de implementação | `jp.aquafactory.apprenticecodex.spell.callbroom.CallBroom` |
+| Auxiliares da mesma raiz | `CallBroomDeploymentManager`, `CallBroomDeploymentEvents`, `BroomCurioSupport`, `BroomDeploymentState` |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-The spell is explicitly item-bound: ordinary crafting and looting are disabled. It only accepts a player caster.
+As versões 0.9.7.1 e 1.0.1 permanecem como histórico; nenhum valor foi reaproveitado sem confirmação no artefato físico 1.0.1.1. Os coeficientes declarados não são os valores efetivos instalados: mana, cooldown, spell power, nível, raridade e multiplicadores do host permanecem `NÃO VERIFICADOS` (`AbstractSpell` lê `SpellConfigManager`, atributos, Curios e eventos).
 
-Client preflight requires:
+## 2. Localizadores para o Codex
 
-- the player is not already a passenger;
-- one unique equipped provider broom can be resolved.
+| Elemento | Localizador |
+|---|---|
+| Registro | `SpellRegistry.reg("call_broom", CallBroom::new)` |
+| Config | `RARE`, nível 1, cooldown `1.0`, `EVOCATION_RESOURCE`, `setAllowCrafting(false)`, `allowLooting()=false` |
+| Coeficientes | <init>: `baseSpellPower=0`, `spellPowerPerLevel=0`, `baseManaCost=20`, `manaCostPerLevel=0`, `castTime=20` |
+| Validação | `CallBroomDeploymentManager.validate`: brooma Curio único, jogador não passageiro, entidade não ocupada |
+| Distância | `RECALL_DISTANCE=8.0`, `RECALL_DISTANCE_SQR=64.0` |
+| Recuperação | `findOwnedBrooms` varre `server.getAllLevels()`; `shouldRecall` considera dimensão, posse, `isVehicle()` e `matchesEquippedDeployment` |
+| Eventos | `CallBroomDeploymentEvents` chama `onLogin`/`onLogout`/`onBroomRemoved` |
 
-The server then delegates to `CallBroomDeploymentManager.validate(...)`. Exact failure states are:
+Bytecode: scratch/javap1011_evocation10.txt (`javap -classpath <JAR> -p -s -c`, 61 classes, EXIT=0, SHA-256 `B872A0B86732D7EAE026532ED358AD9BBDFB7B1D7BCFCA2C6B35F13EADD9A2D5`); decompilação de apoio: scratch/evocation10_sources.txt (44 fontes Vineflower 1.12.0, SHA-256 `BCAF5695AA5346DABC0D976D8EBFA327B7622570230DE48B4330396876448387`). Constantes e fórmulas decisivas foram confrontadas com o bytecode; em divergência, o bytecode prevalece.
 
-- `NOT_FOUND` — no valid equipped broom;
-- `RIDING` — caster is already a passenger;
-- `OCCUPIED` — the relevant owned/deployed broom is currently being ridden and cannot be safely recalled/replaced.
+## 3. Casting / execução
 
-## Provider deployment / recall transaction
+1. `checkPreCastConditions` valida via `CallBroomDeploymentManager.validate(serverPlayer)` e recusa com `not_found_broom` ou `cannot_recall_mounting` conforme a falha.
+2. Para jogador não servidor, exige `!player.isPassenger()` e `BroomCurioSupport.findUniqueEquippedBroom(player).isPresent()`.
+3. `onCast` chama `CallBroomDeploymentManager.execute(player)`: com `Action.RECALL`, chama `broom.recallWithoutItem()`; com `Action.SUMMON`, cria a brooma a partir do item Curio, define dono, nome, move para a posição do jogador, adiciona à dimensão e inicia montaria.
+4. `BroomDeploymentState.setDeployedEntity(stack,uuid)` amarra o item à entidade; falha ao montar reverte com `recallWithoutItem()`.
+5. `shouldRecall` recolhe a brooma se o dono morreu, mudou de dimensão, está a mais de `8.0` blocos (`64.0` ao quadrado) ou se o item equipado não corresponde à entidade.
+6. Login/logout e remoção da entidade limpam o estado; nenhuma segunda brooma é criada quando já existe uma não ocupada.
 
-When a valid deployed broom matching the equipped item already exists and is not occupied, the cast recalls it through the provider lifecycle.
+## 4. Targeting / geometria
 
-Otherwise the manager:
+| Propriedade | Valor e consumidor |
+|---|---|
+| Alvo | Item-brooma único equipado como Curio |
+| Recolha | `64.0` (distância²) ≈ `8.0` blocos |
+| Dimensões | Varredura em `server.getAllLevels()` |
+| Ocupação | `isVehicle()` recusa recall/summon |
+| Spawn | Posição exata do jogador, yaw do jogador, sem pitch |
+| Montaria | `player.startRiding(broom,true)` |
 
-1. recalls stale unoccupied brooms owned by the player;
-2. clears stale deployment state from the equipped broom item;
-3. creates the provider broom entity from that exact equipped item;
-4. assigns owner and copies the item's custom name;
-5. spawns the broom at the player;
-6. requires the player to begin riding it successfully;
-7. only then stores the deployed entity UUID on the broom item.
+## 5. Resultado
 
-If entity insertion fails, the transaction returns failure. If mounting fails after insertion, the provider recalls the broom and does not leave it as a successful deployment.
+- A magia recupera ou invoca a brooma existente; não cria objeto semântico novo por entidade.
+- O vínculo é bidirecional: UUID no item (`BroomDeploymentState`) e dono/nome na entidade.
+- A montaria é imediata; falha de montaria resulta em `recallWithoutItem()` e nenhum estado pendente.
 
-## Reconciliation and automatic recall
+## 6. Scaling e caps
 
-Provider state remains tied to the equipped broom item and owner. The manager recalls or clears deployment state when appropriate on unequip, broom removal, login/logout and ownership/equipment mismatch.
+| Parâmetro | Fórmula literal | Unidade / ownership |
+|---|---|---|
+| Spell power | `0` (sem escalonamento de poder) | constante |
+| Mana/cooldown/cast | `20` / `1.0` s / `20` ticks | host + config **NÃO VERIFICADA** |
+| Recall | `8.0` blocos (`64.0` ao quadrado) | distância do dono |
+| Unicidade | Uma brooma equipada, uma entidade implantada | estado do Curio |
 
-`shouldRecall(...)` returns true when:
+## 7. Possibilidades de perks
 
-- the owner is dead;
-- owner and broom are in different levels;
-- the broom is being controlled by someone other than its owner;
-- an unoccupied broom is more than **8 blocks** from the owner;
-- the deployed entity no longer matches the uniquely equipped broom item/state.
+- **A — atributo nativo:**mana/cooldown respondem ao `AbstractSpell`; poder não altera a brooma.
+- **B — evento verificado:** login/logout/remoção são manutenção de estado, sem modificação de parâmetros.
+- **C — adapter condicionado:** mudar a distância de recall, permitir múltiplas broomas ou substituir o Curio exigiria alterar manager, estado do item e eventos. **CONDICIONADO**.
+- **D — sem hook demonstrado:** não há contract seguro para transformar o recall em teleporte de grupo ou ignorar `isVehicle()`. **NO_MUTATION** / fail-closed.
 
-## Performance caveat
+- `mutating_hook = NOT_VERIFIED`; `mutation = NO_MUTATION` (fail-closed).
 
-At the exact source pin, helper paths that find all owned broom entities iterate all server levels and each level's `getAllEntities()`. That is upstream provider behavior and **must not be copied into Black Arcana**. Black Arcana's own summons/owned entities must continue using bounded/indexed ownership contracts rather than global entity scans.
+## 8. Causalidade
 
-## Causality and progression
+`um cast → validação do Curio → recall da brooma em qualquer dimensão ou summon com montaria imediata → limpeza nos eventos`.
 
-Calling or recalling the broom is one provider cast. Riding distance, mounted ticks, login reconciliation or automatic recall are provider lifecycle effects and must not generate repeated spell Mastery.
 
-Black Arcana does not own broom identity, Curios lookup, deployment UUIDs, mount persistence or recall semantics and must not create a second broom/familiar ledger.
+## 9. Concepção de nova magia
 
-## Deduplication
+Assinatura ocupada: "recall/summon de montaria única vinculada a Curio". Nenhuma implementação foi realizada.
 
-Occupies the **Curios-equipped provider broom deployment/recall spell with owner-bound mount reconciliation** niche.
+## 10. Verificação e pendências
 
-## Confidence
+- ✅ identidade/hash, coeficientes 0/0/20/0/20, `allowCrafting=false`, `allowLooting=false`, constantes 8/64, varredura em todas as dimensões e gates de passageiro/ocupação confirmados no bytecode 1.0.1.1.
+- ⚠️ multiplicador/mana efetivos e comportamento em portais/montaria PvP não certificados.
+- ⚠️ `physical_qa=NOT_TESTED`: sem servidor Survival, PvP, portais, montarias, recast em combate real ou teleportes.
+- ⚠️ Universo integral do provider não encerrado; homologação integral permanece `NOT_CERTIFIED`.
 
-`SOURCE-PINNED SPELL + DEPLOYMENT MANAGER / EXACT ITEM GATE+FAILURE STATES+SPAWN/MOUNT TRANSACTION+8-BLOCK RECALL+LOGIN/LOGOUT/UNEQUIP RECONCILIATION / FULL MODPACK MOUNT RUNTIME QA PENDING`
 
-## Localizadores para Codex — source exato
+## Localizadores para Codex — resumo operacional
 
-- **Registry + identidade:** `apprenticecodex:call_broom` → `SpellRegistry.reg("call_broom", CallBroom::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.callbroom.CallBroom`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/callbroom/CallBroom.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+- `8.0`/`64.0` são a mesma grandeza em unidades diferentes (distância e distância²).
+- A busca cobre todas as dimensões via `server.getAllLevels()`.
+- A brooma não pode ser recolhida se estiver ocupada ou se o jogador estiver passageiro.
+- Nenhum ponto de mutação segura demonstrado; manter fail-closed.
 
----
-
-## Engenharia causal aprofundada — entidades 0.9.7.1
-
-**Source pin declarado:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`. **Classes lidas:** [`callbroom/CallBroom.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/callbroom/CallBroom.java) · [`callbroom/CallBroomDeploymentManager.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/callbroom/CallBroomDeploymentManager.java) · [`callbroom/CallBroomDeploymentEvents.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/callbroom/CallBroomDeploymentEvents.java). O arquivo físico da modlist é 0.9.7.1; **igualdade de corpo dos métodos no bytecode compilado não foi atestada nesta etapa**. Este conteúdo é engenharia documental factual, não código incorporado.
-
-### Cadeia de execução e recibo provider-owned
-
-- **Validação de cast:** `CallBroomDeploymentManager.validate(ServerPlayer)` exige exatamente uma vassoura Curios elegível por `BroomCurioSupport.findUniqueEquippedBroom`, recusa player passageiro, e confronta `BroomDeploymentState.getDeployedEntityId(stack)` com UUID, owner e item correspondente. Uma vassoura já implantada e ocupada falha com `OCCUPIED`; quando livre, a ação vira `RECALL`, senão `SUMMON`.
-- **Summon/recall:** `execute` retorna à própria vassoura livre via `recallWithoutItem` ou recolhe brooms antigas não ocupadas e tenta `BroomCurioSupport.createBroom`. A nova entidade recebe a pilha do equipamento, owner, nome, posição; apenas após `serverLevel.addFreshEntity` e `player.startRiding(broom,true)` bem-sucedidos grava `BroomDeploymentState.setDeployedEntity(stack,broom.getUUID())`. Se montar falhar, chama `recallWithoutItem`.
-- **Longevidade:** `shouldRecall` rejeita owner morto, mudança de dimensão, passenger incorreto, distância acima de `RECALL_DISTANCE_SQ` e equipamento que deixou de corresponder. `onUnequip` faz recall e limpa a tag de deployment; `reconcileEquippedStack`, `onBroomRemoved`, `onLogout` e `onLogin` saneiam IDs e referências.
-- **Ownership:** a montaria continua pertencendo ao item Curios e às entidades da vassoura, não ao runtime BA. Recast para recall e criação do veículo são dois resultados condicionais da mesma spell ID, não duas raízes para Mastery. QA: vassouras em dimensão diferente, duas Curios, mounts terceiros, logout a bordo e manipulação de stack.
-
-### Atribuição técnica e condições para perks
-
-- **Identidade semântica:** exatamente uma raiz `apprenticecodex:call_broom`; eventos de entidades, timers, limpeza, efeitos derivados, recursos e cooldown são de Iron's/Apprentice's, não casts BA adicionais.
-- **Observabilidade:** sem boundary/receipt interoperável comprovado, ⛔ Mastery, perks ou efeitos de RPG Skill Tree que suponham cast confirmado, hit, spawn ou settlement. Não inventar API de bridge.
-- **QA pendente ⚠️:** configuração efetiva, JAR físico dos métodos, dedicated/full-modpack, Survival, cross-dimension, persistência, claim/PvP e compatibilidade de inventário. Não promover Stage 06.05.
-- **Clean-room:** apenas comportamento observado no source é descrito. Black Arcana conserva seu próprio casting, Corruption, Strain e WorldEffectPolicy.
-
-[Matriz de lifecycle](../PERK-ENGINEERING-MATRIX-LIFECYCLE-0.9.7.1.md).
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).

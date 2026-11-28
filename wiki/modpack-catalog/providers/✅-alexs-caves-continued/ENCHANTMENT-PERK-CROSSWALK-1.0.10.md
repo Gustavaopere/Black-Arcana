@@ -1,6 +1,6 @@
 # Alex's Caves Continued 1.0.10 — índice de 51 encantamentos para perks
 
-**Recorte atual — Depth Charge:** **146/184 contratos estáticos entre fichas observadas**, 16/16 suportes, **43/81 itens concretos**, 9/9 equipamentos observados. [Ficha e replays](items/depth-charge.md). +1 contrato técnico estático candidato, zero novas raízes, 51/51 encantamentos preservados; provider OPEN, NO_MUTATION, hook/QA não verificados. CI final e merge obrigatórios.
+**Recorte atual — Depth Charge, Gossamer Worm Bucket e Lanternfish Bucket:** **148/184 contratos estáticos entre fichas observadas**, 16/16 suportes, **45/81 itens concretos**, 9/9 equipamentos observados. [Depth Charge](items/depth-charge.md), [Gossamer](items/gossamer-worm-bucket.md), [Lanternfish](items/lanternfish-bucket.md). +3 contratos estáticos individuais candidatos à main; zero novas raízes, 51/51 encantamentos preservados; provider OPEN, NO_MUTATION, hook/QA não verificados. CI final e merge obrigatórios.
 
 **Recorte anterior — Primitive Club:** **145/184 contratos estáticos entre fichas observadas**, 16/16 suportes, **42/81 itens concretos**, 9/9 equipamentos observados. [Ficha e replays](equipment/primitive-club.md). +1 contrato candidato, zero novas raízes, 51/51 encantamentos preservados; provider OPEN, NO_MUTATION, hook/QA não verificados. CI final e merge obrigatórios.
 

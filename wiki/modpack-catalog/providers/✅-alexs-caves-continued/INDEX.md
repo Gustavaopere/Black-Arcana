@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 146/184.**
+**Fichas catalogadas (somente fichas detectadas): 148/184.**
 
-**Barra das fichas catalogadas:** `███████████████░░░░░ 79.3%`
+**Barra das fichas catalogadas:** `████████████████░░░░ 80.4%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 146/184.**
+**Homologadas para perks (somente fichas detectadas): 148/184.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 79.3%`
+**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 80.4%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -137,7 +137,7 @@
 | ✅ | Gingerbread Helmet | [items/gingerbread-helmet.md](items/gingerbread-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gingerbread Leggings | [items/gingerbread-leggings.md](items/gingerbread-leggings.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Glow Ink Bomb | [items/glow-ink-bomb.md](items/glow-ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Gossamer Worm Bucket | [items/gossamer-worm-bucket.md](items/gossamer-worm-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Gossamer Worm Bucket | [items/gossamer-worm-bucket.md](items/gossamer-worm-bucket.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Green Soylent | [items/green-soylent.md](items/green-soylent.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Guano | [items/guano.md](items/guano.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Hazmat Boots | [items/hazmat-boots.md](items/hazmat-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -149,7 +149,7 @@
 | ✅ | Hot Chocolate Bottle | [items/hot-chocolate-bottle.md](items/hot-chocolate-bottle.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Ink Bomb | [items/ink-bomb.md](items/ink-bomb.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Jelly Bean | [items/jelly-bean.md](items/jelly-bean.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Lanternfish Bucket | [items/lanternfish-bucket.md](items/lanternfish-bucket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Lanternfish Bucket | [items/lanternfish-bucket.md](items/lanternfish-bucket.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Licowitch Radiant Essence | [items/licowitch-radiant-essence.md](items/licowitch-radiant-essence.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Marine Snow | [items/marine-snow.md](items/marine-snow.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Moth Dust | [items/moth-dust.md](items/moth-dust.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -218,7 +218,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 9/9 (100.0%) | 9 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 43/81 (53.1%) | 43 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Items | 45/81 (55.6%) | 45 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 16/16 (100.0%) | 16 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
