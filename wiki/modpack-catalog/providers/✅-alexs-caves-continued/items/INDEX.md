@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 42/81.**
+**Fichas catalogadas (somente fichas detectadas): 43/81.**
 
-**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 51.9%`
+**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 53.1%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 42/81.**
+**Homologadas para perks (somente fichas detectadas): 43/81.**
 
-**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 51.9%`
+**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 53.1%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -32,7 +32,7 @@
 | ⚠️ | Cinder Brick | [ficha/cinder-brick.md](cinder-brick.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cloak Of Darkness | [ficha/cloak-of-darkness.md](cloak-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Darkened Apple | [ficha/darkened-apple.md](darkened-apple.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Depth Charge | [ficha/depth-charge.md](depth-charge.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Depth Charge | [ficha/depth-charge.md](depth-charge.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Boots | [ficha/diving-boots.md](diving-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Chestplate | [ficha/diving-chestplate.md](diving-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Helmet | [ficha/diving-helmet.md](diving-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
