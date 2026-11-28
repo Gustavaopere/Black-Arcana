@@ -34,3 +34,24 @@ Estado mantido: STATIC_DISCOVERY_ONLY / NOT_CERTIFIED / NO_MUTATION / NOT_TESTED
 Receita shapeless direta (SHA-256 `7717bf0d3c751da91753396ce37b5f7cfed578b139c956c11b5e490139ad7962`): três purple_soda_bottle mais um frostmint, saída três foguetes. Isso não prova dano, duração de propulsão nem componentes de explosão. Herança de FireworkRocketEntity deve ser auditada separadamente de apresentação de partículas e de lançamento de ThrowableProjectile. Não incrementar Mastery por efeito cosmético.
 
 Evidência compartilhada: [matriz de reconciliação](../EXACT-CATALOG-INHERITED-BOUNDARIES-1.0.10.md). Mantidos NOT_CERTIFIED, NO_MUTATION e NOT_TESTED; nenhuma promoção por herança isolada.
+
+## Continuação individual — construção, tempo de vida e vínculo
+
+Releitura direta dos registros SEMANTIC e CONSUMER_SITE de [run 45797529084/job 139831910862](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45797529084/job/139831910862) (dois replays já registrados acima; não é nova extração). Base Black Arcana `81dbec3021492e8862b36bb6bbb844d956d742d9`; modlist sibling `b05e2536461bc0a9c526dc47a38e3b9af62d941c` permanece vigente nesta coleta (#001 NeoForge 21.1.250; #019 publisher 1.0.10).
+
+| Construtor próprio de SodaBottleRocketEntity | Code SHA-256 | Contrato observado |
+|---|---|---|
+| (EntityType,Level)V | `7de8b3e8daac56a645f684d85df8875e311764a8a4fff3baa330aa7eb80a9e3f` | super @3; phageAge=0 @8. Não demonstra a inicialização completa dos dados herdados. |
+| (Level,DDD,ItemStack)V | `2593b82d9b9bca3de8485f870d73f147a564a5f279e14ee5b04ab373ea23b298` | SODA_BOTTLE_ROCKET @1, super @13, phageAge=0 @18, setPos @27; copia stack para DATA_ID_FIREWORKS_ITEM @58 somente se não vazia e ACCompat.hasTag=true (@32/@40); setDeltaMovement @91; lifetime @109. |
+| (Level,Entity,DDD,ItemStack)V | `7ffc2d8bbe23e21a6b9b0346247bfa61eedce1417d434af83b979c10d7488a89` | delega ao anterior @9, setOwner(entity) @14. |
+| (Level,ItemStack,LivingEntity)V | `5c463c17dd0de5e0ecc289fafc0bbbf05c39954370e195a43f37c373143c1dab` | lê X/Y/Z da entidade @4/8/12; delega ao construtor com owner @16; DATA_ATTACHED_TO_TARGET = OptionalInt.of(entity.getId()) @23–33. |
+
+Velocidade inicial solicitada: X/Z = chamadas independentes nextGaussian() multiplicadas por 0,001D (pivôs @66/71/74 e @82/87/90); Y = 0,05D (@75). Trata-se de vetor inicial de movimento, não velocidade final de voo do jogador. Lifetime inicial = 18 + RandomSource.nextInt(14), @95–109, portanto 18–31 ticks nominais (0,90–1,55 s a 20 TPS). O valor não demonstra o comparador de expiração ou a duração efetiva de boost; colisões, carga de estado e tick herdado ainda devem ser examinados. Owner e attachment são canais distintos; o attachment usa ID de entidade, não UUID nesse construtor. Não assumir sobrevivência do vínculo após reload ou dimensão.
+
+A janela de ACEntityRegistry.<clinit> (Code `710e51c9e0ec3ea0d80a5b00223bcd46ea73ac9f7c123542efccd93e4b65568c`) mostra DEF_REG @1401, literal soda_bottle_rocket @1404, bootstrap #197 @1407 (handle lambda$static$81) e SODA_BOTTLE_ROCKET @1415. A geometria e demais parâmetros da factory ainda exigem leitura do corpo, não do nome.
+
+O gate ACCompat.hasTag não demonstra presença do componente FIREWORKS. A implementação de getItem() cria uma nova ItemStack do item registrado, não retorna a cópia DATA_ID_FIREWORKS_ITEM. É necessário distinguir getItem de qualquer consumidor direto do dado sincronizado antes de inferir explosão, potência ou dano. O pacote de spawn é delegado a ACPlatform.getEntitySpawningPacket @2 (Code `8b5dfced1a06468618f061569501e97bb8d2abdc33d4cbe8284fcabfecb9cc81`), sem prova de equivalência de estado após round-trip.
+
+### Perks e consumidores pendentes
+
+Propulsão, duração, alcance, detonação, dano, raio e autoria exigem a análise de FireworkRocketEntity distribuído em NeoForge 21.1.250, do contexto de dados/componentes e dos gates de colisão. Não usar lifetime nominal como janela garantida de Mastery, nem partículas como receipt de dano. Não duplicar setOwner, boost, spawn ou débito; `NO_MUTATION`. A coleta complementar deve resolver a factory, os métodos herdados, a identidade de FIREWORKS e os eventos que controlam settlement. Mantidos NOT_CERTIFIED e NOT_TESTED.
