@@ -1,0 +1,48 @@
+name: Alex's Caves 1.0.10 Primordial Soup feeding callback discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/qa/alexscaves_1010_primordial_soup_probe.py'
+      - '.github/workflows/alexscaves-1010-primordial-soup.yml'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/primordial-soup.md'
+      - 'docs/qa/alexscaves_1010_armor_material_audit.py'
+      - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
+      - 'docs/qa/alexscaves_1010_four_items_downstream_250_probe.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact_primordial_soup_discovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile and test scope
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_primordial_soup_probe.py
+          python3 docs/qa/alexscaves_1010_primordial_soup_probe.py --self-test
+      - name: Fetch exact publisher artifact
+        run: |
+          mkdir -p build/primordial-soup
+          curl --fail --silent --show-error --location --retry 3 --max-time 180 'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' --output build/primordial-soup/publisher.jar
+      - name: Project food and callback declarations
+        run: |
+          python3 docs/qa/alexscaves_1010_primordial_soup_probe.py --jar build/primordial-soup/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/primordial-soup/report.json
+      - name: Independent deterministic replay
+        run: |
+          python3 docs/qa/alexscaves_1010_primordial_soup_probe.py --jar build/primordial-soup/publisher.jar --javap "$JAVA_HOME/bin/javap" --output build/primordial-soup/replay.json
+          cmp build/primordial-soup/report.json build/primordial-soup/replay.json
+          sha256sum build/primordial-soup/report.json
+      - name: Archive read-only evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: primordial-soup
+          path: build/primordial-soup/report.json
+          if-no-files-found: warn
+          retention-days: 14
