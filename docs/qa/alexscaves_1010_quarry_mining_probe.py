@@ -47,6 +47,55 @@ def method_record(rd,key,body):
             "instruction_count":len(body),"instruction_sha256":digest(canonical(instructions).encode()),
             "instructions":instructions}
 
+
+TAG=P+"misc/ACTagRegistry"
+BR=P+"block/ACBlockRegistry"
+BER=P+"block/blockentity/ACBlockEntityRegistry"
+PLATFORM=P+"misc/ACPlatform"
+REGISTRY_FIELDS={TAG:{"UNMOVEABLE"},BR:{"QUARRY","MAGNETIC_LIGHT"},BER:{"QUARRY"}}
+def registry_boundaries(z,jar,javap):
+    rows={};literals=set()
+    for owner,names in sorted(REGISTRY_FIELDS.items()):
+        raw=z.read(owner+".class");rd=ClassReader(raw)
+        require(rd.name==owner and rd.major==65,"registry owner identity")
+        parsed=disassemble(jar,javap,owner)
+        key=("<clinit>","()V")
+        require(key in parsed,"registry initializer")
+        body=parsed[key];offsets=sorted(body)
+        decl=next(d for d in rd.methods if (d["name"],d["descriptor"])==key)
+        sites=[]
+        for at,(op,arg,_) in sorted(body.items()):
+            m=re.match(r"#(\d+)(?:\s|,|$)",arg)
+            if not m or op!="putstatic":continue
+            v=rd.resolve(int(m[1]))
+            if not isinstance(v,list) or len(v)!=3 or v[0]!=9 or v[1]!=owner or v[2][1] not in names:continue
+            pos=offsets.index(at);window=[]
+            for o in offsets[max(0,pos-18):pos+5]:
+                op2,arg2,sym2=body[o]
+                m2=re.match(r"#(\d+)(?:\s|,|$)",arg2)
+                val=rd.resolve(int(m2[1])) if m2 else None
+                window.append({"offset":o,"opcode":op2,"operand":arg2,"symbol":sym2,"constant":val})
+                if owner==TAG and m2 and rd.pool[int(m2[1])][0]==8 and isinstance(val,str):
+                    literals.add(val)
+            sites.append({"field":v[2][1],"descriptor":v[2][2],"offset":at,"window":window})
+        require({s["field"] for s in sites}==names and len(sites)==len(names),"registry field writes")
+        rows[owner]={"class_sha256":digest(raw),"initializer_code_sha256":decl["code_sha256"],"sites":sites}
+    # Match literal basenames in the archive, not assume a tag path or loaded tag membership.
+    resources={}
+    for path in sorted(z.namelist()):
+        if not path.startswith("data/") or not path.endswith(".json"):continue
+        if any(path.endswith("/"+v.split(":")[-1]+".json") for v in literals):
+            raw=z.read(path);require(len(raw)<=1_000_000,"tag resource size")
+            resources[path]={"sha256":digest(raw),"data":json.loads(raw)}
+    require(len(resources)<=100,"resource scope")
+    raw=z.read(PLATFORM+".class");rd=ClassReader(raw)
+    require(rd.name==PLATFORM,"platform identity")
+    key=("encapsulating","(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/AABB;")
+    parsed=disassemble(jar,javap,PLATFORM)
+    require(key in parsed,"known encapsulating bridge")
+    return {"registries":rows,"tag_literal_candidates":sorted(literals),"resources":resources,
+            "encapsulating":{"class_sha256":digest(raw),**method_record(rd,key,parsed[key])}}
+
 def inspect(jar,javap):
     verify_artifact(jar)
     with ZipFile(jar) as z:
@@ -92,7 +141,7 @@ def inspect(jar,javap):
                 census[owner]={"class_sha256":digest(raw),"constant_pool_candidates":list(refs.values()),"direct_sites":sites}
         require(pins==set(PINS) and codes==set(CODE_PINS),"prior pins covered")
         require(3<=len(classes)<=25 and 1<=len(census)<=100,"scope budget")
-        return {"schema":1,"artifact":{"sha1":SHA1,"sha256":SHA256,"size_bytes":SIZE},
+        return {"schema":2,"registry_boundaries":registry_boundaries(z,jar,javap),"artifact":{"sha1":SHA1,"sha256":SHA256,"size_bytes":SIZE},
                 "roster_sha256":ROSTER_SHA,"classes":classes,"direct_consumer_census":census,"limits":LIMITS}
 def self_test():
     require(primary(Q) and primary(B) and not primary("net/minecraft/Quarry"),"owner filter")
@@ -118,4 +167,5 @@ if __name__=="__main__":
             for m in row["methods"]:print("METHOD",json.dumps({"owner":owner,**m},sort_keys=True))
         for owner,row in result["direct_consumer_census"].items():
             print("CONSUMERS",json.dumps({"owner":owner,**row},sort_keys=True))
+        print("QUARRY_REGISTRY_BOUNDARIES",json.dumps(result["registry_boundaries"],sort_keys=True))
         print("DISCOVERY_ONLY NO_MUTATION NO_PHYSICAL_QA")
