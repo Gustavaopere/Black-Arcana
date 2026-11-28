@@ -28,3 +28,20 @@ Classfile SHA-256 `b7515b5195e7ae5f1aa4f82fb2fb9e93faa339ad3a754ea62313ce438db46
 | `initGrowth()V` | 16 | `73f1070a2c895ae97a6af0f4decd7e2f989b511b89cd328904986e17f0bc4c83` |
 | `lambda$initGrowth$1(Ljava/util/HashMap;)V` | 213 | `0740caf393748346c5690ac6b98376eb85788337d545fc6f3b03b1645976d71f` |
 | `lambda$initGrowth$0(Ljava/util/HashMap;)V` | 101 | `6329ada9dbdbe900f68e49a6134a370eb63c6ca3149014b96be32441baafd95f` |
+
+
+## Continuação downstream — autoridade e limites do efeito no mundo
+
+Base Black Arcana `81dbec3021492e8862b36bb6bbb844d956d742d9`, modlist sibling `b05e2536461bc0a9c526dc47a38e3b9af62d941c`, #001 NeoForge 21.1.250 e #019 Alex's Caves 1.0.10. Licowitch Radiant Essence permanece reservado ao PR #1240; Marine Snow é o próximo item livre. Releitura do replay de 45653331096/job 139343330423 confirmou os pivôs abaixo.
+
+- useOn: verificação água @25/28; GROWS_INTERACTIONS @33 e containsKey @40, ramo cresce com flag true @48, percorre propriedades existentes do novo estado e testa hasProperty no estado original @110, getValue @123/setValue @126, solicita setBlockAndUpdate @152, descarta booleano @155. Ramo exclusivo de crescimento, não também sorteio de duplicação.
+- DUPLICATES_INTERACTIONS @159/166, flag true @174 ANTES de nextInt(2) @184; ifne @189 segue ao assentamento. getOrDefault @202 fornece a stack do mapa (sem chamada de copy na rota observada), passada ao construtor ItemEntity @243 nas coordenadas do click, addFreshEntity @254 e pop @257. Investigar se o construtor/campos/synched data mantêm alias com o mapa e se merge/tick podem alterá-lo; não afirmar duplicação efetiva de recurso ou bug confirmado.
+- Mussel: identidade @273, MUSSELS @280/getValue @283 e limite 5 @292/293, flag true @296, incremento 1 @323/setValue @328/setBlockAndUpdate @334 com pop. Evento de mundo 1505 @364 somente se !isClientSide; player @368/isCreative @371 sem guarda de null local; shrink(1) @382. Ausência de guarda local não exclui autorização/validação upstream, mas invocação sintética sem player não é segura. Mesmo ramo de débito quando sorteio falha ou solicitação de alteração/entidade é negada; efeitos e assentamento não constituem receipt atômico.
+- scanForWater: primeiro estado clicado @1/7, depois Direction.values @15 e BlockPos.relative @43/BlockGetter.getFluidState @46 com FluidTags.WATER @54. É uma consulta de condições de adjacência, não AOE de efeito; não estender ao entorno por perk sem boundary.
+- initGrowth testa ambos os mapas @0/6 e, se algum null, instancia os dois com Util.make @21/38 e handles lambda$initGrowth$0/$1. Mapas compartilhados não devem ser alterados por perk global.
+
+### Coleta preparada
+
+[Sonda](../../../../../docs/qa/alexscaves_1010_marine_snow_world_probe.py), commit `8af07c191194d9f0f614abbd92e764549abd49a4`; [workflow](../../../../../.github/workflows/alexscaves-1010-marine-snow-world.yml), commit `11bce6c84961e22931407cc6f9f8cf3dac56260d`. Mantém pins publisher e seis Code hashes, materializa engine distribuída 21.1.250, projeta ItemStack.useOn/ServerPlayerGameMode.useItemOn e candidatos de hooks, contexto/estado/propriedades, Level.setBlock e callbacks de chunk, Mussel/corais, ItemEntity e inserção. Censo de Fieldref e referências tipadas do publisher, recursos JSON data/ com ID literal ou basename, sem presumir ausência transitiva. Duas reproduções determinísticas, orçamento e testes de filtro. Seletores sem declaração nominal não equivalem a ausência de comportamento. Resultado PENDENTE; não promove ficha/ledger ou runtime.
+
+`STATIC_DISCOVERY_ONLY / NOT_CERTIFIED / WORLD_SAFETY_BLOCKED / NO_MUTATION / NOT_TESTED`.
