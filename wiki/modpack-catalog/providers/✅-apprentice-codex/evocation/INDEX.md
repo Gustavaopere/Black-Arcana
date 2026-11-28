@@ -2,21 +2,21 @@
 
 > Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
 
-**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+**Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
 
-**Fichas catalogadas (somente fichas detectadas): 10/17.**
+**Fichas catalogadas (somente fichas detectadas): 17/17.**
 
-**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 58.8%`
+**Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 10/17.**
+**Homologadas para perks (somente fichas detectadas): 17/17.**
 
-**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 58.8%`
+**Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
-**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
+**Contratos desta subpasta:** ✅ contratos técnicos estáticos de todas as fichas detectadas certificados; recorte documental, sem homologação de hooks mutadores, QA físico ou universo integral do provider.
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
@@ -30,13 +30,13 @@
 | ✅ | Feather Rush | [ficha/feather-rush.md](feather-rush.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Fujin | [ficha/fujin.md](fujin.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Lethal Assault | [ficha/lethal-assault.md](lethal-assault.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Linear Build | [ficha/linear-build.md](linear-build.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Precision Jack | [ficha/precision-jack.md](precision-jack.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Search Beacon | [ficha/search-beacon.md](search-beacon.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Silent Assassin | [ficha/silent-assassin.md](silent-assassin.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Slash Blade | [ficha/slash-blade.md](slash-blade.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Tamers Pocket | [ficha/tamers-pocket.md](tamers-pocket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Tiro Volley | [ficha/tiro-volley.md](tiro-volley.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Linear Build | [ficha/linear-build.md](linear-build.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Precision Jack | [ficha/precision-jack.md](precision-jack.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Search Beacon | [ficha/search-beacon.md](search-beacon.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Silent Assassin | [ficha/silent-assassin.md](silent-assassin.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Slash Blade | [ficha/slash-blade.md](slash-blade.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Tamers Pocket | [ficha/tamers-pocket.md](tamers-pocket.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Tiro Volley | [ficha/tiro-volley.md](tiro-volley.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
