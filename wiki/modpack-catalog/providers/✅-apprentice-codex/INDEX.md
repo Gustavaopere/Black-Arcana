@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 35/83.**
+**Fichas catalogadas (somente fichas detectadas): 42/83.**
 
-**Barra das fichas catalogadas:** `████████░░░░░░░░░░░░ 42.2%`
+**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 50.6%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 35/83.**
+**Homologadas para perks (somente fichas detectadas): 42/83.**
 
-**Barra dos contratos técnicos estáticos:** `████████░░░░░░░░░░░░ 42.2%`
+**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 50.6%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -55,13 +55,13 @@
 | ✅ | Feather Rush | [evocation/feather-rush.md](evocation/feather-rush.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Fujin | [evocation/fujin.md](evocation/fujin.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Lethal Assault | [evocation/lethal-assault.md](evocation/lethal-assault.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Linear Build | [evocation/linear-build.md](evocation/linear-build.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Precision Jack | [evocation/precision-jack.md](evocation/precision-jack.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Search Beacon | [evocation/search-beacon.md](evocation/search-beacon.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Silent Assassin | [evocation/silent-assassin.md](evocation/silent-assassin.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Slash Blade | [evocation/slash-blade.md](evocation/slash-blade.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Tamers Pocket | [evocation/tamers-pocket.md](evocation/tamers-pocket.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Tiro Volley | [evocation/tiro-volley.md](evocation/tiro-volley.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Linear Build | [evocation/linear-build.md](evocation/linear-build.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Precision Jack | [evocation/precision-jack.md](evocation/precision-jack.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Search Beacon | [evocation/search-beacon.md](evocation/search-beacon.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Silent Assassin | [evocation/silent-assassin.md](evocation/silent-assassin.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Slash Blade | [evocation/slash-blade.md](evocation/slash-blade.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Tamers Pocket | [evocation/tamers-pocket.md](evocation/tamers-pocket.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Tiro Volley | [evocation/tiro-volley.md](evocation/tiro-volley.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Artisan Smash | [fire/artisan-smash.md](fire/artisan-smash.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Catch Flame | [fire/catch-flame.md](fire/catch-flame.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Combustion Jet | [fire/combustion-jet.md](fire/combustion-jet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -111,7 +111,7 @@
 | ✅ | Blood | 3/3 (100.0%) | 3 | [Abrir índice](blood/INDEX.md) |
 | ✅ | Eldritch | 7/7 (100.0%) | 7 | [Abrir índice](eldritch/INDEX.md) |
 | ✅ | Ender | 15/15 (100.0%) | 15 | [Abrir índice](ender/INDEX.md) |
-| ⚠️ | Evocation | 10/17 (58.8%) | 10 | [Abrir índice](evocation/INDEX.md) |
+| ✅ | Evocation | 17/17 (100.0%) | 17 | [Abrir índice](evocation/INDEX.md) |
 | ⚠️ | Fire | 0/5 (0.0%) | 0 | [Abrir índice](fire/INDEX.md) |
 | ⚠️ | Holy | 0/11 (0.0%) | 0 | [Abrir índice](holy/INDEX.md) |
 | ⚠️ | Ice | 0/3 (0.0%) | 0 | [Abrir índice](ice/INDEX.md) |
