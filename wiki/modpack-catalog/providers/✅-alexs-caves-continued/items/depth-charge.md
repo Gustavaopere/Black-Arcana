@@ -129,3 +129,14 @@ Fonte reaberta: [run 46051923163/job 140685084122](https://github.com/Gustavaope
 ### Pendências delimitadas
 
 Verificar censo de callsites de onHit/onHitEntity relevantes fora dos corpos já projetados, callbacks de bloco, pacote de spawn, persistência efetiva de posição/movimento e reload, claims e datapacks. Não ampliar indiscriminadamente inspeção de código alheio. Nenhum novo root, promoção de ledger/índices, hook ou QA física. `NOT_CERTIFIED / NO_MUTATION / NOT_TESTED`.
+
+
+## Continuação da auditoria — censo de callsites do impacto (coleta preparada)
+
+Modlist física sibling [b05e2536461bc0a9c526dc47a38e3b9af62d941c](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/b05e2536461bc0a9c526dc47a38e3b9af62d941c/PROJECT-INSTRUCTIONS/modlist/modlist.md): #001 NeoForge 21.1.250, #019 Alex's Caves Continued 1.0.10, nome de JAR inalterado. SHA do publisher permanece pin da sonda, não medição local nova.
+
+A [sonda existente](../../../../../docs/qa/alexscaves_1010_depth_charge_mine_explosion_probe.py) foi ampliada para schema 3. Além dos pins, projeções e dois replays anteriores, ela deverá enumerar as 1555 classes do publisher por identidade JVM; separar declarações dos callbacks onHit(HitResult), onHitEntity(EntityHitResult), onHitBlock(BlockHitResult), referências Methodref/InterfaceMethodref de assinatura exata (inclusive owners diferentes), MethodHandle candidatos e instruções de invoke diretas, com offset, descritor e Code SHA-256 do chamador. O limite de 128 owners candidatos é um gate, não truncamento silencioso. O censo não confunde coincidência de assinatura com despacho no receptor DepthChargeEntity; não cobre reflexão, outros mods, mixins carregados, execução de MethodHandle ou cadeia indireta integral.
+
+Objetivo: determinar quais consumidores publisher merecem exame causal após a prova de que o tick próprio não chama o raycast vanilla. Se a coleta não localizar ingresso direto adicional, isso não demonstra ausência universal de impacto; runtime transformado, engine fora dos owners selecionados e callbacks externos permanecem condicionais. Não importar dano de contato para a trajetória normal, não duplicar a explosão e não usar estatística/evento como receipt de dano.
+
+Resultado da nova coleta: **PENDENTE**, sem alteração de índices ou ledger, sem certificado, sem mutação e sem QA física. A modlist não substitui inspeção física do JAR; o runner precisa verificar hashes e reproduzir a nova coleta.
