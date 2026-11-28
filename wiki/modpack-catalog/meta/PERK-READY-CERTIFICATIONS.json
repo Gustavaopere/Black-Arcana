@@ -11030,6 +11030,52 @@
         }
       }
     },
+    "✅-alexs-caves-continued/items/purple-soda-bottle-rocket.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+      "artifact_size_bytes": 75279314,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato estático individual delimitado ao uso, lançamento e propulsão do item e à detonação condicional da entidade no publisher 1.0.10/engine distribuída 21.1.250; sem certificar listeners, blocos externos, runtime, hook ou QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/purple-soda-bottle-rocket.md",
+          "reason": "Registro item purple_soda_bottle_rocket, factory $191, entidade soda_bottle_rocket factory $81 e hashes dos classfiles e corpos no publisher 1.0.10."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/purple-soda-bottle-rocket.md",
+          "reason": "Uso em bloco e durante voo, estado sincronizado, propulsão, tick, deflexão, detonação, efeitos visuais distintos do dano e callbacks de mundo da engine distribuída."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/purple-soda-bottle-rocket.md",
+          "reason": "Stack nominal 64, lifetime 18–31, dimensão 0.5×0.5, boost v'=0.5v+0.85L, dano condicional B=5+2N, raio 5, queda sqrt; N=0 no default."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/purple-soda-bottle-rocket.md",
+          "reason": "Contexto de bloco, attachment a LivingEntity, ProjectileUtil com predicado canHitEntity, raycast COLLIDER/NONE e filtro radial/oclusão de dano."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/purple-soda-bottle-rocket.md",
+          "reason": "Uma solicitação de spawn, débito de uma unidade fora de creative/instabuild sem receipt de inserção; receita 3+1 para três, sem mana/cooldown próprio."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/purple-soda-bottle-rocket.md",
+          "reason": "Owner UUID versus attachment ID, evento de impacto e deflexão, perda da cópia custom no getter virtual de NBT; boundaries de spawn, hurt e block callbacks; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/purple-soda-bottle-rocket.md",
+          "reason": "Schema 2 run 46151522451/job 140998990630, dois relatórios SHA-256 69e1d35672bb4fe8cf1646d3ae54e8b2e6b4fdddcae4565bd178f422da6b6d64; engine 21.1.250 reutilizada com hashes e replays; CI da revisão candidata pendente."
+        }
+      }
+    },
     "✅-alexs-caves-continued/items/purple-soda-bottle.md": {
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
