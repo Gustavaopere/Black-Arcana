@@ -43,6 +43,53 @@ LIMITS = {"static_contract": "NOT_CERTIFIED", "mutating_hook": "NOT_VERIFIED",
           "scope": "PUBLISHER_FEEDING_CALLBACKS_AND_FOOD_CONTEXT",
           "food_initializer": "REUSED_EXISTING_CERTIFIED_FOODS_CLASS_NOT_REPROJECTED"}
 
+
+# Exact member-name/descriptor census across the publisher, including inherited-owner references.
+TIMER_MEMBERS = {("getPushingTreesFor","()I"),("setPushingTreesFor","(I)V"),
+                 ("PUSHING_TREES_FOR","Lnet/minecraft/network/syncher/EntityDataAccessor;")}
+RELICH = P+"entity/living/RelicheirusEntity"
+def timer_ref(resolved):
+    return (isinstance(resolved,list) and len(resolved)==3 and resolved[0] in (9,10,11)
+            and isinstance(resolved[2],list) and tuple(resolved[2][1:]) in TIMER_MEMBERS)
+
+def timer_census(z, roster, jar, javap):
+    import re
+    out={}
+    for path in roster:
+        raw=z.read(path);rd=ClassReader(raw)
+        cp={i:rd.resolve(i) for i,v in enumerate(rd.pool) if v and v[0] in (9,10,11)}
+        hits={i:v for i,v in cp.items() if timer_ref(v)}
+        if not hits:continue
+        sites=[]
+        parsed=disassemble(jar,javap,rd.name)
+        for key,body in sorted(parsed.items()):
+            matched=[]
+            for at,(op,arg,symbol) in sorted(body.items()):
+                m=re.match(r"#(\d+)(?:\s|,|$)",arg)
+                if m and int(m[1]) in hits:
+                    matched.append({"offset":at,"opcode":op,"member":hits[int(m[1])]})
+            if not matched:continue
+            decl=next(d for d in rd.methods if (d["name"],d["descriptor"])==key)
+            # Preserve every matching instruction, with bounded causal neighborhoods.
+            # Large methods are not passed to the shared full-projection budget.
+            offsets=sorted(body)
+            for site in matched:
+                pos=offsets.index(site["offset"])
+                site["window"]=[{"offset":o,"opcode":body[o][0],"operand":body[o][1],"symbol":body[o][2]}
+                                for o in offsets[max(0,pos-12):pos+13]]
+            sites.append({"name":key[0],"descriptor":key[1],"code_sha256":decl["code_sha256"],
+                          "instruction_count":len(body),"sites":matched})
+        # Method handles can represent indirect references not reached by direct CP instructions.
+        handles=[{"index":i,"handle":rd.resolve(i)} for i,v in enumerate(rd.pool)
+                 if v and v[0]==15 and timer_ref(rd.resolve(i)["reference"])]
+        out[rd.name]={"class_sha256":digest(raw),"parent":rd.parent,
+                     "constant_pool_candidates":[[i,v] for i,v in sorted(hits.items())],
+                     "direct_sites":sites,"method_handle_candidates":handles}
+    require(RELICH in out and 1<=len(out)<=80,"timer census bounds")
+    require(any(s["name"]=="onFeedMixture" for s in out[RELICH]["direct_sites"]),"known producer absent")
+    require(any(s["name"]=="setPushingTreesFor" for s in out[RELICH]["direct_sites"]),"known setter absent")
+    return out
+
 def refs_json(value, path=()):
     if isinstance(value, dict):
         for k, v in sorted(value.items()):
@@ -122,7 +169,8 @@ def inspect(jar, javap):
                 resources[path] = {"sha256": digest(raw), "refs": refs, "data": data}
         require(RECIPE in resources and resources[RECIPE]["sha256"] == RECIPE_SHA, "recipe pin")
         require(len(resources) <= 100, "resource hit budget")
-        return {"schema": 2, "food_class_sha256": class_hashes[FOODS], "artifact": {"sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE},
+        timer=timer_census(z,roster,jar,javap)
+        return {"schema": 3, "timer_census": timer, "food_class_sha256": class_hashes[FOODS], "artifact": {"sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE},
                 "class_roster_sha256": ROSTER_SHA, "callback_declarations": declarations,
                 "methods": projected, "data_json_count": len(data_paths),
                 "resources": resources, "limits": LIMITS}
@@ -131,7 +179,10 @@ def self_test():
     require(list(refs_json({"x":[ID, ID+"_other"], ID:1})) ==
             [[[ID], "KEY", ID], [["x",0], "VALUE", ID]], "exact resource filter")
     require(LIMITS["mutation"] == "NO_MUTATION" and LIMITS["static_contract"] == "NOT_CERTIFIED", "scope")
-    print("PASS exact resource filter and fail-closed discovery policy")
+    require(timer_ref([10,RELICH,[12,"getPushingTreesFor","()I"]]),"timer method match")
+    require(not timer_ref([10,RELICH,[12,"getPushingTreesFor","()Z"]]),"descriptor mismatch")
+    require(not timer_ref([10,RELICH,[12,"getPushingTreesForOther","()I"]]),"name mismatch")
+    print("PASS exact resource and timer member filters and fail-closed discovery policy")
 
 if __name__ == "__main__":
     p=argparse.ArgumentParser(description=__doc__)
@@ -151,7 +202,7 @@ if __name__ == "__main__":
         with a.output.open("xb") as out:
             out.write(raw)
         print("REPORT_SHA256",digest(raw),"BYTES",len(raw))
-        for key in ("callback_declarations","data_json_count","resources"):
+        for key in ("callback_declarations","data_json_count","resources","timer_census"):
             print(key.upper(),json.dumps(result[key],sort_keys=True))
         for method in result["methods"]:
             print("SEMANTIC",json.dumps(method,sort_keys=True))
