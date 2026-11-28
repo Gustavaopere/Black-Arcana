@@ -1,91 +1,119 @@
 # Remote Eye
 
-- **Provider:** Apprentice's Codex
-- **Mod ID:** `apprenticecodex`
-- **Installed JAR:** `apprentice_codex-0.9.7.1+mc1.21.1.jar`
-- **Registry ID:** `apprenticecodex:remote_eye`
-- **Iron's school:** Ender
-- **Levels:** 1–3
-- **Minimum rarity:** Epic
-- **Cast type:** Instant
-- **Cooldown:** 30 s
-- **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+**Estado do contrato:** ✅ `COMPLETE_PERK_READY` — `STATIC_TECHNICAL_CATALOG_ONLY` · `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`.
 
-## Exact source coefficients
+> O ✅ cobre exclusivamente a documentação estática SHA-exata deste objeto. Não homologa hook mutador, execução no pack, configuração efetiva, universo integral do provider nem QA físico.
 
-- `baseSpellPower = 100`
-- `spellPowerPerLevel = 30`
-- `baseManaCost = 80`
-- `manaCostPerLevel = 25`
-- `castTime = 0`
+## 1. Identidade e proveniência
 
-Duration:
+| Campo | Valor verificado |
+|---|---|
+| Provider | Apprentice's Codex |
+| Mod ID | `apprenticecodex` |
+| Registry ID | `apprenticecodex:remote_eye` |
+| Host | Iron's Spells 'n Spellbooks (`AbstractSpell`) |
+| Escola | `SchoolRegistry.ENDER_RESOURCE` (Ender) |
+| Raridade mínima | `SpellRarity.EPIC` |
+| Níveis | 1–3 (`DefaultConfig.setMaxLevel(3)`) |
+| Tipo de cast | `CastType.INSTANT` |
+| Cooldown declarado | `30.0` s |
+| Recurso | Mana do Iron's (`baseManaCost=80`, `manaCostPerLevel=25`) |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
+| Ambiente | Minecraft 1.21.1 · NeoForge · Java 21 (JDK 21.0.12 na inspeção) |
+| Classe de implementação | `jp.aquafactory.apprenticecodex.spell.remoteeye.RemoteEye` |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-`40 + round(40 * spellPower / 100)` ticks.
+As versões 0.9.7.1 e 1.0.1 permanecem como histórico; nenhum valor foi reaproveitado sem confirmação no artefato físico 1.0.1.1.
 
-At default unmodified spell power this is approximately **80 / 92 / 104 ticks** for levels 1–3, but actual duration responds to spell-power modifiers.
+## 2. Localizadores para o Codex
 
-Persisted-state repair uses an explicit maximum active repair window of `20 * 30 = 600 ticks` for old state lacking active-duration metadata.
+| Elemento | Localizador |
+|---|---|
+| Registro | `SpellRegistry.reg("remote_eye", RemoteEye::new)` |
+| Config | `RemoteEye.config` (`EPIC`, nível 3, cooldown `30.0`) |
+| Coeficientes | `RemoteEye.<init>()`: `baseSpellPower=100`, `spellPowerPerLevel=30`, `baseManaCost=80`, `manaCostPerLevel=25`, `castTime=0` |
+| Duração | `RemoteEye.getDuration(int,LivingEntity)` → `40 + round(40*power/100)` ticks |
+| Gate de dimensão | `RemoteEye.checkPreCastConditions(...)`: `!ApprenticeCodexServerConfig.isRemoteEyeDimensionAllowed(level.dimension().location())` → mensagem `ui.apprenticecodex.spell.dimension_not_allowed` e falha |
+| `onCast` | grava `activeUntilGameTime`, `activeDurationTicks`, `anchorX/Y/Z`, `anchorYaw`, `anchorPitch` em `REMOTE_EYE_STATE`; sincroniza ao `ServerPlayer` |
+| Constante de reparo | `PERSISTED_STATE_REPAIR_MAX_ACTIVE_TICKS=600` |
+| Estado | `capability.codexspelldata.spellstates.RemoteEyeState` |
+| Tick de sessão | `jp.aquafactory.apprenticecodex.spell.remoteeye.RemoteEyeBodyControlEvent.onPlayerTick(Post)`, `isActive`, `sanitizePersistentGameTimes`, `anchorBody`, `deactivate` |
+| Reparo | `PersistentGameTimeSanitizer.repairPersistedFutureUntil(gameTime, activeUntil, activeDurationTicks>0 ? activeDurationTicks : 600)` |
+| Sync | `RemoteEyeSync.syncToClient(...)` |
+| Som | `SoundRegistry.REMOTE_PREPARE` |
+| Limpeza | handlers de `LivingDeathEvent`, `PlayerLoggedInEvent`, `PlayerRespawnEvent`, `PlayerChangedDimensionEvent` |
 
-## Server-owned observation state
+Bytecode: `scratch/javap1011_ender10.txt` (`javap -classpath <JAR> -p -s -c`, `EXIT=0`, SHA-256 `0095E23B21918E38B4BD7D6C47DA8C3503753F0F988C00AB04A786060E2C50E5`); decompilação: `scratch/ender10_sources.txt` (SHA-256 `F3953EB8FCFB793EC501694E054E3C3CBE187E557B09B6CF158828692A97A645`).
 
-The server rejects dimensions not allowed by the provider config, then stores:
+## 3. Casting / execução
 
-- active-until game time;
-- active duration;
-- anchor XYZ;
-- anchor yaw/pitch.
+1. `AbstractSpell` resolve mana/cooldown/nível; `castTime=0`, `CastType.INSTANT`.
+2. `checkPreCastConditions` rejeita dimensões não permitidas pela config no lado servidor.
+3. `onCast` calcula `duration = 40 + round(40*power/100)` e grava no capability: `activeUntilGameTime = gameTime + duration`, `activeDurationTicks = duration`, âncora XYZ e âncora de yaw/pitch do casador; sincroniza ao cliente se `ServerPlayer`.
+4. `RemoteEyeBodyControlEvent.onPlayerTick(Post)` sanitiza horizontes persistidos, testa `activeUntilGameTime > gameTime`, e exige `player.isAlive() && !player.isPassenger()`; caso contrário `deactivate` reseta e sincroniza.
+5. Enquanto ativo, `anchorBody` repõe o corpo na âncora e na rotação registrada. `deactivate` só atua quando `activeUntilGameTime != 0`.
 
-For a `ServerPlayer`, that state is synchronized to the client. The provider guide describes a detached/free-look observation mode in which the physical caster remains vulnerable and the view cannot simply pass through walls.
+Valores efetivos de mana/cooldown e configuração de dimensão **NÃO VERIFICADOS**.
 
-The gameplay observation/camera experience is therefore a provider-owned remote-view system, not a Black Arcana `Borrowed Sight` session.
+## 4. Estado e geometria
 
-## Divination overlap
+| Propriedade | Valor e consumidor |
+|---|---|
+| Duração | `40 + round(40*power/100)` ticks; nominal **80 / 92 / 104 ticks (4 / 4,6 / 5,2 s)** nos níveis 1–3 sem modificadores |
+| Âncora | XYZ + yaw/pitch capturados no cast; `POSITION_EPSILON_SQ=1.0E-6` para detectar divergência |
+| Reparo de save antigo | limite `600` ticks quando `activeDurationTicks <= 0`; é sanitização, não extensão de duração |
+| Corpo | `anchorBody` chama `setPos(anchor)`, `setYRot`, `setXRot`, `setYHeadRot`, `setYBodyRot`, zera `yRotO`/`xRotO`, `fallDistance`, `setDeltaMovement(Vec3.ZERO)`, `xOld/yOld/zOld`, `hasImpulse=false`, `hurtMarked=true` |
+| Persistência | `RemoteEyeState` no capability do Codex, sincronizado via `RemoteEyeSync` |
 
-This is a direct semantic overlap with Black Arcana Familiars & Divination. A Black Arcana remote-observation spell needs a demonstrable distinction—such as target ownership/privacy semantics or a different noetic contract—rather than reproducing Remote Eye with different VFX.
+O corpo real permanece no mundo e é alvo de dano. A visualização/câmera do cliente não é autoridade de teleporte nem de deslocamento remoto.
 
-Black Arcana must not consume client camera state as provider authority. Any future cross-provider progression integration would require a server-observable causal boundary.
+## 5. Resultado
 
-## Acquisition
+- Limpeza em expiração, morte (`LivingDeathEvent`), login, respawn e troca de dimensão.
+- `sanitizePersistentGameTimes` reescreve `activeUntilGameTime` e sincroniza a correção quando há divergência.
+- O provider descreve um modo de observação destacado; a colisão/UX da câmera pertence ao cliente do provider e não foi certificada nesta análise.
 
-Registered through Iron's spell registry. Exact survival acquisition remains provider-wide audit work.
+## 6. Scaling e caps
 
-## Deduplication
+| Parâmetro | Fórmula literal | Unidade / ownership |
+|---|---|---|
+| Spell power | `100 + 30*(level-1)` | float; `getSpellPower` do host aplica atributos/multiplicadores |
+| Mana | `80 + 25*(level-1)` | Iron's mana |
+| Duração | `40 + round(40*power/100)` | ticks; responde a spell power |
+| Gate | `ApprenticeCodexServerConfig.isRemoteEyeDimensionAllowed(...)` | config do servidor; conteúdo **NÃO VERIFICADO** |
+| Cooldown | `30.0` s | `DefaultConfig` |
+| Reparo | `600` ticks | somente para estado legado sem duração registrada |
 
-Occupies the **temporary detached remote-eye/free-look observation** niche.
+## 7. Possibilidades de perks
 
-## Confidence
+- **A — atributo nativo:** spell power/mana/cooldown via `AbstractSpell`; a duração responde indiretamente ao spell power.
+- **B — evento verificado:** `PlayerTickEvent.Post` e os handlers de ciclo de vida são observadores do provider; não autorizam alterar âncora, duração base ou a imobilização do corpo.
+- **C — adapter condicionado:** mudar o modo de observação exigiria contrato com `RemoteEyeBodyControlEvent`/`RemoteEyeSync`, câmera do cliente e sanitização de estado. **CONDICIONADO**.
+- **D — sem hook demonstrado:** não há API segura comprovada para transformar o olho remoto em possessão, teleporte ou segunda sessão de observação. **NO_MUTATION / fail-closed**.
+- `mutating_hook = NOT_VERIFIED`.
 
-`SOURCE-PINNED SPELL / EXACT SERVER STATE+DURATION FORMULA+DIMENSION GATE / CLIENT CAMERA COLLISION+INPUT UX+FULL-PACK QA PENDING`
+## 8. Causalidade
 
-## Localizadores para Codex — source exato
+`um cast → um estado de observação com âncora e expiração → imobilização do corpo até limpeza`.
 
-- **Registry + identidade:** `apprenticecodex:remote_eye` → `SpellRegistry.reg("remote_eye", RemoteEye::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.remoteeye.RemoteEye`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/remoteeye/RemoteEye.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+Há sobreposição semântica direta com Familiars & Divination do Black Arcana. Um recurso BA equivalente exigiria distinção demonstrável (ownership/privacidade de alvo ou contrato noético diferente), não apenas VFX diverso. Black Arcana não deve consumir câmera do cliente como autoridade de provider.
 
----
+## 9. Concepção de nova magia
 
-## Engenharia causal aprofundada — 0.9.7.1 (audit de source, 2026-10-13)
+Assinatura ocupada: "observação remota temporária com corpo imobilizado e âncora persistida". Nenhuma implementação foi realizada.
 
-**Prova rastreável:** [`remoteeye/RemoteEye.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/remoteeye/RemoteEye.java) · [`remoteeye/RemoteEyeBodyControlEvent.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/remoteeye/RemoteEyeBodyControlEvent.java) · [`remoteeye/RemoteEyeSync.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/remoteeye/RemoteEyeSync.java). Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`, mod ID `apprenticecodex`. Identidade e versão do JAR são da modlist física; **não há prova de equivalência de cada corpo de método com o JAR compilado**.
+## 10. Verificação e pendências
 
-### Sessão de observação e imobilização do corpo
+- ✅ Identidade/hash, coeficientes, fórmula de duração, gate de dimensão, âncora, limpeza e reparo confirmados no bytecode 1.0.1.1.
+- ⚠️ Configuração efetiva de dimensão e comportamento de câmera/colisão no cliente não certificados.
+- ⚠️ `physical_qa=NOT_TESTED`: sem cliente/servidor Survival, reconexão, replay de save, cross-dimension, dano ao corpo ou PvP.
+- ⚠️ Universo integral do provider não encerrado.
 
-- **Estado server-owned:** `RemoteEye.onCast` inicia sessão com game time de expiração, duração e anchor de coordenadas/rotação, sincronizando `RemoteEyeState`. O limite de recuperação para save antigo sem duração é `PERSISTED_STATE_REPAIR_MAX_ACTIVE_TICKS=600`; trata-se de **sanitização de tempos persistidos**, não extensão normal da duração da spell.
-- **Tick da sessão:** `RemoteEyeBodyControlEvent.onPlayerTick(PlayerTickEvent.Post)` recupera `REMOTE_EYE_STATE`; primeiro chama `PersistentGameTimeSanitizer.repairPersistedFutureUntil` com duração registrada ou limite de reparo. Se expirou, perdeu vida ou passou a ser passageiro, `deactivate` limpa o estado e sincroniza.
-- **Imobilização:** enquanto ativa, `anchorBody` reposiciona player no XYZ original, restaura yaw/pitch de cabeça e corpo, zera `Vec3` de movimento e `fallDistance`. A rotina executa com estado compartilhado por lados, mas o cliente apenas apresenta visualização; **não** é autoridade de deslocamento remoto.
-- **Limpeza:** `LivingDeathEvent`, login, respawn e mudança de dimensão têm handlers de sincronização/desativação. O corpo real permanece no mundo e pode ser alvo de dano; a câmera não representa um teleport.
-- **Boundary:** não reconstruir posição do player a partir da câmera nem gerar perks por movimento do olho. Testar colisão, inputs, logout, restauração de save, cross-dimension, dano e privacidade no servidor real antes de integrar um sistema BA de Borrowed Sight.
+## Localizadores para Codex — resumo operacional
 
-### Perfil para integração de perks e QA
-
-- **A / stats e rank:** ler apenas os atributos declarados no host Iron's e os state objects que o addon expõe; stat dinâmica e duração efetiva exigem ambiente, item e configuração. Nenhuma alteração de mana/cooldown do Iron's por Black Arcana.
-- **B / causalidade:** uma ação primária `apprenticecodex:remote_eye`; filhos, efeitos retardados, limpeza ou automação pertencem à raiz do provider. Sem `cast UUID`/contrato de retorno validado, o BA e RPG não devem inferir reward do resultado observado.
-- **C/D / segurança:** ⛔ adapter de Mastery/perks enquanto inexistir contrato seguro. ⚠️ QA: servidor real, replay, NBT/relog, cross-dimension, compat opcional, ordenação e anti-double-processing. Não houve GameTest do provider nesta auditoria.
-- **Clean-room:** análise factual e documentação próprias; código upstream não foi incorporado.
-
-[Matriz causal desta etapa](../PERK-ENGINEERING-MATRIX-HIGH-RISK-0.9.7.1.md).
+- `PERSISTED_STATE_REPAIR_MAX_ACTIVE_TICKS=600` não é a duração da spell; é teto de reparo de estado antigo.
+- `anchorBody` imobiliza o corpo; não é um teleporte e não move a câmera por autoridade de servidor.
+- Nenhum ponto de mutação segura demonstrado; manter fail-closed.
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).

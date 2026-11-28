@@ -1,70 +1,128 @@
 # Servant Gaze
 
-- **Provider:** Apprentice's Codex
-- **Mod ID:** `apprenticecodex`
-- **Installed JAR:** `apprentice_codex-0.9.7.1+mc1.21.1.jar`
-- **Registry ID:** `apprenticecodex:servant_gaze`
-- **Iron's school:** Ender
-- **Levels:** 1–5
-- **Minimum rarity:** Uncommon
-- **Cast type:** Long
-- **Cooldown:** 150 s
-- **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+**Estado do contrato:** ✅ `COMPLETE_PERK_READY` — `STATIC_TECHNICAL_CATALOG_ONLY` · `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`.
 
-## Exact source coefficients
+> O ✅ cobre exclusivamente a documentação estática SHA-exata deste objeto. Não homologa hook mutador, execução no pack, configuração efetiva, universo integral do provider nem QA físico.
 
-- `baseSpellPower = 500`
-- `spellPowerPerLevel = 200`
-- `baseManaCost = 75`
-- `manaCostPerLevel = 0`
-- `castTime = 50 ticks`
-- raw attack damage: `spellPower / 100 * providerDamageMultiplier`
-- targeting radius: `20 blocks`
-- mana consumed per turret attack: `15 + 5 * (spellLevel - 1)` = **15 / 20 / 25 / 30 / 35**
-- lifetime: `20 * 60 * 10 = 12000 ticks = 10 min`
-- recast count: `2`
+## 1. Identidade e proveniência
 
-## Provider-owned summon/session
+| Campo | Valor verificado |
+|---|---|
+| Provider | Apprentice's Codex |
+| Mod ID | `apprenticecodex` |
+| Registry ID | `apprenticecodex:servant_gaze` |
+| Host | Iron's Spells 'n Spellbooks (`AbstractSpell`) |
+| Escola | `SchoolRegistry.ENDER_RESOURCE` (Ender) |
+| Raridade mínima | `SpellRarity.UNCOMMON` |
+| Níveis | 1–5 (`DefaultConfig.setMaxLevel(5)`) |
+| Tipo de cast | `CastType.LONG` |
+| Cooldown declarado | `150.0` s |
+| Recurso | Mana do Iron's (`baseManaCost=75`, `manaCostPerLevel=0`); mana adicional por disparo da staff |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
+| Ambiente | Minecraft 1.21.1 · NeoForge · Java 21 (JDK 21.0.12 na inspeção) |
+| Classe de implementação | `jp.aquafactory.apprenticecodex.spell.servantgaze.ServantGaze` |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-If no recast is active, the server creates an owner-linked `ServantGazeStaffEntity`, snapshots spell level, damage, radius and per-shot mana cost into serializable cast data, and starts a provider recast/session for the full duration.
+As versões 0.9.7.1 e 1.0.1 permanecem como histórico; nenhum valor foi reaproveitado sem confirmação no artefato físico 1.0.1.1.
 
-The public guide describes a following magical staff that autonomously attacks enemies—prioritizing high-health targets—and consumes the caster's mana per attack. Dispelling/removing the caster can remove the staff through provider lifecycle logic.
+## 2. Localizadores para o Codex
 
-If the ten-minute session naturally expires while the caster has Iron's **Greater Conjurer's Talisman**, the provider explicitly suppresses the ordinary summon-cooldown completion path. Other completion reasons use the normal provider behavior.
+| Elemento | Localizador |
+|---|---|
+| Registro | `SpellRegistry.reg("servant_gaze", ServantGaze::new)` |
+| Config | `ServantGaze.config` (`UNCOMMON`, nível 5, cooldown `150.0`) |
+| Coeficientes | `ServantGaze.<init>()`: `baseSpellPower=500`, `spellPowerPerLevel=200`, `baseManaCost=75`, `manaCostPerLevel=0`, `castTime=50` |
+| Dano | `ServantGaze.getDamage(int,LivingEntity)` → `spellPower/100 * ApprenticeCodexServerConfig.damageMultiplier(DamageMultiplierKey.SERVANT_GAZE)` |
+| Raio | `ServantGaze.getRadius()` → `20.0` |
+| Custo por disparo | `ServantGaze.getConsumeManaPerAttack(int)` → `15 + 5*(level-1)` |
+| Duração / recast | `ServantGaze.getDuration()` → `12000`; `getRecastCount(...)` → `2` |
+| Dados de cast | `ServantGaze.ServantGazeCastData` (`spellLevel`, `damage`, `radius`, `attackManaCost`) |
+| Manager | `ServantGazeManager.initialize`, `configure`, `validate`, `finishRecast`, `getActiveRecast` |
+| Staff | `ServantGazeStaffEntity` (`ATTACK_INTERVAL=40`, `SHOT_DELAYS={0,3,6}`, `FIRE_POSITION_OFFSET=(0,1.7,0)`, `selectTargets`, `firePendingShot`) |
+| Projétil | `ServantGazeProjectileEntity` |
+| Câmera/efeitos | `SoundRegistry.CLOUD_OF_REGEN_LOOP` (início), `SoundRegistry.VANILLA_SUMMON_MAGICAL_ENTITY` (fim) |
+| Talismã | `ItemRegistry.GREATER_CONJURERS_TALISMAN` suprime `super.onRecastFinished` em `TIMEOUT` |
 
-## Authority and progression
+Bytecode: `scratch/javap1011_ender10.txt` (`javap -classpath <JAR> -p -s -c`, `EXIT=0`, SHA-256 `0095E23B21918E38B4BD7D6C47DA8C3503753F0F988C00AB04A786060E2C50E5`); decompilação: `scratch/ender10_sources.txt` (SHA-256 `F3953EB8FCFB793EC501694E054E3C3CBE187E557B09B6CF158828692A97A645`).
 
-The autonomous staff is not a Black Arcana familiar by default. Its owner, lifetime, targeting and per-shot resource consumption are Apprentice's Codex/Iron's authority.
+## 3. Casting / execução
 
-RPG/Black Arcana must not award Mastery per turret tick or per autonomous target scan. Any future causal credit for a staff hit/kill requires an explicit progression attribution contract.
+1. `AbstractSpell` resolve mana/cooldown/nível; `castTime=50`, `CastType.LONG`.
+2. `onCast`: sem recast ativo para a spell, em `ServerLevel` com `ServerPlayer`, cria `ServantGazeStaffEntity`; se `addFreshEntity` sucede, monta `ServantGazeCastData(spellLevel, damage, radius, manaPerAttack)` e `ServantGazeManager.initialize(player, staff, 12000, castData)`.
+3. `initialize` define `setLifecycleOwner(owner)`, `setExpirationGameTime(gameTime + duration)`, `configure(...)` e `castData.bindStaff(staff)`.
+4. A staff segue o owner (`getStandbyPosition` usa `RotationTools.calculateBehindPosition(owner, -0.75, 0.9, -0.2)`) e, em `tickOnServer`, valida o ciclo de vida.
+5. `onRecastFinished` → `ServantGazeManager.finishRecast`; em `RecastResult.TIMEOUT` com `GREATER_CONJURERS_TALISMAN` equipado, não chama o caminho padrão de conclusão de summon.
 
-## Acquisition
+Valores efetivos de mana/cooldown, multiplicador de dano e configuração **NÃO VERIFICADOS**.
 
-Registered through Iron's spell registry. Exact survival acquisition remains provider-wide audit work.
+## 4. Combate / geometria
 
-## Deduplication
+| Propriedade | Valor e consumidor |
+|---|---|
+| Dano | `spellPower/100 * damageMultiplier(SERVANT_GAZE)`; nominal **5 / 7 / 9 / 11 / 13** sem multiplicador instalado |
+| Raio de seleção | `20.0` blocos; candidatos dentro de `getBoundingBox().inflate(radius)` e `distanceToSqr <= radius²` |
+| Prioridade de alvo | ordena por `getHealth()` **decrescente**, desempata por `Entity.getId()`; exige `CombatTools.canBeHostileToMe` e `hasLineOfSight` (`ClipContext` com `Block.COLLIDER`, `Fluid.NONE`) |
+| Mana por disparo | `15 + 5*(level-1)` = **15 / 20 / 25 / 30 / 35**; debitada de `MagicData` do owner **por alvo selecionado**, antes do disparo |
+| Número máximo de alvos por rodada | `SHOT_DELAYS.length = 3` |
+| Intervalo de seleção | `ATTACK_INTERVAL=40` ticks (`tickCount % 40 == 0`), com `attackSetTick < 0` |
+| Atrasos de disparo | `SHOT_DELAYS={0,3,6}` ticks, um projétil por alvo pendente |
+| Origem do tiro | `position + (0, 1.7, 0)` |
+| Duração da sessão | `12000` ticks = 10 min |
+| Recast | `2` |
 
-Occupies the **long-lived owner-bound autonomous staff turret that spends caster mana per shot** niche.
+O débito de mana acontece em `selectTargets`, não no `firePendingShot`. Se o alvo desaparecer antes do disparo, o custo já foi debitado — risco a validar em QA, não bug comprovado.
 
-## Confidence
+## 5. Resultado e persistência
 
-`SOURCE-PINNED SPELL / EXACT DAMAGE+RADIUS+SHOT COST+10m SESSION+RECAST / TARGET PRIORITY+DISPEL LIFECYCLE+MULTIPLAYER QA PENDING`
+- `ServantGazeManager.validate` rejeita staff sem `expirationGameTime`, expirada ou com owner ausente/morto/em outra dimensão/recast divergente.
+- A staff é `PersistentSummonWeaponEntity` com `shouldBeSaved=false` e `isAlwaysTicking=true`; `onAntiMagic`/`remove` tratam cancelamento e descarte. **Não presumir persistência após restart**.
+- `ServantGazeEvents` e o manager tratam limpeza e conclusão de sessão; remoção do casador pode remover a staff pelo ciclo de vida do provider.
+- `ServantGazeProjectileEntity` pertence à mesma raiz semântica; tiros não são casts novos.
 
-## Localizadores para Codex — source exato
+## 6. Scaling e caps
 
-- **Registry + identidade:** `apprenticecodex:servant_gaze` → `SpellRegistry.reg("servant_gaze", ServantGaze::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.servantgaze.ServantGaze`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/servantgaze/ServantGaze.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+| Parâmetro | Fórmula literal | Unidade / ownership |
+|---|---|---|
+| Spell power | `500 + 200*(level-1)` | float; host aplica atributos |
+| Dano exibido | `power/100 * damageMultiplier(SERVANT_GAZE)` | float; multiplicador de servidor **NÃO VERIFICADO** |
+| Mana base | `75 + 0*(level-1)` | Iron's mana |
+| Mana por disparo | `15 + 5*(level-1)` | por alvo selecionado |
+| Raio | `20.0` | blocos |
+| Duração | `12000` | ticks |
+| Recast | `2` | Iron's recast |
+| Cooldown | `150.0` s | `DefaultConfig` |
+| Cadência | `40` ticks + atrasos `0/3/6` | provider |
 
-## Engenharia causal aprofundada — utilidades, persistência e recursos (2026-10-14)
+## 7. Possibilidades de perks
 
-**Registry:** `apprenticecodex:servant_gaze`. **Proveniência source:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (versão declarada 0.9.7.1); classes e helpers: [ServantGaze.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/servantgaze/ServantGaze.java); [ServantGazeManager.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/servantgaze/ServantGazeManager.java); [ServantGazeStaffEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/servantgaze/ServantGazeStaffEntity.java); [ServantGazeProjectileEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/servantgaze/ServantGazeProjectileEntity.java); [ServantGazeEvents.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/servantgaze/ServantGazeEvents.java).
+- **A — atributo nativo:** spell power e mana base via `AbstractSpell`; multiplicador de dano e custo por disparo são server config/contrato do provider.
+- **B — evento verificado:** `tickOnServer`, `selectTargets` e `ServantGazeManager` são execução do provider; não há hook de mutação segura demonstrado para alterar cadência, alvos ou custo por disparo.
+- **C — adapter condicionado:** mudar o comportamento da torre exigiria substituir staff/manager/projétil com contrato de owner, mana, limpeza e recast. **CONDICIONADO**.
+- **D — sem hook demonstrado:** não há API comprovada para converter a staff em familiar Black Arcana ou premiar Mastery por tick/scan sem risco de duplo processamento. **NO_MUTATION / fail-closed**.
+- `mutating_hook = NOT_VERIFIED`.
 
-**Cadeia causal no código-fonte:** ServantGaze.onCast cria uma staff server-owned e registra recast somente quando addFreshEntity retorna sucesso; ServantGazeManager mantém owner UUID/dimensão/expiration e tratamento de recast/cleanup. ServantGazeStaffEntity.tickOnServer valida lifecycle, segue owner e, a cada ATTACK_INTERVAL=40 ticks, seleciona até 3 alvos LOS ordenados por HP. selectTargets debita MagicData do player por target selecionado e firePendingShot cria projéteis nos offsets SHOT_DELAYS={0,3,6}. shouldBeSaved=false, isAlwaysTicking=true, onAntiMagic/remove tratam cancelamento e descarte — não presumir persistência da staff após restart.
+## 8. Causalidade
 
-**QA prioritário pendente:** Débito de mana mesmo se alvo some antes do shot, owner/death/logout/recast, teleport distante e always ticking, cooldown de talisman, custo agregado de muitas staffs.
+`um cast → uma staff owner-bound → seleção periódica de alvos → projéteis com mana do casador → expiração/recast/cleanup`.
 
-**Governança:** o host Iron's controla cast/mana/recast; o addon controla o estado/efeito/custo especializado verificado. Um pulso, dano periódico, bloco, item gerado, job tick, cast visual ou cast derivado não é uma identidade semântica nova nem gatilho de Mastery/XP automático. Black Arcana não reprocessa recursos, eventos, mutação do mundo ou callback dos providers. ⚠️ Source-level não comprova bytecode idêntico/config efetiva/teste físico. ⛔ Nenhum contrato de RPG Skill Tree perks/Mastery homologado: fail-closed.
+A staff autônoma não é familiar Black Arcana por padrão. RPG/Black Arcana não devem conceder Mastery por tick de torre, scan ou disparo; crédito causal de hit/kill exigiria contrato explícito de atribuição de progressão.
+
+## 9. Concepção de nova magia
+
+Assinatura ocupada: "torre autônoma de longa duração vinculada ao owner que gasta mana do casador por disparo". Nenhuma implementação foi realizada.
+
+## 10. Verificação e pendências
+
+- ✅ Identidade/hash, coeficientes, dano, raio, prioridade de alvo, custo por disparo, cadência, atrasos, duração, recast e limpeza confirmados no bytecode 1.0.1.1.
+- ⚠️ Multiplicador de dano efetivo, prioridade percebida em multiplayer, logout/teleport e custo agregado de múltiplas staffs não certificados.
+- ⚠️ `physical_qa=NOT_TESTED`: sem servidor real, PvP, talismã equipado, death/dispel ou restart.
+- ⚠️ Universo integral do provider não encerrado.
+
+## Localizadores para Codex — resumo operacional
+
+- `selectTargets` debita mana antes de `firePendingShot`; não inferir custo apenas do número de projéteis emitidos.
+- `shouldBeSaved=false`: staff não é persistente across restart.
+- Nenhum ponto de mutação segura demonstrado; manter fail-closed.
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).
