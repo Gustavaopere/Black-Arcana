@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 0/17.**
+**Fichas catalogadas (somente fichas detectadas): 10/17.**
 
-**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 58.8%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 0/17.**
+**Homologadas para perks (somente fichas detectadas): 10/17.**
 
-**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 58.8%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -20,16 +20,16 @@
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
-| ⚠️ | Archer Multiple | [ficha/archer-multiple.md](archer-multiple.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Auto Turret | [ficha/auto-turret.md](auto-turret.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Bound Bow | [ficha/bound-bow.md](bound-bow.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Bound Sword | [ficha/bound-sword.md](bound-sword.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Call Broom | [ficha/call-broom.md](call-broom.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Companion Trunk | [ficha/companion-trunk.md](companion-trunk.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Edge Dancer | [ficha/edge-dancer.md](edge-dancer.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Feather Rush | [ficha/feather-rush.md](feather-rush.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Fujin | [ficha/fujin.md](fujin.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Lethal Assault | [ficha/lethal-assault.md](lethal-assault.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Archer Multiple | [ficha/archer-multiple.md](archer-multiple.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Auto Turret | [ficha/auto-turret.md](auto-turret.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Bound Bow | [ficha/bound-bow.md](bound-bow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Bound Sword | [ficha/bound-sword.md](bound-sword.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Call Broom | [ficha/call-broom.md](call-broom.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Companion Trunk | [ficha/companion-trunk.md](companion-trunk.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Edge Dancer | [ficha/edge-dancer.md](edge-dancer.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Feather Rush | [ficha/feather-rush.md](feather-rush.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Fujin | [ficha/fujin.md](fujin.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Lethal Assault | [ficha/lethal-assault.md](lethal-assault.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Linear Build | [ficha/linear-build.md](linear-build.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Precision Jack | [ficha/precision-jack.md](precision-jack.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Search Beacon | [ficha/search-beacon.md](search-beacon.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |

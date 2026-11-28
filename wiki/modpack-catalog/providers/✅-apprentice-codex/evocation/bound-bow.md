@@ -1,74 +1,117 @@
 # Bound Bow
 
-- **Provider:** Apprentice's Codex
-- **Registry ID:** `apprenticecodex:bound_bow`
-- **Iron's school:** Evocation
-- **Levels:** 1
-- **Minimum rarity:** Rare
-- **Cast type:** Long
-- **Cooldown:** 30 s
-- **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+**Estado do contrato:** ✅ `COMPLETE_PERK_READY` — `STATIC_TECHNICAL_CATALOG_ONLY` · `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `mutation=NO_MUTATION` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED`.
 
-## Exact source coefficients
+> O ✅ cobre exclusivamente a documentação estática SHA-exata deste objeto. Não homologa hook mutador, execução no pack, configuração efetiva, universo integral do provider nem QA físico.
 
-- `baseSpellPower = 100`
-- `spellPowerPerLevel = 50`
-- `baseManaCost = 50`
-- `manaCostPerLevel = 150`
-- `castTime = 30 ticks`
-- duration: `2400 ticks = 120 s`
-- recast count: `2`
-- Power-enchantment progression starts at **130 spell power**
-- one additional Power level per **30 spell power** above that threshold
-- resulting level is clamped by provider config `boundBowMaxPowerEnchantmentLevel()`
-- arrow-forging mana cost is provider-configured through `boundBowForgeArrowManaCost()`
-- summon-damage attribute is snapshotted into the provider activation path
+## 1. Identidade e proveniência
 
-## Provider lifecycle
+| Campo | Valor verificado |
+|---|---|
+| Provider | Apprentice's Codex |
+| Mod ID | `apprenticecodex` |
+| Registry ID | `apprenticecodex:bound_bow` |
+| Host | Iron's Spells 'n Spellbooks (`AbstractSpell`) |
+| Interfaces | sem interface adicional declarada |
+| Escola | `SchoolRegistry.EVOCATION_RESOURCE` (Evocation) |
+| Raridade mínima declarada | `RARE` |
+| Níveis declarados | 1 (`setMaxLevel(1)`) |
+| Tipo de cast | `LONG` |
+| Cooldown declarado | `30.0 s` |
+| Recurso | Mana do Iron's (`baseManaCost=50`, `manaCostPerLevel=150`) |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
+| Ambiente | Minecraft 1.21.1 · NeoForge · Java 21 (JDK 21.0.12 na inspeção) |
+| Classe de implementação | `jp.aquafactory.apprenticecodex.spell.boundbow.BoundBow` |
+| Auxiliares da mesma raiz | `BoundBowManager`, `BoundBowState`, `BoundBowItem`, `BoundBowEvents` |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-The first cast activates a temporary provider-owned bound bow through `BoundBowManager`; a recast deactivates it. The manager receives spell level, Power enchantment level and current Iron's `SUMMON_DAMAGE` multiplier.
+As versões 0.9.7.1 e 1.0.1 permanecem como histórico; nenhum valor foi reaproveitado sem confirmação no artefato físico 1.0.1.1. Os coeficientes declarados não são os valores efetivos instalados: mana, cooldown, spell power, nível, raridade e multiplicadores do host permanecem `NÃO VERIFICADOS` (`AbstractSpell` lê `SpellConfigManager`, atributos, Curios e eventos).
 
-Greater Conjurer's Talisman can suppress the spell's cooldown on provider-defined deactivation/timeout paths. Black Arcana must not reproduce that cooldown mutation.
+## 2. Localizadores para o Codex
 
-## Causality and progression
+| Elemento | Localizador |
+|---|---|
+| Registro | `SpellRegistry.reg("bound_bow", BoundBow::new)` |
+| Config | `RARE`, nível 1, cooldown `30.0`, `EVOCATION_RESOURCE` |
+| Coeficientes | <init>: `baseSpellPower=100`, `spellPowerPerLevel=50`, `baseManaCost=50`, `manaCostPerLevel=150`, `castTime=30` |
+| Poder do arco | `POWER_START_SPELL_POWER=130`, `POWER_SPELL_POWER_STEP=30`; `power<130 → 0`, senão `1+floor((power-130)/30)`, clamp por `boundBowMaxPowerEnchantmentLevel()` |
+| Duração/recast | `getDuration()=2400` ticks; `getRecastCount()=2` |
+| Ativação | `BoundBowManager.activate`: desativa Bound Sword/Edge Dancer, copia e guarda a mão principal, cria `BoundBowItem` com UUID, substitui a mão, adiciona recast e sincroniza |
+| Recurso capturado | `AttributeRegistry.SUMMON_DAMAGE` capturado no cast e passado a `BoundBowItem.create(...)` |
+| Talismã | `Greater Conjurer's Talisman` remove o cooldown após o recast (`removeCooldown`) |
+| Eventos | `BoundBowEvents` desativa em logout, morte, troca de dimensão e violações de slot |
 
-Activating the bow is one provider cast. Forged arrows and bow shots belong to the temporary equipment lifecycle and are not independent spell casts unless the provider exposes a distinct causal event.
+Bytecode: scratch/javap1011_evocation10.txt (`javap -classpath <JAR> -p -s -c`, 61 classes, EXIT=0, SHA-256 `B872A0B86732D7EAE026532ED358AD9BBDFB7B1D7BCFCA2C6B35F13EADD9A2D5`); decompilação de apoio: scratch/evocation10_sources.txt (44 fontes Vineflower 1.12.0, SHA-256 `BCAF5695AA5346DABC0D976D8EBFA327B7622570230DE48B4330396876448387`). Constantes e fórmulas decisivas foram confrontadas com o bytecode; em divergência, o bytecode prevalece.
 
-## Deduplication
+## 3. Casting / execução
 
-Occupies the **two-minute bound magical bow with spell-power-derived Power enchantment and mana-funded arrow forging** niche.
+1. `checkPreCastConditions` exige `Player`; `onCast` verifica se já há recast ativo e, em caso afirmativo, chama `BoundBowManager.deactivate(serverPlayer,true)` antes de reativar.
+2. `BoundBowManager.activate` desativa mutually exclusive Bound Sword e Edge Dancer, copia `getMainHandItem()` para o estado, calcula `getPowerLevel(...)` e captura `SUMMON_DAMAGE`.
+3. `BoundBowItem.create(instanceId,powerLevel,registryAccess,summonDamageMultiplier)` produz o arco; a mão principal é substituída e o estado sincronizado ao cliente.
+4. Um `RecastInstance` com `2400` ticks e `2` recasts é registrado; o talismã, quando equipado, remove o cooldown no recast.
+5. `onRecastFinished` chama `deactivate(player,false)` (sem remover o recast) e só aplica a conclusão padrão quando não há talismã; sem talismã, o recast termina normalmente.
+6. `BoundBowEvents` desativa o arco em logout, morte, troca de dimensão, clique/slot inválido e quando o item esperado sai dos slots permitidos; o item original é restaurado.
 
-## Confidence
+## 4. Targeting / geometria
 
-`SOURCE-PINNED SPELL / EXACT CONFIG+DURATION+RECAST+POWER THRESHOLDS / CONFIGURED ARROW COST+BOUND ITEM PROJECTILE DETAILS REQUIRE MANAGER/CONFIG QA`
+| Propriedade | Valor e consumidor |
+|---|---|
+| Alvo | Nenhum; equipamento na mão principal do jogador |
+| Duração | `2400` ticks no `RecastInstance` |
+| Recast | `2`, com reativação no segundo cast |
+| Nível de poder | `0` abaixo de `130`; `1+floor((power-130)/30)` acima; cap em `ApprenticeCodexServerConfig.boundBowMaxPowerEnchantmentLevel()` |
+| Exclusividade | Bound Sword e Edge Dancer são desativados |
+| Estado | UUID de instância + mão original + multiplicador de `SUMMON_DAMAGE` |
 
-## Localizadores para Codex — source exato
+## 5. Resultado
 
-- **Registry + identidade:** `apprenticecodex:bound_bow` → `SpellRegistry.reg("bound_bow", BoundBow::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.boundbow.BoundBow`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/boundbow/BoundBow.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+- O arco é um item gerado na mão principal; o ataque é o vanilla/Iron's modificado pelo `BoundBowItem`, não um projétil próprio catalogado nesta raiz.
+- O custo de forge de flecha vem de `boundBowForgeArrowManaCost()`, lido apenas como informação; o efeito efetivo permanece `NÃO VERIFICADO`.
+- A desativação restaura a mão original e sincroniza o estado; o recast é uma reativação da mesma raiz.
 
----
+## 6. Scaling e caps
 
-## Engenharia causal aprofundada — entidades 0.9.7.1
+| Parâmetro | Fórmula literal | Unidade / ownership |
+|---|---|---|
+| Spell power | `100 + 50*(level-1)` | float declarado |
+| Power level | `power<130 ? 0 : clamp(1+floor((power-130)/30),0,maxConfig)` | nível de encantamento do arco |
+| Duração | `2400` ticks | recast |
+| Mana/cooldown/cast | `50+150*(level-1)` / `30.0` s / `30` ticks | host + config **NÃO VERIFICADA** |
+| `SUMMON_DAMAGE` | atributo do Iron's capturado no cast | multiplicador, valor efetivo **NÃO VERIFICADO** |
 
-**Source pin declarado:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`. **Classes lidas:** [`boundbow/BoundBow.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/boundbow/BoundBow.java) · [`boundbow/BoundBowManager.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/boundbow/BoundBowManager.java) · [`boundbow/BoundBowEvents.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/boundbow/BoundBowEvents.java). O arquivo físico da modlist é 0.9.7.1; **igualdade de corpo dos métodos no bytecode compilado não foi atestada nesta etapa**. Este conteúdo é engenharia documental factual, não código incorporado.
+## 7. Possibilidades de perks
 
-### Cadeia de execução e recibo provider-owned
+- **A — atributo nativo:** spell power altera o nível de poder; `SUMMON_DAMAGE` é capturado do host.
+- **B — evento verificado:** os eventos de slot/morte/dimensão protegem o estado, mas não modificam parâmetros.
+- **C — adapter condicionado:** mudar o cap, a duração ou a identidade do item exigiria substituir `BoundBow`, `BoundBowManager` e o item, com restauração de mão. **CONDICIONADO**.
+- **D — sem hook demonstrado:** não há contrato seguro para transformar o arco em arma de área, eliminar a exclusividade com Bound Sword/Edge Dancer ou alterar o custo de forge. **NO_MUTATION** / fail-closed.
 
-- **Sessão recast:** `BoundBowManager.activate` encerra Bound Bow, Bound Sword e Edge Dancer do player, checa `CodexSpellData`, gera UUID exclusivo da instância e salva o item original da mão principal. Cria `BoundBowItem` usando `powerLevel`, `registryAccess` e `summonDamageMultiplier`, instala a arma, salva `BOUND_BOW_STATE`, emite atualização de equipamento e registra `RecastInstance` no Iron's.
-- **Localização de item gerado:** `validateActiveBowLocation` consulta `instanceId`, exige pelo menos uma cópia da bow correspondente em inventário principal/offhand/cursor do menu e impede essa mesma identidade em armor. Inconsistência encerra `deactivate(player,true)`. Remoção de item temporário percorre inventários e cursor, filtrando precisamente UUID da instância.
-- **Limpeza:** `deactivate` remove itens da sessão, reseta estado, restaura o item principal original e remove o recast quando requerido. `BoundBowEvents` registra tick, morte (`EventPriority.HIGHEST`), login, logout e dimensão para correção/cleanup. O tempo de duração é do contrato Iron's/Apprentice's e não deve ser recarregado por um segundo scheduler BA.
-- **Risco:** a prova é source-located e não comprova comportamento com inventories modificados, slots extras, instâncias conflitantes ou teclas de descarte. Não conceder Mastery por arrow/hit, nem duplicar buffs/atributos do arco.
+- `mutating_hook = NOT_VERIFIED`; `mutation = NO_MUTATION` (fail-closed).
 
-### Atribuição técnica e condições para perks
+## 8. Causalidade
 
-- **Identidade semântica:** exatamente uma raiz `apprenticecodex:bound_bow`; eventos de entidades, timers, limpeza, efeitos derivados, recursos e cooldown são de Iron's/Apprentice's, não casts BA adicionais.
-- **Observabilidade:** sem boundary/receipt interoperável comprovado, ⛔ Mastery, perks ou efeitos de RPG Skill Tree que suponham cast confirmado, hit, spawn ou settlement. Não inventar API de bridge.
-- **QA pendente ⚠️:** configuração efetiva, JAR físico dos métodos, dedicated/full-modpack, Survival, cross-dimension, persistência, claim/PvP e compatibilidade de inventário. Não promover Stage 06.05.
-- **Clean-room:** apenas comportamento observado no source é descrito. Black Arcana conserva seu próprio casting, Corruption, Strain e WorldEffectPolicy.
+`um cast → arco vinculado na mão principal com nível de poder → recast de 2400 ticks → restauração da mão original`.
 
-[Matriz de lifecycle](../PERK-ENGINEERING-MATRIX-LIFECYCLE-0.9.7.1.md).
+
+## 9. Concepção de nova magia
+
+Assinatura ocupada: "arma conjurada temporária com power level escalonado". Nenhuma implementação foi realizada.
+
+## 10. Verificação e pendências
+
+- ✅ identidade/hash, constantes 130/30, duração 2400, recast 2, captura de `SUMMON_DAMAGE`, exclusividade e talismã confirmados no bytecode 1.0.1.1.
+- ⚠️ cap efetivo do config, custo de forge de flecha e comportamento real de recast não certificados.
+- ⚠️ `physical_qa=NOT_TESTED`: sem servidor Survival, PvP, portais, montarias, recast em combate real ou teleportes.
+- ⚠️ Universo integral do provider não encerrado; homologação integral permanece `NOT_CERTIFIED`.
+
+
+## Localizadores para Codex — resumo operacional
+
+- `power<130` gera nível `0`; o cap vem de `boundBowMaxPowerEnchantmentLevel()`.
+- `SUMMON_DAMAGE` é capturado no cast, não lido a cada disparo.
+- Bound Sword e Edge Dancer são desativados na ativação.
+- Nenhum ponto de mutação segura demonstrado; manter fail-closed.
+
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).

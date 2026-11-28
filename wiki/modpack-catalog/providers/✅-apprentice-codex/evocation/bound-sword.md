@@ -1,70 +1,118 @@
 # Bound Sword
 
-- **Provider:** Apprentice's Codex
-- **Registry ID:** `apprenticecodex:bound_sword`
-- **Iron's school:** Evocation
-- **Levels:** 1
-- **Minimum rarity:** Rare
-- **Cast type:** Long
-- **Cooldown:** 30 s
-- **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+**Estado do contrato:** ✅ `COMPLETE_PERK_READY` — `STATIC_TECHNICAL_CATALOG_ONLY` · `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `mutation=NO_MUTATION` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED`.
 
-## Exact source coefficients
+> O ✅ cobre exclusivamente a documentação estática SHA-exata deste objeto. Não homologa hook mutador, execução no pack, configuração efetiva, universo integral do provider nem QA físico.
 
-- `baseSpellPower = 100`
-- `spellPowerPerLevel = 50`
-- `baseManaCost = 50`
-- `manaCostPerLevel = 150`
-- `castTime = 30 ticks`
-- duration: `2400 ticks = 120 s`
-- recast count: `2`
-- weapon damage: `(3 + 3 * spellPower / 100) * SUMMON_DAMAGE attribute * providerDamageMultiplier`
+## 1. Identidade e proveniência
 
-## Provider lifecycle
+| Campo | Valor verificado |
+|---|---|
+| Provider | Apprentice's Codex |
+| Mod ID | `apprenticecodex` |
+| Registry ID | `apprenticecodex:bound_sword` |
+| Host | Iron's Spells 'n Spellbooks (`AbstractSpell`) |
+| Interfaces | sem interface adicional declarada |
+| Escola | `SchoolRegistry.EVOCATION_RESOURCE` (Evocation) |
+| Raridade mínima declarada | `RARE` |
+| Níveis declarados | 1 (`setMaxLevel(1)`) |
+| Tipo de cast | `LONG` |
+| Cooldown declarado | `30.0 s` |
+| Recurso | Mana do Iron's (`baseManaCost=50`, `manaCostPerLevel=150`) |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
+| Ambiente | Minecraft 1.21.1 · NeoForge · Java 21 (JDK 21.0.12 na inspeção) |
+| Classe de implementação | `jp.aquafactory.apprenticecodex.spell.boundsword.BoundSword` |
+| Auxiliares da mesma raiz | `BoundSwordManager`, `BoundSwordState`, `BoundSwordItem`, `BoundSwordEvents` |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-The first cast activates provider-owned bound-sword state through `BoundSwordManager`. A later recast deactivates it. The provider can optionally attempt a dual-wield compatibility path when the real compat is present and the player deliberately crouches during initial pre-cast.
+As versões 0.9.7.1 e 1.0.1 permanecem como histórico; nenhum valor foi reaproveitado sem confirmação no artefato físico 1.0.1.1. Os coeficientes declarados não são os valores efetivos instalados: mana, cooldown, spell power, nível, raridade e multiplicadores do host permanecem `NÃO VERIFICADOS` (`AbstractSpell` lê `SpellConfigManager`, atributos, Curios e eventos).
 
-Greater Conjurer's Talisman behavior is provider-native: on manual deactivation/recast the spell may remove its own cooldown according to the provider's existing talisman contract.
+## 2. Localizadores para o Codex
 
-## Causality and progression
+| Elemento | Localizador |
+|---|---|
+| Registro | `SpellRegistry.reg("bound_sword", BoundSword::new)` |
+| Config | `RARE`, nível 1, cooldown `30.0`, `EVOCATION_RESOURCE` |
+| Coeficientes | <init>: `baseSpellPower=100`, `spellPowerPerLevel=50`, `baseManaCost=50`, `manaCostPerLevel=150`, `castTime=30` |
+| Dano | `getWeaponDamage` → `(3 + 3*power/100) * SUMMON_DAMAGE * damageMultiplier(BOUND_SWORD)` |
+| Duração/recast | `getDuration()=2400` ticks; `getRecastCount()=2` |
+| Dual wield | `hasDualWieldCompat()` = `ModList.isLoaded("bettercombat") || ModList.isLoaded("epicfight")`; `forceTryDualWield = !hasRecast && compat && isShiftKeyDown()` |
+| Ativação | `BoundSwordManager.activate`: desativa Bound Bow/Edge Dancer, copia mãos, cria espadas, substitui slots e registra recast |
+| Talismã | `Greater Conjurer's Talisman` remove o cooldown após o recast |
+| Eventos | `BoundSwordEvents` desativa em logout, morte, dimensão e slots inválidos, restaurando a mão secundária original |
 
-The temporary weapon session is one cast lifecycle. Physical swings made while the bound sword is active are not automatically new spell casts. Any RPG bridge must distinguish provider activation from downstream melee-hit causality and avoid double credit with combat systems.
+Bytecode: scratch/javap1011_evocation10.txt (`javap -classpath <JAR> -p -s -c`, 61 classes, EXIT=0, SHA-256 `B872A0B86732D7EAE026532ED358AD9BBDFB7B1D7BCFCA2C6B35F13EADD9A2D5`); decompilação de apoio: scratch/evocation10_sources.txt (44 fontes Vineflower 1.12.0, SHA-256 `BCAF5695AA5346DABC0D976D8EBFA327B7622570230DE48B4330396876448387`). Constantes e fórmulas decisivas foram confrontadas com o bytecode; em divergência, o bytecode prevalece.
 
-## Deduplication
+## 3. Casting / execução
 
-Occupies the **two-minute provider-bound summoned melee weapon with summon-damage scaling and optional dual-wield compatibility** niche.
+1. `onServerPreCast` calcula `forceTryDualWield` quando não há recast ativo, o compat está presente e Shift está pressionado; o valor viaja no `BoundSwordCastData` (buffer e NBT).
+2. `onCast` desativa a instância anterior quando há recast e chama `BoundSwordManager.activate(...,getWeaponDamage(...),forceTryDualWield)`.
+3. `BoundSwordManager.activate` desativa Bound Bow e Edge Dancer, copia mão principal e secundária física, e gera a espada da mão principal.
+4. A espada secundária é gerada somente com compat e (`forceTryDualWield` ou mão secundária física vazia); a mão original é guardada no estado para restauração.
+5. `RecastInstance` de `2400` ticks com `2` recasts é registrado; talismã remove cooldown no recast.
+6. `onRecastFinished` desativa sem remover o recast; os eventos restauram o offhand original em logout, morte, dimensão e violação de slot.
 
-## Confidence
+## 4. Targeting / geometria
 
-`SOURCE-PINNED SPELL / EXACT CONFIG+DURATION+RECAST+WEAPON DAMAGE / BOUND ITEM STATS+DUAL-WIELD COMPAT DETAILS REQUIRE MANAGER QA`
+| Propriedade | Valor e consumidor |
+|---|---|
+| Alvo | Nenhum; equipamento nas mãos do jogador |
+| Duração | `2400` ticks |
+| Recast | `2` |
+| Dano | `(3 + 3*power/100) * SUMMON_DAMAGE * multiplier` |
+| Dual wield | Exige `bettercombat` ou `epicfight` ativos |
+| Gate do segundo cast | `!hasRecast && compat && Shift` |
+| Exclusividade | Bound Bow e Edge Dancer desativados |
+| Restauração | Offhand original salvo somente quando a espada secundária é gerada |
 
-## Localizadores para Codex — source exato
+## 5. Resultado
 
-- **Registry + identidade:** `apprenticecodex:bound_sword` → `SpellRegistry.reg("bound_sword", BoundSword::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.boundsword.BoundSword`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/boundsword/BoundSword.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+- A espada é um item gerado; o dano é atributo de item calculado no cast e capturado na criação.
+- A geração da segunda espada é condicionada a mods externos; sem compat, o fluxo permanece de uma mão.
+- A restauração depende do estado `BoundSwordState`; sem geração do offhand, nada é sobrescrito.
 
----
+## 6. Scaling e caps
 
-## Engenharia causal aprofundada — entidades 0.9.7.1
+| Parâmetro | Fórmula literal | Unidade / ownership |
+|---|---|---|
+| Spell power | `100 + 50*(level-1)` | float declarado |
+| Dano da espada | `(3 + 3*power/100) * SUMMON_DAMAGE * damageMultiplier(BOUND_SWORD)` | atributo de item |
+| Mana/cooldown/cast | `50+150*(level-1)` / `30.0` s / `30` ticks | host + config **NÃO VERIFICADA** |
+| Compat | `ModList.isLoaded(...)` | presença de mod, não habilidade de ataque |
 
-**Source pin declarado:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`. **Classes lidas:** [`boundsword/BoundSword.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/boundsword/BoundSword.java) · [`boundsword/BoundSwordManager.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/boundsword/BoundSwordManager.java) · [`boundsword/BoundSwordEvents.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/boundsword/BoundSwordEvents.java). O arquivo físico da modlist é 0.9.7.1; **igualdade de corpo dos métodos no bytecode compilado não foi atestada nesta etapa**. Este conteúdo é engenharia documental factual, não código incorporado.
+## 7. Possibilidades de perks
 
-### Cadeia de execução e recibo provider-owned
+- **A — atributo nativo:** dano responde a poder e `SUMMON_DAMAGE`; dual wield depende de mods instalados.
+- **B — evento verificado:** Shift é lido no pre-cast; não é um hook mutador de dano.
+- **C — adapter condicionado:** alterar dano da espada, duração ou regras de dual wield exigiria substituir raiz, manager e item com restauração de slots. **CONDICIONADO**.
+- **D — sem hook demonstrado:** não há API segura para aumentar o número de espadas além do par ou remover a dependência de compat. **NO_MUTATION** / fail-closed.
 
-- **Sessão recast e exclusão mútua:** `BoundSwordManager.activate` desativa previamente `BoundSword`, `BoundBow` e `EdgeDancer` do player, exige `CodexSpellData` e gera `instanceId=UUID.randomUUID()`. Copia itens originais da mão principal e offhand, cria `BoundSwordItem` com este UUID e dano fornecido pela spell, substitui a mão principal e, condicionalmente, offhand.
-- **Compatibilidade dual wield:** `hasDualWieldCompat` inspeciona `ModList.get().isLoaded` para Better Combat ou Epic Fight. `shouldGenerateOffhandSword` depende desse gate e de offhand física vazia ou flag explícita, **não** é garantia de duas armas para qualquer jogador. O estado persistido guarda stacks originais, UUID da sessão, presença do offhand gerado e dano, seguido de `RecastInstance` de Iron's.
-- **Revalidação anti-extravio:** `validateActiveSwordLocation` em tick verifica UUID válido, contagem de espadas geradas em slots permitidos, e ausência em slots de armor. Se falha, chama `deactivate(player,true)`; esta remove geradas por `instanceId`, reseta `BOUND_SWORD_STATE`, tenta restaurar stacks originais, remove recast e sincroniza. `BoundSwordEvents` também desativa em morte, login, logout e troca de dimensão.
-- **Risco:** prevenção de dupe depende das regras concretas de inventário/packet e compat de combate. Não inferir segurança de outros containers sem inspeção; testar cursor de inventory menu, dual wield, modded slots, mudança de arma e reinício. Cada golpe não é nova spell e a mana de cast é de Iron's.
+- `mutating_hook = NOT_VERIFIED`; `mutation = NO_MUTATION` (fail-closed).
 
-### Atribuição técnica e condições para perks
+## 8. Causalidade
 
-- **Identidade semântica:** exatamente uma raiz `apprenticecodex:bound_sword`; eventos de entidades, timers, limpeza, efeitos derivados, recursos e cooldown são de Iron's/Apprentice's, não casts BA adicionais.
-- **Observabilidade:** sem boundary/receipt interoperável comprovado, ⛔ Mastery, perks ou efeitos de RPG Skill Tree que suponham cast confirmado, hit, spawn ou settlement. Não inventar API de bridge.
-- **QA pendente ⚠️:** configuração efetiva, JAR físico dos métodos, dedicated/full-modpack, Survival, cross-dimension, persistência, claim/PvP e compatibilidade de inventário. Não promover Stage 06.05.
-- **Clean-room:** apenas comportamento observado no source é descrito. Black Arcana conserva seu próprio casting, Corruption, Strain e WorldEffectPolicy.
+`um cast → espada(s) conjuradas com dano calculado → recast de 2400 ticks → restauração das mãos`.
 
-[Matriz de lifecycle](../PERK-ENGINEERING-MATRIX-LIFECYCLE-0.9.7.1.md).
+
+## 9. Concepção de nova magia
+
+Assinatura ocupada: "arma conjurada temporária com dual wield condicionado a mods externos". Nenhuma implementação foi realizada.
+
+## 10. Verificação e pendências
+
+- ✅ identidade/hash, fórmula `(3+3*power/100)*SUMMON_DAMAGE*multiplier`, duração 2400, recast 2, gate de compat/Shift e restauração confirmados no bytecode 1.0.1.1.
+- ⚠️ valor de `SUMMON_DAMAGE`, multiplicador instalado e comportamento real com Better Combat/Epic Fight não certificados.
+- ⚠️ `physical_qa=NOT_TESTED`: sem servidor Survival, PvP, portais, montarias, recast em combate real ou teleportes.
+- ⚠️ Universo integral do provider não encerrado; homologação integral permanece `NOT_CERTIFIED`.
+
+
+## Localizadores para Codex — resumo operacional
+
+- Dual wield exige `bettercombat` ou `epicfight`; Shift só força o segundo cast.
+- O dano é capturado no cast e escrito no item, não recalculado por swing.
+- Bound Bow e Edge Dancer são desativados na ativação.
+- Nenhum ponto de mutação segura demonstrado; manter fail-closed.
+
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).

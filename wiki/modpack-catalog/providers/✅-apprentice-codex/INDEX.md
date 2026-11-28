@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 25/83.**
+**Fichas catalogadas (somente fichas detectadas): 35/83.**
 
-**Barra das fichas catalogadas:** `██████░░░░░░░░░░░░░░ 30.1%`
+**Barra das fichas catalogadas:** `████████░░░░░░░░░░░░ 42.2%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 25/83.**
+**Homologadas para perks (somente fichas detectadas): 35/83.**
 
-**Barra dos contratos técnicos estáticos:** `██████░░░░░░░░░░░░░░ 30.1%`
+**Barra dos contratos técnicos estáticos:** `████████░░░░░░░░░░░░ 42.2%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -45,16 +45,16 @@
 | ✅ | Remote Eye | [ender/remote-eye.md](ender/remote-eye.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Rift Hole | [ender/rift-hole.md](ender/rift-hole.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Servant Gaze | [ender/servant-gaze.md](ender/servant-gaze.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Archer Multiple | [evocation/archer-multiple.md](evocation/archer-multiple.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Auto Turret | [evocation/auto-turret.md](evocation/auto-turret.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Bound Bow | [evocation/bound-bow.md](evocation/bound-bow.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Bound Sword | [evocation/bound-sword.md](evocation/bound-sword.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Call Broom | [evocation/call-broom.md](evocation/call-broom.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Companion Trunk | [evocation/companion-trunk.md](evocation/companion-trunk.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Edge Dancer | [evocation/edge-dancer.md](evocation/edge-dancer.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Feather Rush | [evocation/feather-rush.md](evocation/feather-rush.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Fujin | [evocation/fujin.md](evocation/fujin.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Lethal Assault | [evocation/lethal-assault.md](evocation/lethal-assault.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Archer Multiple | [evocation/archer-multiple.md](evocation/archer-multiple.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Auto Turret | [evocation/auto-turret.md](evocation/auto-turret.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Bound Bow | [evocation/bound-bow.md](evocation/bound-bow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Bound Sword | [evocation/bound-sword.md](evocation/bound-sword.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Call Broom | [evocation/call-broom.md](evocation/call-broom.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Companion Trunk | [evocation/companion-trunk.md](evocation/companion-trunk.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Edge Dancer | [evocation/edge-dancer.md](evocation/edge-dancer.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Feather Rush | [evocation/feather-rush.md](evocation/feather-rush.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Fujin | [evocation/fujin.md](evocation/fujin.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Lethal Assault | [evocation/lethal-assault.md](evocation/lethal-assault.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Linear Build | [evocation/linear-build.md](evocation/linear-build.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Precision Jack | [evocation/precision-jack.md](evocation/precision-jack.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Search Beacon | [evocation/search-beacon.md](evocation/search-beacon.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -111,7 +111,7 @@
 | ✅ | Blood | 3/3 (100.0%) | 3 | [Abrir índice](blood/INDEX.md) |
 | ✅ | Eldritch | 7/7 (100.0%) | 7 | [Abrir índice](eldritch/INDEX.md) |
 | ✅ | Ender | 15/15 (100.0%) | 15 | [Abrir índice](ender/INDEX.md) |
-| ⚠️ | Evocation | 0/17 (0.0%) | 0 | [Abrir índice](evocation/INDEX.md) |
+| ⚠️ | Evocation | 10/17 (58.8%) | 10 | [Abrir índice](evocation/INDEX.md) |
 | ⚠️ | Fire | 0/5 (0.0%) | 0 | [Abrir índice](fire/INDEX.md) |
 | ⚠️ | Holy | 0/11 (0.0%) | 0 | [Abrir índice](holy/INDEX.md) |
 | ⚠️ | Ice | 0/3 (0.0%) | 0 | [Abrir índice](ice/INDEX.md) |

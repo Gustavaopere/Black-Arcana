@@ -1,70 +1,115 @@
 # Fujin
 
-- **Provider:** Apprentice's Codex
-- **Registry ID:** `apprenticecodex:fujin`
-- **Iron's school:** Evocation
-- **Levels:** 1–10
-- **Minimum rarity:** Uncommon
-- **Cast type:** Continuous
-- **Cooldown:** 12 s
-- **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+**Estado do contrato:** ✅ `COMPLETE_PERK_READY` — `STATIC_TECHNICAL_CATALOG_ONLY` · `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `mutation=NO_MUTATION` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED`.
 
-## Exact source coefficients
+> O ✅ cobre exclusivamente a documentação estática SHA-exata deste objeto. Não homologa hook mutador, execução no pack, configuração efetiva, universo integral do provider nem QA físico.
 
-- `baseSpellPower = 100`
-- `spellPowerPerLevel = 75`
-- `baseManaCost = 5`
-- `manaCostPerLevel = 1`
-- `castTime = 100 ticks`
-- projectile damage: `(1 + spellPower / 200) * providerDamageMultiplier`
-- projectile range: **10 blocks**
+## 1. Identidade e proveniência
 
-## Provider lifecycle
+| Campo | Valor verificado |
+|---|---|
+| Provider | Apprentice's Codex |
+| Mod ID | `apprenticecodex` |
+| Registry ID | `apprenticecodex:fujin` |
+| Host | Iron's Spells 'n Spellbooks (`AbstractSummonWeaponSpell<FujinKatanaEntity>`) |
+| Interfaces | sem interface adicional declarada |
+| Escola | `SchoolRegistry.EVOCATION_RESOURCE` (Evocation) |
+| Raridade mínima declarada | `UNCOMMON` |
+| Níveis declarados | 1–10 (`setMaxLevel(10)`) |
+| Tipo de cast | `CONTINUOUS` |
+| Cooldown declarado | `12.0 s` |
+| Recurso | Mana do Iron's (`baseManaCost=5`, `manaCostPerLevel=1`) |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
+| Ambiente | Minecraft 1.21.1 · NeoForge · Java 21 (JDK 21.0.12 na inspeção) |
+| Classe de implementação | `jp.aquafactory.apprenticecodex.spell.fujin.Fujin` |
+| Auxiliares da mesma raiz | `FujinKatanaEntity`, `FujinSlashProjectileEntity`, `FujinKatanaRenderer` |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-The spell summons a `FujinKatanaEntity`, injects the computed projectile damage and 10-block range, and releases that weapon when the continuous cast completes.
+As versões 0.9.7.1 e 1.0.1 permanecem como histórico; nenhum valor foi reaproveitado sem confirmação no artefato físico 1.0.1.1. Os coeficientes declarados não são os valores efetivos instalados: mana, cooldown, spell power, nível, raridade e multiplicadores do host permanecem `NÃO VERIFICADOS` (`AbstractSpell` lê `SpellConfigManager`, atributos, Curios e eventos).
 
-The katana entity — not the top-level spell tick callback — owns projectile cadence. At the exact source pin the executable constants are:
+## 2. Localizadores para o Codex
 
-- first slash at weapon tick **10**;
-- subsequent slashes every **5 ticks**;
-- slash animation speed `3.0`;
-- one `FujinSlashProjectileEntity` spawned per slash.
+| Elemento | Localizador |
+|---|---|
+| Registro | `SpellRegistry.reg("fujin", Fujin::new)` |
+| Config | `UNCOMMON`, nível 10, cooldown `12.0`, `EVOCATION_RESOURCE` |
+| Coeficientes | <init>: `baseSpellPower=100`, `spellPowerPerLevel=75`, `baseManaCost=5`, `manaCostPerLevel=1`, `castTime=100` |
+| Dano | `getDamage` → `(1 + power/200) * damageMultiplier(FUJIN)` |
+| Alcance | `Fujin.getRange()=10.0` blocos |
+| Katana | `FIRST_SLASH_TICK=10`, `SLASH_INTERVAL_TICKS=5`, `SLASH_ANIMATION_SPEED=3.0F` |
+| Projétil | `SPEED=3.0`, `SLASH_WIDTH=5.0`, `HITBOX_HEIGHT=1.5`, sweep com `victimUuids`, descarte em `1.25*range`, `AntiMagicSusceptible` |
+| Dano do projétil | `CombatOwnerResolver.createDamageSourcePreservingCurrentOwner(...,DamageTypes.FUJIN)` + `applySpellDamage(...,NO_KNOCKBACK)` |
 
-Each projectile receives the damage frozen into the katana, the **10-block** maximum travel distance and the provider combat-owner UUID.
+Bytecode: scratch/javap1011_evocation10.txt (`javap -classpath <JAR> -p -s -c`, 61 classes, EXIT=0, SHA-256 `B872A0B86732D7EAE026532ED358AD9BBDFB7B1D7BCFCA2C6B35F13EADD9A2D5`); decompilação de apoio: scratch/evocation10_sources.txt (44 fontes Vineflower 1.12.0, SHA-256 `BCAF5695AA5346DABC0D976D8EBFA327B7622570230DE48B4330396876448387`). Constantes e fórmulas decisivas foram confrontadas com o bytecode; em divergência, o bytecode prevalece.
 
-This executable entity cadence is authoritative for the audited snapshot. A comment in the top-level spell mentions a "10 tick interval", but the actual `FujinKatanaEntity.SLASH_INTERVAL_TICKS` value is **5**; the catalog therefore records the executable behavior rather than promoting the stale comment.
+## 3. Casting / execução
 
-The source deliberately leaves firing cadence to the katana entity so ordinary cast-speed modification does not alter the internal 5-tick slash interval.
+1. `onCastNoWeapon` cria `FujinKatanaEntity`, aplica `setDamage(getDamage(...))` e `setProjectileRange(getRange())`, e a adiciona ao nível.
+2. A katana agenda o primeiro slash no tick `10` e os seguintes a cada `5` ticks, alternando animações `slash0to1`/`slash1to2`/`slash2to1`.
+3. Cada slash cria `FujinSlashProjectileEntity`, copia dano, alcance máximo e `combatOwnerUuid`, e dispara com velocidade `3.0`.
+4. O projétil varre `AABB` de largura `5.0` e altura `1.5` expandida pelo movimento; usa `victimUuids` para não acertar o mesmo alvo duas vezes e exige `hasClearPathToTarget` (clip de bloco).
+5. `damageEntities` aplica `DamageTypes.FUJIN` com `KnockbackTypes.NO_KNOCKBACK`; `AntiMagicSusceptible` descarta o projétil sob anti-magia.
+6. `getDamageMovement` limita o dano ao alcance restante; o descarte ocorre em `1.25 * maxTravelDistance` e o achatamento visual começa em `0.75`.
 
-## Causality and progression
+## 4. Targeting / geometria
 
-Repeated katana projectiles during the channel remain children of one continuous provider cast. Do not award spell-cast progression per projectile or infer cast-speed-scaled projectile frequency when the provider deliberately isolates that cadence.
+| Propriedade | Valor e consumidor |
+|---|---|
+| Alcance | `10.0` blocos (dano até `10`, descarte em `12.5`) |
+| Hitbox do corte | `5.0` de largura × `1.5` de altura, varrida por passos de `0.125` |
+| Velocidade | `3.0` blocos/tick |
+| Dedup | `Set<UUID> victimUuids` por projétil |
+| Oclusão | `ClipContext` de bloco entre origem e alvo |
+| Cadência | Primeiro slash no tick `10`, intervalo `5` ticks |
 
-Black Arcana must not duplicate the katana timer, projectile spawn, combat-owner attribution or projectile damage settlement.
+## 5. Resultado
 
-## Deduplication
+- Cada corte é um projétil de varredura, não um ataque automático da katana.
+- `victimUuids` impede dano duplo por projétil; novos slashes criam novos conjuntos.
+- A katana e o corte pertencem à mesma raiz semântica.
 
-Occupies the **continuous summoned katana that emits short-range projectiles on a fixed provider-owned cadence** niche.
+## 6. Scaling e caps
 
-## Confidence
+| Parâmetro | Fórmula literal | Unidade / ownership |
+|---|---|---|
+| Spell power | `100 + 75*(level-1)` | float declarado |
+| Dano | `(1 + power/200) * damageMultiplier(FUJIN)` | config **NÃO VERIFICADA** |
+| Alcance | `10.0` fixo | blocos |
+| Mana/cooldown/cast | `5+1*(level-1)` / `12.0` s / `100` ticks | host + config **NÃO VERIFICADA** |
 
-`SOURCE-PINNED SPELL + KATANA ENTITY / EXACT CONFIG+DAMAGE+10-BLOCK RANGE+FIRST-SLASH TICK 10+5-TICK INTERVAL+OWNER HANDOFF / PROJECTILE COLLISION DETAIL RUNTIME QA PENDING`
+## 7. Possibilidades de perks
 
-## Localizadores para Codex — source exato
+- **A — atributo nativo:** dano responde ao poder; mana/cooldown ao `AbstractSpell`.
+- **B — evento verificado:** anti-magia descarta o corte; não é ponto de alteração de parâmetros.
+- **C — adapter condicionado:** mudar largura/altura, cadência ou alcance exigiria substituir katana e projétil. **CONDICIONADO**.
+- **D — sem hook demonstrado:** não há hook seguro para transformar o corte em AOE radial persistente ou remover a oclusão de bloco. **NO_MUTATION** / fail-closed.
 
-- **Registry + identidade:** `apprenticecodex:fujin` → `SpellRegistry.reg("fujin", Fujin::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.fujin.Fujin`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/fujin/Fujin.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+- `mutating_hook = NOT_VERIFIED`; `mutation = NO_MUTATION` (fail-closed).
 
-## Engenharia causal aprofundada — armas conjuradas e efeitos derivados (2026-10-14)
+## 8. Causalidade
 
-**Registry ID:** `apprenticecodex:fujin`. **Source fixado:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (versão declarada 0.9.7.1). Classe e helpers: [Fujin.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/fujin/Fujin.java); [FujinKatanaEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/fujin/FujinKatanaEntity.java); [FujinSlashProjectileEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/fujin/FujinSlashProjectileEntity.java).
+`um cast contínuo → katana → slashes periódicos → projéteis de varredura com dedup → dano `FUJIN` sem knockback`.
 
-**Cadeia causal verificada no source:** Fujin.onCastNoWeapon conjura katana; onCastTickWithWeapon não dispara, porque o tick da katana controla a cadência independente da cast speed. FujinKatanaEntity.tickOnServer dispara slash em FIRST_SLASH_TICK e depois a cada SLASH_INTERVAL_TICKS, propagando combatOwnerUuid. FujinSlashProjectileEntity.tick verifica colisão de bloco por segmento, resolve alvos multipart, conserva victimUuids para não repetir dano por entidade e filtra oclusão antes de CombatTools.applyDamage; descarta ao colidir/atingir limite de distância.
 
-**QA direcionado (pendente):** Colisões próximas de paredes/claims, UUID de vítima no save/restart, owner ausente, quantidade de slashes em channel longo e dedup.
+## 9. Concepção de nova magia
 
-**Authority/boundary:** o cast, mana, recast e cooldown base permanecem no Iron's; armas, projetos e efeitos são do Apprentice's Codex. Uma rajada, hit, hitbox, tracer, loot extra ou counterspell derivado **não é novo cast** e não autoriza recompensa/XP/Mastery independente. Black Arcana não replica custos, damage, loot, hit ou efeitos externos. Integração com RPG Skill Tree ⛔ fail-closed até receipt/callback server-side unívoco e homologado. ⚠️ Esta inspeção source-level não comprova o corpo dos métodos no JAR compilado, configs ativas ou QA físico de modpack.
+Assinatura ocupada: "lâmina conjurada com cortes varridos". Nenhuma implementação foi realizada.
+
+## 10. Verificação e pendências
+
+- ✅ identidade/hash, coeficientes 100/75/5/1/100, dano `(1+power/200)`, alcance 10, constantes 10/5/3.0 e geometria 5.0/1.5/1.25 confirmados no bytecode 1.0.1.1.
+- ⚠️ multiplicador instalado, DPS real e comportamento com partes de entidade não certificados.
+- ⚠️ `physical_qa=NOT_TESTED`: sem servidor Survival, PvP, portais, montarias, recast em combate real ou teleportes.
+- ⚠️ Universo integral do provider não encerrado; homologação integral permanece `NOT_CERTIFIED`.
+
+
+## Localizadores para Codex — resumo operacional
+
+- `10` é o alcance de dano; `12.5` é o descarte do projétil.
+- `victimUuids` é por projétil, não global.
+- A katana e o corte são uma única raiz.
+- Nenhum ponto de mutação segura demonstrado; manter fail-closed.
+
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).
