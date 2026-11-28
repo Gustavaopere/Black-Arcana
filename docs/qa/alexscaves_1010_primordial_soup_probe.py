@@ -90,6 +90,81 @@ def timer_census(z, roster, jar, javap):
     require(any(s["name"]=="setPushingTreesFor" for s in out[RELICH]["direct_sites"]),"known setter absent")
     return out
 
+
+GOAL=P+"entity/ai/RelicheirusPushTreesGoal"
+GOAL_PINS={RELICH:"50ba008765f00653c630f9c8e4fd28ab45f8c7e97a054a9858995676f007651f",
+           GOAL:"9307599bad3302757d4848a25eb74ded440b5bd127d981d234b36df2cbefc3c3"}
+GOAL_CODES={(GOAL,"canUse","()Z"):"3495e712e9b5d7dc3955eb23727bc62b68cb2890a33f6b17cd7b03e563dfe458",
+            (RELICH,"tick","()V"):"e2fbb728287e9f002a20db59869ff33a08d3ee1730b3d469eb4bf55bdb1c73aa"}
+def goal_record(rd,key,body):
+    import re
+    decl=next(d for d in rd.methods if (d["name"],d["descriptor"])==key)
+    require("code_sha256" in decl and 0<len(body)<=5000,"goal body budget "+str(key))
+    ops=[]
+    for at,(op,arg,symbol) in sorted(body.items()):
+        m=re.match(r"#(\d+)(?:\s|,|$)",arg)
+        ops.append({"offset":at,"opcode":op,"operand":arg,"symbol":symbol if m else "",
+                    "constant":rd.resolve(int(m[1])) if m else None})
+    return {"name":key[0],"descriptor":key[1],"code_sha256":decl["code_sha256"],
+            "instruction_count":len(body),"instruction_sha256":digest(canonical(ops).encode()),
+            "instructions":ops}
+
+def inspect_goal(z,roster,jar,javap):
+    entries=set(roster);classes={};selected={};cache={};observed=set()
+    def reader(owner):
+        require(owner+".class" in entries,"goal owner absent "+owner)
+        if owner not in cache:
+            raw=z.read(owner+".class");rd=ClassReader(raw)
+            require(rd.name==owner and rd.major==65,"goal owner identity "+owner)
+            cache[owner]=(rd,digest(raw))
+        return cache[owner]
+    def add(owner,key):
+        rd,_=reader(owner)
+        if any((d["name"],d["descriptor"])==key and "code_sha256" in d for d in rd.methods):
+            selected.setdefault(owner,set()).add(key)
+    for owner,sha in GOAL_PINS.items():
+        rd,actual=reader(owner);require(actual==sha,"goal class pin "+owner)
+        for d in rd.methods:
+            name=d["name"]
+            if owner==GOAL or name in {"registerGoals","tick","addAdditionalSaveData","readAdditionalSaveData","onFeedMixture","defineSynchedData"} or ("tree" in name.lower() or "push" in name.lower()):
+                add(owner,(name,d["descriptor"]))
+    # Exact provider-declared direct callee candidates from the goal's actual instructions.
+    goal_rd,_=reader(GOAL)
+    parsed=disassemble(jar,javap,GOAL)
+    import re
+    direct_calls=[]
+    for key,body in sorted(parsed.items()):
+        for at,(op,arg,_) in sorted(body.items()):
+            m=re.match(r"#(\d+)(?:\s|,|$)",arg)
+            if not m or not op.startswith("invoke") or op=="invokedynamic":continue
+            v=goal_rd.resolve(int(m[1]))
+            if not isinstance(v,list) or len(v)!=3 or v[0] not in (10,11):continue
+            _,owner,nt=v
+            if not owner.startswith(P) or owner+".class" not in entries:continue
+            target=(nt[1],nt[2])
+            add(owner,target)
+            direct_calls.append({"caller":list(key),"offset":at,"owner":owner,
+                                 "target":list(target),"declared_body_selected":target in selected.get(owner,set())})
+    require(len(selected)<=25 and sum(map(len,selected.values()))<=100,"goal selection budget")
+    for owner,keys in sorted(selected.items()):
+        rd,sha=reader(owner)
+        bodies=parsed if owner==GOAL else disassemble(jar,javap,owner)
+        methods=[]
+        for key in sorted(keys):
+            require(key in bodies,"goal method missing "+owner+str(key))
+            rec=goal_record(rd,key,bodies[key])
+            pin=(owner,*key)
+            if pin in GOAL_CODES:
+                require(rec["code_sha256"]==GOAL_CODES[pin],"goal Code pin "+str(pin));observed.add(pin)
+            methods.append(rec)
+        if owner==GOAL:
+            require(keys=={(d["name"],d["descriptor"]) for d in rd.methods if "code_sha256" in d},"goal executable roster")
+        classes[owner]={"class_sha256":sha,"parent":rd.parent,"fields":rd.fields,
+                        "declarations":rd.methods,"bootstrap_methods":rd.attributes.get("bootstrap_methods",[]),
+                        "methods":methods}
+    require(observed==set(GOAL_CODES),"goal Code pins not observed")
+    return {"classes":classes,"direct_provider_callee_candidates":direct_calls}
+
 def refs_json(value, path=()):
     if isinstance(value, dict):
         for k, v in sorted(value.items()):
@@ -170,7 +245,8 @@ def inspect(jar, javap):
         require(RECIPE in resources and resources[RECIPE]["sha256"] == RECIPE_SHA, "recipe pin")
         require(len(resources) <= 100, "resource hit budget")
         timer=timer_census(z,roster,jar,javap)
-        return {"schema": 3, "timer_census": timer, "food_class_sha256": class_hashes[FOODS], "artifact": {"sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE},
+        goal=inspect_goal(z,roster,jar,javap)
+        return {"schema": 4, "goal_state":goal, "timer_census": timer, "food_class_sha256": class_hashes[FOODS], "artifact": {"sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE},
                 "class_roster_sha256": ROSTER_SHA, "callback_declarations": declarations,
                 "methods": projected, "data_json_count": len(data_paths),
                 "resources": resources, "limits": LIMITS}
@@ -206,4 +282,9 @@ if __name__ == "__main__":
             print(key.upper(),json.dumps(result[key],sort_keys=True))
         for method in result["methods"]:
             print("SEMANTIC",json.dumps(method,sort_keys=True))
+        for owner,row in result["goal_state"]["classes"].items():
+            print("GOAL_OWNER",owner,row["class_sha256"],"DECLARATIONS",len(row["declarations"]),"METHODS",len(row["methods"]))
+            for method in row["methods"]:
+                print("GOAL_METHOD",json.dumps({"owner":owner,**method},sort_keys=True))
+        print("GOAL_DIRECT_CALLS",json.dumps(result["goal_state"]["direct_provider_callee_candidates"],sort_keys=True))
         print("DISCOVERY_ONLY NO_MUTATION NO_PHYSICAL_QA")
