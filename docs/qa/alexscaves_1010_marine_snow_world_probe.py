@@ -29,10 +29,10 @@ SELECT={
     P+"misc/ACCompat":{"sidedSuccess"},
     P+"block/MusselBlock":{"<clinit>","<init>","createBlockStateDefinition","updateShape","getFluidState","getStateForPlacement","canSurvive","randomTick","tick","getShape"},
     M+"world/item/context/UseOnContext":{"<init>","getPlayer","getItemInHand","getClickedPos","getClickLocation","getLevel"},
-    M+"world/item/ItemStack":{"useOn","shrink","grow","setCount","getCount"},
+    M+"world/item/ItemStack":{"useOn","onItemUse","shrink","grow","setCount","getCount","copy","copyWithCount","isEmpty","getMaxStackSize"},
     M+"world/item/Item":{"useOn","getMaxStackSize"},
     M+"server/level/ServerPlayerGameMode":{"useItemOn"},
-    N+"common/CommonHooks":{"onPlaceItemIntoWorld"},
+    N+"common/CommonHooks":{"onPlaceItemIntoWorld","onRightClickBlock"},
     N+"event/EventHooks":{"onRightClickBlock","onBlockPlace","onMultiBlockPlace"},
     M+"world/level/Level":{"setBlockAndUpdate","setBlock","markAndNotifyBlock","mayInteract","addFreshEntity","levelEvent"},
     M+"server/level/ServerLevel":{"setBlock","addFreshEntity","addEntity","mayInteract","levelEvent"},
@@ -45,8 +45,10 @@ SELECT={
     M+"world/level/block/CoralFanBlock":{"tick","onPlace","updateShape"},
     M+"world/level/block/CoralWallFanBlock":{"tick","onPlace","updateShape"},
     M+"world/level/block/SpongeBlock":{"onPlace","neighborChanged","tryAbsorbWater","removeWaterBreadthFirstSearch"},
-    M+"world/entity/item/ItemEntity":{"<init>","setItem","getItem","tick","merge","tryToMerge","mergeWithNeighbours","isMergable"},
-    M+"network/syncher/SynchedEntityData":{"set","get"},
+    M+"world/entity/item/ItemEntity":{"<init>","setItem","getItem","tick","merge","tryToMerge","mergeWithNeighbours","isMergable","areMergable","playerTouch"},
+    M+"network/syncher/SynchedEntityData":{"set","get","getItem"},
+    M+"network/syncher/SynchedEntityData$DataItem":{"<init>","setValue","getValue","value"},
+    M+"world/entity/player/Inventory":{"add","addResource","getSlotWithRemainingSpace","getFreeSlot"},
     M+"world/entity/player/Player":{"isCreative","mayUseItemAt"},
     M+"world/level/entity/PersistentEntitySectionManager":{"addNewEntity","addEntity","addEntityUuid","addEntityWithoutEvent"},
 }
@@ -86,15 +88,40 @@ def inspect(a):
         roster=sorted(p for p in mod.namelist() if p.endswith(".class"))
         require(len(roster)==1555 and digest(("\n".join(roster)+"\n").encode())=="2296d31ecc7fabb375922b8ad23c7a25c3e969bdfd80d5e1aa602034ae5d62ed","roster")
         candidates=[]
+        digestion=[]
+        pigs=[]
         for path in roster:
             rd=ClassReader(mod.read(path))
             require(rd.name+".class"==path and rd.major==65,"publisher identity")
             refs=[v for v in rd.typed_refs(IR) if v["kind"]=="field_reference" and v["name"]=="MARINE_SNOW"]
             typed=rd.typed_refs(I)
             if refs or typed:candidates.append({"owner":rd.name,"field_refs":refs,"typed_refs":typed})
+            if b"sea_pig_digestion" in mod.read(path):
+                digestion.append(rd.name)
+            if rd.name.rsplit("/",1)[-1]=="SeaPigEntity":
+                pigs.append(rd.name)
+        require(1<=len(digestion)<=20 and len(pigs)==1,"digestion candidate owner budget")
         require(len(candidates)<=100,"candidate budget")
         classes={}
-        for owner in sorted(set(SELECT)|{I}):
+        field_sites=[]
+        for candidate in candidates:
+            owner=candidate["owner"]
+            if not candidate["field_refs"]:continue
+            rd=ClassReader(mod.read(owner+".class"))
+            body=disassemble(cp,a.javap,owner)
+            ids={x["index"] for x in candidate["field_refs"]}
+            for key,ins in sorted(body.items()):
+                offsets=sorted(ins)
+                for i,at in enumerate(offsets):
+                    op,arg,sym=ins[at]
+                    match=re.match(r"#(\d+)(?:\s|,|$)",arg)
+                    if match and int(match[1]) in ids:
+                        d=next(v for v in rd.methods if (v["name"],v["descriptor"])==key)
+                        field_sites.append({"owner":owner,"method":key[0],"descriptor":key[1],"code_sha256":d["code_sha256"],
+                            "offset":at,"window":[{"offset":q,"opcode":ins[q][0],"operand":ins[q][1],"symbol":ins[q][2]} for q in offsets[max(0,i-4):i+5]]})
+        require(1<=len(field_sites)<=100,"field sites budget")
+        loot_owners=set(digestion+pigs)
+        for owner in sorted(set(SELECT)|{I}|loot_owners):
             found=[(n,z) for n,z,paths in index if owner+".class" in paths]
             if not found:
                 require(owner not in REQUIRED and owner!=I,"missing required owner "+owner)
@@ -102,10 +129,18 @@ def inspect(a):
             source,z=found[0];raw=z.read(owner+".class");rd=ClassReader(raw)
             require(rd.name==owner and rd.major==65,"class identity")
             require(owner not in PINS or digest(raw)==PINS[owner],"class pin "+owner)
-            decls=[d for d in rd.methods if owner==I or d["name"] in SELECT[owner]]
+            parsed=disassemble(cp,a.javap,owner)
+            selected_names=SELECT.get(owner,set())
+            extra=set()
+            if owner in loot_owners:
+                for key,body in parsed.items():
+                    if any("sea_pig_digestion" in sym.lower() or "SEA_PIG_DIGESTION" in sym or "LootTable" in sym or "getRandomItems" in sym for op,arg,sym in body.values()):
+                        extra.add(key)
+                    elif owner in pigs and any(token in key[0].lower() for token in ("digest","eat","save","tick","interact","feed","spawn")):
+                        extra.add(key)
+            decls=[d for d in rd.methods if owner==I or d["name"] in selected_names or (d["name"],d["descriptor"]) in extra]
             require(REQUIRED.get(owner,set())<={d["name"] for d in decls},"required method "+owner)
             require(len(decls)<=100,"method budget "+owner)
-            parsed=disassemble(cp,a.javap,owner)
             methods=[]
             for d in decls:
                 key=(d["name"],d["descriptor"])
@@ -127,8 +162,8 @@ def inspect(a):
                 resources[p]={"sha256":digest(raw),"bytes":len(raw),"refs":hits,"data":obj}
         require(len(resources)<=100,"resource hit budget")
         require(digest(mod.read("assets/alexscaves/models/item/marine_snow.json"))=="179f4314608e9b3f7b8351759bc30e0a1641620c978e909f568e9daf31e4451c","model pin")
-    report={"schema":1,"artifact":artifact,"classes":classes,"publisher_candidates":candidates,
-            "data_json_count":len(paths),"resources":resources,"limits":LIMITS}
+    report={"schema":2,"artifact":artifact,"classes":classes,"publisher_candidates":candidates,
+            "data_json_count":len(paths),"resources":resources,"field_sites":field_sites,"loot_string_owners":digestion,"loot_owners":sorted(loot_owners),"limits":LIMITS}
     data=canonical(report).encode();require(len(data)<=12000000,"report budget")
     a.output.parent.mkdir(parents=True,exist_ok=True)
     with a.output.open("xb") as f:f.write(data)
@@ -138,6 +173,8 @@ def inspect(a):
         for m in v.get("methods",[]):print("SEMANTIC",json.dumps({"owner":owner,**m},sort_keys=True))
     print("PUBLISHER_CANDIDATES",json.dumps(candidates,sort_keys=True))
     print("RESOURCES",json.dumps(resources,sort_keys=True))
+    print("FIELD_SITES",json.dumps(field_sites,sort_keys=True))
+    print("LOOT_CANDIDATES",json.dumps({"strings":digestion,"owners":sorted(loot_owners)},sort_keys=True))
     print("DISCOVERY_ONLY NO_MUTATION NO_PHYSICAL_QA")
 
 def self_test():
