@@ -1,90 +1,119 @@
 # Catch Flame
 
-- **Provider:** Apprentice's Codex
-- **Mod ID:** `apprenticecodex`
-- **Installed JAR:** `apprentice_codex-0.9.7.1+mc1.21.1.jar`
-- **Registry ID:** `apprenticecodex:catch_flame`
-- **Iron's school:** Fire
-- **Levels:** 1–8
-- **Minimum rarity:** Uncommon
-- **Cast type:** Long
-- **Cooldown:** 0.5 s
-- **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+**Estado do contrato:** ✅ `COMPLETE_PERK_READY` — `STATIC_TECHNICAL_CATALOG_ONLY` · `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `mutation=NO_MUTATION` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED`.
 
-## Exact source coefficients
+> O ✅ cobre exclusivamente a documentação estática SHA-exata deste objeto. Não homologa hook mutador, execução no pack, configuração efetiva, universo integral do provider nem QA físico.
 
-- `baseSpellPower = 800`
-- `spellPowerPerLevel = 75`
-- `baseManaCost = 10`
-- `manaCostPerLevel = 3`
-- `castTime = 10 ticks`
-- fixed range: **3 blocks**
-- effect half-size around impact: **0.5 block**
+## 1. Identidade e proveniência
 
-Raw damage:
+| Campo | Valor verificado |
+|---|---|
+| Provider | Apprentice's Codex |
+| Mod ID | `apprenticecodex` |
+| Registry ID | `apprenticecodex:catch_flame` |
+| Host | Iron's Spells 'n Spellbooks (`AbstractSpell`) |
+| Interfaces | `CatchFlameImpactEntity` e `CatchFlameServerConfig`/`CatchFlameLoaderHooks` pertencem à raiz; `ThermalSunderedLogic` é consumidor compartilhado com Thermal Slice |
+| Escola | `SchoolRegistry.FIRE_RESOURCE` (Fire) |
+| Raridade mínima declarada | `UNCOMMON` |
+| Níveis declarados | 1–8 (`setMaxLevel(8)`) |
+| Tipo de cast | `LONG` |
+| Cooldown declarado | `0.5 s` |
+| Recurso | Mana do Iron's (`baseManaCost=10`, `manaCostPerLevel=3`) |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
+| Ambiente | Minecraft 1.21.1 · NeoForge · Java 21 (JDK 21.0.12 na inspeção) |
+| Classe de implementação | `jp.aquafactory.apprenticecodex.spell.catchflame.CatchFlame` |
+| Auxiliares da mesma raiz | `CatchFlameImpactEntity`, `CatchFlameLoaderHooks`, `CatchFlameServerConfig`, `DamageTypes.CATCH_FLAME`, `DamageTypes.CATCH_FLAME_PENETRATE` |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-`spellPower / 100`
+As versões 0.9.7.1 e 1.0.1 permanecem como histórico; nenhum valor foi reaproveitado sem confirmação no artefato físico 1.0.1.1. Os coeficientes declarados não são os valores efetivos instalados: mana, cooldown, spell power, nível, raridade e multiplicadores do host permanecem `NÃO VERIFICADOS` (`AbstractSpell` lê `SpellConfigManager`, atributos, Curios e eventos).
 
-then multiplied by `DamageMultiplierKey.CATCH_FLAME`.
+## 2. Localizadores para o Codex
 
-Burn duration:
+| Elemento | Localizador |
+|---|---|
+| Registro | `SpellRegistry.reg("catch_flame", CatchFlame::new)` |
+| Config | `UNCOMMON`, nível 8, cooldown `0.5`, `FIRE_RESOURCE`, `CastType.LONG` |
+| Coeficientes | <init>: `baseSpellPower=800`, `spellPowerPerLevel=75`, `baseManaCost=10`, `manaCostPerLevel=3`, `castTime=10` |
+| Dano | `getDamage` → `power/100 * damageMultiplier(CATCH_FLAME)` |
+| Queima | `getBurnDuration` → `max((spellLevel-1)*20, 10)` ticks |
+| Alcance | `getRange() = 3.0F`; raycast de `Block.OUTLINE` com largura `0.0` |
+| Volume | `AABB(impact,impact).inflate(0.5)`; `BLOCK_SURFACE_EPSILON=1.0E-4` desloca a origem de linha de visão |
+| Ignição | `allowSpellDispenserIgnition=true`, `allowNonPlayerIgnition=false` em `CatchFlameServerConfig` |
+| Partículas | `FIRE_PARTICLE_COUNT=6`; `CatchFlameImpactEntity` dura `2` ticks no servidor e não é salvo |
 
-`max((spellLevel - 1) * 20, 10)` ticks.
+Bytecode: scratch/fire5_evidence/javap1011_fire6.txt (`javap -classpath <JAR> -p -s -c`, 28 classes, 1.095.867 bytes, EXIT=0, SHA-256 `F5491A50DCF3A8F7EBF1E9C035EFE0723490C97475DE501FC3AF6C1580E17EDB`, SHA-1 `53C2C327705603172618C84CFFEFC41412683190`); decompilação de apoio: scratch/fire5_sources.txt (fontes Vineflower 1.12.0 das cinco raízes legadas e auxiliares, 188.994 bytes, SHA-256 `F8BE6DF48A22522FC1B23FBA362D8FD0F2637A2759D65739F25A723A2903A448`). Constantes e fórmulas decisivas foram confrontadas com o bytecode; em divergência, o bytecode prevalece.
 
-## Entity-hit behavior
+## 3. Casting / execução
 
-The spell resolves a short-range raycast and builds a small impact AABB. Valid combat targets must intersect the impact volume and have line of sight from the resolved impact origin.
+1. `onCast` executa no servidor: resolve alvo, tenta ignição de bloco, afeta entidades, gera partículas e cria o `CatchFlameImpactEntity`.
+2. `resolveCastTarget` parte do olho, usa `getViewVector(1.0F)` e raycast de `3.0` blocos; entidade válida vira impacto direto, bloco registra posição/face e ausência de alvo vira ponto a `3.0` blocos.
+3. `affectEntities` usa AABB inflada `0.5`, `resolveUniqueCombatTargets`, interseção de hitbox, `isValidCombatTarget` e `RaycastTools.hasLineOfSight` com origem deslocada pela normal da face.
+4. O dano usa `CATCH_FLAME` quando a vítima não está queimando e `CATCH_FLAME_PENETRATE` quando `getRemainingFireTicks() > 0`; `KnockbackTypes.DEFAULT`.
+5. Se o dano foi aplicado, `ThermalSunderedLogic.extendFromSuccessfulFireDamage` atualiza `ThermalSundered` e a queima é elevada a `max((level-1)*20,10)` ticks quando menor.
+6. `tryIgnition` exige bloco e face, config habilitada, `mayInteract` e `mayUseItemAt`; usa `FLINT_AND_STEEL.useOn` ou `EssenceSmokerBlockEntity.ignite(gameTime)` com hook adicional.
+7. A entidade de impacto apenas reproduz partículas no cliente uma vez e é descartada no servidor no tick `2`.
 
-If a target is already burning, Catch Flame selects its dedicated penetrating damage type; otherwise it uses the standard Catch Flame damage type. On successful damage, remaining fire ticks are raised to at least the spell's burn duration.
+## 4. Targeting / geometria
 
-## Block/world interaction
+| Propriedade | Valor e consumidor |
+|---|---|
+| Alvo | Entidade em raycast de `3.0` blocos ou volume de impacto ao redor do ponto |
+| Filtro | `CombatTools.isValidCombatTarget` contra o combat actor resolvido (owner remoto quando aplicável) |
+| Geometria | AABB isotrópica de raio `0.5` no impacto; linha de visão com deslocamento `1.0E-4` para fora da face |
+| Dano | `CATCH_FLAME` ou `CATCH_FLAME_PENETRATE`, conforme fogo restante na vítima |
+| Ignição de bloco | Config `allowSpellDispenserIgnition=true` e `allowNonPlayerIgnition=false`, portas adicionais `mayInteract`/`mayUseItemAt`/loader hook |
+| Tempo | Impacto visual `2` ticks; sem AOE persistente |
+| Persistência | Nenhuma entidade persistente; `shouldBeSaved=false` no impacto |
 
-Catch Flame can ignite a targeted block surface and has a dedicated interaction for the provider's **Essence Smoker**.
+## 5. Resultado
 
-Important world-safety facts from exact source:
+- Dano direto curto com transição de tipo de dano para alvos já em chamas.
+- A queima é status vanilla aplicado como `setRemainingFireTicks`, com piso `10` ticks.
+- `ThermalSundered` é efeito compartilhado com Thermal Slice; aqui ele é apenas estendido após dano bem-sucedido, não aplicado do zero.
+- Ignição de blocos é efeito separado, condicionado por config e permissão; não é uma nova magia.
 
-- block ignition is gated by provider server config;
-- Spell Dispenser casting has a separate ignition permission toggle;
-- remote-owner and non-player casts are resolved separately;
-- real-player interaction permissions are checked before ignition;
-- `mayInteract` / `mayUseItemAt` checks are preserved;
-- ordinary block ignition is routed through a Flint and Steel `useOn` flow so loader/land-protection events can deny it;
-- Essence Smoker ignition executes only after provider hook/protection checks.
+## 6. Scaling e caps
 
-This is significant for Black Arcana: the addon owns these local Fire world effects. A bridge must not bypass provider protection checks or route the same ignition through Black Arcana `WorldEffectPolicy` a second time after the provider has already settled it.
+| Parâmetro | Fórmula literal | Unidade / ownership |
+|---|---|---|
+| Spell power | `800 + 75*(level-1)` declarado; efetivo **NÃO VERIFICADO** |
+| Dano | `power/100 * damageMultiplier(CATCH_FLAME)` — config **NÃO VERIFICADA** |
+| Queima | `max((level-1)*20, 10)` ticks; piso `10` no nível 1 |
+| Mana | `10 + 3*(level-1)` declarado; efetivo **NÃO VERIFICADO** |
+| Cooldown | `0.5` s declarado; efetivo **NÃO VERIFICADO** |
+| Cast time | `10` ticks no construtor, com `CastType.LONG` |
+| Alcance | `3.0` blocos, constante estática consumida no raycast |
 
-## What it does
+## 7. Possibilidades de perks
 
-Provider guide semantics: kindles fire at close range; already-burning targets can be struck through normal invulnerability-frame behavior; it can ignite an Essence Smoker or place fire on a block surface. The implementation explicitly preserves land-protection/interact hooks.
+- **A — atributo nativo:** dano responde a `getSpellPower`; duração de queima depende apenas do nível efetivo.
+- **B — evento verificado:** `ThermalSunderedEvents` reage a `LivingDamageEvent.Post` por `ON_FIRE`, mas é extensão de efeito, não mutador de parâmetros da magia.
+- **C — adapter condicionado:** alterar alcance, tipo de dano ou regras de ignição exigiria substituir o fluxo de cast e os gates de permissão. **CONDICIONADO**.
+- **D — sem hook demonstrado:** nenhuma API segura para transformar o impacto em AOE persistente ou Ignição ilimitada sem duplicar dano/efeito. **NO_MUTATION** / fail-closed.
 
-## Acquisition
+- `mutating_hook = NOT_VERIFIED`; `mutation = NO_MUTATION` (fail-closed).
 
-Registered through Iron's spell registry. Exact 0.9.7.1 scroll/loot/recipe availability remains in the provider-wide acquisition audit.
+## 8. Causalidade
 
-## Deduplication
+`cast longo → raycast 3 blocos → dano CATCH_FLAME/CATCH_FLAME_PENETRATE em AABB 0.5 → queima e extensão de ThermalSundered → ignição condicionada de bloco → impacto visual 2 ticks`.
 
-Occupies the **short-range Fire strike + burn + protected block ignition / Essence Smoker utility** niche. Black Arcana should not recreate the same convenience ignition spell or bypass these provider-owned checks.
+## 9. Concepção de nova magia
 
-## Confidence
+Assinatura ocupada: chama de curto alcance que alterna tipo de dano contra alvos em chamas e pode acender blocos sob regras de configuração. Nenhuma implementação foi realizada.
 
-`SOURCE-PINNED SPELL + TARGETING + IGNITION PATH / PACK CONFIG VALUES + FULL MODPACK LAND-PROTECTION QA PENDING`
+## 10. Verificação e pendências
 
-## Localizadores para Codex — source exato
+- ✅ identidade/hash, construtor `800/75/10/3/10`, `UNCOMMON/8/0.5`, alcance `3.0`, AABB `0.5`, burn `max((level-1)*20,10)`, dois tipos de dano, config de ignição e impacto `2` ticks confirmados no bytecode 1.0.1.1.
+- ✅ `ThermalSunderedLogic.extendFromSuccessfulFireDamage` e o deslocamento `1.0E-4` da origem de linha de visão confirmados.
+- ⚠️ configuração efetiva de `allowSpellDispenserIgnition`/`allowNonPlayerIgnition`, multiplicador e mana/cooldown instalados permanecem `NÃO VERIFICADOS`.
+- ⚠️ `physical_qa=NOT_TESTED`: sem Survival, PvP, ignição real, dispenser ou essence smoker.
+- ⚠️ Universo integral do provider não encerrado; homologação integral permanece `NOT_CERTIFIED`.
 
-- **Código da implementação:** [`CatchFlame.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/catchflame/CatchFlame.java); classe `jp.aquafactory.apprenticecodex.spell.catchflame.CatchFlame`.
-- **Registro comprovado:** `SpellRegistry.reg("catch_flame", CatchFlame::new)`; entrada distinta de escola, registry e documento.
-- **Localização de parâmetros:** conservar as fórmulas, constantes, tempo, mana, configurações e advertências da seção `Exact source coefficients` desta própria ficha; conferir na classe qualquer setter de entidade/efeito, sem presumir que o campo possa ser alterado externamente.
-- **Atributos/modificadores:** como addon do Iron's, `AbstractSpell` resolve spell power/custo e escola conforme seu contrato exato; parâmetros como raio, alvos e projéteis podem depender da classe acima ou de helpers/entidades *provider-owned*. Sua mutabilidade por perk está **CONDICIONADA** a evento/API/adapter validado na versão exata.
-- **Causalidade e proteção:** associar progressão ao cast original; não premiar projétil, dano indireto, summon ou recast como outro cast automaticamente. Nenhum teste de alteração de runtime, Survival ou hook foi conduzido por esta ficha.
-- **Proveniência:** fonte no commit 0.9.7.1 `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`. Metadados e localizadores factuais; nenhuma cópia de implementação ou asset upstream.
 
-## Engenharia causal aprofundada — utilidades, persistência e recursos (2026-10-14)
+## Localizadores para Codex — resumo operacional
 
-**Registry:** `apprenticecodex:catch_flame`. **Proveniência source:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (versão declarada 0.9.7.1); classes e helpers: [CatchFlame.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/catchflame/CatchFlame.java); [CatchFlameImpactEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/catchflame/CatchFlameImpactEntity.java); [CatchFlameLoaderHooks.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/catchflame/CatchFlameLoaderHooks.java).
+Assinatura ocupada: chama de curto alcance que alterna tipo de dano contra alvos em chamas e pode acender blocos sob regras de configuração. Nenhuma implementação foi realizada.
 
-**Cadeia causal no código-fonte:** CatchFlame.onCast resolve raycast e aplica tryIgniteBlock, affectEntities, partículas e CatchFlameImpactEntity; o impacto visual possui shouldBeSaved=false, expira após 2 ticks e não é segunda explosão de dano. affectEntities deduplica combat targets, valida LOS, escolhe damage type segundo burning e só renova burnDuration se CombatTools.applyDamage teve sucesso. tryIgniteBlock verifica configurações de Spell Dispenser e caster não-jogador, pode checar mayInteract/mayUseItemAt, encaminha item flint-and-steel por useOn e trata EssenceSmoker separadamente.
-
-**QA prioritário pendente:** Claims/protection/mods que interceptam useOn, disparo por dispenser/owner remoto, fire spread, dano PvP/LOS, limpeza de entity VFX não persistente.
-
-**Governança:** o host Iron's controla cast/mana/recast; o addon controla o estado/efeito/custo especializado verificado. Um pulso, dano periódico, bloco, item gerado, job tick, cast visual ou cast derivado não é uma identidade semântica nova nem gatilho de Mastery/XP automático. Black Arcana não reprocessa recursos, eventos, mutação do mundo ou callback dos providers. ⚠️ Source-level não comprova bytecode idêntico/config efetiva/teste físico. ⛔ Nenhum contrato de RPG Skill Tree perks/Mastery homologado: fail-closed.
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).

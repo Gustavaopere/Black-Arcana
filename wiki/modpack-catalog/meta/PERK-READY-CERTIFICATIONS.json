@@ -2,6 +2,192 @@
   "schema_version": 1,
   "definition": "COMPLETE_PERK_READY denotes complete scoped STATIC technical catalog of one object with version, targeting applicability and bounded evidence; it NEVER certifies a mutating hook, live gameplay, installed config or provider-wide 100%.",
   "objects": {
+    "✅-apprentice-codex/fire/artisan-smash.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato tecnico estatico de artisan smash no JAR fisico 1.0.1.1; nao homologa mutacao, config efetiva, QA fisico, universo integral do provider nem implementacao na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.artisansmash ancorados no dossie do lote Fire."
+        },
+        "behavior": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/artisan-smash.md", "reason": "onCastNoWeapon cria launcher que dispara shell explosiva; colisao entra em burst de 14 ticks com dano AABB unico por id e descarte." },
+        "parameters": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/artisan-smash.md", "reason": "Construtor 900/400/40/20/30, dano power/100 por multiplicador, raio min(2+power/600,8), velocidade 1.5, recoil 10 e vida 200." },
+        "targeting": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/artisan-smash.md", "reason": "Shell colide com entidade ou bloco; AABB inflada por splashRadius, damagedIds, ALLOW_SELF_PROTECT_ALLIES e clip COLLIDER para oclusao." },
+        "costs": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/artisan-smash.md", "reason": "Multiplicador, mana e cooldown efetivos permanecem NAO VERIFICADOS; apenas coeficientes declarados no JAR foram lidos." },
+        "integration": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/artisan-smash.md", "reason": "Launcher, shell, preview de trajetoria e DamageTypes pertencem a raiz unica; FLIGHT_AIR_DRAG nao tem consumidor demonstrado." },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura separou o evento de preview de mira de qualquer mutador e confirmou NBT e politica de aliados no artefato exato."
+        }
+      }
+    },
+    "✅-apprentice-codex/fire/catch-flame.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato tecnico estatico de catch flame no JAR fisico 1.0.1.1; nao homologa mutacao, config efetiva, QA fisico, universo integral do provider nem implementacao na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.catchflame ancorados no dossie do lote Fire."
+        },
+        "behavior": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/catch-flame.md", "reason": "Cast longo resolve alvo em 3 blocos, aplica dano e queima, tenta ignicao de bloco sob gates e cria impacto visual de 2 ticks." },
+        "parameters": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/catch-flame.md", "reason": "Construtor 800/75/10/3/10, dano power/100 por multiplicador, alcance 3.0, AABB 0.5 e burn max((level-1)*20,10)." },
+        "targeting": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/catch-flame.md", "reason": "Raycast de Block.OUTLINE com largura 0.0, hitbox inflada 0.5 e linha de visao deslocada por BLOCK_SURFACE_EPSILON 1.0E-4." },
+        "costs": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/catch-flame.md", "reason": "CATCH_FLAME e CATCH_FLAME_PENETRATE dependem de fogo restante; configuracao de ignicao e valores efetivos instalados permanecem NAO VERIFICADOS." },
+        "integration": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/catch-flame.md", "reason": "CatchFlameImpactEntity, config, loader hooks e a extension de ThermalSundered pertencem a raiz semantica unica." },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura confirmou os dois ramos de dano, o piso de queima e que ThermalSundered so e estendido apos dano bem-sucedido."
+        }
+      }
+    },
+    "✅-apprentice-codex/fire/combustion-jet.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato tecnico estatico de combustion jet no JAR fisico 1.0.1.1; nao homologa mutacao, config efetiva, QA fisico, universo integral do provider nem implementacao na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.combustionjet ancorados no dossie do lote Fire."
+        },
+        "behavior": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/combustion-jet.md", "reason": "Onda instantanea varre colisao de bloco e entidades por tick, aplica dano unico por UUID, queima e recuo manual." },
+        "parameters": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/combustion-jet.md", "reason": "Construtor 400/200/30/10/0, dano (1+power/100) por multiplicador, burn max((level-1)*40,10), SPEED 2.25 e alcance 10." },
+        "targeting": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/combustion-jet.md", "reason": "WaveVolume orientado (0.75+movement*0.5,4.5,0.5) com AABB projetada, passo 0.25 e clip MISS ate a caixa da vitima." },
+        "costs": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/combustion-jet.md", "reason": "Multiplicador, mana e cooldown efetivos permanecem NAO VERIFICADOS; WAVE_WIDTH/HEIGHT/DEPTH nao sao a geometria de dano." },
+        "integration": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/combustion-jet.md", "reason": "Wave entity, renderer e DamageTypes pertencem a raiz unica; NO_KNOCKBACK no dano e knockback manual 1.0 sao etapas distintas." },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura confirmou victimUuids por NBT, varrimento por passo maximo de 0.25 e o recuo manual separado do tipo de knockback."
+        }
+      }
+    },
+    "✅-apprentice-codex/fire/magic-spear.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato tecnico estatico de magic spear no JAR fisico 1.0.1.1; nao homologa mutacao, config efetiva, QA fisico, universo integral do provider nem implementacao na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.magicspear ancorados no dossie do lote Fire."
+        },
+        "behavior": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/magic-spear.md", "reason": "Cast instantaneo spawna missile alternado; apos 5 ticks de release acelera, faz homing limitado e explode no impacto." },
+        "parameters": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/magic-spear.md", "reason": "Construtor 600/300/30/30/0, dano power/100 por multiplicador, lock-on 64.0, boost 2.2, homing 5 graus/tick e blast 1.5." },
+        "targeting": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/magic-spear.md", "reason": "Hitbox de busca expande o movimento e infla 0.35; AABB de explosao 1.5 com dedupe por id e KnockbackTypes.DEFAULT." },
+        "costs": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/magic-spear.md", "reason": "Multiplicador, mana e cooldown efetivos permanecem NAO VERIFICADOS; lock-on 64.0 nao e alcance de voo do missile." },
+        "integration": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/magic-spear.md", "reason": "Missile, SummonedFirearmTools, tag persistente de alternancia e DamageTypes pertencem a raiz unica sem invocacao persistente." },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura separou blast 1.5 de burst visual 3.0 e registrou que applyBlastDamage nao verifica oclusao no metodo examinado."
+        }
+      }
+    },
+    "✅-apprentice-codex/fire/thermal-process.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato tecnico estatico de thermal process no JAR fisico 1.0.1.1; nao homologa mutacao, config efetiva, QA fisico, universo integral do provider nem implementacao na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.thermalprocess ancorados no dossie do lote Fire."
+        },
+        "behavior": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/thermal-process.md", "reason": "Cast continuo segura thrower que emite feixe de dano e processa itens por orcamento com ponte Create provider-owned." },
+        "parameters": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/thermal-process.md", "reason": "Construtor 100/150/10/5/200, dano (0.5+1.5*power/100) por multiplicador, itens/s 2*power/100, alcance 12 e efeito 40/5/240." },
+        "targeting": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/thermal-process.md", "reason": "Raycast de 12 com raio 0.5, amostragem 0.25 a cada 0.2, itens em AABB 0.5 e processamento a cada 20 ticks." },
+        "costs": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/thermal-process.md", "reason": "Multiplicador, mana, cooldown, bonus de Craftsmans Delight e receitas do pack permanecem NAO VERIFICADOS." },
+        "integration": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/thermal-process.md", "reason": "Thrower, ThermalProcessing, denylist e CreateExposedItemProcessingBridge pertencem a raiz unica; mobilidade e provider-owned." },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura confirmou applyEffectTick apenas em duration == 1 e separou efeito 40, amp 5 e ignicao 240."
+        }
+      }
+    },
+    "✅-apprentice-codex/fire/thermal-slice.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato tecnico estatico de thermal slice no JAR fisico 1.0.1.1; nao homologa mutacao, config efetiva, QA fisico, universo integral do provider nem implementacao na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.thermalslice ancorados no dossie do lote Fire."
+        },
+        "behavior": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/thermal-slice.md", "reason": "Cast longo nao interrompivel inicia dash de 4 ticks ou slash imediato; a katana aplica dano em caixa orientada e debuff compartilhado." },
+        "parameters": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/thermal-slice.md", "reason": "Construtor 500/200/40/10/10, dano power/100 por multiplicador, amp clamp(level-1,0,4), caixa 0.5/1.5/4.0 e dash 3.5 blocos." },
+        "targeting": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/thermal-slice.md", "reason": "HorizontalOrientedBox com literal 4.0 e isValidCombatTarget; getAttackDepth 4.2 e ATTACK_DEPTH 4.0 sao grandezas distintas." },
+        "costs": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/thermal-slice.md", "reason": "Multiplicador, mana e cooldown efetivos permanecem NAO VERIFICADOS; resistencia efetiva do debuff depende do host." },
+        "integration": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/fire/thermal-slice.md", "reason": "Katana, evento de dash, ThermalSunderedLogic/Events e o efeito compartilhado pertencem a raiz unica, sem nova magia por efeito." },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura separou a caixa real do valor informativo e reconheceu FOLLOW_FORWARD_OFFSET 0.2 como constante nao consumida."
+        }
+      }
+    },
     "✅-apprentice-codex/evocation/linear-build.md": {
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
