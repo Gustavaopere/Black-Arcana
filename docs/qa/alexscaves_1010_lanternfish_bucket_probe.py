@@ -27,7 +27,11 @@ ROSTER_SHA = "2296d31ecc7fabb375922b8ad23c7a25c3e969bdfd80d5e1aa602034ae5d62ed"
 METHODS = {"<init>","mobInteract","interact","getBucketItemStack","saveToBucketTag",
            "loadFromBucketTag","setFromBucket","fromBucket","getPickupSound","addAdditionalSaveData",
            "readAdditionalSaveData","defineSynchedData","requiresCustomPersistence","removeWhenFarAway",
-           "finalizeSpawn","createAttributes","getAddEntityPacket"}
+           "finalizeSpawn","createAttributes","getAddEntityPacket","createAndSetLeader",
+           "doInitialPosing","leaveGroup","hasNoLeader","hasGroupLeader","increaseGroupSize",
+           "decreaseGroupSize","canGroupGrow","getMaxGroupSize","getMaxSpawnClusterSize",
+           "isMaxGroupSizeReached","isGroupLeader","inRangeOfGroupLeader","moveToGroupLeader",
+           "tick","handleAirSupply","registerGoals"}
 LIMITS = {"static_contract":"NOT_CERTIFIED","mutating_hook":"NOT_VERIFIED",
           "physical_qa":"NOT_TESTED","mutation":"NO_MUTATION","provider_universe_closed":False,
           "semantic_magic_roots_delta":0,"runtime_loaded_bytes":"NOT_OBSERVED",
@@ -112,6 +116,20 @@ def inspect(jar,javap):
                             "interfaces":rd.interfaces,"fields":rd.fields,"declarations":rd.methods,"methods":methods})
             cursor=rd.parent
         require(bool(lineage),"publisher lineage")
+        require(digest(z.read(entity+".class"))=="10e48544cd4a543a0b0a1195ea8490d035a841555d3af5efb24d03d1f19da33f","prior entity pin")
+        require(fluid["code_sha256"]=="17ddd17374a6af404edd3800059ef59916e856e35318f410ae35626c71e4da88","prior fluid pin")
+        require(entity_factory["code_sha256"]=="b1724b692eb8aeaef2c2dd9e12725e90659324091c4ed839e95ddb00e9fa6538","prior entity factory pin")
+        # GroupData is reached directly in finalizeSpawn; group goal declarations
+        # are considered only if linked by the exact publisher class roster.
+        group_owners=[o[:-6] for o in roster if o in {entity+"$GroupData.class",entity+"$JoinSchoolGoal.class",entity+"$SwimInSchoolGoal.class"}]
+        require(len(group_owners)==3,"group owner roster")
+        group_classes=[]
+        for owner in group_owners:
+            raw,rd=read_owner(z,owner)
+            parsed=disassemble(jar,javap,owner)
+            methods=[row(rd,parsed,(d["name"],d["descriptor"])) for d in rd.methods if "code_sha256" in d]
+            require(len(methods)<=40,"group method budget")
+            group_classes.append({"owner":owner,"class_sha256":digest(raw),"parent":rd.parent,"fields":rd.fields,"methods":methods})
         consumers=[]
         for path in roster:
             rd=ClassReader(z.read(path))
@@ -133,11 +151,11 @@ def inspect(jar,javap):
         require(len(resources)<=100,"resource hit budget")
         model="assets/alexscaves/models/item/lanternfish_bucket.json"
         require(digest(z.read(model))=="64a2ccfbda89984d68eeb71707ebc909628451db9b176c6150a4f89facedb87a","model pin")
-        return {"schema":1,"artifact":{"sha1":SHA1,"sha256":SHA256,"size_bytes":SIZE},
+        return {"schema":2,"artifact":{"sha1":SHA1,"sha256":SHA256,"size_bytes":SIZE},
                 "class_roster_sha256":ROSTER_SHA,"factory":factory,"fluid_supplier":fluid,
                 "entity_factory":entity_factory,"entity":entity,
                 "registry_window":[{"offset":q,"opcode":v[0],"operand":v[1],"symbol":v[2]} for q,v in window.items()],
-                "lineage":lineage,"external_parent":cursor,"typed_consumers":consumers,
+                "lineage":lineage,"group_classes":group_classes,"external_parent":cursor,"typed_consumers":consumers,
                 "data_json_count":len(data_paths),"resources":resources,"limits":LIMITS}
 
 def self_test():
@@ -164,7 +182,7 @@ if __name__=="__main__":
         print("REPORT_SHA256",digest(raw),"BYTES",len(raw))
         for k in ("factory","fluid_supplier","entity_factory","registry_window","entity","external_parent","data_json_count","resources","typed_consumers"):
             print(k.upper(),json.dumps(result[k],sort_keys=True))
-        for v in result["lineage"]:
+        for v in result["lineage"]+result["group_classes"]:
             print("LINEAGE",json.dumps({k:x for k,x in v.items() if k!="methods"},sort_keys=True))
             for m in v["methods"]:
                 print("SEMANTIC",json.dumps({"owner":v["owner"],**m},sort_keys=True))
