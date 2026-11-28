@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 145/184.**
+**Fichas catalogadas (somente fichas detectadas): 146/184.**
 
-**Barra das fichas catalogadas:** `███████████████░░░░░ 78.8%`
+**Barra das fichas catalogadas:** `███████████████░░░░░ 79.3%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 145/184.**
+**Homologadas para perks (somente fichas detectadas): 146/184.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 78.8%`
+**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 79.3%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -123,7 +123,7 @@
 | ⚠️ | Cinder Brick | [items/cinder-brick.md](items/cinder-brick.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Cloak Of Darkness | [items/cloak-of-darkness.md](items/cloak-of-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Darkened Apple | [items/darkened-apple.md](items/darkened-apple.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Depth Charge | [items/depth-charge.md](items/depth-charge.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Depth Charge | [items/depth-charge.md](items/depth-charge.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Boots | [items/diving-boots.md](items/diving-boots.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Chestplate | [items/diving-chestplate.md](items/diving-chestplate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Diving Helmet | [items/diving-helmet.md](items/diving-helmet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -218,7 +218,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 9/9 (100.0%) | 9 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 42/81 (51.9%) | 42 | [Abrir índice](items/INDEX.md) |
+| ⚠️ | Items | 43/81 (53.1%) | 43 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 16/16 (100.0%) | 16 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
