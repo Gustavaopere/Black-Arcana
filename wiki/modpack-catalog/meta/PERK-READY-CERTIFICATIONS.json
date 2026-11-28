@@ -2,6 +2,223 @@
   "schema_version": 1,
   "definition": "COMPLETE_PERK_READY denotes complete scoped STATIC technical catalog of one object with version, targeting applicability and bounded evidence; it NEVER certifies a mutating hook, live gameplay, installed config or provider-wide 100%.",
   "objects": {
+    "✅-apprentice-codex/evocation/linear-build.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato tecnico estatico de linear build no JAR fisico 1.0.1.1; nao homologa mutacao, config efetiva, QA fisico, universo integral do provider nem implementacao na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.linearbuild ancorados no dossie do lote 4."
+        },
+        "behavior": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/linear-build.md", "reason": "Pre-cast valida template e bloco, placeLine consome fontes e mana por bloco, tryPlaceAt verifica mudanca real e reverte em falha; nenhuma entidade de combate." },
+        "parameters": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/linear-build.md", "reason": "Construtor 0/0/20/0/0, alcance 24/32, denylist, raycast por eixo, custo por bloco via config e cast data serializado." },
+        "targeting": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/linear-build.md", "reason": "Alvo e bloco em ate 24 ou 32 blocos; linha segue o eixo da face ate o jogador ou o limite, com fontes multiplas em collectItemSources." },
+        "costs": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/linear-build.md", "reason": "Mana adicional por bloco vem da config do servidor e do desconto de Craftsmans Delight; valores efetivos instalados permanecem NAO VERIFICADOS." },
+        "integration": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/linear-build.md", "reason": "Cast data, fontes de item e SyncManaPacket pertencem a mesma raiz; nenhuma entidade independente e criada." },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura contra bytecode e decompilacao SHA-exatas; constantes 36/27 reconhecidas como limites de helpers, nao inventario exclusivo."
+        }
+      }
+    },
+    "✅-apprentice-codex/evocation/precision-jack.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato tecnico estatico de precision jack no JAR fisico 1.0.1.1; nao homologa mutacao, config efetiva, QA fisico, universo integral do provider nem implementacao na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.precisionjack ancorados no dossie do lote 4."
+        },
+        "behavior": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/precision-jack.md", "reason": "Faca preparada corta em AABB 1.25 e aplica dano PRECISION_JACK; evento de drops faz rolagem extra e incrementa stacks conforme looting." },
+        "parameters": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/precision-jack.md", "reason": "Construtor 100/50/60/30/40, dano 6.0 por multiplicador, looting min(5,max(1,round(power/100))) e chance min(30,max(0,round(power/10))) por cento." },
+        "targeting": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/precision-jack.md", "reason": "AABB isotropica de raio 1.25 centrada em position+look*0.75, filtrada por isValidCombatTarget; timeouts 80 e 5 ticks." },
+        "costs": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/precision-jack.md", "reason": "Multiplicador de dano e mana/cooldown efetivos permanecem NAO VERIFICADOS; apenas coeficientes declarados no JAR foram lidos." },
+        "integration": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/precision-jack.md", "reason": "Faca, NBT e evento de drops pertencem a raiz unica; o som PLAYER_LEVELUP so ocorre apos rolagem extra produtiva." },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura confirmou os setters da faca e os clamps reaplicados no evento de drops no artefato exato."
+        }
+      }
+    },
+    "✅-apprentice-codex/evocation/search-beacon.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato tecnico estatico de search beacon no JAR fisico 1.0.1.1; nao homologa mutacao, config efetiva, QA fisico, universo integral do provider nem implementacao na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.searchbeacon ancorados no dossie do lote 4."
+        },
+        "behavior": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/search-beacon.md", "reason": "Pre-cast valida farol unico; onCast summona entidade que oferece itens, busca estruturas e devolve itens quando nao ha estrutura desconhecida." },
+        "parameters": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/search-beacon.md", "reason": "Construtor 80/80/100/40/0, alcance inicial 8*round(power), por item round(power), teto 5000, 48 etapas por tick e constantes da entidade." },
+        "targeting": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/search-beacon.md", "reason": "Sem alvo de combate; summon em posicao validada, coleta em boundingBox.inflate(0.85) a cada 4 ticks e descarte em 32 blocos." },
+        "costs": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/search-beacon.md", "reason": "Consumo de itens e reembolso condicionado foram verificados; mana e cooldown efetivos permanecem NAO VERIFICADOS." },
+        "integration": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/search-beacon.md", "reason": "Servico, entidade, estado e refund manager pertencem a raiz unica; nenhum objeto semanticamente novo por item oferecido." },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura confirmou positiveCeilDiv, clampRange e a condicao de reembolso no bytecode e na decompilacao SHA-exatas."
+        }
+      }
+    },
+    "✅-apprentice-codex/evocation/silent-assassin.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato tecnico estatico de silent assassin no JAR fisico 1.0.1.1; nao homologa mutacao, config efetiva, QA fisico, universo integral do provider nem implementacao na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.silentassassin ancorados no dossie do lote 4."
+        },
+        "behavior": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/silent-assassin.md", "reason": "Rifle de cast longo mira em 128 blocos, aplica dano direto com multiplicadores de headshot e vida quase cheia e pode suprimir awareness em 16 blocos." },
+        "parameters": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/silent-assassin.md", "reason": "Construtor 40/60/100/40/50, dano 15 por multiplicador, headshot min(1000,100+round(power)) por cento, bonus 200 por cento e limiar 0.995." },
+        "targeting": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/silent-assassin.md", "reason": "Mira assistida em 128 blocos; headshot depende do resultado do hit, sem area de dano; tracer 32.0/16.0 e KEEP_WEAPON." },
+        "costs": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/silent-assassin.md", "reason": "Multiplicador de dano, mana e cooldown efetivos permanecem NAO VERIFICADOS; valores declarados no JAR nao sao configuracao instalada." },
+        "integration": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/silent-assassin.md", "reason": "Rifle e SummonedFirearmTools pertencem a raiz unica; IMagiAgentSuitAffectedSpell altera apenas interrompibilidade." },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Correcao critica confirmada no JAR 1.0.1.1: incremento 60, teto 1000 e 100+round(power), divergentes da ficha legada 0.9.7.1."
+        }
+      }
+    },
+    "✅-apprentice-codex/evocation/slash-blade.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato tecnico estatico de slash blade no JAR fisico 1.0.1.1; nao homologa mutacao, config efetiva, QA fisico, universo integral do provider nem implementacao na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.slashblade ancorados no dossie do lote 4."
+        },
+        "behavior": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/slash-blade.md", "reason": "Katana em standby executa slash em caixa orientada e aplica dano com multiplicador e knockback condicionais a oclusao por bloco." },
+        "parameters": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/slash-blade.md", "reason": "Construtor 400/50/10/3/15, dano power/100 por multiplicador, penetracao clamp(20+level*5,10,90) por cento e caixa 2.75/0.75/4.5." },
+        "targeting": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/slash-blade.md", "reason": "HorizontalOrientedBox 2.75 por 0.75 por 4.5, getAttackDepth 5.0 informativo e filtro isValidCombatTarget; sem projétil." },
+        "costs": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/slash-blade.md", "reason": "Multiplicador, mana e cooldown efetivos permanecem NAO VERIFICADOS; apenas constantes bytecode foram certificadas." },
+        "integration": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/slash-blade.md", "reason": "Katana, OrientedBoxHit e DamageTypes pertencem a raiz unica; bloqueio altera somente dano e knockback." },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura separou getAttackDepth 5.0 da caixa real 4.5 e reconheceu FOLLOW_FORWARD_OFFSET 0.5 como constante nao consumida."
+        }
+      }
+    },
+    "✅-apprentice-codex/evocation/tamers-pocket.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato tecnico estatico de tamers pocket no JAR fisico 1.0.1.1; nao homologa mutacao, config efetiva, QA fisico, universo integral do provider nem implementacao na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.tamerspocket ancorados no dossie do lote 4."
+        },
+        "behavior": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/tamers-pocket.md", "reason": "Pre-cast escolhe saque unico, saque de area ou deploy; captura e recria pets proprios com NBT e cura proporcional ao tempo armazenado." },
+        "parameters": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/tamers-pocket.md", "reason": "Construtor 0/0/50/0/20, alcance 8.0, tres modos, offsets Y {0,1,-1,2,-2}, prioridade com peso 6 e cura (now-stored)/1200." },
+        "targeting": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/tamers-pocket.md", "reason": "Raycast de 8.0 com raio 0.5, area boundingBox.inflate(8.0) e deploy com volume de ar, suporte e AABB inflate(1.0) livre." },
+        "costs": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/tamers-pocket.md", "reason": "Mana e cooldown efetivos permanecem NAO VERIFICADOS; nenhum poder altera os parametros examinados." },
+        "integration": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/tamers-pocket.md", "reason": "Cast data, estado persistido em CodexSpellData e sincronia ao cliente pertencem a raiz unica." },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura confirmou prioridade -|yOffset|*6, reserva de AABB e formula de cura no artefato exato."
+        }
+      }
+    },
+    "✅-apprentice-codex/evocation/tiro-volley.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.1.1",
+      "artifact_sha1": "a3f9c73ebd77d15b7e77ae14f4d0f695fec3b7cf",
+      "artifact_sha256": "9c5244e75dbca95bdaf48a85f0c189f8456149d1220bad5ff339a86bce04ac86",
+      "artifact_size_bytes": 11870671,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato tecnico estatico de tiro volley no JAR fisico 1.0.1.1; nao homologa mutacao, config efetiva, QA fisico, universo integral do provider nem implementacao na main.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Identidade SHA-exata do JAR 1.0.1.1 e pacote spell.tirovolley ancorados no dossie do lote 4."
+        },
+        "behavior": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/tiro-volley.md", "reason": "Cast continuo agenda mosquetes por tick, escolhe alvos e dispara com dano recalculado, linha de tiro limpa, tracer e recuo." },
+        "parameters": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/tiro-volley.md", "reason": "Construtor 100/100/13/3/200, dano 4+power/1000 por multiplicador, cadencia clamp(2+(power-100)*0.015,1,10), 20 ticks base e 32 spawns por chamada." },
+        "targeting": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/tiro-volley.md", "reason": "Olhado 2/3 em 32 blocos, proximo em 12 com LoS e aleatorio em caixa 32/8/5; spawn minimo 1.5 e clip de colisores." },
+        "costs": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/tiro-volley.md", "reason": "Multiplicador de dano, mana e cooldown efetivos permanecem NAO VERIFICADOS; nao ha QA de cadencia em execucao continua." },
+        "integration": { "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/evocation/tiro-volley.md", "reason": "Mosquete, cast data, tracer e DamageTypes pertencem a raiz unica; nao ha projétil com hitbox independente." },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md",
+          "reason": "Segunda leitura confirmou agendamento round(index*ticksPerMusket), fireDelay max(1,...) e resolveCurrentDamage no disparo."
+        }
+      }
+    },
     "✅-apprentice-codex/blood/blood-brand.md": {
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",

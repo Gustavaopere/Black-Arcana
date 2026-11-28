@@ -1,70 +1,121 @@
 # Search Beacon
 
-- **Provider:** Apprentice's Codex
-- **Registry ID:** `apprenticecodex:search_beacon`
-- **Iron's school:** Evocation
-- **Levels:** 1–3
-- **Minimum rarity:** Epic
-- **Cast type:** Instant
-- **Cooldown:** 60 s
-- **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+**Estado do contrato:** ✅ `COMPLETE_PERK_READY` — `STATIC_TECHNICAL_CATALOG_ONLY` · `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `mutation=NO_MUTATION` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED`.
 
-## Exact source coefficients
+> O ✅ cobre exclusivamente a documentação estática SHA-exata deste objeto. Não homologa hook mutador, execução no pack, configuração efetiva, universo integral do provider nem QA físico.
 
-- `baseSpellPower = 80`
-- `spellPowerPerLevel = 80`
-- `baseManaCost = 100`
-- `manaCostPerLevel = 40`
-- `castTime = 0`
-- base search unit: `round(spellPower)`
-- initial search distance: `base search unit * 8`
-- additional distance per consumed item: `base search unit`
-- absolute maximum search distance is delegated to `SearchBeaconSearchService.getMaxSearchRange()` and is not invented here
+## 1. Identidade e proveniência
 
-## Provider lifecycle
+| Campo | Valor verificado |
+|---|---|
+| Provider | Apprentice's Codex |
+| Mod ID | `apprenticecodex` |
+| Registry ID | `apprenticecodex:search_beacon` |
+| Host | Iron's Spells 'n Spellbooks (`AbstractSpell`) |
+| Interfaces | sem interface adicional na raiz; entidade `PathfinderMob`/`GeoEntity` e serviço de busca pertencem à mesma raiz |
+| Escola | `SchoolRegistry.EVOCATION_RESOURCE` (Evocation) |
+| Raridade mínima declarada | `EPIC` |
+| Níveis declarados | 1–3 (`setMaxLevel(3)`) |
+| Tipo de cast | `INSTANT` |
+| Cooldown declarado | `60.0 s` |
+| Recurso | Mana do Iron's (`baseManaCost=100`, `manaCostPerLevel=40`) |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
+| Ambiente | Minecraft 1.21.1 · NeoForge · Java 21 (JDK 21.0.12 na inspeção) |
+| Classe de implementação | `jp.aquafactory.apprenticecodex.spell.searchbeacon.SearchBeacon` |
+| Auxiliares da mesma raiz | `SearchBeaconEntity`, `SearchBeaconSummoning`, `SearchBeaconSearchService`, `SearchBeaconState`, `SearchBeaconRefundManager`, `SearchBeaconTargetManager` |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-Server-side pre-cast validates placement/summoning through `SearchBeaconSummoning.validate(...)`, including rejection when a beacon is already active. A successful cast delegates the search workflow to `SearchBeaconSummoning.summonFromSpell(...)` with the computed initial and per-item ranges.
+As versões 0.9.7.1 e 1.0.1 permanecem como histórico; nenhum valor foi reaproveitado sem confirmação no artefato físico 1.0.1.1. Os coeficientes declarados não são os valores efetivos instalados: mana, cooldown, spell power, nível, raridade e multiplicadores do host permanecem `NÃO VERIFICADOS` (`AbstractSpell` lê `SpellConfigManager`, atributos, Curios e eventos).
 
-## Causality and progression
+## 2. Localizadores para o Codex
 
-The structure-location workflow is provider-owned. Repeated internal search steps or extra range purchased with items are not independent casts or divination milestones unless a real provider event exposes them as such.
+| Elemento | Localizador |
+|---|---|
+| Registro | `SpellRegistry.reg("search_beacon", SearchBeacon::new)` |
+| Config | `EPIC`, nível 3, cooldown `60.0`, `EVOCATION_RESOURCE` |
+| Coeficientes | <init>: `baseSpellPower=80`, `spellPowerPerLevel=80`, `baseManaCost=100`, `manaCostPerLevel=40`, `castTime=0` |
+| Alcance | `getInitialRange = round(getSpellPower)*8`; `getAdditionalRangePerItem = round(getSpellPower)`; `getBaseRange = round(power)` |
+| Serviço | `CHUNK_PADDING=2`, `MAX_SEARCH_RANGE=5000`, `SEARCH_STEPS_PER_TICK=48`; `clampRange` limita a `0..5000` |
+| Reembolso | `shouldRefundOfferedItems(result)` → `result == null || isEmpty() || !hasUnknownStructures()` |
+| Entidade | `WIDTH=0.7F`, `HEIGHT=1.45F`, `SEARCH_RESOLVE_TICKS=60`, `OFFER_CHECK_INTERVAL_TICKS=4`, `REOFFER_COOLDOWN_TICKS=100`, `OFFER_PICKUP_RANGE=0.85`, `ALL_PHASE_DISCARD_DISTANCE_SQR=1024.0` |
+| Aceite de itens | `getMaxAcceptedItemCount`: `1 + ceil((5000-initial)/additional)` quando `additional>0` e `initial<5000`, senão `1` |
+| Estado | `SearchBeaconState`: `searched_structures`, `traversed_structures`, `pending_instant_brazier_uuid`, `pending_instant_brazier_stack` |
+| Guarda | `SearchBeaconSummoning.validate`: `Failure.ALREADY_ACTIVE` se houver pingente ou farol ativo; `CANNOT_PLACE` se não houver posição |
 
-## Deduplication
+Bytecode: scratch/javap1011_evocation7.txt (`javap -classpath <JAR> -p -s -c`, 94 classes, EXIT=0, SHA-256 `AF225F42FA1A0295D7339542D49620FBA0D0BE6599147EEDF69B75744730DB41`); decompilação de apoio: scratch/evocation7_sources.txt (46 fontes Vineflower 1.12.0, SHA-256 `05090319D9206171C8C4C38ED1A33479F0F1313F9135B5D70146F5559EB80DB1`). Constantes e fórmulas decisivas foram confrontadas com o bytecode; em divergência, o bytecode prevalece.
 
-Directly occupies the **provider-native structure-search beacon with spell-power-scaled initial range and item-funded range extension** niche. Black Arcana Familiars & Divination must not add a generic structure locator without a materially different contract.
+## 3. Casting / execução
 
-## Confidence
+1. `checkPreCastConditions` valida somente em `ServerLevel`/`ServerPlayer`; falha envia action bar vermelha (`already_active` ou `cant_place`) e retorna `false`.
+2. `onCast` chama `SearchBeaconSummoning.summonFromSpell(level, owner, initialRange, additionalRangePerItem)` e então `super.onCast`.
+3. A entidade percorre fases com `SEARCH_RESOLVE_TICKS=60` e avança `SEARCH_STEPS_PER_TICK=48` por tick; `CHUNK_PADDING=2` delimita a varredura de chunks.
+4. A cada `OFFER_CHECK_INTERVAL_TICKS=4` a entidade absorve `ItemEntity` em `boundingBox.inflate(0.85)`; `getAcceptedItemCount` limita o total aceito e `getSearchRangeForCount` converte itens em alcance.
+5. `getMaxAcceptedItemCount` usa `Math.positiveCeilDiv((5000-initial), additional)` e acrescenta o item inicial; o alcance é limitado por `clampRange`.
+6. Ao concluir, `shouldRefundOfferedItems` devolve itens quando não há estrutura desconhecida; o estado guarda estruturas pesquisadas/atravessadas.
+7. `ALL_PHASE_DISCARD_DISTANCE_SQR=1024.0` (32 blocos) e `REOFFER_COOLDOWN_TICKS=100` limitam reofertas; nenhum dano é aplicado.
 
-`SOURCE-PINNED SPELL / EXACT CONFIG+RANGE FORMULAS+SERVER SUMMON VALIDATION / MAX SEARCH CAP+ITEM CONSUMPTION+SEARCH SERVICE DETAILS REQUIRE SERVICE AUDIT`
+## 4. Targeting / geometria
 
-## Localizadores para Codex — source exato
+| Propriedade | Valor e consumidor |
+|---|---|
+| Alvo | Nenhuma entidade de combate; alvo é posição de summon e itens oferecidos |
+| Posição de summon | `resolveSummonPosition`; falha produz `CANNOT_PLACE` |
+| Alcance | Inicial `8*round(power)`, por item `round(power)`, limitado a `5000` |
+| Geometria da entidade | `0.7 × 1.45` blocos (`PathfinderMob`) |
+| Coleta de itens | `inflate(0.85)` a cada `4` ticks; distância mínima horizontal `0.1` |
+| Descarte | `1024.0` distância ao quadrado (32 blocos) em todas as fases; reoferta com `100` ticks |
+| Persistência | `SearchBeaconState` guarda estruturas e brazier pendente; `SearchBeaconRefundManager` guarda reembolso |
 
-- **Registry + identidade:** `apprenticecodex:search_beacon` → `SpellRegistry.reg("search_beacon", SearchBeacon::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.searchbeacon.SearchBeacon`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/searchbeacon/SearchBeacon.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+## 5. Resultado
 
----
+- Utilitário de busca: **sem dano, cura, status, projétil, knockback ou tipo de dano** (`N/A` com justificativa: apenas summon, busca de estruturas e devolução de itens).
+- Itens oferecidos são absorvidos e podem ser devolvidos; o consumo é de itens do jogador, não mana adicional.
+- `Failure.ALREADY_ACTIVE` impede farol duplo enquanto houver entidade ou reembolso pendente.
+- `SearchBeaconState` persiste conhecimento de estruturas e estado de brazier instantâneo; `SearchBeaconRefundManager` controla devolução.
 
-## Engenharia causal aprofundada — entidades 0.9.7.1
+## 6. Scaling e caps
 
-**Fonte lida:** [`searchbeacon/SearchBeacon.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/searchbeacon/SearchBeacon.java) · [`searchbeacon/SearchBeaconEntity.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/searchbeacon/SearchBeaconEntity.java) · [`searchbeacon/SearchBeaconSearchService.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/searchbeacon/SearchBeaconSearchService.java) · [`searchbeacon/SearchBeaconRefundManager.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/searchbeacon/SearchBeaconRefundManager.java) · [`searchbeacon/SearchBeaconTargetManager.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/searchbeacon/SearchBeaconTargetManager.java). Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` alinhado à release declarada 0.9.7.1. Versão e SHA do JAR são da modlist física; **corpos de bytecode destes métodos não foram provados como equivalentes ao source**.
+| Parâmetro | Fórmula literal | Unidade / ownership |
+|---|---|---|
+| Spell power | `80 + 80*(level-1)` declarado; efetivo **NÃO VERIFICADO** |
+| Alcance inicial | `8 * round(getSpellPower)` blocos |
+| Alcance por item | `round(getSpellPower)` blocos |
+| Teto de busca | `5000` blocos (`clampRange`), com `CHUNK_PADDING=2` |
+| Throughput | `48` etapas por tick; resolução em `60` ticks |
+| Itens aceitos | `1 + positiveCeilDiv(5000 - initial, additional)`, no máximo até o teto |
+| Mana | `100 + 40*(level-1)` declarado; efetivo **NÃO VERIFICADO** |
+| Cooldown | `60.0` s declarado |
 
-### Execução, persistência e efeitos secundários
+## 7. Possibilidades de perks
 
-- **Fases e custo de objeto oferecido:** `SearchBeaconEntity.tick` mantém posição ancorada e avança `IDLE → ARMED → SEARCHING → RESULT` segundo estado, oferta e resultado. Entidade sem owner vivo é descartada, e um `reservesInstantBrazier` sem reserva correspondente via `SearchBeaconRefundManager.matches(owner,beaconUuid)` é invalidado. `absorbOfferedItem` lê targets por `SearchBeaconTargetManager.getDefinition(stack)`, aceita somente itens compatíveis com a oferta atual e ajusta `searchRange` pelo total aceito.
-- **Busca com orçamento:** `SearchBeaconSearchService.createSession` resolve alvos pela definição do datapack e placements de structures do nível; compartilha `processedStarts` por structure contra múltiplos placement hits. `SEARCH_STEPS_PER_TICK=48`, `SearchSession.advance(level,maxSteps)` distribui steps entre tarefas e só conclui quando nenhuma tarefa resta. O limite de raio vem de `clampRange`, não da duração arbitrária da sessão.
-- **Reserva e retorno:** `SearchBeaconRefundManager.reserve(owner,beaconUuid,stack)` salva **um stack de count=1 serializado** em `SEARCH_BEACON_STATE` e marca dirty. `consume`, `refund`, `recoverPending` e `recover` passam por `claimPendingInstantBrazier(expectedBeaconUuid)` para impedir claim duplicada na rotina local. O item vai a `owner.getInventory().placeItemBackInInventory` nos caminhos de recuperação. A rota de oferta consome o reservation na transição para SEARCHING.
-- **Distinção necessária:** o reembolso do instant brazier e o consumo de itens oferecidos são estados econômicos diferentes; `SearchBeaconSearchService.shouldRefundOfferedItems` trata `null`, vazio e `hasUnknownStructures` de modo específico. Não inferir reembolso universal de todas as ofertas, sucesso da busca ou chunk loading de todo alvo.
-- **Risco:** search usa generator state/structure data; QA de datapacks, valores efetivos de cap/step budget, morte/logout com refund pendente, estrutura desconhecida e concorrência de beacons é obrigatória. Não atribuir Mastery por cada structure indexada nem iniciar busca paralela BA.
+- **A — atributo nativo:** alcance inicial e por item derivam de `getSpellPower`; nada mais responde a atributos de forma demonstrada.
+- **B — evento verificado:** `SearchBeaconSummoning.validate` e `SearchBeaconState` são fluxos do provider, não hook de modificação de parâmetros.
+- **C — adapter condicionado:** alterar `MAX_SEARCH_RANGE`, `SEARCH_STEPS_PER_TICK` ou as fases exigiria substituir serviço e entidade com risco de busca global/per-tick. **CONDICIONADO**.
+- **D — sem hook demonstrado:** nenhuma API segura para alterar o teto de busca ou o consumo de itens sem duplicar reembolso. **NO_MUTATION** / fail-closed.
 
-### Boundary para perks e QA
+- `mutating_hook = NOT_VERIFIED`; `mutation = NO_MUTATION` (fail-closed).
 
-- **Raiz:** `apprenticecodex:search_beacon`, já contabilizada no registry 83/83. Spawn, cleanup, tick, drop, item handling e efeitos causais **não** são novos casts contáveis.
-- **Autoridade:** Iron's mantém escola, casting, mana e recast padrão; Apprentice's Codex detém entidades, itens e efeitos auxiliares; Black Arcana mantém apenas sua própria pipeline de magia/rituais, política de efeitos de mundo, Corruption e Strain.
-- **Bloqueio:** ⛔ nenhuma API ou bridge de Mastery/perks confirmada para executar intervenções seguras; não deduzir rewards de eventos locais.
-- **Pendências:** ⚠️ equivalência source/JAR, configuração, servidor dedicado com modpack real, multiplayer/PvP, inventários de terceiros, proteção de claims, save/reload e edge cases de entidades. Nenhuma prova de QA físico do provider nesta atualização.
+## 8. Causalidade
 
-[Matriz de lifecycle](../PERK-ENGINEERING-MATRIX-LIFECYCLE-0.9.7.1.md).
+`cast → valida farol único → summon → itens aumentam alcance (≤5000) → busca em 48 etapas/tick → resultado ou reembolso → estado persistido`.
+
+
+## 9. Concepção de nova magia
+
+Assinatura ocupada: farol que busca estruturas usando itens como alcance adicional, com reembolso condicionado. Nenhuma implementação foi realizada.
+
+## 10. Verificação e pendências
+
+- ✅ identidade/hash, construtor `80/80/100/40/0`, alcance `8*power`/`power`, teto `5000`, `48` etapas/tick, constantes da entidade, aceite de itens, reembolso e estado confirmados no bytecode 1.0.1.1.
+- ⚠️ poder e mana efetivos e a lista de estruturas alvo (`SearchBeaconTargetList`), condicionada a config/datapack, permanecem `NÃO VERIFICADOS`.
+- ⚠️ `physical_qa=NOT_TESTED`: sem servidor Survival, busca real em mundo, portais ou reembolso observado.
+- ⚠️ Universo integral do provider não encerrado; homologação integral permanece `NOT_CERTIFIED`.
+
+
+## Localizadores para Codex — resumo operacional
+
+Assinatura ocupada: farol que busca estruturas usando itens como alcance adicional, com reembolso condicionado. Nenhuma implementação foi realizada.
+
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).

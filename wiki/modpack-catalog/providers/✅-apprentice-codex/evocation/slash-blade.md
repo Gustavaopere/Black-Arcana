@@ -1,66 +1,120 @@
 # Slash Blade
 
-- **Provider:** Apprentice's Codex
-- **Registry ID:** `apprenticecodex:slash_blade`
-- **School:** Evocation
-- **Levels:** 1–10
-- **Minimum rarity:** Common
-- **Cast type:** Long
-- **Cooldown:** 1.5 s
-- **Interruptible:** no
-- **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+**Estado do contrato:** ✅ `COMPLETE_PERK_READY` — `STATIC_TECHNICAL_CATALOG_ONLY` · `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `mutation=NO_MUTATION` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED`.
 
-## Exact source coefficients
+> O ✅ cobre exclusivamente a documentação estática SHA-exata deste objeto. Não homologa hook mutador, execução no pack, configuração efetiva, universo integral do provider nem QA físico.
 
-- `baseSpellPower = 400`
-- `spellPowerPerLevel = 50`
-- `baseManaCost = 10`
-- `manaCostPerLevel = 3`
-- `castTime = 15 ticks`
+## 1. Identidade e proveniência
 
-Damage:
+| Campo | Valor verificado |
+|---|---|
+| Provider | Apprentice's Codex |
+| Mod ID | `apprenticecodex` |
+| Registry ID | `apprenticecodex:slash_blade` |
+| Host | Iron's Spells 'n Spellbooks (`AbstractSummonWeaponSpell<SlashBladeKatanaEntity>`) |
+| Interfaces | `GeoEntity`, `ISwordTrailEntity` na katana; `DamageTypes.SLASH_BLADE` pertence à raiz |
+| Escola | `SchoolRegistry.EVOCATION_RESOURCE` (Evocation) |
+| Raridade mínima declarada | `COMMON` |
+| Níveis declarados | 1–10 (`setMaxLevel(10)`) |
+| Tipo de cast | `configurado pelo host (`castTime=15`)` |
+| Cooldown declarado | `1.5 s` |
+| Recurso | Mana do Iron's (`baseManaCost=10`, `manaCostPerLevel=3`) |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
+| Ambiente | Minecraft 1.21.1 · NeoForge · Java 21 (JDK 21.0.12 na inspeção) |
+| Classe de implementação | `jp.aquafactory.apprenticecodex.spell.slashblade.SlashBlade` |
+| Auxiliares da mesma raiz | `SlashBladeKatanaEntity`, `HorizontalOrientedBox`, `OrientedBoxHit`, `DamageTypes.SLASH_BLADE` |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-`spellPower / 100 * SLASH_BLADE damage multiplier`
+As versões 0.9.7.1 e 1.0.1 permanecem como histórico; nenhum valor foi reaproveitado sem confirmação no artefato físico 1.0.1.1. Os coeficientes declarados não são os valores efetivos instalados: mana, cooldown, spell power, nível, raridade e multiplicadores do host permanecem `NÃO VERIFICADOS` (`AbstractSpell` lê `SpellConfigManager`, atributos, Curios e eventos).
 
-Block-penetration damage multiplier:
+## 2. Localizadores para o Codex
 
-`clamp(20 + spellLevel * 5, 10, 90)%`
+| Elemento | Localizador |
+|---|---|
+| Registro | `SpellRegistry.reg("slash_blade", SlashBlade::new)` |
+| Config | `COMMON`, nível 10, cooldown `1.5`, `EVOCATION_RESOURCE` |
+| Coeficientes | <init>: `baseSpellPower=400`, `spellPowerPerLevel=50`, `baseManaCost=10`, `manaCostPerLevel=3`, `castTime=15` |
+| Dano | `getDamage` → `power/100 * damageMultiplier(SLASH_BLADE)` |
+| Penetração | `getBlockPenetrationDamageMultiplierPercent` → `clamp(20 + level*5, 10, 90)`%; multiplicador `/100` |
+| Alcance | `getRange()` → `SlashBladeKatanaEntity.getAttackDepth()` = `5.0` |
+| Caixa | `HorizontalOrientedBox(position, getLookAngle(), 2.75, 0.75, 4.5)` |
+| Dano aplicado | `hitsHorizontalOrientedBox` → `createCombatDamageSource(DamageTypes.SLASH_BLADE)` + `CombatTools.applySpellDamage` |
+| Bloqueio | `blockOccluded()` → dano × multiplicador e `KnockbackTypes.NO_KNOCKBACK`; sem bloqueio → dano cheio e `DEFAULT` |
+| NBT | `Damage`, `BlockPenetrationDamageMultiplier` (setter clamp `0..1`) |
 
-The displayed/ideal range is defined by the provider's `SlashBladeKatanaEntity.getAttackDepth()` rather than duplicated in the spell class; this catalog does not invent that entity constant without a dedicated entity audit.
+Bytecode: scratch/javap1011_evocation7.txt (`javap -classpath <JAR> -p -s -c`, 94 classes, EXIT=0, SHA-256 `AF225F42FA1A0295D7339542D49620FBA0D0BE6599147EEDF69B75744730DB41`); decompilação de apoio: scratch/evocation7_sources.txt (46 fontes Vineflower 1.12.0, SHA-256 `05090319D9206171C8C4C38ED1A33479F0F1313F9135B5D70146F5559EB80DB1`). Constantes e fórmulas decisivas foram confrontadas com o bytecode; em divergência, o bytecode prevalece.
 
-## Weapon lifecycle
+## 3. Casting / execução
 
-The spell summons a provider-owned katana. Damage and block-penetration values are written into the katana when it is created and are refreshed again at the initial weapon cast so completion-time spell-power/cast modifiers are reflected.
+1. `onCast` cria a katana, define `setDamage(getDamage(...))` e `setBlockPenetrationDamageMultiplier(...)`.
+2. No standby, `setStandby` dispara animação e define `ANIMATION_SPEED=1.5 * max(1, castTimeSpeedScale)`; `SHOW_TRAIL=false`.
+3. `slash()` exige dono vivo: `refreshAttackPose` move a katana por `moveToCollisionLimitedStandbyPosition` desde `calculateBehindPosition(owner,0,0,-0.75)` até `getStandbyPosition()` (`calculateBehindPosition(owner,-0.5,0,-0.75)`), iguala a rotação à do dono e dispara `quickdraw`. A constante `FOLLOW_FORWARD_OFFSET=0.5` existe, mas não é consumida nesse método.
+4. `ANIMATION_SPEED=3.0`, `SHOW_TRAIL=true`, `lifeTick=10` e `isSlashed=true`; a caixa `2.75 × 0.75 × 4.5` é testada com `hitsHorizontalOrientedBox`, excluindo o dono.
+5. Cada `OrientedBoxHit` aplica dano via `DamageTypes.SLASH_BLADE`; bloqueios recebem `damage * blockPenetrationDamageMultiplier` e `NO_KNOCKBACK`.
+6. `tickOnServer` decrementa `lifeTick` após o corte e descarta a katana ao chegar a zero; sem dono, descarta imediatamente.
+7. `getStandbyPosition` usa `calculateBehindPosition(owner,-0.5,0,-0.75)`.
 
-During the long cast the katana enters its standby state. When the cast completes successfully, the provider calls the katana's own slash sequence and keeps the weapon through that sequence. A cancelled cast releases the weapon without the slash.
+## 4. Targeting / geometria
 
-The standby animation speed is scaled from the actual Iron's cast duration, so cast-time modifiers affect presentation without creating a second cast timer.
+| Propriedade | Valor e consumidor |
+|---|---|
+| Alvo | Entidades em `HorizontalOrientedBox(position, look, 2.75, 0.75, 4.5)`, exceto o dono |
+| Filtro | `CombatTools.isValidCombatTarget(e, owner)` |
+| Geometria | Meia-largura `2.75`, meia-altura `0.75`, profundidade `4.5`; `getAttackDepth=5.0` é o alcance declarado |
+| Bloqueio | `blockOccluded()` reduz o dano ao multiplicador e suprime knockback |
+| Tempo | `10` ticks de `lifeTick` após o corte |
+| Projétil | Nenhum; dano direto na caixa orientada |
+| Persistência | NBT `Damage` e `BlockPenetrationDamageMultiplier`; katana é entidade supervisionada |
 
-## Authority / deduplication
+## 5. Resultado
 
-The summoned katana owns the concrete slash hit geometry and block-penetration settlement. Iron's owns the standard mana/cast/cooldown lifecycle.
+- Dano direto em caixa orientada; tipo `DamageTypes.SLASH_BLADE`.
+- A penetração é um multiplicador de dano para alvos ocultos por bloco, não um segundo dano ou projétil.
+- Knockback é `DEFAULT` sem bloqueio e `NO_KNOCKBACK` com bloqueio; `KATANA_SLASH` e `PLAYER_ATTACK_SWEEP` são feedback.
+- Sem cura, status, invocação múltipla ou AOE persistente (`N/A` com justificativa).
 
-Black Arcana must not re-run the slash hitbox, apply a second penetration multiplier, or count multiple entities hit by the area slash as multiple casts.
+## 6. Scaling e caps
 
-## Confidence
+| Parâmetro | Fórmula literal | Unidade / ownership |
+|---|---|---|
+| Spell power | `400 + 50*(level-1)` declarado; efetivo **NÃO VERIFICADO** |
+| Dano | `power/100 * damageMultiplier(SLASH_BLADE)` — config **NÃO VERIFICADA** |
+| Penetração | `clamp(20 + level*5, 10, 90)`% → multiplicador `0.1..0.9` |
+| Alcance | `5.0` (`getAttackDepth`), enquanto a caixa física usa profundidade `4.5` |
+| Mana | `10 + 3*(level-1)` declarado; efetivo **NÃO VERIFICADO** |
+| Cooldown | `1.5` s declarado |
+| Cast time | `15` ticks no construtor |
 
-`SOURCE-PINNED SPELL COEFFICIENTS + CAST/WEAPON HANDOFF / KATANA HIT GEOMETRY DETAIL NOT YET EXPANDED / RUNTIME QA PENDING`
+## 7. Possibilidades de perks
 
-## Localizadores para Codex — source exato
+- **A — atributo nativo:** dano responde ao poder; penetração depende do nível, não de atributos.
+- **B — evento verificado:** `ISwordTrailEntity`/`GeoEntity` são apresentação, não contrato de mutação.
+- **C — adapter condicionado:** alterar geometria, penetração ou knockback exigiria substituir `SlashBladeKatanaEntity` com risco de duplicar dano. **CONDICIONADO**.
+- **D — sem hook demonstrado:** nenhuma API segura para transformar o corte em AOE persistente ou alterar a caixa sem duplicar casting. **NO_MUTATION** / fail-closed.
 
-- **Registry + identidade:** `apprenticecodex:slash_blade` → `SpellRegistry.reg("slash_blade", SlashBlade::new)` no source 0.9.7.1.
-- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.slashblade.SlashBlade`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/slashblade/SlashBlade.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
-- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
-- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
-- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+- `mutating_hook = NOT_VERIFIED`; `mutation = NO_MUTATION` (fail-closed).
 
-## Engenharia causal aprofundada — ofensiva/movimento (2026-10-14)
+## 8. Causalidade
 
-**Source:** [`slashblade/SlashBlade.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/slashblade/SlashBlade.java) · [`slashblade/SlashBladeKatanaEntity.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/slashblade/SlashBladeKatanaEntity.java).
+`cast → katana em standby → slash em caixa 2.75×0.75×4.5 → dano SLASH_BLADE com penetração/knockback condicionais → descarte em 10 ticks`.
 
-- **Geometria comprovada pelo helper:** `SlashBladeKatanaEntity` usa profundidade `4.5`, deslocamento frontal `0.5` (alcance ideal `5.0`), semilargura `2.75` e semialtura `0.75`; `move(MoverType.SELF,...)` limita posição da arma contra colisão.
-- **Fonte do hit:** `slash` usa `RaycastTools.hitsHorizontalOrientedBox`. Alvo atrás de bloco recebe apenas `clamp(20 + level*5,10,90)%` do dano e **sem knockback**; outros recebem dano integral e knockback usual. A entidade grava dano e percentual em NBT.
-- **QA:** parede/claims, alvos multipart, PvP, recast e FocusStaffbow; uma ação de lâmina por cast completo (cancelamento libera sem atacar).
 
-🟡 Source-level causal; ⚠️ bytecode do JAR, config e QA modpack/Survival não certificados; ⛔ RPG perks/Mastery sem adapter homologado. Iron's e Apprentice's mantêm mana/casting/efeitos; Black Arcana não duplica runtime.
+## 9. Concepção de nova magia
+
+Assinatura ocupada: katana conjurada com corte em caixa orientada e penetração de bloco. Nenhuma implementação foi realizada.
+
+## 10. Verificação e pendências
+
+- ✅ identidade/hash, construtor `400/50/10/3/15`, dano `power/100*multiplier`, penetração `clamp(20+level*5,10,90)%`, caixa `2.75/0.75/4.5`, `getAttackDepth=5.0`, animação `1.5`/`3.0`, NBT e ramos de bloqueio confirmados no bytecode 1.0.1.1.
+- ⚠️ multiplicador instalado, mana/cooldown efetivos e comportamento real contra blocos permanecem `NÃO VERIFICADOS`.
+- ⚠️ `physical_qa=NOT_TESTED`: sem Survival, PvP, bloqueio real ou modificação da katana.
+- ⚠️ Universo integral do provider não encerrado; homologação integral permanece `NOT_CERTIFIED`.
+
+
+## Localizadores para Codex — resumo operacional
+
+Assinatura ocupada: katana conjurada com corte em caixa orientada e penetração de bloco. Nenhuma implementação foi realizada.
+
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).
