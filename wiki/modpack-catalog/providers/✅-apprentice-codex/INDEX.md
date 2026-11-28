@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 42/83.**
+**Fichas catalogadas (somente fichas detectadas): 48/84.**
 
-**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 50.6%`
+**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 57.1%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 42/83.**
+**Homologadas para perks (somente fichas detectadas): 48/84.**
 
-**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 50.6%`
+**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 57.1%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -62,11 +62,12 @@
 | ✅ | Slash Blade | [evocation/slash-blade.md](evocation/slash-blade.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Tamers Pocket | [evocation/tamers-pocket.md](evocation/tamers-pocket.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Tiro Volley | [evocation/tiro-volley.md](evocation/tiro-volley.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Artisan Smash | [fire/artisan-smash.md](fire/artisan-smash.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Catch Flame | [fire/catch-flame.md](fire/catch-flame.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Combustion Jet | [fire/combustion-jet.md](fire/combustion-jet.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Magic Spear | [fire/magic-spear.md](fire/magic-spear.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Thermal Process | [fire/thermal-process.md](fire/thermal-process.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Artisan Smash | [fire/artisan-smash.md](fire/artisan-smash.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Catch Flame | [fire/catch-flame.md](fire/catch-flame.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Combustion Jet | [fire/combustion-jet.md](fire/combustion-jet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Magic Spear | [fire/magic-spear.md](fire/magic-spear.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Thermal Process | [fire/thermal-process.md](fire/thermal-process.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Thermal Slice | [fire/thermal-slice.md](fire/thermal-slice.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Divine Possession | [holy/divine-possession.md](holy/divine-possession.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Force Field | [holy/force-field.md](holy/force-field.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Illuminate Stellar | [holy/illuminate-stellar.md](holy/illuminate-stellar.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -112,7 +113,7 @@
 | ✅ | Eldritch | 7/7 (100.0%) | 7 | [Abrir índice](eldritch/INDEX.md) |
 | ✅ | Ender | 15/15 (100.0%) | 15 | [Abrir índice](ender/INDEX.md) |
 | ✅ | Evocation | 17/17 (100.0%) | 17 | [Abrir índice](evocation/INDEX.md) |
-| ⚠️ | Fire | 0/5 (0.0%) | 0 | [Abrir índice](fire/INDEX.md) |
+| ✅ | Fire | 6/6 (100.0%) | 6 | [Abrir índice](fire/INDEX.md) |
 | ⚠️ | Holy | 0/11 (0.0%) | 0 | [Abrir índice](holy/INDEX.md) |
 | ⚠️ | Ice | 0/3 (0.0%) | 0 | [Abrir índice](ice/INDEX.md) |
 | ⚠️ | Lightning | 0/10 (0.0%) | 0 | [Abrir índice](lightning/INDEX.md) |
