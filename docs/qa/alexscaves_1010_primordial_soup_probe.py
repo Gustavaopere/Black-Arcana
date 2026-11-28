@@ -40,7 +40,8 @@ LIMITS = {"static_contract": "NOT_CERTIFIED", "mutating_hook": "NOT_VERIFIED",
           "physical_qa": "NOT_TESTED", "mutation": "NO_MUTATION",
           "semantic_magic_roots_delta": 0, "provider_universe_closed": False,
           "runtime_loaded_bytes": "NOT_OBSERVED",
-          "scope": "PUBLISHER_FEEDING_CALLBACKS_AND_FOOD_CONTEXT"}
+          "scope": "PUBLISHER_FEEDING_CALLBACKS_AND_FOOD_CONTEXT",
+          "food_initializer": "REUSED_EXISTING_CERTIFIED_FOODS_CLASS_NOT_REPROJECTED"}
 
 def refs_json(value, path=()):
     if isinstance(value, dict):
@@ -81,14 +82,14 @@ def inspect(jar, javap):
                     name in STATE_METHODS or
                     (owner == IR and (name,desc) == FACTORY) or
                     (owner == ITEM) or
-                    (owner == COMPAT and name in {"food", "foodEffects"}) or
-                    (owner == FOODS and name == "<clinit>")):
+                    (owner == COMPAT and name in {"food", "foodEffects"})):
                     if "code_sha256" in d:
                         keys.add((name,desc))
             if keys:
                 readers[owner] = rd
                 selected[owner] = keys
-        require(set(PINS) <= set(readers), "required owners")
+        require(set(PINS) <= set(class_hashes), "required class pins")
+        require(set(PINS)-{FOODS} <= set(readers), "required projected owners")
         require(any(d["owner"].endswith("/DinosaurEntity") for d in declarations), "base callback declaration")
         require(any(name == "getPushingTreesFor" for keys in selected.values() for name,_ in keys), "state getter")
         require(len(selected) <= 50 and sum(map(len,selected.values())) <= 150, "projection scope")
@@ -104,6 +105,7 @@ def inspect(jar, javap):
                 if pin in CODE_PINS:
                     require(decl[0]["code_sha256"] == CODE_PINS[pin], "Code pin "+str(pin))
                     observed_pins.add(pin)
+                print("PROJECT_METHOD", owner, *key, flush=True)
                 projected.append({"owner": owner, "class_sha256": class_hashes[owner],
                                   **projection(rd,key,parsed[key],decl[0])})
         require(observed_pins == set(CODE_PINS), "all prior Code pins observed")
@@ -120,7 +122,7 @@ def inspect(jar, javap):
                 resources[path] = {"sha256": digest(raw), "refs": refs, "data": data}
         require(RECIPE in resources and resources[RECIPE]["sha256"] == RECIPE_SHA, "recipe pin")
         require(len(resources) <= 100, "resource hit budget")
-        return {"schema": 1, "artifact": {"sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE},
+        return {"schema": 2, "food_class_sha256": class_hashes[FOODS], "artifact": {"sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE},
                 "class_roster_sha256": ROSTER_SHA, "callback_declarations": declarations,
                 "methods": projected, "data_json_count": len(data_paths),
                 "resources": resources, "limits": LIMITS}
