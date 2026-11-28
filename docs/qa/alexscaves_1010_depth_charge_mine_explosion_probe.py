@@ -123,6 +123,87 @@ def tag_field_windows(rd, body, decl):
             "scope":"EXACT_FIELD_WRITE_WITH_BOUNDED_PREDECESSOR_WINDOW",
             "complete_method_projection":False,"field_write_windows":hits}
 
+# Exact callback descriptors; matching a signature on another owner is only
+# a candidate, not proof of receiver type, virtual dispatch or execution.
+IMPACT_SIGNATURES = {
+    ("onHit", "(Lnet/minecraft/world/phys/HitResult;)V"),
+    ("onHitEntity", "(Lnet/minecraft/world/phys/EntityHitResult;)V"),
+    ("onHitBlock", "(Lnet/minecraft/world/phys/BlockHitResult;)V"),
+}
+
+def impact_candidates(reader):
+    candidates = {}
+    for i, entry in enumerate(reader.pool):
+        if entry is None or entry[0] not in (10, 11):
+            continue
+        tag, owner, signature = reader.resolve(i)
+        _, name, descriptor = signature
+        if (name, descriptor) in IMPACT_SIGNATURES:
+            candidates[i] = {"cp_index": i, "owner": owner, "name": name,
+                             "descriptor": descriptor, "ref_kind": tag}
+    return candidates
+
+def impact_sites(parsed, candidates):
+    sites = []
+    for (method, descriptor), body in sorted(parsed.items()):
+        for at, (op, arg, _) in sorted(body.items()):
+            if op not in ("invokevirtual", "invokespecial", "invokestatic", "invokeinterface"):
+                continue
+            match = re.match(r"#(\d+)(?:\s|,|$)", arg)
+            require(match is not None, "unresolved invocation operand")
+            index = int(match[1])
+            if index in candidates:
+                sites.append({"caller_method": method, "caller_descriptor": descriptor,
+                              "offset": at, "opcode": op, **candidates[index]})
+    return sites
+
+def publisher_impact_census(mod, cp, javap):
+    owners = []
+    declaration_owners = []
+    paths = sorted(p for p in mod.namelist() if p.endswith(".class"))
+    require(len(paths) == 1555, "impact census roster drift")
+    for path in paths:
+        reader = ClassReader(mod.read(path))
+        require(reader.name + ".class" == path and reader.major == 65,
+                "impact census class identity")
+        declarations = [d for d in reader.methods
+                        if (d["name"], d["descriptor"]) in IMPACT_SIGNATURES]
+        if declarations:
+            declaration_owners.append({"owner": reader.name, "parent": reader.parent,
+                                       "class_sha256": digest(reader.raw),
+                                       "declarations": declarations})
+        candidates = impact_candidates(reader)
+        if not candidates:
+            continue
+        require(len(owners) < 128, "impact candidate owner budget exceeded")
+        handles = [{"cp_index": i, "reference_kind": entry[1][0],
+                    "target": candidates[entry[1][1]]}
+                   for i, entry in enumerate(reader.pool)
+                   if entry is not None and entry[0] == 15 and entry[1][1] in candidates]
+        parsed = disassemble(cp, javap, reader.name)
+        sites = impact_sites(parsed, candidates)
+        decl_by_key = {(d["name"], d["descriptor"]): d for d in reader.methods}
+        for site in sites:
+            decl = decl_by_key[(site["caller_method"], site["caller_descriptor"])]
+            require("code_sha256" in decl, "impact caller Code absent")
+            site["caller_code_sha256"] = decl["code_sha256"]
+        owners.append({"owner": reader.name, "parent": reader.parent,
+                       "class_sha256": digest(reader.raw),
+                       "constant_pool_candidates": list(candidates.values()),
+                       "invocation_sites": sites, "method_handle_candidates": handles})
+    require(any(row["owner"] == W for row in declaration_owners),
+            "Depth Charge callback declaration missing")
+    require(any(row["owner"] == W for row in owners),
+            "Depth Charge callback reference missing")
+    return {"class_entries_scanned": len(paths),
+            "class_path_roster_sha256": digest(("\n".join(paths)+"\n").encode()),
+            "scope": "PUBLISHER_EXACT_SIGNATURE_CP_AND_DIRECT_INVOKE_ONLY",
+            "candidate_owners": owners, "declaration_owners": declaration_owners,
+            "runtime_dispatch_proven": False,
+            "exclusions": ["other mods", "engine-wide census", "reflection",
+                           "runtime mixins", "dynamic receiver identity",
+                           "method handle execution", "indirect calls"]}
+
 def inspect(args):
     select = {k:set(v) for k,v in SELECT.items()}
     required = {k:set(v) for k,v in REQUIRED.items()}
@@ -170,6 +251,7 @@ def inspect(args):
             if refs:
                 consumers.append({"owner":rd.name,"typed_refs":refs})
         require({x["owner"] for x in consumers}=={W,X,P+"entity/living/MineGuardianEntity"},"prior mine explosion typed census drift")
+        impact_census = publisher_impact_census(mod, cp, args.javap)
         classes = {}
         for owner in sorted(ALL | set(select)):
             found = [(name,z) for name,z,entries in roster if owner+".class" in entries]
@@ -216,7 +298,8 @@ def inspect(args):
                  for m in classes[X]["methods"] for site in m.get("typed_members",[])
                  if site["owner"]==X and site["name"]=="underwaterSound"]
     require(any(row["site"]["opcode"]=="getfield" for row in water_sites),"underwaterSound reader absent")
-    report={"schema_version":2,"scope":"DEPTH_CHARGE_MINE_EXPLOSION_WRAPPERS_DISCOVERY_ONLY",
+    report={"schema_version":3,"scope":"DEPTH_CHARGE_MINE_EXPLOSION_AND_IMPACT_DISCOVERY_ONLY",
+            "publisher_impact_census":impact_census,
             "underwater_sound_sites":water_sites,"packaged_unmoveable_tag_candidates":tag_paths,
             "artifact":artifact,"classes":classes,"entity_registry":reg,"resources":resources,"mine_explosion_consumers":consumers,"limits":LIMITS}
     data=canonical(report).encode()
@@ -231,6 +314,7 @@ def inspect(args):
             print("SEMANTIC",json.dumps({"owner":owner,**method},sort_keys=True))
     print("REGISTRY",json.dumps(reg,sort_keys=True))
     print("CONSUMERS",json.dumps(consumers,sort_keys=True))
+    print("PUBLISHER_IMPACT_CENSUS",json.dumps(impact_census,sort_keys=True))
     print("UNDERWATER_SOUND_SITES",json.dumps(water_sites,sort_keys=True))
     print("PACKAGED_TAG_CANDIDATES",json.dumps(tag_paths))
     print("RESOURCES",json.dumps(resources,sort_keys=True))
@@ -247,6 +331,14 @@ def self_test():
     require(REQUIRED[W] >= {"tick","explode","onHit","onHitEntity"},"own tick coverage")
     require(REQUIRED[X] >= {"<init>","explode","finalizeExplosion"},"explosion coverage")
     require(LIMITS["static_contract"]=="NOT_CERTIFIED" and LIMITS["mutation"]=="NO_MUTATION","policy")
+    # Synthetic negative and positive direct invocation checks, independent of JAR.
+    sample = {7: {"cp_index": 7, "owner": W, "name": "onHit",
+                  "descriptor": "(Lnet/minecraft/world/phys/HitResult;)V", "ref_kind": 10}}
+    body = {0: ("invokevirtual", "#7", ""), 3: ("invokevirtual", "#8", ""),
+            6: ("invokedynamic", "#7, 0", ""), 11: ("return", "", "")}
+    sites = impact_sites({("caller", "()V"): body}, sample)
+    require(len(sites) == 1 and sites[0]["offset"] == 0, "impact direct call filter")
+    require(impact_sites({}, sample) == [], "impact empty scan")
     print("PASS: discovery scope and policy guards")
 
 if __name__=="__main__":
