@@ -26,11 +26,17 @@ CODE_PINS={(I,"useOn"):"dec29a166ca2ab5e84b8f78f3c35d157e9403a293a0e97c167cc3a73
            (IR,"lambda$static$90"):"d385d5b08e71c8ae683c30c5f0402acecbcb5ec0b6f13d0e33c25bbf57cdf7ba"}
 SELECT={
     IR:{"lambda$static$90"},
-    P+"misc/ACCompat":{"sidedSuccess"},
+    P+"misc/ACCompat":{"sidedSuccess","lootTable","spawnAtLocation"},
     P+"block/MusselBlock":{"<clinit>","<init>","createBlockStateDefinition","updateShape","getFluidState","getStateForPlacement","canSurvive","randomTick","tick","getShape"},
     M+"world/item/context/UseOnContext":{"<init>","getPlayer","getItemInHand","getClickedPos","getClickLocation","getLevel"},
-    M+"world/item/ItemStack":{"useOn","onItemUse","shrink","grow","setCount","getCount","copy","copyWithCount","isEmpty","getMaxStackSize"},
-    M+"world/item/Item":{"useOn","getMaxStackSize"},
+    M+"world/item/ItemStack":{"useOn","onItemUse","shrink","grow","setCount","getCount","copy","copyWithCount","isEmpty","getMaxStackSize","<init>"},
+    M+"world/item/Item":{"useOn","getMaxStackSize","<init>"},
+    M+"world/item/Item$Properties":{"<init>","buildAndValidateComponents"},
+    M+"world/level/block/Block":{"asItem"},
+    M+"world/level/block/BaseCoralWallFanBlock":{"asItem"},
+    M+"world/entity/Entity":{"spawnAtLocation"},
+    M+"world/level/storage/loot/LootTable":{"getRandomItems"},
+    M+"server/network/ServerGamePacketListenerImpl":{"handleUseItemOn"},
     M+"server/level/ServerPlayerGameMode":{"useItemOn"},
     N+"common/CommonHooks":{"onPlaceItemIntoWorld","onRightClickBlock"},
     N+"event/EventHooks":{"onRightClickBlock","onBlockPlace","onMultiBlockPlace"},
@@ -43,13 +49,13 @@ SELECT={
     M+"world/level/block/CoralBlock":{"tick","onPlace","updateShape","scanForWater"},
     M+"world/level/block/CoralPlantBlock":{"tick","onPlace","updateShape"},
     M+"world/level/block/CoralFanBlock":{"tick","onPlace","updateShape"},
-    M+"world/level/block/CoralWallFanBlock":{"tick","onPlace","updateShape"},
+    M+"world/level/block/CoralWallFanBlock":{"tick","onPlace","updateShape","asItem"},
     M+"world/level/block/SpongeBlock":{"onPlace","neighborChanged","tryAbsorbWater","removeWaterBreadthFirstSearch"},
     M+"world/entity/item/ItemEntity":{"<init>","setItem","getItem","tick","merge","tryToMerge","mergeWithNeighbours","isMergable","areMergable","playerTouch"},
     M+"network/syncher/SynchedEntityData":{"set","get","getItem"},
     M+"network/syncher/SynchedEntityData$DataItem":{"<init>","setValue","getValue","value"},
     M+"world/entity/player/Inventory":{"add","addResource","getSlotWithRemainingSpace","getFreeSlot"},
-    M+"world/entity/player/Player":{"isCreative","mayUseItemAt"},
+    M+"world/entity/player/Player":{"isCreative","mayUseItemAt","canInteractWithBlock","blockInteractionRange"},
     M+"world/level/entity/PersistentEntitySectionManager":{"addNewEntity","addEntity","addEntityUuid","addEntityWithoutEvent"},
 }
 REQUIRED={IR:{"lambda$static$90"},P+"misc/ACCompat":{"sidedSuccess"},
@@ -121,6 +127,20 @@ def inspect(a):
                             "offset":at,"window":[{"offset":q,"opcode":ins[q][0],"operand":ins[q][1],"symbol":ins[q][2]} for q in offsets[max(0,i-4):i+5]]})
         require(1<=len(field_sites)<=100,"field sites budget")
         loot_owners=set(digestion+pigs)
+        tag_owners=[p[:-6] for p in roster if p.endswith("/ACTagRegistry.class")]
+        require(len(tag_owners)==1,"tag registry identity")
+        tag_rd=ClassReader(mod.read(tag_owners[0]+".class"))
+        tag_methods=disassemble(cp,a.javap,tag_owners[0])
+        tag_sites=[]
+        for key,body in sorted(tag_methods.items()):
+            offsets=sorted(body)
+            for i,at in enumerate(offsets):
+                op,arg,sym=body[at]
+                if op=="putstatic" and any("Field "+n+":" in sym for n in ("SEA_PIG_DIGESTS","GROWS_MUSSELS")):
+                    decl=next(d for d in tag_rd.methods if (d["name"],d["descriptor"])==key)
+                    tag_sites.append({"owner":tag_rd.name,"method":key[0],"code_sha256":decl["code_sha256"],"offset":at,
+                        "window":[{"offset":q,"opcode":body[q][0],"operand":body[q][1],"symbol":body[q][2]} for q in offsets[max(0,i-6):i+1]]})
+        require(len(tag_sites)==2,"two exact tag registration sites")
         for owner in sorted(set(SELECT)|{I}|loot_owners):
             found=[(n,z) for n,z,paths in index if owner+".class" in paths]
             if not found:
@@ -158,12 +178,12 @@ def inspect(a):
         for p in paths:
             raw=mod.read(p);require(len(raw)<=2_000_000,"resource size")
             obj=json.loads(raw);hits=list(exact_refs(obj))
-            if hits or p.rsplit("/",1)[-1]=="marine_snow.json":
+            if hits or p.rsplit("/",1)[-1] in {"marine_snow.json","sea_pig_digests.json","grows_mussels.json"}:
                 resources[p]={"sha256":digest(raw),"bytes":len(raw),"refs":hits,"data":obj}
         require(len(resources)<=100,"resource hit budget")
         require(digest(mod.read("assets/alexscaves/models/item/marine_snow.json"))=="179f4314608e9b3f7b8351759bc30e0a1641620c978e909f568e9daf31e4451c","model pin")
-    report={"schema":2,"artifact":artifact,"classes":classes,"publisher_candidates":candidates,
-            "data_json_count":len(paths),"resources":resources,"field_sites":field_sites,"loot_string_owners":digestion,"loot_owners":sorted(loot_owners),"limits":LIMITS}
+    report={"schema":3,"artifact":artifact,"classes":classes,"publisher_candidates":candidates,
+            "data_json_count":len(paths),"resources":resources,"field_sites":field_sites,"loot_string_owners":digestion,"loot_owners":sorted(loot_owners),"tag_sites":tag_sites,"limits":LIMITS}
     data=canonical(report).encode();require(len(data)<=12000000,"report budget")
     a.output.parent.mkdir(parents=True,exist_ok=True)
     with a.output.open("xb") as f:f.write(data)
@@ -174,6 +194,7 @@ def inspect(a):
     print("PUBLISHER_CANDIDATES",json.dumps(candidates,sort_keys=True))
     print("RESOURCES",json.dumps(resources,sort_keys=True))
     print("FIELD_SITES",json.dumps(field_sites,sort_keys=True))
+    print("TAG_SITES",json.dumps(tag_sites,sort_keys=True))
     print("LOOT_CANDIDATES",json.dumps({"strings":digestion,"owners":sorted(loot_owners)},sort_keys=True))
     print("DISCOVERY_ONLY NO_MUTATION NO_PHYSICAL_QA")
 
