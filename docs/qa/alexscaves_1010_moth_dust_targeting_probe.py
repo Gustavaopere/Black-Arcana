@@ -5,9 +5,10 @@ No gameplay execution, external hook promotion or provider code reuse.
 import argparse,json,re
 from pathlib import Path
 from zipfile import ZipFile
-from alexscaves_1010_armor_material_audit import ClassReader,canonical,digest,require,verify_artifact,SHA1,SHA256,SIZE
+from alexscaves_1010_armor_material_audit import ClassReader,AuditError,canonical,digest,require,verify_artifact,SHA1,SHA256,SIZE
 from alexscaves_1010_enchantable_item_probe import disassemble
 from alexscaves_1010_four_items_downstream_250_probe import projection,identified,verify_universal,ARTIFACTS
+from alexscaves_1010_galena_211248_spawn_denial_guards_probe import refs, SELECT_OPS
 P="com/github/alexmodguy/alexscaves/server/"
 M="net/minecraft/"
 N="net/neoforged/neoforge/"
@@ -101,14 +102,38 @@ def inspect(a):
             decls=[d for d in rd.methods if owner==I or d["name"] in select]
             require(REQUIRED.get(owner,set())<={d["name"] for d in decls},"required method "+owner)
             require(len(decls)<=100,"method budget "+owner)
-            parsed=disassemble(cp,a.javap,owner);methods=[]
+            parsed=disassemble(cp,a.javap,owner);methods=[];deferred=[]
             for d in decls:
                 key=(d["name"],d["descriptor"]);pin=CODE.get((owner,key[0]))
                 require(pin is None or d.get("code_sha256")==pin,"Code pin "+owner+str(key))
                 if "code_sha256" not in d:methods.append({"name":key[0],"descriptor":key[1],"executable":False});continue
                 require(key in parsed and 0<len(parsed[key])<=5000,"body budget "+owner+str(key))
-                methods.append({"executable":True,**projection(rd,key,parsed[key],d)})
-            classes[owner]={"present":True,"source":source,"class_sha256":digest(raw),"parent":rd.parent,"interfaces":rd.interfaces,"declarations":rd.methods,"methods":methods}
+                print("PROJECT_METHOD",owner,*key,flush=True)
+                try:
+                    methods.append({"executable":True,**projection(rd,key,parsed[key],d)})
+                except AuditError as err:
+                    # Do not relax the shared method budget. Nonessential large AI
+                    # bodies get explicitly deferred, with complete typed-reference
+                    # enumeration in bounded chunks and local consumer windows.
+                    if str(err) not in {"bounded typed member census","branch/return budget","method budget"} or owner==I or key[0] in REQUIRED.get(owner,set()) or (owner,key[0]) in CODE:
+                        raise AuditError(owner+"."+key[0]+key[1]+": "+str(err)) from err
+                    body=parsed[key]
+                    offsets=sorted(body)
+                    typed=[]
+                    for start in range(0,len(offsets),120):
+                        chunk={q:body[q] for q in offsets[start:start+120]}
+                        typed.extend(refs(rd,chunk))
+                    require(len(typed)==sum(body[q][0] in SELECT_OPS for q in offsets),"typed census coverage")
+                    require(len(typed)<=1200,"deferred member budget")
+                    pivots={"setTarget","getTarget","setLastHurtByMob","getLastHurtByMob","getLastHurtByMobTimestamp","canAttack","canBeSeenAsEnemy","canBeHitByProjectile","isAlliedTo","releaseUsing","releaseUsingItem","onLivingChangeTarget"}
+                    windows=[]
+                    for member in typed:
+                        if member["name"] not in pivots:continue
+                        j=offsets.index(member["offset"])
+                        windows.append({"member":member,"instructions":[{"offset":q,"opcode":body[q][0],"operand":body[q][1],"symbol":body[q][2]} for q in offsets[max(0,j-6):j+7]]})
+                    require(len(windows)<=100,"deferred window budget")
+                    deferred.append({"name":key[0],"descriptor":key[1],"code_sha256":d["code_sha256"],"instruction_count":len(body),"typed_member_count":len(typed),"typed_members":typed,"reason":str(err),"windows":windows,"full_projection":False})
+            classes[owner]={"present":True,"source":source,"class_sha256":digest(raw),"parent":rd.parent,"interfaces":rd.interfaces,"declarations":rd.methods,"methods":methods,"deferred":deferred}
         resources={}
         paths=sorted(p for p in mod.namelist() if p.startswith("data/") and p.endswith(".json"))
         require(len(paths)<=5000,"resource budget")
@@ -118,7 +143,7 @@ def inspect(a):
             if refs or p==TAG or p.rsplit("/",1)[-1]=="moth_dust.json":resources[p]={"sha256":digest(raw),"bytes":len(raw),"refs":refs,"data":obj}
         require(len(resources)<=100,"resource hits")
         require(digest(mod.read("assets/alexscaves/models/item/moth_dust.json"))=="293ac1ab9c1db699f5e385954e7f773e2d899347f0351a1cf4bb7e428d06c4e0","model pin")
-    report={"schema":1,"artifact":artifact,"classes":classes,"publisher_candidates":candidates,"field_sites":fields,"tag_class_name_candidates":ai,"data_json_count":len(paths),"resources":resources,"limits":LIMITS}
+    report={"schema":2,"artifact":artifact,"classes":classes,"publisher_candidates":candidates,"field_sites":fields,"tag_class_name_candidates":ai,"data_json_count":len(paths),"resources":resources,"limits":LIMITS}
     data=canonical(report).encode();require(len(data)<=15000000,"report budget")
     a.output.parent.mkdir(parents=True,exist_ok=True)
     with a.output.open("xb") as f:f.write(data)
@@ -126,6 +151,7 @@ def inspect(a):
     for owner,v in classes.items():
         print("OWNER",owner,v.get("source"),v.get("class_sha256"),"METHODS",len(v.get("methods",[])))
         for m in v.get("methods",[]):print("SEMANTIC",json.dumps({"owner":owner,**m},sort_keys=True))
+        for m in v.get("deferred",[]):print("DEFERRED",json.dumps({"owner":owner,**m},sort_keys=True))
     print("FIELD_SITES",json.dumps(fields,sort_keys=True));print("TAG_CLASS_NAME_CANDIDATES",json.dumps(ai,sort_keys=True))
     print("RESOURCES",json.dumps(resources,sort_keys=True));print("DISCOVERY_ONLY NO_MUTATION NO_PHYSICAL_QA")
 def self_test():
