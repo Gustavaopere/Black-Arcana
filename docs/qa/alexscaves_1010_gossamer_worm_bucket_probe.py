@@ -32,10 +32,12 @@ SELECT={
     IR:{"lambda$static$92","lambda$static$91"},
     C:{"getOrCreateTag","setTag","setHoverName","asOutput","asInput","getCompound","getBoolean"},
     P+"misc/ACPlatform":{"dispenserPos","dispenserState","dispenserLevel"},
-    M+"world/item/ItemStack":{"consume","shrink","grow","split","getCount","setCount","isEmpty"},
+    M+"world/item/ItemStack":{"consume","shrink","grow","split","getCount","setCount","isEmpty","copyWithCount","copyAndClear","isSameItemSameComponents","getMaxStackSize"},
     M+"world/item/Item":{"getPlayerPOVHitResult"},
-    M+"world/entity/player/Inventory":{"add","contains","addResource","getSlotWithRemainingSpace","getFreeSlot","hasRemainingSpaceForItem"},
-    M+"nbt/CompoundTag":{"getCompound","getBoolean","contains","copy"},
+    M+"world/entity/player/Inventory":{"add","contains","addResource","getSlotWithRemainingSpace","getFreeSlot","hasRemainingSpaceForItem","getMaxStackSize"},
+    M+"world/entity/ai/attributes/Attributes":{"<clinit>"},
+    N+"common/CommonHooks":{"onPlayerTossEvent"},
+    M+"nbt/CompoundTag":{"getCompound","getBoolean","getByte","contains","copy"},
     M+"world/item/DispensibleContainerItem":{"emptyContents","checkExtraContent"},
     M+"world/item/component/CustomData":{"copyTag","of","loadInto"},
     M+"core/dispenser/DefaultDispenseItemBehavior":{"dispense","execute","spawnItem"},
@@ -58,7 +60,8 @@ REQUIRED={
     IR:{"lambda$static$92","lambda$static$91"},
     C:{"getOrCreateTag","setTag","setHoverName","asOutput","asInput","getCompound","getBoolean"},
     P+"misc/ACPlatform":{"dispenserPos","dispenserState","dispenserLevel"},
-    M+"world/item/ItemStack":{"consume","grow","split"},
+    M+"world/item/ItemStack":{"consume","grow","split","copyWithCount"},
+    N+"common/CommonHooks":{"onPlayerTossEvent"},
     M+"world/item/Item":{"getPlayerPOVHitResult"},
     M+"world/entity/player/Inventory":{"add","contains"},
     M+"core/dispenser/DefaultDispenseItemBehavior":{"dispense"},
@@ -90,11 +93,12 @@ EXACT={C:{("getOrCreateTag","(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraf
           ("dispenserState","(Lnet/minecraft/core/dispenser/BlockSource;)Lnet/minecraft/world/level/block/state/BlockState;"),
           ("dispenserLevel","(Lnet/minecraft/core/dispenser/BlockSource;)Lnet/minecraft/world/level/Level;")},
        M+"world/item/ItemStack":{("consume","(ILnet/minecraft/world/entity/LivingEntity;)V"),("grow","(I)V"),("split","(I)Lnet/minecraft/world/item/ItemStack;")},
+       N+"common/CommonHooks":{("onPlayerTossEvent","(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Z)Lnet/minecraft/world/entity/item/ItemEntity;")},
        M+"world/item/Item":{("getPlayerPOVHitResult","(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/ClipContext$Fluid;)Lnet/minecraft/world/phys/BlockHitResult;")},
        M+"world/entity/player/Inventory":{("add","(Lnet/minecraft/world/item/ItemStack;)Z"),("contains","(Lnet/minecraft/world/item/ItemStack;)Z")},
        ET: {("spawn","(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/MobSpawnType;ZZ)Lnet/minecraft/world/entity/Entity;"),("appendCustomNameConfig","(Ljava/util/function/Consumer;Lnet/minecraft/world/item/ItemStack;)Ljava/util/function/Consumer;"),("lambda$appendCustomEntityStackConfig$3","(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/component/CustomData;Lnet/minecraft/world/entity/Entity;)V"),("lambda$createDefaultStackConfig$1","(Lnet/minecraft/world/entity/Entity;)V")},
        M+"core/dispenser/DefaultDispenseItemBehavior":{("dispense","(Lnet/minecraft/core/dispenser/BlockSource;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;")}}
-ENTITY_METHODS={"<init>","mobInteract","interact","getBucketItemStack","saveToBucketTag","loadFromBucketTag","setFromBucket","fromBucket","getPickupSound","addAdditionalSaveData","readAdditionalSaveData","defineSynchedData","requiresCustomPersistence","removeWhenFarAway","finalizeSpawn"}
+ENTITY_METHODS={"createAttributes","getAddEntityPacket","getParts","isMultipartEntity","hurt","<init>","mobInteract","interact","getBucketItemStack","saveToBucketTag","loadFromBucketTag","setFromBucket","fromBucket","getPickupSound","addAdditionalSaveData","readAdditionalSaveData","defineSynchedData","requiresCustomPersistence","removeWhenFarAway","finalizeSpawn"}
 LIMITS={"static_contract":"NOT_CERTIFIED","mutating_hook":"NOT_VERIFIED","physical_qa":"NOT_TESTED","mutation":"NO_MUTATION","provider_universe_closed":False,"semantic_magic_roots_delta":0,"runtime_loaded_bytes":"NOT_OBSERVED","actual_spawn_acceptance":"NOT_VERIFIED"}
 
 def class_paths(names):
@@ -199,6 +203,11 @@ def inspect(a):
             cursor=rd.parent
         require(len(lineage)<16 and any(x["owner"]==entity for x in lineage),"lineage budget")
         all_own={I,dispenser}
+        # The prior publisher census identifies the exact part class by simple name;
+        # its identity is checked against the pinned archive, not inferred as a hook.
+        parts=[x for x in classes if x.rsplit("/",1)[-1]=="GossamerWormPartEntity"]
+        require(len(parts)==1,"individual multipart class")
+        select[parts[0]]={"<init>","hurt","getParent","is","getAddEntityPacket","getDimensions","isPickable"}
         consumers=[]
         for owner in classes:
             rd=ClassReader(mod.read(owner+".class"))
@@ -254,7 +263,7 @@ def inspect(a):
             require(len(raw)<=100000,"resource size")
             resources[path]={"sha256":digest(raw),"bytes":len(raw),"data":json.loads(raw)}
         require(resources.get("assets/alexscaves/models/item/gossamer_worm_bucket.json",{}).get("sha256")=="b78cc41faf66a35938ce69ba9935026346186c89a2f1507571bbdb54b9b6945c","model pin")
-    report={"schema_version":4,"scope":"GOSSAMER_WORM_BUCKET_DISCOVERY_ONLY","artifact":artifact,"entity":entity,"dispenser":dispenser,"registry":reg,"lineage":lineage,"classes":records,"typed_consumers":consumers,"resources":resources,"limits":LIMITS}
+    report={"schema_version":5,"scope":"GOSSAMER_WORM_BUCKET_DISCOVERY_ONLY","artifact":artifact,"entity":entity,"dispenser":dispenser,"registry":reg,"lineage":lineage,"classes":records,"typed_consumers":consumers,"resources":resources,"limits":LIMITS}
     data=canonical(report).encode()
     require(len(data)<=10000000,"report byte budget")
     a.output.parent.mkdir(parents=True,exist_ok=True)
@@ -284,6 +293,7 @@ def self_test():
     require(LIMITS["static_contract"]=="NOT_CERTIFIED" and LIMITS["mutation"]=="NO_MUTATION","policy")
     require({"grow","split"}<=REQUIRED[M+"world/item/ItemStack"],"settlement coverage")
     require({"appendCustomNameConfig","lambda$appendCustomEntityStackConfig$3"}<=REQUIRED[ET],"component consumer coverage")
+    require("onPlayerTossEvent" in REQUIRED[N+"common/CommonHooks"],"drop event boundary")
     print("PASS: discovery scope and policy guards")
 
 if __name__=="__main__":
