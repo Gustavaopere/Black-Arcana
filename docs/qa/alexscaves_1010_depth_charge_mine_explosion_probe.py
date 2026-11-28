@@ -31,8 +31,11 @@ N = "net/neoforged/neoforge/"
 EXACT = {
     C: {("explosion","(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;DDDFLnet/minecraft/world/level/Explosion$BlockInteraction;)Lnet/minecraft/world/level/Explosion;"),
         ("ignoreExplosion","(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Explosion;)Z"),
-        ("canEntityGrief","(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Z")},
+        ("canEntityGrief","(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Z"),
+        ("getEntitySpawningPacket","(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/server/level/ServerEntity;)Lnet/minecraft/network/protocol/Packet;")},
     K: {("explosionKnockback","(Lnet/minecraft/world/entity/LivingEntity;D)D")},
+    TAG: {("registerBlockTag","(Ljava/lang/String;)Lnet/minecraft/tags/TagKey;")},
+
     N+"event/EventHooks": {("canEntityGrief","(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Z")},
     M+"world/level/Level": {("setBlock","(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z")},
 }
@@ -50,7 +53,9 @@ SELECT = {
     IR: set(FACTORIES),
     C: {"canEntityGrief","explosion","ignoreExplosion"},
     K: {"gameRule","explosionKnockback"},
-    TAG: {"<clinit>"},
+    TAG: {"<clinit>","registerBlockTag"},
+    M+"world/entity/EntityType": {"defaultTrackingRangeSupplier","clientTrackingRange","updateInterval","trackDeltas"},
+    M+"world/level/entity/PersistentEntitySectionManager": {"addNewEntity","addEntity","addEntityUuid","addEntityWithoutEvent"},
     M+"world/entity/LivingEntity": {"ignoreExplosion","getAttributeValue","getAttribute"},
     M+"world/item/enchantment/EnchantmentHelper": {"modifyKnockback","modifyExplosionKnockback","getExplosionKnockbackAfterDampener"},
     M+"world/level/storage/loot/LootParams$Builder": {"withParameter","withOptionalParameter","create"},
@@ -59,7 +64,7 @@ SELECT = {
     M+"world/entity/projectile/Projectile": {"onHit","onHitEntity","getOwner","setOwner","addAdditionalSaveData","readAdditionalSaveData","updateRotation","shootFromRotation"},
     M+"world/entity/projectile/ThrowableProjectile": {"<init>","tick"},
     M+"world/entity/projectile/ThrowableItemProjectile": {"<init>","setItem","getItem","addAdditionalSaveData","readAdditionalSaveData"},
-    M+"world/entity/EntityType$Builder": {"sized","setUpdateInterval","setShouldReceiveVelocityUpdates","build"},
+    M+"world/entity/EntityType$Builder": {"<init>","sized","setUpdateInterval","setShouldReceiveVelocityUpdates","build","lambda$setUpdateInterval$1","lambda$setShouldReceiveVelocityUpdates$3"},
     M+"world/level/Explosion": {"<init>","getDirectSourceEntity","getIndirectSourceEntity","getDamageSource","getToBlow","getHitPlayers","interactsWithBlocks","getSeenPercent"},
     M+"world/level/ExplosionDamageCalculator": {"getBlockExplosionResistance","shouldBlockExplode","shouldDamageEntity","getEntityDamageAmount","getKnockbackMultiplier"},
     M+"world/level/EntityBasedExplosionDamageCalculator": {"getBlockExplosionResistance","shouldBlockExplode"},
@@ -80,6 +85,7 @@ REQUIRED = {
     M+"world/entity/Entity": {"baseTick","move","getY","remove"},
     M+"world/level/Explosion": {"<init>"},
     M+"world/damagesource/DamageSources": {"thrown","explosion"},
+    M+"world/level/entity/PersistentEntitySectionManager": {"addNewEntity","addEntity","addEntityUuid","addEntityWithoutEvent"},
 }
 PINS = {
     I:"925fb7047dddc8044929b0a581af2a4dcf5c6688dd277f445c9bc0dbd1f9d57d",
@@ -87,6 +93,8 @@ PINS = {
     X:"84ad7a97c853ee0825fa3ff3b7d570cc1b8d4a23e40b06cd918e7226e2656922",
     C:"662a4d2593fe515ed8790bad06d8184d1eb921423033dfd11b3b44142dedc3e6",
     K:"333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+    TAG:"f678e725a839f2c05579c71de9e0c03b7613ad6981fd36306c3559f1e0eeb3c0",
+    M+"world/level/entity/PersistentEntitySectionManager":"6351fcb7c7370b77b8d9618474783b58ab3e037c224b5c83481c23908db1fbf4",
     N+"event/EventHooks":"f810377f87c95c04bb4de7a7ac68e8f4862f9ca33a34cc74e067e65e2a92d66b",
     M+"world/level/Level":"74a062f0d480674152fa4665bd7b483fca52de8dd3b07178c1a6c40d3fae3fae",
 }
@@ -122,6 +130,120 @@ def tag_field_windows(rd, body, decl):
             "code_sha256":decl["code_sha256"],"instruction_count":len(body),
             "scope":"EXACT_FIELD_WRITE_WITH_BOUNDED_PREDECESSOR_WINDOW",
             "complete_method_projection":False,"field_write_windows":hits}
+
+# Exact callback descriptors; matching a signature on another owner is only
+# a candidate, not proof of receiver type, virtual dispatch or execution.
+IMPACT_SIGNATURES = {
+    ("onHit", "(Lnet/minecraft/world/phys/HitResult;)V"),
+    ("onHitEntity", "(Lnet/minecraft/world/phys/EntityHitResult;)V"),
+    ("onHitBlock", "(Lnet/minecraft/world/phys/BlockHitResult;)V"),
+}
+
+def impact_candidates(reader):
+    candidates = {}
+    for i, entry in enumerate(reader.pool):
+        if entry is None or entry[0] not in (10, 11):
+            continue
+        tag, owner, signature = reader.resolve(i)
+        _, name, descriptor = signature
+        if (name, descriptor) in IMPACT_SIGNATURES:
+            candidates[i] = {"cp_index": i, "owner": owner, "name": name,
+                             "descriptor": descriptor, "ref_kind": tag}
+    return candidates
+
+def impact_sites(parsed, candidates):
+    sites = []
+    for (method, descriptor), body in sorted(parsed.items()):
+        for at, (op, arg, _) in sorted(body.items()):
+            if op not in ("invokevirtual", "invokespecial", "invokestatic", "invokeinterface"):
+                continue
+            match = re.match(r"#(\d+)(?:\s|,|$)", arg)
+            require(match is not None, "unresolved invocation operand")
+            index = int(match[1])
+            if index in candidates:
+                sites.append({"caller_method": method, "caller_descriptor": descriptor,
+                              "offset": at, "opcode": op, **candidates[index]})
+    return sites
+
+def publisher_impact_census(mod, cp, javap):
+    owners = []
+    declaration_owners = []
+    paths = sorted(p for p in mod.namelist() if p.endswith(".class"))
+    require(len(paths) == 1555, "impact census roster drift")
+    for path in paths:
+        reader = ClassReader(mod.read(path))
+        require(reader.name + ".class" == path and reader.major == 65,
+                "impact census class identity")
+        declarations = [d for d in reader.methods
+                        if (d["name"], d["descriptor"]) in IMPACT_SIGNATURES]
+        if declarations:
+            declaration_owners.append({"owner": reader.name, "parent": reader.parent,
+                                       "class_sha256": digest(reader.raw),
+                                       "declarations": declarations})
+        candidates = impact_candidates(reader)
+        if not candidates:
+            continue
+        require(len(owners) < 128, "impact candidate owner budget exceeded")
+        handles = [{"cp_index": i, "reference_kind": entry[1][0],
+                    "target": candidates[entry[1][1]]}
+                   for i, entry in enumerate(reader.pool)
+                   if entry is not None and entry[0] == 15 and entry[1][1] in candidates]
+        parsed = disassemble(cp, javap, reader.name)
+        sites = impact_sites(parsed, candidates)
+        decl_by_key = {(d["name"], d["descriptor"]): d for d in reader.methods}
+        for site in sites:
+            decl = decl_by_key[(site["caller_method"], site["caller_descriptor"])]
+            require("code_sha256" in decl, "impact caller Code absent")
+            site["caller_code_sha256"] = decl["code_sha256"]
+        owners.append({"owner": reader.name, "parent": reader.parent,
+                       "class_sha256": digest(reader.raw),
+                       "constant_pool_candidates": list(candidates.values()),
+                       "invocation_sites": sites, "method_handle_candidates": handles})
+    require(any(row["owner"] == W for row in declaration_owners),
+            "Depth Charge callback declaration missing")
+    require(any(row["owner"] == W for row in owners),
+            "Depth Charge callback reference missing")
+    return {"class_entries_scanned": len(paths),
+            "class_path_roster_sha256": digest(("\n".join(paths)+"\n").encode()),
+            "scope": "PUBLISHER_EXACT_SIGNATURE_CP_AND_DIRECT_INVOKE_ONLY",
+            "candidate_owners": owners, "declaration_owners": declaration_owners,
+            "runtime_dispatch_proven": False,
+            "exclusions": ["other mods", "engine-wide census", "reflection",
+                           "runtime mixins", "dynamic receiver identity",
+                           "method handle execution", "indirect calls"]}
+
+def exact_json_paths(value, path=()):
+    # JSON pointer components, not raw substring matches.
+    if isinstance(value, dict):
+        for key, child in sorted(value.items()):
+            if key == "alexscaves:depth_charge":
+                yield list(path + (key,)), "KEY"
+            yield from exact_json_paths(child, path + (key,))
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from exact_json_paths(child, path + (index,))
+    elif value == "alexscaves:depth_charge":
+        yield list(path), "VALUE"
+
+def depth_resource_census(mod):
+    paths = sorted(p for p in mod.namelist()
+                   if p.startswith("data/") and p.endswith(".json"))
+    require(len(paths) <= 5000, "resource census budget")
+    hits = []
+    for path in paths:
+        raw = mod.read(path)
+        require(len(raw) <= 2_000_000, "individual JSON budget " + path)
+        data = json.loads(raw)
+        refs = list(exact_json_paths(data))
+        filename_match = path.rsplit("/", 1)[-1] == "depth_charge.json"
+        if refs or filename_match:
+            hits.append({"path": path, "bytes": len(raw), "sha256": digest(raw),
+                         "exact_refs": refs, "filename_match": filename_match,
+                         "data": data})
+    require(len(hits) <= 100, "resource hit budget")
+    return {"json_files_scanned": len(paths), "hits": hits,
+            "effective_datapacks_observed": False,
+            "scope": "PACKAGED_DATA_JSON_EXACT_ID_OR_BASENAME_ONLY"}
 
 def inspect(args):
     select = {k:set(v) for k,v in SELECT.items()}
@@ -170,6 +292,8 @@ def inspect(args):
             if refs:
                 consumers.append({"owner":rd.name,"typed_refs":refs})
         require({x["owner"] for x in consumers}=={W,X,P+"entity/living/MineGuardianEntity"},"prior mine explosion typed census drift")
+        impact_census = publisher_impact_census(mod, cp, args.javap)
+        depth_resources = depth_resource_census(mod)
         classes = {}
         for owner in sorted(ALL | set(select)):
             found = [(name,z) for name,z,entries in roster if owner+".class" in entries]
@@ -216,7 +340,9 @@ def inspect(args):
                  for m in classes[X]["methods"] for site in m.get("typed_members",[])
                  if site["owner"]==X and site["name"]=="underwaterSound"]
     require(any(row["site"]["opcode"]=="getfield" for row in water_sites),"underwaterSound reader absent")
-    report={"schema_version":2,"scope":"DEPTH_CHARGE_MINE_EXPLOSION_WRAPPERS_DISCOVERY_ONLY",
+    report={"schema_version":4,"scope":"DEPTH_CHARGE_MINE_EXPLOSION_AND_IMPACT_DISCOVERY_ONLY",
+            "depth_resource_census":depth_resources,
+            "publisher_impact_census":impact_census,
             "underwater_sound_sites":water_sites,"packaged_unmoveable_tag_candidates":tag_paths,
             "artifact":artifact,"classes":classes,"entity_registry":reg,"resources":resources,"mine_explosion_consumers":consumers,"limits":LIMITS}
     data=canonical(report).encode()
@@ -231,6 +357,8 @@ def inspect(args):
             print("SEMANTIC",json.dumps({"owner":owner,**method},sort_keys=True))
     print("REGISTRY",json.dumps(reg,sort_keys=True))
     print("CONSUMERS",json.dumps(consumers,sort_keys=True))
+    print("PUBLISHER_IMPACT_CENSUS",json.dumps(impact_census,sort_keys=True))
+    print("DEPTH_RESOURCE_CENSUS",json.dumps(depth_resources,sort_keys=True))
     print("UNDERWATER_SOUND_SITES",json.dumps(water_sites,sort_keys=True))
     print("PACKAGED_TAG_CANDIDATES",json.dumps(tag_paths))
     print("RESOURCES",json.dumps(resources,sort_keys=True))
@@ -239,14 +367,24 @@ def inspect(args):
 def self_test():
     require(set(PINS) <= ALL | set(SELECT),"pins out of scope")
     require(len(FACTORIES)==2,"identity pins")
-    require(SELECT[TAG]=={"<clinit>"},"tag scope drift")
-    require({n for n,d in EXACT[C]}=={"explosion","ignoreExplosion","canEntityGrief"},"wrapper coverage")
+    require(SELECT[TAG]=={"<clinit>","registerBlockTag"},"tag scope drift")
+    require({n for n,d in EXACT[C]}=={"explosion","ignoreExplosion","canEntityGrief","getEntitySpawningPacket"},"wrapper coverage")
     require({n for n,d in EXACT[K]}=={"explosionKnockback"},"knockback coverage")
     require(all(owner in PINS for owner in EXACT),"exact owner pin coverage")
     require(all(owner in PINS for owner,n,d in CODE_PINS),"Code pin owner coverage")
     require(REQUIRED[W] >= {"tick","explode","onHit","onHitEntity"},"own tick coverage")
     require(REQUIRED[X] >= {"<init>","explode","finalizeExplosion"},"explosion coverage")
     require(LIMITS["static_contract"]=="NOT_CERTIFIED" and LIMITS["mutation"]=="NO_MUTATION","policy")
+    # Synthetic negative and positive direct invocation checks, independent of JAR.
+    sample = {7: {"cp_index": 7, "owner": W, "name": "onHit",
+                  "descriptor": "(Lnet/minecraft/world/phys/HitResult;)V", "ref_kind": 10}}
+    body = {0: ("invokevirtual", "#7", ""), 3: ("invokevirtual", "#8", ""),
+            6: ("invokedynamic", "#7, 0", ""), 11: ("return", "", "")}
+    sites = impact_sites({("caller", "()V"): body}, sample)
+    require(len(sites) == 1 and sites[0]["offset"] == 0, "impact direct call filter")
+    require(impact_sites({}, sample) == [], "impact empty scan")
+    require(list(exact_json_paths({"items":["alexscaves:depth_charge", "alexscaves:depth_charge_other"]})) == [(["items", 0], "VALUE")], "exact JSON resource filter")
+    require(list(exact_json_paths({"alexscaves:depth_charge": 1})) == [(["alexscaves:depth_charge"], "KEY")], "exact JSON key filter")
     print("PASS: discovery scope and policy guards")
 
 if __name__=="__main__":

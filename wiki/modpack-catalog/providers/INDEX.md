@@ -6,9 +6,9 @@
 
 **Barra dos providers catalogados:** `░░░░░░░░░░░░░░░░░░░░ 2.4%`
 
-**Fichas catalogadas (somente fichas detectadas): 571/2496.**
+**Fichas catalogadas (somente fichas detectadas): 574/2496.**
 
-**Barra das fichas catalogadas:** `████░░░░░░░░░░░░░░░░ 22.9%`
+**Barra das fichas catalogadas:** `████░░░░░░░░░░░░░░░░ 23.0%`
 
 **Escopo:** pastas atuais de providers; a modlist pode conter outros mods/sistemas ainda não representados. Objetos ausentes do catálogo não são presumidos inexistentes.
 
@@ -18,9 +18,9 @@
 
 **Próximo na fila alfabética:** Alexs Caves Continued.
 
-**Fichas com contrato técnico estático certificado: 321/2496.**
+**Fichas com contrato técnico estático certificado: 324/2496.**
 
-**Barra das fichas estáticas observadas:** `██░░░░░░░░░░░░░░░░░░ 12.9%`
+**Barra das fichas estáticas observadas:** `██░░░░░░░░░░░░░░░░░░ 13.0%`
 
 **Mods com escopo integral certificado: 0/164.**
 
@@ -34,7 +34,7 @@
 | ✅ | Aces Spell Utils — ✅ catálogo da versão-fonte documentado | 118/118 (100.0%) | 0 | ⚠️ | ⚠️ 0/118 verificados | ⚠️ 0/118 testados | [Ver fichas](✅-aces-spell-utils/INDEX.md) |
 | ✅ | Acolyte — ✅ catálogo do artefato publisher documentado | 74/74 (100.0%) | 0 | ⚠️ | ⚠️ 0/74 verificados | ⚠️ 0/74 testados | [Ver fichas](✅-acolyte/INDEX.md) |
 | ✅ | Aeromancy Additions — ✅ catálogo da versão-fonte documentado | 58/58 (100.0%) | 0 | ⚠️ | ⚠️ 0/58 verificados | ⚠️ 0/58 testados | [Ver fichas](✅-aeromancy-additions/INDEX.md) |
-| ⚠️ | Alexs Caves Continued — 🟡 próximo na fila | 145/184 (78.8%) | 145 | ⚠️ | ⚠️ 0/184 verificados | ⚠️ 0/184 testados | [Ver fichas](✅-alexs-caves-continued/INDEX.md) |
+| ⚠️ | Alexs Caves Continued — 🟡 próximo na fila | 148/184 (80.4%) | 148 | ⚠️ | ⚠️ 0/184 verificados | ⚠️ 0/184 testados | [Ver fichas](✅-alexs-caves-continued/INDEX.md) |
 | ⚠️ | Alexs Mobs Continued | 1/3 (33.3%) | 1 | ⚠️ | ⚠️ 0/3 verificados | ⚠️ 0/3 testados | [Ver fichas](✅-alexs-mobs-continued/INDEX.md) |
 | ⚠️ | Alshanex Familiars | 2/18 (11.1%) | 2 | ⚠️ | ⚠️ 0/18 verificados | ⚠️ 0/18 testados | [Ver fichas](✅-alshanex-familiars/INDEX.md) |
 | ⚠️ | Apokinetics | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-apokinetics/INDEX.md) |

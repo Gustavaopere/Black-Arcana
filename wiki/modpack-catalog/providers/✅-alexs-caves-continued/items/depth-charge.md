@@ -1,6 +1,6 @@
 # Depth Charge
 
-**Estado:** ⚠️ PARCIAL / STATIC_DISCOVERY_ONLY. `static_contract=NOT_CERTIFIED; mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED; NO_MUTATION`. Sem nova raiz semântica certificada.
+**Estado:** ✅ contrato técnico estático individual (escopo delimitado; candidato à integração na main após CI). `claim_scope=STATIC_TECHNICAL_CATALOG_ONLY; mutating_hook=NOT_VERIFIED; runtime_dispatch=NOT_VERIFIED; perk_certification=NOT_CERTIFIED; physical_qa=NOT_TESTED; NO_MUTATION`. Sem nova raiz semântica certificada. As marcações NOT_CERTIFIED nas etapas abaixo são registros históricos da descoberta, não o estado estático final.
 
 ## Identidade e autoridade
 `alexscaves:depth_charge`, owner `ThrownProjectileItem`, factory `ACItemRegistry.lambda$static$113`, Code SHA-256 `5b5396ac73dc271445003cefeda4e6066978b2df1997228de0b035949d3a39f8`. [Registro](../systems/item-registry.md). Alex's Caves Continued 1.0.10, Minecraft 1.21.1/NeoForge/Java21, modlist sibling #19; JAR publisher `alexscaves-1.0.10-neoforge+1.21.1.jar`, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`, 75.279.314 bytes. [Dossiê](../EXACT-TERMINAL-ITEM-HELPERS-1.0.10.md), [run/job](https://github.com/Gustavaopere/Black-Arcana/actions/runs/45794089646/job/139820166475), HEAD `27c5bbc7780abbb2efe9bf2c4db615be5d0e7b3c`, dois replays byte-idênticos 439138 bytes, SHA-256 `7d70e29eb4bd2df5df5fe73720d1bd6213b61e7a950b43494f3efd416830e66f`. Sem dump físico novo.
@@ -129,3 +129,72 @@ Fonte reaberta: [run 46051923163/job 140685084122](https://github.com/Gustavaope
 ### Pendências delimitadas
 
 Verificar censo de callsites de onHit/onHitEntity relevantes fora dos corpos já projetados, callbacks de bloco, pacote de spawn, persistência efetiva de posição/movimento e reload, claims e datapacks. Não ampliar indiscriminadamente inspeção de código alheio. Nenhum novo root, promoção de ledger/índices, hook ou QA física. `NOT_CERTIFIED / NO_MUTATION / NOT_TESTED`.
+
+
+## Continuação da auditoria — censo de callsites do impacto (coleta preparada)
+
+Modlist física sibling [b05e2536461bc0a9c526dc47a38e3b9af62d941c](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/b05e2536461bc0a9c526dc47a38e3b9af62d941c/PROJECT-INSTRUCTIONS/modlist/modlist.md): #001 NeoForge 21.1.250, #019 Alex's Caves Continued 1.0.10, nome de JAR inalterado. SHA do publisher permanece pin da sonda, não medição local nova.
+
+A [sonda existente](../../../../../docs/qa/alexscaves_1010_depth_charge_mine_explosion_probe.py) foi ampliada para schema 3. Além dos pins, projeções e dois replays anteriores, ela deverá enumerar as 1555 classes do publisher por identidade JVM; separar declarações dos callbacks onHit(HitResult), onHitEntity(EntityHitResult), onHitBlock(BlockHitResult), referências Methodref/InterfaceMethodref de assinatura exata (inclusive owners diferentes), MethodHandle candidatos e instruções de invoke diretas, com offset, descritor e Code SHA-256 do chamador. O limite de 128 owners candidatos é um gate, não truncamento silencioso. O censo não confunde coincidência de assinatura com despacho no receptor DepthChargeEntity; não cobre reflexão, outros mods, mixins carregados, execução de MethodHandle ou cadeia indireta integral.
+
+Objetivo: determinar quais consumidores publisher merecem exame causal após a prova de que o tick próprio não chama o raycast vanilla. Se a coleta não localizar ingresso direto adicional, isso não demonstra ausência universal de impacto; runtime transformado, engine fora dos owners selecionados e callbacks externos permanecem condicionais. Não importar dano de contato para a trajetória normal, não duplicar a explosão e não usar estatística/evento como receipt de dano.
+
+### Resultado SHA-exato — schema 3
+
+[Run 46090154233 / job 140808940616](https://github.com/Gustavaopere/Black-Arcana/actions/runs/46090154233/job/140808940616), HEAD `819f606c06c6c2f20fb7413c6943eb2b0ef8833a`: job concluído success, incluindo py_compile, self-test, download/pins, duas inspeções, cmp e upload. Os dois relatórios têm 1.964.824 bytes, SHA-256 `e7b80d4040eeb84fa9030cedf98b7ad7a35b47529f2b1058352b65939e71815c`, 26 owners projetados. Roster de 1555 classes com SHA-256 `2296d31ecc7fabb375922b8ad23c7a25c3e969bdfd80d5e1aa602034ae5d62ed`. Na coleta, 41 workflows haviam concluído success e Black Arcana CI permanecia em execução; não é gate da revisão posterior.
+
+- 14 owners declaram pelo menos uma das três assinaturas; 11 owners contêm 20 referências Methodref/InterfaceMethodref candidatas, 20 sites de invocação direta e zero MethodHandle candidatos neste recorte. Destes, 18 são invokespecial e dois invokevirtual.
+- DepthChargeEntity (class SHA já pinado) contém exatamente duas referências candidatas: CP #126 e #93 para ThrowableItemProjectile.onHit(HitResult)V e onHitEntity(EntityHitResult)V. Ambas são invokespecial @2 nos respectivos callbacks próprios, Code `ce73871f104c656416adcb196c0f8bed8656cdd8c621383adf4bad8cb931d383` e `1e7d5a900fd8da9e27d893763a32fcadd7b9bd426854838017d674a04887dc8c`. Não constituem ingresso novo nos callbacks; são delegações ancestrais após a entrada.
+- Os únicos invokevirtual candidatos do publisher são TephraEntity.tick @640 (CP #345, Code `9133e22199c3a66a8ab139c2a7c2afa329d6e457613265a3643ee9a0f7108595`) e WaterBoltEntity.tick @690 (CP #344, Code `683b7c5992f0ed65b6db78d3c07e058730aa154dbd196ea928d4ae66263999a4`), cada qual referenciando onHit do próprio owner nominal. Não transportar seu despacho para DepthChargeEntity. O censo exclui engine-wide, reflexão, outros mods e execução de handles, portanto não comprova ausência universal de ingresso.
+- Conclusão limitada: o censo publisher não acrescenta nenhum ponto direto de disparo do callback de Depth Charge na trajetória normal. O dano direto solicitado 2F+nextInt(2) continua condicional a uma entrada efetiva; a detonação tem caminho próprio, independente desse dano. Não gerar dois procs de Mastery ou reemitir callbacks.
+
+### Reuso causal de contratos distribuídos
+
+- A nova coleta confirma ServerLevel.addFreshEntity(Entity)Z Code `3258d8fbc1797f284b939eb102698cf9e82350461672a04c2b3eb7330fa5ae3b` -> addEntity(Entity)Z Code `90b05c8f3b8b3044c50d7010fcba7d618fc3972c7216f926aac33028f2975243` -> PersistentEntitySectionManager.addNewEntity @32. Entidade removida ou rejeição do manager retorna false; onAddedToLevel somente no aceite. O item não condiciona awardStat/shrink ao booleano. O [Gossamer Worm Bucket](gossamer-worm-bucket.md) contém a prova distribuída adicional do evento EntityJoinLevelEvent cancelável e UUID duplicado na mesma engine. O caminho do Depth Charge usa addFreshEntity diretamente, não addFreshEntityWithPassengers do balde. Em retorno normal false, a lógica do item prossegue; não inferir perda física universal nem compensar automaticamente. Exigir receipt antes de Mastery ou modificação transacional.
+- A tabela das 21 chamadas de DispenserBlock.registerBehavior em [ACItemRegistry.setup](../systems/item-registry.md#5-setup-e-callbacks-locais-de-dispenser) não contém DEPTH_CHARGE. Isso limita o registro nativo auditado; não prova ausência de comportamento default, configuração externa ou registro por outro mod.
+- Registro EntityType confirmado em ACEntityRegistry.lambda$static$50: @17 sized, @21 intervalo, @25 velocity, @34 build, sem setter explícito de tracking. A factory não chama setter de tracking; o [dossiê de defaults](../EXACT-ITEM-ENTITY-DEFAULTS-21.1.250.md) demonstra que builder nominal inicializa 5 e supplier padrão lê clientTrackingRange, enquanto os suppliers de update/velocity retornam argumentos capturados. No escopo distribuído, valores nominais derivados 5/1/true; tracking não é alcance de lançamento ou AOE. A coleta complementar reprojetará esses consumidores.
+- Sem promoção de índice, ledger, hook ou QA.
+
+### Coleta complementar preparada — schema 4
+
+O commit `0c50d4e0cc124eae45c6c80ced48fb123dee0351` amplia a mesma sonda: descritores obrigatórios de ACPlatform.getEntitySpawningPacket e ACTagRegistry.registerBlockTag vindos dos callsites exatos, pin da classe de tag e do manager distribuído, métodos de inserção/recusa do manager, builders e suppliers de EntityType. O censo adicional de JSON em data/ procura a identidade literal alexscaves:depth_charge em chaves/valores e basename depth_charge.json, com SHA e caminhos estruturados, incluindo receitas/loot caso presentes; não equivale a resolução transitiva de tags/datapacks. Testes sintéticos novos distinguem ID exato de prefixo e chave de valor. A execução schema 4 ainda não foi confirmada. Não afirmar resultados antes de ler logs e dois replays.
+
+Pendências de escopo: examinar resultado complementar, demonstrar cadeia estática de pacote de spawn e tag; registrar limitações de callbacks externos, transações, reload/claims e QA física separadamente. `NOT_CERTIFIED / NO_MUTATION / NOT_TESTED` permanece até certificação individual verificável.
+
+
+## Resultado complementar SHA-exato — schema 4
+
+[Run 46090631197 / job 140810449309](https://github.com/Gustavaopere/Black-Arcana/actions/runs/46090631197/job/140810449309), HEAD `204bc5975df4ad48771954bfb61258eab3bc54b9`: todos os steps da sonda success, dois relatórios de 2.084.194 bytes SHA-256 `ef61a49077fb21638212873cbfabcfb1bf23e0d95189f04cabcd9babc6a6bd26`, 28 owners projetados. Publisher e distribuições 21.1.250 verificados pelos pins do workflow, sem execução de gameplay.
+
+### Identidade, tracking, tag e spawn
+- ACPlatform.getEntitySpawningPacket(Entity,ServerEntity)Packet Code `5ec438f409eba53fe56ea5eef66768fdd608af7a4903ea08930e4aba40eb7775` constrói ClientboundAddEntityPacket(Entity,ServerEntity) @6; não envia packet próprio nem serializa explicitamente groundTime/hitGround nesse corpo. Estado de cliente e resolução de owner não são inferidos.
+- ACTagRegistry.registerBlockTag(String)TagKey Code `4c84e35345e38f8ca03f97edefc4107de0a38b4bde71b8b9f46ee7b1fff40218`: Registries.BLOCK @0, literal alexscaves @3, ResourceLocation.fromNamespaceAndPath @6, TagKey.create @9. Com a escrita UNMOVEABLE @21 do clinit, comprova o ID alexscaves:unmovable e o recurso listado acima; resolução efetiva de #minecraft:wither_immune e overrides externos não observada.
+- EntityType.clientTrackingRange Code `5638bbb02298d9343aa7f91a9aa010cf3d4c049f86e2715adeba4de9bb494f3f`, updateInterval Code `bd9446f15706b7581575ad79857b80e86c22db1dec6b6093a021d3cc855c1cc9`, trackDeltas Code `dbeab507b183f85fa93c8edc6a544d82cc5fea06c946eb012e716da54ebc2637` delegam aos suppliers respectivos. defaultTrackingRangeSupplier Code `940c8e76d6e4850d223eb734aa8924b449670a45f0da5ce5ef637e41cccdd07d` lê clientTrackingRange. Com builder e factory, os valores nominais são 5/1/true. Dimensão nominal 0.7 × 0.7 blocos; tracking não é distância de combate.
+- PersistentEntitySectionManager.addNewEntity Code `9db758e37d1cce08918652495bb9d01f1207b068528736b83e3cf7d5acce621c` -> addEntity(EntityAccess,Z) Code `c12cfbffb16e15950de4caf3fd5785350b920540c24aed54e3160c9b3f771c7c`; EntityJoinLevelEvent @25/28, isCanceled @36 e retorno false se cancelado. addEntityWithoutEvent Code `f616e8ec0dd0bcbb1ab3ff9425e9659f41af1d9dbc94f8faf4a255c96b7c5454` exige addEntityUuid @2, que usa knownUuids.add (Code `5f312b918531647b3983fc55ad0330bb0e43acd5f3609d66e5d8148aac7a2b25`); rejeita duplicação antes de inserir na seção @33. Instala callback @49 e inicia tracking/ticking conforme visibilidade. Confirma a fronteira de aceite sem transformar item/stat em receipt.
+
+### Aquisição, recursos e custo
+Censo de 1.563 JSONs de data/, três hits por ID exato ou basename, sem recurso próprio de receita identificado:
+| Recurso | SHA-256 | Significado |
+|---|---|---|
+| data/alexscaves/loot_table/entities/mine_guardian.json | `02a9a950559e52b41120ddf09c8925c8124ac731cc2b42d4adedf8fee7f7c086` | Um roll, entrada item peso 1, set_count 0..2, enchanted_count_increase looting 0..1; não taxa física garantida. |
+| data/alexscaves/recipe/drain.json | `5d7f3e5fb0ef20a8359e7a7a2a9cffa548ea6d9353af83c56c910fd6699ffdaf` | Receita shaped BBB/DRD/BBB, B=bucket, D=depth_charge, R=redstone, saída drain ×1; duas unidades usadas no crafting. |
+| data/alexscaves/advancement/alexscaves/defeat_mine_guardian.json | `c88d5ba075572df0fdb6ada16a840bf3335df2291a4cc0e15bfeb7bea322ce5a` | Depth Charge é ícone, critério player_killed_entity mine_guardian; não gate de uso, recompensa nem grant de Mastery. |
+
+Uso manual solicita shrink(1) se !instabuild, sem custo de mana, cooldown, cast time ou durabilidade próprios no corpo/factory; não afirmar ausência de modificadores externos. Censo não resolve tags indiretas, receitas customizadas, loot modifiers nem datapacks ativos.
+
+## Certificação estática individual — sete eixos
+Escopo: ação manual do item, entidade própria, explosão customizada MineExplosion e consumidores diretos distribuídos identificados. Descrição funcional própria: projétil de lançamento manual que, ao entrar no estado de contato físico, aguarda atualizações elegíveis e solicita uma explosão com dano/knockback e possível alteração de blocos conforme política nativa. Não classificar como spell cast adicional.
+
+| Eixo | Fechamento estático delimitado |
+|---|---|
+| Identidade | JAR e factory SHA-exatos, modelo, registro de item/entidade, tag e resource IDs. |
+| Comportamento | Uso, criação, tick próprio, contador pós-incremento, callback condicional, detonação, dano/knockback, terrain e loot; owner, spawn e descarte. |
+| Parâmetros | Angle −10F, speed 0.65F, inaccuracy 1.5F, dimensão 0.7×0.7, gravidade própria −0.05, drag ~0.99, detonação na 32ª atualização elegível (1.6 s nominal), argumento raio 2F, R de entidades 4, fórmula de dano bruto e máximo teórico 29, contato condicional 2–3. Não há alcance fixo, cooldown ou mana próprios. |
+| Targeting | AABB de busca e filtro d<=1, ignoreExplosion, exposição por amostras e vetor normalizado, política de bloco distinta, callback condicional; nenhum alvo travado nem garantia de hit. |
+| Custos | Solicitação de uma unidade, exceção instabuild, retorno de spawn não usado; loot/crafting/advancement declarativos e ausência de registro específico de dispenser no setup auditado. |
+| Integração | Causalidade owner/cache/UUID, estado herdado, pacote, hitGround/groundTime sem save próprio, fronteiras de recusa e proteção, consumidores compartilhados; nenhuma autorização para mutar ou reemitir. |
+| Validação | Replays SHA-exatos de lançamento, projétil, MineExplosion, wrappers, censo e recursos; final CI da branch exigida antes do merge. |
+
+Este certificado delimita o comportamento solicitado no bytecode do publisher e as fronteiras distribuídas; não certifica dispatch físico de contato, receiver dinâmico externo, loot aplicado, listeners/claims/PvP reais, persistência efetiva após reload, compatibilidade de outros mods ou valores transformados. Esses aspectos permanecem requisitos explícitos para futura integração e QA, não fatos assumidos. Sem duplicar dano, débito, spawn, efeitos ou Mastery. `STATIC_TECHNICAL_CATALOG_ONLY / mutating_hook=NOT_VERIFIED / perk_certification=NOT_CERTIFIED / runtime_dispatch=NOT_VERIFIED / NO_MUTATION / physical_qa=NOT_TESTED`. Universo do provider OPEN; +0 raízes.
+
+CI da coleta schema 4: verify success, stage05_qa_companion_smoke bloqueado no build por HTTP 429 do Maven Central (Gson 2.10.1), [run 46090631175/job 140811199129](https://github.com/Gustavaopere/Black-Arcana/actions/runs/46090631175/job/140811199129). Não é falha semântica demonstrada da sonda, nem aprovação do smoke. Não mesclar antes dos gates atuais.

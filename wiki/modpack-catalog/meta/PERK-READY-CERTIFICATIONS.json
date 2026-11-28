@@ -12985,6 +12985,144 @@
         "integration": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/ender/servant-gaze.md", "reason": "Staff nao e familiar BA; shouldBeSaved=false impede presumir persistencia apos restart."},
         "validation": {"path": "wiki/modpack-catalog/providers/✅-apprentice-codex/EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md", "reason": "Segunda leitura contra bytecode e decompilacao do artefato exato; nenhum reward de Mastery por tick de torre promovido."}
       }
+    },
+    "✅-alexs-caves-continued/items/depth-charge.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+      "artifact_size_bytes": 75279314,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Depth Charge manual, entidade, MineExplosion e consumidores diretos SHA-exatos; não comprova dispatch físico, claims, loot efetivo, mutação nem universo integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
+          "reason": "Factory, registry e modelo SHA-exatos, tag e entidade; modlist #019 e publisher pinados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
+          "reason": "Uso e tick próprio, 32ª atualização elegível, MineExplosion, efeitos solicitados e callback condicional; censo publisher de 1555 classes."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
+          "reason": "Angle, speed, dispersão, gravidade, drag, dimensões, tracking, temporização, fórmula de dano e raio; ausência de alcance fixo."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
+          "reason": "AABB, distância normalizada, exposição por amostras, ignoreExplosion, dano e knockback; gates de blocos e contato condicional."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
+          "reason": "Shrink(1) condicionado a instabuild, spawn sem receipt, loot e crafting declarativos, sem cooldown/mana próprios."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
+          "reason": "Owner/UUID, save/load herdado, packet, recusa de spawn, política de blocos e consumidores compartilhados; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/depth-charge.md",
+          "reason": "Dois replays schema 4 de 2084194 bytes SHA-256 ef61a49077fb21638212873cbfabcfb1bf23e0d95189f04cabcd9babc6a6bd26, run 46090631197/job 140810449309; CI final exigida."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/gossamer-worm-bucket.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+      "artifact_size_bytes": 75279314,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato individual delimitado à captura e transporte do animal pelo item, não à IA/combate integral do mob; sem runtime/QA ou hook certificado.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gossamer-worm-bucket.md",
+          "reason": "Factory $92 e fluido $91, registry $40, classe individual e publisher/model pinado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gossamer-worm-bucket.md",
+          "reason": "Captura e soltura via Bucketable, ModFishBucketItem, BucketItem, dispenser, fronteiras de aceite e recusa."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gossamer-worm-bucket.md",
+          "reason": "Stack nominal 1, dimensões/partes, movimento 0.1, HP 10 declarados, ar 2000 após load, alcance via atributo; ausência de dano/mana/cooldown próprios."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gossamer-worm-bucket.md",
+          "reason": "Raycast de olhos com BLOCK_INTERACTION_RANGE, OUTLINE/Fluid.NONE, permissão de colocação; captura em entidade viva com balde de água; não AOE."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gossamer-worm-bucket.md",
+          "reason": "Consume, creative, stack/inventory e fallback toss, evento cancelável e booleano de spawn descartado; aquisição por captura."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gossamer-worm-bucket.md",
+          "reason": "FishBucketTag, CUSTOM_DATA e ENTITY_DATA distintos, FromBucket, persistência, owner não próprio, multipart não equivale a summons; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/gossamer-worm-bucket.md",
+          "reason": "Schema 5 run 46094303735/job 140822035239, dois relatórios 2379853 bytes SHA-256 c9275d19e66b94acf68bd21caa9e18387a95e7eb813bea806fdb9850ac12d8c2; CI 42/42 naquele HEAD."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/items/lanternfish-bucket.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+      "artifact_size_bytes": 75279314,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Contrato individual delimitado à captura e transporte do animal pelo item, não à IA/combate integral do mob; sem runtime/QA ou hook certificado.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/lanternfish-bucket.md",
+          "reason": "Factory $80/$79, registry $36, LanternfishEntity e modelo SHA-exatos."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/lanternfish-bucket.md",
+          "reason": "Captura individual, soltura compartilhada com identidade comprovada, dispenser, callbacks e recusa de engine; estado de cardume separado."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/lanternfish-bucket.md",
+          "reason": "Stack nominal 1, dimensões 0.5x0.4, HP 2, movimento 0.15, ar 2000 restaurado e dryOut próprio da entidade; ausência de cast/dano/AOE próprios."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/lanternfish-bucket.md",
+          "reason": "Captura em entidade viva com water bucket; raycast de bloco por atributo e permissões da engine exata; cardume não targeting de item."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/lanternfish-bucket.md",
+          "reason": "Captura, consume/creative, retorno de balde e descarte; loot de peixe não balde; boundaries compartilhados comprovados."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/lanternfish-bucket.md",
+          "reason": "FishBucketTag individual, FromBucket, CUSTOM_NAME/ENTITY_DATA, grupo/líder não gravados explicitamente, recusa de spawn e toss; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/lanternfish-bucket.md",
+          "reason": "Schema 2 run 46094534407/job 140822758163, dois relatórios 398523 bytes SHA-256 c8e493ad2c6a692b61f62fec73e2f4f31c1e36f1911e70fed8e41a01fd66f007; engine schema 5 comprovada em run 46094303735."
+        }
+      }
     }
   },
   "providers": {},
