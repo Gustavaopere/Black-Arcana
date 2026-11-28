@@ -24,7 +24,9 @@ SELECT = {
     IR: {"lambda$static$191"},
     ER: {"lambda$static$81"},
     COMPAT: {"hasTag"},
-    PROJECTILE: {"setOwner","getOwner","addAdditionalSaveData","readAdditionalSaveData","onHit","canHitEntity","tick"},
+    PROJECTILE: {"setOwner","getOwner","addAdditionalSaveData","readAdditionalSaveData","onHit","canHitEntity","tick","hitTargetOrDeflectSelf","deflect","onHitEntity","onHitBlock"},
+    MC+"world/item/FireworkRocketItem": {"<init>","use","useOn"},
+    MC+"world/item/Item": {"components","<init>"},
     MC+"world/item/ItemStack": {"get","getOrDefault","copy","shrink"},
     MC+"world/entity/Entity": {"getDeltaMovement","setDeltaMovement","discard","getId"},
     MC+"world/entity/LivingEntity": {"isFallFlying","getLookAngle","hurt"},
@@ -37,7 +39,7 @@ REQUIRED = {ROCKET:{"<init>","tick","getItem","handleEntityEvent"},
             ITEM:{"<init>","use","useOn"},
             FIREWORK:{"<init>","tick","getItem","defineSynchedData","addAdditionalSaveData","readAdditionalSaveData"},
             IR:{"lambda$static$191"},ER:{"lambda$static$81"},COMPAT:{"hasTag"},
-            PROJECTILE:{"setOwner","getOwner"}}
+            PROJECTILE:{"setOwner","getOwner","hitTargetOrDeflectSelf"}}
 PINS = {ROCKET:"73a4d9bb64f255503ffeca52e8576aa4570052a75ba7c87767bb9ff8b9d53877",
         ITEM:"bbc633c61e6226a10cbf00bce158c2a272d3a7f1ee40dd03b3a049d8c957fb42",
         IR:"114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
@@ -49,6 +51,30 @@ CODE_PINS = {(ROCKET,"<init>","(Lnet/minecraft/world/level/Level;DDDLnet/minecra
              (IR,"lambda$static$191","()Lnet/minecraft/world/item/Item;"):"4dc589cd486b67dc65677e0388911cb53182ffdfb49ca2459bf226a07bb96d72"}
 LIMITS = {"static_contract":"NOT_CERTIFIED","mutating_hook":"NOT_VERIFIED","physical_qa":"NOT_TESTED",
           "mutation":"NO_MUTATION","runtime_loaded_bytes":"NOT_OBSERVED","semantic_magic_roots_delta":0}
+
+def field_sites(archives, cp, javap, owner, field, descriptor):
+    import re
+    found=[(n,z) for n,z in archives if owner+".class" in z.namelist()]
+    require(bool(found),"registry owner absent "+owner)
+    source,z=found[0];raw=z.read(owner+".class");rd=ClassReader(raw)
+    indices={i for i,v in enumerate(rd.pool) if v and v[0]==9 and
+             rd.resolve(i)==[9,owner,[12,field,descriptor]]}
+    require(bool(indices),"registry field reference absent "+field)
+    sites=[]
+    for key,body in sorted(disassemble(cp,javap,owner).items()):
+        offsets=sorted(body)
+        for at,(op,arg,_) in sorted(body.items()):
+            m=re.match(r"#(\d+)(?:\s|,|$)",arg)
+            if not m or int(m[1]) not in indices:continue
+            pos=offsets.index(at)
+            decl=next(d for d in rd.methods if (d["name"],d["descriptor"])==key)
+            sites.append({"method":key[0],"descriptor":key[1],"code_sha256":decl["code_sha256"],
+                          "offset":at,"opcode":op,
+                          "window":[{"offset":o,"opcode":body[o][0],"operand":body[o][1],"symbol":body[o][2]}
+                                    for o in offsets[max(0,pos-45):pos+8]]})
+    require(any(s["opcode"]=="putstatic" for s in sites),"registry producer absent "+field)
+    return {"owner":owner,"source":source,"class_sha256":digest(raw),"field":field,"sites":sites}
+
 def inspect(a):
     verify_artifact(a.publisher)
     verify_universal(a.universal,"universal")
@@ -85,6 +111,7 @@ def inspect(a):
                 pin=(owner,*key)
                 if pin in CODE_PINS:
                     require(d["code_sha256"]==CODE_PINS[pin],"Code pin "+str(pin));observed.add(pin)
+                print("PROJECT_METHOD",owner,*key,flush=True)
                 methods.append({"executable":True,**projection(rd,key,parsed[key],d)})
             if owner in ALL:
                 require({(d["name"],d["descriptor"]) for d in decls if "code_sha256" in d}==
@@ -92,7 +119,9 @@ def inspect(a):
             classes[owner]={"present":True,"source":source,"available_sources":[n for n,_ in found],
                 "class_sha256":digest(raw),"parent":rd.parent,"fields":rd.fields,"declarations":rd.methods,"methods":methods}
         require(observed==set(CODE_PINS),"all Code pins observed")
-    return {"schema":1,"scope":"SODA_ROCKET_DISTRIBUTED_ENGINE_DISCOVERY","artifact":artifact,"classes":classes,"limits":LIMITS}
+        defaults=[field_sites(archives,cp,a.javap,MC+"world/item/Items","FIREWORK_ROCKET","Lnet/minecraft/world/item/Item;"),
+                  field_sites(archives,cp,a.javap,IR,"PURPLE_SODA_BOTTLE_ROCKET","Ljava/util/function/Supplier;")]
+    return {"schema":2,"default_registry_sites":defaults,"scope":"SODA_ROCKET_DISTRIBUTED_ENGINE_DISCOVERY","artifact":artifact,"classes":classes,"limits":LIMITS}
 def self_test():
     require(ALL=={ROCKET,ITEM,FIREWORK} and ALL<=set(REQUIRED),"complete owner scope")
     require(LIMITS["mutation"]=="NO_MUTATION" and LIMITS["static_contract"]=="NOT_CERTIFIED","policy")
@@ -117,4 +146,5 @@ if __name__=="__main__":
             print("OWNER",owner,row.get("source"),row.get("class_sha256"),"METHODS",len(row.get("methods",[])))
             for method in row.get("methods",[]):
                 print("SEMANTIC",json.dumps({"owner":owner,**method},sort_keys=True))
+        print("DEFAULT_REGISTRY_SITES",json.dumps(result["default_registry_sites"],sort_keys=True))
         print("DISCOVERY_ONLY NO_MUTATION NO_PHYSICAL_QA")
