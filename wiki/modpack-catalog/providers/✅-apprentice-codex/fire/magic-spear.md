@@ -1,75 +1,123 @@
 # Magic Spear
 
-- **Provider:** Apprentice's Codex
-- **Mod ID:** `apprenticecodex`
-- **Installed JAR:** `apprentice_codex-0.9.7.1+mc1.21.1.jar`
-- **Registry ID:** `apprenticecodex:magic_spear`
-- **Iron's school:** Fire
-- **Levels:** 1–5
-- **Minimum rarity:** Epic
-- **Cast type:** Instant
-- **Cooldown:** 0.5 s
-- **Resource:** Iron's mana
-- **Source pin:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`
+**Estado do contrato:** ✅ `COMPLETE_PERK_READY` — `STATIC_TECHNICAL_CATALOG_ONLY` · `SHA_EXACT_BINARY_BEHAVIOR` · `mutating_hook=NOT_VERIFIED` · `mutation=NO_MUTATION` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED`.
 
-## Exact source coefficients
+> O ✅ cobre exclusivamente a documentação estática SHA-exata deste objeto. Não homologa hook mutador, execução no pack, configuração efetiva, universo integral do provider nem QA físico.
 
-- `baseSpellPower = 600`
-- `spellPowerPerLevel = 300`
-- `baseManaCost = 30`
-- `manaCostPerLevel = 30`
-- `castTime = 0`
-- assisted-aim/lock-on range: **64 blocks**
+## 1. Identidade e proveniência
 
-Raw impact/blast damage is `spellPower / 100`, then multiplied by `DamageMultiplierKey.MAGIC_SPEAR`.
+| Campo | Valor verificado |
+|---|---|
+| Provider | Apprentice's Codex |
+| Mod ID | `apprenticecodex` |
+| Registry ID | `apprenticecodex:magic_spear` |
+| Host | Iron's Spells 'n Spellbooks (`AbstractSpell`) |
+| Interfaces | `GeoEntity`, `AntiMagicSusceptible`; `SummonedFirearmTools` e `DamageTypes.MAGIC_SPEAR` pertencem à raiz |
+| Escola | `SchoolRegistry.FIRE_RESOURCE` (Fire) |
+| Raridade mínima declarada | `EPIC` |
+| Níveis declarados | 1–5 (`setMaxLevel(5)`) |
+| Tipo de cast | `INSTANT` |
+| Cooldown declarado | `0.5 s` |
+| Recurso | Mana do Iron's (`baseManaCost=30`, `manaCostPerLevel=30`) |
+| JAR exato | `apprentice_codex-1.0.1.1-mc1.21.1.jar` |
+| SHA-256 do JAR | `9C5244E75DBCA95BDAF48A85F0C189F8456149D1220BAD5FF339A86BCE04AC86` |
+| SHA-1 do JAR | `A3F9C73EBD77D15B7E77AE14F4D0F695FEC3B7CF` |
+| Ambiente | Minecraft 1.21.1 · NeoForge · Java 21 (JDK 21.0.12 na inspeção) |
+| Classe de implementação | `jp.aquafactory.apprenticecodex.spell.magicspear.MagicSpear` |
+| Auxiliares da mesma raiz | `MagicSpearMissileEntity`, `SummonedFirearmTools`, `DamageTypes.MAGIC_SPEAR` |
+| Evidência compartilhada | [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md) |
 
-## Missile lifecycle
+As versões 0.9.7.1 e 1.0.1 permanecem como histórico; nenhum valor foi reaproveitado sem confirmação no artefato físico 1.0.1.1. Os coeficientes declarados não são os valores efetivos instalados: mana, cooldown, spell power, nível, raridade e multiplicadores do host permanecem `NÃO VERIFICADOS` (`AbstractSpell` lê `SpellConfigManager`, atributos, Curios e eventos).
 
-The exact missile entity establishes:
+## 2. Localizadores para o Codex
 
-- release phase: **5 ticks**;
-- boost speed: **2.2 blocks/tick**;
-- homing turn cap: **5 degrees/tick**;
-- maximum life before burst/discard: **120 ticks**;
-- impact blast radius: **1.5 blocks**;
-- burst visual phase: **14 ticks**;
-- anti-magic susceptibility: Counterspell/anti-magic converts it to a visual burst without applying blast damage.
+| Elemento | Localizador |
+|---|---|
+| Registro | `SpellRegistry.reg("magic_spear", MagicSpear::new)` |
+| Config | `EPIC`, nível 5, cooldown `0.5`, `FIRE_RESOURCE`, `CastType.INSTANT` |
+| Coeficientes | <init>: `baseSpellPower=600`, `spellPowerPerLevel=300`, `baseManaCost=30`, `manaCostPerLevel=30`, `castTime=0` |
+| Dano | `getDamage` → `power/100 * damageMultiplier(MAGIC_SPEAR)` |
+| Mira | `LOCK_ON_RANGE=64.0`, via `SummonedFirearmTools.resolveAssistedAim` e filtro `isValidCombatTarget` |
+| Alternância | tag persistente `apprenticecodex.magic_spear.next_left` em `caster.getPersistentData()` |
+| Spawn | `eye + forward*0.4 + side*0.75 + (0,-0.25,0)`; lados alternados `-1`/`1` |
+| Fases | `RELEASE_TICKS=5`, `BOOST_SPEED=2.2`, `HOMING_TURN_DEGREES=5.0`, `MAX_LIFE_TICKS=120`, `BURST_TICKS=14` |
+| velocidades de release | `RELEASE_SIDE_SPEED=0.045`, `RELEASE_FORWARD_SPEED=0.02` |
+| Impacto | `BLAST_RADIUS=1.5`, `ENTITY_IMPACT_INFLATE=0.35`, burst visual `3.0` |
 
-The spell alternates launch side on successive casts and can acquire a provider-valid target within the assisted-aim range. Homing only continues while that target remains valid and in the same level.
+Bytecode: scratch/fire5_evidence/javap1011_fire6.txt (`javap -classpath <JAR> -p -s -c`, 28 classes, 1.095.867 bytes, EXIT=0, SHA-256 `F5491A50DCF3A8F7EBF1E9C035EFE0723490C97475DE501FC3AF6C1580E17EDB`, SHA-1 `53C2C327705603172618C84CFFEFC41412683190`); decompilação de apoio: scratch/fire5_sources.txt (fontes Vineflower 1.12.0 das cinco raízes legadas e auxiliares, 188.994 bytes, SHA-256 `F8BE6DF48A22522FC1B23FBA362D8FD0F2637A2759D65739F25A723A2903A448`). Constantes e fórmulas decisivas foram confrontadas com o bytecode; em divergência, o bytecode prevalece.
 
-## What it does
+## 3. Casting / execução
 
-The provider guide describes a magical spear/missile launched toward the target in line of sight. It homes toward that target and bursts on impact, damaging nearby valid combat targets.
+1. `onCast` chama `spawnMissile` somente em `ServerLevel` e então `super.onCast`.
+2. `resolveLaunchForward` usa a visão inclinada quando o caster está voando/nadando; caso contrário usa `RotationTools.getFlatForward`.
+3. `resolveLaunchRight` calcula a lateral com `worldUp.cross(forward)` e tem fallback para pose horizontal.
+4. `nextSide` lê e inverte a tag persistente do caster, produzindo spawn alternado à esquerda/direita.
+5. `setup` grava dano, direção, lateral e alvo opcional, e define movimento inicial `side*0.045 + forward*0.02`.
+6. `tickRelease` mantém esse movimento por `5` ticks; `startBoost` troca para `movementDirection*2.2`.
+7. `tickBoost` redireciona no máximo `5.0` graus por tick para o alvo válido e usa `moveWithImpactCheck`.
+8. Colisão com entidade ou bloco chama `explode`, que aplica dano em AABB inflada `1.5` com dedupe por id; anti-magia chama `burstWithoutDamage`.
+9. A fase de burst dura `14` ticks e o míssil é descartado se `tickCount > 120` antes do impacto.
 
-The blast uses provider combat-target filtering and normal knockback semantics. It does not become a Black Arcana projectile or proc source merely because a future integration observes the hit.
+## 4. Targeting / geometria
 
-## Acquisition
+| Propriedade | Valor e consumidor |
+|---|---|
+| Alvo | Colisão direta do míssil ou entidades em AABB de raio `1.5` no centro da explosão |
+| Filtro | `canHitEntity` exclui owner, exige `isValidCombatTarget` e bloqueia nova colisão na fase de burst |
+| Mira assistida | `64.0` blocos, com `resolutePartEntity` e revalidação de alvo |
+| Hitbox de busca | `getBoundingBox().expandTowards(movement).inflate(0.35)` |
+| Knockback | `KnockbackTypes.DEFAULT` no dano de área |
+| Tempo | release `5`, boost até `120`, burst `14` ticks |
+| Persistência | NBT com dano, fase, contadores, direções e `Target` UUID; geometria de colisão não é persistida separadamente |
 
-Registered through Iron's spell registry. Exact 0.9.7.1 scroll/loot/recipe availability remains in the provider-wide acquisition audit.
+## 5. Resultado
 
-## Deduplication
+- Dano de impacto explosionário em AABB, tipo `DamageTypes.MAGIC_SPEAR`.
+- O homing é limitado a `5` graus/tick e exige alvo vivo, mesmo nível e válido contra o owner.
+- A explosão não verifica oclusão de bloco no método `applyBlastDamage` examinado; isso não prova comportamento em runtime modificado.
+- Sem queima, cura ou invocação persistente (`N/A` com justificativa: o míssil é descartado após o burst).
 
-Occupies the **rapid Fire homing missile + compact AoE burst** niche. Black Arcana Chaos/Fire should not duplicate this with a differently colored tracking projectile.
+## 6. Scaling e caps
 
-## Confidence
+| Parâmetro | Fórmula literal | Unidade / ownership |
+|---|---|---|
+| Spell power | `600 + 300*(level-1)` declarado; efetivo **NÃO VERIFICADO** |
+| Dano | `power/100 * damageMultiplier(MAGIC_SPEAR)` — config **NÃO VERIFICADA** |
+| Mana | `30 + 30*(level-1)` declarado; efetivo **NÃO VERIFICADO** |
+| Cooldown | `0.5` s declarado; efetivo **NÃO VERIFICADO** |
+| Cast time | `0` ticks, coerente com `CastType.INSTANT` |
+| Lock-on | `64.0` blocos; não é o alcance de voo do míssil |
+| Velocidade | release `0.045` lateral + `0.02` avante; boost `2.2` blocos/tick |
+| Explosão | raio `1.5`, burst `14` ticks, vida máxima `120` ticks |
 
-`SOURCE-PINNED SPELL + MISSILE ENTITY / PACK CONFIG MULTIPLIER + FULL RUNTIME QA PENDING`
+## 7. Possibilidades de perks
 
-## Localizadores para Codex — source exato
+- **A — atributo nativo:** dano responde a `getSpellPower`; mira/help de mira depende de utilitário do provider.
+- **B — evento verificado:** `EventHooks.onProjectileImpact` pode cancelar um impacto, mas não há hook para alterar parâmetros em voo.
+- **C — adapter condicionado:** mudar homing, raio de explosão ou alternância de lado exigiria substituir `MagicSpear` e a entidade com risco de duplicar míssil. **CONDICIONADO**.
+- **D — sem hook demonstrado:** nenhuma API segura para converter o míssil em área persistente ou alterar o lock-on sem duplicar dano. **NO_MUTATION** / fail-closed.
 
-- **Código da implementação:** [`MagicSpear.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/magicspear/MagicSpear.java); classe `jp.aquafactory.apprenticecodex.spell.magicspear.MagicSpear`.
-- **Registro comprovado:** `SpellRegistry.reg("magic_spear", MagicSpear::new)`; entrada distinta de escola, registry e documento.
-- **Localização de parâmetros:** conservar as fórmulas, constantes, tempo, mana, configurações e advertências da seção `Exact source coefficients` desta própria ficha; conferir na classe qualquer setter de entidade/efeito, sem presumir que o campo possa ser alterado externamente.
-- **Atributos/modificadores:** como addon do Iron's, `AbstractSpell` resolve spell power/custo e escola conforme seu contrato exato; parâmetros como raio, alvos e projéteis podem depender da classe acima ou de helpers/entidades *provider-owned*. Sua mutabilidade por perk está **CONDICIONADA** a evento/API/adapter validado na versão exata.
-- **Causalidade e proteção:** associar progressão ao cast original; não premiar projétil, dano indireto, summon ou recast como outro cast automaticamente. Nenhum teste de alteração de runtime, Survival ou hook foi conduzido por esta ficha.
-- **Proveniência:** fonte no commit 0.9.7.1 `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`. Metadados e localizadores factuais; nenhuma cópia de implementação ou asset upstream.
+- `mutating_hook = NOT_VERIFIED`; `mutation = NO_MUTATION` (fail-closed).
 
-## Engenharia causal aprofundada — ofensiva/movimento/sensoriamento (2026-10-14)
+## 8. Causalidade
 
-**Source:** [`magicspear/MagicSpear.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/magicspear/MagicSpear.java) · [`magicspear/MagicSpearMissileEntity.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/magicspear/MagicSpearMissileEntity.java).
+`cast instantâneo → míssil alternado em release 5 ticks → boost 2.2 com homing 5 graus/tick → impacto → explosão AABB 1.5 com dedupe → burst 14 ticks e descarte`.
 
-- **Persistência/lançamento:** `MagicSpear.nextSide` alterna esquerda/direita na chave de persistent data `apprenticecodex.magic_spear.next_left`; busca mira assistida em até **64 blocos**. Ao voar/nadar usa vetor de visão, nos demais casos direção plana.
-- **Lifecycle de míssil:** `MagicSpearMissileEntity.tickServer` alterna `RELEASE` (5 ticks), `BOOST` (2.2 blocos/tick; direção altera até 5°/tick), `BURST` (14 ticks). Projétil serializa `Phase`, `PhaseTicks`, vetores e `Target` UUID. Impacto `applyBlastDamage` em raio **1.5** e dedup por entidade; `onAntiMagic` altera para burst **sem dano**, se ainda não estava em burst.
-- **QA:** lado persistido após restart, target stale, detecção de colisão e anti-magic, dono do splash e política de dano; não premiar fases do projétil como cast extra.
+## 9. Concepção de nova magia
 
-🟡 Source-level causal; ⚠️ bytecode do JAR, config e QA modpack/Survival não certificados; ⛔ RPG perks/Mastery sem adapter homologado. Iron's e Apprentice's mantêm mana/casting/efeitos; Black Arcana não duplica runtime.
+Assinatura ocupada: míssil de mira assistida, disparo alternado e explosão em área. Nenhuma implementação foi realizada.
+
+## 10. Verificação e pendências
+
+- ✅ identidade/hash, construtor `600/300/30/30/0`, `EPIC/5/0.5`, dano `power/100*multiplier`, `LOCK_ON_RANGE=64`, tag alternada, constantes de release/boost/homing/burst e NBT confirmados no bytecode 1.0.1.1.
+- ✅ `applyBlastDamage` com AABB `1.5`, dedupe por id e `KnockbackTypes.DEFAULT` confirmado.
+- ⚠️ multiplicador instalado, mana/cooldown efetivos e lock-on real em cliente permanecem `NÃO VERIFICADOS`.
+- ⚠️ `physical_qa=NOT_TESTED`: sem Survival, PvP, mira real, colisão ou anti-magia.
+- ⚠️ Universo integral do provider não encerrado; homologação integral permanece `NOT_CERTIFIED`.
+
+
+## Localizadores para Codex — resumo operacional
+
+Assinatura ocupada: míssil de mira assistida, disparo alternado e explosão em área. Nenhuma implementação foi realizada.
+
+- Consultar [`EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md`](../EXACT-TECHNICAL-CONTRACTS-1.0.1.1.md).
